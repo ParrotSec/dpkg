@@ -1,3 +1,192 @@
+commit 2240c05fea67fd57f182344a237d02ef58ed9629
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 1 05:51:06 2017 +0100
+
+    Release 1.18.22
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 113d307f3a3ac6b89855620d5c8a3a7fed038c3e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 1 05:48:49 2017 +0100
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        | 2 +-
+ dselect/po/ca.po        | 2 +-
+ dselect/po/cs.po        | 2 +-
+ dselect/po/da.po        | 2 +-
+ dselect/po/de.po        | 2 +-
+ dselect/po/dselect.pot  | 4 ++--
+ dselect/po/el.po        | 2 +-
+ dselect/po/es.po        | 2 +-
+ dselect/po/et.po        | 2 +-
+ dselect/po/eu.po        | 2 +-
+ dselect/po/fr.po        | 2 +-
+ dselect/po/gl.po        | 2 +-
+ dselect/po/hu.po        | 2 +-
+ dselect/po/id.po        | 2 +-
+ dselect/po/it.po        | 2 +-
+ dselect/po/ja.po        | 2 +-
+ dselect/po/ko.po        | 2 +-
+ dselect/po/nb.po        | 2 +-
+ dselect/po/nl.po        | 2 +-
+ dselect/po/nn.po        | 2 +-
+ dselect/po/pl.po        | 2 +-
+ dselect/po/pt.po        | 2 +-
+ dselect/po/pt_BR.po     | 2 +-
+ dselect/po/ro.po        | 2 +-
+ dselect/po/ru.po        | 2 +-
+ dselect/po/sk.po        | 2 +-
+ dselect/po/sv.po        | 2 +-
+ dselect/po/tl.po        | 2 +-
+ dselect/po/vi.po        | 2 +-
+ dselect/po/zh_CN.po     | 2 +-
+ dselect/po/zh_TW.po     | 2 +-
+ man/po/de.po            | 2 +-
+ man/po/dpkg-man.pot     | 4 ++--
+ man/po/es.po            | 2 +-
+ man/po/fr.po            | 2 +-
+ man/po/hu.po            | 2 +-
+ man/po/it.po            | 2 +-
+ man/po/ja.po            | 2 +-
+ man/po/nl.po            | 2 +-
+ man/po/pl.po            | 2 +-
+ man/po/pt_BR.po         | 2 +-
+ man/po/ru.po            | 2 +-
+ man/po/sv.po            | 2 +-
+ man/po/zh_CN.po         | 2 +-
+ po/ast.po               | 2 +-
+ po/bs.po                | 2 +-
+ po/ca.po                | 2 +-
+ po/cs.po                | 2 +-
+ po/da.po                | 2 +-
+ po/de.po                | 2 +-
+ po/dpkg.pot             | 4 ++--
+ po/dz.po                | 2 +-
+ po/el.po                | 2 +-
+ po/eo.po                | 2 +-
+ po/es.po                | 2 +-
+ po/et.po                | 2 +-
+ po/eu.po                | 2 +-
+ po/fr.po                | 2 +-
+ po/gl.po                | 2 +-
+ po/hu.po                | 2 +-
+ po/id.po                | 2 +-
+ po/it.po                | 2 +-
+ po/ja.po                | 2 +-
+ po/km.po                | 2 +-
+ po/ko.po                | 2 +-
+ po/ku.po                | 2 +-
+ po/lt.po                | 2 +-
+ po/mr.po                | 2 +-
+ po/nb.po                | 2 +-
+ po/ne.po                | 2 +-
+ po/nl.po                | 2 +-
+ po/nn.po                | 2 +-
+ po/pa.po                | 2 +-
+ po/pl.po                | 2 +-
+ po/pt.po                | 2 +-
+ po/pt_BR.po             | 2 +-
+ po/ro.po                | 2 +-
+ po/ru.po                | 2 +-
+ po/sk.po                | 2 +-
+ po/sv.po                | 2 +-
+ po/th.po                | 2 +-
+ po/tl.po                | 2 +-
+ po/tr.po                | 2 +-
+ po/vi.po                | 2 +-
+ po/zh_CN.po             | 2 +-
+ po/zh_TW.po             | 2 +-
+ scripts/po/ca.po        | 2 +-
+ scripts/po/de.po        | 2 +-
+ scripts/po/dpkg-dev.pot | 4 ++--
+ scripts/po/es.po        | 2 +-
+ scripts/po/fr.po        | 2 +-
+ scripts/po/pl.po        | 2 +-
+ scripts/po/ru.po        | 2 +-
+ scripts/po/sv.po        | 2 +-
+ 94 files changed, 98 insertions(+), 98 deletions(-)
+
+commit 66f0819359a5b40a845213348772033c353d30ae
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 1 05:21:26 2017 +0100
+
+    Dpkg::Shlibs::Objdump: Mask ABI bits in flags for ARM
+    
+    These are too unreliable for exact matches. There are objects with
+    EABIv4 in the wild, even when the current is EABIv5. The soft and
+    hard float flags are not always set on armel and armhf respectively,
+    although the Tag_ABI_VFP_args attribute in the the ARM attribute
+    section should always be present on armhf. And there are cases were
+    both soft and hard float flags are set at the same time(!).
+    
+    Mask all flags on ARM, so that we get back to the previous behavior
+    with objdump. We can try to revisit this for a better matching during
+    the dpkg 1.19.x cycle.
+    
+    Closes: #853793
+
+ debian/changelog               | 3 +++
+ scripts/Dpkg/Shlibs/Objdump.pm | 3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit eeeae2acc87ab380b732491d22af7ec3f4b6b772
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jan 30 01:04:31 2017 +0100
+
+    libdpkg: Turn status file parser errors on field blank lines into warnings
+    
+    Regression introduced in commit e4cb12a710457b103a7544c4de5e9fc1b2bd24d8.
+    
+    This has caused issues at least on Cydia installations. And it should
+    have been introduced as a lax parsing error, only failing for new
+    packages, and warn on already installed ones. Otherwise one cannot
+    easily recover after upgrading to a new dpkg on an affected system.
+    
+    Reported-by: Jay Freeman <saurik@saurik.com>
+    Stable-Candidate: 1.17.x
+
+ debian/changelog   |  5 +++++
+ lib/dpkg/dpkg-db.h |  4 +++-
+ lib/dpkg/parse.c   | 12 ++++++++----
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+commit 2906c9de5ee60b8cdfe09c8bfefa3c00721416be
+Author: Mert Dirik <mertdirik@gmail.com>
+Date:   Wed Feb 1 05:30:52 2017 +0100
+
+    po: Update Turkish programs translations
+    
+    Closes: #853202
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   3 +
+ po/tr.po         | 193 ++++++++++++++-----------------------------------------
+ 2 files changed, 53 insertions(+), 143 deletions(-)
+
+commit 9ef2064880c0972949623406738d708e58614562
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Mon Jan 30 19:46:04 2017 +0100
+
+    Update German scripts translation
+    
+    Update to 588t.
+
+ debian/changelog |  3 ++-
+ scripts/po/de.po | 73 ++++----------------------------------------------------
+ 2 files changed, 7 insertions(+), 69 deletions(-)
+
+commit 1e459c8c1ec2bdd64afd4698af791a24cb9e98db
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jan 29 21:09:15 2017 +0100
+
+    Bump version to 1.18.22
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit 447a8c37501bccf7b1b6f3c34231a806ffb1fae9
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sun Jan 29 20:30:05 2017 +0100
