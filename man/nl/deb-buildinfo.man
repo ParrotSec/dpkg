@@ -1,0 +1,184 @@
+.\" dpkg manual page - deb-buildinfo(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2015-2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-buildinfo 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-buildinfo \- Indeling van het Debian bouw\-informatiebestand
+.
+.SH OVERZICHT
+\fIbestandsnaam\fP\fB.buildinfo\fP
+.
+.SH BESCHRIJVING
+Bij elke bouw (build) van een Debian broncodepakket kan de bouwinformatie
+opgeslagen worden in een \fB.buildinfo\fP\-controlebestand dat een aantal velden
+bevat. Ieder veld begint met een markering, zoals \fBSource\fP of \fBBinary\fP
+(niet hoofdlettergevoelig), gevolgd door een dubbele punt en de tekstinhoud
+van het veld. Velden worden enkel door veldmarkeringen begrensd. De
+tekstinhoud van het veld kan met andere woorden verschillende regels lang
+zijn, maar de installatiegereedschappen zullen bij het verwerken van de
+tekstinhoud de regels gewoonlijk samenvoegen (behalve in het geval van de
+multiregel\-velden \fBBinary\-Only\-Changes\fP, \fBInstalled\-Build\-Depends\fP,
+\fBEnvironment\fP, \fBChecksums\-Md5\fP, \fBChecksums\-Sha1\fP en \fBChecksums\-Sha256\fP;
+zie hierna)
+.PP
+De controle\-data mogen ingesloten liggen in een OpenPGP\-handtekening met
+ASCII\-harnas volgens de specificatie RFC4880.
+.PP
+De naam van het \fB.buildinfo\fP\-bestand is afhankelijk van het type bouw en is
+zo specifiek als nodig, maar niet meer. Voor een bouw die \fBany\fP vermeldt,
+is de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP. In geval het
+een bouw betreft die \fBall\fP vermeldt, is de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBall.buildinfo\fP. En in geval het
+een bouw betreft die \fBsource\fP vermeldt, is de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBsource.buildinfo\fP.
+.
+.SH VELDEN
+.TP 
+\fBFormat:\fP \fIindelingsversie\fP (verplicht)
+De waarde van dit veld bepaalt de indelingsversie van het bestand. De
+syntaxis van de veldwaarde is een versienummer met een hoofdversie\- en een
+onderversiecomponent. Wijzigingen aan de indeling die niet neerwaarts
+compatibel zijn, hebben een verhoging van het hoofdversienummer tot gevolg
+en neerwaarts compatibele veranderingen (zoals het toevoegen van extra
+velden) verhogen het onderversienummer. De huidige indelingsversie is
+\fB0.2\fP.
+.TP 
+\fBSource:\fP \fIbroncode\-naam\fP [\fB(\fP\fIbroncode\-versie\fP\fB)\fP] (verplicht)
+De naam van het broncodepakket. Indien de versie van het broncodepakket
+verschilt van de versie van het binaire pakket, dan zal de \fIbroncode\-naam\fP
+gevolgd worden door een \fIbroncode\-versie\fP tussen haakjes. Dit kan het geval
+zijn als de bouw gebeurt voor een uitsluitend binaire upload die niet door
+de onderhouder uitgevoerd wordt.
+.TP 
+\fBBinary:\fP \fIlijst\-binaire\-pakketten\fP (verplicht)
+Dit gevouwen veld is een lijst, met spatie als scheidingsteken, van de
+gebouwde binaire pakketten.
+.TP 
+\fBArchitecture:\fP \fIarch\-lijst\fP (verplicht)
+Dit veld met spaties als scheidingsteken, somt de architecturen op van de
+bestanden die momenteel gebouwd worden. Gebruikelijke architecturen zijn
+\fBamd64\fP, \fBarmel\fP, \fBi386\fP, enz. Merk op dat de waarde \fBall\fP bedoeld is
+voor pakketten die architectuuronafhankelijk zijn. Indien ook de broncode
+voor het pakket gebouwd wordt, is ook de bijzondere vermelding \fBsource\fP
+aanwezig. Jokertekens voor architecturen mogen nooit voorkomen in de lijst.
+.TP 
+\fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
+auteur van het programma er ook voor gebruikt. Het kan ook een
+Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
+exacte indeling en het sorteringsalgoritme worden beschreven in
+\fBdeb\-version\fP(5).
+.TP 
+\fBBinary\-Only\-Changes:\fP
+.TQ
+\fI changelog\-item\fP
+Dit multiregel\-veld bevat in voorkomend geval de samengevoegde tekst van het
+changelog\-item voor een uitsluitend binaire upload die niet door de
+onderhouder uitgevoerd wordt (een binary\-only non\-maintainer upload \-
+binNMU). Om van dit veld een geldig multiregel\-veld te maken, worden lege
+regels vervangen door één enkel punt (‘.’) en springen alle regels in met
+één spatie. De exacte inhoud hangt af van de changelog\-indeling.
+.TP 
+\fBChecksums\-Md5:\fP (verplicht)
+.TQ
+\fBChecksums\-Sha1:\fP (verplicht)
+.TQ
+\fBChecksums\-Sha256:\fP (verplicht)
+.TQ
+ \fIcontrolesom\fP \fIgrootte\fP \fIbestandsnaam\fP
+Deze multiregel\-velden bevatten een lijst van bestanden met voor elk van hen
+een controlesom en een grootte. Deze velden hebben een identieke syntaxis en
+verschillen onderling enkel inzake het gebruikte algoritme voor de
+controlesom: MD5 voor \fBChecksums\-Md5\fP, SHA\-1 voor \fBChecksums\-Sha1\fP en
+SHA\-256 voor \fBChecksums\-Sha256\fP.
+
+De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als
+de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van
+het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke
+regel bestaat uit elementen die onderling door een spatie van elkaar
+gescheiden zijn en het bestand beschrijven: zijn controlesom, zijn
+bestandsgrootte en zijn naam.
+
+Deze velden sommen alle bestanden die de bouw vormen.
+.TP 
+\fBBuild\-Origin:\fP\fI naam\fP
+De naam van de distributie waaruit dit pakket afkomstig is.
+.TP 
+\fBBuild\-Architecture:\fP \fIarch\fP (verplicht)
+De Debian\-architectuur van de installatie waarin de pakketten gebouwd
+worden. Gebruikelijke architecturen zijn \fBamd64\fP, \fBarmel\fP, \fBi386\fP, enz.
+.TP 
+\fBBuild\-Date:\fP \fIbouwdatum\fP
+De datum waarop het pakket gebouwd werd. Hij moet dezelfde indeling hebben
+als de datum in een \fBdeb\-changelog\fP(5)\-item.
+.TP 
+\fBBuild\-Path:\fP \fIbouwpad\fP
+Het absoluut bouwpad, wat overeenkomt met de uitgepakte broncodeboom. Dit
+veld is enkel aanwezig als de leverancier het op de witte lijst geplaatst
+heeft aan de hand van een patroonvergelijking, om zo het eventueel weglekken
+van gevoelige informatie te voorkomen.
+
+Op Debian en zijn derivaten zullen enkel bouwpaden die beginnen met
+\fI/build/\fP aanleiding geven tot het aanmaken van dit veld.
+.TP 
+\fBInstalled\-Build\-Depends:\fP (verplicht)
+.TQ
+\fIpakketlijst\fP
+De lijst van geïnstalleerde en geconfigureerde pakketten die van invloed
+kunnen zijn op het proces van het bouwen van het pakket.
+
+De lijst bestaat uit de naam van elk pakket, eventueel een
+architectuurkwalificatie voor andere architecturen, met een exacte
+versierestrictie, gescheiden door komma's.
+
+De lijst bevat alle essentiële pakketten, pakketten vermeld in velden
+\fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP, \fBBuild\-Depends\-Indep\fP van de
+broncode, eventuele ingebouwde leveranciersspecifieke vereisten en al hun
+recursieve vereisten. Op Debian en zijn derivaten is de ingebouwde vereiste
+\fBbuild\-essential\fP.
+
+Waar het vereisten betreft die afkomstig zijn uit de controlevelden van de
+broncode, worden ook alle vereistenalternatieven in aanmerking genomen en
+alle pakketten die voorzien in de virtuele pakketten die vereist worden.
+.TP 
+\fBEnvironment:\fP
+.TQ
+\fIvariabelelijst\fP
+De lijst met omgevingsvariabelen waarvan bekend is dat zij het proces van
+het bouwen van het pakket beïnvloeden, waarbij elke variabele gevolgd wordt
+door een gelijkheidsteken (‘=’) en de waarde van de variabele tussen
+aanhalingstekens, wat dubbele aanhalingstekens (‘"’) moeten zijn, en waarbij
+de backslashes worden gemaskeerd (‘\e\e’).
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\"
+.\" .fi
+.\" .RE
+.
+.SH "ZIE OOK"
+\fBdeb\-changes\fP(5), \fBdeb\-version\fP(5), \fBdpkg\-genbuildinfo\fP(1).

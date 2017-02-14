@@ -1,0 +1,55 @@
+.\" dpkg manual page - deb-src-files(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-files 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-src\-files \- Indeling van het Debian distributiebestand
+.
+.SH OVERZICHT
+debian/files
+.
+.SH BESCHRIJVING
+Dit bestand bevat de lijst van voorwerpen die via het controlebestand
+\&\fB.changes\fP dienen gedistribueerd te worden.
+.PP
+Het bestand \fIdebian/files\fP heeft een eenvoudige indeling waarbij de
+elementen door witruimte van elkaar gescheiden worden.
+.PP
+.in +5
+\fIbestandsnaam\fP \fIsectie\fP \fIprioriteit\fP
+.in -5
+.PP
+\fIbestandsnaam\fP is de naam van het te distribueren voorwerp.
+.PP
+\fIsectie\fP en \fIprioriteit\fP komen overeen met de respectieve controlevelden
+uit het .deb\-bestand. Welke waarden mogelijk zijn, is specifiek voor het
+archief van elke distributie.
+.
+.SH OPMERKINGEN
+Het is niet de bedoeling dat dit bestand rechtstreeks gewijzigd
+wordt. Gelieve ofwel \fBdpkg\-gencontrol\fP of \fBdpkg\-distaddfile\fP te gebruiken
+om er elementen aan toe te voegen.
+.
+.SH "ZIE OOK"
+.ad l
+\fBdpkg\-genchanges\fP(1), \fBdpkg\-distaddfile\fP(1).

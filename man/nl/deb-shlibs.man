@@ -1,0 +1,61 @@
+.\" dpkg manual page - deb-shlibs(5)
+.\"
+.\" Copyright © 1996 Michael Shields <shields@crosslink.net>
+.\" Copyright © 2008 Zack Weinberg <zackw@panix.com>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-shlibs 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-shlibs \- Informatiebestand van Debian over gedeelde bibliotheken
+.
+.SH BESCHRIJVING
+.PP
+\fBshlibs\fP\-bestanden zetten namen en versies (\fIsonames\fP) van gedeelde
+bibliotheken om naar vereisten die bruikbaar zijn voor een control\-bestand
+van een pakket. Elke regel bevat één element. Lege regels zijn \fBniet\fP
+toegestaan. Regels die beginnen met het teken \fB#\fP worden als commentaar
+aanzien en genegeerd. Alle andere regels moeten de volgende indeling hebben:
+.IP
+[\fItype\fP\fB:\fP] \fIbibliotheek\fP \fIversie\fP \fIvereisten\fP
+.PP
+De velden \fIbibliotheek\fP en \fIversie\fP worden door witruimte van elkaar
+gescheiden, maar het veld \fIvereisten\fP loopt door tot het einde van de
+regel. Het veld \fItype\fP is facultatief en meestal niet nodig.
+.PP
+Het veld \fIvereisten\fP heeft dezelfde syntaxis als het veld \fBDepends\fP in het
+control\-bestand van een binair pakket, zie \fBdeb\-control\fP(5).
+.
+.SH VOORBEELDEN
+.PP
+Het \fBshlibs\fP\-bestand voor een typisch bibliotheekpakket met als naam
+\fIlibcrunch1\fP dat één bibliotheek levert met als soname \fIlibcrunch.so.1\fP,
+kan er als volgt uitzien:
+.IP
+libcrunch 1 libcrunch1 (>= 1.2\-1)
+.PP
+De \fIvereisten\fP moeten de meest recente versie vermelden van het pakket dat
+nieuwe symbolen toevoegde aan de bibliotheek. In het bovenstaande voorbeeld
+werden nieuwe symbolen toegevoegd in versie 1.2 van \fIlibcrunch\fP. Dit is
+niet de enige reden waarom het kan zijn dat vereisten scherper gesteld
+moeten worden.
+.
+.SH "ZIE OOK"
+\fBdeb\-control\fP(5), \fBdpkg\-shlibdeps\fP(1), \fBdeb\-symbols\fP(5).

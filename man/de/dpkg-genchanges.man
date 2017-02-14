@@ -1,0 +1,194 @@
+.\" dpkg manual page - dpkg-genchanges(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006-2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2010 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-genchanges 1 %RELEASE_DATE% %VERSION% dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-genchanges \- erstelle Debian\-.changes\-Dateien
+.
+.SH ÜBERSICHT
+\fBdpkg\-genchanges\fP [\fIOption\fP …]
+.br
+.
+.SH BESCHREIBUNG
+\fBdpkg\-genchanges\fP liest Informationen aus einem entpackten und gebauten
+Debian\-Quellcodebaum und aus den darin erzeugten Dateien und erzeugt eine
+Debian\-Steuerdatei für das Hochladen (die \fB.changes\fP\-Datei).
+.
+.SH OPTIONEN
+.TP 
+\fB\-\-build=\fP\fITyp\fP
+Spezifiziert den Bau\-\fITyp\fP aus einer Kommata\-getrennten Liste von
+Komponenten (seit Dpkg 1.18.5).
+
+Die erlaubten Werte sind:
+.RS
+.TP 
+\fBsource\fP
+Hochladen des Quellpakets.
+.TP 
+\fBany\fP
+Hochladen des architekturspezifischen Binärpakets.
+.TP 
+\fBall\fP
+Hochladen des architekturunabhängigen Binärpakets.
+.TP 
+\fBbinary\fP
+Hochladen der architekturspezifischen und \-unabhängigen Binärpakete. Dies
+ist ein Alias für \fBany,all\fP.
+.TP 
+\fBfull\fP
+Alles hochladen. Dies ist ein Alias für \fBsource,any,all\fP und identisch zum
+Standardfall, wenn keine Bauoption festgelegt ist.
+.RE
+.TP 
+\fB\-g\fP
+Äquivalent zu \fB\-\-build=source,all\fP (seit Dpkg 1.17.11).
+.TP 
+\fB\-G\fP
+Äquivalent zu \fB\-\-build=source,any\fP (seit Dpkg 1.17.11).
+.TP 
+\fB\-b\fP
+Äquivalent zu \fB\-\-build=binary\fP oder \fB\-\-build=any,all\fP.
+.TP 
+\fB\-B\fP
+Äquivalent zu \fB\-\-build=any\fP.
+.TP 
+\fB\-A\fP
+Äquivalent zu \fB\-\-build=all\fP.
+.TP 
+\fB\-S\fP
+Äquivalent zu \fB\-\-build=source\fP.
+.PP
+Die \fB\-s\fP\fIx\fP Optionen steuern, ob das Original\-Quellarchiv dem Upload
+hinzugefügt wird, falls die Quellen erzeugt werden (d.h. \fB\-b\fP oder \fB\-B\fP
+nicht verwendet wurden).
+.TP 
+\fB\-si\fP
+Standardmäßig, oder falls angegeben, werden die Originalquellen nur
+hinzugefügt, falls sich die Versionsnummer der Originalautoren (die Version
+ohne Epoche und ohne die Debian\-Revision) von der Versionsnummer der
+Originalautoren in dem letzten Changlog\-Eintrag unterscheidet.
+.TP 
+\fB\-sa\fP
+Erzwingt die Hinzunahme der Originalquellen.
+.TP 
+\fB\-sd\fP
+Erzwingt den Ausschluss der Originalquellen und fügt nur den Diff hinzu.
+.fi
+.TP 
+\fB\-v\fP\fIVersion\fP
+Dies führt dazu, dass »changelog«\-Informationen von allen Versionen, die
+strikt neuer als \fIVersion\fP sind, verwendet werden.
+.TP 
+\fB\-C\fP\fIÄnderungsbeschreibung\fP
+Lese die Beschreibung der Änderungen aus der Datei \fIÄnderungsbeschreibung\fP
+anstatt die Informationen aus dem changelog\-Datei des Quellbaums zu
+verwenden.
+.TP 
+\fB\-m\fP\fIBetreueradresse\fP
+Verwende \fIBetreueradresse\fP als Namen und E\-Mail\-Adresse des Betreuers
+dieses Paketes, anstatt die Informationen aus der »control«\-Datei des
+Quellbaums zu verwenden.
+.TP 
+\fB\-e\fP\fIBetreueradresse\fP
+Verwende \fIBetreueradresse\fP als Namen und E\-Mail\-Adresse des Betreuers für
+diesen Upload, anstatt die Informationen aus dem »changelog« des Quellbaums
+zu verwenden.
+.TP 
+\fB\-V\fP\fIName\fP\fB=\fP\fIWert\fP
+Setzt eine Ausgabesubstitutionsvariable. Lesen Sie \fBdeb\-substvars\fP(5) für
+eine Besprechung des Ausgabesubstitution.
+.TP 
+\fB\-T\fP\fISubstvars\-Datei\fP
+Lese die Substitutionsvariablen aus \fISubstvars\-Datei\fP; standardmäßig
+\fBdebian/substvars\fP. Bei den ausgegeben Feldern erfolgt keine
+Variablensubstitution, die besondere Variable \fIFormat\fP wird allerdings das
+Feld mit dem gleichen Namen überschreiben. Diese Option kann mehrfach
+verwandt werden, um Substitutionsvariablen aus mehreren Dateien einzulesen
+(seit Dpkg 1.15.6).
+
+.TP 
+\fB\-D\fP\fIFeld\fP\fB=\fP\fIWert\fP
+Überschreibe oder ergänze ein Ausgabesteuerdateifeld.
+.TP 
+\fB\-U\fP\fIfield\fP
+Entferne ein Ausgabesteuerdateifeld.
+.TP 
+\fB\-c\fP\fISteuerdatei\fP
+Gibt die Haupt\-control\-Datei an, aus der Informationen gelesen werden
+sollen. Standardmäßig \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIChangelog\-Datei\fP
+Gibt die Änderungsprotokolldatei an, aus der Informationen gelesen werden
+sollen. Standardmäßig \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIDateienlist\-Datei\fP
+Lese die Liste der hochzuladenen Dateien von hier, statt \fBdebian/files\fP zu
+verwenden.
+.TP 
+\fB\-F\fP\fIChangelog\-Format\fP
+Spezifiziert das Format des Changelogs. Lesen Sie \fBdpkg\-parsechangelog\fP(1)
+für Informationen über alternative Formate.
+.TP 
+\fB\-u\fP\fIHochladedateiverzeichnis\fP
+Suche nach Dateien, die hochgeladen werden sollen, in
+\fIHochladedateiverzeichnis\fP statt in \fB..\fP (\fBdpkg\-genchanges\fP muss diese
+Dateien finden, so dass es ihre Größen und Prüfsummen in die
+\&\fB.changes\fP\-Datei aufnehmen kann.
+.TP 
+\fB\-q\fP
+Normalerweise schreibt \fBdpkg\-genchanges\fP informative Meldungen auf die
+Standard\-Fehlerausgabe, beispielsweise wie viele Quelldateien des Pakets
+hochgeladen werden. \fB\-q\fP unterdrückt diese Meldungen.
+.TP 
+\fB\-O\fP[\fIDateiname\fP]
+Gibt die changes\-Datei auf der Standardausgabe (Vorgabe) oder in
+\fIDateiname\fP, falls angegeben, aus (seit Dpkg 1.18.5).
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH DATEIEN
+.TP 
+\fBdebian/files\fP
+Die Liste der erstellten Dateien, die Teil der zum Hochladen vorbereiteten
+Dateien sind. \fBdpkg\-genchanges\fP liest hier die Daten, wenn es die Datei
+\&\fB.changes\fP erstellt.
+.
+.SH "SIEHE AUCH"
+.ad l
+\fBdeb\-substvars\fP(5), \fBdeb\-src\-control\fP(5), \fBdeb\-src\-files\fP(5),
+\fBdeb\-changelog\fP(5), \fBdeb\-changes\fP(5).
+.SH ÜBERSETZUNG
+Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer für die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

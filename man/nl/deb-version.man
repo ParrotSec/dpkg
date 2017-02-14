@@ -1,0 +1,125 @@
+.\" dpkg manual page - deb-version(5)
+.\"
+.\" Copyright © 1996-1998 Ian Jackson and Christian Schwarz
+.\"   for parts of the text reused from the Debian Policy
+.\" Copyright © 2007 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2011, 2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-version 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-version \- Indeling van het pakketversienummer in Debian
+.
+.SH OVERZICHT
+[\fIepoche\fP\fB:\fP]\fItoeleveraarsversie\fP[\fB\-\fP\fIdebian\-revisie\fP]
+.SH BESCHRIJVING
+De versienummers die gebruikt worden voor de binaire en broncodepakketten
+van Debian bestaan uit drie componenten. Die zijn:
+.TP 
+\fIepoche\fP
+Dit is een enkel (meestal klein) positief geheel getal. Het mag weggelaten
+worden en in dat geval wordt aangenomen dat het nul is. Indien het
+weggelaten wordt, mag de \fItoeleveraarsversie\fP geen dubbele punt bevatten.
+.IP
+Het wordt gebruikt om te kunnen breken met een vergissing die bij de
+versienummering van een eerdere versie van het pakket gemaakt werd of met
+een vroeger versienummeringsschema.
+.TP 
+\fItoeleveraarsversie\fP
+Dit is het belangrijkste deel van het versienummer. Het is gewoonlijk het
+versienummer van het originele (“upstream”) pakket waarvan het
+\&\fI.deb\fP\-bestand gemaakt werd, voor zover dit van toepassing is. Gewoonlijk
+wordt dezelfde indeling gebruikt als die welke door de auteurs van de
+software opgegeven wordt. Een herindeling kan nochtans nodig zijn om ze te
+laten passen binnen de indeling van het systeem voor pakketbeheer en
+\-vergelijking.
+.IP
+Het vergelijkingsgedrag van het pakketbeheerssysteem met betrekking tot de
+\fItoeleveraarsversie\fP wordt hierna beschreven. Het onderdeel
+\fItoeleveraarsversie\fP is een verplicht onderdeel van het versienummer.
+.IP
+De \fItoeleveraarsversie\fP mag enkel alfanumerieke (“A\-Za\-z0\-9”) tekens
+bevatten en de tekens \fB.\fP \fB+\fP \fB\-\fP \fB:\fP \fB~\fP (punt, plus,
+verbindingsteken, dubbele punt, tilde) en moet met een cijfer beginnen. Als
+er geen \fIdebian\-revisie\fP is, mogen geen verbindingstekens gebruikt worden
+en als het onderdeel \fIepoche\fP ontbreekt, mogen geen dubbele punten gebruikt
+worden.
+.TP 
+\fIdebian\-revisie\fP
+Dit deel van het versienummer specificeert de versie van het Debian pakket,
+gebaseerd op de versie van de toeleveraar. Het mag enkel alfanumerieke
+tekens bevatten en de tekens \fB+\fP \fB.\fP \fB~\fP (plus, punt, tilde) en wordt op
+dezelfde manier vergeleken als de \fItoeleveraarsversie\fP.
+.IP
+Het is facultatief. Als het ontbreekt, mag de \fItoeleveraarsversie\fP geen
+verbindingsteken bevatten. Deze indeling komt voor in het geval een stuk
+software geschreven werd met de specifieke bedoeling er een Debian pakket
+van te maken, zodat er slechts één enkele “debianisatie” van is en er daarom
+geen revisieaanduiding nodig is.
+.IP
+Het is gebruikelijk om de \fIdebian\-revisie\fP terug op ‘1’ te laten beginnen
+telkens wanneer de \fItoeleveraarsversie\fP verhoogd wordt.
+.IP
+Dpkg splitst het versienummer op bij het laatste verbindingstekenteken uit
+de tekenreeks (als er een in voorkomt) om te bepalen wat de
+\fItoeleveraarsversie\fP is en wat de \fIdebian\-revisie\fP. In een vergelijking is
+een versienummer zonder een \fIdebian\-revisie\fP een lagere versie dan één met
+een dergelijke component (maar merk op dat de \fIdebian\-revisie\fP het minst
+significante deel van een versienummer is).
+.SS Sorteeralgoritme
+De onderdelen \fItoeleveraarsversie\fP en \fIdebian\-revisie\fP worden door het
+pakketbeheersysteem met behulp van hetzelfde algoritme vergeleken:
+.PP
+De tekenreeksen worden vergeleken van links naar rechts.
+.PP
+Eerst wordt van elke tekenreeks het eerste deel, dat volledig uit
+niet\-numerieke tekens bestaat, bepaald. Deze twee delen (waarvan er een leeg
+mag zijn) worden lexicaal met elkaar vergeleken. Als een verschil
+aangetroffen wordt, wordt ze teruggegeven. Een lexicale vergelijking is een
+vergelijking van ASCII\-waarden die aangepast wordt, zodat alle lettertekens
+in de ordening voor alle niet\-lettertekens komen en zodat een tilde voor
+alles komt, zelfs het einde van een onderdeel. De volgende onderdelen zijn
+bijvoorbeeld in volgorde weergegeven: ‘~~’, ‘~~a’, ‘~’, het lege deel, ‘a’.
+.PP
+Vervolgens wordt het eerste deel van de rest van elke tekenreeks dat
+volledig uit cijfertekens bestaat, bepaald. De numerieke waarden van deze
+twee delen worden vergeleken en een eventueel gevonden verschil wordt als
+resultaat van de vergelijking teruggegeven. In deze context geldt een lege
+tekenreeks (die enkel kan voorkomen op het einde van een of beide vergeleken
+versietekenreeksen) als een nul.
+.PP
+Deze beide stappen (vergelijken en verwijderen van initiële niet\-numerieke
+en initiële numerieke tekenreeksen) worden herhaald tot er een verschil
+gevonden wordt of tot beide tekenreeksen volledig afgelopen werden.
+.PP
+Merk op dat een epoche bedoeld is om ons toe te laten fouten in
+versienummering achter ons te laten en te kunnen omgaan met situaties
+waarbij het versienummeringssysteem gewijzigd werd. Het is \fBniet\fP de
+bedoeling ervan te kunnen omgaan met versienummers die lettertekenreeksen
+bevatten die niet geïnterpreteerd kunnen worden door het pakketbeheersysteem
+(zoals ‘ALPHA’ of ‘pre\-’), of met ondoordachte ordeningen.
+.SH OPMERKINGEN
+De bijzondere betekenis van het tilde\-teken bij het sorteren werd
+geïntroduceerd in dpkg 1.10 en sommige onderdelen van de bouwscripts van
+dpkg werden pas later in de 1.10.x\-cyclus in staat gesteld het te
+ondersteunen.
+.SH "ZIE OOK"
+\fBdeb\-control\fP(5), \fBdeb\fP(5), \fBdpkg\fP(1)

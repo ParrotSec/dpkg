@@ -1,0 +1,154 @@
+.\" dpkg manual page - dpkg-gencontrol(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006, 2012-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gencontrol 1 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+dpkg\-gencontrol \- tworzy pliki kontrolne Debiana
+.
+.SH SKŁADNIA
+\fBdpkg\-gencontrol\fP [\fIopcja\fP...]
+.
+.SH OPIS
+\fBdpkg\-gencontrol\fP czyta informacje z rozpakowanego drzewa źródeł pakietu
+Debiana i generuje plik kontrolny pakietu binarnego (domyślnie jest to
+debian/tmp/DEBIAN/control), upraszczając podczas tego procesu pola dotyczące
+zależności.
+.sp
+Thus \fBPre\-Depends\fP, \fBDepends\fP, \fBRecommends\fP and \fBSuggests\fP are
+simplified in this order by removing dependencies which are known to be true
+according to the stronger dependencies already parsed. It will also remove
+any self\-dependency (in fact it will remove any dependency which evaluates
+to true given the current version of the package as installed). Logically it
+keeps the intersection of multiple dependencies on the same package. The
+order of dependencies is preserved as best as possible: if any dependency
+must be discarded due to another dependency appearing further in the field,
+the superseding dependency will take the place of the discarded one.
+.sp
+The other relation fields (\fBEnhances\fP, \fBConflicts\fP, \fBBreaks\fP, \fBReplaces\fP
+and \fBProvides\fP)  are also simplified individually by computing the union of
+the various dependencies when a package is listed multiple times in the
+field.
+.sp
+\fBdpkg\-gencontrol\fP dodaje ponadto wpis dotyczący pakietu binarnego do
+\fBdebian/files\fP.
+.
+.SH OPCJE
+.TP 
+\fB\-v\fP\fIwersja\fP
+Ustawia numer wersji generowanego pakietu binarnego.
+.TP 
+\fB\-V\fP\fInazwa\fP\fB=\fP\fIwartość\fP
+Ustawia zmienną podstawienia wyjścia. Szczegółowy opis podstawiania
+zmiennych wyjściowych znajduje się w \fBdeb\-substvars\fP(5).
+.TP 
+\fB\-T\fP\fIplik\-zmiennych\-podst\fP
+Read substitution variables in \fIsubstvars\-file\fP; the default is
+\fBdebian/substvars\fP.  This option can be used multiple times to read
+substitution variables from multiple files (since dpkg 1.15.6).
+.TP 
+\fB\-D\fP\fIpole\fP\fB=\fP\fIwartość\fP
+Nadpisuje lub dodaje wyjściowe pole pliku kontrolnego.
+.TP 
+\fB\-U\fP\fIpole\fP
+Usuwa wyjściowe pole pliku kontrolnego.
+.TP 
+\fB\-c\fP\fIplik\-kontrolny\fP
+Określa główny plik kontrolny, z którego będą czytane informacje. Domyślnie
+jest to \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIplik\-dziennika\-zmian\fP
+Określa dziennik zmian, z którego będą czytane informacje. Domyślnym plikiem
+jest \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIplik\-z\-listą\-plików\fP
+Czyta lub zapisuje listę plików wydania do pliku podanego jako argument tej
+opcji, zamiast do pliku \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIformat\-dziennika\-zmian\fP
+Określa format dziennika zmian. Więcej informacji o alternatywnych formatach
+można znaleźć w \fBdpkg\-parsechangelog\fP(1).
+.TP 
+\fB\-p\fP\fIpakiet\fP
+Generuje informacje o pakiecie binarnym \fIpakiet\fP. Jeżeli plik kontrolny
+pakietu źródłowego wymienia tylko jeden pakiet binarny, to opcję tę można
+pominąć, w przeciwnym wypadku wymagane jest wskazanie, dla którego pakietu
+binarnego wygenerować informacje.
+.TP 
+\fB\-n\fP\fInazwa_pliku\fP
+Określa, że nazwą pliku pakietu będzie \fInazwa_pliku\fP zamiast normalnej
+nazwy pliku w postaci pakiet_wersja_architektura.deb
+.TP 
+\fB\-is\fP, \fB\-ip\fP, \fB\-isp\fP
+These options are ignored for compatibility with older versions of the dpkg
+build scripts but are now deprecated. Previously they were used to tell
+\fBdpkg\-gencontrol\fP to include the Section and Priority fields in the control
+file. This is now the default behaviour. If you want to get the old
+behaviour you can use the \fB\-U\fP option to delete the fields from the control
+file.
+.TP 
+\fB\-P\fP\fIkatalog\-budowania\-pakietu\fP
+Mówi programowi \fBdpkg\-source\fP, że pakiet jest budowany w
+\fIkatalogu\-budowania\-pakietu\fP, zamiast w \fBdebian/tmp\fP. Katalog ten jest
+używany do znalezienia domyślnych wartości zmiennej podstawiania
+\fBInstalled\-Size\fP i pola w pliku kontrolnym o tej samej nazwie (przy użyciu
+\fBdu\fP) oraz domyślnej lokalizacji pliku wynikowego.
+.TP 
+\fB\-O\fP[\fIfilename\fP]
+Print the control file to standard output (or \fIfilename\fP if specified,
+since dpkg 1.17.2), rather than to \fBdebian/tmp/DEBIAN/control\fP (or
+\fIpackage\-build\-dir\fP\fB/DEBIAN/control\fP if \fB\-P\fP was used).
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Wyświetla informację o użytkowaniu i kończy działanie.
+.TP 
+\fB\-\-version\fP
+Wyświetla informację o wersji i pomyślnie kończy działanie.
+.
+.SH PLIKI
+.TP 
+\fBdebian/control\fP
+Główny plik kontrolny, zawierający niezależne od wersji informacje zarówno o
+pakiecie źródłowym, jak i o pakietach binarnych, które są tworzone z pakietu
+źródłowego.
+.TP 
+\fBdebian/files\fP
+Lista wygenerowanych plików, które są częścią przygotowywanego
+wydania. \fBdpkg\-gencontrol\fP zapisuje tutaj przypuszczalne nazwy
+plików\-pakietów binarnych generowanych z pliku kontrolnego.
+.SH "ZOBACZ TAKŻE"
+.ad l
+\fBdeb\-substvars\fP(5), \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5),
+\fBdeb\-control\fP(5).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

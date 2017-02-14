@@ -1,0 +1,175 @@
+.\" dpkg manual page - dpkg-divert(1)
+.\"
+.\" Copyright © 1995 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 1999 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-divert 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-divert \- vervang de versie van een bestand in een pakket
+.
+.SH OVERZICHT
+\fBdpkg\-divert\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+\fBdpkg\-divert\fP is het hulpprogramma dat gebruikt wordt om de lijst met
+omleggingen aan te maken en bij te werken.
+.PP
+Bestands\-\fIomleggingen\fP zijn een manier om \fBdpkg\fP(1) te dwingen een bestand
+niet op zijn eigen locatie te installeren, maar op een \fIomgeleide\fP
+locatie. Omleggingen kunnen door de scripts van een Debian pakket gebruikt
+worden om een bestand uit de weg te zetten als het een tegenstrijdigheid
+veroorzaakt. Systeembeheerders kunnen het ook gebruiken om het
+configuratiebestand van een bepaald pakket te vervangen of wanneer bepaalde
+bestanden (die niet als “conffiles” (configuratiebestanden) gemarkeerd
+staan) behouden moeten worden door \fBdpkg\fP bij het installeren van een
+recentere versie van een pakket dat die bestanden bevat.
+.sp
+.SH COMMANDO'S
+.TP 
+[\fB\-\-add\fP] \fIbestand\fP
+Voeg voor \fIbestand\fP een omlegging toe.
+.TP 
+\fB\-\-remove\fP \fIbestand\fP
+Verwijder een omlegging voor \fIbestand\fP.
+.TP 
+\fB\-\-list\fP \fIglob\-patroon\fP
+Som de omleggingen op die aan \fIglob\-patroon\fP beantwoorden.
+.TP 
+\fB\-\-listpackage\fP \fIbestand\fP
+Geef de naam van het pakket weer dat \fIbestand\fP omleidt (sinds dpkg
+1.15.0). Vermeldt LOCAL als \fIbestand\fP lokaal omgeleid werd en niets als
+\fIbestand\fP niet omgeleid werd.
+.TP 
+\fB\-\-truename\fP \fIbestand\fP
+Vermeld de echte naam van een omgeleid bestand.
+.
+.SH OPTIES
+.TP 
+\fB\-\-admindir\fP \fImap\fP
+Stel de datamap van \fBdpkg\fP in op \fImap\fP (standaard: \fI%ADMINDIR%\fP).
+.TP 
+\fB\-\-divert\fP \fIleid\-om\-naar\fP
+\fIleid\-om\-naar\fP is de locatie waarnaartoe de versies van \fIbestand\fP die door
+andere pakketten geleverd worden, omgeleid zullen worden.
+.TP 
+\fB\-\-local\fP
+Geeft aan dat dit bestand bij alle pakketversies omgeleid wordt. Dit
+betekent dat er geen uitzonderingen zijn en dat het bestand omgeleid wordt,
+ongeacht het pakket dat geïnstalleerd wordt. Dit kan gebruikt worden door
+een systeembeheerder om een lokaal aangepaste versie te installeren.
+.TP 
+\fB\-\-package\fP \fIpakket\fP
+\fIpakket\fP is de naam van het pakket waarvan zijn exemplaar van \fIbestand\fP
+niet omgeleid zal worden. Dit wil zeggen dat bij alle pakketten \fIbestand\fP
+omgeleid zal worden, behalve bij \fIpakket\fP.
+.TP 
+\fB\-\-quiet\fP
+Stille modus, m.a.w. geen breedsprakige uitvoer.
+.TP 
+\fB\-\-rename\fP
+Zet het bestand effectief uit de weg (of terug). \fBdpkg\-divert\fP zal de
+bewerking afbreken indien het doelbestand reeds bestaat.
+.TP 
+\fB\-\-test\fP
+Testmodus. Voer m.a.w. geen enkele wijziging effectief uit. Geef enkel een
+demonstratie.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde actie werd succesvol uitgevoerd.
+.TP 
+\fB2\fP
+Fatale of onherstelbare fout die te wijten is aan ongeldig gebruik van de
+commandoregel of aan interacties met het systeem, zoals het benaderen van de
+database, het toewijzen van geheugen, enz.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_ADMINDIR\fP
+Indien dit ingesteld werd en de optie \fB\-\-admindir\fP niet gebruikt werd, zal
+dit gebruikt worden als de datamap voor \fBdpkg\fP.
+.TP 
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP
+Indien dit ingesteld werd en de opties \fB\-\-local\fP en \fB\-\-package\fP niet
+gebruikt werden, zal \fBdpkg\-divert\fP dit gebruiken als de naam van het
+pakket.
+.
+.SH BESTANDEN
+.TP 
+\fI%ADMINDIR%/diversions\fP
+Bestand dat de huidige lijst van omleggingen op het systeem bevat. Zijn
+plaats is in de beheersmap van \fBdpkg\fP samen met andere bestanden die
+belangrijk zijn voor \fBdpkg\fP, zoals \fIstatus\fP en \fIavailable\fP.
+.br
+Merk op dat \fBdpkg\-divert\fP de oorspronkelijke kopie van dit bestand bewaart
+met de extensie \fI\-old\fP, vooraleer het te vervangen door het nieuwe
+exemplaar.
+.
+.SH OPMERKINGEN
+Bij het toevoegen wordt standaard \fB\-\-local\fP en \fB\-\-divert\fP
+\fIorigineel\fP\fB.distrib\fP gebruikt. Bij het verwijderen moeten \fB\-\-package\fP of
+\fB\-\-local\fP en \fB\-\-divert\fP overeenkomen als ze opgegeven werden.
+
+Mappen kunnen met \fBdpkg\-divert\fP niet omgeleid worden.
+
+Extra zorg moet besteed worden aan het omleiden van gedeelde
+bibliotheken. \fBldconfig\fP(8) maakt een symbolische koppeling aan op basis
+van het veld DT_SONAME dat in de bibliotheek ingebed zit. Aangezien
+\fBldconfig\fP geen omleggingen honoreert (enkel \fBdpkg\fP doet dat), kan het
+resultaat zijn dat de symbolische koppeling naar de omgeleide bibliotheek
+verwijst als de omgeleide bibliotheek dezelfde SONAME heeft als de
+niet\-omgeleide.
+.
+.SH VOORBEELDEN
+Om alle exemplaren van een bestand \fI/usr/bin/voorbeeld\fP om te leiden naar
+\fI/usr/bin/voorbeeld.foo\fP, of met andere woorden alle pakketten die
+\fI/usr/bin/voorbeeld\fP aanleveren, op te dragen het te installeren als
+\fI/usr/bin/voorbeeld.foo\fP en zo nodig het hernoemen ervan uit te voeren:
+.HP
+dpkg\-divert \-\-divert /usr/bin/voorbeeld.foo \-\-rename /usr/bin/voorbeeld
+.PP
+Om die omlegging te verwijderen:
+.HP
+dpkg\-divert \-\-rename \-\-remove /usr/bin/voorbeeld
+
+.PP
+Om elk pakket dat \fI/usr/bin/voorbeeld\fP tracht te installeren, om te leiden
+naar \fI/usr/bin/voorbeeld.foo\fP, behalve uw eigen pakket \fIwiegel\fP
+.HP
+dpkg\-divert \-\-package wiegel \-\-divert /usr/bin/voorbeeld.foo \-\-rename
+/usr/bin/voorbeeld
+.PP
+Om die omlegging te verwijderen:
+.HP
+dpkg\-divert \-\-package wiegel \-\-rename \-\-remove /usr/bin/voorbeeld
+.
+.SH "ZIE OOK"
+\fBdpkg\fP(1).

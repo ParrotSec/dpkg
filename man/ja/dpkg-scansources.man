@@ -1,0 +1,92 @@
+.\" dpkg manual page - dpkg-scansources(1)
+.\"
+.\" Copyright © 2005 Roderick Schertler <roderick@argon.org>
+.\" Copyright © 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2009 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-scansources 1 %RELEASE_DATE% %VERSION% "dpkg suite"
+.nh
+.SH 名前
+dpkg\-scansources \- ソースインデックスファイルの作成
+.
+.SH 書式
+\fBdpkg\-scansources\fP [\fIoption\fP...] \fIbinary\-dir\fP [\fIoverride\-file\fP
+[\fIpath\-prefix\fP]] \fB>\fP \fISources\fP
+.
+.SH 説明
+\fBdpkg\-scansources\fP は、\fI.dsc\fP ファイルのために、指定された \fIbinary\-dir\fP を検索する。これは Debian
+ソースインデックスを生成し、標準出力に出力するために用いられる。
+.PP
+The \fIoverride\-file\fP, if given, is used to set priorities in the resulting
+index records and to override the maintainer field given in the \fI.dsc\fP
+files.  The file can be compressed (since dpkg 1.15.5).  See
+\fBdeb\-override\fP(5)  for the format of this file. Note: Since the override
+file is indexed by binary, not source packages, there's a bit of a problem
+here. The current implementation uses the highest priority of all the binary
+packages produced by a \fI.dsc\fP file for the priority of the source package,
+and the override entry for the first binary package listed in the \fI.dsc\fP
+file to modify maintainer information. This might change.
+.PP
+\fIpath\-prefix\fP が指定された場合、生成されたソースインデックスにおける directory フィールドの先頭に挿入される。これは通常
+directory フィールドにDebian アーカイブ階層トップからのパスを含めたい場合に使用する。
+.
+.PP
+\fB注記:\fP \fBapt\fP(8) を用いて生成された Sources ファイルにアクセスする場合は、恐らくファイルを \fBgzip\fP(1) で圧縮する
+(Sources.gz を生成する) 必要があるだろう。apt はローカルアクセス (\fBfile://\fP ソース) 以外、非圧縮の Sources
+ファイルを無視する。
+.
+.SH オプション
+.IP "\fB\-n\fP, \fB\-\-no\-sort\fP" 4
+インデックスレコードをソートしない。通常これはソースパッケージ名によってソートされる。
+.TP 
+.IP "\fB\-e\fP, \fB\-\-extra\-override\fP \fIfile\fP" 4
+Scan \fIfile\fP to find supplementary overrides (since dpkg 1.15.4; the file
+can be compressed since dpkg 1.15.5).  See \fBdeb\-extra\-override\fP(5)  for
+more information on its format.
+.IP "\fB\-s\fP, \fB\-\-source\-override\fP \fIfile\fP" 4
+Use \fIfile\fP as the source override file (the file can be compressed since
+dpkg 1.15.5).  The default is the name of the override file you specified
+with \fI.src\fP appended.
+.sp
+ソース override ファイルの形式はバイナリ override ファイルとは異なり、空白文字で区切られた 2 つのフィールドのみからなる。1
+番目のフィールドはソースパッケージ名であり、2
+番目はセクション名である。慣習に従い、空白行とコメント行は無視される。あるパッケージが両方のファイルに現れた場合、セクションの設定においては、ソース
+override ファイルが優先される。
+.IP \fB\-\-debug\fP 4
+デバッグを有効にする
+.IP \fB\-\-help\fP 4
+利用方法を表示して終了する。
+.IP \fB\-\-version\fP 4
+バージョン情報を表示して終了する。
+.
+.SH 関連項目
+\fBdeb\-override\fP(5), \fBdeb\-extra\-override\fP(5), \fBdpkg\-scanpackages\fP(1).
+.SH 翻訳者
+高橋 基信 <monyo@monyo.com>.
+喜瀬 浩 <kise@fuyuneko.jp>.
+関戸 幸一 <sekido@mbox.kyoto-inet.or.jp>.
+鍋谷 栄展 <nabe@debian.or.jp>.
+倉澤 望 <nabetaro@debian.or.jp>.
+石川 睦 <ishikawa@linux.or.jp>.
+鵜飼 文敏 <ukai@debian.or.jp>.
+中野 武雄 <nakano@apm.seikei.ac.jp>.
+.SH 翻訳校正
+Debian JP Documentation ML <debian-doc@debian.or.jp>.

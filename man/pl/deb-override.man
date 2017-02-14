@@ -1,0 +1,70 @@
+.\" dpkg manual page - deb-override(5)
+.\"
+.\" Copyright © 1996 Michael Shields <shields@crosslink.net>
+.\" Copyright © 2010 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-override 5 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+deb\-override \- plik nadpisań archiwum Debiana
+.
+.SH SKŁADNIA
+override
+.
+.SH OPIS
+Chociaż większość informacji o pakiecie można znaleźć w pliku kontrolnym, to
+niektóre z nich są zarządzane centralnie przez carów dystrybucji, a nie
+przez opiekuna, aby zachować ogólną spójność. Do tego służy plik nadpisań.
+.PP
+Plik nadpisań ma prosty format pól rozdzielonych białymi znakami
+(spacjami). Dozwolone są komentarze (zaczynające się od \fB#\fP).
+.PP
+.in +5
+\fIpakiet\fP \fIpriorytet\fP \fIsekcja\fP [\fIinformacje\-o\-opiekunie\fP]
+.in -5
+.PP
+\fIpakiet\fP jest nazwą pakietu. Ignorowane są wpisy w pliku nadpisań dotyczące
+pakietów nie znajdujących się w drzewie pakietów binarnych.
+.PP
+\fIpriority\fP and \fIsection\fP correspond to the respective control fields
+available in the .deb. The allowed values are specific to each distribution
+archive.
+.PP
+\fIinformacje_o_opiekunie\fP, jeżeli są obecne, mogą być albo samą nazwą
+opiekuna bezwarunkowego nadpisania, albo są w postaci \fIstary_opiekun\fP
+\fB=>\fP \fInowy_opiekun\fP, by przeprowadzić zamianę informacji o opiekunie.
+.PP
+Pliki nadpisań używane do stworzenia oficjalnego pliku Packages można
+znaleźć w katalogu \fIindices\fP na każdym mirrorze Debiana.
+.
+.SH "ZOBACZ TAKŻE"
+.ad l
+\fBdpkg\-scanpackages\fP(1), \fBdpkg\-scansources\fP(1), \fBapt\-ftparchive\fP(1).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

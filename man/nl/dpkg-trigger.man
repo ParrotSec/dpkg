@@ -1,0 +1,113 @@
+.\" dpkg manual page - dpkg-trigger(1)
+.\"
+.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-trigger 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-trigger \- een hulpprogramma in verband met pakkettriggers
+.
+.SH OVERZICHT
+\fBdpkg\-trigger\fP [\fIoptie\fP...] \fItriggernaam\fP
+.br
+\fBdpkg\-trigger\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+\fBdpkg\-trigger\fP is gereedschap om triggers expliciet te activeren en na te
+gaan of ze door het exemplaar van \fBdpkg\fP dat actief is, ondersteund worden.
+.PP
+Dit kan gebruikt worden door scripts van de pakketonderhouder in complexe en
+voorwaardelijke situaties waarvoor het bestand triggers of de declaratieve
+opdracht \fBactivate\fP van het triggercontrolebestand onvoldoende verfijnd
+zijn. Het kan ook voor testdoeleinden en door systeembeheerders gebruikt
+worden (maar merk op dat de triggers niet effectief uitgevoerd worden door
+\fBdpkg\-trigger\fP).
+.PP
+Een syntaxis van een triggernaam die niet herkend wordt, is voor
+\fBdpkg\-trigger\fP een fout.
+.
+.SH COMMANDO'S
+.TP 
+\fB\-\-check\-supported\fP
+Controleer of het exemplaar van \fBdpkg\fP dat uitgevoerd wordt, triggers
+ondersteunt (meestal worden die vanuit een postinst\-script geactiveerd). Zal
+afsluiten met \fB0\fP als een exemplaar van \fBdpkg\fP uitgevoerd werd dat
+triggers aankan of afsluiten met \fB1\fP en een foutmelding op de standaard
+foutuitvoer indien dat niet het geval was. Het is normaal gezien nochtans
+beter om gewoon de gewenste trigger te activeren met \fBdpkg\-trigger\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OPTIES
+.TP 
+\fB\-\-admindir=\fP\fImap\fP
+Wijzig de locatie van de database van \fBdpkg\fP. De standaardlocatie is
+\fI%ADMINDIR%\fP.
+.TP 
+\fB\-\-by\-package=\fP\fIpakket\fP
+Pas de triggerafwachter aan (normaal wordt dit ingesteld door \fBdpkg\fP via de
+omgevingsvariabele \fBDPKG_MAINTSCRIPT_PACKAGE\fP van de scripts van de
+pakketonderhouder. Die bevat de naam van het pakket waartoe het script
+behoort en standaard wordt die waarde gebruikt).
+.TP 
+\fB\-\-no\-await\fP
+Deze optie zorgt ervoor dat het (eventuele) aanroepende pakket T niet moet
+wachten op de afhandeling van deze trigger. Het/de betrokken pakket(ten) I
+zal/zullen niet toegevoegd worden aan T's lijst van triggers waarvan de
+afhandeling afgewacht wordt en de status van T blijft ongewijzigd. T mag als
+geïnstalleerd beschouwd worden, zelfs al heeft I misschien de trigger nog
+niet verwerkt.
+.TP 
+\fB\-\-await\fP
+Deze optie doet het tegenovergestelde van \fB\-\-no\-await\fP (sinds dpkg
+1.17.21). Dit is momenteel het standaardgedrag.
+.TP 
+\fB\-\-no\-act\fP
+Test de zaak enkel uit, maar voer geen enkele effectieve wijziging door.
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde actie werd succesvol uitgevoerd. Of een commando dat een toets
+of een assertie verrichtte gaf waar als resultaat.
+.TP 
+\fB1\fP
+Een commando dat een toets of een assertie verrichtte gaf onwaar als
+resultaat.
+.TP 
+\fB2\fP
+Fatale of onherstelbare fout die te wijten is aan ongeldig gebruik van de
+commandoregel of aan interacties met het systeem, zoals het benaderen van de
+database, het toewijzen van geheugen, enz.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_ADMINDIR\fP
+Indien dit ingesteld werd en de optie \fB\-\-admindir\fP niet gebruikt werd, zal
+dit gebruikt worden als de datamap voor \fBdpkg\fP.
+.
+.SH "ZIE OOK"
+.\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.
+\fBdpkg\fP(1), \fBdeb\-triggers\fP(5), \fB/usr/share/doc/dpkg\-dev/triggers.txt.gz\fP.

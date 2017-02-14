@@ -1,0 +1,204 @@
+.\" dpkg manual page - dpkg-split(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-split 1 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+dpkg\-split \- narzędzie dzielenia/łączenia pakietów Debiana
+.
+.SH SKŁADNIA
+\fBdpkg\-split\fP [\fIopcja\fP...] \fIpolecenie\fP
+.
+.SH OPIS
+\fBdpkg\-split\fP dzieli pakiety binarne Debiana na mniejsze części oraz scala
+je z powrotem, tak że możliwe jest przechowanie większych pakietów na małych
+nośnikach, takich jak dyskietki.
+
+Program wywołuje się ręcznie, wraz z opcją \fB\-\-split\fP, \fB\-\-join\fP lub
+\fB\-\-info\fP.
+
+Możliwe jest także wywołanie automatyczne, przez użycie opcji
+\fB\-\-auto\fP. Wtedy to tworzona jest kolejka części pakietu, a gdy wszystkie
+części będą dostępne, cały pakiet zostanie odtworzony. Opcje \fB\-\-listq\fP i
+\fB\-\-discard\fP pozwalają na zarządzanie kolejką.
+
+Wszystkie działania, takie jak rozdzielanie, łączenie, czy kolejkowanie,
+powodują wyświetlenie informacji na standardowe wyjście. Informacje te można
+zignorować.
+.
+.SH POLECENIA
+.TP 
+\fB\-s\fP, \fB\-\-split\fP \fIkompletne\-archiwum\fP [\fIprzedrostek\fP]
+Rozdzielenie pojedynczego pakietu binarnego na poszczególne części.
+
+Części mają nazwę \fIprzyrostek\fP\fB.\fP\fIN\fP\fBof\fP\fIM\fP\fB.deb\fP gdzie \fIN\fP jest
+numerem części, rozpoczynając od 1, a \fIM\fP jest liczbą wszystkich części
+(dziesiętnie).
+
+Jeśli nie podano \fIprzedrostka\fP, to użyta jest nazwa pliku
+\fIpełnego\-archiwum\fP, wraz z katalogiem, gdy jest określony. Ponadto usunięta
+jest końcówka \fB.deb\fP.
+.TP 
+\fB\-j\fP, \fB\-\-join\fP \fIpart\fP...
+Łączenie części pakietu i odtworzenie oryginalnego pliku sprzed dzielenia.
+
+Pliki podane jako argumenty muszą być częściami tego samego oryginalnego
+pakietu. Każda część musi pojawić się raz na liście argumentów, ale nie jest
+konieczne zachowanie właściwej kolejności.
+
+Części muszą być wygenerowane z użyciem tego samego rozmiaru, co oznacza, że
+muszą to być te same części utworzone za pomocą polecenia \fBdpkg\-split
+\-\-split\fP.
+
+Nazwy plików części nie mają znaczenia dla procesu odtworzenia pakietu.
+
+Domyślnie, plik wynikowy ma nazwę
+\fIpakiet\fP\fB_\fP\fIwersja\fP\fB_\fP\fIarchitektura\fP\fB.deb\fP.
+
+.TP 
+\fB\-I\fP, \fB\-\-info\fP \fIpart\fP...
+Wyświetlanie informacji, podanych w formacie czytelnym dla człowieka, o
+częściach pakietu. Argumenty, które nie są częścią pakietu, powodują
+wyświetlenie informacji o tym fakcie na standardowym wyjściu.
+.TP 
+\fB\-a\fP, \fB\-\-auto \-o\fP \fIpełne\-archiwum część\fP
+Automatyczne kolejkowanie części i odtworzenie pakietu, gdy to jest możliwe.
+
+Podana \fIczęść\fP zostaje sprawdzona i porównana z innymi częściami tego
+samego pakietu, które znajdują się w kolejce.
+
+Jeśli wszystkie części pakietu są już dostępne, pakiet jest odtwarzany i
+zapisywany do \fIpełnego\-archiwum\fP.
+
+Jeśli jeszcze nie ma wszystkich części, podana \fIczęść\fP jest kopiowana do
+kolejki i \fIpełne\-archiwum\fP nie jest odtwarzane.
+
+Jeśli plik \fIczęść\fP nie jest częścią pakietu binarnego, \fBdpkg\-split\fP
+zakończy się i zwróci kod błędu \fB1\fP, albo kod błędu \fB2\fP w przypadku
+wystąpienia innych problemów.
+
+Opcja \fB\-\-output\fP lub \fB\-o\fP musi zostać podana w przypadku użycia
+\fB\-\-auto\fP. (W przeciwnym razie program nie wiedziałby, jakiego spodziewać
+się pliku wyjściowego.)
+.TP 
+\fB\-l\fP, \fB\-\-listq\fP
+Listowanie zawartości kolejki części pakietu do odtworzenia.
+
+Dla każdego pliku części pakietu wyświetlana jest nazwa pakietu, część w
+kolejce, całkowita liczba bajtów przechowywanych w kolejce.
+.TP 
+\fB\-d\fP, \fB\-\-discard\fP [\fIpakiet\fP...]
+Usuwa części pakietu z kolejki.
+
+Jeśli nie podano nazwy \fIpakietu\fP, czyszczona jest cała kolejka. Gdy nazwa
+jest podana, usuwane są tylko części podanego pakietu.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Wyświetla informację o użytkowaniu i kończy działanie.
+.TP 
+\fB\-\-version\fP
+Wyświetla informację o wersji i pomyślnie kończy działanie.
+.
+.SH OPCJE
+.TP 
+\fB\-\-depotdir\fP\fI katalog\fP
+Określenie alternatywnego katalogu dla kolejki części pakietów do
+zrekonstruowania. Domyślnym jest \fB%ADMINDIR%\fP.
+.TP 
+\fB\-S\fP, \fB\-\-partsize\fP \fIkibibajty\fP
+Określenie maksymalnego rozmiaru części pakietu w kibibajtach (KiB, 1024
+bajtów). Wartością domyślną jest 450 KiB.
+.TP 
+\fB\-o\fP, \fB\-\-output\fP \fIpełne\-archiwum\fP
+Określenie nazwy pliku pełnego archiwum.
+
+Ta opcja nadpisuje domyślną nazwę przy odtwarzaniu pakietu (\fB\-\-join\fP) oraz
+jest wymagana przy automatycznym odtwarzaniu pakietu (\fB\-\-auto\fP).
+.TP 
+\fB\-Q\fP, \fB\-\-npquiet\fP
+Gdy wykonywane jest automatyczne łączenie części pakietu, \fBdpkg\-split\fP
+zwykle wyświetla informacje o błędzie, gdy dany plik \fIczęści\fP nie jest
+częścią pakietu. Ta opcja zapobiega wyświetlaniu nadmiernej ilości
+informacji przez programy takie jak \fBdpkg\fP.
+.TP 
+\fB\-\-msdos\fP
+Pliki generowane przez \fB\-\-split\fP są zapisywane w formacie odczytywanym
+przez MSDOS.
+
+Zmieniany jest przedrostek, zarówno ten domyślny jak i ten podany w
+argumencie: litery są zamieniane na małe, znak plusa zamieniany jest na
+\fBx\fP, a pozostałe znaki są pomijane.
+
+Powstały przedrostek jest ucinany do niezbędnego rozmiaru. Powstała nazwa ma
+postać \fIprzedrostekN\fP\fBof\fP\fIM\fP\fB.deb..\fP
+.
+.SH "KOD WYJŚCIA"
+.TP 
+\fB0\fP
+Żądana operacja dzielenia, łączenia czy jakakolwiek inna, zakończyła się
+sukcesem. Polecenie \fB\-\-info\fP kończy się sukcesem nawet gdy podany plik nie
+jest częścią pakietu.
+.TP 
+\fB1\fP
+Występuje tylko, jeśli użyto \fB\-\-auto\fP i oznacza, że plik \fIczęści\fP nie był
+częścią pakietu binarnego.
+.TP 
+\fB2\fP
+Fatal or unrecoverable error due to invalid command\-line usage, a file that
+looked like a package part file but was corrupted, or interactions with the
+system, such as accesses to the database, memory allocations, etc.
+.
+.SH ŚRODOWISKO
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+If set, it will be used as the timestamp (as seconds since the epoch) in the
+\fBdeb\-split\fP(5)'s \fBar\fP(5) container.
+.
+.SH PLIKI
+.TP 
+\fI%ADMINDIR%/parts\fP
+Domyślny katalog kolejki części pakietów czekających na automatyczne
+odtworzenie.
+
+Nazwy plików w tym katalogu są wewnętrznie utworzone przez \fBdpkg\-split\fP i
+nie są użyteczne dla innych programów.
+.
+.SH BŁĘDY
+Pobranie pełnej informacji o pakietach w kolejce jest niemożliwe, bez
+przeszukania katalogu kolejki.
+
+Nie ma prostego testu na sprawdzenie, czy dany plik jest na pewno częścią
+pakietu.
+.
+.SH "ZOBACZ TAKŻE"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\-deb\fP(1), \fBdpkg\fP(1).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

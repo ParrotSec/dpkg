@@ -1,0 +1,122 @@
+.\" dpkg manual page - dpkg-statoverride(1)
+.\"
+.\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2009-2011, 2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-statoverride 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-statoverride \- annuler la propriété et le mode des fichiers
+.
+.SH SYNOPSIS
+\fBdpkg\-statoverride\fP [\fIoption\fP...] \fIcommande\fP
+.
+.SH DESCRIPTION
+“\fBstat overrides\fP” are a way to tell \fBdpkg\fP(1)  to use a different owner
+or mode for a path when a package is installed (this applies to any
+filesystem object that \fBdpkg\fP handles, including directories, devices,
+etc.). This can be used to force programs that are normally setuid to be
+install without a setuid flag, or only executable by a certain group.
+.P
+\fBdpkg\-statoverride\fP est un utilitaire pour gérer la liste des
+dérogations. Il possède trois fonctions élémentaires\ : l'ajout, la
+suppression et le listage des dérogations.
+.
+.SH COMMANDES
+.TP 
+\fB\-\-add\fP\fI utilisateur groupe mode chemin\fP
+Add an override for \fIpath\fP. \fIpath\fP does not need to exist when this
+command is used; the override will be stored and used later.  Users and
+groups can be specified by their name (for example \fBroot\fP or \fBnobody\fP), or
+by their number by prepending the number with a ‘\fB#\fP’ (for example \fB#0\fP or
+\fB#65534\fP).  The \fImode\fP needs to be specified in octal.
+
+Si \fB\-\-update\fP est utilisée et si \fIchemin\fP existe, le fichier change
+immédiatement de propriétaire et de mode.
+.TP 
+\fB\-\-remove\fP \fI chemin\fP
+Supprime une dérogation («\ override\ ») pour \fIchemin\fP, l'état de \fIchemin\fP
+est inchangé.
+.TP 
+\fB\-\-list\fP [\fImotif\-global\fP]
+List all overrides. If a glob pattern is specified restrict the output to
+overrides which match the glob.
+.TP 
+\fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le numéro de version puis quitte.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-admindir\fP\fI répertoire\fP
+Change le \fIrépertoire\fP de la base de données de \fBdpkg\fP, où se trouve aussi
+le fichier statoverride. La valeur par défaut est \fI%ADMINDIR%\fP.
+.TP 
+\fB\-\-force\fP
+Forcer une opération, même si une vérification raisonnable
+l'interdirait. C'est nécessaire pour annuler une précédente dérogation.
+.TP 
+\fB\-\-update\fP
+Essaye de changer immédiatement le \fIchemin\fP vers les nouveaux propriétaire
+et mode s'il existe.
+.TP 
+\fB\-\-quiet\fP
+Moins de bavardage sur ce qui est fait.
+.
+.SH "CODE DE SORTIE"
+.TP 
+\fB0\fP
+L'action demandée s'est correctement déroulée.
+.TP 
+\fB1\fP
+For \fB\-\-list\fP, if there are no overrides or none match the supplied glob.
+.TP 
+\fB2\fP
+Fatal or unrecoverable error due to invalid command\-line usage, or
+interactions with the system, such as accesses to the database, memory
+allocations, etc.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_ADMINDIR\fP
+Si cette variable est positionnée et que l'option \fB\-\-admindir\fP n'est pas
+précisée, ce répertoire sera utilisé comme répertoire de données pour
+\fBdpkg\fP.
+.
+.SH FICHIERS
+.TP 
+\fI%ADMINDIR%/statoverride\fP
+File which contains the current list of stat overrides of the system. It is
+located in the \fBdpkg\fP administration directory, along with other files
+important to \fBdpkg\fP, such as \fIstatus\fP or \fIavailable\fP.
+.br
+Note: \fBdpkg\-statoverride\fP preserves the old copy of this file, with
+extension “\-old”, before replacing it with the new one.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

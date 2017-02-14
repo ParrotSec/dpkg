@@ -1,0 +1,45 @@
+.\" dselect manual page - dselect.cfg(5)
+.\"
+.\" Copyright © 2002 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2009-2011, 2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dselect.cfg 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dselect.cfg \- configuratiebestand voor dselect
+.
+.SH BESCHRIJVING
+Dit bestand bevat de standaardopties voor dselect. Elke regel bevat één
+enkele optie, die exact hetzelfde is als de gewone commandoregeloptie voor
+dselect, behalve wat de verbindingstekens aan het begin betreft, die hier
+niet gebruikt worden. Als de opties tussen aanhalingstekens staan, worden
+die laatste verwijderd. Commentaar is toegelaten. Daarvoor moet men de regel
+met een hekje (‘\fB#\fP’) laten beginnen.
+.
+.SH BESTANDEN
+\fI%PKGCONFDIR%/dselect.cfg.d/[0\-9a\-zA\-Z_\-]*\fP
+.br
+\fI%PKGCONFDIR%/dselect.cfg\fP
+.br
+\fI~/.dselect.cfg\fP
+.
+.SH "ZIE OOK"
+\fBdselect\fP(1).

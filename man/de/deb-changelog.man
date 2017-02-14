@@ -1,0 +1,177 @@
+.\" dpkg manual page - deb-changelog(5)
+.\"
+.\" Copyright © 1996-1998 Ian Jackson and Christian Schwarz
+.\" Copyright © 1998, 2001 Manoj Srivastava <srivasta@debian.org>
+.\" Copyright © 2001 Julian Gilbey <jdg@debian.org>
+.\" Copyright © 2003 Josip Rodin <joy@debian.org>
+.\" Copyright © 2008, 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2010 Charles Plessy <plessy@debian.org>
+.\" Copyright © 2014 Bill Allombert <ballombe@debian.org>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-changelog 5 %RELEASE_DATE% %VERSION% dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-src\-control \- Format der Quellpaket\-Changelog\-Datei von Debian
+.
+.SH ÜBERSICHT
+changelog
+.
+.SH BESCHREIBUNG
+Änderungen in der paketierten Version eines Projekts werden in der
+Changelog\-Datei \fIdebian/changelog\fP erläutert. Darunter fallen Änderungen,
+die am Quellpaket beim Paketieren vorgenommen wurden sowie andere Änderungen
+und Aktualisierungen am Paket.
+.PP
+Das Format von \fIdebian/changelog\fP erlaubt den Paketbauwerkzeugen, die zu
+bauende Version des Pakets und andere, veröffentlichungsspezifische
+Information, zu ermitteln.
+.PP
+Das Format besteht aus einer Serie von Einträgen der folgenden Art:
+
+.nf
+\fIPaket\fP (\fIVersion\fP) \fIDistributionen\fP; \fIMetadaten\fP
+          [optionale leere Zeile(n), entfernt]
+  * \fIÄnderungsdetails\fP
+    \fIweitere_Änderungsdetails\fP
+          [leere Zeile(n), in der Ausgabe von \fBdpkg\-parsechangelog\fP(1) enthalten]
+  * \fInoch_weitere_Änderungsdetails\fP
+          [optionale leere Zeile(n), entfernt]
+ \-\- \fIBetreuername\fP <\fIE\-Mail\-Adresse\fP>  \fIDatum\fP
+.fi
+
+.PP
+\fIPaket\fP und \fIVersion\fP sind der Quellpaketname und die Versionsnummer.
+.PP
+\fIDistributionen\fP listet eine oder mehrere durch Leerzeichen getrennte
+Distributionen auf, in die diese Version nach dem Upload installiert werden
+soll. Es wird in das Feld \fBDistribution\fP in der \fI.changes\fP\-Datei kopiert.
+.PP
+\fIMetadaten\fP ist eine durch Kommata getrennte Liste von
+\fISchlüssel\fP=\fIWert\fP\-Objekten. Die einzigen von \fBdpkg\fP derzeit verstandenen
+\fISchlüsselwörter\fP sind \fBurgency\fP und \fBbinary\-only\fP. Der Wert von
+\fBurgency\fP wird für das Feld \fBUrgency\fP in der Datei \fI.changes\fP für den
+Upload verwandt. \fBbinary\-only\fP mit einem Wert von \fByes\fP wird verwandt, um
+anzuzeigen, dass dieser Changelog\-Eintrag für einen rein\-binären
+nicht\-Betreuer\-Upload (ein automatischer binärer Neubau, wo die einzige
+Änderung der Changelog\-Eintrag darstellt) ist.
+.PP
+Die Änderungsdetails können tatsächlich eine Reihe von Zeilen, die
+mindestens mit zwei Leerzeichen beginnen, sein, aber üblicherweise beginnt
+jede Änderung mit einem Stern und einem trennenden Leerzeichen und
+Folgezeilen werden so eingerückt, dass sie bündig mit dem obigen Text
+formatiert sind. Leerzeilen können hier verwandt weden, um Gruppen von
+Änderungen, falls gewünscht, zu trennen.
+.PP
+Falls dieser Upload Fehler aus der Fehlerdatenbank behebt, können diese
+automatisch geschlossen werden, falls der Changlog bei der Aufnahme in das
+Distributionsarchiv die folgende Zeichenkette enthält:
+.nf
+  \fBCloses: Bug#\fP\fInnnnn\fP
+.fi
+in den Änderungsdetails auftaucht. Der genaue reguläre Perl\-Ausdruck lautet
+\fB/closes:\es*(?:bug)?\e#?\es?\ed+(?:,\es*(?:bug)?\e#?\es?\ed+)*/i\fP). Diese
+Information wird über das Feld \fBCloses\fP in der \fI.changes\fP\-Datei
+vermittelt.
+.PP
+Der im Changelog\-Eintrag verwandte Name des Betreuers und die E\-Mail\-Adresse
+sollten die Details der Person sein, die diese Veröffentlichung des Pakets
+erstellt hat. Sie stimmen \fBnicht\fP notwendigerweise mit denen des
+Hochladenden oder des normalen Paketbetreuers überein. Die Informationen
+werden von hier in das Feld \fBChanged\-By\fP in der \fI.changes\fP\-Datei kopiert
+und könnten dann später zum Versand der Bestätigung verwandt werden, wenn
+der Upload im Archiv der Distribution aufgenommen wurde.
+.PP
+Das \fIDatum\fP hat das folgende Format (kompatibel zu und mit der gleichen
+Semantik von RFC2822 und RFC5322 bzw. der Ausgabe von »date \-R«):
+.IP
+\fIWochentag\fP\fB,\fP \fItt\fP \fIMonat\fP \fIjjjj\fP \fIhh\fP\fB:\fP\fImm\fP\fB:\fP\fIss\fP \fB+\fP\fIzzzz\fP
+.PP
+Hierbei sind:
+.TP 
+\fIWochentag\fP
+Dieser ist einer aus: \fBMon\fP, \fBTue\fP, \fBWed\fP, \fBThu\fP, \fBFri\fP, \fBSat\fP,
+\fBSun\fP.
+.TP 
+\fItt\fP
+Dies ist der Tag des Monats (\fB01\fP\-\fB31\fP) aus einer oder zwei Ziffern.
+.TP 
+\fIMonat\fP
+Dies ist einer aus: \fBJan\fP, \fBFeb\fP, \fBMar\fP, \fBApr\fP, \fBMay\fP, \fBJun\fP, \fBJul\fP,
+\fBAug\fP, \fBSep\fP, \fBOct\fP, \fBNov\fP, \fBDec\fP.
+.TP 
+\fIjjjj\fP
+ist das vierstellige Jahr (z.B. 2010).
+.TP 
+\fIhh\fP
+ist die zweistellige Stunde (\fB00\fP\-\fB23\fP).
+.TP 
+\fImm\fP
+ist die zweistellige Minute (\fB00\fP\-\fB59\fP).
+.TP 
+\fIss\fP
+ist die zweistellige Sekunde (\fB00\fP\-\fB60\fP).
+.TP 
+[\fB+\-\fP]\fIzzzz\fP
+ist der Zeitzonenversatz der koordinierten Weltzeit (UTC). ‚\fB+\fP’ gibt an,
+dass die Zeit voraus (d.h. östlich von UTC) ist und ‚\fB\-\fP’, dass die Zeit
+zurück (d.h. westliche von UTC) ist. Die ersten zwei Ziffern geben den
+Unterschied in Stunden von UTC und die letzten zwei Ziffern die Anzahl von
+zusätzlichen Minuten zu UTC an. Die letzten zwei Ziffern müssen im Bereich
+\fB00\fP\-\fB59\fP liegen.
+.PP
+Die erste „Titel“\-Zeile muss am linken Rand anfangen. Die „Schluss“\-Zeile
+mit den Betreuer\- und Datumsdetails müssen durch genau ein Leerzeichen
+eingeleitet werden. Die Details zum Betreuer und das Datum müssen durch
+genau zwei Leerzeichen getrennt sein.
+.PP
+Der gesamte Changelog muss in UTF\-8 kodiert sein.
+.SH DATEIEN
+.TP 
+\fIdebian/changelog\fP
+.SH BEISPIELE
+.nf
+dpkg (1.17.18) unstable; urgency=low
+
+  [ Guillem Jover ]
+  * Handle empty minimum versions when initializing dependency versions,
+    as the code is mapping the minimum version 0 to \*(rq to avoid outputting
+    useless versions. Regression introduced in dpkg 1.17.17. Closes: #764929
+
+  [ Updated programs translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated dselect translations ]
+  * Catalan (Guillem Jover).
+  * German (Sven Joachim).
+
+ \-\- Guillem Jover <guillem@debian.org>  Sun, 12 Oct 2014 15:47:44 +0200
+.fi
+.
+.SH "SIEHE AUCH"
+\fBdeb\-version\fP(5), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).
+.SH ÜBERSETZUNG
+Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer für die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

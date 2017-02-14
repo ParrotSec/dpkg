@@ -1,0 +1,292 @@
+.\" dpkg manual page - dpkg-maintscript-helper(1)
+.\"
+.\" Copyright © 2010-2012 Raphaël Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-maintscript\-helper 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-maintscript\-helper \- omzeilt in de scripts van de onderhouder gekende
+beperkingen van dpkg
+.
+.SH OVERZICHT
+\fBdpkg\-maintscript\-helper\fP \fIcommando\fP [\fIparameter\fP...] \fB\-\-\fP
+\fIonderhouderscriptparameter\fP...
+.
+.SH "COMMANDO'S EN PARAMETERS"
+.P
+\fBsupports\fP \fIcommando\fP
+.P
+\fBrm_conffile\fP \fIconfiguratiebestand\fP [\fIvorige\-versie\fP [\fIpakket\fP]]
+.P
+\fBmv_conffile\fP \fIoud\-configuratiebestand\fP \fInieuw\-configuratiebestand\fP
+[\fIvorige\-versie\fP [\fIpakket\fP]]
+.P
+\fBsymlink_to_dir\fP \fIpadnaam\fP \fIoud\-doel\fP [\fIvorige\-versie\fP [\fIpakket\fP]]
+.P
+\fBdir_to_symlink\fP \fIpadnaam\fP \fInieuw\-doel\fP [\fIvorige\-versie\fP [\fIpakket\fP]]
+.
+.SH BESCHRIJVING
+.P
+Dit programma is ontwikkeld om uitgevoerd te worden binnenin
+onderhouderscripts om sommige taken te verrichten die \fBdpkg\fP (nog) niet
+alleen kan uitvoeren, ofwel omwille van gemaakte keuzes inzake design ofwel
+ten gevolge van actuele beperkingen.
+.P
+Veel van deze taken vereisen gecoördineerde actie van verschillende
+onderhouderscripts (\fBpreinst\fP, \fBpostinst\fP, \fBprerm\fP, \fBpostrm\fP). Om fouten
+te vermijden moet gewoon dezelfde aanroep in alle scripts geplaatst worden
+en het programma zal zijn gedrag automatisch aan passen op basis van de
+omgevingsvariabele \fBDPKG_MAINTSCRIPT_NAME\fP en de argumenten van de
+onderhouderscripts die na een dubbel koppelteken opgegeven moeten worden.
+.
+.SH "GEMEENSCHAPPELIJKE PARAMETERS"
+.TP 
+\fIvorige\-versie\fP
+Definieert de laatste versie van het pakket waarvan de opwaardering de
+operatie moet uitlokken. Het is belangrijk om \fIvorige\-versie\fP correct te
+berekenen, zodat de operaties correct uitgevoerd worden zelfs in het geval
+de gebruiker het pakket met een lokaal versienummer herbouwde. Indien
+\fIvorige\-versie\fP leeg of weggelaten is, dan wordt geprobeerd om bij elke
+opwaardering de operatie uit te voeren (merk op dat het veiliger is om de
+versie op te geven zodat slechts eenmaal geprobeerd wordt om de operatie uit
+te voeren).
+
+Indien sinds verschillende versies geen configuratiebestand meer meegeleverd
+werd en u nu de scripts van de pakketonderhouder aan het wijzigen bent om
+het verouderde bestand op te ruimen, moet \fIvorige\-versie\fP ingesteld worden
+op de versie van het pakket dat u nu aan het voorbereiden bent, niet op de
+eerste versie van het pakket zonder het configuratiebestand. Dit geldt op
+dezelfde wijze voor alle andere acties.
+
+Voor een configuratiebestand dat in de versie \fB2.0\-1\fP van een pakket
+verwijderd werd, moet \fIvorige\-versie\fP ingesteld worden op \fB2.0\-1~\fP. Dit
+heeft tot effect dat het configuratiebestand verwijderd wordt, zelfs als de
+gebruiker de vorige versie \fB1.0\-1\fP herbouwde als \fB1.0\-1lokaal1\fP. En in het
+geval waarin in een pakket een pad eerst een symbolische koppeling was (bij
+versie \fB1.0\-1\fP) en later een map werd (bij versie \fB2.0\-1\fP), maar u pas in
+versie \fB3.0\-1\fP de eigenlijke omschakeling doorvoert in de scripts van de
+pakketonderhouder, moet \fIvorige\-versie\fP ingesteld worden op \fB3.0\-1~\fP.
+.TP 
+\fIpakket\fP
+De pakketnaam. Als het pakket “Multi\-Arch: same” is, moet deze parameter de
+architectuurkwalificatie bevatten, anders zou er gewoonlijk \fBgeen\fP
+architectuurkwalificatie in moeten voorkomen (aangezien dit geen
+cross\-grades zou toelaten, of de omschakeling van architectuurspecifiek naar
+architectuur \fBall\fP en vice versa). Indien de parameter leeg is of
+weggelaten werd, zullen de omgevingsvariabelen \fBDPKG_MAINTSCRIPT_PACKAGE\fP
+en \fBDPKG_MAINTSCRIPT_ARCH\fP (zoals die door \fBdpkg\fP ingesteld werden)
+gebruikt worden om een pakketnaam met architectuurkwalificatie te genereren.
+.TP 
+\fB\-\-\fP
+Alle parameters van de scripts van de pakketonderhouder moeten doorgegeven
+worden aan het programma na \fB\-\-\fP.
+.SH "TAKEN IN VERBAND MET CONFIGURATIEBESTANDEN"
+.P
+Bij het opwaarderen van een pakket zal \fBdpkg\fP niet automatisch een conffile
+(configuratiebestand) (conffile = een configuratiebestand waarin \fBdpkg\fP
+door de gebruiker gemaakte aanpassingen moet behouden) verwijderen indien
+dat niet in de nieuwe versie voorkomt. Daarvoor zijn twee belangrijke
+redenen. De eerste is dat het configuratiebestand per ongeluk weggevallen
+kan zijn en dat de volgende versie dit zou kunnen herstellen en dat
+gebruikers hun aanpassingen niet graag verloren zouden zien gaan. De tweede
+is om pakketten de mogelijkheid te bieden om over te gaan van een door dpkg
+onderhouden configuratiebestand naar een bestand dat onderhouden wordt door
+de scripts van de pakketonderhouder, meestal met behulp van gereedschap
+zoals debconf of ucf.
+.P
+Dit houdt in dat indien een pakket de bedoeling heeft om een conffile
+(configuratiebestand) te hernoemen of te verwijderen, het dit expliciet moet
+doen en dat \fBdpkg\-maintscript\-helper\fP kan gebruikt worden in scripts van de
+pakketonderhouder om het verwijderen en verplaatsen van conffiles op een
+elegante manier uit te voeren.
+.
+.SS "Een configuratiebestand verwijderen"
+.P
+Indien een configuratiebestand volledig verwijderd wordt, moet het van
+schijf verwijderd worden, tenzij de gebruiker het aangepast heeft. Indien er
+lokale aanpassingen aangebracht werden, moeten die behouden blijven. Indien
+het opwaarderen van het pakket afbreekt, mag het pas in onbruik geraakte
+configuratiebestand niet verdwijnen.
+.P
+Dit alles wordt toegepast door het volgende shell\-fragment te plaatsen in de
+scripts \fBpreinst\fP, \fBpostinst\fP en \fBpostrm\fP van de pakketonderhouder:
+.P
+    dpkg\-maintscript\-helper rm_conffile \e
+        \fIconfiguratiebestand\fP \fIvorige\-versie\fP \fIpakket\fP \-\- "$@"
+.P
+\fIconfiguratiebestand\fP is de bestandsnaam van het te verwijderen
+configuratiebestand.
+.P
+Huidige toepassing: in het script \fBpreinst\fP controleert het of het
+configuratiebestand gewijzigd werd en hernoemt het ofwel naar
+\fIconfiguratiebestand\fP\fB.dpkg\-remove\fP (als het niet gewijzigd was) of naar
+\fIconfiguratiebestand\fP\fB.dpkg\-backup\fP (als het wel gewijzigd was). In het
+script \fBpostinst\fP wordt dit laatste bestand hernoemd naar
+\fIconfiguratiebestand\fP\fB.dpkg\-bak\fP en het wordt ter referentie behouden
+vermits het door de gebruiker gemaakte aanpassingen bevat. In het eerste
+geval (niet gewijzigd configuratiebestand) wordt het bestand
+verwijderd. Indien de opwaardering van het pakket afbreekt, herinstalleert
+het script \fBpostrm\fP het originele configuratiebestand. Tijdens het
+uitvoeren van een wisopdracht (purge) zal het script \fBpostrm\fP ook het tot
+dan bewaarde bestand \fB.dpkg\-bak\fP verwijderen.
+.
+.SS "Een configuratiebestand hernoemen"
+.P
+Indien een configuratiebestand verplaatst wordt van de ene locatie naar een
+andere, moet u er voor zorgen dat eventuele wijzigingen die de gebruiker
+maakte mee gaan. Op het eerste gezicht kan dit lijken op een eenvoudige
+aanpassing aan het script \fBpreinst\fP. Dat zal evenwel als resultaat hebben
+dat de gebruiker door \fBdpkg\fP gevraagd wordt om de aanpassingen aan het
+configuratiebestand goed te keuren, al heeft hij er in dit geval niets mee
+te maken.
+.P
+Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende
+shell\-fragment te plaatsen in de scripts \fBpreinst\fP, \fBpostinst\fP en
+\fBpostrm\fP van de pakketonderhouder:
+.P
+    dpkg\-maintscript\-helper mv_conffile \e
+        \fIoud\-configuratiebestand\fP \fInieuw\-configuratiebestand\fP \fIvorige\-versie\fP \fIpakket\fP \-\- "$@"
+.P
+\fIoud\-configuratiebestand\fP en \fInieuw\-configuratiebestand\fP zijn de oude en
+de nieuwe naam van het configuratiebestand dat hernoemd moet worden.
+.P
+Huidige toepassing: het script \fBpreinst\fP controleert of het
+configuratiebestand gewijzigd werd. Indien dat het geval is wordt het
+gelaten waar het is, anders wordt het hernoemd naar
+\fIoud\-configuratiebestand\fP\fB.dpkg\-remove\fP. Bij het configureren verwijdert
+het script \fBpostinst\fP \fIoud\-configuratiebestand\fP\fB.dpkg\-remove\fP en hernoemt
+\fIoud\-configuratiebestand\fP naar \fInieuw\-configuratiebestand\fP als
+\fIoud\-configuratiebestand\fP nog steeds voorhanden is. Bij
+abort\-upgrade/abort\-install (afbreken van de opwaardering/installatie)
+hernoemt het script \fBpostrm\fP zo nodig
+\fIoud\-configuratiebestand\fP\fB.dpkg\-remove\fP terug naar
+\fIoud\-configuratiebestand\fP.
+.
+.SH "OMSCHAKELEN TUSSEN SYMBOLISCHE KOPPELING EN MAP"
+.
+Bij het opwaarderen van een pakket zal \fBdpkg\fP niet automatisch een
+symbolische koppeling omzetten naar een map of vice versa. Degradaties
+worden niet ondersteund en het pad wordt onveranderd gelaten.
+.
+.SS "Een symbolische koppeling omzetten naar een map"
+.
+Indien een symbolische koppeling veranderd wordt naar een echte map, moet u
+er voor zorgen dat de symbolische koppeling verwijderd wordt voor het
+uitpakken. Op het eerste gezicht kan dit een eenvoudige wijziging in het
+script \fBpreinst\fP lijken. Nochtans kan dit enige problemen opleveren in het
+geval de systeembeheerder de symbolische koppeling lokaal aanpaste of bij
+een degradatie van het pakket.
+.P
+Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende
+shell\-fragment te plaatsen in de scripts \fBpreinst\fP, \fBpostinst\fP en
+\fBpostrm\fP van de pakketonderhouder:
+.P
+    dpkg\-maintscript\-helper symlink_to_dir \e
+        \fIpadnaam\fP \fIoud\-doel\fP \fIvorige\-versie\fP \fIpakket\fP \-\- "$@"
+.P
+\fIpadnaam\fP is de absolute naam van de oude symbolische koppeling (op het
+einde van de installatie zal het pad een map zijn) en \fIoud\-doel\fP is de naam
+van het doel van de vroegere symbolische koppeling in \fIpadnaam\fP. Die kan
+ofwel absoluut zijn ofwel relatief ten opzichte van de map die \fIpadnaam\fP
+bevat.
+.P
+Huidige toepassing: het script \fBpreinst\fP gaat na of de symbolische
+koppeling bestaat en verwijst naar \fIoud\-doel\fP. Is dit niet het geval dan
+wordt ze gerust gelaten. Anders wordt ze hernoemd naar
+\fIpadnaam\fP\fB.dpkg\-backup\fP. Tijdens het configureren verwijdert het script
+\fBpostinst\fP \fIpadnaam\fP\fB.dpkg\-backup\fP indien \fIpadnaam\fP\fB.dpkg\-backup\fP nog
+steeds een symbolische koppeling is. Bij een abort\-upgrade/abort\-install
+(afbreken van de opwaardering/installatie) hernoemt het script \fBpostrm\fP
+\fIpadnaam\fP\fB.dpkg\-backup\fP zo nodig terug naar \fIpadnaam\fP.
+.
+.SS "Een map omzetten naar een symbolische koppelling"
+.
+Indien een echte map omgezet wordt naar een symbolische koppeling, moet u
+ervoor zorgen dat de map verwijderd wordt voor het uitpakken. Dit kan op het
+eerste gezicht een eenvoudige aanpassing aan het script \fBpreinst\fP
+lijken. Nochtans kan dit enige problemen opleveren in het geval de map
+conffiles (configuratiebestanden) bevat, padnamen die eigendom zijn van
+andere pakketten of lokaal aangemaakte padnamen, of in het geval het pakket
+gedegradeerd wordt.
+.P
+Een elegante omschakeling kan gerealiseerd worden door het volgende
+shell\-fragment op te nemen in de scripts \fBpreinst\fP, \fBpostinst\fP en
+\fBpostrm\fP van de pakketonderhouder:
+.P
+    dpkg\-maintscript\-helper dir_to_symlink \e
+        \fIpadnaam\fP \fInieuw\-doel\fP \fIvorige\-versie\fP \fIpakket\fP \-\- "$@"
+.P
+\fIpadnaam\fP is de absolute naam van de oude map (het pad zal op het einde van
+de installatie een symbolische koppeling zijn) en \fInieuw\-doel\fP is het doel
+van de nieuwe symbolische koppeling in \fIpadnaam\fP. Dit kan ofwel absoluut of
+relatief zijn ten opzichte van de map die \fIpadnaam\fP bevat.
+.P
+Huidige toepassing: het script \fBpreinst\fP controleert of de map bestaat en
+geen conffiles (configuratiebestanden), padnamen die eigendom zijn van
+andere pakketten of lokaal aangemaakte padnamen bevat. Is dat niet het
+geval, dan wordt ze gerust gelaten. Anders wordt ze hernoemd naar
+\fIpadnaam\fP\fB.dpkg\-backup\fP en wordt een lege voorlopige map \fIpadnaam\fP
+aangemaakt die met een bestand gemarkeerd wordt, zodat dpkg ze kan
+opvolgen. Tijdens het configureren beëindigt het script \fBpostinst\fP de
+overgang indien \fIpadnaam\fP\fB.dpkg\-backup\fP nog steeds een map is en
+\fIpadnaam\fP de voorlopige map. Het verwijdert het bestand dat de voorlopige
+map markeert en verplaatst de zopas in de map aangemaakte bestanden naar het
+doel van de symbolische koppeling \fInieuw\-doel\fP/, vervangt de nu lege
+voorlopige map \fIpadnaam\fP door een symbolische koppeling naar \fInieuw\-doel\fP
+en verwijdert \fIpadnaam\fP\fB.dpkg\-backup\fP. In geval van
+abort\-upgrade/abort\-install (afbreken van de opwaardering/installatie)
+hernoemt het script \fBpostrm\fP zo nodig \fIpadnaam\fP\fB.dpkg\-backup\fP terug naar
+\fIpadnaam\fP.
+.
+.SH "DE INTEGRATIE IN PAKKETTEN"
+.P
+Gelieve bij het gebruiken van een hulpmiddel voor het verpakken na te gaan
+of er geen systeemeigen integratie in \fBdpkg\-maintscript\-helper\fP van
+bestaat, wat het leven voor u makkelijker zou maken. Zie bijvoorbeeld
+\fBdh_installdeb\fP(1).
+.P
+Gegeven het feit dat \fBdpkg\-maintscript\-helper\fP gebruikt wordt in het script
+\fBpreinst\fP, houdt een onvoorwaardelijk gebruik ervan een voorafgaande
+vereiste in om te kunnen garanderen dat de benodigde versie van \fBdpkg\fP
+voordien uitgepakt werd. De benodigde versie hangt af van het gebruikte
+commando. Voor \fBrm_conffile\fP en \fBmv_conffile\fP is dat 1.15.7.2. Voor
+\fBsymlink_to_dir\fP en \fBdir_to_symlink\fP is dat 1.17.14:
+.P
+    \fBPre\-Depends:\fP dpkg (>= 1.17.14)
+.P
+Maar in veel gevallen is de operatie die door het programma uitgevoerd
+wordt, niet kritiek van aard voor het pakket en in plaats van een
+voorafgaande vereiste te gebruiken, kunnen we ook het programma pas
+aanroepen als we weten dat het benodigde programma ondersteund wordt door de
+huidige geïnstalleerde versie van \fBdpkg\fP:
+.P
+    if dpkg\-maintscript\-helper supports \fIcommando\fP; then
+        dpkg\-maintscript\-helper \fIcommando\fP ...
+    fi
+.P
+Het commando \fBsupports\fP geeft in geval van succes een 0 terug en anders een
+1. Het commando \fBsupports\fP gaat na of de omgevingsvariabelen die ingesteld
+worden door dpkg en die het script nodig heeft, voorhanden zijn. Indien de
+omgeving niet voldoet, zal dit als een mislukking beschouwd worden.
+.SH "ZIE OOK"
+.ad l
+\fBdh_installdeb\fP(1).

@@ -1,0 +1,73 @@
+.\" dpkg manual page - deb-origin(5)
+.\"
+.\" Copyright © 2011 Matt Kraai <kraai@ftbfs.org>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-origin 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-origin \- Bestanden met leveranciersspecifieke informatie
+.SH OVERZICHT
+\fB%PKGCONFDIR%/origins/\fP\fIbestandsnaam\fP
+.SH BESCHRIJVING
+De bestanden in \fB%PKGCONFDIR%/origins\fP kunnen informatie verschaffen over
+de verschillende leveranciers die Debian pakketten leveren.
+
+Ze bevatten een aantal velden, of commentaar in het geval de regel begint
+met een ‘\fB#\fP’. Elk veld begint met een markering, zoals \fBVendor\fP of
+\fBParent\fP, gevolgd door een dubbele punt en het tekstgedeelte van het
+veld. Velden zijn enkel van elkaar gescheiden door de veldmarkeringen. Met
+andere woorden de tekst van een veld mag meerdere regels lang zijn, maar de
+gereedschappen zullen de regels samenvoegen bij het verwerken van het
+tekstgedeelte van het veld.
+
+Het bestand zou een naam moeten krijgen die overeenstemt met de naam van de
+leverancier. Het is gebruikelijk om het leveranciersbestand de naam van de
+leverancier te geven in kleine letters, maar een zekere mate van variatie is
+toegestaan. Met name wordt een spatie omgezet naar een liggend streepje
+(‘\fB\-\fP’) en kan de bestandsnaam op dezelfde manier gebruik maken van
+hoofdletters en kleine letters zoals dat het geval is voor de waarde van het
+veld \fBVendor\fP of hij kan volledig uit hoofdletters bestaan.
+.SH VELDEN
+.TP 
+\fBVendor:\fP \fIleveranciersnaam\fP (verplicht)
+De waarde van dit veld bepaalt de naam van de leverancier.
+.TP 
+\fBVendor\-URL:\fP\fI leveranciers\-URL\fP
+De waarde van dit veld bepaalt de URL van de leverancier.
+.TP 
+\fBBugs:\fP\fI bug\-URL\fP
+De waarde van dit veld bepaalt het type en het adres van het
+bugopvolgingssysteem dat door deze leverancier gebruikt wordt. Het kan gaan
+om een URL van het type mailto of een URL van het type debbugs
+(bijv. debbugs://bugs.debian.org/).
+.TP 
+\fBParent:\fP\fI leveranciersnaam\fP
+De waarde van dit veld bepaalt de naam van de leverancier waarvan deze
+leverancier een derivaat maakt.
+.SH VOORBEELD
+.nf
+Vendor: Debian
+Vendor\-URL: https://www.debian.org/
+Bugs: debbugs://bugs.debian.org
+.fi
+.SH "ZIE OOK"
+\fBdpkg\-vendor\fP(1)

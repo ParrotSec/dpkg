@@ -1,0 +1,115 @@
+.\" dpkg manual page - dpkg-name(1)
+.\"
+.\" Copyright © 1995-1996 Erick Branderhorst
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-name 1 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+dpkg\-name \- zmienia nazwy pakietów Debiana na pełne
+.
+.SH SKŁADNIA
+\fBdpkg\-name\fP [\fIopcja\fP...] [\fB\-\-\fP] \fIplik\fP...
+.
+.SH OPIS
+.PP
+Ta strona podręcznika dokumentuje program \fBdpkg\-name\fP, który dostarcza
+prostego sposobu na zmianę nazw pakietów \fBDebiana\fP na pełne nazwy
+pakietów. Pełna nazwa pakietu jest w postaci
+\fIpakiet\fP\fB_\fP\fIwersja\fP\fB_\fP\fIarchitektua\fP\fB.\fP\fItyp\-pakietu\fP, jak to określono
+w pliku kontrolnym pakietu. Część \fIwersja\fP nazwy pliku zawiera oryginalną
+wersję nadaną przez autora, po której opcjonalnie następuje myślnik oraz
+informacje o wersji zmian pakietu w Debianie.Część \fItyp\-pakietu\fP pochodzi z
+odpowiedniego pola, jeśli jest obecne, lub jest równa \fBdeb\fP.
+.
+.SH OPCJE
+.TP 
+\fB\-a\fP, \fB\-\-no\-architecture\fP
+Wynikowy plik nie będzie miał informacji o architekturze.
+.TP 
+\fB\-k\fP, \fB\-\-symlink\fP
+Tworzy dowiązanie symboliczne, zamiast przenosić plik.
+.TP 
+\fB\-o\fP, \fB\-\-overwrite\fP
+Istniejące pliki będą nadpisane, jeżeli ich nazwy są takie same jak nazwy
+plików wynikowych.
+.TP 
+\fB\-s\fP, \fB\-\-subdir\fP [\fIkatalog\fP]
+Files will be moved into a subdirectory. If the directory given as argument
+exists the files will be moved into that directory otherwise the name of the
+target directory is extracted from the section field in the control part of
+the package. The target directory will be
+«unstable/binary\-\fIarchitecture\fP/\fIsection\fP».  If the section is not found
+in the control, then \fBno\-section\fP is assumed, and in this case, as well as
+for sections \fBnon\-free\fP and \fBcontrib\fP the target directory is
+«\fIsection\fP/binary\-\fIarchitecture\fP».  The section field is not required so a
+lot of packages will find their way to the \fBno\-section\fP area.  Use this
+option with care, it's messy.
+.TP 
+\fB\-c\fP, \fB\-\-create\-dir\fP
+This option can used together with the \fB\-s\fP option. If a target directory
+isn't found it will be created automatically.  \fBUse this option with care.\fP
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Wyświetla informację o użytkowaniu i kończy działanie.
+.TP 
+\fB\-v\fP, \fB\-\-version\fP
+Wyświetla informację o wersji i pomyślnie kończy działanie.
+.
+.SH BŁĘDY
+Some packages don't follow the name structure
+\fIpackage\fP\fB_\fP\fIversion\fP\fB_\fP\fIarchitecture\fP\fB.deb\fP.  Packages renamed by
+\fBdpkg\-name\fP will follow this structure. Generally this will have no impact
+on how packages are installed by \fBdselect\fP(1)/\fBdpkg\fP(1), but other
+installation tools might depend on this naming structure.
+.
+.SH PRZYKŁADY
+.TP 
+\fBdpkg\-name bar\-foo.deb\fP
+The file \fBbar\-foo.deb\fP will be renamed to bar\-foo_1.0\-2_i386.deb or
+something similar (depending on whatever information is in the control part
+of \fBbar\-foo.deb\fP).
+.TP 
+\fBfind /root/debian/ \-name '*.deb' | xargs \-n 1 dpkg\-name \-a\fP
+All files with the extension \fBdeb\fP in the directory /root/debian and its
+subdirectory's will be renamed by \fBdpkg\-name\fP if required into names with
+no architecture information.
+.TP 
+\fBfind \-name '*.deb' | xargs \-n 1 dpkg\-name \-a \-o \-s \-c\fP
+\fBNie rób tego\fP. Twoje archiwum zostanie kompletnie zepsute, ponieważ wiele
+pakietów nie będzie miało informacji o sekcji. \fBNie rób tego\fP.
+.TP 
+\fBdpkg\-deb \-\-build debian\-tmp && dpkg\-name \-o \-s .. debian\-tmp.deb\fP
+Może zostać użyte do budowania nowych pakietów.
+.
+.SH "ZOBACZ TAKŻE"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1), \fBfind\fP(1),
+\fBxargs\fP(1).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

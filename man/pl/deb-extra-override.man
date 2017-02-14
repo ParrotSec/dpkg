@@ -1,0 +1,64 @@
+.\" dpkg manual page - deb-extra-override(5)
+.\"
+.\" Copyright © 2009-2010 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-extra\-override 5 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+deb\-extra\-override \- plik dodatkowych nadpisań archiwum Debiana
+.
+.SH SKŁADNIA
+override
+.
+.SH OPIS
+Większość informacji o binarnym lub źródłowym pakiecie może być zawarta w
+pliku control/.dsc, jednak cała ta informacja może być nadpisana podczas
+eksportowania do plików Packages/Sources. Plik dodatkowych nadpisań zawiera
+takie właśnie nadpisania.
+.PP
+Dodatkowy plik nadpisań ma prosty format pól rozdzielonych białymi znakami
+(spacjami). Dozwolone są komentarze (zaczynające się od \fB#\fP).
+.PP
+.in +5
+\fIpakiet\fP \fInazwa\-pola\fP \fIwartość\fP
+.in -5
+.PP
+\fIpakiet\fP jest nazwą binarnego lub źródłowego pakietu.
+.PP
+\fInazwa\-pola\fP jest nazwą nadpisywanego pola. \fIwartość\fP jest wartością,
+która będzie umieszczona w tym polu. Może ona zawierać spacje, ponieważ
+linia jest dzielona podczas parsowania na nie więcej niż 3 kolumny.
+.PP
+Dodatkowe pliki nadpisań używane do stworzenia oficjalnych list Packages
+można znaleźć w katalogu \fIindices\fP na każdym mirrorze Debiana.
+.
+.SH "ZOBACZ TAKŻE"
+\fBdpkg\-scanpackages\fP(1), \fBdpkg\-scansources\fP(1), \fBapt\-ftparchive\fP(1).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

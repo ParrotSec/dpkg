@@ -1,0 +1,70 @@
+.\" dpkg manual page - dpkg-vendor(1)
+.\"
+.\" Copyright © 2009 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-vendor 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOME
+dpkg\-vendor \- interroga informazioni sui produttori di una distribuzione
+.
+.SH SINTASSI
+\fBdpkg\-vendor\fP [\fIopzione\fP...] \fIcomando\fP
+.
+.SH DESCRIZIONE
+\fBdpkg\-vendor\fP is a tool to query information about vendors listed in
+\fB%PKGCONFDIR%/origins\fP. \fB%PKGCONFDIR%/origins/default\fP contains
+information about the current vendor.
+.
+.SH COMANDI
+.TP 
+\fB\-\-is\fP\fI produttore\fP
+Exits with \fB0\fP if the current vendor is \fIvendor\fP. Otherwise exits with
+\fB1\fP.
+.TP 
+\fB\-\-derives\-from\fP\fI produttore\fP
+Exits with \fB0\fP if the current vendor distribution is a derivative of
+\fIvendor\fP, otherwise exits with \fB1\fP.  It uses the \fBParent\fP field to browse
+all ancestors of the current vendor.
+.TP 
+\fB\-\-query\fP\fI campo\fP
+Stampa sullo standard output il valore del \fIcampo\fP specifico del produttore
+per il produttore corrente.
+.TP 
+\fB\-\-help\fP
+Mostra il messaggio sull'uso ed esce.
+.TP 
+\fB\-\-version\fP
+Mostra la versione ed esce.
+.
+.SH OPZIONI
+.TP 
+\fB\-\-vendor\fP\fI produttore\fP
+Assume come produttore corrente \fIproduttore\fP invece di scoprirlo con la
+variabile d'ambiente \fBDEB_VENDOR\fP o \fB%PKGCONFDIR%/origins/default\fP.
+.
+.SH AMBIENTE
+.TP 
+\fBDEB_VENDOR\fP
+Questa impostazione definisce il produttore corrente. Se non è impostata, il
+produttore corrente verrà trovato leggendo \fB%PKGCONFDIR%/origins/default\fP.
+.
+.SH "VEDERE ANCHE"
+\fBdeb\-origin\fP(5).

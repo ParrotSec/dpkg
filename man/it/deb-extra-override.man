@@ -1,0 +1,54 @@
+.\" dpkg manual page - deb-extra-override(5)
+.\"
+.\" Copyright © 2009-2010 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-extra\-override 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOME
+deb\-extra\-override \- file override extra degli archivi Debian
+.
+.SH SINTASSI
+override
+.
+.SH DESCRIZIONE
+Sebbene la maggior parte delle informazioni su un pacchetto binario/sorgente
+possano essere trovate nel file control/.dsc, tutte possono essere
+sovrascritte al momento dell'esportazione nei file Packages/Sources. Il file
+override extra contiene questi valori da sovrascrivere.
+.PP
+Il file override extra ha un semplice formato delimitato da spazi
+bianchi. Sono permessi i commenti, indicati con un carattere \fB#\fP.
+.PP
+.in +5
+\fIpacchetto\fP \fInome\-campo\fP \fIvalore\fP
+.in -5
+.PP
+\fIpacchetto\fP è il nome del pacchetto binario/sorgente.
+.PP
+\fInome\-campo\fP è il nome del campo che viene sovrascritto. \fIvalore\fP è il
+valore da inserire nel campo. Può contenere spazi dato che la riga non viene
+suddivisa in più di 3 colonne quando viene analizzata.
+.PP
+I file override extra usati per creare i file elenco Packages ufficiali
+possono essere trovati nella directory \fIindices\fP di ogni mirror Debian.
+.
+.SH "VEDERE ANCHE"
+\fBdpkg\-scanpackages\fP(1), \fBdpkg\-scansources\fP(1), \fBapt\-ftparchive\fP(1).

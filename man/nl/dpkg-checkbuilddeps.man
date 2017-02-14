@@ -1,0 +1,95 @@
+.\" dpkg manual page - dpkg-checkbuilddeps(1)
+.\"
+.\" Copyright © 2001 Joey Hess <joeyh@debian.org>
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2011 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-checkbuilddeps 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-checkbuilddeps \- controleer bouwvereisten en \-tegenstrijdigheden
+.
+.SH OVERZICHT
+\fBdpkg\-checkbuilddeps\fP [\fIoptie\fP...] [\fIcontrolebestand\fP]
+.
+.SH BESCHRIJVING
+Dit programma controleert de op het systeem geïnstalleerde pakketten aan de
+bouwvereisten en bouwtegenstrijdigheden die vermeld worden in het
+controlebestand. Indien er eventueel aan sommige niet voldaan is, geeft het
+die weer en sluit af met niet\-nul als terugkeercode.
+.P
+Standaard wordt uit \fBdebian/control\fP gelezen, maar de bestandsnaam van een
+alternatief controlebestand mag aan de commandoregel opgegeven worden.
+.
+.SH OPTIES
+.TP 
+\fB\-\-admindir=\fP\fImap\fP
+Geef een andere locatie op voor de database van \fBdpkg\fP (sinds dpkg
+1.14.0). De standaardlocatie is \fI%ADMINDIR%\fP.
+.TP 
+\fB\-A\fP
+Negeer de regels \fBBuild\-Depends\-Arch\fP en \fBBuild\-Conflicts\-Arch\fP (sinds
+dpkg 1.16.4). Gebruik dit als enkel pakketten van het type arch\-indep
+(architectuuronafhankelijke pakketten) gebouwd zullen worden, of gebruik het
+in combinatie met \fB\-B\fP als enkel een broncodepakket gebouwd moet worden.
+.TP 
+\fB\-B\fP
+Negeer de regels \fBBuild\-Depends\-Indep\fP en \fBBuild\-Conflicts\-Indep\fP. Gebruik
+dit als enkel pakketten van het type arch\-dep (architectuurafhankelijke
+pakketten) gebouwd zullen worden, of gebruik het in combinatie met \fB\-A\fP als
+enkel een broncodepakket gebouwd moet worden.
+.TP 
+\fB\-I\fP
+Negeer ingebouwde bouwvereisten en bouwtegenstrijdigheden (sinds dpkg
+1.18.2). Dit zijn impliciete vereisten die gewoonlijk nodig zijn bij een
+specifieke distributie, de set van zogenaamde Build\-Essential pakketten.
+.TP 
+\fB\-d \fP\fItekenreeks\-voor\-bouwvereisten\fP
+.TP 
+\fB\-c \fP\fItekenreeks\-voor\-bouwtegenstrijdigheden\fP
+Gebruik de opgegeven vereisten/tegenstrijdigheden in plaats van diegene die
+in het bestand \fIdebian/control\fP vermeld worden (sinds dpkg 1.14.17).
+.TP 
+\fB\-a \fP\fIarch\fP
+Controleer op bouwvereisten/\-tegenstrijdigheden, ervan uitgaand dat het
+pakket dat in het bestand control beschreven wordt, gebouwd moet worden voor
+de opgegeven hostarchitectuur in plaats van voor de architectuur van het
+huidige systeem (sinds dpkg 1.16.2).
+.TP 
+\fB\-P \fP\fIprofiel\fP[\fB,\fP...]
+Controleer op bouwvereisten/\-tegenstrijdigheden, ervan uitgaand dat het
+pakket dat in het bestand control beschreven wordt, gebouwd moet worden voor
+het/de opgegeven bouwprofiel(en) (sinds dpkg 1.17.2). Het argument is een
+lijst van profielnamen die onderling door komma's gescheiden worden.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OMGEVING
+.TP 
+\fBDEB_BUILD_PROFILES\fP
+Indien dit ingesteld is, zal dit gebruikt worden als het/de actieve
+bouwprofiel(en) voor het pakket dat gebouwd wordt. Het is een lijst van
+profielnamen die onderling door spaties gescheiden worden. De optie \fB\-P\fP
+heeft voorrang hierop.

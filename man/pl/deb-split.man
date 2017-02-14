@@ -1,0 +1,85 @@
+.\" dpkg manual page - deb-split(5)
+.\"
+.\" Copyright © 2009-2012 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-split 5 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+deb\-split \- format binarnego pakietu wieloczęściowego Debiana
+.SH SKŁADNIA
+\fInazwa_pliku\fP\fB.deb\fP
+.SH OPIS
+Format wieloczęściowego \fB.deb\fP jest używany do podzielenia dużych pakietów
+w mniejsze części, aby ułatwić przesyłanie danych na małe nośniki.
+.SH FORMAT
+Plik ten jest archiwum \fBar\fP mającym liczbę magiczną z
+\fB!<arch>\fP. Nazwy plików mogą zawierać kończący znak ukośnika (od
+dpkg 1.15.6).
+.PP
+Pierwszym członem jest \fBdebian\-split\fP zawierający wiersze oddzielone
+znakiem nowego wiersza. Obecnie jest to osiem wierszy:
+.IP • 4
+Numer wersji formatu, w chwili pisania tego podręcznika \- \fB2.1\fP.
+.IP •
+Nazwa pakietu.
+.IP •
+Wersja pakietu.
+.IP •
+Suma kontrolna md5 pakietu.
+.IP •
+Całkowity rozmiar pakietu.
+.IP •
+Rozmiar największej części.
+.IP •
+Bieżący numer części, po którym występuje ukośnik i całkowita liczba części
+(np. ‘1/10’).
+.IP •
+Architektura pakietu (od dpkg 1.16.1).
+.PP
+Programy odczytujące archiwa wieloczęściowe, powinny być przygotowane na
+zwiększanie pobocznego numeru wersji oraz na obecność większej liczby
+wierszy, które powinny wówczas ignorować.
+.PP
+Jeżeli zmieni się główna liczba numeru wersji (liczba przed kropką), oznacza
+to, że wprowadzone zmiany w formacie są niekompatybilne z poprzednią wersją
+i program powinien się zatrzymać. Jeżeli się nie zatrzyma, to powinien
+kontynuować działanie aż do napotkania nieoczekiwanego składnika w archiwum
+(chyba, że występuje on na końcu), tak jak to opisano poniżej.
+.PP
+Drugi, ostatni wymagany człon nazywa się \fBdata.\fP\fIN\fP, gdzie \fIN\fP jest
+numerem części. Zawiera surowe dane części.
+.PP
+Składniki te muszą występować w tym powyższym porządku. Implementacje
+powinny ignorować jakiekolwiek dodatkowe składniki występujące po
+\fBdata.\fP\fIN\fP. Kolejne składniki mogą zostać zdefiniowane w przyszłości i
+(jeżeli będzie to możliwe) będą umieszczone po dwóch wyżej wymienionych.
+.SH "ZOBACZ TAKŻE"
+\fBdeb\fP(5), \fBdpkg\-split\fP(1).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

@@ -1,0 +1,433 @@
+.\" dpkg manual page - update-alternatives(1)
+.\"
+.\" Copyright © 1997-1998 Charles Briscoe-Smith
+.\" Copyright © 1999 Ben Collins <bcollins@debian.org>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2003 Adam Heath <doogie@debian.org>
+.\" Copyright © 2005 Scott James Remnant <scott@netsplit.com>
+.\" Copyright © 2006-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008 Pierre Habouzit <madcoder@debian.org>
+.\" Copyright © 2009-2011 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH update\-alternatives 1 %RELEASE_DATE% %VERSION% "Herramientas de dpkg"
+.nh
+.SH NOMBRE
+update\-alternatives \- Gestión de enlaces simbólicos que determinan órdenes
+predefinidas
+.
+.SH SINOPSIS
+\fBupdate\-alternatives\fP [\fIopción\fP...] \fIorden\fP
+.
+.SH DESCRIPCIÓN
+\fBupdate\-alternatives\fP crea, elimina, gestiona y muestra información sobre
+los enlaces simbólicos que conforman el sistema de alternativas de Debian.
+.PP
+Es posible que tenga en el sistema varios programas instalados a la vez que
+realizan la misma función. Por ejemplo, muchos sistemas tienen varios
+editores de texto instalados al mismo tiempo, lo que deja la elección de qué
+editor de texto utilizar en manos del usuario, si éste lo desea, pero hace
+difícil que un programa elija la opción correcta si el usuario no ha
+definido ninguna preferencia.
+.PP
+El objetivo del sistema de alternativas de Debian es resolver este
+problema. Un nombre genérico en el sistema de ficheros se comparte entre
+todos los ficheros que tienen una funcionalidad intercambiable. El sistema
+de alternativas junto con el administrador del sistema determinan a qué
+fichero hace referencia este nombre genérico. Por ejemplo, si los editores
+de texto \fBed\fP(1) y \fBnvi\fP(1) están instalados conjuntamente en el sistema,
+el sistema de alternativas hará que el nombre genérico \fI/usr/bin/editor\fP se
+refiera a \fI/usr/bin/nvi\fP por omisión. El administrador del sistema puede
+modificar esto y hacer que se refiera a \fI/usr/bin/ed\fP, y el sistema de
+alternativas no modificará esto posteriormente hasta que se solicite
+explícitamente.
+.PP
+El nombre genérico no es un enlace simbólico directo a la alternativa
+seleccionada. En vez de esto, es un enlace simbólico a un nombre en el
+\fIdirectorio\fP de \fIalternativas\fP («%CONFDIR%/alternatives»), que a su vez es
+un enlace simbólico al fichero al que se hace referencia en realidad. El
+objetivo es que los cambios del administrador se mantengan dentro del
+directorio \fI%CONFDIR%\fP: el FHS (q.v.) da razones de por qué esto es bueno.
+.PP
+When each package providing a file with a particular functionality is
+installed, changed or removed, \fBupdate\-alternatives\fP is called to update
+information about that file in the alternatives system.
+\fBupdate\-alternatives\fP is usually called from the \fBpostinst\fP (configure) or
+\fBprerm\fP (remove and deconfigure) scripts in Debian packages.
+.PP
+Habitualmente, es útil que un número de alternativas se sincronicen de tal
+modo que se puedan cambiar como un grupo. Por ejemplo, cuando varias
+versiones del editor \fBvi\fP(1) están instaladas la página del manual
+preferida por \fI/usr/share/man/man1/vi.1\fP debe corresponder con el
+ejecutable al que hace referencia \fI/usr/bin/vi\fP. \fBupdate\-alternatives\fP
+manipula esto en términos de enlaces \fImaestro\fP y \fIesclavo\fP; cuando se
+cambia el maestro, todos los esclavos relacionados con él también
+cambian. Un enlace maestro y sus esclavos relacionados forman un \fIgrupo\fP de
+\fIenlaces\fP.
+.PP
+Cada grupo de enlaces está en todo momento en uno de los dos modos posibles:
+automático o manual. Cuando un grupo está en modo automático el sistema de
+alternativas decide automáticamente el momento de actualizar los enlaces a
+medida que se instalan o desinstalan paquetes. En modo manual el sistema de
+alternativas deja todas estas decisiones en manos del administrador del
+sistema.
+.PP
+Los grupos de enlaces se establecen en modo automático la primera vez que
+aparecen en el sistema. Si el administrador del sistema hace cambios en la
+configuración automática del sistema, \fBupdate\-alternatives\fP se dará cuenta
+la próxima vez que se ejecute sobre el grupo de enlaces cambiados y el grupo
+pasará automáticamente a modo manual.
+.PP
+Cada alternativa tiene una \fIprioridad\fP asociada. Cuando un grupo de enlaces
+se encuentra en modo automático, los miembros del grupo apuntarán a la
+alternativa con la prioridad más alta.
+.PP
+When using the \fB\-\-config\fP option, \fBupdate\-alternatives\fP will list all of
+the choices for the link group of which given \fIname\fP is the master
+alternative name.  The current choice is marked with a ‘*’.  You will then
+be prompted for your choice regarding this link group.  Depending on the
+choice made, the link group might no longer be in \fIauto\fP mode. You will
+need to use the \fB\-\-auto\fP option in order to return to the automatic mode
+(or you can rerun \fB\-\-config\fP and select the entry marked as automatic).
+.PP
+Si quiere realizar la configuración de un modo no interactivo puede utilizar
+la opción \fB\-\-set\fP en su lugar (véase más abajo).
+.PP
+Los diferentes paquetes que proveen el mismo fichero tienen que hacerlo de
+forma \fBcooperativa\fP. En otras palabras, el uso de \fBupdate\-alternatives\fP es
+\fBobligatorio\fP con todos los paquetes relacionados con esa situación. No es
+posible sobreescribir el fichero de un paquete que no usa el mecanismo de
+\fBupdate\-alternatives\fP.
+.
+.SH TERMINOLOGÍA
+Debido a que las actividades que realiza \fBupdate\-alternatives\fP están
+fuertemente relacionadas entre sí, la definición de algunos términos
+específicos ayudará a entender su funcionamiento.
+.TP 
+nombre genérico (o enlace alternativo)
+Un nombre, como \fI/usr/bin/editor\fP, que mediante el sistema de alternativas
+hace referencia a uno de los posibles ficheros con una función similar.
+.TP 
+nombre de la alternativa
+El nombre de un enlace simbólico en el directorio de alternativas.
+.TP 
+alternativa (o ruta alternativa)
+El nombre de un fichero específico en el sistema de ficheros al que se puede
+acceder a través de un nombre genérico usando el sistema de alternativas.
+.TP 
+directorio de alternativas
+El directorio que contiene los enlaces, por omisión es
+\fI%CONFDIR%/alternatives\fP.
+.TP 
+directorio administrativo
+El directorio que contiene la información de estado de
+\fBupdate\-alternatives\fP, por omisión es \fI%ADMINDIR%/alternatives\fP.
+.TP 
+grupo de enlaces
+Un conjunto de enlaces relacionados con el objetivo de que se actualicen
+como grupo.
+.TP 
+enlace maestro
+El enlace alternativo en un grupo de enlaces que determina cómo se
+configuran el resto de los enlaces del grupo.
+.TP 
+enlace esclavo
+Un enlace alternativo en un grupo de enlaces definido por el enlace maestro.
+.TP 
+modo automático
+Cuando un grupo de enlaces se encuentra en modo automático el sistema de
+alternativas asegura que los enlaces del grupo apuntan a la alternativa con
+la mayor prioridad en ese grupo.
+.TP 
+modo manual
+Cuando un grupo de enlaces se encuentra en modo manual el sistema de
+alternativas no hará ningún cambio en la configuración del administrador.
+.
+.SH ÓRDENES
+.TP 
+\fB\-\-install\fP \fIenlace nombre ruta prioridad\fP [\fB\-\-slave\fP \fIenlace nombre ruta\fP] ...
+Añade un grupo de alternativas al sistema. \fIenlace\fP es el nombre genérico
+del enlace maestro, \fInombre\fP es el nombre del enlace simbólico en el
+directorio de alternativas, y \fIruta\fP es la alternativa que se va a
+introducir para el enlace maestro. Los argumentos a continuación de
+\fB\-\-slave\fP son el nombre genérico, el nombre del enlace simbólico en el
+directorio de alternativas, y la ruta alternativa para el enlace
+esclavo. Puede definir cero o más opciones de \fB\-\-slave\fP, cada uno seguido
+de tres argumentos. Tenga en cuenta que la alternativa maestra debe existir
+previamente o la ejecución fallará. Por otra parte, si la alternativa
+esclava no existe, el enlace esclavo alternativo correspondiente no se
+instalará, mostrando un aviso. Un fichero real instalado en la ubicación de
+un enlace alternativo nunca se eliminará a menos que se use \fB\-\-force\fP.
+.IP
+Si el nombre de la alternativa definida ya existe en los registros del
+sistema de alternativas la información suministrada se añadirá como un nuevo
+conjunto de alternativas para el grupo. De otra forma se creará un grupo
+nuevo en modo automático, al que se le añadirá la información
+suministrada. Si el grupo está en modo automático, y la prioridad nueva
+añadida es mayor que cualquier otra alternativa instalada para ese grupo,
+los enlaces se actualizarán para apuntar a las nuevas alternativas.
+.TP 
+\fB\-\-set\fP \fInombre ruta\fP
+Define la \fIruta\fP del programa como alternativa para \fInombre\fP. Equivale a
+\fB\-\-config\fP pero no es interactivo, de modo que permite su inclusión en
+scripts.
+.TP 
+\fB\-\-remove\fP \fInombre ruta\fP
+Elimina una alternativa y todos sus enlaces esclavos asociados. \fInombre\fP es
+el nombre en el directorio de alternativas y \fIruta\fP es el nombre absoluto
+del fichero al que \fInombre\fP se podría enlazar. Si \fInombre\fP está en
+realidad enlazado a \fIruta\fP, \fInombre\fP se actualizará para que apunte a otra
+alternativa apropiada o se eliminará si no queda ninguna alternativa
+restante. Los enlaces esclavos asociados se actualizarán o eliminarán
+correspondientemente. Si el enlace no apunta a \fIruta\fP, no se cambia ningún
+enlace, sólo se elimina la información acerca de la alternativa.
+.TP 
+\fB\-\-remove\-all\fP \fInombre\fP
+Elimina todas las alternativas y todos sus enlaces esclavos
+asociados. \fInombre\fP es un nombre en el directorio de alternativas.
+.TP 
+\fB\-\-all\fP
+Ejecuta \fB\-\-config\fP sobre todas las alternativas. Puede ser útil en
+combinación con \fB\-\-skip\-auto\fP para revisar y configurar todas las
+alternativas que no están configuradas en modo automático. También se
+muestran las alternativas rotas. Una manera sencilla de arreglar todas las
+alternativas rotas es ejecutar \fByes \*(rq | update\-alternatives \-\-force
+\-\-all\fP.
+.TP 
+\fB\-\-auto\fP \fInombre\fP
+Cambia el grupo de enlaces dependientes de la alternativa \fInombre\fP a modo
+automático. En el proceso, el enlace simbólico y sus esclavos se
+actualizarán para apuntar a la alternativa instalada con una prioridad
+mayor.
+.TP 
+\fB\-\-display\fP \fInombre\fP
+Display information about the link group.  Information displayed includes
+the group's mode (auto or manual), the master and slave links, which
+alternative the master link currently points to, what other alternatives are
+available (and their corresponding slave alternatives), and the highest
+priority alternative currently installed.
+.TP 
+\fB\-\-get\-selections\fP
+List all master alternative names (those controlling a link group)  and
+their status (since version 1.15.0).  Each line contains up to 3 fields
+(separated by one or more spaces). The first field is the alternative name,
+the second one is the status (either \fBauto\fP or \fBmanual\fP), and the last one
+contains the current choice in the alternative (beware: it's a filename and
+thus might contain spaces).
+.TP 
+\fB\-\-set\-selections\fP
+Lee la configuración de alternativas por la entrada estándar en el formato
+generado por \fB\-\-get\-selections\fP y los reconfigura apropiadamente (desde la
+versión 1.15.0).
+.TP 
+\fB\-\-query\fP \fInombre\fP
+Display information about the link group like \fB\-\-display\fP does, but in a
+machine parseable way (since version 1.15.0, see section \fBQUERY FORMAT\fP
+below).
+.TP 
+\fB\-\-list\fP \fIname\fP
+Muestra todos los objetivos del grupo de enlaces.
+.TP 
+\fB\-\-config\fP \fInombre\fP
+Muestra las alternativas disponibles para un grupo de enlaces y permite al
+usuario seleccionar interactivamente cual usar. El grupo de enlaces se
+actualizará.
+.TP 
+\fB\-\-help\fP
+Muestra el modo de uso y termina.
+.TP 
+\fB\-\-version\fP
+Muestra la versión y termina.
+.
+.SH OPCIONES
+.TP 
+\fB\-\-altdir\fP \fIdirectorio\fP
+Define el directorio de alternativas, cuando es diferente del directorio por
+omisión.
+.TP 
+\fB\-\-admindir\fP\fI directorio\fP
+Define el directorio administrativo, cuando es diferente del directorio por
+omisión.
+.TP 
+\fB\-\-log=\fP\fIfichero\fP
+Specifies the log file (since version 1.15.0), when this is to be different
+from the default (%LOGDIR%/alternatives.log).
+.TP 
+\fB\-\-force\fP
+Allow replacing or dropping any real file that is installed where an
+alternative link has to be installed or removed.
+.TP 
+\fB\-\-skip\-auto\fP
+Omite el dialogo de configuración de alternativas para aquellas configuradas
+adecuadamente en modo automático. Esta opción solo tiene sentido con
+\fB\-\-config\fP o \fB\-\-all\fP.
+.TP 
+\fB\-\-verbose\fP
+Generate more comments about what is being done.
+.TP 
+\fB\-\-quiet\fP
+No genera ningún comentario a menos que ocurra algún error.
+.
+.SH "ESTADOS DE SALIDA"
+.TP 
+\fB0\fP
+La acción requerida finalizó con éxito.
+.TP 
+\fB2\fP
+Se encontraron problemas analizando la línea de órdenes o realizando la
+acción requerida.
+.
+.SH ENTORNO
+.TP 
+\fBDPKG_ADMINDIR\fP
+Si se define, y no se define la opción \fB\-\-admindir\fP, se utiliza como el
+directorio base de gestión.
+.
+.SH FICHEROS
+.TP 
+\fI%CONFDIR%/alternatives/\fP
+El directorio de alternativas por omisión. Se puede cambiar con la opción
+\fB\-\-altdir\fP.
+.TP 
+\fI%ADMINDIR%/alternatives/\fP
+El directorio de administración por omisión. Se puede modificar con la
+opción \fB\-\-admindir\fP.
+.
+.SH "FORMATO DE CONSULTA"
+The \fB\-\-query\fP format is using an RFC822\-like flat format. It's made of \fIn\fP
++ 1 blocks where \fIn\fP is the number of alternatives available in the queried
+link group. The first block contains the following fields:
+.TP 
+\fBName:\fP\fI nombre\fP
+El nombre de la alternativa en el directorio de alternativas.
+.TP 
+\fBLink:\fP\fI enlace\fP
+El nombre genérico de la alternativa.
+.TP 
+\fBSlaves:\fP\fI lista de esclavos\fP
+Cuando este campo está presente, las líneas \fBsiguientes\fP contienen todos
+los enlances esclavos asociados al enlace maestro de la alternativa. Hay un
+esclavo por línea. Cada línea contiene un espacio, el nombre genérico de la
+alternativa esclava, otro espacio, y la ruta al enlace esclavo.
+.TP 
+\fBStatus:\fP\fI estado\fP
+El estado de la alternativa (\fBauto\fP o \fBmanual\fP).
+.TP 
+\fBBest:\fP\fI mejor\-opción\fP
+La ruta de la mejor alternativa para este grupo de enlaces. No aparece si no
+existen alternativas disponibles.
+.TP 
+\fBValue:\fP\fI alternativa\-seleccionada\-actualmente\fP
+La ruta de la alternativa seleccionada en ese momento. También puede tomar
+el valor mágico \fBnone\fP (ninguno). Se usa si el enlace no existe.
+.PP
+Los siguientes bloques describen las alternativas disponibles en el grupo de
+enlaces consultado:
+.TP 
+\fBAlternative:\fP\fI ruta\-a\-esta\-alternativa\fP
+Ruta a la alternativa de este bloque.
+.TP 
+\fBPriority:\fP\fI valor\-de\-prioridad\fP
+Valor de la prioridad de esta alternativa.
+.TP 
+\fBSlaves:\fP\fI lista de esclavos\fP
+When this field is present, the \fBnext\fP lines hold all slave alternatives
+associated to the master link of the alternative. There is one slave per
+line. Each line contains one space, the generic name of the slave
+alternative, another space, and the path to the slave alternative.
+.
+.SS Example
+.nf
+$ update\-alternatives \-\-query editor
+Name: editor
+Link: /usr/bin/editor
+Slaves:
+ editor.1.gz /usr/share/man/man1/editor.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/editor.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/editor.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/editor.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/editor.1.gz
+Status: auto
+Best: /usr/bin/vim.basic
+Value: /usr/bin/vim.basic
+
+Alternative: /bin/ed
+Priority: \-100
+Slaves:
+ editor.1.gz /usr/share/man/man1/ed.1.gz
+
+Alternative: /usr/bin/vim.basic
+Priority: 50
+Slaves:
+ editor.1.gz /usr/share/man/man1/vim.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/vim.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/vim.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/vim.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/vim.1.gz
+.fi
+.
+.SH DIAGNÓSTICOS
+Con la opción \fB\-\-verbose\fP, \fBupdate\-alternatives\fP informa detalladamente
+acerca de sus actividades por la salida estándar. Si ocurre algún problema,
+\fBupdate\-alternatives\fP envía los mensajes de error por la salida de errores
+estándar y cierra con el estado 2. Los diagnósticos deberían ser
+auto\-explicativos; si a usted no se lo parecen, le rogamos informe de esto
+como un fallo.
+.
+.SH EJEMPLOS
+Hay varios paquetes que proporcionan un editor de texto compatible con
+\fBvi\fP, por ejemplo \fBnvi\fPy \fBvim\fP. El grupo de enlaces \fBvi\fP selecciona cual
+se usa, incluyendo enlaces para el programa y la página del manual asociada.
+.PP
+Utilice la opción \fB\-\-display\fP para mostrar los paquetes disponibles que
+proporcionan \fBvi\fP y su configuración actual:
+.PP
+.RS
+\fBupdate\-alternatives \-\-display vi\fP
+.RE
+.PP
+Para elegir una implementación de \fBvi\fP en particular use la siguiente orden
+como el usuario «root» y seleccione un número de la lista:
+.PP
+.RS
+\fBupdate\-alternatives \-\-config vi\fP
+.RE
+.PP
+Para que la implementación de \fBvi\fP se vuelva a elegir de forma automática,
+haga como administrador:
+.PP
+.RS
+\fBupdate\-alternatives \-\-auto vi\fP
+.RE
+.
+.SH "VÉASE TAMBIÉN"
+\fBln\fP(1), FHS, el estándar de la jerarquía del sistema de ficheros.
+.SH TRADUCTOR
+Rudy Godoy <rudy@kernel\-panik.org>,
+Rubén Porras <nahoo@inicia.es>,
+Bruno Barrera C. <bruno.barrera@igloo.cl>,
+Carlos Izquierdo <gheesh@ertis.net>,
+Esteban Manchado y
+NOK.
+Debian L10n Spanish <debian\-l10n\-spanish@lists.debian.org>.
+.br
+Revisiones por Santiago Vila <sanvila@unex.es>,
+Javier Fernández\-Sanguino, Rubén Porras,
+Luis Uribe y Omar Campagne.

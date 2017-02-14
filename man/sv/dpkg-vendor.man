@@ -1,0 +1,74 @@
+.\" dpkg manual page - dpkg-vendor(1)
+.\"
+.\" Copyright © 2009 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-vendor 1 %RELEASE_DATE% %VERSION% Dpkg\-sviten
+.nh
+.SH NAMN
+dpkg\-vendor \- frågar efter information om distributionsåterförsäljare
+.
+.SH SYNOPS
+\fBdpkg\-vendor\fP [\fIflaggor\fP...] \fIåtgärd\fP
+.
+.SH BESKRIVNING
+\fBdpkg\-vendor\fP is a tool to query information about vendors listed in
+\fB%PKGCONFDIR%/origins\fP. \fB%PKGCONFDIR%/origins/default\fP contains
+information about the current vendor.
+.
+.SH KOMMANDON
+.TP 
+\fB\-\-is\fP\fI återförsäljare\fP
+Exits with \fB0\fP if the current vendor is \fIvendor\fP. Otherwise exits with
+\fB1\fP.
+.TP 
+\fB\-\-derives\-from\fP\fI återförsäljare\fP
+Exits with \fB0\fP if the current vendor distribution is a derivative of
+\fIvendor\fP, otherwise exits with \fB1\fP.  It uses the \fBParent\fP field to browse
+all ancestors of the current vendor.
+.TP 
+\fB\-\-query\fP \fIfält\fP
+Skriver värdet för det återförsäljarspecifika fältet \fIfält\fP för den
+aktuella återförsäljaren på standard ut.
+.TP 
+\fB\-\-help\fP
+Visar hjälpskärm och avslutar.
+.TP 
+\fB\-\-version\fP
+Visar version och avslutar.
+.
+.SH FLAGGOR
+.TP 
+\fB\-\-vendor\fP\fI återförsäljare\fP
+Anta att den aktuella återförsäljaren är \fIåterförsäljare\fP istället för att
+upptäcka det via miljövariabeln \fBDEB_VENDOR\fP eller
+\fB%PKGCONFDIR%/origins/default\fP.
+.
+.SH MILJÖVARIABLER
+.TP 
+\fBDEB_VENDOR\fP
+Inställningen anger den aktuella återförsäljaren. Om den inte är satt kommer
+återförsäljaren att identifieras genom att läsa
+\fB%PKGCONFDIR%/origins/default\fP.
+.
+.SH "SE ÄVEN"
+\fBdeb\-origin\fP(5).
+.SH ÖVERSÄTTNING
+Peter Krefting och Daniel Nylander.

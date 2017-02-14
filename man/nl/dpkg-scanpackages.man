@@ -1,0 +1,114 @@
+.\" dpkg manual page - dpkg-scanpackages(1)
+.\"
+.\" Copyright © 1996 Michael Shields <shields@crosslink.net>
+.\" Copyright © 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2007, 2009, 2011-2014 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2009 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-scanpackages 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-scanpackages \- maak Packages indexbestanden
+.
+.SH OVERZICHT
+\fBdpkg\-scanpackages\fP [\fIoptie\fP...] \fIpad\-binair\-pakket\fP [\fIoverride\-bestand\fP
+[\fIpad\-prefix\fP]] \fB>\fP \fIPakketten\fP
+.
+.SH BESCHRIJVING
+\fBdpkg\-scanpackages\fP sorteert een boom van binaire Debian pakketten en maakt
+een bestand Packages aan, dat door \fBapt\fP(8), \fBdselect\fP(1), enz. gebruikt
+wordt om de gebruiker te informeren over welke pakketten voor installatie
+beschikbaar zijn. Deze Packages\-bestanden zijn dezelfde als die welke men
+aantreft op de sites met Debian\-archieven of op CD's. U kunt zelf gebruik
+maken van \fBdpkg\-scanpackages\fP als u een map met lokale pakketten maakt om
+ze op een cluster machines te installeren.
+.PP
+\fBOpmerking:\fP indien u het gegenereerde bestand Packages wilt gebruiken met
+\fBapt\fP, zult u het wellicht moeten comprimeren met \fBxz\fP(1) (hetgeen een
+bestand Packages.xz genereert), met \fBbzip2\fP(1) (hetgeen een bestand
+Packages.bz2 genereert) of met \fBgzip\fP(1) (hetgeen een bestand Packages.gz
+genereert). apt negeert niet\-gecomprimeerde Packages\-bestanden tenzij in
+geval van lokale toegang (d.w.z. pakketbronnen in de vorm van \fBfile://\fP).
+.PP
+\fIpad\-binair\-pakket\fP is de naam van de boom met binaire pakketten die
+verwerkt moet worden (bijvoorbeeld \fBcontrib/binary\-i386\fP). Het is best om
+dit relatief te maken ten opzichte van de basismap van het Debian\-archief,
+omdat elk Filename\-veld uit het nieuwe Packages\-bestand met die tekenreeks
+zal beginnen.
+.PP
+\fIoverride\-bestand\fP is de naam van een bestand dat moet ingelezen worden en
+dat informatie bevat over hoe het pakket binnen de distributie past (het
+bestand mag gecomprimeerd zijn sinds dpkg 1.15.5); zie \fBdeb\-override\fP(5).
+.PP
+\fIpadprefix\fP is een facultatieve tekenreeks die voorgevoegd moet worden in
+de Filename\-velden.
+.PP
+Indien meer dan één versie van een pakket aangetroffen wordt, wordt enkel
+het recentste opgenomen in de uitvoer. Indien ze hetzelfde versienummer
+hebben en enkel qua architectuur van elkaar verschillen, wordt het pakket
+dat eerst aangetroffen wordt, gebruikt.
+.
+.SH OPTIES
+.TP 
+\fB\-t\fP, \fB\-\-type\fP \fItype\fP
+Zoek naar pakketten van het type *.\fItype\fP in plaats van naar pakketten van
+het type *.deb.
+.TP 
+\fB\-e\fP, \fB\-\-extra\-override\fP \fIbestand\fP
+Zoek in het \fIbestand\fP naar bijkomende vervangingen (het bestand mag
+gecomprimeerd zijn sinds dpkg 1.15.5). Zie \fBdeb\-extra\-override\fP(5) voor
+meer informatie over hoe het ingedeeld wordt.
+.TP 
+\fB\-a\fP, \fB\-\-arch\fP \fIarch\fP
+Gebruik een patroon dat bestaat uit \fI*_all.deb\fP en \fI*_arch.deb\fP in plaats
+van te zoeken naar alle deb\-bestanden.
+.TP 
+\fB\-h\fP, \fB\-\-hash\fP \fIhash\-lijst\fP
+Genereer enkel bestandshashes voor de opgegeven lijst van algoritmen,
+onderling gescheiden door komma's (sinds dpkg 1.17.14). Standaard worden ze
+voor alle momenteel ondersteunde algoritmen gemaakt. Ondersteunde waarden:
+\fBmd5\fP, \fBsha1\fP, \fBsha256\fP.
+.TP 
+\fB\-m\fP, \fB\-\-multiversion\fP
+Neem alle gevonden pakketten op in de uitvoer.
+.TP 
+\fB\-M\fP, \fB\-\-medium\fP \fIID\-tekenreeks\fP
+Voeg een veld \fBX\-Medium\fP toe dat de waarde \fIID\-tekenreeks\fP heeft (sinds
+dpkg 1.15.5). Dit veld is nodig als u \fBPackages.cd\fP\-bestanden wilt
+genereren om te gebruiken met de multicd\-toegangsmethode van dselect.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH DIAGNOSTIEK
+\fBdpkg\-scanpackages\fP gebruikt de gangbare foutberichten die op zich
+duidelijk zijn. Het waarschuwt ook voor pakketten die zich in de verkeerde
+map bevinden, die dubbel voorkomen, die in hun control\-bestand een
+Filename\-veld hebben, die in het override\-bestand ontbreken of waarvoor een
+vervanging van pakketonderhouder niet geëffectueerd wordt.
+.
+.SH "ZIE OOK"
+.ad l
+\fBdpkg\fP(1), \fBdselect\fP(1), \fBdeb\-override\fP(5), \fBdeb\-extra\-override\fP(5),
+\fBdpkg\-scansources\fP(1).

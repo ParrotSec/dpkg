@@ -1,0 +1,65 @@
+.\" dpkg manual page - dpkg-distaddfile(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-distaddfile 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOME
+dpkg\-distaddfile \- aggiunge voci a debian/files
+.
+.SH SINTASSI
+\fBdpkg\-distaddfile\fP [\fIopzione\fP...]\fI nomefile sezione priorità\fP
+.
+.SH DESCRIZIONE
+\fBdpkg\-distaddfile\fP aggiunge una voce per un file specificato in
+\fBdebian/files\fP.
+
+Accetta tre argomenti non opzione: il nome del file e la sezione e priorità
+per il file \fB.changes\fP.
+
+Il nome del file deve essere specificato come relativo rispetto alla
+directory in cui \fBdpkg\-genchanges\fP si aspetta di trovare i file,
+solitamente \fB..\fP, piuttosto che un nome di percorso relativo alla directory
+corrente quando viene eseguito \fBdpkg\-distaddfile\fP.
+.
+.SH OPZIONI
+.TP 
+\fB\-f\fP\fIfile\-con\-lista\-file\fP
+Legge o scrive la lista di file da caricare qui, invece di usare
+\fBdebian/files\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Mostra il messaggio sull'uso ed esce.
+.TP 
+\fB\-\-version\fP
+Mostra la versione ed esce.
+.
+.SH FILE
+.TP 
+\fBdebian/files\fP
+L'elenco dei file generati che fanno parte del caricamento in fase di
+preparazione. \fBdpkg\-distaddfile\fP può essere usato per aggiungere file
+addizionali.
+.
+.SH "VEDERE ANCHE"
+.ad l
+\fBdeb\-src\-files\fP(5).

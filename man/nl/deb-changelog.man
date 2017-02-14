@@ -1,0 +1,182 @@
+.\" dpkg manual page - deb-changelog(5)
+.\"
+.\" Copyright © 1996-1998 Ian Jackson and Christian Schwarz
+.\" Copyright © 1998, 2001 Manoj Srivastava <srivasta@debian.org>
+.\" Copyright © 2001 Julian Gilbey <jdg@debian.org>
+.\" Copyright © 2003 Josip Rodin <joy@debian.org>
+.\" Copyright © 2008, 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2010 Charles Plessy <plessy@debian.org>
+.\" Copyright © 2014 Bill Allombert <ballombe@debian.org>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-changelog 5 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+deb\-changelog \- indeling van het dpkg changelog\-bestand van
+broncodepakketten
+.
+.SH OVERZICHT
+changelog
+.
+.SH BESCHRIJVING
+Wijzigingen aan de ingepakte versie van een project worden in het
+changelog\-bestand \fIdebian/changelog\fP toegelicht. Daar vallen in de broncode
+aangebrachte veranderingen ten opzichte van die van de toeleveraar onder,
+evenals andere wijzigingen en updates aan het pakket.
+.PP
+De indeling van het bestand \fIdebian/changelog\fP laat het gereedschap voor
+het bouwen van pakketten toe om uit te zoeken welke versie van het pakket
+gebouwd wordt en om andere release\-specifieke informatie te weten te komen.
+.PP
+Deze indeling bestaat uit een reeks vermeldingen zoals deze:
+
+.nf
+\fIpakket\fP (\fIversie\fP) \fIdistributies\fP; \fImetadata\fP
+          [optioneel (een) blanco regel(s), die gestript worden]
+  * \fIinformatie\-over\-de\-veranderingen\fP
+    \fInog\-informatie\-i.v.m.\-de\-aanpassingen\fP
+          [blanco regel(s), zichtbaar in de uitvoer van \fBdpkg\-parsechangelog\fP(1)]
+  * \fIen\-eventueel\-nog\-meer\-wijzigingsinformatie\fP
+          [optioneel (een) blanco regel(s), die gestript worden]
+ \-\- \fInaam\-van\-de\-onderhouder\fP <\fIe\-mailadres\fP>  \fIdatum\fP
+.fi
+
+.PP
+\fIpakket\fP en \fIversie\fP zijn de naam van het broncodepakket en zijn
+versienummer.
+.PP
+\fIdistributies\fP somt één of meer door een spatie van elkaar gescheiden
+distributies op waarin deze versie ondergebracht moet worden als ze geüpload
+wordt; dit wordt gekopieerd naar het veld \fBDistribution\fP in het bestand
+\&\fI.changes\fP.
+.PP
+\fImetadata\fP is een lijst items van het type \fItrefwoord\fP=\fIwaarde\fP die
+onderling door een komma gescheiden worden. De enige \fItrefwoord\fPen die
+momenteel ondersteund worden door \fBdpkg\fP zijn \fBurgency\fP en
+\fBbinary\-only\fP. De waarde van \fBurgency\fP wordt gebruikt voor het
+\fBUrgency\fP\-veld in het \fI.changes\fP\-bestand voor de upload. \fBbinary\-only\fP
+met als waarde \fByes\fP wordt gebruikt om aan te geven dat dit changelog\-item
+betrekking heeft op een niet door de onderhouder gedane upload van
+uitsluitend het(de) binaire pakket(ten) (een automatisch opnieuw bouwen van
+het(de) binaire pakket(ten) met het changelog\-item als enige aangebrachte
+wijziging).
+.PP
+De informatie over de wijzigingen kan in feite om het even welk aantal
+regels beslaan die beginnen met minstens twee spaties. Gewoonlijk begint men
+bij het beschrijven van een wijziging steeds met een asterisk, gevolgd door
+een spatie. Eventuele vervolgregels springen zo in dat ze uitgelijnd zijn
+met de tekst van de regel erboven. Als men dat wenst kunnen blanco regels
+gebruikt worden om groepen van veranderingen onderling te scheiden.
+.PP
+Indien deze upload bugs oplost die vermeld staan in het opvolgingssysteem
+voor bugs van de distributie, kunnen die automatisch gesloten worden op het
+ogenblik dat het pakket opgenomen wordt in het archief van de distributie,
+indien de tekenreeks
+.nf
+  \fBCloses: Bug#\fP\fInnnnn\fP
+.fi
+opgenomen wordt in de beschrijving van de wijzigingen (de exacte Perl
+reguliere expressie is
+\fB/closes:\es*(?:bug)?\e#?\es?\ed+(?:,\es*(?:bug)?\e#?\es?\ed+)*/i\fP). Deze
+informatie wordt overgedragen via het veld \fBCloses\fP in het bestand
+\&\fI.changes\fP.
+.PP
+De naam van de onderhouder en het e\-mailadres die in het changelog\-bestand
+vermeld worden moeten betrekking hebben op de persoon die deze release van
+het pakket voorbereidde. Deze gegevens betreffen \fBniet\fP noodzakelijk de
+persoon die het pakket uploadt of de persoon die het pakket gewoonlijk
+onderhoudt. Deze informatie wordt gekopieerd naar het veld \fBChanged\-By\fP in
+het bestand \fI.changes\fP en zal later, wanneer de upload in het
+distributiearchief ondergebracht wordt, gebruikt worden voor het zenden van
+een kennisgeving.
+.PP
+De \fIdatum\fP heeft de volgende indeling (compatibel met en met dezelfde
+betekenis als in RFC2822 en RFC5322, of hetgeen het commando «date \-R»
+genereert):
+.IP
+\fIdag\-van\-de\-week\fP\fB,\fP \fIdd\fP \fImaand\fP \fIjjjj\fP \fIuu\fP\fB:\fP\fImm\fP\fB:\fP\fIss\fP
+\fB+\fP\fIzzzz\fP
+.PP
+waarbij
+.TP 
+\fIdag\-van\-de\-week\fP
+een van volgende mogelijkheden is: \fBMon\fP, \fBTue\fP, \fBWed\fP, \fBThu\fP, \fBFri\fP,
+\fBSat\fP, \fBSun\fP.
+.TP 
+\fIdd\fP
+met één of twee cijfers de dag van de maand aanduidt (\fB01\fP\-\fB31\fP).
+.TP 
+\fImaand\fP
+een van volgende mogelijkheden is: \fBJan\fP, \fBFeb\fP, \fBMar\fP, \fBApr\fP, \fBMay\fP,
+\fBJun\fP, \fBJul\fP, \fBAug\fP, \fBSep\fP, \fBOct\fP, \fBNov\fP, \fBDec\fP.
+.TP 
+\fIjjjj\fP
+met vier cijfers het jaar aanduidt (bijv. 2010).
+.TP 
+\fIuu\fP
+met twee cijfers het uur aanduidt (\fB00\fP\-\fB23\fP).
+.TP 
+\fImm\fP
+met twee cijfers de minuut aanduidt (\fB00\fP\-\fB59\fP).
+.TP 
+\fIss\fP
+met twee cijfers de seconde aanduidt (\fB00\fP\-\fB60\fP).
+.TP 
+[\fB+\-\fP]\fIzzzz\fP
+aanduidt wat het tijdsverschil is tegenover de gecoördineerde wereldtijd
+(UTC). ‘\fB+\fP’ geeft aan dat de tijd voorloopt op UTC (d.w.z. dat de tijdzone
+zich ten oosten van de nulmeridiaan bevindt) en ‘\fB\-\fP’ geeft aan dat de tijd
+achterloopt op UTC  (d.w.z. dat de tijdzone zich ten oosten van de
+nulmeridiaan bevindt). De eerste twee cijfers geven aan hoeveel uur het
+verschil bedraagt ten opzichte van UTC en de laatste twee hoeveel extra
+minuten het verschil is ten opzichte van UTC. De laatste twee cijfers moeten
+vallen binnen het bereik \fB00\fP\-\fB59\fP.
+.PP
+De eerste “titel”\-regel met de naam van het pakket moet beginnen aan de
+linkermarge. De “volgende” regel met de gegevens over de onderhouder en de
+datum moet door exact één spatie voorafgegaan worden. Tussen de informatie
+over de onderhouder en de datum moeten exact twee spaties staan.
+.PP
+Het volledige changelog\-bestand moet in UTF\-8 op gemaakt zijn.
+.SH BESTANDEN
+.TP 
+\fIdebian/changelog\fP
+.SH VOORBEELDEN
+.nf
+dpkg (1.17.18) unstable; urgency=low
+
+  [ Guillem Jover ]
+  * Handle empty minimum versions when initializing dependency versions,
+    as the code is mapping the minimum version 0 to \*(rq to avoid outputting
+    useless versions. Regression introduced in dpkg 1.17.17. Closes: #764929
+
+  [ Updated programs translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated dselect translations ]
+  * Catalan (Guillem Jover).
+  * German (Sven Joachim).
+
+ \-\- Guillem Jover <guillem@debian.org>  Sun, 12 Oct 2014 15:47:44 +0200
+.fi
+.
+.SH "ZIE OOK"
+\fBdeb\-version\fP(5), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).

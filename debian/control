@@ -1,0 +1,209 @@
+Source: dpkg
+Section: admin
+Priority: required
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Uploaders: Guillem Jover <guillem@debian.org>
+Origin: debian
+Bugs: debbugs://bugs.debian.org
+Homepage: https://wiki.debian.org/Teams/Dpkg
+Vcs-Browser: https://anonscm.debian.org/cgit/dpkg/dpkg.git
+Vcs-Git: https://anonscm.debian.org/git/dpkg/dpkg.git
+Standards-Version: 3.9.8
+Build-Depends:
+# Needed for build profile usage below.
+ dpkg-dev (>= 1.17.14),
+ debhelper (>= 9.20141010),
+ pkg-config,
+# Needed for --add-location.
+ gettext (>= 0.19),
+# Needed for --porefs.
+ po4a (>= 0.43),
+ zlib1g-dev,
+ libbz2-dev,
+ liblzma-dev,
+ libselinux1-dev [linux-any],
+ libncursesw5-dev,
+ libio-string-perl <!nocheck>,
+
+Package: dpkg
+Architecture: any
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends:
+ ${shlibs:Depends},
+Depends:
+ ${misc:Depends},
+# Needed for --clamp-mtime in dpkg-deb -b.
+ tar (>= 1.28-1),
+Suggests:
+ apt,
+ debsig-verify,
+Replaces:
+ manpages-it (<< 2.80-4),
+Breaks:
+# Due to removal of dpkg-divert compat symlink.
+ amule (<< 2.3.1+git1a369e47-3),
+# Due to removal of dpkg-statoverride compat symlink.
+ acidbase (<= 1.4.5-4),
+ beep (<< 1.3-4),
+ im (<< 1:151-4),
+ netselect (<< 0.3.ds1-27),
+ pconsole (<< 1.0-12),
+ phpgacl (<< 3.3.7-7.3),
+ pure-ftpd (<< 1.0.43-1),
+ systemtap (<< 2.8-1),
+ terminatorx (<< 4.0.1-1),
+ xvt (<= 2.1-20.1),
+# Due to renaming of triplettable to tupletable.
+ libdpkg-perl (<< 1.18.11),
+Description: Debian package management system
+ This package provides the low-level infrastructure for handling the
+ installation and removal of Debian software packages.
+ .
+ For Debian package development tools, install dpkg-dev.
+
+Package: libdpkg-dev
+Section: libdevel
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ zlib1g-dev,
+ liblzma-dev,
+ libbz2-dev,
+Description: Debian package management static library
+ This package provides the header files and static library necessary to
+ develop software using libdpkg, the same library used internally by dpkg.
+ .
+ Note though, that the API is to be considered volatile, and might change
+ at any time, use at your own risk.
+
+Package: dpkg-dev
+Section: utils
+Priority: optional
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ ${perl:Depends},
+ libdpkg-perl (= ${source:Version}),
+# Needed for --clamp-mtime.
+ tar (>= 1.28-1),
+ bzip2,
+ xz-utils,
+# Needed for git-style diff support.
+ patch (>= 2.7),
+ make,
+ binutils,
+Recommends:
+ build-essential,
+ gcc | c-compiler,
+ fakeroot,
+ gnupg | gnupg2,
+ gpgv | gpgv2,
+# Used by dpkg-mergechangelogs.
+ libalgorithm-merge-perl,
+Suggests:
+ debian-keyring,
+Breaks:
+# Due to new dpkg-architecture 1.17.17 strictness.
+ devscripts (<< 2.14.10),
+Replaces:
+ manpages-it (<< 2.80-4),
+Description: Debian package development tools
+ This package provides the development tools (including dpkg-source)
+ required to unpack, build and upload Debian source packages.
+ .
+ Most Debian source packages will require additional tools to build;
+ for example, most packages need make and the C compiler gcc.
+
+Package: libdpkg-perl
+Section: perl
+Priority: optional
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+# XXX: This needs to be perl:any, but that breaks debootstrap in jessie
+# (the current stable), it could be fixed once and iff stretch is stable
+# and contains a fixed debootstrap.
+ perl,
+# Needed for arch tuples.
+ dpkg (>= 1.18.11),
+Recommends:
+# Used by Dpkg::File.
+ libfile-fcntllock-perl,
+# Used by Dpkg::Gettext.
+ liblocale-gettext-perl,
+ bzip2,
+ xz-utils,
+Suggests:
+ debian-keyring,
+ gnupg | gnupg2,
+ gpgv | gpgv2,
+ gcc | c-compiler,
+ binutils,
+ patch,
+Breaks:
+# Needed for git-style diffs.
+ patch (<< 2.7),
+Description: Dpkg perl modules
+ This package provides the perl modules used by the scripts
+ in dpkg-dev. They cover a wide range of functionality. Among them
+ there are the following public modules:
+ .
+  - Dpkg: core variables
+  - Dpkg::Arch: architecture handling functions
+  - Dpkg::Build::Info: build information functions
+  - Dpkg::BuildFlags: set, modify and query compilation build flags
+  - Dpkg::BuildOptions: parse and manipulate DEB_BUILD_OPTIONS
+  - Dpkg::BuildProfile: parse and manipulate build profiles
+  - Dpkg::Changelog: parse changelogs
+  - Dpkg::Changelog::Entry: represents a changelog entry
+  - Dpkg::Changelog::Parse: generic changelog parser for dpkg-parsechangelog
+  - Dpkg::Checksums: generate and parse checksums
+  - Dpkg::Compression: simple database of available compression methods
+  - Dpkg::Compression::Process: wrapper around compression tools
+  - Dpkg::Compression::FileHandle: transparently (de)compress files
+  - Dpkg::Conf: parse dpkg configuration files
+  - Dpkg::Control: parse and manipulate Debian control information
+    (.dsc, .changes, Packages/Sources entries, etc.)
+  - Dpkg::Control::Changelog: represent fields output by dpkg-parsechangelog
+  - Dpkg::Control::Fields: manage (list of known) control fields
+  - Dpkg::Control::Hash: parse and manipulate a block of RFC822-like fields
+  - Dpkg::Control::Info: parse files like debian/control
+  - Dpkg::Control::Tests: parse files like debian/tests/control
+  - Dpkg::Deps: parse and manipulate dependencies
+  - Dpkg::Exit: push, pop and run exit handlers
+  - Dpkg::Gettext: wrapper around Locale::gettext
+  - Dpkg::IPC: spawn sub-processes and feed/retrieve data
+  - Dpkg::Index: collections of Dpkg::Control (Packages/Sources files for
+    example)
+  - Dpkg::Interface::Storable: base object serializer
+  - Dpkg::Path: common path handling functions
+  - Dpkg::Source::Package: extract Debian source packages
+  - Dpkg::Substvars: substitute variables in strings
+  - Dpkg::Vendor: identify current distribution vendor
+  - Dpkg::Version: parse and manipulate Debian package versions
+ .
+ All the packages listed in Suggests or Recommends are used by some of the
+ modules.
+
+Package: dselect
+Priority: optional
+Architecture: any
+Multi-Arch: foreign
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Suggests:
+ perl,
+Replaces:
+ manpages-it (<< 2.80-4),
+Description: Debian package management front-end
+ dselect is a high-level interface for managing the installation and
+ removal of Debian software packages.
+ .
+ Many users find dselect intimidating and new users may prefer to use
+ apt-based user interfaces.

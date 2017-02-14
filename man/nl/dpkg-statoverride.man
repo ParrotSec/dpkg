@@ -1,0 +1,121 @@
+.\" dpkg manual page - dpkg-statoverride(1)
+.\"
+.\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2009-2011, 2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-statoverride 1 %RELEASE_DATE% %VERSION% dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-statoverride \- wijzig eigenaarschap en modus van bestanden
+.
+.SH OVERZICHT
+\fBdpkg\-statoverride\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+“\fBstat overrides\fP” zijn een manier om aan \fBdpkg\fP(1) te laten weten dat het
+bij het installeren van een pakket een andere eigenaar of modus moet
+gebruiken voor een bepaald pad (dit is van toepassing op elk
+bestandssysteemobject dat \fBdpkg\fP verwerkt, met inbegrip van mappen,
+apparaten, enz.). Dit kan gebruikt worden om af te dwingen dat programma's
+die normaal setuid zijn, geïnstalleerd worden zonder een setuid\-vlag of dat
+ze enkel uitgevoerd kunnen worden door een bepaalde groep.
+.P
+\fBdpkg\-statoverride\fP is een hulpmiddel voor het beheren van de lijst met
+statusaanpassingen (stat overrides). Het heeft drie basisfuncties:
+toevoegen, verwijderen en opsommen van aanpassingen.
+.
+.SH COMMANDO'S
+.TP 
+\fB\-\-add\fP\fI gebruiker groep modus pad\fP
+Voeg een statusaanpassing toe voor \fIpad\fP. Het is niet nodig dat \fIpad\fP
+reeds bestaat op het ogenblik dat dit commando gebruikt wordt. De aanpassing
+zal opgeslagen worden en later gebruikt worden. Gebruikers en groepen kunnen
+bij hun naam opgegeven worden (bijvoorbeeld \fBroot\fP of \fBnobody\fP), of met
+hun nummer door voor dat nummer een ‘\fB#\fP’ te plaatsen (bijvoorbeeld \fB#0\fP
+of \fB#65534\fP). De \fImodus\fP moet als octaal getal opgegeven worden.
+
+Indien \fB\-\-update\fP opgegeven wordt en \fIpad\fP bestaat, dan wordt dat
+onmiddellijk op de nieuwe eigenaar en modus ingesteld.
+.TP 
+\fB\-\-remove\fP\fI pad\fP
+Verwijder een statusaanpassing voor \fIpad\fP. De status zelf van \fIpad\fP wordt
+door dit commando niet gewijzigd.
+.TP 
+\fB\-\-list\fP [\fIglob\-patroon\fP]
+Som alle modificaties (overrides) op. Beperk de uitvoer tot modificaties die
+overeenkomen met het glob\-patroon, indien een glob\-patroon opgegeven werd.
+.TP 
+\fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OPTIES
+.TP 
+\fB\-\-admindir\fP \fImap\fP
+Wijzig de \fImap\fP voor de \fBdpkg\fP\-database waar ook het bestand met
+statusaanpassingen opgeslagen wordt. Standaard is dat \fI%ADMINDIR%\fP.
+.TP 
+\fB\-\-force\fP
+Verplicht een actie, zelfs als een redelijkheidstoets die anders zou
+verbieden. Dit is noodzakelijk om een bestaande aanpassing (override) te
+wijzigen.
+.TP 
+\fB\-\-update\fP
+Tracht onmiddellijk het \fIpad\fP, als dat bestaat, in te stellen op de nieuwe
+eigenaar en modus.
+.TP 
+\fB\-\-quiet\fP
+Wees minder breedsprakig over wat er gedaan wordt.
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde actie werd succesvol uitgevoerd.
+.TP 
+\fB1\fP
+Voor \fB\-\-list\fP, indien er geen modificaties (overrides) zijn of geen enkele
+beantwoordt aan het opgegeven glob\-patroon.
+.TP 
+\fB2\fP
+Fatale of onherstelbare fout die te wijten is aan ongeldig gebruik van de
+commandoregel of aan interacties met het systeem, zoals het benaderen van de
+database, het toewijzen van geheugen, enz.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_ADMINDIR\fP
+Indien dit ingesteld werd en de optie \fB\-\-admindir\fP niet gebruikt werd, zal
+dit gebruikt worden als de datamap voor \fBdpkg\fP.
+.
+.SH BESTANDEN
+.TP 
+\fI%ADMINDIR%/statoverride\fP
+Bestand dat de huidige lijst van statusaanpassingen van het systeem
+bevat. Het bevindt zich in de beheersmap van \fBdpkg\fP samen met andere
+bestanden die van belang zijn voor \fBdpkg\fP, zoals \fIstatus\fP en \fIavailable\fP.
+.br
+Opmerking: \fBdpkg\-statoverride\fP bewaart de oude kopie van dit bestand met de
+extensie “\-old” vooraleer het dit door het nieuwe bestand vervangt.
+.
+.SH "ZIE OOK"
+\fBdpkg\fP(1).

@@ -1,0 +1,157 @@
+.\" dpkg manual page - dpkg-gencontrol(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006, 2012-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gencontrol 1 %RELEASE_DATE% %VERSION% "Herramientas de dpkg"
+.nh
+.SH NOMBRE
+dpkg\-gencontrol \- Generación de ficheros de control de Debian
+.
+.SH SINOPSIS
+\fBdpkg\-gencontrol\fP [\fIopción\fP...]
+.
+.SH DESCRIPCIÓN
+\fBdpkg\-gencontrol\fP lee la información desde un árbol de fuentes de Debian
+desempaquetado, y genera un fichero de control de paquete binario (por
+omisión ubicado en «debian/tmp/DEBIAN/control»); durante el proceso, también
+simplificará los campos de las relaciones.
+.sp
+Thus \fBPre\-Depends\fP, \fBDepends\fP, \fBRecommends\fP and \fBSuggests\fP are
+simplified in this order by removing dependencies which are known to be true
+according to the stronger dependencies already parsed. It will also remove
+any self\-dependency (in fact it will remove any dependency which evaluates
+to true given the current version of the package as installed). Logically it
+keeps the intersection of multiple dependencies on the same package. The
+order of dependencies is preserved as best as possible: if any dependency
+must be discarded due to another dependency appearing further in the field,
+the superseding dependency will take the place of the discarded one.
+.sp
+The other relation fields (\fBEnhances\fP, \fBConflicts\fP, \fBBreaks\fP, \fBReplaces\fP
+and \fBProvides\fP)  are also simplified individually by computing the union of
+the various dependencies when a package is listed multiple times in the
+field.
+.sp
+\fBdpkg\-gencontrol\fP también añade una entrada para el paquete binario en
+\fBdebian/files\fP.
+.
+.SH OPCIONES
+.TP 
+\fB\-v\fP\fIversión\fP
+Define el número de versión del paquete binario a generar.
+.TP 
+\fB\-V\fP\fInombre\fP\fB=\fP\fIvalor\fP
+Define una variable de sustitución de la salida. Consulte
+\fBdeb\-substvars\fP(5) para más información acerca de la sustitución de la
+salida.
+.TP 
+\fB\-T\fP\fIfichero\-variables\-sustitución\fP
+Read substitution variables in \fIsubstvars\-file\fP; the default is
+\fBdebian/substvars\fP.  This option can be used multiple times to read
+substitution variables from multiple files (since dpkg 1.15.6).
+.TP 
+\fB\-D\fP\fIcampo\fP\fB=\fP\fIvalor\fP
+Sobreescribe o añade un campo en el fichero de control de salida.
+.TP 
+\fB\-U\fP\fIcampo\fP
+Elimina un campo del fichero de control de salida.
+.TP 
+\fB\-c\fP\fIfichero\-de\-control\fP
+Define el fichero de control principal de las fuentes del que leer la
+información. Por omisión es \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIfichero\-de\-cambios\fP
+Define el fichero de registro de cambios del que leer la información. Por
+omisión es \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIfichero\-de\-lista\-de\-ficheros\fP
+Lee o escribe la lista de ficheros a subir desde el fichero especificado, en
+lugar de utilizar \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIformato\-fichero\-de\-cambios\fP
+Define el formato del fichero de cambios. Para información sobre formatos
+alternativos consulte \fBdpkg\-parsechangelog\fP(1).
+.TP 
+\fB\-p\fP\fIpaquete\fP
+Genera información para el paquete binario \fIpaquete\fP. Puede omitir esta
+opción si el fichero de control de las fuentes lista un sólo paquete
+binario; de no ser así, es esencial seleccionar el paquete binario del cual
+se desea generar la información.
+.TP 
+\fB\-n\fP\fInombrefichero\fP
+Supone que el nombre de fichero del paquete será \fInombre\-fichero\fP en vez
+del habitual, «paquete_versión_arquitectura.deb».
+.TP 
+\fB\-is\fP, \fB\-ip\fP, \fB\-isp\fP
+These options are ignored for compatibility with older versions of the dpkg
+build scripts but are now deprecated. Previously they were used to tell
+\fBdpkg\-gencontrol\fP to include the Section and Priority fields in the control
+file. This is now the default behaviour. If you want to get the old
+behaviour you can use the \fB\-U\fP option to delete the fields from the control
+file.
+.TP 
+\fB\-P\fP\fIdirectorio\-compilación\-paquete\fP
+Indica a \fBdpkg\-source\fP que el paquete se está creando en
+\fIdirectorio\-compilación\-paquete\fP en vez de \fBdebian/tmp\fP. Se usa para
+encontrar el valor por omisión de la variable de sustitución y campo del
+fichero de control \fBInstalled\-Size\fP, tamaño instalado, (usando \fBdu\fP), y
+para establecer la ruta predefinida del fichero de salida.
+.TP 
+\fB\-O\fP[\fIfilename\fP]
+Print the control file to standard output (or \fIfilename\fP if specified,
+since dpkg 1.17.2), rather than to \fBdebian/tmp/DEBIAN/control\fP (or
+\fIpackage\-build\-dir\fP\fB/DEBIAN/control\fP if \fB\-P\fP was used).
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Muestra el modo de uso y termina.
+.TP 
+\fB\-\-version\fP
+Muestra la versión y termina.
+.
+.SH FICHEROS
+.TP 
+\fBdebian/control\fP
+El fichero de información de control de fuentes principal, que da
+información independiente de la versión acerca del paquete fuente y los
+paquetes binarios que puede generar.
+.TP 
+\fBdebian/files\fP
+La lista de ficheros generados que forman parte de la subida en
+preparación. \fBdpkg\-gencontrol\fP añade los supuestos nombres de fichero de
+paquetes binarios cuyos ficheros de control genera.
+.SH "VÉASE TAMBIÉN"
+.ad l
+\fBdeb\-substvars\fP(5), \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5),
+\fBdeb\-control\fP(5).
+.SH TRADUCTOR
+Rudy Godoy <rudy@kernel\-panik.org>,
+Rubén Porras <nahoo@inicia.es>,
+Bruno Barrera C. <bruno.barrera@igloo.cl>,
+Carlos Izquierdo <gheesh@ertis.net>,
+Esteban Manchado y
+NOK.
+Debian L10n Spanish <debian\-l10n\-spanish@lists.debian.org>.
+.br
+Revisiones por Santiago Vila <sanvila@unex.es>,
+Javier Fernández\-Sanguino, Rubén Porras,
+Luis Uribe y Omar Campagne.

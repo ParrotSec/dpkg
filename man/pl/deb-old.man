@@ -1,0 +1,75 @@
+.\" dpkg manual page - deb-old(5)
+.\"
+.\" Copyright © 1995 Raul Miller
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-old 5 %RELEASE_DATE% %VERSION% "użytki dpkg"
+.nh
+.SH NAZWA
+deb\-old \- stary format binarnego pakietu Debiana
+.
+.SH SKŁADNIA
+\fInazwa_pliku\fP\fB.deb\fP
+.
+.SH OPIS
+Format \fB.deb\fP jest formatem binarnego pakietu Debiana. Ta strona
+podręcznika opisuje \fBstary\fP format, używany przed wersją 0.93
+Debiana. Szczegóły nowego formatu można znaleźć w \fBdeb\fP(5).
+.
+.SH FORMAT
+Plik składa się z dwu linii informacji o formacie jako tekst ASCII, po
+których następują dwa połączone pliki ustar spakowane gzipem.
+.PP
+Pierwszą linią jest numer wersji formatu, wyrównany do 8 cyfr. Dla starego
+formatu numer ten wynosi \fB0.939000\fP.
+.PP
+W drugiej linii jest zapisana liczba dziesiętna (bez początkowych zer)
+podające długość pierwszego zgzipowanego pliku tar.
+.PP
+Każda z tych linii jest zakończona pojedynczym znakiem nowej linii.
+.PP
+Pierwszy plik tar zawiera informacje kontrolne, jako serię zwyczajnych
+plików. Zawsze musi być obecny plik \fBcontrol\fP zawierający główne informacje
+kontrolne.
+.PP
+In some very old archives, the files in the control tarfile may optionally
+be in a \fBDEBIAN\fP subdirectory. In that case, the \fBDEBIAN\fP subdirectory
+will be in the control tarfile too, and the control tarfile will have only
+files in that directory. Optionally the control tarfile may contain an entry
+for ‘\fB.\fP’, that is, the current directory.
+.PP
+Drugim skompresowanym archiwum tar jest archiwum systemu plików, zawierające
+nazwy ścieżek relatywne do głównego katalogu systemu, na którym będą
+instalowane. Nazwy te nie zaczynają się od ukośników.
+.
+.SH "ZOBACZ TAKŻE"
+\fBdeb\fP(5), \fBdpkg\-deb\fP(1), \fBdeb\-control\fP(5).
+.SH TŁUMACZE
+Piotr Roszatycki <dexter@debian.org>, 1999
+.br
+Bartosz Feński <fenio@debian.org>, 2004-2005
+.br
+Robert Luberda <robert@debian.org>, 2006-2008
+.br
+Wiktor Wandachowicz <siryes@gmail.com>, 2008
+.br
+Michał Kułach <michal.kulach@gmail.com>, 2012

@@ -1,0 +1,287 @@
+.\" dpkg manual page - dpkg-maintscript-helper(1)
+.\"
+.\" Copyright © 2010-2012 Raphaël Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-maintscript\-helper 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-maintscript\-helper \- contournement des limitations connues de dpkg dans
+les scripts du responsable
+.
+.SH SYNOPSIS
+\fBdpkg\-maintscript\-helper\fP \fIcommande\fP [\fIparamètres\fP...] \fB\-\-\fP
+\fIparamètres\-script\-responsable\fP...
+.
+.SH "COMMANDES ET PARAMÈTRES"
+.P
+\fBsupports\fP \fIcommande\fP
+.P
+\fBrm_conffile\fP \fIfichier\-de\-configuration\fP [\fIversion\-précédente\fP
+[\fIpaquet\fP]]
+.P
+\fBmv_conffile\fP \fIancien\-fichier\-de\-configuration\fP
+\fInouveau\-fichier\-de\-configuration\fP [\fIdernière\-version\fP [\fIpaquet\fP]]
+.P
+\fBsymlink_to_dir\fP \fInom\-de\-chemin\fP \fIancienne\-cible\fP [\fIversion\-précédente\fP
+[\fIpaquet\fP]]
+.P
+\fBdir_to_symlink\fP \fInom\-de\-chemin\fP \fInouvelle\-cible\fP [\fIversion\-précédente\fP
+[\fIpaquet\fP]]
+.
+.SH DESCRIPTION
+.P
+Ce programme est prévu pour être exécuté dans les scripts du responsable
+afin de réaliser certaines tâches que \fBdpkg\fP ne peut pas (encore) prendre
+en charge directement à cause de limites de conception ou de limitations
+actuelles.
+.P
+La plupart de ces tâches nécessitent la coordination de plusieurs scripts du
+responsable (\fBpreinst\fP, \fBpostinst\fP, \fBprerm\fP, \fBpostrm\fP). Pour éviter des
+erreurs, le même appel a simplement besoin d'être placé dans tous les
+scripts. Le programme adaptera alors son comportement en fonction de la
+variable d'environnement \fBDPKG_MAINTSCRIPT_NAME\fP et des paramètres des
+scripts du responsable qui doivent être passés avec un double tiret.
+.
+.SH "PARAMÈTRES COMMUNS"
+.TP 
+\fIversion\-précédente\fP
+Indique la dernière version du paquet pour laquelle la mise à jour doit
+provoquer l'opération. Il est important de déterminer correctement
+\fIversion\-précédente\fP afin que les opérations s'accomplissent correctement
+même si l'utilisateur reconstruit le paquet avec une version locale. Si le
+paramètre \fIversion\-précédente\fP est vide ou omis, l'opération sera tentée à
+chaque mise à jour (il est toutefois plus sûr d'indiquer la version afin que
+l'opération n'ait lieu qu'une fois).
+
+Si le fichier de configuration n'était pas fourni pour une raison ou une
+autre dans plusieurs versions et que vous modifiez les scripts du
+responsable pour nettoyer l'ancien fichier, \fIversion\-précédente\fP doit être
+basé sur la version actuellement préparée et non la première version qui ne
+fournissait plus ce fichier de configuration. Ceci s'applique à toutes les
+autres actions de la même manière
+
+Par exemple, pour un fichier de configuration supprimé dans la version
+\fB2.0\-1\fP d'un paquet, \fIdernière\-version\fP doit être \fB2.0\-1~\fP. Cela
+provoquera la suppression du fichier même si la version précédente \fB1.0\-1\fP
+a été reconstruite avec \fB1.0\-1local1\fP comme numéro de version. Ou bien, si
+un paquet substitue un chemin d'un lien symbolique (fourni dans la version
+\fB1.0\-1\fP) à un répertoire (fourni dans la version \fB2.0\-1\fP), mais ne réalise
+réellement la substitution que dans les scripts du responsable dans la
+version \fB3.0\-1\fP, \fIdernière\-version\fP doit être \fB3.0\-1~\fP.
+.TP 
+\fIpaquet\fP
+The package name. When the package is “Multi\-Arch: same” this parameter must
+include the architecture qualifier, otherwise it should \fBnot\fP usually
+include the architecture qualifier (as it would disallow cross\-grades, or
+switching from being architecture specific to architecture \fBall\fP or vice
+versa).  If the parameter is empty or omitted, the
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP and \fBDPKG_MAINTSCRIPT_ARCH\fP environment
+variables (as set by \fBdpkg\fP)  will be used to generate an arch\-qualified
+package name.
+.TP 
+\fB\-\-\fP
+Tous les paramètres des scripts du responsable doivent être passés au
+programme après \fB\-\-\fP.
+.SH "TÂCHES LIÉES AUX FICHIERS DE CONFIGURATION"
+.P
+Lors de la mise à jour d'un paquet, \fBdpkg\fP ne supprime pas automatiquement
+les fichiers de configuration (comportant des modifications locales à
+préserver) s'il n'est pas présent dans la nouvelle version. Il existe deux
+raisons principales à cela. En premier lieu, le fichier de configuration
+peut avoir été supprimé par accident, être réintégré dans la version
+suivante et il peut être nécessaire de retrouver les modifications
+locales. Ensuite, l'objectif est également de permettre d'effectuer la
+transition depuis des fichiers de configuration gérés par dpkg vers un
+fichier géré via les scripts du responsable, en général à l'aide d'un outil
+comme debconf ou ucf.
+.P
+Cela signifie que si un paquet a besoin de renommer ou supprimer un fichier
+de configuration, il doit le faire explicitement. L'objectif de
+\fBdpkg\-maintscript\-helper\fP est donc de fournir des méthodes de suppression
+ou renommage de fichiers de configuration via les scripts du responsable.
+.
+.SS "Supprimer un fichier de configuration"
+.P
+Si un fichier de configuration est complètement supprimé, il doit être
+effacé du disque sauf si l'administrateur local l'a modifié. Les éventuelles
+modifications locales doivent être conservées. Si la mise à jour du paquet
+est interrompue, le fichier de configuration rendu obsolète ne doit pas
+avoir disparu.
+.P
+L'ensemble de ces pré\-requis est mis en œuvre en utilisant les commandes
+shell suivantes dans les scripts \fBpreinst\fP, \fBpostinst\fP et \fBpostrm\fP\ :
+.P
+    dpkg\-maintscript\-helper rm_conffile \e
+        \fIfichier\-de\-configuration\fP \fIdernière\-version\fP \fIpaquet\fP \-\- "$@"
+.P
+\fIfichier\-de\-configuration\fP est le nom du fichier de configuration à
+supprimer.
+.P
+Détails de la mise en œuvre actuelle\ :\ dans le script \fBpreinst\fP, il est
+vérifié si le fichier de configuration a été modifié. Celui\-ci est alors
+renommé, soit en \fIfichier\-de\-configuration\fP\fB.dpkg\-remove\fP s'il n'a pas été
+modifié, soit en \fIfichier\-de\-configuration\fP\fB.dpkg\-backup\fP s'il l'a
+été. Dans le script \fBpostinst\fP, ce dernier fichier est ensuite renommé en
+\fIfichier\-de\-configuration\fP\fB.dpkg\-bak\fP et conservé pour référence puisqu'il
+contient des modifications locales, mais le premier est supprimé. Si la mise
+à jour du paquet est interrompue, le script \fBpostrm\fP remet en place le
+fichier de configuration d'origine. À la purge du paquet, le script
+\fBpostrm\fP supprimera également le fichier \fB.dpkg\-bak\fP qui avait été
+conservé jusque là.
+.
+.SS "Renommer un fichier de configuration"
+.P
+Si un fichier de configuration est déplacé à un autre endroit, il est
+nécessaire de garantir la préservation des modifications locales. À première
+vue, cela peut sembler être une simple modification dans le script
+\fBpreinst\fP, mais cela risque de résulter en une demande, par \fBdpkg\fP,
+d'approbation de modifications locales qui n'existent pas réellement.
+.P
+Un renommage élégant peut être mis en œuvre avec les extraits shell qui
+suivent, dans les scripts \fBpreinst\fP, \fBpostinst\fP et \fBpostrm\fP\ :
+.P
+    dpkg\-maintscript\-helper mv_conffile \e
+.P
+\fIancien\-fichier\fP et \fInouveau\-fichier\fP sont l'ancien et le nouveau nom du
+fichier de configuration à renommer.
+.P
+Détails de la mise en œuvre actuelle\ :\ dans le script \fBpreinst\fP, il est
+vérifié si le fichier de configuration a été modifié. Celui\-ci est alors
+soit laissé en place s'il a été modifié, soit renommé en
+\fIancien\-fichier\fP\fB.dpkg\-remove\fP s'il ne l'a pas été. Lors de la
+configuration, le script \fBpostinst\fP supprime
+\fIancien\-fichier\fP\fB.dpkg\-remove\fP et renomme \fIancien\-fichier\fP et
+\fInouveau\-fichier\fP si \fIancien\-fichier\fP existe toujours. Si la mise à jour
+ou l'installation sont interrompues, le script \fBpostrm\fP renomme
+\fIancien\-fichier\fP\fB.dpkg\-remove\fP en \fIancien\-fichier\fP si c'est
+indispensable.
+.
+.SH "SUBSTITUTIONS DE LIENS SYMBOLIQUES ET DE RÉPERTOIRES"
+.
+Lors de la mise à jour d'un paquet, \fBdpkg\fP ne substitue pas automatiquement
+un lien symbolique à un répertoire ou le contraire. Les retours à une
+version inférieure ne sont pas pris en charge et le chemin sera laissé comme
+il est.
+.
+.SS "Substituer un lien symbolique à un répertoire"
+.
+Si un lien symbolique est substitué à un répertoire réel, il est nécessaire
+de garantir qu'avant le dépaquettage le lien symbolique est retiré. À
+première vue, cela peut sembler être une simple modification dans le script
+\fBpreinst\fP, mais cela risque de résulter en problèmes si l'administrateur
+local a personnalisé le lien symbolique ou si l'on revient à une version
+antérieure du paquet.
+.P
+Un renommage élégant peut être mis en œuvre avec les extraits shell qui
+suivent, dans les scripts \fBpreinst\fP, \fBpostinst\fP et \fBpostrm\fP\ :
+.P
+    dpkg\-maintscript\-helper symlink_to_dir \e
+        \fInom\-de\-chemin\fP \fIancienne\-cible\fP \fIversion\-précédente\fP \fIpaquet\fP \-\- "$@"
+.P
+\fInom\-de\-chemin\fP est le nom absolu de l'ancien lien symbolique (le chemin
+sera un répertoire à la fin de l'installation) et \fIancienne\-cible\fP la cible
+de l'ancien lien symbolique vers \fInom\-de\-chemin\fP. Cela peut être un chemin
+absolu ou relatif vers le répertoire contenant \fInom\-de\-chemin\fP.
+.P
+Détails de la mise en œuvre actuelle\ :\ dans le script \fBpreinst\fP, il est
+vérifié si le lien symbolique existe et pointe vers \fIancienne\-cible\fP. Si ce
+n'est pas le cas, il est alors soit laissé en place, soit renommé en
+\fInom\-de\-chemin\fP\fB.dpkg\-backup\fP. Lors de la configuration, le script
+\fBpostinst\fP supprime \fInom\-de\-chemin\fP\fB.dpkg\-backup\fP si
+\fInom\-de\-chemin\fP\fB.dpkg\-backup\fP est encore un lien symbolique. Si la mise à
+jour ou l'installation sont interrompues, le script \fBpostrm\fP renomme
+\fInom\-de\-chemin\fP\fB.dpkg\-backup\fP en \fInom\-de\-chemin\fP si c'est indispensable.
+.
+.SS "Substituer un répertoire à un lien symbolique"
+.
+Si un répertoire réel est substitué à un lien symbolique, il est nécessaire
+de garantir qu'avant le dépaquettage le répertoire est retiré. À première
+vue, cela peut sembler être une simple modification dans le script
+\fBpreinst\fP, mais cela risque de résulter en problèmes si le répertoire
+contient des fichiers de configuration, des noms de chemins qui
+appartiennent à d'autres paquets, des noms de chemin créés localement ou si
+l'on revient à une version antérieure du paquet.
+.P
+Une substitution élégante peut être mise en œuvre avec les extraits shell
+qui suivent, dans les scripts \fBpreinst\fP, \fBpostinst\fP et \fBpostrm\fP\ :
+.P
+    dpkg\-maintscript\-helper dir_to_symlink \e
+        \fInom\-de\-chemin\fP \fInouvelle\-cible\fP \fIversion\-précédente\fP \fIpaquet\fP \-\- "$@"
+.P
+\fInom\-de\-chemin\fP est le nom absolu de l'ancien répertoire (le chemin sera un
+lien symbolique à la fin de l'installation) et \fInouvelle\-cible\fP la cible du
+nouveau lien symbolique vers \fInom\-de\-chemin\fP. Cela peut être un chemin
+absolu ou relatif vers le répertoire contenant \fInom\-de\-chemin\fP.
+.P
+Détails de la mise en œuvre actuelle\ :\ dans le script \fBpreinst\fP, il est
+vérifié si le répertoire existe et ne contient pas de fichiers de
+configuration, de noms de chemins qui appartiennent à d'autres paquets, de
+noms de chemin créés localement. Si ce n'est pas le cas, il est alors soit
+laissé en place, soit renommé en \fInom\-de\-chemin\fP\fB.dpkg\-backup\fP et un
+répertoire vide provisoire nommé \fInom\-de\-chemin\fP est créé, marqué par un
+fichier pour que dpkg le suive. Lors de la configuration, le script
+\fBpostinst\fP achève la substitution si \fInom\-de\-chemin\fP\fB.dpkg\-backup\fP  est
+encore un répertoire et si \fInom\-de\-chemin\fP est le répertoire provisoire. Il
+supprime le fichier qui marque le fichier provisoire et déplace les fichiers
+nouvellement créés dans le répertoire provisoire vers la cible du lien
+symbolique \fInouvelle cible\fP, remplace le répertoire provisoire
+\fInom\-de\-chemin\fP, maintenant vide, par un lien symbolique vers la
+\fInouvelle\-cible\fP et, enfin supprime \fInom\-de\-chemin\fP\fB.dpkg\-backup\fP. Si la
+mise à jour ou l'installation sont interrompues, le script \fBpostrm\fP renomme
+\fInom\-de\-chemin\fP\fB.dpkg\-backup\fP en \fInom\-de\-chemin\fP si c'est indispensable.
+.
+.SH "INTÉGRATION DANS LES PAQUETS"
+.P
+Lors de l'utilisation d'un assistant d'empaquetage, veuillez vérifier s'il
+ne dispose pas d'une intégration native de \fBdpkg\-maintscript\-helper\fP ce qui
+vous facilitera la tâche. Voir par exemple \fBdh_installdeb\fP(1).
+.P
+Comme \fBdpkg\-maintscript\-helper\fP est utilisé dans le script \fBpreinst\fP,
+l'utiliser sans conditions impose une pré\-dépendance afin de garantir que la
+version minimale nécessaire de \fBdpkg\fP ait bien été préalablement
+configurée. La version minimale dépend de la commande utilisée\ : ainsi pour
+\fBrm_conffile\fP et \fBmv_conffile\fP, cette version est 1.15.7.2, pour
+\fBsymlink_to_dir\fP et \fBdir_to_symlink\fP, c'est 1.17.14\ :
+.P
+    \fBPre\-Depends:\fP dpkg (>= 1.17.14)
+.P
+Cependant, dans de nombreux cas, l'opération réalisée par le programme n'est
+pas critique pour le paquet et au lieu d'utiliser une pré\-dépendance, il est
+possible de ne lancer le programme que si on a la certitude que la commande
+nécessaire est gérée par la version actuellement installée de \fBdpkg\fP\ :
+.P
+    if dpkg\-maintscript\-helper supports \fIcommande\fP; then
+        dpkg\-maintscript\-helper \fIcommande\fP ...
+    fi
+.P
+La commande \fBsupports\fP retournera  0 en cas de réussite, 1 autrement. Elle
+vérifiera si les variables d'environnement telles que définies par \fBdpkg\fP
+et requises par le script sont présentes, et considérera que c'est un échec
+si l'environnement n'est pas suffisant.
+.SH "VOIR AUSSI"
+.ad l
+\fBdh_installdeb\fP(1)
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

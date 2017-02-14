@@ -1,0 +1,176 @@
+.\" dpkg manual page - dpkg-divert(1)
+.\"
+.\" Copyright © 1995 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 1999 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-divert 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-divert \- remplacer la version d'un fichier contenu dans un paquet.
+.
+.SH SYNOPSIS
+\fBdpkg\-divert\fP [\fIoption\fP...] \fIcommande\fP
+.
+.SH DESCRIPTION
+\fBdpkg\-divert\fP sert à créer et à mettre à jour la liste des détournements.
+.PP
+File \fIdiversions\fP are a way of forcing \fBdpkg\fP(1)  not to install a file
+into its location, but to a \fIdiverted\fP location. Diversions can be used
+through the Debian package scripts to move a file away when it causes a
+conflict. System administrators can also use it to override some package's
+configuration file, or whenever some files (which aren't marked as
+“conffiles”) need to be preserved by \fBdpkg\fP, when installing a newer
+version of a package which contains those files.
+.sp
+.SH COMMANDES
+.TP 
+[\fB\-\-add\fP] \fIfichier\fP
+Ajoute un détournement pour le \fIfichier\fP.
+.TP 
+\fB\-\-remove\fP\fI fichier\fP
+Supprime un détournement pour le \fIfichier\fP.
+.TP 
+\fB\-\-list\fP \fImotif\-global\fP
+Liste les détournements qui correspondent à \fImotif\-global\fP.
+.TP 
+\fB\-\-listpackage\fP\fI fichier\fP
+Print the name of the package that diverts \fIfile\fP (since dpkg 1.15.0).
+Prints LOCAL if \fIfile\fP is locally diverted and nothing if \fIfile\fP is not
+diverted.
+.TP 
+\fB\-\-truename\fP\fI fichier\fP
+Affiche le vrai nom d'un fichier détourné.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-admindir\fP\fI répertoire\fP
+Définit le répertoire de données de \fBdpkg\fP comme \fIrépertoire\fP (par défaut
+c'est \fI%ADMINDIR%\fP).
+.TP 
+\fB\-\-divert\fP\fI détourner\-dans\fP
+\fIdétourner\-dans\fP est l'emplacement vers lequel les versions de \fIfichier\fP,
+tel qu'il est donné par d'autres paquets, seront détournées.
+.TP 
+\fB\-\-local\fP
+Indique que toutes les versions de ce fichier sont détournées. Cela signifie
+qu'il n'y a pas d'exception et quel que soit le paquet installé, ce fichier
+sera détourné. Un administrateur peut par exemple installer une version
+modifiée localement.
+.TP 
+\fB\-\-package\fP\fI paquet\fP
+\fIpaquet\fP est le nom du paquet dont la copie de \fIfichier\fP ne sera pas
+détournée. Autrement dit, \fIfichier\fP sera détourné sauf s'il appartient à
+\fIpaquet\fP.
+.TP 
+\fB\-\-quiet\fP
+Mode silencieux, pas de bavardage.
+.TP 
+\fB\-\-rename\fP
+Met en fait le fichier de côté. Quand le fichier de destination existe,
+\fBdpkg\-divert\fP interrompt l'opération.
+.TP 
+\fB\-\-test\fP
+Mode de test, ne modifie rien réellement, montre seulement.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le numéro de version puis quitte.
+.
+.SH "CODE DE SORTIE"
+.TP 
+\fB0\fP
+L'action demandée s'est correctement déroulée.
+.TP 
+\fB2\fP
+Fatal or unrecoverable error due to invalid command\-line usage, or
+interactions with the system, such as accesses to the database, memory
+allocations, etc.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_ADMINDIR\fP
+Si cette variable est positionnée et que l'option \fB\-\-admindir\fP n'est pas
+précisée, ce répertoire sera utilisé comme répertoire de données pour
+\fBdpkg\fP.
+.TP 
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP
+Si cette variable est positionnée et que les options \fB\-\-local\fP et
+\fB\-\-package\fP ne le sont pas, \fBdpkg\-divert\fP en utilisera la valeur comme nom
+de paquet.
+.
+.SH FICHIERS
+.TP 
+\fI%ADMINDIR%/diversions\fP
+Ce fichier contient la liste des détournements en œuvre sur le système. Il
+se trouve dans le répertoire d'administration de \fBdpkg\fP, avec d'autres
+fichiers importants comme «\ status\ » ou «\ available\ ».
+.br
+Note\ : \fBdpkg\-divert\fP préserve l'ancienne copie de ce fichier, avec
+l'extension «\ \-old\ », avant de la remplacer par la nouvelle.
+.
+.SH NOTES
+Pour l'ajout, le défaut est \fB\-\-local\fP et \fB\-\-divert\fP
+\fIoriginal\fP\fB.distrib\fP. Pour la suppression, \fB\-\-package\fP ou \fB\-\-local\fP et
+\fB\-\-divert\fP doivent correspondre quand ils sont précisés.
+
+On ne peut pas détourner des répertoires avec \fBdpkg\-divert\fP.
+
+Il faut faire attention quand une bibliothèque partagée est
+détournée. \fBldconfig\fP(8) crée un lien symbolique à partir du champ
+DT_SONAME embarqué dans la bibliothèque. \fBldconfig\fP ne connaît pas les
+détournements (seul \fBdpkg\fP le fait), et si une bibliothèque détournée
+possède le même SONAME que la bibliothèque non détournée, le lien symbolique
+peut pointer en fin de compte sur la bibliothèque détournée.
+.
+.SH EXEMPLES
+Pour détourner toutes les copies de \fI/usr/bin/example\fP vers
+\fI/usr/bin/example.foo\fP, c'est\-à\-dire demander aux paquets qui fournissent
+\fI/usr/bin/example\fP de l'installer dans \fI/usr/bin/example.foo\fP, en
+effectuant le changement de nom si nécessaire\ :
+.HP
+dpkg\-divert \-\-divert /usr/bin/example.foo \-\-rename /usr/bin/example
+.PP
+Pour supprimer ce détournement\ :
+.HP
+dpkg\-divert \-\-rename \-\-remove /usr/bin/example
+
+.PP
+Pour détourner n'importe quel paquet qui veut installer \fI/usr/bin/example\fP
+dans \fI/usr/bin/example.foo\fP, sauf votre propre paquet \fIwibble\fP\ :
+.HP
+dpkg\-divert \-\-package wibble \-\-divert /usr/bin/example.foo \-\-rename
+/usr/bin/example
+.PP
+Pour supprimer ce détournement\ :
+.HP
+dpkg\-divert \-\-package wibble \-\-rename \-\-remove /usr/bin/example
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

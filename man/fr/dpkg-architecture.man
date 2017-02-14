@@ -1,0 +1,377 @@
+.\" dpkg manual page - dpkg-architecture(1)
+.\"
+.\" Copyright © 2005 Marcus Brinkmann <brinkmd@debian.org>
+.\" Copyright © 2005 Scott James Remnant <scott@netsplit.com>
+.\" Copyright © 2006-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2009-2012 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-architecture 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-architecture \- Fixer et déterminer l'architecture pour la construction
+d'un paquet
+.
+.SH SYNOPSIS
+\fBdpkg\-architecture\fP [\fIoption\fP...] [\fIcommande\fP]
+.PP
+.
+.SH DESCRIPTION
+\fBdpkg\-architecture\fP aide à déterminer et à fixer l'architecture de
+construction et l'architecture hôte pour la création d'un paquet.
+.PP
+L'architecture de construction est toujours déterminée par un appel externe
+à \fBdpkg\fP(1). Elle ne peut pas être spécifiée en ligne de commande.
+.PP
+Vous pouvez spécifier une architecture hôte en utilisant une des options
+\fB\-\-host\-arch\fP et \fB\-\-host\-type\fP (ou les deux). Par défaut, la valeur est
+déterminée par un appel à \fBgcc\fP(1), ou en utilisant l'architecture de
+construction si \fBCC\fP ou gcc ne sont pas disponibles. Utiliser une seule des
+options \fB\-\-host\-arch\fP et \fB\-\-host\-type\fP est suffisant, la valeur de l'une
+est utilisée comme valeur par défaut de l'autre. Bien sûr, il est préférable
+de n'en préciser qu'une seule, puisque \fBdpkg\-architecture\fP affichera un
+avertissement si le choix ne correspond pas à la valeur par défaut.
+.
+.SH COMMANDES
+.TP 
+\fB\-l\fP, \fB\-\-list\fP
+Affiche les variables d'environnement, une par ligne, en utilisant le format
+\fIVARIABLE=valeur\fP. C'est l'action par défaut.
+.TP 
+\fB\-e\fP, \fB\-\-equal\fP \fIarchitecture\fP
+Vérifie l'égalité d'architectures (depuis dpkg 1.13.13). Cela compare
+l'architecture Debian en cours (ou celle spécifiée) à \fIarchitecture\fP afin
+de vérifier leur égalité. Cette action ne gère pas les architectures
+joker. La commande quitte avec un code de retour de 0 si l'architecture
+correspond et de 1 dans le cas contraire.
+
+.TP 
+\fB\-i\fP, \fB\-\-is\fP \fIarchitecture\-joker\fP
+Vérifie l'identité des architectures (depuis dpkg 1.13.13). Cela compare
+l'architecture Debian en cours (ou celle spécifiée) à \fIarchitecture\-joker\fP
+(après expansion de celle\-ci) afin de vérifier leur correspondance. La
+commande quitte avec un code de retour de 0 si l'architecture correspond et
+de 1 dans le cas contraire.
+.TP 
+\fB\-q\fP, \fB\-\-query\fP \fInom\-de\-variable\fP
+Affiche la valeur d'une seule variable.
+.TP 
+\fB\-s\fP, \fB\-\-print\-set\fP
+Produit une commande, qui peut être utilisée pour positionner les variables
+d'environnement avec «\ eval\ ».
+.TP 
+\fB\-u\fP, \fB\-\-print\-unset\fP
+Affiche une commande similaire à celle produite par \fB\-\-print\-unset\fP, mais
+pour supprimer toutes les variables.
+.TP 
+\fB\-c\fP, \fB\-\-command\fP \fIcommande\fP
+Exécute une \fIcommande\fP dans un environnement où toutes les variables sont
+positionnées aux valeurs spécifiées.
+.TP 
+\fB\-L\fP, \fB\-\-list\-known\fP
+Affiche une liste des architectures valables. Elle peut être restreinte par
+une ou plusieurs des options correspondantes \fB\-\-match\-wildcard\fP,
+\fB\-\-match\-bits\fP ou \fB\-\-match\-endian\fP (depuis dpkg 1.17.14).
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le numéro de version puis quitte.
+.
+.SH OPTIONS
+.TP 
+\fB\-a\fP, \fB\-\-host\-arch\fP \fIarchitecture\fP
+Définit l'architecture Debian en cours.
+.TP 
+\fB\-t\fP, \fB\-\-host\-type\fP \fItype\-de\-système\-gnu\fP
+Définit le type de système GNU en cours.
+.TP 
+\fB\-A\fP, \fB\-\-target\-arch\fP \fIarchitecture\fP
+Set the target Debian architecture (since dpkg 1.17.14).
+.TP 
+\fB\-T\fP, \fB\-\-target\-type\fP \fItype\-de\-système\-gnu\fP
+Set the target GNU system type (since dpkg 1.17.14).
+.TP 
+\fB\-W\fP, \fB\-\-match\-wildcard\fP \fIarchitecture\-joker\fP
+Restreindre les architectures listées par \fB\-\-list\-known\fP à celles
+correspondant à l'architecture\-joker (depuis dpkg 1.17.14).
+.TP 
+\fB\-B\fP, \fB\-\-match\-bits\fP \fIbits\-de\-l'architecture\fP
+Restreindre les architectures listées par \fB\-\-list\-known\fP à celles employant
+un CPU disposant du nombre de bits indiqués (depuis dpkg 1.17.14). Soit
+\fB32\fP, soit \fB64\fP.
+.TP 
+\fB\-E\fP, \fB\-\-match\-endian\fP \fIboutisme\-d'architecture\fP
+Restreindre les architectures listées par \fB\-\-list\-known\fP à celles
+correspondant au boutisme spécifié (depuis dpkg 1.17.14). Soit \fBlittle\fP,
+soit \fBbig\fP.
+.TP 
+\fB\-f\fP, \fB\-\-force\fP
+Les valeurs positionnées par les variables d'environnement ayant le même nom
+que celles utilisées par les scripts sont prises en compte (c'est\-à\-dire
+utilisée par \fBdpkg\-architecture\fP), sauf si cette option est présente. Cela
+permet à un utilisateur de surcharger une valeur même lorsque l'appel à
+\fBdpkg\-architecture\fP est inclus dans un autre script (par exemple
+\fBdpkg\-buildpackage\fP(1)).
+.
+.SH TERMINOLOGIE
+.IP "Machine de construction" 4
+Machine sur laquelle le paquet est construit.
+.IP "Machine hôte" 4
+Machine pour laquelle le paquet est construit.
+.IP "Machine cible" 4
+The machine the compiler is building for.  This is only needed when building
+a cross\-toolchain, one that will be built on the build architecture, to be
+run on the host architecture, and to build code for the target architecture.
+.IP "Architecture Debian" 4
+Chaîne de caractères de l'architecture Debian qui spécifie l'emplacement
+dans l'archive FTP. Par exemple\ : i386, sparc, hurd\-i386.
+.IP "Debian architecture tuple" 4
+A Debian architecture tuple is the fully qualified architecture with all its
+components spelled out.  This differs with Debian architectures in that at
+least the \fIcpu\fP component does not embed the \fIabi\fP.  The current tuple has
+the form \fIabi\fP\-\fIlibc\fP\-\fIos\fP\-\fIcpu\fP.  Examples: base\-gnu\-linux\-amd64,
+eabihf\-musl\-linux\-arm.
+.IP "Debian architecture wildcard" 4
+A Debian architecture wildcard is a special architecture string that will
+match any real architecture being part of it.  The general form is a Debian
+architecture tuple with four or less elements, and with at least one of them
+being \fBany\fP.  Missing elements of the tuple are prefixed implicitly as
+\fBany\fP, and thus the following pairs are equivalent:
+.nf
+    \fBany\fP\-\fBany\fP\-\fBany\fP\-\fBany\fP = \fBany\fP
+    \fBany\fP\-\fBany\fP\-\fIos\fP\-\fBany\fP = \fIos\fP\-\fBany\fP
+    \fBany\fP\-\fIlibc\fP\-\fBany\fP\-\fBany\fP = \fIlibc\fP\-\fBany\fP\-\fBany\fP
+.fi
+Examples: linux\-any, any\-i386, hurd\-any, eabi\-any\-any\-arm, musl\-any\-any.
+.IP "Type de système GNU" 4
+An architecture specification string consisting of two parts separated by a
+hyphen: cpu and system.  Examples: i586\-linux\-gnu, sparc\-linux\-gnu,
+i686\-gnu, x86_64\-netbsd.
+.IP "multiarch triplet" 4
+The clarified GNU system type, used for filesystem paths.  This triplet does
+not change even when the baseline ISA gets bumped, so that the resulting
+paths are stable over time.  The only current difference with the GNU system
+type is that the CPU part for i386 based systems is always i386.  Examples:
+i386\-linux\-gnu, x86_64\-linux\-gnu.  Example paths:
+/lib/powerpc64le\-linux\-gnu/, /usr/lib/i386\-kfreebsd\-gnu/.
+.
+.SH "VARIABLES D'ENVIRONNEMENT"
+Les variables suivantes sont positionnées par \fBdpkg\-architecture\fP\ :
+.IP \fBDEB_BUILD_ARCH\fP 4
+Architecture Debian de la machine de construction.
+.IP \fBDEB_BUILD_ARCH_ABI\fP 4
+The Debian abi name of the build machine (since dpkg 1.18.11).
+.IP \fBDEB_BUILD_ARCH_LIBC\fP 4
+The Debian libc name of the build machine (since dpkg 1.18.11).
+.IP \fBDEB_BUILD_ARCH_OS\fP 4
+Nom du système Debian de la machine de construction (depuis dpkg 1.13.2).
+.IP \fBDEB_BUILD_ARCH_CPU\fP 4
+Nom de processeur Debian de la machine de construction (depuis dpkg 1.13.2).
+.IP \fBDEB_BUILD_ARCH_BITS\fP 4
+Taille de pointeur de la machine de construction (en bits, depuis dpkg
+1.15.4).
+.IP \fBDEB_BUILD_ARCH_ENDIAN\fP 4
+Boutisme de la machine de construction (petit ou gros, depuis dpkg 1.15.4).
+.IP \fBDEB_BUILD_GNU_CPU\fP 4
+Partie CPU de \fBDEB_BUILD_GNU_TYPE\fP.
+.IP \fBDEB_BUILD_GNU_SYSTEM\fP 4
+Partie «\ système\ » de \fBDEB_BUILD_GNU_TYPE\fP.
+.IP \fBDEB_BUILD_GNU_TYPE\fP 4
+Type de système GNU de la machine de construction.
+.IP \fBDEB_BUILD_MULTIARCH\fP 4
+Le type en clair de système GNU de la machine de construction, utilisé pour
+les chemins du système de fichiers (depuis dpkg 1.16.0).
+.IP \fBDEB_HOST_ARCH\fP 4
+Architecture Debian de la machine hôte.
+.IP \fBDEB_HOST_ARCH_ABI\fP 4
+The Debian abi name of the host machine (since dpkg 1.18.11).
+.IP \fBDEB_HOST_ARCH_LIBC\fP 4
+The Debian libc name of the host machine (since dpkg 1.18.11).
+.IP \fBDEB_HOST_ARCH_OS\fP 4
+Nom du système Debian de la machine hôte (depuis dpkg 1.13.2).
+.IP \fBDEB_HOST_ARCH_CPU\fP 4
+Nom du processeur Debian de la machine hôte (depuis dpkg 1.13.2).
+.IP \fBDEB_HOST_ARCH_BITS\fP 4
+Taille de pointeur de la machine hôte (en bits, depuis dpkg 1.15.4).
+.IP \fBDEB_HOST_ARCH_ENDIAN\fP 4
+Boutisme de la machine hôte (petit ou gros, depuis dpkg 1.15.4).
+.IP \fBDEB_HOST_GNU_CPU\fP 4
+Partie «\ processeur\ » de \fBDEB_HOST_GNU_TYPE\fP.
+.IP \fBDEB_HOST_GNU_SYSTEM\fP 4
+Partie «\ système\ » de \fBDEB_HOST_GNU_TYPE\fP.
+.IP \fBDEB_HOST_GNU_TYPE\fP 4
+Type de système GNU de la machine hôte.
+.IP \fBDEB_HOST_MULTIARCH\fP 4
+Le type en clair de système GNU de la machine hôte, utilisé pour les chemins
+du système de fichiers (depuis dpkg 1.16.0).
+.IP \fBDEB_TARGET_ARCH\fP 4
+L'architecture Debian de la machine cible (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_ARCH_ABI\fP 4
+The Debian abi name of the target machine (since dpkg 1.18.11).
+.IP \fBDEB_TARGET_ARCH_LIBC\fP 4
+The Debian libc name of the target machine (since dpkg 1.18.11).
+.IP \fBDEB_TARGET_ARCH_OS\fP 4
+Nom du système Debian de la machine cible (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_ARCH_CPU\fP 4
+Nom du processeur Debian de la machine cible (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_ARCH_BITS\fP 4
+Taille de pointeur de la machine cible (en bits, depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_ARCH_ENDIAN\fP 4
+Boutisme de la machine cible (petit ou gros, depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_GNU_CPU\fP 4
+Partie «\ processeur\ » de \fBDEB_TARGET_GNU_TYPE\fP (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_GNU_SYSTEM\fP 4
+Partie «\ système\ » de \fBDEB_TARGET_GNU_TYPE\fP (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_GNU_TYPE\fP 4
+Type du système GNU de la machine cible (depuis dpkg 1.17.14).
+.IP \fBDEB_TARGET_MULTIARCH\fP 4
+Le type de système clarifié GNU de la machine cible, utilisé pour les
+chemins du système de fichiers (depuis dpkg 1.17.14).
+.
+.SH FICHIERS
+.SS "Tables d'architectures"
+All these files have to be present for \fBdpkg\-architecture\fP to work. Their
+location can be overridden at runtime with the environment variable
+\fBDPKG_DATADIR\fP.  These tables contain a format \fBVersion\fP pseudo\-field on
+their first line to mark their format, so that parsers can check if they
+understand it, such as "# Version=1.0".
+.TP 
+\fI%PKGDATADIR%/cputable\fP
+Table of known CPU names and mapping to their GNU name.  Format version 1.0
+(since dpkg 1.13.2).
+.TP 
+\fI%PKGDATADIR%/ostable\fP
+Table of known operating system names and mapping to their GNU name.  Format
+version 2.0 (since dpkg 1.18.11).
+.TP 
+\fI%PKGDATADIR%/tupletable\fP
+Mapping between Debian architecture tuples and Debian architecture names.
+Format version 1.0 (since dpkg 1.18.11).
+.TP 
+\fI%PKGDATADIR%/abitable\fP
+Table of Debian architecture ABI attribute overrides.  Format version 2.0
+(since dpkg 1.18.11).
+.SS "Gestion de l'empaquetage"
+.TP 
+\fI%PKGDATADIR%/architecture.mk\fP
+Un fragment de fichier Makefile qui définit correctement et exporte toutes
+les variables que \fBdpkg\-architecture\fP peut fournir (depuis dpkg 1.16.1).
+.
+.SH EXEMPLES
+\fBdpkg\-buildpackage\fP accepte l'option \fB\-a\fP, et la passe à
+\fBdpkg\-architecture\fP. Voici d'autres exemples\ :
+.IP
+CC=i386\-gnu\-gcc dpkg\-architecture \-c debian/rules build
+.IP
+eval \`dpkg\-architecture \-u\`
+.PP
+Vérifie si l'architecture en cours (ou celle spécifiée) est identique à une
+architecture\ :
+.IP
+dpkg\-architecture \-elinux\-alpha
+.IP
+dpkg\-architecture \-amips \-elinux\-mips
+.PP
+Vérifie si l'architecture en cours (ou celle spécifiée) est un système
+Linux\ :
+.IP
+dpkg\-architecture \-ilinux\-any
+.IP
+dpkg\-architecture \-ai386 \-ilinux\-any
+.
+.SS "Utilisation dans debian/rules"
+Les variables d'environnement définies par \fBdpkg\-architecture\fP sont
+fournies à \fIdebian/rules\fP comme variables pour make (consultez la
+documentation de make). Cependant, vous ne devez pas compter là\-dessus
+puisque cela empêche les appels manuels à ce script. À la place, vous devez
+toujours les initialiser en utilisant \fBdpkg\-architecture\fP avec l'option
+\fB\-q\fP. Voici quelques exemples, qui indiquent aussi comment améliorer la
+gestion des compilations croisées de votre paquet\ :
+.PP
+Récupération du type de système GNU et passage à ./configure\ :
+.PP
+.RS 4
+.nf
+DEB_BUILD_GNU_TYPE\ ?= $(shell dpkg\-architecture \-qDEB_BUILD_GNU_TYPE)
+DEB_HOST_GNU_TYPE\ ?= $(shell dpkg\-architecture \-qDEB_HOST_GNU_TYPE)
+[...]
+ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
+  confflags += \-\-build=$(DEB_HOST_GNU_TYPE)
+else
+  confflags += \-\-build=$(DEB_BUILD_GNU_TYPE) \e
+               \-\-host=$(DEB_HOST_GNU_TYPE)
+endif
+[...]
+\&./configure $(confflags)
+.fi
+.RE
+.PP
+Effectuer une action pour une architecture spécifique\ :
+.PP
+.RS 4
+.nf
+DEB_HOST_ARCH\ ?= $(shell dpkg\-architecture \-qDEB_HOST_ARCH)
+
+ifeq ($(DEB_HOST_ARCH),alpha)
+  [...]
+endif
+.fi
+.RE
+.PP
+Ou, si vous n'avez besoin que de vérifier le type du processeur et du
+système, utilisez les variables \fBDEB_HOST_ARCH_CPU\fP ou \fBDEB_HOST_ARCH_OS\fP.
+.PP
+Veuillez noter qu'il est également possible d'utiliser un fragment externe
+de fichier Makefile pour définir correctement toutes les variables que
+\fBdpkg\-architecture\fP peut fournir\ :
+.PP
+.RS 4
+.nf
+include %PKGDATADIR%/architecture.mk
+
+ifeq ($(DEB_HOST_ARCH),alpha)
+  [...]
+endif
+.fi
+.RE
+.PP
+Dans tous les cas, il ne faut jamais utiliser \fBdpkg \-\-print\-architecture\fP
+pour récupérer les informations relatives à l'architecture pendant la
+construction d'un paquet.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_DATADIR\fP
+If set, it will be used as the \fBdpkg\fP data directory, where the
+architecture tables are located (since dpkg 1.14.17).  Defaults to
+«%PKGDATADIR%».
+.SH NOTES
+Tous les noms de commandes et d'options longs ne sont disponibles qu'à
+partir de dpkg 1.17.17.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\-buildpackage\fP(1), \fBdpkg\-cross\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.
