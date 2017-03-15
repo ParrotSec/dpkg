@@ -156,6 +156,7 @@ my %elf_mach_map = (
     ELF_MACH_MN10300_CYGNUS()   => ELF_MACH_MN10300,
     ELF_MACH_OR1K_OLD()         => ELF_MACH_OR1K,
     ELF_MACH_S390_OLD()         => ELF_MACH_S390,
+    ELF_MACH_SPARC32PLUS()      => ELF_MACH_SPARC,
     ELF_MACH_SPARC64_OLD()      => ELF_MACH_SPARC64,
     ELF_MACH_XTENSA_OLD()       => ELF_MACH_XTENSA,
 );
@@ -179,7 +180,12 @@ sub get_format {
     my $header;
 
     open my $fh, '<', $file or syserr(g_('cannot read %s'), $file);
-    read($fh, $header, 64) == 64 or syserr(g_('cannot read %s'), $file);
+    my $rc = read $fh, $header, 64;
+    if (not defined $rc) {
+        syserr(g_('cannot read %s'), $file);
+    } elsif ($rc != 64) {
+        return;
+    }
     close $fh;
 
     my %elf;
@@ -195,30 +201,20 @@ sub get_format {
         $elf_word = 'L';
     } elsif ($elf{bits} == ELF_BITS_64) {
         $elf_word = 'Q';
-    } elsif ($elf{bits} == ELF_BITS_NONE) {
+    } else {
         return;
     }
     if ($elf{endian} == ELF_ORDER_2LSB) {
         $elf_endian = '<';
     } elsif ($elf{endian} == ELF_ORDER_2MSB) {
         $elf_endian = '>';
-    } elsif ($elf{endian} == ELF_ORDER_NONE) {
+    } else {
         return;
     }
 
     # Unpack the endianness and size dependent fields.
     my $tmpl = "x16(S2Lx[${elf_word}3]L)${elf_endian}";
     @elf{qw(type mach version flags)} = unpack $tmpl, $header;
-
-    # XXX: We need to special case ELF_MACH_SPARC32PLUS, because NetBSD
-    # treats it differently depending on the ELF bits.
-    if ($elf{mach} == ELF_MACH_SPARC32PLUS) {
-        if ($elf{bits} == ELF_BITS_32) {
-            $elf{mach} = ELF_MACH_SPARC;
-        } else {
-            $elf{mach} = ELF_MACH_SPARC64;
-        }
-    }
 
     # Canonicalize the machine ID.
     $elf{mach} = $elf_mach_map{$elf{mach}} // $elf{mach};
@@ -296,6 +292,11 @@ sub analyze {
     $self->{file} = $file;
 
     $self->{exec_abi} = Dpkg::Shlibs::Objdump::get_format($file);
+
+    if (not defined $self->{exec_abi}) {
+        warning(g_("unknown executable format in file '%s'"), $file);
+        return;
+    }
 
     local $ENV{LC_ALL} = 'C';
     open(my $objdump, '-|', $OBJDUMP, '-w', '-f', '-p', '-T', '-R', $file)

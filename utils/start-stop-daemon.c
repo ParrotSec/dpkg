@@ -49,6 +49,9 @@
 #  error Unknown architecture - cannot build start-stop-daemon
 #endif
 
+/* NetBSD needs this to expose struct proc. */
+#define _KMEMUSER 1
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
@@ -434,10 +437,10 @@ wait_for_child(pid_t pid)
 		fatal("error waiting for child");
 
 	if (WIFEXITED(status)) {
-		int err = WEXITSTATUS(status);
+		int ret = WEXITSTATUS(status);
 
-		if (err != 0)
-			fatal("child returned error exit status %d", err);
+		if (ret != 0)
+			fatal("child returned error exit status %d", ret);
 	} else if (WIFSIGNALED(status)) {
 		int signo = WTERMSIG(status);
 
@@ -1356,7 +1359,11 @@ ssd_kvm_get_procs(kvm_t *kd, int op, int arg, int *count)
 		count = &lcount;
 	*count = 0;
 
+#if defined(OS_OpenBSD)
+	kp = kvm_getprocs(kd, op, arg, sizeof(*kp), count);
+#else
 	kp = kvm_getprocs(kd, op, arg, count);
+#endif
 	if (kp == NULL && errno != ESRCH)
 		errx(1, "%s", kvm_geterr(kd));
 
@@ -1761,6 +1768,8 @@ pid_is_user(pid_t pid, uid_t uid)
 	proc_uid = kp->p_ruid;
 #elif defined(OS_DragonFlyBSD)
 	proc_uid = kp->kp_ruid;
+#elif defined(OS_NetBSD)
+	proc_uid = kp->kp_eproc.e_pcred.p_ruid;
 #else
 	if (kp->kp_proc.p_cred)
 		kvm_read(kd, (u_long)&(kp->kp_proc.p_cred->p_ruid),

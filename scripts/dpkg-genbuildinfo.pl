@@ -64,7 +64,7 @@ my %use_feature = (
     path => 0,
 );
 my @build_profiles = get_build_profiles();
-my $buildinfo_format = '0.2';
+my $buildinfo_format = '1.0';
 my $buildinfo;
 
 my $checksums = Dpkg::Checksums->new();
@@ -213,6 +213,7 @@ sub collect_installed_builddeps {
                 # installed package of the right architecture.
                 deps_iterate($new_deps, sub {
                     my $dep = shift;
+                    return unless defined $facts->{pkg}->{$dep->{package}};
                     $dep->{archqual} //= $architecture
                         if any { $_[0]->{architecture} eq $architecture }, @{$facts->{pkg}->{$dep->{package}}};
                     1;

@@ -130,13 +130,15 @@ Toon de versie en sluit af.
 .SH OMGEVING
 .TP 
 \fBDEB_BUILD_OPTIONS\fP
-This variable can be used to enable or disable various features that affect
-the information included in the .buildinfo file, via the \fBbuildinfo\fP option
-(since dpkg 1.18.19).  This option contains a comma\-separated list of
-features, prefixed with the ‘\fB+\fP’ or ‘\fB\-\fP’ modifiers, to denote whether to
-enable or disable them.  The special feature “\fBall\fP” can be used to enable
-or disable all other features.  The feature “\fBpath\fP” controls whether to
-unconditionally include the \fBBuild\-Path\fP field.
+Deze variabele kan gebruikt worden via de optie \fBbuildinfo\fP voor het
+activeren of deactiveren van verschillende functies die invloed hebben op de
+informatie die opgenomen wordt in het bestand .buildinfo (sinds dpkg
+1.18.19). Deze optie bevat een lijst van onderling door komma's gescheiden
+functies, die voorafgegaan worden door de bepaling ‘\fB+\fP’ of ‘\fB\-\fP’, welke
+aangeven of die functie al dan niet geactiveerd moet worden. De bijzondere
+functie “\fBall\fP” kan gebruikt worden om alle overige functies te activeren
+of te deactiveren. De functie “\fBpath\fP” regelt of het veld \fBBuild\-Path\fP
+onvoorwaardelijk mee opgenomen moet worden.
 .
 .SH BESTANDEN
 .TP 

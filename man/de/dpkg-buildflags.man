@@ -357,11 +357,12 @@ falls \fBrelro\fP nicht aktiviert ist.
 .
 .TP 
 \fBpie\fP
-Diese Einstellung (standardmäßig seit Dpkg 1.18.11 aktiviert und
-standardmäßig von GCC auf den Architekturen Amd64, Arm64, Armel, Armhf,
-I386, Mips, Mipsel, Mips64el, PPC64el und S390x hinzugefügt) fügt die
-benötigten Optionen hinzu, falls sie zum Aktivieren oder Deaktivieren von
-PIE benötigt werden. Falls aktiviert und von GCC hinzugefügt, ergänzt
+Diese Einstellung (seit Dpkg 1.18.13 ohne Vorgabe und standardmäßig von GCC
+auf den Debian\-Architekturen Amd64, Arm64, Armel, Armhf, I386,
+Kfreebsd\-amd64, Kfreebsd\-i386, Mips, Mipsel, Mips64el, PPC64el, S390x, Sparc
+und Sparc64 hinzugefügt) fügt die benötigten Optionen mittels
+GCC\-Spec\-Dateien hinzu, falls sie zum Aktivieren oder Deaktivieren von PIE
+benötigt werden. Falls aktiviert und von GCC hinzugefügt, ergänzt
 nichts. Wenn aktiviert und nicht von GCC hinzugefügt, fügt \fB\-fPIE\fP zu
 \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP
 und \fBFCFLAGS\fP hinzu und \fB\-fPIE \-pie\fP zu \fBLDFLAGS\fP. Wenn deaktiviert und

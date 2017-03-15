@@ -63,7 +63,7 @@ Feldwertes ist eine Versionsnummer mit einer Haupt\- und einer
 Nebenkomponente. Rückwärtsinkompatible Änderungen im Format führen zu einer
 Erhöhung der Hauptversion und rückwärtskompatible Änderungen (wie die
 Aufnahme neuer Felder) führen zu einer Erhöhung der Nebenversion. Die
-aktuelle Formatversion ist \fB0.2\fP.
+aktuelle Formatversion ist \fB1.0\fP.
 .TP 
 \fBSource:\fP \fIQuellname\fP [\fB(\fP\fIQuellversion\fP\fB)\fP] (verpflichtend)
 Der Name des Quellpakets. Falls sich die Quellversion von der Binärversion

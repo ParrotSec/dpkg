@@ -68,15 +68,17 @@ geval is, dan zou het programma in staat moeten zijn probleemloos voort te
 gaan, tenzij het in het archief (behalve op het einde) een onverwacht
 element tegenkomt, zoals hierna beschreven wordt.
 .PP
-The second required member is named \fBcontrol.tar\fP.  It is a tar archive
-containing the package control information, either not compressed (supported
-since dpkg 1.17.6), or compressed with gzip (with \fB.gz\fP extension) or xz
-(with \fB.xz\fP extension, supported since 1.17.6), as a series of plain files,
-of which the file \fBcontrol\fP is mandatory and contains the core control
-information, the \fBconffiles\fP, \fBtriggers\fP, \fBshlibs\fP and \fBsymbols\fP files
-contain optional control information, and the \fBpreinst\fP, \fBpostinst\fP,
-\fBprerm\fP and \fBpostrm\fP files are optional maintainer scripts.  The control
-tarball may optionally contain an entry for ‘\fB.\fP’, the current directory.
+Het tweede vereiste element wordt \fBcontrol.tar\fP genoemd. Het is een
+tar\-archief dat de controle\-informatie van het pakket bevat, ofwel
+niet\-gecomprimeerd (ondersteund sinds dpkg 1.17.6) of gecomprimeerd met gzip
+(met de extensie \fB.gz\fP) of met xz (met de extensie \fB.xz\fP, ondersteund
+sinds 1.17.6), onder de vorm van een reeks gewone bestanden, waarvan het
+bestand \fBcontrol\fP, dat de kern van de controle\-informatie bevat, verplicht
+deel uitmaakt. De bestanden \fBconffiles\fP, \fBtriggers\fP, \fBshlibs\fP en
+\fBsymbols\fP bevatten facultatieve controle\-informatie en de bestanden
+\fBpreinst\fP, \fBpostinst\fP, \fBprerm\fP en \fBpostrm\fP zijn facultatieve scripts van
+de pakketonderhouder. Het controle\-tar\-archief kan facultatief een
+vermelding bevatten van ‘\fB.\fP’, de huidige map.
 .PP
 Het derde en laatste verplichte element wordt \fBdata.tar\fP genoemd. Het bevat
 het bestandssysteem in de vorm van een tar\-archief, dat ofwel

@@ -1,3 +1,85 @@
+dpkg (1.18.23parrot1) testing; urgency=medium
+
+  * Rebuild using Parrot build system
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Wed, 15 Mar 2017 23:01:18 +0100
+
+dpkg (1.18.23kali1) kali-dev; urgency=medium
+
+  * Synchronize with Debian
+  * Keep the work-around EXDEV error returned by overlayfs
+    (see: #836211)
+
+ -- Sophie Brun <sophie@freexian.com>  Tue, 14 Mar 2017 11:06:43 +0100
+
+dpkg (1.18.23) unstable; urgency=medium
+
+  * Handle unmatched arch-qualified virtual packages in dpkg-genbuildinfo,
+    instead of letting perl die. Closes: #849944
+  * Declare .buildinfo format as stable with version 1.0.
+  * Do not depend on cxxabi.h to have declared __cxa_pure_virtual, use
+    the same “__cxxabiv1” namespace as specified in the C++ ABI, instead
+    of using the “abi” alias intended for use by userland.
+    Thanks to Jörg Sonnenberger <joerg@netbsd.org>.
+  * Add a comment on any C code switch case that falls through. Fixes new
+    gcc-7 warnings.
+  * Use snprintf() instead of sprintf() in libdpkg when constructing the ar
+    member header, as we might overflow depending on the input data.
+  * Portability:
+    - Do not redeclare sys_siglist in libcompat when the system does so.
+      Thanks to Thomas Klausner <wiz@NetBSD.org>.
+    - Rename err variable to ret in start-stop-daemon as the former is a
+      function on BSDs.
+    - Use 5-argument kvm_getprocs() call form on OpenBSD in start-stop-daemon.
+    - Use correct struct kinfo_proc ruid submember name on NetBSD in
+      start-stop-daemon.
+    - Define _KMEMUSER for NetBSD to get declarations for various
+      struct kinfo_proc members in start-stop-daemon.
+  * Perl modules:
+    - Do not special case EM_SPARC32PLUS for NetBSD in Dpkg::Shlibs::Objdump,
+      the code has been fixed in NetBSD as that situation could not happen.
+    - Fix read() error handling in Dpkg::Shlibs::Objdump::get_format() to
+      gracefully ignore non-ELF files again. Closes: #854536
+    - Emit an explicit warning from Dpkg::Shlibs::Objdump::Object::analyze()
+      for unknown executable formats instead of relying on objdump doing so.
+    - Do not parse bogus ELF binaries in Dpkg::Shlibs::Objdump::get_format().
+      Reported by Niels Thykier <niels@thykier.net>.
+    - Add ‘.mnt-ignore’ to the default ignore lists in Dpkg::Source::Package,
+      as we were already ignoring the ‘_MTN’ pathnames. Closes: #855450
+      Thanks to Nicolas Boulenguez <nicolas@debian.org>.
+    - Mark kfreebsd-amd64, kfreebsd-i386, sparc and sparc64 architectures as
+      having gcc builtin PIE in Dpkg::Vendor::Debian.
+    - Switch PIE handling in Dpkg::Vendor::Debian to have no default (!) and
+      delegate the setting to gcc or an explicit request by a user. This is
+      needed to cope with the general PIE brokenness situation in Debian, and
+      the current specific brokenness of a Debian gcc patch mangling the dpkg
+      build flags. Closes: #848129, #845550
+  * Documentation:
+    - Clarify the requirements for deb-conffile(5) pathnames. Closes: #854417
+      Proposed by Dieter Adriaenssens <dieter.adriaenssens@gmail.com>.
+    - Document dpkg-source --before-build and --after-build in --help output.
+    - Document dpkg-buildpackage --ignore-builtin-builddeps in --help output.
+  * Build system:
+    - Check <sys/proc.h> by also including <sys/param.h>, on several BSD
+      systems the header is not self-contained.
+    - Handle libmd implementations built into system libc, as found on some
+      BSD systems.
+    - Do not fail on missing compression libraries or headers on automatic
+      detection mode. Regression introduced in dpkg 1.18.14.
+  * Test suite:
+    - Use the detected perl interpreter instead of a random one from PATH.
+
+  [ Updated programs translations ]
+  * Dutch (Frans Spiesschaert). Closes: #856325
+
+  [ Updated scripts translations ]
+  * German (Helge Kreutzmann).
+
+  [ Updated man pages translations ]
+  * Dutch (Frans Spiesschaer). Closes: #856326
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 06 Mar 2017 05:41:11 +0100
+
 dpkg (1.18.22parrot0) testing; urgency=medium
 
   * Rebuild using Parrot build system

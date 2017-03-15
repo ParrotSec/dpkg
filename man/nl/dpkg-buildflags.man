@@ -363,17 +363,17 @@ optie kan niet aangezet worden als \fBrelro\fP niet geactiveerd is.
 .
 .TP 
 \fBpie\fP
-Deze instelling (standaard geactiveerd sinds dpkg 1.18.11 en door gcc
-standaard geïnjecteerd bij de Debian architecturen amd64, arm64, armel,
-armhf, i386, mips, mipsel, mips64el, ppc64el en s390x) voegt zo nodig de
-vereiste opties toe om PIE te activeren of te deactiveren. In geval van
-activering en door gcc geïnjecteerd, wordt er niets toegevoegd, In geval van
-activering en niet geïnjecteerd door gcc, wordt \fB\-fPIE\fP toegevoegd bij
-\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP
-en \fBFCFLAGS\fP, en \fB\-fPIE \-pie\fP bij \fBLDFLAGS\fP. In geval van deactivering en
-geïnjecteerd door gcc wordt \fB\-fno\-PIE\fP toegevoegd bij \fBCFLAGS\fP,
-\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en
-\fBFCFLAGS\fP, en \fB\-fno\-PIE \-no\-pie\fP bij \fBLDFLAGS\fP.
+This setting (with no default since dpkg 1.18.23, and injected by default by
+gcc on the amd64, arm64, armel, armhf, i386, kfreebsd\-amd64, kfreebsd\-i386,
+mips, mipsel, mips64el, ppc64el, s390x, sparc and sparc64 Debian
+architectures)  adds the required options via gcc specs files if needed to
+enable or disable PIE. When enabled and injected by gcc, adds nothing. When
+enabled and not injected by gcc, adds \fB\-fPIE\fP to \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and
+\fB\-fPIE \-pie\fP to \fBLDFLAGS\fP. When disabled and injected by gcc, adds
+\fB\-fno\-PIE\fP to \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP,
+\fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and \fB\-fno\-PIE \-no\-pie\fP to
+\fBLDFLAGS\fP.
 
 Position Independent Executable (PIE \- positie\-onafhankelijke programma's)
 zijn nodig om voordeel te halen uit Address Space Layout Randomization (ASLR

@@ -41,15 +41,18 @@ op een Debian systeem. In het hoofdmenu van \fBdselect\fP kan de systeembeheerde
  \- Pakketselecties wijzigen en afhankelijkheden beheren,
  \- Nieuwe pakketten installeren of ze opwaarderen naar een recentere versie.
 .PP
-\fBdselect\fP operates as a front\-end to \fBdpkg\fP(1), the low\-level Debian
-package handling tool. It features a full\-screen package selections manager
-with package depends and conflicts resolver. When run with administrator
-privileges, packages can be installed, upgraded and removed. Various access
-methods can be configured to retrieve available package version information
-and installable packages from package repositories.  Depending on the used
-access method, these repositories can be public archive servers on the
-internet, local archive servers or cdroms.  The recommended access method is
-\fIapt\fP, which is provided by the package \fBapt\fP.
+\fBdselect\fP functioneert als een frontend voor \fBdpkg\fP(1), het primaire
+Debian gereedschap voor het behandelen van pakketten. Het maakt gebruik van
+het volledige scherm om een systeem ter beschikking te stellen voor het
+beheren van pakketselecties met een oplosser voor vereisten en
+tegenstrijdigheden. Indien het uitgevoerd wordt met beheerdersrechten,
+kunnen er pakketten mee geïnstalleerd, opgewaardeerd of verwijderd
+worden. Verschillende benaderingsmethodes kunnen ingesteld worden voor het
+ophalen van informatie over beschikbare pakketversies en voor het ophalen
+van installeerbare pakketten uit pakketbronnen. Afhankelijk van de gebruikte
+benaderingsmethode kunnen deze pakketbronnen publieke archiefservers zijn op
+het internet, lokale archiefservers of CD's. De aanbevolen
+benaderingsmethode is \fIapt\fP, welke door het pakket \fBapt\fP geleverd wordt.
 .PP
 Gewoonlijk wordt \fBdselect\fP zonder parameters gestart. Er wordt een
 interactief menu weergegeven dat de gebruiker een lijst met commando's
@@ -241,16 +244,17 @@ Sluit het programma af met de foutcode nul (succesvol).
 .sp
 .SS Inleiding
 .sp
-\fBdselect\fP directly exposes the administrator to some of the complexities
-involved with managing large sets of packages with many
-interdependencies. For a user who is unfamiliar with the concepts and the
-ways of the Debian package management system, it can be quite
-overwhelming. Although \fBdselect\fP is aimed at easing package management and
-administration, it is only instrumental in doing so and cannot be assumed to
-be a sufficient substitute for administrator skill and understanding. The
-user is required to be familiar with the concepts underlying the Debian
-packaging system.  In case of doubt, consult the \fBdpkg\fP(1) manpage and the
-distribution policy.
+\fBdselect\fP stelt de beheerder rechtstreeks bloot aan sommige aspecten van de
+complexiteit van het beheren van een grote hoeveelheid pakketten met een
+grote onderlinge afhankelijkheid. Voor een gebruiker die niet vertrouwd is
+met het concept en de werkwijze van het Debian pakketbeheersysteem kan dit
+behoorlijk overdonderend zijn. Hoewel \fBdselect\fP erop gericht is
+pakketbeheer te vergemakkelijken, is het niet meer dan een instrument ervoor
+en er kan niet van verwacht worden dat het afdoend in de plaats treedt van
+de vaardigheden en de kennis van de beheerder. Van de gebruiker wordt
+vereist dat hij vertrouwd is met de onderliggende concepten van het Debian
+pakketsysteem. Gelieve in geval van twijfel de man\-pagina van \fBdpkg\fP(1) te
+raadplegen en de beleidsrichtlijnen van de distributie.
 .sp
 Tenzij \fBdselect\fP uitgevoerd wordt in de rechtstreekse of de expertmodus,
 wordt eerst een hulpscherm getoond als u dit commando via het menu
@@ -289,9 +293,10 @@ het pakket, die de reden zijn waarom het pakket vermeld wordt, te zien.
 .sp
 .SS "De pakketstatuslijst"
 .sp
-The main select screen displays a list of all packages known to the Debian
-package management system. This includes packages installed on the system
-and packages known from the available packages database.
+Het selectiehoofdscherm toont een lijst met alle pakketten die door het
+Debian pakketbeheersysteem gekend zijn. Dit omvat de pakketten die op het
+systeem geïnstalleerd zijn en de pakketten die gekend zijn in de databank
+van beschikbare pakketten.
 .sp
 Voor elk pakket geeft de lijst de status van het pakket weer, zijn
 prioriteit, sectie, geïnstalleerde en beschikbare architectuur,

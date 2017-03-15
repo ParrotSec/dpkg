@@ -1,6 +1,6 @@
 .\" dpkg manual page - deb-conffiles(5)
 .\"
-.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2016-2017 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -34,8 +34,11 @@ geregistreerd staan als bestanden die door de gebruiker aangepast kunnen
 worden) door een bestand \fIconffiles\fP op te nemen in zijn controle\-archief
 (nl. \fIDEBIAN/conffiles\fP bij het creëren van het pakket).
 .PP
-Dit bestand bevat een lijst van bestanden, één per regel. Witruimte aan het
-einde wordt weggelaten en lege regels worden genegeerd.
+This file contains a list of files, one per line.  They should be listed as
+absolute pathnames, and should exist in the binary package, otherwise
+\fBdpkg\fP(1) will ignore them (although by default \fBdpkg\-deb\fP(1) will refuse
+to build such binary packages).  Trailing whitespace will be trimmed, and
+empty lines will be ignored.
 .
 .SH VOORBEELD
 .nf
@@ -46,4 +49,4 @@ einde wordt weggelaten en lege regels worden genegeerd.
 .fi
 .
 .SH "ZIE OOK"
-\fBdpkg\fP(1).
+\fBdpkg\-deb\fP(1), \fBdpkg\fP(1).

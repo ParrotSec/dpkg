@@ -1,6 +1,6 @@
 .\" dpkg manual page - deb-conffiles(5)
 .\"
-.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2016-2017 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -33,8 +33,12 @@ Ein Paket erklärt seine Liste an Conffiles, indem es eine Datei \fIconffiles\fP
 in seinem Steuerarchiv (d.h. \fIDEBIAN/conffiles\fP während der
 Paketerstellung) hinzunimmt.
 .PP
-Diese Datei enthält eine Liste von Dateien, eine pro Zeile. Leerraumzeichen
-am Ende werden entfernt und leere Zeilen werden ignoriert.
+Diese Datei enthält eine Liste von Dateien, eine pro Zeile. Sie sollten als
+absolute Pfadnamen aufgeführt werden und sollten im Programmpaket
+existieren, andernfalls wird \fBdpkg\fP(1) sie ignorieren (allerdings wird
+\fBdpkg\-deb\fP(1) standardmäßig den Bau solcher Programmpakete
+verweigern). Abschließende Leerraumzeichen werden entfernt und leere Zeilen
+werden ignoriert.
 .
 .SH BEISPIEL
 .nf
@@ -45,7 +49,7 @@ am Ende werden entfernt und leere Zeilen werden ignoriert.
 .fi
 .
 .SH "SIEHE AUCH"
-\fBdpkg\fP(1).
+\fBdpkg\-deb\fP(1), \fBdpkg\fP(1).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und

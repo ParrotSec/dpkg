@@ -1,3 +1,523 @@
+commit 933f2d62873822eae68fc082f69b4a7c48802c28
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 6 05:41:23 2017 +0100
+
+    Release 1.18.23
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit f797959b4912b18b8f40768b08dad2ab774e1421
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 6 06:27:22 2017 +0100
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |   2 +-
+ dselect/po/ca.po        |   2 +-
+ dselect/po/cs.po        |   2 +-
+ dselect/po/da.po        |   2 +-
+ dselect/po/de.po        |   2 +-
+ dselect/po/dselect.pot  |   4 +-
+ dselect/po/el.po        |   2 +-
+ dselect/po/es.po        |   2 +-
+ dselect/po/et.po        |   2 +-
+ dselect/po/eu.po        |   2 +-
+ dselect/po/fr.po        |   2 +-
+ dselect/po/gl.po        |   2 +-
+ dselect/po/hu.po        |   2 +-
+ dselect/po/id.po        |   2 +-
+ dselect/po/it.po        |   2 +-
+ dselect/po/ja.po        |   2 +-
+ dselect/po/ko.po        |   2 +-
+ dselect/po/nb.po        |   2 +-
+ dselect/po/nl.po        |   2 +-
+ dselect/po/nn.po        |   2 +-
+ dselect/po/pl.po        |   2 +-
+ dselect/po/pt.po        |   2 +-
+ dselect/po/pt_BR.po     |   2 +-
+ dselect/po/ro.po        |   2 +-
+ dselect/po/ru.po        |   2 +-
+ dselect/po/sk.po        |   2 +-
+ dselect/po/sv.po        |   2 +-
+ dselect/po/tl.po        |   2 +-
+ dselect/po/vi.po        |   2 +-
+ dselect/po/zh_CN.po     |   2 +-
+ dselect/po/zh_TW.po     |   2 +-
+ man/po/de.po            |  32 ++++----
+ man/po/dpkg-man.pot     |  46 +++++++-----
+ man/po/es.po            |  71 ++++++++++--------
+ man/po/fr.po            |  71 ++++++++++--------
+ man/po/hu.po            |  50 +++++++------
+ man/po/it.po            |  71 ++++++++++--------
+ man/po/ja.po            |  69 ++++++++++--------
+ man/po/nl.po            | 189 ++++++++++++++++++++++--------------------------
+ man/po/pl.po            |  73 +++++++++++--------
+ man/po/pt_BR.po         |  52 +++++++------
+ man/po/ru.po            |  50 +++++++------
+ man/po/sv.po            |  71 ++++++++++--------
+ man/po/zh_CN.po         |  47 +++++++-----
+ po/ast.po               |   2 +-
+ po/bs.po                |   2 +-
+ po/ca.po                |   2 +-
+ po/cs.po                |   2 +-
+ po/da.po                |   2 +-
+ po/de.po                |   2 +-
+ po/dpkg.pot             |   4 +-
+ po/dz.po                |   2 +-
+ po/el.po                |   2 +-
+ po/eo.po                |   2 +-
+ po/es.po                |   2 +-
+ po/et.po                |   2 +-
+ po/eu.po                |   2 +-
+ po/fr.po                |   2 +-
+ po/gl.po                |   2 +-
+ po/hu.po                |   2 +-
+ po/id.po                |   2 +-
+ po/it.po                |   2 +-
+ po/ja.po                |   2 +-
+ po/km.po                |   2 +-
+ po/ko.po                |   2 +-
+ po/ku.po                |   2 +-
+ po/lt.po                |   2 +-
+ po/mr.po                |   2 +-
+ po/nb.po                |   2 +-
+ po/ne.po                |   2 +-
+ po/nl.po                |   4 +-
+ po/nn.po                |   2 +-
+ po/pa.po                |   2 +-
+ po/pl.po                |   2 +-
+ po/pt.po                |   2 +-
+ po/pt_BR.po             |   2 +-
+ po/ro.po                |   2 +-
+ po/ru.po                |   2 +-
+ po/sk.po                |   2 +-
+ po/sv.po                |   2 +-
+ po/th.po                |   2 +-
+ po/tl.po                |   2 +-
+ po/tr.po                |   2 +-
+ po/vi.po                |   2 +-
+ po/zh_CN.po             |   2 +-
+ po/zh_TW.po             |   2 +-
+ scripts/po/ca.po        |  29 ++++++--
+ scripts/po/de.po        |   2 +-
+ scripts/po/dpkg-dev.pot |  15 +++-
+ scripts/po/es.po        |  19 +++--
+ scripts/po/fr.po        |  27 ++++++-
+ scripts/po/pl.po        |  29 ++++++--
+ scripts/po/ru.po        |  29 ++++++--
+ scripts/po/sv.po        |  29 ++++++--
+ 94 files changed, 702 insertions(+), 521 deletions(-)
+
+commit fa453ac3249430d39db85d814324e0eb7c874cd7
+Author: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>
+Date:   Mon Mar 6 05:03:42 2017 +0100
+
+    po: Update Dutch translations
+    
+    Closes: #856325, #856326
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   6 ++
+ man/po/nl.po     | 163 +++++++++++++++++++++++++++++++------------------------
+ po/nl.po         |  10 ++--
+ 3 files changed, 103 insertions(+), 76 deletions(-)
+
+commit fe65fe1d82c1b3d84f5b733057a6ea809a229f82
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Mon Feb 27 08:58:01 2017 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2841t1f.
+
+ debian/changelog |  3 ++
+ man/po/de.po     | 90 +++++++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 62 insertions(+), 31 deletions(-)
+
+commit 643ae098b54463eed6c40869a03a72f43c946585
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Mon Feb 27 08:41:40 2017 +0100
+
+    Update German scripts translation
+    
+    Update to 589t.
+
+ debian/changelog |  3 +++
+ scripts/po/de.po | 28 ++++++++++++++++++++++------
+ 2 files changed, 25 insertions(+), 6 deletions(-)
+
+commit f34ce936004583f3280182a9dcc3daa9295f56a0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 22 22:46:56 2017 +0100
+
+    libdpkg: Use snprintf() instead of sprintf()
+    
+    The field width in a format string does not limit the number of bytes
+    emitted, so we can overflow, even if we are checking the number of bytes
+    written. Use snprintf() to limit the amount written.
+    
+    Warned-by: gcc-7
+
+ debian/changelog | 2 ++
+ lib/dpkg/ar.c    | 9 +++++----
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+commit 63bf76937536f21b5ec110c75c166c3d7b343c76
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 22 22:44:29 2017 +0100
+
+    dpkg: Add a comment on any switch case that falls through
+    
+    Warned-by: gcc-7
+
+ debian/changelog | 2 ++
+ src/archives.c   | 1 +
+ src/depcon.c     | 6 ++++--
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 7b1b21e4c94ca046141e4d13bd96a0a3d1b6169f
+Author: Jörg Sonnenberger <joerg@netbsd.org>
+Date:   Wed Feb 15 03:42:40 2017 +0100
+
+    dselect: Do not depend on cxxabi.h to have declared __cxa_pure_virtual
+    
+    The C++ ABI specifies that these functions are within the “__cxxabiv1”
+    namespace, and that “abi” is an alias to be used by userland. But in
+    this case as we are replacing the implementation we should also use the
+    same canonical namespace.
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog       | 4 ++++
+ dselect/cxx-support.cc | 6 +++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+commit 414903639c5c23ec4e346a011feea2deb7565be0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 22:40:20 2017 +0100
+
+    s-s-d: Define _KMEMUSER for NetBSD
+    
+    We need to define this macro to be able to get the declarations for the
+    struct proc and other struct kproc_info members.
+
+ debian/changelog          | 2 ++
+ utils/start-stop-daemon.c | 3 +++
+ 2 files changed, 5 insertions(+)
+
+commit 12af640e1bcfa7dd1327ccd0e5d775d7ba1571d2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 22:39:56 2017 +0100
+
+    s-s-d: Use correct struct kinfo_proc ruid submember on NetBSD
+
+ debian/changelog          | 2 ++
+ utils/start-stop-daemon.c | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 2283f64a899e73d5e9db15508083fe31e995c4e1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 22:37:52 2017 +0100
+
+    s-s-d: Use 5-argument kvm_getprocs() call form on OpenBSD
+
+ debian/changelog          | 1 +
+ utils/start-stop-daemon.c | 4 ++++
+ 2 files changed, 5 insertions(+)
+
+commit 6031615231a9fd4ba1d462aff9a1cb08037ca184
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 20:03:20 2017 +0100
+
+    s-s-d: Rename err to ret as the former is a function on BSDs
+    
+    Do not shadow the global err() with a local variable.
+
+ debian/changelog          | 2 ++
+ utils/start-stop-daemon.c | 6 +++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit a390de3632925cf1271523a8672dfb642caa68eb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 20:01:14 2017 +0100
+
+    test: Use the detected perl interpreter instead of a random one from PATH
+    
+    We check for a specific version of perl and store that in the PERL
+    variable. But the shebangs on several test scripts hardcode a specific
+    perl that might not be present or might not be recent enough. Always
+    invoke perl scripts explicitly with PERL, or implicitly by letting the
+    currently running interpreter use itself.
+
+ check.am                      | 3 ++-
+ debian/changelog              | 2 ++
+ scripts/t/dpkg_buildpackage.t | 3 ++-
+ scripts/t/dpkg_source.t       | 2 +-
+ scripts/t/merge_changelogs.t  | 2 +-
+ scripts/t/mk.t                | 4 ++--
+ 6 files changed, 10 insertions(+), 6 deletions(-)
+
+commit 6acaea0708bd7f7c1e261fbb50e429b1efe10368
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 18 20:31:49 2017 +0100
+
+    build: Do not fail on missing compression libraries or headers on check mode
+    
+    This is supposed to be the automatic detection mode, so we should cope
+    gracefully with any of these being missing.
+    
+    Regression introduced in commit a166517a6d2f095c96b9661e8f2519470576a513.
+
+ debian/changelog | 2 ++
+ m4/dpkg-libs.m4  | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+commit 94f8b385a6d433a0c84f2dda22dc8c0129dba915
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 13 06:00:50 2017 +0100
+
+    build: Handle libmd implementations built into system libc
+    
+    As found on some BSD systems.
+
+ debian/changelog |  2 ++
+ m4/dpkg-libs.m4  | 13 +++++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+commit 5c32516dcad58980481ae85c71e65eaeb97865e1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 11 19:58:09 2017 +0100
+
+    build: Check <sys/proc.h> by also including <sys/param.h>
+    
+    On several BSD systems the header is not self-contained and requires
+    <sys/param.h> to compile, add the pre-requisite so that the check
+    succeeds there.
+
+ configure.ac     | 6 +++++-
+ debian/changelog | 3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit edeb1593a9e7e2a5a38f2b28841d831bfee4ee7d
+Author: Thomas Klausner <wiz@NetBSD.org>
+Date:   Sat Feb 11 19:55:16 2017 +0100
+
+    libcompat: Do not redeclare sys_siglist when the system does so
+    
+    This can cause issues if the declaration is not exactly the same, and
+    declaring it when the system already does is bogus no matter what.
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog       | 3 +++
+ lib/compat/strsignal.c | 1 -
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit ce97c5865788e0d311645d12d1c84f6fdf1412ea
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 7 15:47:23 2017 +0100
+
+    Dpkg::Vendor::Debian: Switch PIE handling to have no default (!)
+    
+    Delegate the setting to gcc builtin or an explicit request by a user.
+    This is needed to cope with the general PIE brokenness situation in
+    Debian, and the current specific brokenness of a Debian gcc patch
+    mangling the dpkg build flags.
+    
+    This is wrong in so many levels, as we'll have discrepancies between
+    architectures, the interface towards maintainers is inconsistent, and
+    updating the PIE support needs touching and coordinating two places. But
+    it's certainly the current lesser evil.
+    
+    Closes: #848129, #845550
+
+ debian/changelog              |  5 +++++
+ man/dpkg-buildflags.man       |  2 +-
+ scripts/Dpkg/Vendor/Debian.pm | 15 ++++++++++++---
+ 3 files changed, 18 insertions(+), 4 deletions(-)
+
+commit 8e6660991e63cce477c8cb2e2ba62237b351efc0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 7 01:51:12 2017 +0100
+
+    Dpkg::Vendor::Debian: Mark more architectures as having gcc builtin PIE
+    
+    Specifically kfreebsd-amd64, kfreebsd-i386, sparc and sparc64.
+
+ debian/changelog              | 2 ++
+ man/dpkg-buildflags.man       | 5 +++--
+ scripts/Dpkg/Vendor/Debian.pm | 3 ++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+commit dded9f5b0699f5ddead03e46b58ce674effe7fe4
+Author: Nicolas Boulenguez <nicolas@debian.org>
+Date:   Sat Feb 18 15:18:54 2017 +0100
+
+    Dpkg::Source::Package: Add ‘.mnt-ignore’ to the default ignore lists
+    
+    Closes: #855450
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog               | 3 +++
+ scripts/Dpkg/Source/Package.pm | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+commit 952326db379555e0f3241806a40e12cda3d8a205
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Feb 12 01:31:25 2017 +0100
+
+    Dpkg::Shlibs::Objdump: Do not parse bogus ELF binaries in get_format()
+    
+    If the ELF class or endianness are unknown or bogus, ignore the file.
+    
+    Reported-by: Niels Thykier <niels@thykier.net>
+
+ debian/changelog               | 2 ++
+ scripts/Dpkg/Shlibs/Objdump.pm | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 0fad19f2a3014b487d8c6dbcf70feac03ff0b693
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 8 06:08:03 2017 +0100
+
+    Dpkg::Shlibs::Objdump:Object: Warn for unknown exec formats in analyze()
+    
+    Emit an explicit warning whenever we cannot detect the format for
+    an executable object, instead of delegating this to the subsequent
+    objdump, and letting it die, which ca be canfusing and is not
+    future-proof.
+    
+    Closes: #854536
+
+ debian/changelog               | 2 ++
+ scripts/Dpkg/Shlibs/Objdump.pm | 5 +++++
+ 2 files changed, 7 insertions(+)
+
+commit 1c1675500edf4285f87384af3e709c3801f87c51
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 8 06:08:03 2017 +0100
+
+    Dpkg::Shlibs::Objdump: Fix read() error handling in get_format()
+    
+    The rest of the code handles non-binary files (ELF in this case)
+    gracefully and ignores them, even though not very explicitly, as
+    objdump will emit a warning that might be difficult to decrypt.
+    
+    We will still fail for other read failures that are not just
+    short-reads, as those imply some actual problem with the passed files.
+    
+    Closes: #854536
+
+ debian/changelog               | 2 ++
+ scripts/Dpkg/Shlibs/Objdump.pm | 7 ++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit 27bb073c1f40014c4eafbe43f150a76a02a6c542
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 8 05:04:34 2017 +0100
+
+    Dpkg::Shlibs::Objdump: Do not special case EM_SPARC32PLUS for NetBSD
+    
+    The affected code in NetBSD was bogus, and has been removed now. So
+    there is no point in trying to special case the EM_SPARC32PLUS ELF
+    machine ID depending on the ELF class, for something that should never
+    happen.
+    
+    Ref: https//gnats.netbsd.org/51925
+
+ debian/changelog               |  3 +++
+ scripts/Dpkg/Shlibs/Objdump.pm | 11 +----------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
+
+commit 64f4738462ac22904f4743278043aa15a69093b7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Feb 19 16:37:20 2017 +0100
+
+    dpkg-genbuildinfo: Declare .buildinfo format as stable with version 1.0
+    
+    All the currently planned changes have been done, let's bump the format
+    version to denote a stable format, which will not change in incomatible
+    changes any more without bumping the major version component.
+
+ debian/changelog             | 1 +
+ man/deb-buildinfo.man        | 2 +-
+ scripts/dpkg-genbuildinfo.pl | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 896a740cfe9f774bf266b1f94027a91a1072a12e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 6 03:12:37 2017 +0100
+
+    dpkg-genbuildinfo: Handle unmatched virtual arch-qualified packages
+    
+    The dependency traversal code is currently broken, and this mostly
+    papers over the issue. Properly fixing this involves changes all over
+    the place, which would be too intrusive for this series.
+    
+    We should handle this gracefully, instead of letting perl die.
+    
+    Closes: #849944
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-genbuildinfo.pl | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit d3c4079b124e592d3ab072c842da7b75fe937174
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Feb 26 19:33:32 2017 +0100
+
+    dpkg-buildpackage: Document --ignore-builtin-builddeps in --help output
+    
+    Missed in commit 98b3341f5f46866208862ff40e4336ff1a7e1cd3.
+
+ debian/changelog             | 1 +
+ scripts/dpkg-buildpackage.pl | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 75ef93c8bb14ed852c4dee24df3aa7eacc306f27
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 13 05:23:02 2017 +0100
+
+    dpkg-source: Document --before-build and --after-build in --help output
+
+ debian/changelog       | 1 +
+ scripts/dpkg-source.pl | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 45eb890431c219b35055f98bdaa0f15587dca249
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Feb 19 20:47:33 2017 +0100
+
+    man: Clarify the requirements for deb-conffile(5) pathnames
+    
+    Closes: #854417
+    Proposed-by: Dieter Adriaenssens <dieter.adriaenssens@gmail.com>
+
+ debian/changelog      | 4 +++-
+ man/deb-conffiles.man | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 807c31c54baebb72535bfedff50cd8ed45a7b3e5
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Feb 8 21:54:20 2017 +0100
+
+    Minor fix
+    
+    Noted by looking at lintian warning
+
+ man/po/de.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 513bbda90f15b763653b842180b77088f1d790eb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 1 06:28:43 2017 +0100
+
+    Bump version to 1.18.23
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit 2240c05fea67fd57f182344a237d02ef58ed9629
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed Feb 1 05:51:06 2017 +0100

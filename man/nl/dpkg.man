@@ -1037,7 +1037,8 @@ Dagelijks wordt een reservekopie van het statusbestand gemaakt in
 \fI/var/backups\fP. Die kan nuttig zijn mocht het bestand verloren gegaan zijn
 of beschadigd ten gevolge van problemen met het bestandssysteem.
 .P
-The format and contents of a binary package are described in \fBdeb\fP(5).
+De indeling en de inhoud van een binair pakket worden beschreven in
+\fBdeb\fP(5).
 .
 .SH BUGS
 \fB\-\-no\-act\fP geeft gewoonlijk minder informatie dan nuttig kan zijn.

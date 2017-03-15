@@ -324,12 +324,13 @@ broncodepakket te vergelijken met de .orig\-map.
 
 \fBBouwopties (met \-\-build):\fP
 
-If a second non\-option argument is supplied it should be the name of the
-original source directory or tarfile or the empty string if the package is a
-Debian\-specific one and so has no debianisation diffs. If no second argument
-is supplied then \fBdpkg\-source\fP will look for the original source tarfile
-\fIpackage\fP\fB_\fP\fIupstream\-version\fP\fB.orig.tar.gz\fP or the original source
-directory \fIdirectory\fP\fB.orig\fP depending on the \fB\-sX\fP arguments.
+Indien een tweede argument opgegeven wordt dat geen optie is, moet het de
+naam van de originele broncodemap zijn of van het tar\-archief of een lege
+tekenreeks als het pakket Debian\-specifiek is en dus geen diffs bevat in
+verband met de debianisering. Indien geen tweede argument opgegeven werd,
+zal \fBdpkg\-source\fP zoeken naar het tar\-bestand met de originele broncode
+\fIpakket\fP\fB_\fP\fItoeleveraarsversie\fP\fB.orig.tar.gz\fP of naar de map met de
+originele broncode \fImap\fP\fB.orig\fP, afhankelijk van de argumenten \fB\-sX\fP.
 
 \fB\-sa\fP, \fB\-sp\fP, \fB\-sk\fP, \fB\-su\fP en \fB\-sr\fP zullen geen bestaande tar\-bestanden
 of \-mappen overschrijven. Indien dat wel gewenst wordt, dan moeten in de

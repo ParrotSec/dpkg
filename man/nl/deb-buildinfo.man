@@ -58,13 +58,11 @@ een bouw betreft die \fBsource\fP vermeldt, is de naam
 .SH VELDEN
 .TP 
 \fBFormat:\fP \fIindelingsversie\fP (verplicht)
-De waarde van dit veld bepaalt de indelingsversie van het bestand. De
-syntaxis van de veldwaarde is een versienummer met een hoofdversie\- en een
-onderversiecomponent. Wijzigingen aan de indeling die niet neerwaarts
-compatibel zijn, hebben een verhoging van het hoofdversienummer tot gevolg
-en neerwaarts compatibele veranderingen (zoals het toevoegen van extra
-velden) verhogen het onderversienummer. De huidige indelingsversie is
-\fB0.2\fP.
+The value of this field declares the format version of the file.  The syntax
+of the field value is a version number with a major and minor component.
+Backward incompatible changes to the format will bump the major version, and
+backward compatible changes (such as field additions) will bump the minor
+version.  The current format version is \fB1.0\fP.
 .TP 
 \fBSource:\fP \fIbroncode\-naam\fP [\fB(\fP\fIbroncode\-versie\fP\fB)\fP] (verplicht)
 De naam van het broncodepakket. Indien de versie van het broncodepakket
@@ -118,9 +116,9 @@ SHA\-256 voor \fBChecksums\-Sha256\fP.
 De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als
 de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van
 het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke
-regel bestaat uit elementen die onderling door een spatie van elkaar
-gescheiden zijn en het bestand beschrijven: zijn controlesom, zijn
-bestandsgrootte en zijn naam.
+regel bestaat uit elementen die onderling door een spatie gescheiden zijn en
+het bestand beschrijven: zijn controlesom, zijn bestandsgrootte en zijn
+naam.
 
 Deze velden sommen alle bestanden die de bouw vormen.
 .TP 

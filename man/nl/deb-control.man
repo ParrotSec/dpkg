@@ -298,18 +298,20 @@ zal zijn om een upload te aanvaarden van een pakket dat verklaart een
 worden.
 .
 .TP 
-\fBBuilt\-For\-Profiles:\fP\fI profile\-list (obsolete)\fP
-This field used to specify a whitespace separated list of build profiles
-that this binary packages was built with (since dpkg 1.17.2 until 1.18.18).
-The information previously found in this field can now be found in the
-\&\fB.buildinfo\fP file, which supersedes it.
+\fBBuilt\-For\-Profiles:\fP\fI profiel\-lijst (verouderd)\fP
+Dit veld werd vroeger gebruikt om een lijst van door spaties van elkaar
+gescheiden bouwprofielen op te sommen waarmee deze binaire pakketten gebouwd
+werden (sinds dpkg 1.17.2 tot 1.18.18). De informatie die vroeger in dit
+veld te vinden was, kan nu gevonden worden in het bestand \fB.buildinfo\fP dat
+het vervangt.
 .
 .TP 
-\fBAuto\-Built\-Package:\fP\fI reason\-list\fP
-This field specifies a whitespace separated list of reasons why this package
-was auto\-generated.  Binary packages marked with this field will not appear
-in the \fIdebian/control\fP master source control file.  The only currently
-used reason is \fBdebug\-symbols\fP.
+\fBAuto\-Built\-Package:\fP\fI lijst\-met\-redenen\fP
+Dit veld somt een lijst van onderling door spaties gescheiden redenen op
+waarom dit pakket automatisch gegenereerd werd. Binaire pakketten die met
+dit veld gemarkeerd werden, zullen niet te vinden zijn in het
+hoofdcontrolebestand \fIdebian/control\fP van de broncode. De enige reden die
+momenteel gebruikt wordt, is \fBdebug\-symbols\fP.
 .
 .SH VOORBEELD
 .\" .RS

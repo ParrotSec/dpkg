@@ -129,9 +129,9 @@ pakketonderhouder uitgevoerde bouw van uitsluitend het binaire pakket. Het
 vindt zijn oorsprong in het item met de sleutel/waarde\-combinatie
 \fBbinary\-only=yes\fP uit de metadata van het changelog\-bestand.
 .TP 
-\fBBuilt\-For\-Profiles:\fP\fI profile\-list\fP
-This field specifies a whitespace separated list of build profiles that this
-upload was built with.
+\fBBuilt\-For\-Profiles:\fP\fI profiel\-lijst\fP
+Dit veld somt een lijst van door een spatie van elkaar gescheiden
+bouwprofielen op waarmee deze upload gebouwd werd.
 .TP 
 \fBChanges:\fP (verplicht)
 .TQ
@@ -151,9 +151,9 @@ vermelding van de md5som, grootte, sectie en prioriteit.
 De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als
 de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van
 het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke
-regel bestaat uit elementen die onderling door een spatie van elkaar
-gescheiden zijn en het bestand beschrijven: zijn md5som, zijn
-bestandsgrootte, zijn sectie, zijn prioriteit en zijn naam.
+regel bestaat uit elementen die onderling gescheiden zijn door een spatie en
+het bestand beschrijven: zijn md5som, zijn bestandsgrootte, zijn sectie,
+zijn prioriteit en zijn naam.
 
 Dit veld somt alle bestanden op die deel uitmaken van de upload. De lijst
 van bestanden uit dit veld moet overeenkomen met de bestandslijst in de
@@ -173,9 +173,9 @@ berekenen van de controlesom: SHA\-1 voor \fBChecksums\-Sha1\fP en SHA\-256 voor
 De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als
 de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van
 het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke
-regel bestaat uit elementen die onderling door een spatie van elkaar
-gescheiden zijn en het bestand beschrijven: zijn controlesom, zijn
-bestandsgrootte en zijn naam.
+regel bestaat uit elementen die onderling door een spatie gescheiden zijn en
+het bestand beschrijven: zijn controlesom, zijn bestandsgrootte en zijn
+naam.
 
 Deze velden sommen alle bestanden op die deel uitmaken van de upload. De
 lijst van bestanden uit deze velden moet overeenkomen met de bestandslijst
