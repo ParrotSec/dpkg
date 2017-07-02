@@ -46,7 +46,7 @@ Funktionalität bereitstellen, gleichzeitig auf einem System zu
 installieren. Beispielsweise sind auf vielen Systemen mehrere Texteditoren
 gleichzeitig installiert. Dies gibt den Benutzern eines Systems die
 Möglichkeit, falls gewünscht, jeweils einen anderen Editor zu verwenden,
-allerdings wird es damit für ein Programm schwierig, einen guten Wahl für
+allerdings wird es damit für ein Programm schwierig, eine gute Wahl für
 einen Editor zum Starten zu treffen, falls der Benutzer keine spezielle Wahl
 getroffen hat.
 .PP

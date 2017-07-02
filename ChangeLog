@@ -1,3 +1,701 @@
+commit 4fd7def03c96e82c03773c6eca111cf244bae8c0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 17 13:16:31 2017 +0200
+
+    Release 1.18.24
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 99eec1e82a7e6f020dc7f5a5eb7c5281517c670c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 17 13:27:04 2017 +0200
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |  2 +-
+ dselect/po/ca.po        |  5 ++-
+ dselect/po/cs.po        |  3 +-
+ dselect/po/da.po        |  2 +-
+ dselect/po/de.po        |  2 +-
+ dselect/po/dselect.pot  |  4 +-
+ dselect/po/el.po        |  2 +-
+ dselect/po/es.po        |  2 +-
+ dselect/po/et.po        |  2 +-
+ dselect/po/eu.po        |  2 +-
+ dselect/po/fr.po        |  2 +-
+ dselect/po/gl.po        |  2 +-
+ dselect/po/hu.po        |  2 +-
+ dselect/po/id.po        |  2 +-
+ dselect/po/it.po        |  2 +-
+ dselect/po/ja.po        |  2 +-
+ dselect/po/ko.po        |  2 +-
+ dselect/po/nb.po        |  2 +-
+ dselect/po/nl.po        |  2 +-
+ dselect/po/nn.po        |  2 +-
+ dselect/po/pl.po        |  2 +-
+ dselect/po/pt.po        |  2 +-
+ dselect/po/pt_BR.po     |  2 +-
+ dselect/po/ro.po        |  2 +-
+ dselect/po/ru.po        |  2 +-
+ dselect/po/sk.po        |  2 +-
+ dselect/po/sv.po        |  2 +-
+ dselect/po/tl.po        |  2 +-
+ dselect/po/vi.po        |  2 +-
+ dselect/po/zh_CN.po     |  2 +-
+ dselect/po/zh_TW.po     |  2 +-
+ man/po/de.po            | 31 ++++++++++------
+ man/po/dpkg-man.pot     | 21 ++++++-----
+ man/po/es.po            | 15 +++++---
+ man/po/fr.po            | 15 +++++---
+ man/po/hu.po            | 15 +++++---
+ man/po/it.po            | 15 +++++---
+ man/po/ja.po            | 15 +++++---
+ man/po/nl.po            | 24 +++++++++---
+ man/po/pl.po            | 15 +++++---
+ man/po/pt_BR.po         | 15 +++++---
+ man/po/ru.po            | 15 +++++---
+ man/po/sv.po            | 15 +++++---
+ man/po/zh_CN.po         | 15 +++++---
+ po/ast.po               | 14 +++----
+ po/bs.po                | 12 +++---
+ po/ca.po                | 29 +++++++++------
+ po/cs.po                | 18 +++++----
+ po/da.po                | 12 +++---
+ po/de.po                | 12 +++---
+ po/dpkg.pot             | 14 +++----
+ po/dz.po                | 14 +++----
+ po/el.po                | 14 +++----
+ po/eo.po                | 12 +++---
+ po/es.po                | 59 ++++++++++++++++++-----------
+ po/et.po                | 14 +++----
+ po/eu.po                | 12 +++---
+ po/fr.po                | 12 +++---
+ po/gl.po                | 14 +++----
+ po/hu.po                | 14 +++----
+ po/id.po                | 12 +++---
+ po/it.po                | 12 +++---
+ po/ja.po                | 12 +++---
+ po/km.po                | 14 +++----
+ po/ko.po                | 12 +++---
+ po/ku.po                | 12 +++---
+ po/lt.po                | 14 +++----
+ po/mr.po                | 14 +++----
+ po/nb.po                | 12 +++---
+ po/ne.po                | 14 +++----
+ po/nl.po                | 12 +++---
+ po/nn.po                | 12 +++---
+ po/pa.po                | 14 +++----
+ po/pl.po                | 12 +++---
+ po/pt.po                | 12 +++---
+ po/pt_BR.po             | 14 +++----
+ po/ro.po                | 12 +++---
+ po/ru.po                | 12 +++---
+ po/sk.po                | 12 +++---
+ po/sv.po                | 12 +++---
+ po/th.po                | 12 +++---
+ po/tl.po                | 12 +++---
+ po/tr.po                | 12 +++---
+ po/vi.po                | 12 +++---
+ po/zh_CN.po             | 12 +++---
+ po/zh_TW.po             | 12 +++---
+ scripts/po/ca.po        | 99 ++++++++++++++++++++++++++++---------------------
+ scripts/po/de.po        | 19 ++++------
+ scripts/po/dpkg-dev.pot | 13 +------
+ scripts/po/es.po        | 21 +++++------
+ scripts/po/fr.po        | 17 ++++-----
+ scripts/po/pl.po        | 21 +++++------
+ scripts/po/ru.po        | 17 ++++-----
+ scripts/po/sv.po        | 21 +++++------
+ 94 files changed, 594 insertions(+), 528 deletions(-)
+
+commit a373a65e062a47e572f96cf8242e0886de6a2923
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed May 17 20:31:16 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2841t1f.
+
+ debian/changelog |  2 +-
+ man/po/de.po     | 26 ++++++++++++++++----------
+ 2 files changed, 17 insertions(+), 11 deletions(-)
+
+commit 19cf51bc93a023fed4aa843dfd4090e537b20833
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 11 23:19:50 2017 +0100
+
+    libdpkg: Improve tar metadata parsing
+    
+    Make the existing octal parser more robust, by checking for the expected
+    format of leading zeros or spaces, followed by any ASCII octal characters
+    (0-7), followed by zero or more space or NULs. Even though POSIX specifies
+    that numerical fields should end with at least one space or NUL, we still
+    support this extension which has been present in other implementations
+    for a long time.
+    
+    Add support for base-256 encoded numeric fields, to support large
+    values, for UID/GID, device number, size and even negative timestamps.
+    This is necessary not only to be able to store larger values, but to
+    cover packages that can already be generated by dpkg-deb, given that it
+    uses the system GNU tar when building.
+    
+    Closes: #850834
+
+ debian/changelog       |   8 +++
+ lib/dpkg/libdpkg.map   |   2 +
+ lib/dpkg/t/.gitignore  |   1 +
+ lib/dpkg/t/Makefile.am |   1 +
+ lib/dpkg/t/t-tar.c     | 148 ++++++++++++++++++++++++++++++++++++++++++++++
+ lib/dpkg/tarfn.c       | 155 ++++++++++++++++++++++++++++++++++++++++++++-----
+ lib/dpkg/tarfn.h       |   9 ++-
+ man/deb.man            |   9 ++-
+ 8 files changed, 314 insertions(+), 19 deletions(-)
+
+commit a6fbd1693e41d86db6884f1ce8b8576fcdeb7495
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon May 15 06:45:14 2017 +0200
+
+    libdpkg: Do not parse device number for non block nor char tar entry objects
+    
+    We should not try to parse these fields if the tar entry is neither
+    a block nor a char device.
+    
+    On older tar entries these fields will be all NULs, so it would make
+    a parser expecting a somewhat strictly formatted octal value to error
+    out.
+
+ debian/changelog | 2 ++
+ lib/dpkg/tarfn.c | 8 ++++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 7c58bb402d7e57312f89efae4a9d811b9b29d11a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon May 15 06:43:17 2017 +0200
+
+    libdpkg: Handle files with non-zero sizes in c-tarextract test code
+    
+    The test suite only handles empty files, so it never had any problem
+    with not skipping those objects. But when testing it on common data,
+    and to make the code future-proof, we should just skip the file
+    objects when parsing them.
+
+ debian/changelog          |  1 +
+ lib/dpkg/t/c-tarextract.c | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
+
+commit 9507afd811a3d73822dc6a6b110bd602b82aad0b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Apr 26 19:11:10 2017 +0200
+
+    dpkg: Fix digest inference for shared conffiles
+    
+    The code in charge of inferring the digest for a conffile was
+    checking the owning package status twice, and ignoring conffiles
+    with a status lower than "unpacked" even if they had been configured
+    previously and their md5sums were valid.
+    
+    This was causing bogus takeover unpack errors.
+    
+    Fixes: commit 05a8ddb482419d110571679a29bcd25e3c2b036d
+    Closes: #861217
+    Stable-Candidate: 1.17.x
+
+ debian/changelog | 2 ++
+ src/archives.c   | 6 +-----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+commit 0970c5e5c48d24f5d723f0d0f0c0cec37338b59b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Mar 16 17:20:13 2017 +0100
+
+    dpkg: Fix conffile takeover handling during unpack on --root or diversions
+    
+    The current code was trying to stat(2) a conffile without taking into
+    account a specified root directory, nor any possible diversions.
+    
+    But the check based on the device and inode was pretty much unnecessary
+    because a simple string comparison is enough here, which as a bogus
+    solves both problems by reducing the code size.
+    
+    Closes: #837051, #858004
+    Stable-Candidate: 1.17.x
+
+ debian/changelog | 2 ++
+ src/archives.c   | 9 +--------
+ 2 files changed, 3 insertions(+), 8 deletions(-)
+
+commit 7cdeb9bafb4512b29b40e3c74fef7ced7e03a01b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Apr 29 23:43:49 2017 +0200
+
+    Dpkg::Source::Package: Ignore debian/files and debian/files.new by default
+    
+    These are generated files, and these pathnames are part of the external
+    interface. With the introduction of the buildinfo support, these get
+    generated even on source builds, which means that it can disrupt
+    previous workflows based on not cleaning the source tree, because they
+    assumed that source-only builds did not have filesystem side-effects.
+
+ debian/changelog                  | 6 ++++++
+ scripts/Dpkg/Source/Package.pm    | 8 ++++++--
+ scripts/Dpkg/Source/Package/V1.pm | 8 ++++++--
+ 3 files changed, 18 insertions(+), 4 deletions(-)
+
+commit 45f0c9a93098af4173a6cd6c6a90b3e5d043f213
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 30 00:42:17 2017 +0200
+
+    dpkg-genbuildinfo: Add duplicate prevention code for debian/files
+    
+    We should do something similar to what dpkg-gencontrol is doing, by
+    preventing duplicated entries for the same file with different versions.
+    
+    In this case, because the assumption is that there can ever only be one
+    buildinfo file for a «source» or «all» build, but possibly multiple for
+    arch-specific builds (from another build driver than dpkg-buildpackage),
+    we filter based on this.
+
+ debian/changelog             |  4 ++++
+ scripts/dpkg-genbuildinfo.pl | 14 +++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+
+commit 8ffbe5f5c0012c740e1b61c460cea093ac080dea
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Apr 22 18:48:10 2017 +0200
+
+    dpkg-maintscript-helper: Print all unowned files from a directory
+    
+    Add a new internal command that is not part of the public interface,
+    that takes care of checking whether a pathname is owned by a package.
+    
+    This internal command has some logic to prevent external abuse, by
+    checking whether the parent has set a specific environment variable
+    with a token that changes per release.
+    
+    The code will list all unowned files because xargs does not short-circuit
+    on the first command erroring out, as long these do not terminate with an
+    exit code of 255.
+    
+    Closes: #813454, #860238
+    Based-on-patch-by: Bastien ROUCARIÈS <roucaries.bastien@gmail.com>
+
+ debian/changelog                   |  4 ++++
+ scripts/dpkg-maintscript-helper.sh | 31 +++++++++++++++++++++++--------
+ 2 files changed, 27 insertions(+), 8 deletions(-)
+
+commit 31f98198278ae0a70b5594680e05454a383ac175
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 23 04:51:58 2017 +0200
+
+    dpkg-shlibdeps: Preserve the order when scanning symbols/shlibs files
+    
+    The code was getting all the possible shared library pathnames for the
+    wanted SONAME, but was not preserving the order carefully constructed
+    in find_library(), so we were overwriting symbols/shlibs information
+    when parsing multiple entries, and selecting the symbols/shlibs files
+    randomly based on the perl hash order.
+    
+    This causes regressions when multiple packages provide the same
+    SONAME on different directories. An example would be libc6:amd64
+    and libc6-amd64:i386.
+    
+    Fixes: commit a927295c93fb7a17742441aa863aaffcf4a351b5
+    Closes: #860979
+    Reported-by: Helmut Grohne <helmut@subdivi.de>
+
+ debian/changelog          |  4 +++
+ scripts/dpkg-shlibdeps.pl | 74 ++++++++++++++++++++++++++++++++---------------
+ 2 files changed, 55 insertions(+), 23 deletions(-)
+
+commit 7c77a05faaff3e23ca39f27e946f4edee5b8b144
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 19 19:40:14 2017 +0100
+
+    Dpkg::Source::Patch: Indented patch test-case
+    
+    POSIX specifies that a diff hunk can be indented by spaces or tabs
+    (while the original patch(1) by Larry Wall also accepts 'X'), as long
+    as the amount of spaces is consistent for all subsequent lines. And as
+    we are not checking for this condition at all, any such indented hunk
+    can avoid the sanity checks performed by Dpkg::Source::Patch.
+    
+    On systems using GNU patch >= 2.7.5, this should, in principle, not be
+    a problem anymore, as that implementation protects against directory
+    traversal issue. But on other systems where the patch implementation
+    does not perform such checks (such as the BSDs) this is an issue, so
+    check for this in the test-suite.
+    
+    Those are arguably all security issues in these various patch
+    implementations, but given that we are performing sanity checks and that
+    those implementations are currently very lax, it seems prudent to do the
+    heavy lifting ourselves and also take the possible blame too.
+    
+    Ref: CVE-2017-8283
+    Stable-Candidate: 1.17.x
+
+ debian/changelog                                | 3 +++
+ scripts/Makefile.am                             | 1 +
+ scripts/t/Dpkg_Source_Patch.t                   | 6 +++++-
+ scripts/t/Dpkg_Source_Patch/indent-header.patch | 9 +++++++++
+ 4 files changed, 18 insertions(+), 1 deletion(-)
+
+commit 3a9f07899770432d25990e4cdd78974f8821520a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 5 19:09:07 2017 +0200
+
+    Dpkg::Deps: Bump $VERSION to match the documented CHANGES
+    
+    The documentation on the CHANGES section did not match the current
+    $VERSION, bump it so that it does, and document when it was actually
+    bumped, so that users do not get confused.
+    
+    Fixes: commit 608f93858f2fc44e86538fbf585d4e0fa9cf7743
+
+ debian/changelog     | 1 +
+ scripts/Dpkg/Deps.pm | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 8ba04d41c839318b5a024f6c5298848d3b54c723
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Mar 28 22:44:36 2017 +0200
+
+    build: Detect the required GNU patch
+    
+    This makes sure the perl module is using a directory traversal resistant
+    patch implementation, currently that's only GNU patch.
+    
+    Fixes: CVE-2017-8283
+    Stable-Candidate: 1.17.x
+
+ configure.ac                 |  1 +
+ debian/changelog             |  4 ++++
+ m4/dpkg-progs.m4             | 15 +++++++++++++++
+ scripts/Dpkg.pm              | 13 ++++++++++++-
+ scripts/Dpkg/Source/Patch.pm |  9 +++++----
+ scripts/Makefile.am          |  2 ++
+ 6 files changed, 39 insertions(+), 5 deletions(-)
+
+commit 068980536d9bf613cc0e0b6d17b49cc3e3b37313
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Mar 28 22:44:36 2017 +0200
+
+    build: Detect the required GNU tar
+    
+    For now we do require a GNU tar implementation, so let's check this
+    explicitly in configure, so that downstream packagers do not get
+    surprised when the code fails at run-time.
+    
+    In the future this should be lifted once we switch fully to an internal
+    tar implementation.
+
+ debian/changelog | 1 +
+ m4/dpkg-progs.m4 | 3 +++
+ 2 files changed, 4 insertions(+)
+
+commit d62520090a7dafb123b6f1f4d4e9b61b75218057
+Author: Adam Conrad <adconrad@0c3.net>
+Date:   Wed Apr 26 03:09:37 2017 +0200
+
+    Dpkg::Vendor::Ubuntu: Remove obsolete hardening-wrapper support
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog              |  3 +++
+ scripts/Dpkg/Vendor/Ubuntu.pm | 37 -------------------------------------
+ 2 files changed, 3 insertions(+), 37 deletions(-)
+
+commit bea859cbc426deec85729d363b9f63ec9d490d71
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 31 05:51:43 2017 +0200
+
+    libdpkg: Add missing symbols to the map file
+    
+    This causes build failures when enabling the shared library.
+
+ debian/changelog     |  1 +
+ lib/dpkg/libdpkg.map | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
+
+commit 7e0656a1e1ab5177b5bacecad96ee0a1386b505a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 15 19:49:08 2017 +0100
+
+    arch: Add support for ARM64 ILP32
+    
+    Closes: #824742
+    Based-on-patch-by: Wookey <wookey@wookware.org>
+
+ data/abitable         | 1 +
+ data/ostable          | 1 +
+ data/tupletable       | 1 +
+ debian/changelog      | 3 +++
+ scripts/t/Dpkg_Arch.t | 4 ++--
+ 5 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 747f3df99aa0263ba684c6ce317310b0c75f72c8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 6 22:28:45 2017 +0100
+
+    build: Use libexec variable for auxiliary internal programs
+    
+    Using libdir is wrong, and doubly so when being referred from
+    architecture independent files such as perl modules. This affects
+    non-Debian based systems, which might by default use an arch varying
+    libdir per architecture, for example when using the obsolete multilib
+    layout.
+
+ debian/changelog            | 3 +++
+ debian/rules                | 1 +
+ dselect/Makefile.am         | 3 ++-
+ dselect/methods/Makefile.am | 2 +-
+ man/Makefile.am             | 2 +-
+ scripts/Makefile.am         | 2 +-
+ 6 files changed, 9 insertions(+), 4 deletions(-)
+
+commit 24899e778c30cbbe399c1cc27f4a004faf33b7e1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 2 19:27:19 2017 +0200
+
+    build: Spell builtin correctly
+    
+    This has no functional effect, it's just used for output.
+
+ m4/dpkg-libs.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ac578fa8c26729ae08594bd71275df6322f9a77f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun May 7 16:26:59 2017 +0200
+
+    po: Add missing new lines in Catalan translation
+
+ scripts/po/ca.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit d363dae69e329fa22289bc5c794c87162573f10d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Apr 28 04:08:08 2017 +0200
+
+    debian: Add missing changelog entries
+    
+    Entry for Spanish translation update. Multi-maintainer marking in
+    1.18.23.
+
+ debian/changelog | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit f6cae61030e322b8815cc4f4a8a263c90447f6bc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Apr 29 23:43:11 2017 +0200
+
+    po: Update Catalan translation
+
+ debian/changelog |   7 +
+ dselect/po/ca.po |  94 ++-----
+ po/ca.po         | 364 ++++++++----------------
+ scripts/po/ca.po | 834 +++++++++++++++++--------------------------------------
+ 4 files changed, 404 insertions(+), 895 deletions(-)
+
+commit 451bd5d85672e60eed60ef2e24bf007182395e6d
+Author: David Rabel <david.rabel@noresoft.com>
+Date:   Sat Mar 11 12:51:48 2017 +0100
+
+    po: Fix German man page translation
+    
+    Closes: #857449
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog | 3 +++
+ man/po/de.po     | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit e43d0d04e3376e104ab68ce61c23d941e970ca45
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Mar 9 04:22:24 2017 +0100
+
+    po: Unfuzzy strings after spelling fixes
+
+ man/po/de.po            | 14 +++++++-------
+ man/po/dpkg-man.pot     | 12 ++++++------
+ man/po/es.po            | 16 ++++++++--------
+ man/po/fr.po            | 24 ++++++++++++------------
+ man/po/hu.po            | 14 +++++++-------
+ man/po/it.po            | 16 ++++++++--------
+ man/po/ja.po            | 16 ++++++++--------
+ man/po/nl.po            | 14 +++++++-------
+ man/po/pl.po            | 16 ++++++++--------
+ man/po/pt_BR.po         | 14 +++++++-------
+ man/po/ru.po            | 14 +++++++-------
+ man/po/sv.po            | 16 ++++++++--------
+ man/po/zh_CN.po         | 14 +++++++-------
+ po/ast.po               |  8 ++++----
+ po/bs.po                |  4 ++--
+ po/ca.po                |  4 ++--
+ po/cs.po                |  4 ++--
+ po/da.po                |  4 ++--
+ po/de.po                |  4 ++--
+ po/dpkg.pot             |  4 ++--
+ po/dz.po                |  8 ++++----
+ po/el.po                |  8 ++++----
+ po/eo.po                |  4 ++--
+ po/es.po                |  4 ++--
+ po/et.po                |  4 ++--
+ po/eu.po                |  4 ++--
+ po/fr.po                |  4 ++--
+ po/gl.po                |  8 ++++----
+ po/hu.po                |  8 ++++----
+ po/id.po                |  8 ++++----
+ po/it.po                |  4 ++--
+ po/ja.po                |  4 ++--
+ po/km.po                | 12 ++++++------
+ po/ko.po                |  8 ++++----
+ po/ku.po                |  4 ++--
+ po/lt.po                |  8 ++++----
+ po/mr.po                |  8 ++++----
+ po/nb.po                |  8 ++++----
+ po/ne.po                |  8 ++++----
+ po/nl.po                |  4 ++--
+ po/nn.po                |  6 +++---
+ po/pa.po                |  4 ++--
+ po/pl.po                |  4 ++--
+ po/pt.po                |  4 ++--
+ po/pt_BR.po             |  8 ++++----
+ po/ro.po                |  8 ++++----
+ po/ru.po                |  4 ++--
+ po/sk.po                |  6 +++---
+ po/sv.po                |  4 ++--
+ po/th.po                |  4 ++--
+ po/tl.po                |  6 +++---
+ po/tr.po                |  4 ++--
+ po/vi.po                |  4 ++--
+ po/zh_CN.po             |  4 ++--
+ po/zh_TW.po             |  6 +++---
+ scripts/po/ca.po        |  6 +++---
+ scripts/po/de.po        |  6 +++---
+ scripts/po/dpkg-dev.pot |  6 +++---
+ scripts/po/es.po        |  6 +++---
+ scripts/po/fr.po        |  6 +++---
+ scripts/po/pl.po        |  6 +++---
+ scripts/po/ru.po        |  6 +++---
+ scripts/po/sv.po        |  6 +++---
+ 63 files changed, 242 insertions(+), 242 deletions(-)
+
+commit 71db021361e25a46aebac52ca62e406d1e6c0f7c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Mar 14 03:15:29 2017 +0100
+
+    doc: Do not include mispellings in changelogs
+    
+    This makes detecting them more difficult, as they become a bunch of
+    false-positives to wade through.
+
+ ChangeLog.old        | 57 +++++++++++++++++++++++++---------------------------
+ debian/changelog     | 20 +++++++++---------
+ man/po/ChangeLog.old |  6 +++---
+ po/ChangeLog.old     |  2 +-
+ 4 files changed, 42 insertions(+), 43 deletions(-)
+
+commit 75033aa803928948d8bc422bf505ab99f72f0095
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Mar 7 02:42:18 2017 +0100
+
+    doc: Spelling fixes
+    
+    Spotted-by: Josh Soref <jsoref@gmail.com>
+
+ ChangeLog.old    | 7 +++----
+ debian/changelog | 4 ++--
+ src/configure.c  | 2 +-
+ 3 files changed, 6 insertions(+), 7 deletions(-)
+
+commit b46c8ba6504ab341d74e61f003124d772a3f3875
+Author: Josh Soref <jsoref@gmail.com>
+Date:   Sun Feb 26 22:14:52 2017 +0000
+
+    doc: Spelling fixes
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ ChangeLog.old                      | 102 ++++++++++++++++++-------------------
+ TODO                               |   6 +--
+ debian/changelog                   |  78 ++++++++++++++--------------
+ doc/README.api                     |   2 +-
+ dpkg-deb/extract.c                 |   2 +-
+ dselect/basecmds.cc                |   2 +-
+ dselect/methods/floppy/update      |   2 +-
+ dselect/methods/ftp/install.pl     |   2 +-
+ dselect/pkgdepcon.cc               |   2 +-
+ dselect/pkglist.cc                 |   2 +-
+ lib/compat/obstack.c               |   2 +-
+ lib/compat/obstack.h               |   2 +-
+ lib/dpkg/dbdir.c                   |   4 +-
+ lib/dpkg/debug.c                   |   2 +-
+ lib/dpkg/debug.h                   |   2 +-
+ lib/dpkg/fields.c                  |   4 +-
+ lib/dpkg/report.c                  |   2 +-
+ lib/dpkg/t/c-trigdeferred.c        |   2 +-
+ lib/dpkg/t/t-ehandle.c             |   2 +-
+ lib/dpkg/t/t-tarextract.t          |   2 +-
+ lib/dpkg/t/t-treewalk.t            |   4 +-
+ m4/dpkg-arch.m4                    |   2 +-
+ man/deb-buildinfo.man              |   2 +-
+ man/deb-version.man                |   2 +-
+ man/dpkg-source.man                |   6 +--
+ man/dpkg.man                       |   2 +-
+ man/po/ChangeLog.old               |   2 +-
+ po/ChangeLog.old                   |   4 +-
+ scripts/Dpkg/Control/HashCore.pm   |   2 +-
+ scripts/Dpkg/Shlibs/Symbol.pm      |   2 +-
+ scripts/Dpkg/Source/Package.pm     |   2 +-
+ scripts/dpkg-buildpackage.pl       |   6 +--
+ scripts/dpkg-maintscript-helper.sh |   2 +-
+ scripts/dpkg-shlibdeps.pl          |   2 +-
+ scripts/t/Dpkg_Changelog.t         |   8 +--
+ scripts/t/Dpkg_Changelog/shadow    |  20 ++++----
+ scripts/t/Dpkg_Checksums.t         |   2 +-
+ scripts/t/Dpkg_Dist_Files.t        |   2 +-
+ scripts/t/Dpkg_Shlibs.t            |   6 +--
+ scripts/t/Dpkg_Shlibs/ld.so.conf   |   6 +--
+ scripts/t/Dpkg_Shlibs/ld.so.conf_2 |   2 +-
+ scripts/t/dpkg_buildpackage.t      |   2 +-
+ scripts/t/mk.t                     |   2 +-
+ src/archives.c                     |   2 +-
+ src/configure.c                    |   2 +-
+ src/main.c                         |   2 +-
+ src/t/dpkg_divert.t                |   2 +-
+ src/trigproc.c                     |   2 +-
+ 48 files changed, 163 insertions(+), 161 deletions(-)
+
+commit 4137592923011e34c865d34d202a02871c3840aa
+Author: Miroslav Kure <kurem@debian.cz>
+Date:   Sat May 6 13:20:04 2017 +0200
+
+    Updated Czech translation
+
+ debian/changelog |   3 +
+ dselect/po/cs.po | 203 +++++++++++---------------
+ po/cs.po         | 428 +++++++++++++++++--------------------------------------
+ 3 files changed, 221 insertions(+), 413 deletions(-)
+
+commit ce003c48ef2226e65d9dabdbedb2512b56e1185f
+Author: Javier Fernandez-Sanguino <jfs@debian.org>
+Date:   Fri Apr 7 17:49:46 2017 +0200
+
+    Updated Spanish translation
+
+ po/es.po | 307 ++++++++++++++++++++-------------------------------------------
+ 1 file changed, 96 insertions(+), 211 deletions(-)
+
+commit 89f9f6ce119ecb0345b1404eea2853f156182601
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 6 06:52:13 2017 +0100
+
+    Bump version to 1.18.24
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit 933f2d62873822eae68fc082f69b4a7c48802c28
 Author: Guillem Jover <guillem@debian.org>
 Date:   Mon Mar 6 05:41:23 2017 +0100

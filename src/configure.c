@@ -117,7 +117,7 @@ show_prompt(const char *cfgfile, const char *realold, const char *realnew,
 		        _("     Version in package is the same as at last installation.\n"));
 	}
 
-	/* No --force-confdef but a forcible situtation. */
+	/* No --force-confdef but a forcible situation. */
 	/* TODO: check if this condition can not be simplified to
 	 *       just !fc_conff_def */
 	if (!(fc_conff_def && (what & (CFOF_INSTALL | CFOF_KEEP)))) {
@@ -324,7 +324,7 @@ promptconfaction(struct pkginfo *pkg, const char *cfgfile,
  *
  * When the first instance of a package set is configured, the *.dpkg-new
  * files gets installed into their destination, which makes configuration of
- * conffiles from subsequent package instances be skept along with updates
+ * conffiles from subsequent package instances be skipped along with updates
  * to the Conffiles field hash.
  *
  * In case the conffile has already been processed, sync the hash from an

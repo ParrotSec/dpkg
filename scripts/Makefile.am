@@ -128,10 +128,11 @@ do_perl_subst = $(AM_V_GEN) sed \
 	-e "s:^\#![[:space:]]*/usr/bin/perl:\#!$(PERL):" \
 	-e "s:our \$$CONFDIR = .*;:our \$$CONFDIR = '$(pkgconfdir)';:" \
 	-e "s:our \$$ADMINDIR = .*;:our \$$ADMINDIR = '$(admindir)';:" \
-	-e "s:our \$$LIBDIR = .*;:our \$$LIBDIR = '$(pkglibdir)';:" \
+	-e "s:our \$$LIBDIR = .*;:our \$$LIBDIR = '$(pkglibexecdir)';:" \
 	-e "s:our \$$DATADIR = .*;:our \$$DATADIR = '$(pkgdatadir)';:" \
 	-e "s:our \$$PROGMAKE = .*;:our \$$PROGMAKE = '$(MAKE)';:" \
 	-e "s:our \$$PROGTAR = .*;:our \$$PROGTAR = '$(TAR)';:" \
+	-e "s:our \$$PROGPATCH = .*;:our \$$PROGPATCH = '$(PATCH)';:" \
 	-e "s:our \$$PROGVERSION = .*;:our \$$PROGVERSION = '$(PACKAGE_VERSION)';:"
 
 do_shell_subst = $(AM_V_GEN) sed \
@@ -193,6 +194,7 @@ coverage-clean:
 
 TEST_ENV_VARS = \
 	DPKG_PROGTAR=$(TAR) \
+	DPKG_PROGPATCH=$(PATCH) \
 	DPKG_PROGMAKE=$(MAKE) \
 	DPKG_DATADIR=$(top_srcdir)/data \
 	DPKG_ORIGINS_DIR=$(srcdir)/t/origins
@@ -283,6 +285,7 @@ test_data = \
 	t/Dpkg_Shlibs/spacesyms-o-map.pl \
 	t/Dpkg_Source_Patch/c-style.patch \
 	t/Dpkg_Source_Patch/ghost-hunk.patch \
+	t/Dpkg_Source_Patch/indent-header.patch \
 	t/Dpkg_Source_Patch/index-+++.patch \
 	t/Dpkg_Source_Patch/index-alone.patch \
 	t/Dpkg_Source_Patch/index-inert.patch \

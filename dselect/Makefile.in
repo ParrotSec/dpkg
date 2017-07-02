@@ -339,6 +339,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
+PATCH = @PATCH@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 PERL_COVER = @PERL_COVER@
@@ -428,7 +429,8 @@ top_srcdir = @top_srcdir@
 SUBDIRS = methods po
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
-	-DADMINDIR=\"$(admindir)\" -DLIBDIR=\"$(pkglibdir)\" \
+	-DADMINDIR=\"$(admindir)\" \
+	-DLIBDIR=\"$(pkglibexecdir)\" \
 	-DLOCALLIBDIR=\"/usr/local/lib/dpkg\" \
 	-idirafter $(top_srcdir)/lib/compat \
 	-iquote $(builddir) \

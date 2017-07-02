@@ -3,7 +3,7 @@
 .\" Copyright © 1995 Raul Miller
 .\" Copyright © 1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
 .\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
-.\" Copyright © 2006-2014 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2006-2017 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -45,14 +45,15 @@ de 16 die toegelaten zijn). De grootte van bestanden is beperkt tot 10 ASCII
 decimalen, waardoor tot ongeveer 9536.74 MiB aan bestandselementen
 toegelaten is.
 .PP
-De \fBtar\fP\-archieven die momenteel toegelaten zijn, zijn de indeling in oude
-stijl (v7), de pre\-POSIX ustar\-indeling, een subset van de GNU\-indeling
-(enkel de lange padnamen en lange koppelingsnamen in nieuwe stijl, die sinds
-dpkg 1.4.1.17 ondersteund worden) en de POSIX ustar\-indeling (lange namen,
-ondersteund sinds dpkg 1.15.0). Niet\-herkende tar\-typevlaggen worden als een
-fout beschouwd. Binnen een tar\-archief is de grootte van elk item beperkt
-tot 11 ASCII octale cijfers, hetgeen tot maximaal 8 GiB aan tar\-items
-mogelijk maakt.
+The \fBtar\fP archives currently allowed are, the old\-style (v7) format, the
+pre\-POSIX ustar format, a subset of the GNU format (new style long pathnames
+and long linknames, supported since dpkg 1.4.1.17; large file metadata since
+dpkg 1.18.24), and the POSIX ustar format (long names supported since dpkg
+1.15.0).  Unrecognized tar typeflags are considered an error.  Each tar
+entry size inside a tar archive is limited to 11 ASCII octal digits,
+allowing for up to 8 GiB tar entries.  The GNU large file metadata support
+permits 95\-bit tar entry sizes and negative timestamps, and 63\-bit UID, GID
+and device numbers.
 .PP
 Het eerste element wordt \fBdebian\-binary\fP genoemd en bevat een aantal
 regels, gescheiden door regeleinden. Momenteel, op het moment van het

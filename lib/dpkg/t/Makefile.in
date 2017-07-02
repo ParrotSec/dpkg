@@ -128,10 +128,10 @@ am__EXEEXT_1 = t-test$(EXEEXT) t-test-skip$(EXEEXT) t-macros$(EXEEXT) \
 	t-c-ctype$(EXEEXT) t-ehandle$(EXEEXT) t-error$(EXEEXT) \
 	t-string$(EXEEXT) t-buffer$(EXEEXT) t-path$(EXEEXT) \
 	t-progname$(EXEEXT) t-subproc$(EXEEXT) t-command$(EXEEXT) \
-	t-varbuf$(EXEEXT) t-ar$(EXEEXT) t-deb-version$(EXEEXT) \
-	t-arch$(EXEEXT) t-version$(EXEEXT) t-pkginfo$(EXEEXT) \
-	t-pkg-list$(EXEEXT) t-pkg-queue$(EXEEXT) t-trigger$(EXEEXT) \
-	t-mod-db$(EXEEXT)
+	t-varbuf$(EXEEXT) t-ar$(EXEEXT) t-tar$(EXEEXT) \
+	t-deb-version$(EXEEXT) t-arch$(EXEEXT) t-version$(EXEEXT) \
+	t-pkginfo$(EXEEXT) t-pkg-list$(EXEEXT) t-pkg-queue$(EXEEXT) \
+	t-trigger$(EXEEXT) t-mod-db$(EXEEXT)
 c_tarextract_SOURCES = c-tarextract.c
 c_tarextract_OBJECTS = c-tarextract.$(OBJEXT)
 c_tarextract_LDADD = $(LDADD)
@@ -237,6 +237,11 @@ t_subproc_OBJECTS = t-subproc.$(OBJEXT)
 t_subproc_LDADD = $(LDADD)
 t_subproc_DEPENDENCIES = $(top_builddir)/lib/dpkg/libdpkg.la \
 	$(am__DEPENDENCIES_1)
+t_tar_SOURCES = t-tar.c
+t_tar_OBJECTS = t-tar.$(OBJEXT)
+t_tar_LDADD = $(LDADD)
+t_tar_DEPENDENCIES = $(top_builddir)/lib/dpkg/libdpkg.la \
+	$(am__DEPENDENCIES_1)
 t_test_SOURCES = t-test.c
 t_test_OBJECTS = t-test.$(OBJEXT)
 t_test_LDADD = $(LDADD)
@@ -300,13 +305,14 @@ SOURCES = c-tarextract.c c-treewalk.c c-trigdeferred.c t-ar.c t-arch.c \
 	t-buffer.c t-c-ctype.c t-command.c t-deb-version.c t-ehandle.c \
 	t-error.c t-macros.c t-mod-db.c t-path.c t-pkg-list.c \
 	t-pkg-queue.c t-pkginfo.c t-progname.c t-string.c t-subproc.c \
-	t-test.c t-test-skip.c t-trigger.c t-varbuf.c t-version.c
+	t-tar.c t-test.c t-test-skip.c t-trigger.c t-varbuf.c \
+	t-version.c
 DIST_SOURCES = c-tarextract.c c-treewalk.c c-trigdeferred.c t-ar.c \
 	t-arch.c t-buffer.c t-c-ctype.c t-command.c t-deb-version.c \
 	t-ehandle.c t-error.c t-macros.c t-mod-db.c t-path.c \
 	t-pkg-list.c t-pkg-queue.c t-pkginfo.c t-progname.c t-string.c \
-	t-subproc.c t-test.c t-test-skip.c t-trigger.c t-varbuf.c \
-	t-version.c
+	t-subproc.c t-tar.c t-test.c t-test-skip.c t-trigger.c \
+	t-varbuf.c t-version.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -420,6 +426,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
+PATCH = @PATCH@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 PERL_COVER = @PERL_COVER@
@@ -541,6 +548,7 @@ test_programs = \
 	t-command \
 	t-varbuf \
 	t-ar \
+	t-tar \
 	t-deb-version \
 	t-arch \
 	t-version \
@@ -696,6 +704,10 @@ t-subproc$(EXEEXT): $(t_subproc_OBJECTS) $(t_subproc_DEPENDENCIES) $(EXTRA_t_sub
 	@rm -f t-subproc$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(t_subproc_OBJECTS) $(t_subproc_LDADD) $(LIBS)
 
+t-tar$(EXEEXT): $(t_tar_OBJECTS) $(t_tar_DEPENDENCIES) $(EXTRA_t_tar_DEPENDENCIES) 
+	@rm -f t-tar$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(t_tar_OBJECTS) $(t_tar_LDADD) $(LIBS)
+
 t-test$(EXEEXT): $(t_test_OBJECTS) $(t_test_DEPENDENCIES) $(EXTRA_t_test_DEPENDENCIES) 
 	@rm -f t-test$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(t_test_OBJECTS) $(t_test_LDADD) $(LIBS)
@@ -742,6 +754,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-progname.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-string.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-subproc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-tar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-test-skip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/t-trigger.Po@am__quote@

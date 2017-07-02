@@ -263,6 +263,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
+PATCH = @PATCH@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 PERL_COVER = @PERL_COVER@
@@ -452,7 +453,7 @@ MANGEN = $(MANGEN_V) sed \
 	-e 's:%ADMINDIR%:$(admindir):g' \
 	-e 's:%PKGDOCDIR%:$(docdir):g' \
 	-e 's:%PKGCONFDIR%:$(pkgconfdir):g' \
-	-e 's:%PKGLIBDIR%:$(pkglibdir):g' \
+	-e 's:%PKGLIBDIR%:$(pkglibexecdir):g' \
 	-e 's:%PKGDATADIR%:$(pkgdatadir):g'
 
 all: all-am

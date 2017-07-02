@@ -228,14 +228,10 @@ md5hash_prev_conffile(struct pkginfo *pkg, char *oldhash, const char *oldname,
   for (otherpkg = &pkg->set->pkg; otherpkg; otherpkg = otherpkg->arch_next) {
     if (otherpkg == pkg)
       continue;
-    /* The hash in the Conffiles is only meaningful if the package
-     * configuration has been at least tried. */
-    if (otherpkg->status < PKG_STAT_UNPACKED)
-      continue;
     /* If we are reinstalling, even if the other package is only unpacked,
      * we can always make use of the Conffiles hash value from an initial
      * installation, if that happened at all. */
-    if (otherpkg->status == PKG_STAT_UNPACKED &&
+    if (otherpkg->status <= PKG_STAT_UNPACKED &&
         dpkg_version_compare(&otherpkg->installed.version,
                              &otherpkg->configversion) != 0)
       continue;
@@ -857,7 +853,7 @@ tarobject(void *ctx, struct tar_entry *ti)
       }
 
       /* Is the package with the conflicting file in the “config files only”
-       * state? If so it must be a config file and we can silenty take it
+       * state? If so it must be a config file and we can silently take it
        * over. */
       if (otherpkg->status == PKG_STAT_CONFIGFILES)
         continue;
@@ -875,14 +871,7 @@ tarobject(void *ctx, struct tar_entry *ti)
              conff = conff->next) {
           if (!conff->obsolete)
             continue;
-          if (stat(conff->name, &stabtmp)) {
-            if (errno == ENOENT || errno == ENOTDIR || errno == ELOOP)
-              continue;
-            else
-              ohshite(_("cannot stat file '%s'"), conff->name);
-          }
-          if (stabtmp.st_dev == stab.st_dev &&
-              stabtmp.st_ino == stab.st_ino)
+          if (strcmp(conff->name, nifd->namenode->name) == 0)
             break;
         }
         if (conff) {
