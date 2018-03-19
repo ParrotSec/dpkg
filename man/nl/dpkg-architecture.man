@@ -82,9 +82,9 @@ met behulp van eval in te stellen.
 Toon een commando dat vergelijkbaar is met \fB\-\-print\-unset\fP, maar om alle
 variabelen leeg te maken.
 .TP 
-\fB\-c\fP, \fB\-\-command\fP \fIcommando\fP
-Voer een \fIcommando\fP uit in een omgeving waarin alle variabelen ingesteld
-zijn op de vastgelegde waarde.
+\fB\-c\fP, \fB\-\-command\fP \fIcommand\-string\fP
+Execute a \fIcommand\-string\fP in an environment which has all variables set to
+the determined value.
 .TP 
 \fB\-L\fP, \fB\-\-list\-known\fP
 Toon een lijst van geldige architectuurbenamingen. Kan eventueel ingeperkt
@@ -375,4 +375,4 @@ Alle lange commando\- en optienamen kunnen slechts sinds dpkg 1.17.17
 gebruikt worden.
 .
 .SH "ZIE OOK"
-\fBdpkg\-buildpackage\fP(1), \fBdpkg\-cross\fP(1).
+\fBdpkg\-buildpackage\fP(1).

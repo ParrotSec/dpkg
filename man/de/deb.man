@@ -45,15 +45,16 @@ damit auf 15 Zeichen (von den erlaubten 16) begrenzt ist. Dateigrößen sind
 auf 10 dezimale ASCII\-Ziffern begrenzt, wodurch bis zu ungefähr 9536,74
 MiB\-Mitgliedsdateien erlaubt sind.
 .PP
-The \fBtar\fP archives currently allowed are, the old\-style (v7) format, the
-pre\-POSIX ustar format, a subset of the GNU format (new style long pathnames
-and long linknames, supported since dpkg 1.4.1.17; large file metadata since
-dpkg 1.18.24), and the POSIX ustar format (long names supported since dpkg
-1.15.0).  Unrecognized tar typeflags are considered an error.  Each tar
-entry size inside a tar archive is limited to 11 ASCII octal digits,
-allowing for up to 8 GiB tar entries.  The GNU large file metadata support
-permits 95\-bit tar entry sizes and negative timestamps, and 63\-bit UID, GID
-and device numbers.
+Derzeit werden die folgenden \fBtar\fP\-Archive erlaubt: alter Stil (V7\-)Format,
+pre\-POSIX\-ustar\-Format, eine Teilmenge des GNU\-Formats (der neue Stil mit
+langen Pfadnamen und langen Linknamen, unterstützt seit Dpkg 1.4.1.17; große
+Datei\-Metadaten seit Dpkg 1.18.24) und das POSIX\-ustar\-Format (lange Namen
+seit Dpkg 1.15.0 unterstützt). Unbekannte Tar\-Typeinstellungen werden als
+Fehler betrachtet. Jede Tar\-Eintraggröße innerhalb eines Tar\-Archivs ist auf
+11 ASCII\-Oktalziffern begrenzt; damit sind bis zu 8 GiB\-Tar\-Einträge
+möglich. Die Unterstützung der großen Dateimetadaten im GNU\-Format
+ermöglicht 95\-Bit\-Tar\-Eintragsgrößen und negative Zeitstempel und
+63\-Bit\-UID, \-GID und \-Gerätenummern.
 .PP
 Das erste Mitglied heißt \fBdebian\-binary\fP und enthält eine Reihe von Zeilen,
 die durch Zeilenumbrüche getrennt sind. Derzeit ist nur eine Zeile

@@ -23,15 +23,15 @@
 
 use strict;
 use warnings;
+use feature qw(state);
 
-use POSIX qw(:errno_h);
+use List::Util qw(any none);
 use Cwd qw(realpath);
 use File::Basename qw(dirname);
 
 use Dpkg ();
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
-use Dpkg::Util qw(:list);
 use Dpkg::Path qw(relative_to_pkg_root guess_pkg_root_dir
 		  check_files_are_the_same get_control_path);
 use Dpkg::Version;
@@ -782,7 +782,12 @@ sub find_symbols_file {
     } else {
 	push @files, "$Dpkg::CONFDIR/symbols/$pkg.symbols.$host_arch",
 	    "$Dpkg::CONFDIR/symbols/$pkg.symbols";
-	my $control_file = get_control_path($pkg, 'symbols');
+
+	state %control_file_cache;
+	if (not exists $control_file_cache{$pkg}) {
+	    $control_file_cache{$pkg} = get_control_path($pkg, 'symbols');
+	}
+	my $control_file = $control_file_cache{$pkg};
 	push @files, $control_file if defined $control_file;
     }
 
@@ -818,7 +823,6 @@ sub symfile_has_soname {
 # find_library ($soname, \@rpath, $format)
 sub my_find_library {
     my ($lib, $rpath, $format, $execfile) = @_;
-    my $file;
 
     # Create real RPATH in case $ORIGIN is used
     # Note: ld.so also supports $PLATFORM and $LIB but they are

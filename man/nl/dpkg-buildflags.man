@@ -147,12 +147,42 @@ de vlag werd ingesteld/gewijzigd door een gebruikersspecifieke configuratie;
 de vlag werd ingesteld/gewijzigd door een omgevingsspecifieke configuratie.
 .RE
 .TP 
+\fB\-\-query\fP
+Print any information that can be useful to explain the behaviour of the
+program: current vendor, relevant environment variables, feature areas,
+state of all feature flags, and the compiler flags with their origin (since
+dpkg 1.19.0).
+.IP
+For example:
+.nf
+  Vendor: Debian
+  Environment:
+   DEB_CFLAGS_SET=\-O0 \-Wall
+
+  Area: qa
+  Features:
+   bug=no
+   canary=no
+
+  Area: reproducible
+  Features:
+   timeless=no
+
+  Flag: CFLAGS
+  Value: \-O0 \-Wall
+  Origin: env
+
+  Flag: CPPFLAGS
+  Value: \-D_FORTIFY_SOURCE=2
+  Origin: vendor
+.fi
+.TP 
 \fB\-\-query\-features\fP\fI gebied\fP
-Geef de functionaliteit weer die voor een opgegeven gebied geactiveerd is
-(sinds dpkg 1.16.2). Momenteel worden door Debian en zijn derivaten enkel de
-gebieden \fBqa\fP, \fBreproducible\fP, \fBsanitize\fP en \fBhardening\fP erkend. Zie het
-onderdeel \fBFUNCTIONALITEITSGEBIEDEN\fP voor meer details. Sluit af met 0 als
-het gebied gekend is, anders met 1.
+Print the features enabled for a given area (since dpkg 1.16.2).  The only
+currently recognized areas on Debian and derivatives are \fBfuture\fP, \fBqa\fP,
+\fBreproducible\fP, \fBsanitize\fP and \fBhardening\fP, see the \fBFEATURE AREAS\fP
+section for more details.  Exits with 0 if the area is known otherwise exits
+with 1.
 .IP
 De uitvoer is in RFC822\-indeling met één sectie per functie. Bijvoorbeeld:
 .IP
@@ -226,6 +256,16 @@ en “fortify” activeren kunt u dus doen met:
 .P
   export DEB_BUILD_MAINT_OPTIONS=hardening=\-all,+format,+fortify
 .
+.SS future
+Several compile\-time options (detailed below) can be used to enable features
+that should be enabled by default, but cannot due to backwards compatibility
+reasons.
+.TP 
+\fBlfs\fP
+This setting (disabled by default) enables Large File Support on 32\-bit
+architectures where their ABI does not include LFS by default, by adding
+\fB\-D_LARGEFILE_SOURCE \-D_FILE_OFFSET_BITS=64\fP to \fBCPPFLAGS\fP.
+.
 .SS "qa (kwaliteitsbevordering)"
 Er kunnen verschillende compilatieopties (die hierna beschreven worden)
 gebruikt worden om problemen in de broncode of het bouwsysteem te helpen
@@ -252,11 +292,11 @@ zijn de enige ondersteunde vlaggen \fBCPPFLAGS\fP, \fBCFLAGS\fP, \fBOBJCFLAGS\fP
 \fBLDFLAGS\fP dat ingesteld wordt op \fB\-Wl,\-z,deb\-canary\-\fP\fIwillekeurige\-id\fP.
 .
 .SS "sanitize (saneren)"
-Er kunnen verschillende compilatie\-opties (die hierna beschreven worden)
-gebruikt worden om te helpen bij het gezond houden van een resulterend
-binair pakket op het vlak van geheugenvervuiling, geheugenlekkage,
-geheugengebruik na vrijgave, dataraces bij threads en bugs door
-ongedefinieerd gedrag.
+Several compile\-time options (detailed below) can be used to help sanitize a
+resulting binary against memory corruptions, memory leaks, use after free,
+threading data races and undefined behavior bugs.  \fBNote\fP: these options
+should \fBnot\fP be used for production builds as they can reduce reliability
+for conformant code, reduce security or even functionality.
 .TP 
 \fBaddress\fP
 Deze instelling (standaard uitgeschakeld) voegt \fB\-fsanitize=address\fP toe
@@ -363,17 +403,18 @@ optie kan niet aangezet worden als \fBrelro\fP niet geactiveerd is.
 .
 .TP 
 \fBpie\fP
-This setting (with no default since dpkg 1.18.23, and injected by default by
-gcc on the amd64, arm64, armel, armhf, i386, kfreebsd\-amd64, kfreebsd\-i386,
-mips, mipsel, mips64el, ppc64el, s390x, sparc and sparc64 Debian
-architectures)  adds the required options via gcc specs files if needed to
-enable or disable PIE. When enabled and injected by gcc, adds nothing. When
-enabled and not injected by gcc, adds \fB\-fPIE\fP to \fBCFLAGS\fP, \fBCXXFLAGS\fP,
-\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and
-\fB\-fPIE \-pie\fP to \fBLDFLAGS\fP. When disabled and injected by gcc, adds
-\fB\-fno\-PIE\fP to \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP,
-\fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and \fB\-fno\-PIE \-no\-pie\fP to
-\fBLDFLAGS\fP.
+Deze instelling (zonder standaardinstelling sinds dpkg 1.18.23 en door gcc
+standaard geïnjecteerd bij de Debian architecturen amd64, arm64, armel,
+armhf, i386, kfreebsd\-amd64, kfreebsd\-i386, mips, mipsel, mips64el, ppc64el,
+s390x, sparc en sparc64) voegt zo nodig de vereiste opties toe om PIE te
+activeren of te deactiveren. In geval van activering en door gcc
+geïnjecteerd, wordt er niets toegevoegd, In geval van activering en niet
+geïnjecteerd door gcc, wordt \fB\-fPIE\fP toegevoegd bij \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en \fBFCFLAGS\fP, en
+\fB\-fPIE \-pie\fP bij \fBLDFLAGS\fP. In geval van deactivering en geïnjecteerd door
+gcc wordt \fB\-fno\-PIE\fP toegevoegd bij \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP,
+\fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en \fBFCFLAGS\fP, en \fB\-fno\-PIE \-no\-pie\fP
+bij \fBLDFLAGS\fP.
 
 Position Independent Executable (PIE \- positie\-onafhankelijke programma's)
 zijn nodig om voordeel te halen uit Address Space Layout Randomization (ASLR

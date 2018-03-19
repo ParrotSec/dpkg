@@ -28,6 +28,7 @@
 use strict;
 use warnings;
 
+use List::Util qw(any none);
 use Cwd;
 use File::Basename;
 use File::Spec;
@@ -35,7 +36,6 @@ use File::Spec;
 use Dpkg ();
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
-use Dpkg::Util qw(:list);
 use Dpkg::Arch qw(:operators);
 use Dpkg::Deps;
 use Dpkg::Compression;
@@ -43,7 +43,6 @@ use Dpkg::Conf;
 use Dpkg::Control::Info;
 use Dpkg::Control::Tests;
 use Dpkg::Control::Fields;
-use Dpkg::Index;
 use Dpkg::Substvars;
 use Dpkg::Version;
 use Dpkg::Vars;
@@ -286,7 +285,7 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
 
         my $pkg_summary = sprintf('%s %s %s %s', $p, $type, $sect, $prio);
 
-        $pkg_summary .= ' arch=' . join ',', split /\s+/, $arch;
+        $pkg_summary .= ' arch=' . join ',', split ' ', $arch;
 
         if (defined $profile) {
             # If the string does not contain brackets then it is using the
@@ -333,7 +332,7 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
                         push(@sourcearch, $a) unless $archadded{$a}++;
                     }
                 }
-            } elsif (m/^Homepage$/) {
+            } elsif (m/^(?:Homepage|Description)$/) {
                 # Do not overwrite the same field from the source entry
             } else {
                 field_transfer_single($pkg, $fields);

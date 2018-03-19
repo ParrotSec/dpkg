@@ -49,7 +49,8 @@ our @EXPORT_OK = qw(
     debarch_is_wildcard
     debarch_is_illegal
     debarch_is_concerned
-    debarch_to_cpuattrs
+    debarch_to_abiattrs
+    debarch_to_cpubits
     debarch_to_gnutriplet
     debarch_to_debtuple
     debarch_to_multiarch
@@ -74,7 +75,7 @@ our %EXPORT_TAGS = (
         debarch_list_parse
     ) ],
     mappers => [ qw(
-        debarch_to_cpuattrs
+        debarch_to_abiattrs
         debarch_to_gnutriplet
         debarch_to_debtuple
         debarch_to_multiarch
@@ -95,12 +96,11 @@ our %EXPORT_TAGS = (
 
 
 use Exporter qw(import);
-use POSIX qw(:errno_h);
+use List::Util qw(any);
 
 use Dpkg ();
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
-use Dpkg::Util qw(:list);
 use Dpkg::Build::Env;
 
 my (@cpu, @os);
@@ -134,6 +134,8 @@ sub get_raw_build_arch()
     # dpkg-architecture itself, by avoiding computing the DEB_BUILD_
     # variables when they are not requested.
 
+    ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+    no warnings qw(exec);
     $build_arch = qx(dpkg --print-architecture);
     syserr('dpkg --print-architecture failed') if $? >> 8;
 
@@ -162,6 +164,8 @@ sub get_build_arch()
 
         return $cc_host_gnu_type{$CC} if defined $cc_host_gnu_type{$CC};
 
+        ## no critic (TestingAndDebugging::ProhibitNoWarnings)
+        no warnings qw(exec);
         $cc_host_gnu_type{$CC} = qx($CC -dumpmachine);
 	if ($? >> 8) {
             $cc_host_gnu_type{$CC} = '';
@@ -501,7 +505,7 @@ sub debwildcard_to_debtuple($)
     }
 }
 
-sub debarch_to_cpuattrs($)
+sub debarch_to_abiattrs($)
 {
     my $arch = shift;
     my ($abi, $libc, $os, $cpu) = debarch_to_debtuple($arch);
@@ -510,6 +514,18 @@ sub debarch_to_cpuattrs($)
         _load_abitable();
 
         return ($abibits{$abi} // $cpubits{$cpu}, $cpuendian{$cpu});
+    } else {
+        return;
+    }
+}
+
+sub debarch_to_cpubits($)
+{
+    my $arch = shift;
+    my (undef, undef, undef, $cpu) = debarch_to_debtuple($arch);
+
+    if (defined $cpu) {
+        return $cpubits{$cpu};
     } else {
         return;
     }
@@ -640,7 +656,7 @@ Parse an architecture list.
 sub debarch_list_parse
 {
     my $arch_list = shift;
-    my @arch_list = split /\s+/, $arch_list;
+    my @arch_list = split ' ', $arch_list;
 
     foreach my $arch (@arch_list) {
         if (debarch_is_illegal($arch)) {

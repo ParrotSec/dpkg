@@ -86,15 +86,11 @@ einen frühzeitigen Lauf der Trigger\-Verarbeitung vermeiden und es
 ermöglichen, den Trigger nur einmal als einen der letzten Schrittes des
 Upgrades auszuführen.
 .PP
-Die Varianten „\-noawait“ werden nur seit Dpkg 1.16.1 unterstützt und werden
-bei älteren Dpkg zu Fehlern führen. Es wird daher empfohlen, ein
-„Pre\-Depends: dpkg (>= 1.16.1)“ zu jedem Paket hinzuzufügen, dass diese
-Direktiven nutzen möchte.
+Die Varianten „\-noawait“ werden seit Dpkg 1.16.1 unterstützt und bei älteren
+Dpkg zu Fehlern führen.
 .PP
-Die Alias\-Varianten „\-await“ werden nur seit Dpkg 1.17.21 unterstützt und
-werden bei älteren Dpkg zu Fehlern führen. Es wird daher empfohlen, ein
-„Pre\-Depends: dpkg (>= 1.17.21)“ zu jedem Paket hinzuzufügen, dass diese
-Direktiven nutzen möchte.
+Die Alias\-Varianten „\-await“ werden seit Dpkg 1.17.21 unterstützt und bei
+älteren Dpkg zu Fehlern führen.
 .
 .SH "SIEHE AUCH"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

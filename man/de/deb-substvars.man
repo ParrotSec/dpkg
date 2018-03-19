@@ -95,14 +95,22 @@ Die Paketversion der Originalautoren, einschließlich der Epoche der
 Debian\-Version, falls vorhanden (seit Dpkg 1.13.19).
 .TP 
 \fBbinary:Version\fP
-Die Binärpaketversion (die z.B. in einem binNMU von source:Version abweichen
-kann; seit Dpkg 1.13.19).
+Die Binärpaketversion (die z.B. in einem binNMU von \fBsource:Version\fP
+abweichen kann; seit Dpkg 1.13.19).
 .TP 
 \fBSource\-Version\fP
 Die Quellpaketversion (aus der changelog\-Datei). Diese Variable ist jetzt
 \fBveraltet\fP und gibt bei der Benutzung einen Fehler aus, da ihre Bedeutung
 von ihrer Funktion abweicht, bitte verwenden Sie \fBsource:Version\fP oder
 \fBbinary:Version\fP wo zutreffend.
+.TP 
+\fBsource:Synopsis\fP
+The source package synopsis, extracted from the source stanza \fBDescription\fP
+field, if it exists (since dpkg 1.19.0).
+.TP 
+\fBsource:Extended\-Description\fP
+The source package extended description, extracted from the source stanza
+\fBDescription\fP field, if it exists (since dpkg 1.19.0).
 .TP 
 \fBInstalled\-Size\fP
 Die ungefähre Gesamtgröße der vom Paket installierten Dateien. Dieser Wert

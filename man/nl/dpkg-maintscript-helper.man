@@ -87,14 +87,14 @@ versie \fB3.0\-1\fP de eigenlijke omschakeling doorvoert in de scripts van de
 pakketonderhouder, moet \fIvorige\-versie\fP ingesteld worden op \fB3.0\-1~\fP.
 .TP 
 \fIpakket\fP
-De pakketnaam. Als het pakket “Multi\-Arch: same” is, moet deze parameter de
-architectuurkwalificatie bevatten, anders zou er gewoonlijk \fBgeen\fP
-architectuurkwalificatie in moeten voorkomen (aangezien dit geen
-cross\-grades zou toelaten, of de omschakeling van architectuurspecifiek naar
-architectuur \fBall\fP en vice versa). Indien de parameter leeg is of
-weggelaten werd, zullen de omgevingsvariabelen \fBDPKG_MAINTSCRIPT_PACKAGE\fP
-en \fBDPKG_MAINTSCRIPT_ARCH\fP (zoals die door \fBdpkg\fP ingesteld werden)
-gebruikt worden om een pakketnaam met architectuurkwalificatie te genereren.
+The package name owning the pathname(s).  When the package is “Multi\-Arch:
+same” this parameter must include the architecture qualifier, otherwise it
+should \fBnot\fP usually include the architecture qualifier (as it would
+disallow cross\-grades, or switching from being architecture specific to
+architecture \fBall\fP or vice versa).  If the parameter is empty or omitted,
+the \fBDPKG_MAINTSCRIPT_PACKAGE\fP and \fBDPKG_MAINTSCRIPT_ARCH\fP environment
+variables (as set by \fBdpkg\fP when running the maintainer scripts) will be
+used to generate an arch\-qualified package name.
 .TP 
 \fB\-\-\fP
 Alle parameters van de scripts van de pakketonderhouder moeten doorgegeven

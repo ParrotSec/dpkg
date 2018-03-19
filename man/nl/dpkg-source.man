@@ -324,13 +324,12 @@ broncodepakket te vergelijken met de .orig\-map.
 
 \fBBouwopties (met \-\-build):\fP
 
-Indien een tweede argument opgegeven wordt dat geen optie is, moet het de
-naam van de originele broncodemap zijn of van het tar\-archief of een lege
-tekenreeks als het pakket Debian\-specifiek is en dus geen diffs bevat in
-verband met de debianisering. Indien geen tweede argument opgegeven werd,
-zal \fBdpkg\-source\fP zoeken naar het tar\-bestand met de originele broncode
-\fIpakket\fP\fB_\fP\fItoeleveraarsversie\fP\fB.orig.tar.gz\fP of naar de map met de
-originele broncode \fImap\fP\fB.orig\fP, afhankelijk van de argumenten \fB\-sX\fP.
+If a second non\-option argument is supplied it should be the name of the
+original source directory or tarfile or the empty string if the package is a
+Debian\-specific one and so has no debianization diffs. If no second argument
+is supplied then \fBdpkg\-source\fP will look for the original source tarfile
+\fIpackage\fP\fB_\fP\fIupstream\-version\fP\fB.orig.tar.gz\fP or the original source
+directory \fIdirectory\fP\fB.orig\fP depending on the \fB\-sX\fP arguments.
 
 \fB\-sa\fP, \fB\-sp\fP, \fB\-sk\fP, \fB\-su\fP en \fB\-sr\fP zullen geen bestaande tar\-bestanden
 of \-mappen overschrijven. Indien dat wel gewenst wordt, dan moeten in de
@@ -365,27 +364,23 @@ maken. Gebruik deze optie met zorg \- indien de map en het tar\-bestand niet
 overeenkomen zal er een slecht broncodearchief gegenereerd worden.
 .TP 
 \fB\-sn\fP
-Geeft aan dat er niet naar een originele broncode gezocht moet worden en dat
-er geen diff\-bestand aangemaakt moet worden. Als er een tweede argument
-opgegeven wordt, moet het de lege tekenreeks zijn. Dit wordt gebruikt voor
-Debian\-specifieke pakketten die geen afzonderlijke toeleveraarsbroncode
-hebben en om die reden ook geen debianisatie\-diffs.
+Specifies to not look for any original source, and to not generate a diff.
+The second argument, if supplied, must be the empty string. This is used for
+Debian\-specific packages which do not have a separate upstream source and
+therefore have no debianization diffs.
 .TP 
 \fB\-sa\fP of \fB\-sA\fP
-Geeft aan dat naar de originele broncode gezocht moet worden in de vorm van
-een tar\-bestand of een map. Als er een tweede argument opgegeven wordt, mag
-dat een van die twee zijn of een lege tekenreeks (dit is het equivalent voor
-het gebruik van \fB\-sn\fP). Indien er een tar\-bestand gevonden wordt, zal het
-dat uitpakken om het diff\-bestand aan te maken en het daarna verwijderen
-(dit is het equivalent voor \fB\-sp\fP). Indien een map aangetroffen wordt, zal
-het die inpakken om de originele broncode te creëren en ze vervolgens
-verwijderen (dit is het equivalent voor \fB\-sr\fP). Indien geen van beide
-gevonden wordt, zal het aannemen dat het pakket geen debianisatie\-diffs
-heeft, maar enkel een eenvoudig broncodearchief (dit is het equivalent voor
-\fB\-sn\fP). Indien beide aangetroffen worden, dan zal \fBdpkg\-source\fP de map
-negeren, en ze overschrijven als \fB\-sA\fP opgegeven werd (dit is het
-equivalent voor \fB\-sP\fP) of een foutmelding geven als \fB\-sa\fP opgegeven
-werd. \fB\-sA\fP is de standaard.
+Specifies to look for the original source archive as a tarfile or as a
+directory \- the second argument, if any, may be either, or the empty string
+(this is equivalent to using \fB\-sn\fP).  If a tarfile is found it will unpack
+it to create the diff and remove it afterwards (this is equivalent to
+\fB\-sp\fP); if a directory is found it will pack it to create the original
+source and remove it afterwards (this is equivalent to \fB\-sr\fP); if neither
+is found it will assume that the package has no debianization diffs, only a
+straightforward source archive (this is equivalent to \fB\-sn\fP).  If both are
+found then \fBdpkg\-source\fP will ignore the directory, overwriting it, if
+\fB\-sA\fP was specified (this is equivalent to \fB\-sP\fP)  or raise an error if
+\fB\-sa\fP was specified.  \fB\-sA\fP is the default.
 .TP 
 \fB\-\-abort\-on\-upstream\-changes\fP
 Het proces mislukt als het gegenereerde diff\-bestand wijzigingen aan

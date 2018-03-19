@@ -49,9 +49,9 @@ as specified in RFC4880.
 The name of the \fB.buildinfo\fP file will depend on the type of build and
 will be as specific as necessary but not more;
 for a build that includes \fBany\fP the name will be
-\fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP,
+\fIsource-name\fP\fB_\fP\fIbinary-version\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP,
 or otherwise for a build that includes \fBall\fP the name will be
-\fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fBall.buildinfo\fP,
+\fIsource-name\fP\fB_\fP\fIbinary-version\fP\fB_\fP\fBall.buildinfo\fP,
 or otherwise for a build that includes \fBsource\fP the name will be
 \fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fBsource.buildinfo\fP.
 .
@@ -90,7 +90,7 @@ Typically, this is the original package's version number in whatever form
 the program's author uses.
 It may also include a Debian revision number (for non-native packages).
 The exact format and sorting algorithm are described in
-.BR deb\-version (5).
+.BR deb\-version (7).
 .TP
 .B Binary\-Only\-Changes:
 .TQ
@@ -134,6 +134,12 @@ Common architectures are \fBamd64\fP, \fBarmel\fP, \fBi386\fP, etc.
 The date the package was built.
 It must be in the same format as the date in a \fBdeb\-changelog\fP(5)
 entry.
+.TP
+.BR Build\-Kernel\-Version: " \fIbuild-kernel-version\fP"
+The release and version (in an unspecified format) of the kernel running
+on the build system.
+This field is only going to be present if the builder has explicitly
+requested it, to avoid leaking possibly sensitive information.
 .TP
 .BR Build\-Path: " \fIbuild-path\fP"
 The absolute build path, which correspond to the unpacked source tree.
@@ -179,5 +185,5 @@ backslashes escaped (‘\\\\’).
 .
 .SH SEE ALSO
 .BR deb\-changes (5),
-.BR deb\-version (5),
+.BR deb\-version (7),
 .BR dpkg\-genbuildinfo (1).

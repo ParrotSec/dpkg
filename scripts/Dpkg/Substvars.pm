@@ -19,9 +19,7 @@ package Dpkg::Substvars;
 use strict;
 use warnings;
 
-our $VERSION = '1.05';
-
-use POSIX qw(:errno_h);
+our $VERSION = '1.06';
 
 use Dpkg ();
 use Dpkg::Arch qw(get_host_arch);
@@ -270,6 +268,26 @@ sub set_arch_substvars {
     $self->set('Arch', get_host_arch(), $attr);
 }
 
+=item $s->set_desc_substvars()
+
+Defines source description variables: ${source:Synopsis} and
+${source:Extended-Description}.
+
+These will never be warned about when unused.
+
+=cut
+
+sub set_desc_substvars {
+    my ($self, $desc) = @_;
+
+    my ($synopsis, $extended) = split /\n/, $desc, 2;
+
+    my $attr = SUBSTVAR_ATTR_USED | SUBSTVAR_ATTR_AUTO;
+
+    $self->set('source:Synopsis', $synopsis, $attr);
+    $self->set('source:Extended-Description', $extended, $attr);
+}
+
 =item $s->set_field_substvars($ctrl, $prefix)
 
 Defines field variables from a Dpkg::Control object, with each variable
@@ -342,7 +360,7 @@ sub warn_about_unused {
     my ($self, %opts) = @_;
     $opts{msg_prefix} //= $self->{msg_prefix};
 
-    foreach my $vn (keys %{$self->{vars}}) {
+    foreach my $vn (sort keys %{$self->{vars}}) {
         next if $self->{attr}{$vn} & SUBSTVAR_ATTR_USED;
         # Empty substitutions variables are ignored on the basis
         # that they are not required in the current situation
@@ -418,6 +436,10 @@ sub output {
 =back
 
 =head1 CHANGES
+
+=head2 Version 1.06 (dpkg 1.19.0)
+
+New method: $s->set_desc_substvars().
 
 =head2 Version 1.05 (dpkg 1.18.11)
 

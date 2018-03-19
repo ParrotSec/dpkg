@@ -15,6 +15,7 @@ package Dpkg::ErrorHandling;
 
 use strict;
 use warnings;
+use feature qw(state);
 
 our $VERSION = '0.02';
 our @EXPORT_OK = qw(
@@ -45,7 +46,6 @@ our @EXPORT = qw(
 );
 
 use Exporter qw(import);
-use Term::ANSIColor;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -53,11 +53,11 @@ use Dpkg::Gettext;
 my $quiet_warnings = 0;
 my $debug_level = 0;
 my $info_fh = \*STDOUT;
-my $use_color = 0;
 
 sub setup_color
 {
     my $mode = $ENV{'DPKG_COLORS'} // 'auto';
+    my $use_color;
 
     if ($mode eq 'auto') {
         ## no critic (InputOutput::ProhibitInteractiveTest)
@@ -67,9 +67,9 @@ sub setup_color
     } else {
         $use_color = 0;
     }
-}
 
-setup_color();
+    require Term::ANSIColor if $use_color;
+}
 
 use constant {
     REPORT_PROGNAME => 1,
@@ -152,8 +152,10 @@ sub report_pretty
 {
     my ($msg, $color) = @_;
 
+    state $use_color = setup_color();
+
     if ($use_color) {
-        return colored($msg, $color);
+        return Term::ANSIColor::colored($msg, $color);
     } else {
         return $msg;
     }
@@ -236,19 +238,21 @@ sub subprocerr(@)
     require POSIX;
 
     if (POSIX::WIFEXITED($?)) {
-	error(g_('%s gave error exit status %s'), $p, POSIX::WEXITSTATUS($?));
+        my $ret = POSIX::WEXITSTATUS($?);
+        error(g_('%s subprocess returned exit status %d'), $p, $ret);
     } elsif (POSIX::WIFSIGNALED($?)) {
-	error(g_('%s died from signal %s'), $p, POSIX::WTERMSIG($?));
+        my $sig = POSIX::WTERMSIG($?);
+        error(g_('%s subprocess was killed by signal %d'), $p, $sig);
     } else {
-	error(g_('%s failed with unknown exit code %d'), $p, $?);
+        error(g_('%s subprocess failed with unknown status code %d'), $p, $?);
     }
 }
-
-my $printforhelp = g_('Use --help for program usage information.');
 
 sub usageerr(@)
 {
     my ($msg) = (shift);
+
+    state $printforhelp = g_('Use --help for program usage information.');
 
     $msg = sprintf($msg, @_) if (@_);
     warn report(REPORT_ERROR, $msg);

@@ -69,9 +69,9 @@ Toon de versie en sluit af.
 .
 .SH BEPERKINGEN
 .P
-Alles wat niet door Dpkg::Changelog ontleed wordt, geraakt tijdens het
-samenvoegen verloren. Dit kan gaan om zaken zoals modus\-regels van vim,
-commentaar die daar niet hoort te staan, enz.
+Anything that is not parsed by Dpkg::Changelog is lost during the merge.
+This might include stuff like Vim modelines, Emacs variables, comments which
+were not supposed to be there, etc.
 .
 .SH "INTEGRATIE MET GIT"
 .P

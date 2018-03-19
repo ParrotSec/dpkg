@@ -65,9 +65,9 @@ Wyświetla informację o wersji i pomyślnie kończy działanie.
 .
 .SH OGRANICZENIA
 .P
-Wszystko co nie jest przetwarzane przez Dpkg::Changelog jest tracone przy
-łączeniu. Może to dotyczyć następujących rzeczy: modeline vima, komentarze,
-które nie są tu przeznaczone itd.
+Anything that is not parsed by Dpkg::Changelog is lost during the merge.
+This might include stuff like Vim modelines, Emacs variables, comments which
+were not supposed to be there, etc.
 .
 .SH "INTEGRACJA Z GITEM"
 .P

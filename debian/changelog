@@ -1,3 +1,322 @@
+dpkg (1.19.0.5+parrot0) testing; urgency=medium
+
+  * Non-maintainer upload.
+  * Import new upstream release.
+  * Import previous patches.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Mon, 19 Mar 2018 15:56:37 +0100
+
+dpkg (1.19.0.5) unstable; urgency=medium
+
+  * Fix directory traversal with dpkg-deb --raw-extract, by guaranteeing
+    that the DEBIAN pathname does not exist. Closes: #879982
+    Reported by Jakub Wilk <jwilk@jwilk.net>.
+  * Rename DPKG_GAIN_ROOT_CMD to DEB_GAIN_ROOT_CMD in the R³ support, as
+    the variable is expected to be set by any builder, not just dpkg. And
+    introduce ephemereal backwards compatibility even though there are no
+    known users.
+  * Do not set DEB_GAIN_ROOT_CMD in dpkg-buildpackage when the R³ value is
+    <implementations-keywords>, following the specification.
+  * Specify that DEB_GAIN_ROOT_CMD in R³ should preserve the environment.
+    Proposed by Josh Triplett <josh@joshtriplett.org>.
+  * Specify new DEB_RULES_REQUIRES_ROOT variable for R³ support.
+  * Declare R³ specification as "recommendation, stable" with version 1.0.
+  * Architecture support:
+    - Add support for riscv64 CPU. Closes: #822914
+      Thanks to Manuel A. Fernandez Montecelo <mafm@debian.org>
+  * Perl modules:
+    - Dpkg::Vendor::Debian: Use proper %use_feature key. This was causing perl
+      errors on paths not accapted for fixdebugpath.
+      Reported by Mattia Rizzolo <mattia@debian.org>, on IRC. Closes: #881051
+    - Check that $state->{seen} exists instead of $state being just defined.
+      Fixes regression in dpkg-gensymbols symbols output.
+      Thanks to Dmitry Shachnev <mitya57@debian.org>. Closes: #880166
+    - Mark hurd-i386 as having gcc builtin PIE in Dpkg::Vendor::Debian.
+      Requested by Samuel Thibault <sthibault@debian.org>.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 17 Jan 2018 03:27:34 +0100
+
+dpkg (1.19.0.4kali1) kali-dev; urgency=medium
+
+  * Synchronize with Debian
+  * Keep the work-around EXDEV error returned by overlayfs
+    (see: #836211)
+
+ -- Sophie Brun <sophie@freexian.com>  Thu, 02 Nov 2017 09:54:04 +0100
+
+dpkg (1.19.0.4) unstable; urgency=medium
+
+  * Perl modules:
+    - Check that $tarname is defined before use in Dpkg::Source::Package::V1.
+      Thanks to Christoph Biedl <debian.axhn@manchmal.in-ulm.de>.
+      Closes: #879124
+  * Packaging:
+    - Add Breaks on debhelper << 10.10.1~ to dpkg-dev, so that debhelper users
+      wanting to use R³ support do not need a versioned dependency on dpkg-dev.
+    - Add Breaks dgit << 3.13~ to libdpkg-perl, as older dgit versions assumed
+      that Dpkg::Compression::Process was available, via implicit import
+      from Dpkg::Source::Package.
+      Reported by Ian Jackson <ijackson@chiark.greenend.org.uk>.
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 22 Oct 2017 23:47:08 +0200
+
+dpkg (1.19.0.3) unstable; urgency=medium
+
+  * Pass the correct source stanza to the dpkg-buildpackage code parsing the
+    Rules-Requires-Root field. This meant the field was being ignored.
+  * Setup and check rootcommand in dpkg-buildpackage only if it is going to
+    be needed. Reported by Niels Thykier <niels@thykier.net>.
+  * Documentation:
+    - Add a missing dot on the dpkg-buildflags(1) «lfs» feature paragraph.
+      Spotted by Helge Kreutzmann <debian@helgefjell.de>.
+  * Packaging:
+    - Comment out Rules-Requires-Root field until debhelper supports it.
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 21 Oct 2017 16:01:15 +0200
+
+dpkg (1.19.0.2) unstable; urgency=medium
+
+  * Fix logic in dpkg-buildpackage to decide whether to run build targets,
+    which broke tons of packages that are violating Debian policy MUSTs.
+    Thanks to James Clarke <jrtc27@debian.org>. Closes: #878899
+  * Do not try to recompute hashes for the .dsc file when signing binary-only
+    builds in dpkg-buildpackage. Reported by Ximin Luo <infinity0@debian.org>.
+  * Packaging:
+    - Add Breaks to libdpkg-perl against pkg-kde-tools (<< 0.15.28~), as
+      that package is using private modules with no API guarantees, that
+      obviously broke due to recent changes in 1.19.0. Closes: #878919
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 18 Oct 2017 01:28:20 +0200
+
+dpkg (1.19.0.1) unstable; urgency=medium
+
+  * Packaging:
+    - Install update-alternatives policykit-1 file.
+  * Test suite:
+    - Skip Dpkg::OpenPGP test if gpg is not present.
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 17 Oct 2017 04:50:11 +0200
+
+dpkg (1.19.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * Remove an unused variable in dpkg-shlibdeps.
+    Thanks to Niels Thykier <niels@thykier.net>.
+  * Parse start-stop-daemon usernames and groupnames starting with digits in
+    -u and -c correctly. Reported by Bodo Eggert <7eggert@online.de>.
+  * Cache the result of «dpkg-query --control-path» calls in dpkg-shlibdeps.
+    Based on a patch by Niels Thykier <niels@thykier.net>. Closes: #846405
+  * Always use the binary version for the .buildinfo filename in
+    dpkg-genbuildinfo. Reported by Raphaël Hertzog <hertzog@debian.org>.
+    Closes: #869236
+  * Fix integer overflow in deb(5) format version parser.
+    Closes: #868356
+  * Re-enable upstream tar signatures when building source format 1.0.
+  * Make dpkg-deb --build sanity check the config maintainer script file type
+    and permissions.
+  * Add support to dpkg-deb for rootless builds, by setting the owner and
+    group for the control.tar entries to root:root, and making it possible to
+    do the same for the data.tar entries via the new --root-owner-group option.
+    Based on a patch by Niels Thykier <niels@thykier.net>. Closes: #291320
+  * Make dpkg-buildpackage error out if --as-root is passed without
+    --rules-target.
+  * Add support for rootless builds in dpkg-buildpackage by honoring the
+    Rules-Requires-Root (R³) field.
+  * Add new dpkg-buildflags --query command, which is like --status but in
+    deb822 format.
+  * Remove long obsolete dselect floppy method.
+  * Remove traces of non-US support from dselect methods.
+  * Add support for a new Build-Kernel-Version field in .buildinfo files,
+    that can be emitted with a new dpkg-genbuildinfo --always-include-kernel
+    option. Closes: #873937
+  * Make dpkg-genchanges honor substvars in .changes Description field.
+    Closes: #856547
+  * Add support for source package Description and substvars. This new
+    field in the debian/control source stanza will be copied into the .dsc
+    file, and will also be used to initialize the new source:Synopsis and
+    source:Extended-Description substvars that will be available when
+    generating the DEBIAN/control and .changes files. Closes: #555743
+  * Add new “future” feature area in dpkg-buildflags:
+    - Add new «lfs» feature, to be used instead of the getconf(1) interface
+      which cannot support cross-building.
+  * Add new buildtools.mk make fragment to support build tools variable
+    setup, for both TOOL and TOOL_FOR_BUILD variables. Not included by
+    default from default.mk.
+  * Make --uniform-compression the new default dpkg-deb behavior. Add support
+    for negating the option via --no-uniform-compression.
+  * Clarify subprocess error message by shuffling words around.
+  * Print the package name on maintainter script errors. Closes: #877521
+  * Fix capitalization of Debian in dpkg-deb output messages.
+  * Add a policikit file for running update-alternatives via pkexec.
+    Propose by Boyuan Yang <073plan@gmail.com>.
+  * Perl modules:
+    - Switch from Dpkg::Util to List::Util, now that the module in the
+      new required Perl contains the needed functions.
+    - Add a new "unique_tuple_key" option to Dpkg::Index set_options() to
+      set better default "get_key_func" options, which will become the default
+      behavior in 1.20.x. Prompted by Johannes Schauer <josch@debian.org>.
+    - Mark ppc64 and powerpc as having gcc builtin PIE in Dpkg::Vendor::Debian.
+    - Make the Dpkg::Substvars warnings output deterministic.
+      Thanks to Chris Lamb <lamby@debian.org>. Closes: #870221
+    - Remove unused POSIX module imports.
+    - Use Errno module instead of the slow to import POSIX.
+    - Remove unused Dpkg::Path from Dpkg::Vendor::Ubuntu.
+    - Only load POSIX from Dpkg::Compression::FileHandle if we are going to
+      use signal definitions, reducing the load time of many other modules.
+    - Only load Dpkg::BuildOptions and Dpkg::Arch from Dpkg::Vendor-specific
+      modules if we are going to use them, reducing the load time of many
+      other modules.
+    - Only load Term::ANSIColor from Dpkg::ErrorHandling if we are going to
+      use colors, reducing the load time of many other modules.
+    - Move color setup into report_pretty in Dpkg::ErrorHandling.
+    - Move printforhelp initialization into usageerr() in Dpkg::ErrorHandling.
+    - Avoid many function arguments in Dpkg::Shlibs::SymbolFile parse().
+    - Avoid many function arguments in Dselect::Ftp do_connect().
+    - Add new Dpkg::Interface::Storable option to disable compression support,
+      so that we can load Dpkg::Compression::FileHandle only when enabled.
+    - Disable decompression support for Dpkg::Vendor origin files.
+    - Move file_lock() function into a new Dpkg::Lock module, to reduce the
+      module load chain for several Dpkg modules.
+    - Add support for new DPKG_NLS environment variable in Dpkg::Gettext,
+      that when set to 0 will disable NLS (i18n) support in the Dpkg modules,
+      and reduce the load chain.
+    - Disable compression when using the default file in
+      Dpkg::Changelog::Parse.
+    - Mark all missing CTRL_INDEX_SRC and CTRL_INDEX_PKG fields as allowed
+      in Dpkg::Control::FieldsCore.
+    - Complete field order for CTRL_PKG_DEB and CTRL_FILE_STATUS types in
+      Dpkg::Control::FieldsCore.
+    - Switch to use lowercase field names for all internal field name
+      handling in Dpkg::Control::FieldsCore, giving a significant speed up.
+    - Remove dependency on Dpkg::Checksums from Dpkg::Control::FieldsCore.
+    - Do not execute code when importing Dpkg::Control::FieldsCore.
+    - Use substr instead of a regex to match the first line characters in
+      when parsing control files in Dpkg::Control::HashCore.
+    - Merge build flag methods into a single _add_build_flags private method
+      in Dpkg::Vendor::Debian.
+    - Do not use an intermediate variable in Dpkg::Control::HashCore::Tie
+      STORE method.
+    - Expect deb822 stanza delimiters more often than OpenPGP Armor Headers
+      in Dpkg::Control::HashCore parse method.
+    - Optimize trailing space matching on Dpkg::Control::HashCore parse
+      method, by trimming it just once at the beginning of the iteration.
+    - Optimize trailing space trimming on Dpkg::Control::HashCore parse
+      method, by requiring that at least one whitespace is present.
+    - Optimize first character matching in Dpkg::Control::HashCore parse
+      method, by storing the first character in a variable.
+    - Optimize field/value parsing in Dpkg::Control::HashCore parse method,
+      by switching from a capturing regex to split() plus a checking regex.
+    - Auto-convert binary signatures to OpenPGP ASCII Armor in
+      Dpkg::Source::Package when building source packages.
+    - Switch Dpkg::Source::Package::V3 modules to use find_command() instead
+      of ad-hoc code.
+    - Call source format prerequisites Dpkg::Source::Package method if
+      present. Addresses: #877688
+    - Unify Dpkg::ErrorHandling subprocess errors with the ones from libdpkg.
+    - Do not emit a perl warning if gcc or dpkg is not found from Dpkg::Arch,
+      the code already handles the commands not being present.
+    - Do not unnecessarily require setting the host_arch in Dpkg::Deps.
+      Closes: #856396
+    - Do not normalize args past a passthrough stop word in Dpkg::Getopt.
+      Some commands pass some arguments through to another command, and
+      those must not be normalized as that might break their invocation.
+      Reported by Helmut Grohne <helmut@subdivi.de>.
+  * Documentation:
+    - Document currently accepted syntax for changelogs in deb-changelog(5).
+      Closes: #858579
+    - Mark source:Version substvar in bold in deb-substvars(5).
+    - Clarify behavior for dpkg-maintscript-helper. Closes: #857852
+    - Use <command-string> instead of <command> for -c argument value in
+      dpkg-architecture(1). Reported by Johannes Schauer <josch@debian.org>.
+    - Itemize the CTRL_* constants in the Dpkg::Index POD.
+    - Update buildinfo information in dpkg-buildpackage man page to match
+      the current implementation.
+    - Add all source files to POTFILES.in files.
+    - Move deb-version man page to section 7.
+    - Remove reference to obsolete dpkg-cross(1).
+    - Sort control field export markers by tool order in deb-src-control(5).
+    - Document Package-Type and Enhances fields in deb-control(5).
+    - Write the actual glyphs used to delimit dependency restrictions in
+      deb-src-control(5).
+    - Move Package-Type description just after the Package field in
+      deb-src-control(5).
+    - Move udeb-specific fields to the end of the list of fields in
+      deb-src-control(5), and mention these are really udeb-specific.
+    - Document that dependency fields in binary stanza can have restrictions
+      in deb-src-control(5).
+    - Clarify that the Testsuite field is comma-separarted.
+    - Fix update-alternatives man page section in alternatives/README file
+      reference. Closes: #872309
+    - Use correct name for archname validator value in dpkg(1) man page.
+      Reported by Niels Thykier <niels@thykier.net.
+    - Add new deb-src-rules(5) man page.
+    - Document that trailing commas are valid in debian/control dependency
+      fields, which get stripped when generating output files.
+      Prompted by Mattia Rizzolo <mattia@debian.org>.
+    - Clarify that sanitize options should not be used for production builds.
+    - Remove recommendation to use Pre-Depends for trigger directives from
+      deb-triggers(5). Closes: #864882
+    - Add new rootless build experimental draft specification.
+      Initial proposal by Niels Thykier <niels@thykier.net>, wording fixes
+      and spec clarifications by Guillem Jover <guillem@debian.org>.
+    - Fix several function signature documentation.
+  * Code internals:
+    - Switch perl code to use -> operator for function variables.
+    - Switch perl code from split() with /\s+/ to ' '.
+  * Build system:
+    - Require Perl 5.20.2, the version in Debian oldstable (jessie).
+    - Use new gcc-7 -Wrestrict and -Wshift-negative-value warnings if
+      available.
+    - Do not override the default DEPENDENCIES for libdpkg, extend it instead.
+    - Install perl man pages in section 3perl.
+  * Packaging:
+    - Remove preinst maintainer scripts for dselect and dpkg-dev, for an
+      ancient /usr/share/doc symlink to directory switch. Closes: #867327
+    - Remove now unused libio-string-perl Build-Depends, and versioned
+      dpkg-dev as we do not use build profiles any more.
+    - Set Rules-Requires-Root field to no.
+    - Do not set redundant source compression to xz.
+    - Bump Standards-Version to 4.1.0 (no changes needed).
+    - Switch to debhelper compatibility level 10.
+    - Split alternatives logrotate into its own configuration file to help
+      downstreams and derivatives.
+    - Remove ancient code recompressing the alternatives database backups
+      from xz to gzip in the dpkg daily cron job.
+    - Remove Replaces and Breaks for ancient transitions.
+    - Remove workaround for ancient gcc lacking stackprotectorstrong support.
+    - Remove maintainer script code to handle downgrades to pre-triggers and
+      pre-multiarch dpkg versions.
+    - Remove alternative logs when purging dpkg (!?).
+    - Add support for DPKG_ROOT in dpkg maintainer scripts.
+    - Add git and bzr to libdpkg-perl Suggests. Closes: #877688
+  * Test suite:
+    - Enable perlcritic Documentation::RequirePodSections and
+      Miscellanea::ProhibitTies.
+    - Disable perlcritic ValuesAndExpressions::ProhibitEscapedCharacter.
+    - Add a new all_perl_modules function to Test::Dpkg.
+    - Add a new module-version unit test to check that module $VERSION
+      matches the newest entry in the CHANGES section.
+    - Use Module::Metadata instead of grepping for $VERSION in pod-coverage.
+    - Avoid many function arguments in Dpkg_Changelog.t check_options().
+    - Add a new unit test for Dpkg::Control::FieldsCore.
+    - Switch from IO::String to native open() scalar support.
+    - Use UTC0 when setting TZ.
+
+  [ Updated programs translations ]
+  * German (Sven Joachim).
+  * Italian (Pietro Battiston). Closes: #864509
+  * Portuguese (Miguel Figueiredo). Closes: #868800
+  * Simplified Chinese (Zhou Mo, Boyuan Yang). Closes: #867133, #877929
+
+  [ Updated scripts translations ]
+  * German (Helge Kreutzmann).
+
+  [ Updated man pages translations ]
+  * Dutch (Frans Spiesschaert). Closes: #862924
+  * German (Helge Kreutzmann).
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 17 Oct 2017 01:51:16 +0200
+
 dpkg (1.18.24+parrot0) testing; urgency=medium
 
   * Import new upstream release.

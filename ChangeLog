@@ -1,3 +1,2611 @@
+commit a059dd6ff6499ebe478466148fb82944590b8f86
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 17 03:27:54 2018 +0100
+
+    Release 1.19.0.5
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit b4f5930b862ee0819deee80a0980922e06984a92
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Nov 12 03:08:49 2017 +0100
+
+    spec/R³: Declare specification as recommendation, stable
+    
+    (cherry picked from commit b988d6be020eb8362167b195fb0de658a4db3642)
+
+ debian/changelog        | 1 +
+ doc/rootless-builds.txt | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 44aac36c26877b7659f3b29766cd28bec5ea04fe
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 3 02:20:20 2018 +0100
+
+    spec/R³: Add new DEB_RULES_REQUIRES_ROOT variable
+    
+    This variable is set by the builder to notify debian/rules that it
+    supports this specification.
+    
+    Wordsmithing-by: Niels Thykier <niels@thykier.net>
+    (cherry picked from commit 566a4b61b6c3359c3d4cffa05519ecbc967b292c)
+
+ debian/changelog             | 1 +
+ doc/rootless-builds.txt      | 9 +++++++++
+ man/dpkg-buildpackage.man    | 7 +++++++
+ scripts/dpkg-buildpackage.pl | 3 +++
+ 4 files changed, 20 insertions(+)
+
+commit d3ccdd8ff131c4c5c6abd17d490d27b5f6f5bd6c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 3 01:59:17 2018 +0100
+
+    spec/R³: The DEB_GAIN_ROOT_CMD should preserve the environment
+    
+    Proposed-by: Josh Triplett <josh@joshtriplett.org>
+    (cherry picked from commit 36f8ff64764d301d151e55c256b9913f1ada94e3)
+
+ debian/changelog        | 2 ++
+ doc/rootless-builds.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit ef92e1b1bc911b83c7f7c1df686a4fd8439c927d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 3 01:57:30 2018 +0100
+
+    dpkg-buildpackage: Do not set DEB_GAIN_ROOT_CMD on <implementations-keywords>
+    
+    The specification is clear on this, and we should not be setting this
+    variable when the values are different to "no" and "binary-targets".
+    
+    (cherry picked from commit f6095fa5db1e4d277a0660806875375d60286250)
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 5 +++++
+ 2 files changed, 7 insertions(+)
+
+commit e7fec820d93dd5108790f126caadb7db7b174a47
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 3 01:54:51 2018 +0100
+
+    spec/R³: Rename DPKG_GAIN_ROOT_CMD to DEB_GAIN_ROOT_CMD
+    
+    This variable should not be dpkg specific, as it is supposed to be set
+    by any builder driving the package build, and not just dpkg itself.
+    
+    Introduce ephemereal backwards compatibility by mapping the old name to
+    the new one, even thught there are no known users.
+    
+    (cherry picked from commit 28fee8b445cd94bf7efd76f6c3fd0c62bdf94b6d)
+
+ debian/changelog             |  4 ++++
+ doc/rootless-builds.txt      | 14 +++++++++-----
+ man/dpkg-buildpackage.man    |  2 +-
+ scripts/dpkg-buildpackage.pl |  4 +++-
+ 4 files changed, 17 insertions(+), 7 deletions(-)
+
+commit e606532b171130be9f3a7ebc4188ed76444d8339
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jan 13 02:34:46 2018 +0100
+
+    Dpkg::Vendor::Debian: Mark hurd-i386 as having built-in PIE support
+    
+    Requested-by: Samuel Thibault <sthibault@debian.org>
+    (cherry picked from commit 81591e0f2590052ff221964c8c554bbbd39763b5)
+
+ debian/changelog              | 2 ++
+ scripts/Dpkg/Vendor/Debian.pm | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 0419b862a70504164c15680a6d3267f158bde1aa
+Author: Manuel A. Fernandez Montecelo <mafm@debian.org>
+Date:   Tue Jan 16 00:43:51 2018 +0100
+
+    arch: Add support for riscv64 CPU
+    
+    [guillem@debian.org:
+     - Update unit-tests. ]
+    
+    Closes: #822914
+    Stable-Candidate: 1.18.x
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+    (cherry picked from commit ee0855cc66076691de4796be48f8a0d889fde001)
+
+ data/cputable         | 1 +
+ debian/changelog      | 3 +++
+ scripts/t/Dpkg_Arch.t | 4 ++--
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+commit e7ad5635c104399ea1bbeaa0ef2902be3791ffcd
+Author: Dmitry Shachnev <mitya57@debian.org>
+Date:   Sun Dec 3 03:37:23 2017 +0100
+
+    Dpkg::Shlibs::SymbolFile: Check that $state->{seen} exists instead of $state being defined
+    
+    Fixes: commit 0d2b3cee25b74dd3fd9ddc3a469b8b144368c963
+    Closes: #880166
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+    (cherry picked from commit b29058ea75ce28f95b373b0c36deffd4b57d466b)
+
+ debian/changelog                  | 3 +++
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit b98f0117f0c5a6c23e27a10d18aa8eabd5c8e82a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 28 03:27:46 2017 +0200
+
+    dpkg-deb: Fix directory traversal with --raw-extract
+    
+    Guarantee that the DEBIAN pathname does not exist.
+    
+    Closes: #879982
+    Reported-by: Jakub Wilk <jwilk@jwilk.net>
+    (cherry picked from commit 5003d763fdd29fe9533b2927eb083d6e6d6d98d4)
+
+ debian/changelog    |  3 +++
+ dpkg-deb/dpkg-deb.h |  2 ++
+ dpkg-deb/extract.c  | 16 ++++++++--------
+ 3 files changed, 13 insertions(+), 8 deletions(-)
+
+commit 592c91b958579f95994f327194d183cd5ece7ce6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 27 22:06:58 2017 +0200
+
+    Dpkg::Vendor::Debian: Use proper use_feature key
+    
+    We need to access the features within the feature area hash now. Missed
+    in a previous refactoring.
+    
+    Fixes: commit 2125e8dd7388e2adb9b6c837f4832fe8f0f63b25
+    Reported-by: Mattia Rizzolo <mattia@debian.org> (on IRC)
+    Closes: #881051
+    (cherry picked from commit 0e894ddaa68792246bd03a5dcf3f2e56fd2aeb74)
+
+ debian/changelog              | 5 ++++-
+ scripts/Dpkg/Vendor/Debian.pm | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 796768306ae0564e934d18414c48f1dc2919eded
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 17 03:16:12 2018 +0100
+
+    Bump version to 1.19.0.5
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit dab792ad3a8606bff46d2f2bdee44eea7dec4975
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 23:47:23 2017 +0200
+
+    Release 1.19.0.4
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit a0cfee138889502f6a860b795680dbf33115ec17
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 23:28:06 2017 +0200
+
+    debian: Add Breaks dgit << 3.13~ to libdpkg-perl
+    
+    Older dgit versions assumed that Dpkg::Compression::Process was
+    available, via implicit import from Dpkg::Source::Package.
+    
+    Reported-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
+    (cherry picked from commit e1792f2285fc68fee89d63572a8de31b38dddce6)
+
+ debian/changelog | 4 ++++
+ debian/control   | 3 +++
+ 2 files changed, 7 insertions(+)
+
+commit a720679d1f19dc8a367c6a5aee554cfe35e4520e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 23:18:07 2017 +0200
+
+    debian: Add Breaks debhelper << 10.10.1~ to dpkg-dev
+    
+    We want to make debhelper users that will use R³ support not having to
+    add a versioned Depends on the relevant dpkg-dev package.
+    
+    (cherry picked from commit 948fe221afc7f540b2de6760affa94c9373c0452)
+
+ debian/changelog | 3 +++
+ debian/control   | 3 +++
+ 2 files changed, 6 insertions(+)
+
+commit 99be1f3508053ea2e50f3cef85bb8799cec8dd32
+Author: Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
+Date:   Fri Oct 20 01:29:48 2017 +0200
+
+    Dpkg::Source::Package::V1: Check that $tarname is defined before use
+    
+    Closes: #879124
+    Warned-by: perl
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+    (cherry picked from commit db6c5b5043e51c196818c2d24070c089ca9ea1d4)
+
+ debian/changelog                  | 5 ++++-
+ scripts/Dpkg/Source/Package/V1.pm | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit c6ba24c010ea520a1fba7d7eba9f1022f1617d8d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 23:37:42 2017 +0200
+
+    Bump version to 1.19.0.4
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 61c026b850502c0d7f9ef7c9abc26ae9de831d48
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 21 16:01:24 2017 +0200
+
+    Release 1.19.0.3
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2881ea29227cf11477abcf3eabcc0449d44a0556
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 21 13:21:00 2017 +0200
+
+    man: Add missing dot on the dpkg-buildflags «lfs» paragraph
+    
+    Spotted-by: Helge Kreutzmann <debian@helgefjell.de>
+    (cherry picked from commit 78e824f4e26156ee6edb8b80ad30125f818c11f3)
+
+ debian/changelog        | 3 +++
+ man/dpkg-buildflags.man | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit e16940da1af9f62f877840fb71e49eafea8a64fa
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 19 01:39:14 2017 +0200
+
+    dpkg-buildpackage: Setup and check rootcommand only if needed
+    
+    When building in R³ mode or when the user requested to run a rule as
+    root we should setup the rootcommand, otherwise we should ignore it.
+    
+    Reported-by: Niels Thykier <niels@thykier.net>
+    (cherry picked from commit b4e46fab018e3d5ae813642b20b955d8a5327b1e)
+
+ debian/changelog             |  2 ++
+ scripts/dpkg-buildpackage.pl | 46 +++++++++++++++++++++++++-------------------
+ 2 files changed, 28 insertions(+), 20 deletions(-)
+
+commit 20ff9bdb8ff8c7919ce5424f4ae18a4d4074d80b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 19 00:51:54 2017 +0200
+
+    dpkg-buildpackage: Pass the debian/control source stanza to R³ parser
+    
+    This meant the field was being ignored.
+    
+    (cherry picked from commit 96547b59076841cb85a2682870cf6742dbb9a3e3)
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit fe2cd2836a71c093be2405c86e4fdae264e3d2db
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 19 00:51:21 2017 +0200
+
+    debian: Disable R³ field until debhelper supports it
+    
+    If we use a dpkg that fully supports the field, with a debhelper that
+    does not, this will produce broken builds. Disable for now, until such
+    debhelper has been released, and then we'll need to add some kind of
+    relationship to avoid the problem.
+    
+    (cherry picked from commit ba52826a3429b9037e1876ba63c51afb211f151d)
+
+ debian/changelog | 3 ++-
+ debian/control   | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 0177ce615bdd75ef44b627f3bff1f3ac33513fb2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 21 15:57:30 2017 +0200
+
+    Bump version to 1.19.0.3
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 68abeec1eb41ab3e28d05480830dac2d12187ac4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Oct 18 01:28:51 2017 +0200
+
+    Release 1.19.0.2
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit d9146911e86c0913bef266aafdc4e59a8ec9a305
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 22:42:16 2017 +0200
+
+    dpkg-buildpackage: Do not rehash .dsc file when signing binary-only builds
+    
+    Reported-by: Ximin Luo <infinity0@debian.org>
+    Stable-Candidate: 1.18.x
+    (cherry picked from commit 7e48a3921244dcaa0c2bf9fadd53a52ab230212a)
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 6 ++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+commit 029aa41244e44c6d4675ac7af69df4ce29bbe2b0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 21:20:53 2017 +0200
+
+    dpkg-buildpackage: Fix logic to decide whether to call the build targets
+    
+    The build targets never require root, so checking them will always return
+    false. We need to key on the binary target instead.
+    
+    This broke tons of packages that are violating Debian policy MUSTs.
+    
+    Thanks-to: James Clarke <jrtc27@debian.org>
+    Closes: #878899
+    (cherry picked from commit a3a9527efb1345ac71014dd59da911db05e99ea0)
+
+ debian/changelog             | 3 +++
+ scripts/dpkg-buildpackage.pl | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit a76fe8cc4d921992d66cb247f59046edf3b8560d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 21:59:17 2017 +0200
+
+    debian: Add Breaks to libdpkg-perl against pkg-kde-tools
+    
+    That package is using private modules with no API guarantees, and broke
+    due to recent changes in 1.19.0.
+    
+    Closes: #878919
+    (cherry picked from commit 833274b1e2dc9551a346531dfd0b83bd417ad595)
+
+ debian/changelog | 5 ++++-
+ debian/control   | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit f22d34475eacf63a8714b4efca5ac57988e51c0c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Oct 18 01:24:57 2017 +0200
+
+    Bump version to 1.19.0.2
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 0282e7905821fa8f471bef4fbbaf2ce97eb2855b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 04:13:57 2017 +0200
+
+    Release 1.19.0.1
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 721e06ada21618c9f6639b6edbb4a77181cdc93d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 04:43:38 2017 +0200
+
+    debian: Install update-alternatives policykit-1 file
+
+ debian/changelog    | 2 ++
+ debian/dpkg.install | 1 +
+ utils/.gitignore    | 2 +-
+ utils/Makefile.am   | 6 +++---
+ 4 files changed, 7 insertions(+), 4 deletions(-)
+
+commit 5c193ca42bd5e747f93fceb14dc26b3670e216ec
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 04:07:19 2017 +0200
+
+    scripts/t: Skip Dpkg::OpenPGP test if gpg is not present
+
+ debian/changelog         |  3 ++-
+ scripts/t/Dpkg_OpenPGP.t | 12 +++++++-----
+ 2 files changed, 9 insertions(+), 6 deletions(-)
+
+commit a373d18366374abb885ce156ba42abedbfb37b18
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 04:13:03 2017 +0200
+
+    Bump version to 1.19.0.1
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 84c9328e8fd5e5bf8f10ba1c778eb053fec1af5c
+Merge: 1665fe4c7 90d2887c6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 04:11:00 2017 +0200
+
+    Merge tag '1.19.0' into sid
+    
+    Release 1.19.0
+
+commit 90d2887c67f2b1d0915169cc49725bb774083aba
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 01:53:35 2017 +0200
+
+    Release 1.19.0
+
+ debian/changelog | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit b0500cbbabaab727cf89a6fec73c417f90d11cf6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 02:09:25 2017 +0200
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |    2 +-
+ dselect/po/ca.po        |    2 +-
+ dselect/po/cs.po        |    2 +-
+ dselect/po/da.po        |    2 +-
+ dselect/po/de.po        |    2 +-
+ dselect/po/dselect.pot  |    4 +-
+ dselect/po/el.po        |    2 +-
+ dselect/po/es.po        |    2 +-
+ dselect/po/et.po        |    2 +-
+ dselect/po/eu.po        |    2 +-
+ dselect/po/fr.po        |    2 +-
+ dselect/po/gl.po        |    2 +-
+ dselect/po/hu.po        |    2 +-
+ dselect/po/id.po        |    2 +-
+ dselect/po/it.po        |    2 +-
+ dselect/po/ja.po        |    2 +-
+ dselect/po/ko.po        |    2 +-
+ dselect/po/nb.po        |    2 +-
+ dselect/po/nl.po        |    2 +-
+ dselect/po/nn.po        |    2 +-
+ dselect/po/pl.po        |    2 +-
+ dselect/po/pt.po        |    2 +-
+ dselect/po/pt_BR.po     |    2 +-
+ dselect/po/ro.po        |    2 +-
+ dselect/po/ru.po        |    2 +-
+ dselect/po/sk.po        |    2 +-
+ dselect/po/sv.po        |    2 +-
+ dselect/po/tl.po        |    2 +-
+ dselect/po/vi.po        |    2 +-
+ dselect/po/zh_CN.po     |    2 +-
+ dselect/po/zh_TW.po     |    2 +-
+ man/po/de.po            |  215 +-
+ man/po/dpkg-man.pot     | 6698 +++++++++++++++++++++++++----------------------
+ man/po/es.po            |  858 +++++-
+ man/po/fr.po            |  957 +++++--
+ man/po/hu.po            |  740 +++++-
+ man/po/it.po            |  959 +++++--
+ man/po/ja.po            |  858 ++++--
+ man/po/nl.po            | 1207 +++++++--
+ man/po/pl.po            |  861 ++++--
+ man/po/pt_BR.po         |  725 ++++-
+ man/po/ru.po            |  744 +++++-
+ man/po/sv.po            |  955 +++++--
+ man/po/zh_CN.po         |  741 +++++-
+ po/ast.po               |  240 +-
+ po/bs.po                |  185 +-
+ po/ca.po                |  239 +-
+ po/cs.po                |  237 +-
+ po/da.po                |  225 +-
+ po/de.po                |  117 +-
+ po/dpkg.pot             |  167 +-
+ po/dz.po                |  197 +-
+ po/el.po                |  215 +-
+ po/eo.po                |  225 +-
+ po/es.po                |  243 +-
+ po/et.po                |  192 +-
+ po/eu.po                |  233 +-
+ po/fr.po                |  247 +-
+ po/gl.po                |  213 +-
+ po/hu.po                |  197 +-
+ po/id.po                |  217 +-
+ po/it.po                |  243 +-
+ po/ja.po                |  235 +-
+ po/km.po                |  197 +-
+ po/ko.po                |  219 +-
+ po/ku.po                |  181 +-
+ po/lt.po                |  197 +-
+ po/mr.po                |  194 +-
+ po/nb.po                |  217 +-
+ po/ne.po                |  199 +-
+ po/nl.po                |  241 +-
+ po/nn.po                |  199 +-
+ po/pa.po                |  186 +-
+ po/pl.po                |  233 +-
+ po/pt.po                |  336 ++-
+ po/pt_BR.po             |  211 +-
+ po/ro.po                |  243 +-
+ po/ru.po                |  225 +-
+ po/sk.po                |  229 +-
+ po/sv.po                |  225 +-
+ po/th.po                |  225 +-
+ po/tl.po                |  227 +-
+ po/tr.po                |  247 +-
+ po/vi.po                |  231 +-
+ po/zh_CN.po             |  237 +-
+ po/zh_TW.po             |  225 +-
+ scripts/po/ca.po        |  160 +-
+ scripts/po/de.po        |   75 +-
+ scripts/po/dpkg-dev.pot |  106 +-
+ scripts/po/es.po        |  152 +-
+ scripts/po/fr.po        |  153 +-
+ scripts/po/pl.po        |  151 +-
+ scripts/po/ru.po        |  149 +-
+ scripts/po/sv.po        |  149 +-
+ 94 files changed, 18024 insertions(+), 8844 deletions(-)
+
+commit 7598ecb905a058de4211e74675ef426e9b9d82e4
+Author: Miguel Figueiredo <elmig@debianpt.org>
+Date:   Tue Oct 17 01:09:20 2017 +0200
+
+    po: Update Portuguese programs translations
+    
+    Closes: #868800
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/pt.po         | 188 ++++++++++++++++++++++++-------------------------------
+ 2 files changed, 84 insertions(+), 105 deletions(-)
+
+commit 70252402dc326a958992e29e87b86de5b45016a7
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Sat Oct 7 20:14:19 2017 +0800
+
+    po: Fix errors in Simplified Chinese programs translation
+    
+    * The word "build" should be translated as "构建" instead of
+      "编译", which means "compilation".
+    * The word "alphanumeric" should be translated as "字母数字的"
+      instead of "字母的", which means "alphabetic".
+    
+    Closes: #877929
+    Reviewed-by: Zhou Mo <cdluminate@gmail.com>
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog | 2 +-
+ po/zh_CN.po      | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+commit a0d21db5d77eb2d1d6af51520ca2aad6350310f6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 16 10:30:06 2017 +0200
+
+    po: Add Catalan translations for policykit file
+
+ po/ca.po | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 8e2bbd2ab23edd7d9ea0b424a2f1791a0136a741
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Aug 20 02:14:36 2017 +0200
+
+    u-a: Add new policykit file
+    
+    This makes it possible to use the pkexec tool to execute u-a from GUI
+    programs.
+    
+    We need to bump the gettext build-dependency to at least 0.19.7 which is
+    the first version introducing ITS support and GETTEXTDATADIR variable
+    support (GETTEXTDATADIRS support was added in 0.19.8).
+    
+    Proposed-by: Boyuan Yang <073plan@gmail.com>
+
+ Makefile.am                         |  2 ++
+ configure.ac                        | 19 +++++++------------
+ debian/changelog                    |  2 ++
+ debian/control                      |  4 ++--
+ po/Makevars                         |  7 +++++++
+ po/POTFILES.in                      |  1 +
+ po/its/polkit.its                   |  7 +++++++
+ po/its/polkit.loc                   |  6 ++++++
+ utils/.gitignore                    |  1 +
+ utils/Makefile.am                   | 19 +++++++++++++++++++
+ utils/update-alternatives.polkit.in | 20 ++++++++++++++++++++
+ 11 files changed, 74 insertions(+), 14 deletions(-)
+
+commit 53dbac6cdff347fc8acc8cdacf7e509ceadd7f5d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jan 22 20:09:24 2017 +0100
+
+    dpkg-deb: Fix capitalization of Debian in output messages
+    
+    Here Debian refers to the distribution and in English this needs to be
+    capitalized. No translation will be unfuzzed, as the capitalization
+    rules change among locales.
+    
+    Warned-by: spellintian
+
+ debian/changelog     |  1 +
+ dpkg-deb/extract.c   |  8 ++++----
+ t-func/deb-format.at | 14 +++++++-------
+ 3 files changed, 12 insertions(+), 11 deletions(-)
+
+commit 2e344c2119c5a55a3180ddd61c67f8a657520ceb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 16 13:43:52 2017 +0200
+
+    Dpkg::Getopt: Do not normalize args past a passthrough stop word
+    
+    Some commands pass some arguments through to another command, and those
+    must not be normalized as that might break their invocation.
+    
+    Reported-by: Helmut Grohne <helmut@subdivi.de>
+    Stable-Candidate: 1.17.x 1.18.x
+
+ debian/changelog               |  4 ++++
+ scripts/Dpkg/Getopt.pm         | 13 ++++++++-----
+ scripts/dpkg-architecture.pl   |  2 +-
+ scripts/dpkg-parsechangelog.pl |  2 +-
+ scripts/t/Dpkg_Getopt.t        | 11 ++++++++---
+ 5 files changed, 22 insertions(+), 10 deletions(-)
+
+commit e23943051599ff21e6ca955ac8e5ead4cda1891c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 03:17:26 2017 +0200
+
+    Dpkg::Deps: Do not unnecessarily require setting the host_arch
+    
+    If we are not reducing the architectures, or we are not going to use the
+    known facts, we do not need to know and set the host architecture, which
+    relies on gcc being present.
+    
+    Closes: #856396
+
+ debian/changelog     |  2 ++
+ scripts/Dpkg/Deps.pm | 18 +++++++++++-------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
+
+commit 4bf65e6ba11fb5097b82073bea48e1ae4a96f5d7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 03:16:40 2017 +0200
+
+    Dpkg::Arch: Do not emit a perl warning if gcc or dpkg is not found
+    
+    We are emitting options or errors elsewhere.
+
+ debian/changelog     | 2 ++
+ scripts/Dpkg/Arch.pm | 4 ++++
+ 2 files changed, 6 insertions(+)
+
+commit 44b0bf1a576e3b0cfcb4c87f18d4195c3ffccb8f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 9 08:15:25 2017 +0200
+
+    dpkg: Print the package name on maintainter script errors
+    
+    When processing an archive or a package, we can call maintainer script
+    for other packages. Not printing the package name for the script that
+    failed means we can get very confusing output.
+    
+    Closes: #877521
+
+ debian/changelog |  1 +
+ src/script.c     | 29 ++++++++++++++++++++++-------
+ 2 files changed, 23 insertions(+), 7 deletions(-)
+
+commit f9d1a5cdfcc6d2cd0afc008f4070289533904fd7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 17 00:46:38 2017 +0200
+
+    Dpkg::ErrorHandling: Unify subprocess errors with the ones from libdpkg
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/ErrorHandling.pm | 8 +++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+commit db880e67e10a6b1b33102955027c5d79c49df6d2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 16 21:37:42 2017 +0200
+
+    libdpkg: Clarify subprocess error message by shuffling it around
+    
+    For command-names the current message was more or less fine. But for
+    command descriptions the message made little sense.
+
+ debian/changelog   |  1 +
+ lib/dpkg/subproc.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+commit 0f5d107191fa58a4092d9ce17d079a50c82c4332
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 6 03:35:40 2017 +0200
+
+    debian: Add git and bzr to Suggests for libdpkg-perl
+    
+    The Dpkg::Source::Package::V3 source formats can use them.
+    
+    Closes: #877688
+
+ debian/changelog | 1 +
+ debian/control   | 4 ++++
+ 2 files changed, 5 insertions(+)
+
+commit d9ba911e0bb30f2f8e290b7b8a80f527616a3034
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 7 03:41:55 2017 +0200
+
+    Dpkg::Source::Package: Call source format prerequisites method if present
+    
+    We want to be able to check for prerequisites when loading the source
+    format module. That function used to be called import, which is a
+    misnomer here, and was not being invoked.
+    
+    Rename it to the more appropriate prerequisites() and call it if it's
+    present from the module loading code.
+    
+    Addresses: #877688
+
+ debian/changelog                      | 2 ++
+ scripts/Dpkg/Source/Package.pm        | 1 +
+ scripts/Dpkg/Source/Package/V3/Bzr.pm | 2 +-
+ scripts/Dpkg/Source/Package/V3/Git.pm | 2 +-
+ 4 files changed, 5 insertions(+), 2 deletions(-)
+
+commit e48a0b532be96f587c5d479c150ba50857792fff
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 6 09:39:07 2017 +0200
+
+    Dpkg::Source::Package::V3: Use find_command() instead of ad-hoc code
+
+ debian/changelog                      | 2 ++
+ scripts/Dpkg/Source/Package/V3/Bzr.pm | 7 ++-----
+ scripts/Dpkg/Source/Package/V3/Git.pm | 7 ++-----
+ 3 files changed, 6 insertions(+), 10 deletions(-)
+
+commit 0b1391fd2c30e9ad955fde84c90c30509877b5c4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Aug 20 02:22:16 2017 +0200
+
+    Dpkg::Source::Package: Auto-convert binary signatures to OpenPGP ASCII Armor
+    
+    When we are building a source package, if we find a binary signature in
+    the form of a .sig file, we should try to auto-convert it to the format
+    that we expect to include in the source package, which is an OpenPGP
+    ASCII Armor.
+
+ debian/changelog                                |   2 +
+ scripts/Dpkg/OpenPGP.pm                         |  80 ++++++++++++++++++++++++
+ scripts/Dpkg/Source/Package/V1.pm               |   4 ++
+ scripts/Dpkg/Source/Package/V2.pm               |   7 +++
+ scripts/Makefile.am                             |   5 ++
+ scripts/po/POTFILES.in                          |   1 +
+ scripts/t/Dpkg_OpenPGP.t                        |  56 +++++++++++++++++
+ scripts/t/Dpkg_OpenPGP/package_1.0.orig.tar     |   0
+ scripts/t/Dpkg_OpenPGP/package_1.0.orig.tar.asc |  16 +++++
+ scripts/t/Dpkg_OpenPGP/package_1.0.orig.tar.sig | Bin 0 -> 566 bytes
+ 10 files changed, 171 insertions(+)
+
+commit 9e5e03e9a6ddf74bb22ffc5ea8794a14a592d6b6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Sep 28 09:28:24 2017 +0200
+
+    Dpkg::Control::HashCore: Optimize field/value parsing in parse()
+    
+    We switch from a capturing regex to split() plus a checking regex.
+
+ debian/changelog                 | 2 ++
+ scripts/Dpkg/Control/HashCore.pm | 5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit a76b755572bfd7b106ef283193d32fba8cbc5dd1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Sep 28 09:28:24 2017 +0200
+
+    Dpkg::Control::HashCore: Optimize first character matching in parse()
+    
+    We store the first character in a variable.
+
+ debian/changelog                 | 2 ++
+ scripts/Dpkg/Control/HashCore.pm | 6 ++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+commit f5b7b766b4d9f07f8de7c7ad040b747ffb1cb014
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Sep 28 02:52:12 2017 +0200
+
+    Dpkg::Control::HashCore: Optimize trailing space trimming in parse()
+    
+    We should only apply the "costly" substitution when there is at least
+    one whitespace.
+
+ debian/changelog                 | 2 ++
+ scripts/Dpkg/Control/HashCore.pm | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 1b2bb72f7b5da8419be5521b0c1a25eab6ce6f06
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 27 02:10:07 2017 +0200
+
+    Dpkg::Control::HashCore: Optimize trailing space matching on parse()
+    
+    We remove the trailing space after the chomp, so that we cover the
+    common case of a single \n with chomp, and do not need to check for
+    trailing spaces more than once while parsing.
+    
+    We preserve the chomp'ed string to be used for the Armor Header checks,
+    which have a different set of allowed whitespace, than what \s covers.
+
+ debian/changelog                 |  2 ++
+ scripts/Dpkg/Control/HashCore.pm | 16 ++++++++++------
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+commit b56eddde1a625feff02ebfb92dff88c96f11d376
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 27 01:59:22 2017 +0200
+
+    Dpkg::Control::HashCore: Expect stanza delimiters more often than Armor Headers
+    
+    Usually we will just have Armor Headers at the beginning and end of the
+    data, so it's more common to find stanza delimiter lines. Optimize for
+    that.
+
+ debian/changelog                 |  2 ++
+ scripts/Dpkg/Control/HashCore.pm | 20 ++++++++++----------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
+
+commit 63958db6f8a0816539ad98b419775ae1ae00105c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 26 05:09:43 2017 +0200
+
+    Dpkg::Control::HashCore: Do not use an intermediate variable in STORE method
+
+ debian/changelog                 | 2 ++
+ scripts/Dpkg/Control/HashCore.pm | 3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit b95681f0ad831c2bacb25bd25ee220fb58f78466
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 26 03:32:42 2017 +0200
+
+    dpkg-deb: Make --uniform-compression the new default behavior
+    
+    Add support for negating the option via --no-uniform-compression.
+
+ debian/changelog    |  2 ++
+ dpkg-deb/main.c     |  5 +++--
+ man/dpkg-deb.man    |  5 ++++-
+ t-func/deb-split.at | 13 +++++++------
+ 4 files changed, 16 insertions(+), 9 deletions(-)
+
+commit 08c15e1b795d2468798c43330ca5426e10487cbc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 26 02:38:25 2017 +0200
+
+    t-func: Use UTC0 when setting TZ
+
+ debian/changelog  | 1 +
+ t-func/atlocal.in | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 4618ae2495a843b40ea5223fa7a4910543194297
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 2 23:56:08 2015 +0100
+
+    scripts/mk: Add new buildtools.mk support
+    
+    This make fragment contains setup for build tool variables for both TOOL
+    and TOOL_FOR_BUILD. It does not get included by default from default.mk
+
+ debian/changelog           |  3 +++
+ scripts/Makefile.am        |  1 +
+ scripts/mk/Makefile.am     |  7 ++++++
+ scripts/mk/buildtools.mk   | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/mk/default.mk      |  2 +-
+ scripts/t/mk.t             | 28 ++++++++++++++++++++++-
+ scripts/t/mk/buildtools.mk | 21 +++++++++++++++++
+ 7 files changed, 116 insertions(+), 2 deletions(-)
+
+commit d917dd74cfb8c78f7a99a7e02d4098866f3f763d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 18 03:02:58 2017 +0200
+
+    dpkg-buildflags: Add support for new future feature area
+    
+    This new area includes an lfs feature, to be used instead of the
+    getconf(1) interfaces which cannot support cross-building.
+
+ debian/changelog              |  3 +++
+ man/dpkg-buildflags.man       | 12 +++++++++++-
+ scripts/Dpkg/BuildFlags.pm    |  6 +++---
+ scripts/Dpkg/Vendor/Debian.pm | 15 +++++++++++++++
+ 4 files changed, 32 insertions(+), 4 deletions(-)
+
+commit e59a804d37e129042be326702d6af62fda493f49
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 25 03:14:51 2017 +0200
+
+    Dpkg::Arch: Add new debarch_to_cpubits() function
+
+ scripts/Dpkg/Arch.pm | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+commit b9dd3e5dd385877c6c57157d47169f792aeff532
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 25 03:09:15 2017 +0200
+
+    scripts: Rename debarch_to_cpuattrs() to debarch_to_abiattrs()
+
+ scripts/Dpkg/Arch.pm          | 6 +++---
+ scripts/Dpkg/Shlibs/Symbol.pm | 4 ++--
+ scripts/dpkg-architecture.pl  | 8 ++++----
+ scripts/t/Dpkg_Arch.t         | 6 +++---
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+commit 2125e8dd7388e2adb9b6c837f4832fe8f0f63b25
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 18 00:54:25 2017 +0200
+
+    Dpkg::Vendor::Debian: Merge build flag methods into a single private method
+    
+    This reduces code redundancy, and makes it possible to reuse common code
+    for various feature areas.
+
+ debian/changelog              |   2 +
+ scripts/Dpkg/Vendor/Debian.pm | 217 +++++++++++++++++++-----------------------
+ 2 files changed, 100 insertions(+), 119 deletions(-)
+
+commit ec1eb273accae4f7d35d3ef840505fa400fbe82d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 15:44:41 2017 +0200
+
+    scripts: Add support for source package Description and substvars
+    
+    We support a new source package Description field in debian/control
+    that will be copied into the .dsc file. The field will also be used
+    to initialize the new source:Synopsis and source:Extended-Description
+    substvars that will be available when generating the DEBIAN/control
+    and .changes files.
+    
+    Closes: #555743
+
+ debian/changelog                   |  5 +++++
+ man/deb-src-control.man            | 11 +++++++++++
+ man/deb-substvars.man              |  8 ++++++++
+ man/dsc.man                        | 10 ++++++++++
+ scripts/Dpkg/Control/FieldsCore.pm |  8 ++++----
+ scripts/Dpkg/Substvars.pm          | 26 +++++++++++++++++++++++++-
+ scripts/dpkg-genchanges.pl         |  4 ++++
+ scripts/dpkg-gencontrol.pl         |  4 ++++
+ scripts/dpkg-source.pl             |  2 +-
+ scripts/t/Dpkg_Control_Fields.t    | 13 +++++++------
+ 10 files changed, 79 insertions(+), 12 deletions(-)
+
+commit fc57bf83dcb089b1cca96f6c08b2b375cc693995
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 04:15:11 2017 +0200
+
+    dpkg-genchanges: Honor substvars in Description field
+    
+    This field can have substvars applied in the binary package, so it is a
+    safe replacement compared to all other output fields. More so with the
+    newly introduced S:<source-field> style automatic substvars.
+    
+    Closes: #856547
+
+ debian/changelog           | 2 ++
+ man/dpkg-genchanges.man    | 6 ++++--
+ scripts/dpkg-genchanges.pl | 1 +
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 6f406f2dc14e9cac1ee0385e422b6fa0bf8822cc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jul 12 02:14:18 2017 +0200
+
+    Dpkg::Vendor::Debian: Mark powerpc as having builtin PIE
+
+ debian/changelog              | 2 +-
+ scripts/Dpkg/Vendor/Debian.pm | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d920305d9deb52fa7c1fb8b0f01bfc31cf517e41
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 10 16:18:15 2017 +0200
+
+    dpkg-genbuildinfo: Add support for new Build-Kernel-Version field
+    
+    Packages intended to be built in a generic way must never rely on the
+    currently running kernel on the build system (an exception could be an
+    optimization rebuild using the current system as the reference baseline).
+    
+    But to be able to detect when a package might not be reproducible due to
+    varying kernel information it is still useful to be able to record this
+    information. Although that information can be very sensitive.
+    
+    When the builder has explicitly enabled the Build-Kernel-Version field
+    with the new dpkg-genbuildinfo --always-include-kernel option, it will
+    get included in the generated .buildinfo file.
+    
+    Closes: #873937
+
+ debian/changelog                   | 3 +++
+ man/deb-buildinfo.man              | 6 ++++++
+ man/dpkg-genbuildinfo.man          | 6 ++++++
+ scripts/Dpkg/Control/FieldsCore.pm | 8 ++++++--
+ scripts/dpkg-genbuildinfo.pl       | 9 +++++++++
+ scripts/t/Dpkg_Control_Fields.t    | 6 +++---
+ 6 files changed, 33 insertions(+), 5 deletions(-)
+
+commit b964b3d6270a6205b74c4910e6d2783123850982
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 28 15:01:21 2017 +0100
+
+    dselect: Remove traces of non-US support from methods
+    
+    This has been obsoleted long ago.
+
+ debian/changelog                         |  1 +
+ dselect/methods/disk/install             |  2 +-
+ dselect/methods/disk/setup               |  5 +----
+ dselect/methods/disk/update              |  7 +++----
+ dselect/methods/ftp/setup.pl             |  4 ----
+ dselect/methods/multicd/README.multicd   |  4 ----
+ dselect/methods/multicd/desc.multi_mount |  5 ++---
+ dselect/methods/multicd/desc.multi_nfs   |  4 ++--
+ dselect/methods/multicd/setup            | 14 +-------------
+ dselect/methods/multicd/update           |  6 +++---
+ 10 files changed, 14 insertions(+), 38 deletions(-)
+
+commit eeaf7bae8e6482646f268c4d4a57cb328e2cd250
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 28 04:50:54 2017 +0100
+
+    dselect: Remove long obsolete floppy method
+
+ TODO                               |   1 -
+ debian/changelog                   |   1 +
+ dselect/methods/Makefile.am        |   6 --
+ dselect/methods/floppy/desc.floppy |   9 ---
+ dselect/methods/floppy/install     | 113 -------------------------------------
+ dselect/methods/floppy/names       |   1 -
+ dselect/methods/floppy/setup       |  89 -----------------------------
+ dselect/methods/floppy/update      |  89 -----------------------------
+ man/dselect.man                    |   2 +-
+ 9 files changed, 2 insertions(+), 309 deletions(-)
+
+commit e0396b06cb90801eaa3b66a6aac6e471019f6cfc
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Mon Sep 25 21:14:26 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2892t1f.
+
+ man/po/de.po | 279 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 248 insertions(+), 31 deletions(-)
+
+commit 0b74be976effc25d222c8f548aea3f8e8f184b48
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Mon Sep 25 19:04:21 2017 +0200
+
+    Update German scripts translation
+    
+    Update to 594t.
+
+ scripts/po/de.po | 79 +++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 55 insertions(+), 24 deletions(-)
+
+commit ce7d7276c3c3baa197a895ef408fe57218dee65f
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Sun Sep 24 22:02:31 2017 +0200
+
+    German dpkg translation update
+    
+    Update to 1105t.
+
+ po/de.po | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit b77da84672f77ee4eafaef8a308555c496335738
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 21:00:06 2017 +0200
+
+    debian: Add support for DPKG_ROOT in dpkg maintainer scripts
+
+ debian/changelog     | 1 +
+ debian/dpkg.postinst | 2 +-
+ debian/dpkg.postrm   | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit f310046425d3527cfad39072216373f34af9ca31
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 20:57:22 2017 +0200
+
+    debian: Remove alternative logs when purging dpkg (!?)
+
+ debian/changelog   | 1 +
+ debian/dpkg.postrm | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+commit b7507002eeac63c580e8ea9d8c8e1e9071733150
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 18:35:16 2017 +0200
+
+    debian: Remove maintscript code for downgrades to ancient dpkg versions
+    
+    The code here was handling pre-triggers and pre-multiarch downgrades.
+
+ Makefile.am        |   1 -
+ debian/changelog   |   2 +
+ debian/dpkg.postrm |  17 ------
+ debian/dpkg.prerm  | 149 -----------------------------------------------------
+ 4 files changed, 2 insertions(+), 167 deletions(-)
+
+commit 2910d4924d49f536e71b748978370e9122fe3f4b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 18:33:34 2017 +0200
+
+    debian: Remove workaround for ancient gcc w/o stackprotectorstrong support
+
+ debian/changelog | 1 +
+ debian/rules     | 7 +------
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+commit bd882f3f0ac1c062f9ad39053a6c5b94b4458a50
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 18:31:44 2017 +0200
+
+    debian: Remove Replaces and Breaks for ancient transitions
+
+ debian/changelog | 1 +
+ debian/control   | 9 ---------
+ 2 files changed, 1 insertion(+), 9 deletions(-)
+
+commit 6f4209e478c76f96b49def24e83db88ed88395d4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 18:16:10 2017 +0200
+
+    debian: Remove ancient code recompressing alternatives database backups
+    
+    The code converted the backups from xz to gzip in the dpkg daily cron
+    job due to a short-lived change that compressed the database backups
+    in xz.
+
+ debian/changelog       |  2 ++
+ debian/dpkg.cron.daily | 11 -----------
+ 2 files changed, 2 insertions(+), 11 deletions(-)
+
+commit 72182989948d4bc9711174741c22b0fc66c348f1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 18:11:05 2017 +0200
+
+    debian: Split alternatives logrotate into its own configuration file
+    
+    This should help some downstreams and derivatives which package
+    update-alternatives on its own package, for example.
+
+ Makefile.am                                            | 1 +
+ debian/changelog                                       | 2 ++
+ debian/{dpkg.logrotate => dpkg.alternatives.logrotate} | 9 ---------
+ debian/dpkg.logrotate                                  | 9 ---------
+ debian/rules                                           | 1 +
+ 5 files changed, 4 insertions(+), 18 deletions(-)
+
+commit fc7bd599cf17a34fd624e55e89af1637af7ff5d7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 17:53:40 2017 +0200
+
+    debian: Fix typo in changelog file
+
+ debian/changelog | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 05deb17c83bccf1f25cb04f7a38eb2da0a9f5294
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 17:45:26 2017 +0200
+
+    debian: Switch to debhelper compatibility level 10
+
+ debian/changelog | 1 +
+ debian/compat    | 2 +-
+ debian/control   | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 568428d42250abb3b8a6cc13cf16531e5981eb1d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 17:31:09 2017 +0200
+
+    debian: Bump Standards-Version to 4.1.0 (no changes needed)
+
+ debian/changelog | 1 +
+ debian/control   | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 9c4320832595d8f8f5168a37679fc4e901a2e974
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 17:24:48 2017 +0200
+
+    debian: Do not set redundant source compression to xz
+    
+    The default source compression has been xz for a while.
+
+ Makefile.am           | 1 -
+ debian/changelog      | 1 +
+ debian/source/options | 2 --
+ 3 files changed, 1 insertion(+), 3 deletions(-)
+
+commit 4dabb60bcd0488bac46e4f1daba8c0d8a0d8d65d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 20 02:13:52 2017 +0200
+
+    debian: Set Rules-Requires-Root field to no
+
+ debian/changelog | 1 +
+ debian/control   | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit c365c51ea613d11b5cdc1c82f1f7062b990d5b07
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 19 02:29:49 2017 +0200
+
+    scripts: Fix function signatures documentation
+
+ debian/changelog          |  1 +
+ scripts/Dpkg/Build/Env.pm | 10 +++++-----
+ scripts/Dpkg/Vendor.pm    | 12 ++++++------
+ 3 files changed, 12 insertions(+), 11 deletions(-)
+
+commit 04f99e25b9d4fa3f3d63b89ae4d702364d407c26
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 6 23:38:05 2015 +0100
+
+    dpkg-buildflags: Add new --query command
+    
+    This command is equivalent to --status but in deb822 format.
+
+ debian/changelog           |  2 ++
+ man/dpkg-buildflags.man    | 30 ++++++++++++++++++++++++++++++
+ scripts/dpkg-buildflags.pl | 42 +++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 69 insertions(+), 5 deletions(-)
+
+commit fca1bfe8406898105d1d724fb808f0cbcf985ae4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 17 12:18:15 2017 +0200
+
+    dpkg-buildpackage: Add support for rootless builds
+    
+    Implement the rootless-builds specification, by honoring the
+    Rules-Requires-Root (R³) field.
+
+ debian/changelog                   |   2 +
+ man/deb-src-control.man            |  33 ++++++++++++
+ man/dpkg-buildpackage.man          |   6 ++-
+ scripts/Dpkg/Control/FieldsCore.pm |   5 ++
+ scripts/dpkg-buildpackage.pl       | 100 ++++++++++++++++++++++++++++++++-----
+ 5 files changed, 132 insertions(+), 14 deletions(-)
+
+commit b3608a01a8ac1416f0620bdf03d497c5b761b244
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 18 12:28:11 2017 +0200
+
+    dpkg-buildpackage: Rename withecho to run_cmd
+
+ scripts/dpkg-buildpackage.pl | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
+
+commit 2ed19233dc9a6e123e3f66d3f475d65dc5933ea9
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 18 12:25:59 2017 +0200
+
+    dpkg-buildpackage: Error out if --as-root is passed w/o --rules-target
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 5 +++++
+ 2 files changed, 7 insertions(+)
+
+commit 2436807c87b033a1ea25164d3b951cd559084a5a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 17 12:15:32 2017 +0200
+
+    dpkg-deb: Add support for rootless builds
+    
+    This sets the control member entries always to root:root, and makes it
+    possible to do the same for the data member entries via the new
+    --root-onwer-group option.
+    
+    Closes: #291320
+    Based-on-patch-by: Niels Thykier <niels@thykier.net>
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog    | 4 ++++
+ dpkg-deb/build.c    | 5 +++++
+ dpkg-deb/dpkg-deb.h | 1 +
+ dpkg-deb/main.c     | 3 +++
+ man/dpkg-deb.man    | 9 +++++++++
+ 5 files changed, 22 insertions(+)
+
+commit c6fa483ce9e3babd9a43ac30788c9101dca44d18
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 17 05:54:22 2017 +0200
+
+    dpkg-deb: Refactor tarball_pack options into a new struct
+
+ dpkg-deb/build.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+commit cd791ccf8117398ea765eda3a92db52a9cf04c23
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 17 12:04:15 2017 +0200
+
+    dpkg-deb: Sanity check config maintainer script file type and permissions
+    
+    This is a well-known executable maintainer script, that ideally should
+    be handled by dpkg itself. But for now we will at least sanity check its
+    file type and permissions.
+
+ debian/changelog | 2 ++
+ dpkg-deb/build.c | 1 +
+ lib/dpkg/dpkg.h  | 2 ++
+ 3 files changed, 5 insertions(+)
+
+commit 11fce7c00e04a5b045ba733d574a304515f1321e
+Author: Niels Thykier <niels@thykier.net>
+Date:   Sat Sep 16 15:54:18 2017 +0200
+
+    doc: Add new rootless builds experimental draft specification
+    
+    [guillem@debian.org:
+     - Mark the spec as an experimental draft.
+     - Add new Background section.
+     - Rename Package-Creation-Requires-Root to Rules-Requires-Root.
+     - Rename dpkg/rules-requires-root to dpkg/target-subcommand.
+     - Add new dpkg/target/<target-name> keyword.
+     - Use dpkg-deb --build instead of dpkg --build.
+     - Fix DPKG_GAIN_ROOT_CMD invocation, and denote it as the one to use
+       instead of the alternative wrapper command.
+     - Rearrange sections and reflow text. ]
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ Makefile.am             |   1 +
+ debian/changelog        |   3 +
+ debian/dpkg-dev.docs    |   1 +
+ doc/rootless-builds.txt | 161 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 166 insertions(+)
+
+commit 943ebbb0b991b993fddad71b824965c530251c51
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 24 17:55:03 2017 +0200
+
+    scripts/t: Switch from IO::String to native open support
+    
+    We can also remove the versioned dpkg-dev Build-Depends now that we
+    do not use any build profile anymore.
+
+ README                   |  1 -
+ debian/changelog         |  3 +++
+ debian/control           |  3 ---
+ scripts/t/Dpkg_Control.t | 15 ++++++++-------
+ scripts/t/Dpkg_Shlibs.t  | 21 +++++++++++----------
+ 5 files changed, 22 insertions(+), 21 deletions(-)
+
+commit ff837f376cf97167e65b2b41e2e16103c98a911f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 17 12:01:45 2017 +0200
+
+    scripts: Use split() with ' ' instead of /\s+/
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Arch.pm              | 2 +-
+ scripts/Dpkg/BuildProfiles.pm     | 4 ++--
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 2 +-
+ scripts/dpkg-buildpackage.pl      | 4 ++--
+ scripts/dpkg-source.pl            | 2 +-
+ 6 files changed, 8 insertions(+), 7 deletions(-)
+
+commit 7c75716f63cce2eabe6430fb573d711d0e519b2d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 01:55:35 2017 +0200
+
+    Dpkg::Control::HashCore: Use substr instead of a regex
+    
+    When we want to match the first character on a parsed control file line,
+    using substr is more efficient than using a regex.
+
+ debian/changelog                 | 2 ++
+ scripts/Dpkg/Control/HashCore.pm | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit f0fa8190fe02bb9db8168ae6a67f592f135b06c2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 15:07:53 2017 +0200
+
+    Dpkg::Control::FieldsCore: Do not execute code at import time
+
+ debian/changelog                   |  1 +
+ scripts/Dpkg/Control/FieldsCore.pm | 32 +++++++++++++++++++++-----------
+ 2 files changed, 22 insertions(+), 11 deletions(-)
+
+commit 42f6282a932b9908a2562f3b753348458917c9e3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 03:20:38 2017 +0200
+
+    Dpkg::Control::FieldsCore: Remove dependency on Dpkg::Checksums
+
+ debian/changelog                   |  1 +
+ scripts/Dpkg/Control/FieldsCore.pm | 58 +++++++++++++++++++++++++-------------
+ 2 files changed, 40 insertions(+), 19 deletions(-)
+
+commit 2cd5cb673398bb279a7a4bfce8a4b77ce2a08e17
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jun 7 08:28:50 2013 +0200
+
+    Dpkg::Control::FieldsCore: Switch internal field name handling to lowercase
+    
+    Change field name handling to always work with them as lowercase, add a
+    new name key to store the capitalized form, and use that when we need
+    to return that form instead of computing it on every instance.
+
+ debian/changelog                   |   2 +
+ scripts/Dpkg/Control/FieldsCore.pm | 428 +++++++++++++++++++++++--------------
+ 2 files changed, 273 insertions(+), 157 deletions(-)
+
+commit c670a64c1b430b0e49e673a746656493fd35bd4d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 31 12:02:50 2017 +0200
+
+    scripts/t: Add new unit test for Dpkg::Control::Fields
+
+ debian/changelog                |   1 +
+ scripts/Makefile.am             |   1 +
+ scripts/t/Dpkg_Control_Fields.t | 247 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 249 insertions(+)
+
+commit 328edcc9229ee95402107b39b1041eb5aaa24405
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 2 02:03:01 2017 +0200
+
+    Dpkg::Control::FieldsCore: Complete field order for all control types
+    
+    The CTRL_PKG_DEB and CTRL_FILE_STATUS types were missing some allowed
+    fields in their order list, which meant that the field information was
+    not coherent.
+
+ debian/changelog                   |  2 ++
+ scripts/Dpkg/Control/FieldsCore.pm | 11 ++++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+commit f470b400c18e9c8dff7bc3bacec5753b8371ec5e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 2 02:01:10 2017 +0200
+
+    Dpkg::Control::FieldsCore: Mark all missing CTRL_INDEX_* fields as allowed
+
+ debian/changelog                   |  2 ++
+ scripts/Dpkg/Control/FieldsCore.pm | 12 ++++++------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+commit fb45d741f8edb5f9282ff8aaf79cab7e86fa95dd
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 2 01:58:51 2017 +0200
+
+    Dpkg::Control::Types: Move misplaced comments
+
+ scripts/Dpkg/Control/Types.pm | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit da7c7542f1337d15f1435ca30eb3a4348fefe3e7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jul 16 17:35:03 2017 +0200
+
+    Dpkg::Changelog::Parse: Disable compression when using the default file
+
+ debian/changelog                |  2 ++
+ scripts/Dpkg/Changelog/Parse.pm | 13 +++++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+commit dd196e60b1b18f8b127a06d24c9095a1696838f1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 15:07:35 2017 +0200
+
+    Dpkg::Gettxt: Add support for new DPKG_NLS environment variable
+    
+    When set to 0, it will disable NLS (i18n) support in the Dpkg modules,
+    and reduce the load chain.
+
+ debian/changelog        |  3 +++
+ scripts/Dpkg/Gettext.pm | 33 ++++++++++++++++++++++++++-------
+ 2 files changed, 29 insertions(+), 7 deletions(-)
+
+commit ff00042f3d77a2b8d122a7a7628d43a3e3bbf385
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 03:09:23 2017 +0200
+
+    Dpkg::File: Move file_lock() into a new Dpkg::Lock module
+    
+    This reduces the load chain for several Dpkg modules.
+
+ debian/changelog                  |  2 ++
+ scripts/Dpkg/File.pm              | 33 ---------------------------------
+ scripts/Dpkg/{File.pm => Lock.pm} | 11 +----------
+ scripts/Makefile.am               |  2 ++
+ scripts/dpkg-distaddfile.pl       |  2 +-
+ scripts/dpkg-genbuildinfo.pl      |  2 +-
+ scripts/dpkg-gencontrol.pl        |  2 +-
+ scripts/po/POTFILES.in            |  1 +
+ scripts/t/Dpkg_Lock.t             | 27 +++++++++++++++++++++++++++
+ 9 files changed, 36 insertions(+), 46 deletions(-)
+
+commit 6f059fcf7b0d26ec6e4d6d3ea9a1ec342bd37f18
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 02:58:02 2017 +0200
+
+    Dpkg::Vendor: Disable decompression support for origin files
+    
+    These files are not supposed to be compressed, disabling decompression
+    support gives a significant performance improvement for anything that is
+    making use of vendor hooks, even if indirectly.
+
+ debian/changelog       | 1 +
+ scripts/Dpkg/Vendor.pm | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 9db913167657ce6c5b208c63117069813f15c0ea
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 02:58:02 2017 +0200
+
+    Dpkg::Interface::Storable: Add new option to disable compression support
+    
+    Only load the Dpkg::Compression::FileHandle module if the compression
+    option is enabled.
+    
+    Some control files are not supposed to ever be compressed, and making it
+    possible to disable the compression support reduces substantially the
+    amount of modules being loaded by default.
+
+ debian/changelog                   |  2 ++
+ scripts/Dpkg/Interface/Storable.pm | 40 +++++++++++++++++++++++++-------------
+ 2 files changed, 29 insertions(+), 13 deletions(-)
+
+commit 47ccfd91e707720aa05296463673ed78c3e2e512
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 31 10:30:40 2017 +0200
+
+    scripts/t: Avoid many function arguments in check_options()
+    
+    Fixes: Subroutines::ProhibitManyArgs
+    Warned-by: perlcritic
+
+ debian/changelog           |   1 +
+ scripts/t/Dpkg_Changelog.t | 234 ++++++++++++++++++++++++++-------------------
+ t/critic.t                 |   1 +
+ 3 files changed, 139 insertions(+), 97 deletions(-)
+
+commit 417c80f6fbc6673aac6c42bb1fdc3e0280b01cd1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 31 03:29:53 2017 +0200
+
+    Dselect::Ftp: Avoid many function arguments in do_connect()
+    
+    Addresses: Subroutines::ProhibitManyArgs
+    Warned-by: perlcritic
+
+ debian/changelog               |  1 +
+ dselect/methods/Dselect/Ftp.pm | 38 ++++++++++++++++++++------------------
+ dselect/methods/ftp/install.pl | 18 +++++++++---------
+ dselect/methods/ftp/setup.pl   | 18 +++++++++---------
+ dselect/methods/ftp/update.pl  | 36 ++++++++++++++++++------------------
+ 5 files changed, 57 insertions(+), 54 deletions(-)
+
+commit 0d2b3cee25b74dd3fd9ddc3a469b8b144368c963
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jun 29 02:34:58 2016 +0200
+
+    Dpkg::Shlibs::SymbolFile: Avoid many function arguments in parse()
+    
+    Addresses: Subroutines::ProhibitManyArgs
+    Warned-by: perlcritic
+
+ debian/changelog                  |  1 +
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 44 +++++++++++++++++++++------------------
+ 2 files changed, 25 insertions(+), 20 deletions(-)
+
+commit 600bf60bdf19b0857cf1fce0b01a281512b96dd2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 15:27:25 2017 +0200
+
+    Dpkg::ErrorHandling: Move printforhelp initialization into usageerr()
+    
+    This way we remove code executed at import time.
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/ErrorHandling.pm | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 5ea09cee634e4fe0cfac726937ccd2be81c272e8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 15:21:33 2017 +0200
+
+    Dpkg::ErrorHandling: Move color setup into report_pretty
+    
+    Call setup_color() only if we are going to print something, so that
+    we remove code executed at import time.
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/ErrorHandling.pm | 7 ++++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 8829502bfc75a74b1539634bb3ca1f801589c0ff
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 00:36:21 2017 +0200
+
+    Dpkg::ErrorHandling: Only load Term::ANSIColor if we are using colors
+    
+    If we are not using colors we should not be imposing the additional load
+    times over most modules using the error handling functionality.
+
+ debian/changelog              | 2 ++
+ scripts/Dpkg/ErrorHandling.pm | 5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 79f7e1533187cabe9bf6c00777a101bfe48d0971
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 01:59:41 2017 +0200
+
+    Dpkg::Vendor: Only load Dpkg::BuildOptions and Dpkg::Arch if needed
+    
+    The Dpkg::Vendor-specific modules are loaded as part of many other
+    modules load-chains. But not all parts of these modules are used, as
+    they are hook-specific. Switch these two modules to be required only
+    when we are going over the specific code paths needing them.
+
+ debian/changelog              |  3 +++
+ scripts/Dpkg/Vendor/Debian.pm | 11 +++++++----
+ scripts/Dpkg/Vendor/Ubuntu.pm | 10 +++++++---
+ 3 files changed, 17 insertions(+), 7 deletions(-)
+
+commit 6217726eb5cfbc3b1ea4603b69bcb43881f29cbd
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 00:35:11 2017 +0200
+
+    Dpkg::Compression::FileHandle: Only load POSIX if we need signal handling
+    
+    If we are not using signal handling code we should not be imposing the
+    additional load times over most modules using the transparent compression
+    support, which currently includes all Dpkg::Control users.
+
+ debian/changelog                       | 2 ++
+ scripts/Dpkg/Compression/FileHandle.pm | 5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit ff4692b945e889a3618ccba448c1d735a6395243
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 15 01:59:41 2017 +0200
+
+    Dpkg::Vendor::Ubuntu: Remove unused Dpkg::Path
+    
+    Missed in commit d62520090a7dafb123b6f1f4d4e9b61b75218057.
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/Vendor/Ubuntu.pm | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit a4889aac5b4a5eaa66823df86575f30b00d741a4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 00:33:14 2017 +0200
+
+    Dpkg::Source: Use Errno module instead of the slow to import POSIX
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Source/Functions.pm  | 2 +-
+ scripts/Dpkg/Source/Package/V1.pm | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 6b15b128a22e4c825b8c32ccec56022baef1ac38
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 00:31:49 2017 +0200
+
+    perl: Remove unused use POSIX module imports
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Arch.pm              | 1 -
+ scripts/Dpkg/Source/Package/V2.pm | 1 -
+ scripts/Dpkg/Substvars.pm         | 2 --
+ scripts/dpkg-shlibdeps.pl         | 1 -
+ 5 files changed, 1 insertion(+), 5 deletions(-)
+
+commit ca2b8b44910acbc3adbb53dfb121f7f85fcebc81
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sat Sep 9 13:27:25 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2869t1f.
+
+ man/po/de.po | 338 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 267 insertions(+), 71 deletions(-)
+
+commit 17319b5bd1271d88ef8dd55a64aa03cd12121c8a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 6 03:17:32 2017 +0200
+
+    debian: Add bug closure for .buildinfo filename not using the binary version
+    
+    This was already fixed in commit f02d4572568398a55503351d9e5d04212a4207fc.
+    
+    Closes: #869236
+
+ debian/changelog | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 6a2ae2cbc78517698c77db762cd97b18b9389786
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 6 01:48:47 2017 +0200
+
+    man: Remove recommendation to use Pre-Depends for trigger directives
+    
+    Closes: #864882
+
+ debian/changelog     |  2 ++
+ man/deb-triggers.man | 12 ++++--------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+commit e6171e188e7c1fc7cfc9f159fe55abba7a1d128a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 5 03:27:31 2017 +0200
+
+    man: Clarify that sanitize options should not be used for production builds
+    
+    Ref: http://www.openwall.com/lists/oss-security/2016/02/17/9
+
+ debian/changelog        | 1 +
+ man/dpkg-buildflags.man | 3 +++
+ 2 files changed, 4 insertions(+)
+
+commit 05bbea38469409fd718e44cb550fabd2f1b073f5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 5 03:22:31 2017 +0200
+
+    man: Document trailing commas as valid in debian/control dependency fields
+    
+    For any dependency field found on debian/control, trailing commas are
+    accepted and eliminated when generating the binary control files. So
+    that things like substvars can be used at the end of the list even if
+    they produce no output.
+    
+    Prompted-by: Mattia Rizzolo <mattia@debian.org>
+
+ debian/changelog        |  3 +++
+ man/deb-src-control.man | 15 ++++++++++-----
+ 2 files changed, 13 insertions(+), 5 deletions(-)
+
+commit ba9acf9f64928adf15e4ad470ac15c19ec095fab
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 17 00:56:38 2016 +0200
+
+    man: Add new man page for debian/rules
+
+ debian/changelog         |  1 +
+ debian/dpkg-dev.manpages |  1 +
+ man/Makefile.am          |  2 ++
+ man/deb-src-rules.man    | 88 ++++++++++++++++++++++++++++++++++++++++++++++++
+ man/po/po4a.cfg          |  3 ++
+ 5 files changed, 95 insertions(+)
+
+commit e6e7cef81e77343249df5cffbcd4a9f0d06772de
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 26 15:50:37 2017 +0200
+
+    man: Use correct name for archname validator value
+    
+    Reported-by: Niels Thykier <niels@thykier.net>
+
+ debian/changelog | 2 ++
+ man/dpkg.man     | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 0fe059239ea00e6c82830f15a9417889d2789839
+Author: Jakub Wilk <jwilk@jwilk.net>
+Date:   Thu Sep 7 01:46:58 2017 +0200
+
+    libdpkg: Fix integer overflow in unit test
+    
+    Fixes: commit 59f63342b9121b9d941d3dbd09487c953a113f6e
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ lib/dpkg/t/t-deb-version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9844b9425ed9571f72826ca5749b279891232f82
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Sep 7 00:38:35 2017 +0200
+
+    build: Remove references to deleted preinst files
+    
+    Fixes: commit c991f1bf5c799f72caecb6d62bcb339171796aa4
+
+ Makefile.am | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 5b8693138c585b56a5f8c03223cce369f9790cfd
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Tue Aug 29 21:05:40 2017 +0200
+
+    German dpkg translation update
+    
+    Update to 1105t.
+
+ debian/changelog |   1 +
+ po/de.po         | 126 +++++++++++++++++++++++++++++--------------------------
+ 2 files changed, 68 insertions(+), 59 deletions(-)
+
+commit 79ef050500720eefa12afa14f11b775575bde385
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Aug 29 20:20:02 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2845t1f.
+
+ man/po/de.po | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
+
+commit db370156fa34ddbc79d83e86326d4a3eadf0779d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Aug 20 02:23:34 2017 +0200
+
+    Dpkg::Source::Package::V1: Re-enable upstream tar signatures when building
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Source/Package/V1.pm | 4 +---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+commit b8639b63cbdb09569eb650d4605bfccc00aaf4ca
+Author: Chris Lamb <lamby@debian.org>
+Date:   Sat Aug 5 03:18:31 2017 +0200
+
+    Dpkg::Substvars: Make the warnings output deterministic
+    
+    Closes: #870221
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog          | 2 ++
+ scripts/Dpkg/Substvars.pm | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 3373f5f95ca6fd6590b9bd6efdb5fbca9853cb44
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jul 12 02:14:18 2017 +0200
+
+    Dpkg::Vendor::Debian: Mark ppc64 as having builtin PIE
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/Vendor/Debian.pm | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 59f63342b9121b9d941d3dbd09487c953a113f6e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Aug 20 10:03:33 2017 +0200
+
+    libdpkg: Fix integer overflow in deb(5) version parser
+    
+    The previous code was both not checking for overflows, and triggering
+    undefined behavior as it was overflowing a signed integer.
+    
+    Closes: #868356
+
+ debian/changelog           |  2 ++
+ lib/dpkg/deb-version.c     | 27 +++++++++++++++++++++------
+ lib/dpkg/t/t-deb-version.c | 22 +++++++++++++++++++++-
+ 3 files changed, 44 insertions(+), 7 deletions(-)
+
+commit 99b3e1c276af88327b5f9423cfdf75afead28018
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 02:03:29 2017 +0200
+
+    perl: Use -> operator for function variables
+
+ debian/changelog                  | 2 ++
+ scripts/Dpkg/Deps.pm              | 6 +++---
+ scripts/Dpkg/Dist/Files.pm        | 2 +-
+ scripts/Dpkg/Exit.pm              | 2 +-
+ scripts/Dpkg/Index.pm             | 4 ++--
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 4 ++--
+ scripts/Dpkg/Source/Patch.pm      | 6 +++---
+ scripts/dpkg-buildpackage.pl      | 2 +-
+ scripts/dpkg-mergechangelogs.pl   | 6 +++---
+ scripts/t/Dpkg_Compression.t      | 4 ++--
+ 10 files changed, 20 insertions(+), 18 deletions(-)
+
+commit 3f2687270a406347a14463a5e3031d214827bf56
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Aug 21 01:34:47 2017 +0200
+
+    utils: Fix u-a man page section reference in README file
+    
+    Closes: #872309
+
+ debian/changelog          | 2 ++
+ utils/README.alternatives | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 38ec57a5ac6e82f3eb8835dd35b2b9b2821853b7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 14 02:02:30 2017 +0200
+
+    t: Rename FIXME to BUG
+    
+    This is not something that we can easily fix, those are all upstream
+    problems.
+
+ t/critic/perlcriticrc | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 0350aec23c0563aa63a0410ad5fa27e731cd94d8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 5 03:15:44 2017 +0200
+
+    man: The Testsuite field is comma-separated
+
+ debian/changelog | 1 +
+ man/dsc.man      | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 6882258b4cbf28720252ea90a6c74342a20af897
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jul 12 01:38:04 2017 +0200
+
+    man: Add section 7 man pages to .gitignore
+
+ man/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 4ccf8231dd81902ff4c4df8f6e0f5f14dc008c73
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Jul 12 14:32:51 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2845t1f.
+
+ man/po/de.po | 29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
+
+commit 6db1379ed6d9fbabbd04f95cf35795a360328e33
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Jul 11 21:22:52 2017 +0200
+
+    Add missing quote sign
+
+ man/deb-src-control.man | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 37cd72b22e8ab3e06f3b922d6b9abef036756492
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Jul 11 21:22:35 2017 +0200
+
+    Add missing space
+
+ man/deb-control.man | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ddf75c69ce91acf11656c70b2000609d2cbb48c1
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Jul 11 21:21:58 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2842t3f1u.
+
+ man/po/de.po | 215 ++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 131 insertions(+), 84 deletions(-)
+
+commit 43a6207d9c91f612c1e843ba61e5a8feddbebe0c
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Jul 11 20:25:05 2017 +0200
+
+    Update German scripts translation
+    
+    Update to 588t.
+
+ debian/changelog | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit ea49488a7a4e4c8cff0c408970f4d5623b9085da
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Jul 11 20:24:24 2017 +0200
+
+    Update German scripts translation
+    
+    Update to 588t.
+
+ scripts/po/de.po | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+commit 5df20387d3bab369759814bae8176d1810b1e66e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:47:43 2017 +0200
+
+    man: Document that dependency fields in binary stanza can have restrictions
+    
+    The architecture specifications and the restriction formulas apply also
+    to the dependency fields in the binary package stanzas in debian/control.
+
+ debian/changelog        | 2 ++
+ man/deb-src-control.man | 3 +++
+ 2 files changed, 5 insertions(+)
+
+commit 28b48f61383084409d297a95e50d783bff032ebe
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:46:33 2017 +0200
+
+    man: Move udeb-specific fields to the end of the list of fields
+    
+    Mention that these fields are really udeb-specific.
+
+ debian/changelog        |  2 ++
+ man/deb-src-control.man | 23 ++++++++++++-----------
+ 2 files changed, 14 insertions(+), 11 deletions(-)
+
+commit e4f3b720bf7a4e092eaa1c75d064038425bb0afb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:17:52 2017 +0200
+
+    man: Move Package-Type description just after the Package field
+
+ debian/changelog        |  2 ++
+ man/deb-src-control.man | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
+
+commit 769e051eb653b3fc666205416ce8c68f14027e1b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:16:23 2017 +0200
+
+    man: Write the actual glyphs used to delimit dependency restrictions
+
+ debian/changelog        |  2 ++
+ man/deb-src-control.man | 11 +++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+commit 40fb9578f690aeff0bb52e76797fc89994553c66
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:15:21 2017 +0200
+
+    man: Document Package-Type and Enhances fields in deb-control(5)
+
+ debian/changelog    |  1 +
+ man/deb-control.man | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
+
+commit a6c063d50048a04d023785540fda910e9de9a304
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:13:50 2017 +0200
+
+    man: Sort control field export markers by tool order
+    
+    First we list source, then binary, then changes.
+
+ debian/changelog        |  1 +
+ man/deb-src-control.man | 10 +++++-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+commit a8f8ee3fd4e6e26ad0afc8875b6553a435c23a0e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:11:29 2017 +0200
+
+    man: Remove reference to obsolete dpkg-cross(1)
+    
+    The dpkg-cross program and its package have been obsolete for some time,
+    it is also unmaintained and bug-ridden with Debian policy violations.
+
+ debian/changelog          | 1 +
+ man/dpkg-architecture.man | 3 +--
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 82dbfea51d1a44b13d2e4fb8cc4f06b534d39c29
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 8 18:10:04 2017 +0200
+
+    man: Move deb-version man page to section 7
+    
+    This man page does not describe a file format, move it to the
+    conventions section.
+
+ debian/changelog         | 1 +
+ debian/dpkg-dev.manpages | 2 +-
+ man/Makefile.am          | 4 +++-
+ man/deb-buildinfo.man    | 4 ++--
+ man/deb-changelog.man    | 2 +-
+ man/deb-changes.man      | 4 ++--
+ man/deb-control.man      | 4 ++--
+ man/deb-src-control.man  | 2 +-
+ man/deb-version.man      | 4 ++--
+ man/dsc.man              | 4 ++--
+ 10 files changed, 17 insertions(+), 14 deletions(-)
+
+commit f02d4572568398a55503351d9e5d04212a4207fc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jul 5 16:33:41 2017 +0200
+
+    dpkg-genbuildinfo: Always use the binary version for the .buildinfo filename
+    
+    We should use the binary (instead of the source) version for the
+    .buildinfo filename, otherwise on binNMUs the filename will be wrong.
+    
+    Reported-by: Raphaël Hertzog <hertzog@debian.org>
+
+ debian/changelog             | 2 ++
+ man/deb-buildinfo.man        | 4 ++--
+ man/dpkg-buildpackage.man    | 4 ++--
+ man/dpkg-genbuildinfo.man    | 2 +-
+ scripts/dpkg-genbuildinfo.pl | 5 +++--
+ 5 files changed, 10 insertions(+), 7 deletions(-)
+
+commit 08ceaf0dd829aa1cee5382974ce29540955a25df
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Apr 1 16:49:48 2017 +0000
+
+    dpkg-shlibdeps: Cache get_control_path() calls
+    
+    It is basically a thin-wrapper around «dpkg-query --control-path» and
+    the repeated calls add up to quite a sum.
+    
+    Results from a poor-mans performance test on ~90 ELF binaries from
+    piglit:
+    
+      * BEFORE:
+        real    0m35.892s
+        user    0m15.652s
+        sys     0m18.584s
+    
+      * AFTER:
+        real    0m10.884s
+        user    0m7.316s
+        sys     0m3.296s
+    
+    Closes: #846405
+    Based-on-patch-by: Niels Thykier <niels@thykier.net>
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog          | 2 ++
+ scripts/dpkg-shlibdeps.pl | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+commit 96a678f5adfb9328ad042254b9a60f3ec0dc75a7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 7 03:05:29 2017 +0200
+
+    po: Add all source files to POTFILES.in files
+    
+    Even though some do not have any translation currently, not listing
+    all the source files by principle means that we might start adding
+    translated strings to existing files and forget to update the needed
+    POTFILES.in.
+    
+    In this case also there were some files that did have translations.
+
+ debian/changelog       |  1 +
+ po/POTFILES.in         | 23 +++++++++++++++++++----
+ scripts/po/POTFILES.in |  5 +++++
+ 3 files changed, 25 insertions(+), 4 deletions(-)
+
+commit abad69ed09d0986bd4a554b5b5fc6779a7ef3d48
+Author: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>
+Date:   Fri Jul 7 01:54:01 2017 +0200
+
+    po: Update Dutch man page translation
+    
+    Closes: #862924
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ man/po/nl.po     | 106 ++++++++++++++++++++++++++-----------------------------
+ 2 files changed, 51 insertions(+), 56 deletions(-)
+
+commit 48e19bbcb6323d0fda5df367af994e5ff299d5e3
+Author: Pietro Battiston <me@pietrobattiston.it>
+Date:   Fri Jul 7 01:31:20 2017 +0200
+
+    po: Fix in Italian program translation
+    
+    Closes: #864509
+    Reviewed-by: Mattia Rizzolo <mattia@debian.org>
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog | 1 +
+ po/it.po         | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit b7b077d09a8e004bd57da18923f5f14bf77e3160
+Author: Zhou Mo <cdluminate@gmail.com>
+Date:   Fri Jul 7 00:32:47 2017 +0200
+
+    po: Update Simplified Chinese programs translation
+    
+    Closes: #867133
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   4 ++
+ po/zh_CN.po      | 117 ++++++++++++++++---------------------------------------
+ 2 files changed, 37 insertions(+), 84 deletions(-)
+
+commit c991f1bf5c799f72caecb6d62bcb339171796aa4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jul 7 00:21:50 2017 +0200
+
+    debian: Remove preinst maintainer scripts for dselect and dpkg-dev
+    
+    These were upgrade recipes from 1.14.x, for an old /usr/share/doc
+    symlink to directory switch.
+    
+    Closes: #867327
+
+ debian/changelog        |  3 +++
+ debian/dpkg-dev.preinst | 31 -------------------------------
+ debian/dselect.preinst  | 31 -------------------------------
+ 3 files changed, 3 insertions(+), 62 deletions(-)
+
+commit b7f2c0a2e088a2ebf5f41bce7f2b5a55061f644c
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Jul 5 19:36:56 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2843t1f.
+
+ man/po/de.po | 53 +++++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 24 deletions(-)
+
+commit 55c291c69bc9ee7c00731f4f5ffafd42673eb7d1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 4 03:33:25 2017 +0200
+
+    s-s-d: Parse usernames and groupnames starting with digits correctly
+    
+    We should not consider a username or groupname that starts with digits
+    as a valid uid or gid. When parsing integers we should parse the strings
+    fully and not consider any partial parsing to be correct.
+    
+    Reported-by: Bodo Eggert <7eggert@online.de>
+
+ debian/changelog          | 2 ++
+ utils/start-stop-daemon.c | 6 +++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit b8a9fefcfa67f7c93a526cfdb3c92943129f9d65
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 24 03:06:25 2017 +0200
+
+    man: Update buildinfo information to match the current implementation
+
+ debian/changelog          | 2 ++
+ man/dpkg-buildpackage.man | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 398a4ae2cc734d6187af8972d5225dbf7e51fde7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun May 21 19:43:35 2017 +0200
+
+    dpkg-source: Remove unused Dpkg::Index module import
+
+ scripts/dpkg-source.pl | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 976d6ad7be0b704fab3675175a051b9d94a9b68e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 14 13:55:03 2017 +0100
+
+    Dpkg::Index: Add a new "unique_tuple_key" option to set_options()
+    
+    When the option is true it will set a get_func_key to a function that
+    generates a unique tuple for that item. For CTRL_INDEX_SRC and CTRL_PKG_SRC
+    use the Package and Version fields, for CTRL_INDEX_PKG and CTRL_PKG_DEB use
+    the Package, Version and Architecture fields, all joined by "_" to index
+    the entries.
+    
+    This behavior will become the default in dpkg 1.20.x. A deprecation
+    warning will be emitted now requesting to set the option to true or
+    to set a get_key_func options.
+    
+    Prompted-by: Johannes Schauer <josch@debian.org>
+
+ debian/changelog      |  3 +++
+ scripts/Dpkg/Index.pm | 69 +++++++++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 62 insertions(+), 10 deletions(-)
+
+commit 13a9dcf9c0396fe959a95508514695985ee98522
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Feb 14 13:55:03 2017 +0100
+
+    Dpkg::Index: Itemize the CTRL_* constants in the POD
+
+ debian/changelog      |  1 +
+ scripts/Dpkg/Index.pm | 50 +++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 42 insertions(+), 9 deletions(-)
+
+commit ef8a0d63edcc867a66ddb10c801e4a8bb36c0111
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 4 05:05:41 2017 +0200
+
+    test: Add missing POD stopwords
+    
+    Fixes: commit 2378fb62a7b0985aef451beb9ff856a4df5dd715
+
+ t/pod-spell.t | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 8ee86f14b2525813a9fe8a2018d55b09b451b32e
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun May 21 07:57:47 2017 +0200
+
+    Fix changelog
+
+ debian/changelog | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 505c67eb0ce3a39219394e94ab6d27e0667f2b3e
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun May 21 07:55:48 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2843t1f.
+
+ debian/changelog |  5 ++++-
+ man/po/de.po     | 68 +++++++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 49 insertions(+), 24 deletions(-)
+
+commit 68ddad3e87562ab2760a168482569a283d97375f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun May 21 00:20:20 2017 +0200
+
+    debian: Install the perl module man pages from section 3perl
+    
+    Fixes: commit 0b020bec8cffe1bf21931f868262d7a34592d1a3
+
+ debian/libdpkg-perl.install | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit efad997fbe3d4b4db0ba95fe42149cf6b56d48fc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Apr 22 18:49:14 2017 +0200
+
+    man: Use command-string instead of command for dpkg-architecture -c argument
+    
+    Using the same name as the name in the SYNOPSIS, or the COMMANDS section
+    seems confusing as it can be understood as the program accepting -c
+    argument values without the -c command option.
+    
+    Reported-by: Johannes Schauer <josch@debian.org>
+
+ debian/changelog          | 2 ++
+ man/dpkg-architecture.man | 6 +++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 5fe793718842afc08c81ab6b86209fa959bb9b60
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 16:53:28 2017 +0200
+
+    man: Clarify behavior for dpkg-maintscript-helper
+    
+    Closes: #857852
+
+ debian/changelog                | 1 +
+ man/dpkg-maintscript-helper.man | 8 +++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 5a16a039309ccc52892f628b761a16f2baedf79f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 15:01:20 2017 +0200
+
+    man: Mark source:Version substvar in bold in deb-substvars(5)
+
+ debian/changelog      | 1 +
+ man/deb-substvars.man | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 2378fb62a7b0985aef451beb9ff856a4df5dd715
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 03:51:03 2017 +0200
+
+    man: Document currently accepted syntax for changelogs
+    
+    The current implementation supports several comment lines, VCS and
+    editor variable settings which get ignored. In addition, to be able
+    to handle ancient changelog entries, the parser will detect those and
+    ignore while preserving them for output.
+    
+    Closes: #858579
+    Reviewed-by: G. Branden Robinson <g.branden.robinson@gmail.com>
+
+ debian/changelog                 |  3 +++
+ man/deb-changelog.man            | 10 +++++++++-
+ man/dpkg-mergechangelogs.man     |  4 ++--
+ scripts/Dpkg/Changelog/Debian.pm |  8 ++++----
+ 4 files changed, 18 insertions(+), 7 deletions(-)
+
+commit b22d5b1ba169c10a608c2f351cae32fd51206055
+Author: Niels Thykier <niels@thykier.net>
+Date:   Sat Apr 1 09:47:14 2017 +0000
+
+    dpkg-shlibdeps: Remove unused my $file variable
+    
+    Signed-off-by: Niels Thykier <niels@thykier.net>
+
+ debian/changelog          | 2 ++
+ scripts/dpkg-shlibdeps.pl | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit f57835579cf70a7ed5569d84c30c25a901a18ca3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 20 05:06:17 2017 +0200
+
+    test: Use Module::Metadata instead of grepping for $VERSION
+
+ debian/changelog | 1 +
+ t/pod-coverage.t | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 9e8530f5e7d89c8abe9e6cf782a11698f280127c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 00:16:49 2017 +0200
+
+    test: Add new module-version unit test
+    
+    This will check that the module $VERSION matches the newest entry
+    in the CHANGES section if there is any POD present.
+
+ Makefile.am        |  1 +
+ debian/changelog   |  2 ++
+ t/module-version.t | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+)
+
+commit 983c1bc74c8e036bc5ae6d9646474d8acbc9a112
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 00:12:01 2017 +0200
+
+    Test::Dpkg: Add new all_perl_modules function
+
+ debian/changelog     |  1 +
+ scripts/Test/Dpkg.pm | 10 +++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+commit c96fef71fc69b4d30ef60f7dfb5790fc1d5d31b6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 00:07:14 2017 +0200
+
+    test: Disable perlcritic ValuesAndExpressions::ProhibitEscapedCharacter
+
+ debian/changelog      | 1 +
+ t/critic/perlcriticrc | 3 +++
+ 2 files changed, 4 insertions(+)
+
+commit 27d8ebdbe3e106d2d16c37e9e3e4271308aab17a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 00:00:38 2017 +0200
+
+    test: Enable perlcritic Documentation::RequirePodSections
+    
+    Declare the minimum required POD sections.
+
+ debian/changelog      | 3 ++-
+ t/critic.t            | 1 +
+ t/critic/perlcriticrc | 7 ++++---
+ 3 files changed, 7 insertions(+), 4 deletions(-)
+
+commit dd3cdbaf21841205a47d980a6678672973847d10
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 17 23:42:17 2017 +0200
+
+    test: Enable perlcritic Miscellanea::ProhibitTies
+
+ debian/changelog                       | 2 ++
+ scripts/Dpkg/Compression/FileHandle.pm | 2 +-
+ scripts/Dpkg/Control/HashCore.pm       | 2 +-
+ t/critic.t                             | 1 +
+ 4 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 0b020bec8cffe1bf21931f868262d7a34592d1a3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 9 03:19:25 2017 +0200
+
+    build: Install perl man pages in section 3perl
+
+ debian/changelog    |  1 +
+ scripts/Makefile.am | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+commit 7fd3dc1d6aed1c1a8a6bbe783d982e6db6073412
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 31 05:53:00 2017 +0200
+
+    build: Do not override the default DEPENDENCIES for libdpkg
+    
+    Extend it instead, to make sure that we preserve the libcompat
+    dependency generated from LIBADD.
+
+ debian/changelog     | 1 +
+ lib/dpkg/Makefile.am | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 449adb2959642f8a10729a0cbf6eedf0cc4441b2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Feb 22 22:49:18 2017 +0100
+
+    build: Add new gcc-7 warnings
+
+ debian/changelog    | 2 ++
+ m4/dpkg-compiler.m4 | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 7f779d971f1f9af460cb2286047ab97e854796ac
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 06:25:26 2017 +0200
+
+    Dpkg::Util: Remove and replace with core module List::Util
+    
+    Our current minimal Perl version contains a new enough List::Util module
+    implementing none and any, and several other functions.
+
+ debian/changelog                        |  3 ++
+ scripts/Dpkg/Arch.pm                    |  2 +-
+ scripts/Dpkg/BuildProfiles.pm           |  2 +-
+ scripts/Dpkg/Changelog/Parse.pm         |  2 +-
+ scripts/Dpkg/Deps.pm                    |  1 -
+ scripts/Dpkg/Shlibs.pm                  |  2 +-
+ scripts/Dpkg/Shlibs/Symbol.pm           |  2 +-
+ scripts/Dpkg/Source/Package/V3/Quilt.pm |  2 +-
+ scripts/Dpkg/Source/Quilt.pm            |  2 +-
+ scripts/Dpkg/Util.pm                    | 59 ---------------------------------
+ scripts/Makefile.am                     |  2 --
+ scripts/dpkg-genbuildinfo.pl            |  2 +-
+ scripts/dpkg-genchanges.pl              |  2 +-
+ scripts/dpkg-gencontrol.pl              |  2 +-
+ scripts/dpkg-scanpackages.pl            |  2 +-
+ scripts/dpkg-scansources.pl             |  2 +-
+ scripts/dpkg-shlibdeps.pl               |  2 +-
+ scripts/dpkg-source.pl                  |  2 +-
+ scripts/po/POTFILES.in                  |  1 -
+ scripts/t/Dpkg_Util.t                   | 38 ---------------------
+ t/critic/perlcriticrc                   |  3 --
+ t/pod-coverage.t                        |  2 +-
+ 22 files changed, 18 insertions(+), 119 deletions(-)
+
+commit 810aa7aec63ded6de321bab69cd1b5e725a0fff1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 05:56:23 2017 +0200
+
+    doc: Bump minimal Perl version to 5.20.2
+    
+    The Perl version in Debian jessie is 5.20.2, which is the release that
+    will be oldstable once 1.19.x gets uploaded to Debian unstable.
+
+ debian/changelog     | 3 ++-
+ doc/coding-style.txt | 4 ++--
+ m4/dpkg-progs.m4     | 2 +-
+ t/minimum-version.t  | 2 +-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
+
+commit 090d1481ae666a7e1527c9e674424f7a4abb1b02
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Thu May 18 18:10:06 2017 +0200
+
+    Remove accidentially forgotten ,fuzzy
+
+ man/po/de.po | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+
+commit 65f96697fa0bedd74fd554244365943bc6014d3b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 18 05:28:32 2017 +0200
+
+    Bump version to 1.19.0
+
+ TODO             | 2 +-
+ debian/changelog | 6 ++++++
+ scripts/Dpkg.pm  | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
 commit 4fd7def03c96e82c03773c6eca111cf244bae8c0
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed May 17 13:16:31 2017 +0200

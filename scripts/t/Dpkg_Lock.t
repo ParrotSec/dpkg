@@ -16,23 +16,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 7;
+use Test::More tests => 1;
 
 BEGIN {
-    use_ok('Dpkg::Util', qw(:list));
+    use_ok('Dpkg::Lock');
 }
 
-my @array = qw(foo bar quux baz);
-my %hash = (foo => 1, bar => 10, quux => 100, baz => 200);
-
-ok(any { 'bar' eq $_ } @array, 'array has item');
-
-ok(!any { 'notfound' eq $_ } @array, 'array does not have item');
-ok(none { 'notfound' eq $_ } @array, 'array lacks item');
-
-ok(any { m/^quu/ } @array, 'array has item matching regex');
-ok(none { m/^notfound/ } @array, 'array lacks item matching regex');
-
-ok(any { m/^quu/ } keys %hash, 'hash has item matching regex');
+# TODO: Add actual test cases.
 
 1;

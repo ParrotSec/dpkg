@@ -88,6 +88,8 @@ nobase_dist_perllib_DATA = \
 	Dpkg/Index.pm \
 	Dpkg/Interface/Storable.pm \
 	Dpkg/IPC.pm \
+	Dpkg/Lock.pm \
+	Dpkg/OpenPGP.pm \
 	Dpkg/Package.pm \
 	Dpkg/Path.pm \
 	Dpkg/Shlibs.pm \
@@ -108,7 +110,6 @@ nobase_dist_perllib_DATA = \
 	Dpkg/Source/Patch.pm \
 	Dpkg/Source/Quilt.pm \
 	Dpkg/Substvars.pm \
-	Dpkg/Util.pm \
 	Dpkg/Vars.pm \
 	Dpkg/Vendor.pm \
 	Dpkg/Vendor/Debian.pm \
@@ -123,6 +124,8 @@ EXTRA_DIST += \
 
 # Keep it even if empty to have man3dir correctly set
 man3_MANS =
+
+man_perl_section = 3perl
 
 do_perl_subst = $(AM_V_GEN) sed \
 	-e "s:^\#![[:space:]]*/usr/bin/perl:\#!$(PERL):" \
@@ -159,10 +162,10 @@ if BUILD_POD_DOC
 	for module in $(nobase_dist_perllib_DATA); do \
 	  name=`echo $$module | sed -e 's|/|::|g' -e 's/\.pm$$//'`; \
 	  $(POD2MAN) --utf8 --center=libdpkg-perl --release=$(VERSION) \
-	    --name="$$name" --section=3 $(srcdir)/$$module \
-	    >$(DESTDIR)$(man3dir)/$$name.3; \
-	  test -s $(DESTDIR)$(man3dir)/$$name.3 || \
-	  rm -f $(DESTDIR)$(man3dir)/$$name.3; \
+	    --name="$$name" --section=$(man_perl_section) $(srcdir)/$$module \
+	    >$(DESTDIR)$(man3dir)/$$name.$(man_perl_section); \
+	  test -s $(DESTDIR)$(man3dir)/$$name.$(man_perl_section) || \
+	  rm -f $(DESTDIR)$(man3dir)/$$name.$(man_perl_section); \
 	done
 endif
 
@@ -177,7 +180,7 @@ install-data-hook:
 uninstall-local:
 if BUILD_POD_DOC
 	for module in $(nobase_dist_perllib_DATA); do \
-	  rm -f $(DESTDIR)$(man3dir)/`echo $$module | sed -e 's|/|::|g' -e 's/\.pm$$/.3/'`; \
+	  rm -f $(DESTDIR)$(man3dir)/`echo $$module | sed -e 's|/|::|g' -e 's/\.pm$$/.$(man_perl_section)/'`; \
 	done
 endif
 
@@ -218,17 +221,19 @@ test_scripts = \
 	t/Dpkg_ErrorHandling.t \
 	t/Dpkg_Exit.t \
 	t/Dpkg_File.t \
+	t/Dpkg_Lock.t \
 	t/Dpkg_Getopt.t \
 	t/Dpkg_Gettext.t \
 	t/Dpkg_Conf.t \
 	t/Dpkg_Deps.t \
 	t/Dpkg_Path.t \
-	t/Dpkg_Util.t \
 	t/Dpkg_Vars.t \
 	t/Dpkg_Interface_Storable.t \
+	t/Dpkg_OpenPGP.t \
 	t/Dpkg_Vendor.t \
 	t/Dpkg_Changelog.t \
 	t/Dpkg_Changelog_Ubuntu.t \
+	t/Dpkg_Control_Fields.t \
 	t/Dpkg_Control.t \
 	t/Dpkg_Control_Tests.t \
 	t/Dpkg_Index.t \
@@ -248,6 +253,9 @@ test_scripts = \
 	$(nil)
 
 test_data = \
+	t/Dpkg_OpenPGP/package_1.0.orig.tar \
+	t/Dpkg_OpenPGP/package_1.0.orig.tar.asc \
+	t/Dpkg_OpenPGP/package_1.0.orig.tar.sig \
 	t/Dpkg_Shlibs/symbols.blacklisted \
 	t/Dpkg_Shlibs/symbols.blacklist-groups \
 	t/Dpkg_Shlibs/symbols.blacklist-filter \
@@ -343,6 +351,7 @@ test_data = \
 	t/mk/debian/changelog \
 	t/mk/architecture.mk \
 	t/mk/buildflags.mk \
+	t/mk/buildtools.mk \
 	t/mk/pkg-info.mk \
 	t/mk/vendor.mk \
 	t/origins/debian \

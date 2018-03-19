@@ -200,12 +200,24 @@ für Xz.
 Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind
 \fBgzip\fP, \fBxz\fP (seit Dpkg 1.15.6) und \fBnone\fP (voreingestellt ist \fBxz\fP).
 .TP 
-\fB\-\-uniform\-compression\fP
-Gibt an, dass die gleichen Komprimierungsparameter für alle Archivteile
-(d.h. \fBcontrol.tar\fP und \fBdata.tar\fP; seit Dpkg 1.17.6) verwandt werden
-sollen. Andernfalls wird nur der Teil \fBdata.tar\fP diese Parameter
-verwenden. Die einzigen unterstützten Kompressionstypen, die übergreifend
-benutzt werden dürfen, sind \fBnone\fP, \fBgzip\fP und \fBxz\fP.
+\fB\-\-[no\-]uniform\-compression\fP
+Specify that the same compression parameters should be used for all archive
+members (i.e. \fBcontrol.tar\fP and \fBdata.tar\fP; since dpkg 1.17.6).  Otherwise
+only the \fBdata.tar\fP member will use those parameters. The only supported
+compression types allowed to be uniformly used are \fBnone\fP, \fBgzip\fP and
+\fBxz\fP.  The \fB\-\-no\-uniform\-compression\fP option disables uniform compression
+(since dpkg 1.19.0).  Uniform compression is the default (since dpkg
+1.19.0).
+.TP 
+\fB\-\-root\-owner\-group\fP
+Setzt für jeden Eintrag in den Dateisystembaumdaten den Eigentümer und die
+Gruppe auf Kennung 0 (seit Dpkg 1.19.0).
+
+\fBHinweis\fP: Diese Option kann für rootloses Bauen (siehe
+\fIrootless\-builds.txt\fP) nützlich sein, sollte aber \fBnicht\fP verwandt werden,
+wenn Einträge eine von root verschiedenen Eigentümer oder Gruppe haben. Die
+Unterstützung hierfür wird später in der Form eines Meta\-Manifests
+hinzugefügt.
 .TP 
 \fB\-\-deb\-format=\fP\fIFormat\fP
 Setzt das beim Bau verwandte Archivformat (seit Dpkg 1.17.0). Erlaubte Werte

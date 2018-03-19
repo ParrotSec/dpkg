@@ -1,13 +1,13 @@
 # German translation of the scripts in the dpkg package
 # This file is distributed under the same license as the dpkg package.
-# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2016.
+# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-dev 1.18.8\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2017-05-17 13:17+0200\n"
-"PO-Revision-Date: 2017-02-27 08:39+0100\n"
+"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"PO-Revision-Date: 2017-09-25 19:03+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -177,6 +177,10 @@ msgid ""
 "  --get <flag>       output the requested flag to stdout.\n"
 "  --origin <flag>    output the origin of the flag to stdout:\n"
 "                     value is one of vendor, system, user, env.\n"
+"  --status           output a synopsis with all parameters affecting the\n"
+"                     program behaviour, the resulting flags and their "
+"origin.\n"
+"  --query            like --status, but in deb822 format.\n"
 "  --query-features <area>\n"
 "                     output the status of features for the given area.\n"
 "  --list             output a list of the flags supported by the current "
@@ -185,10 +189,7 @@ msgid ""
 "                     output something convenient to import the compilation\n"
 "                     flags in a shell script, in make, or in a command "
 "line.\n"
-"  --dump             output all compilation flags with their values\n"
-"  --status           print a synopsis with all parameters affecting the\n"
-"                     behaviour of dpkg-buildflags and the resulting flags\n"
-"                     and their origin.\n"
+"  --dump             output all compilation flags with their values.\n"
 "  --help             show this help message.\n"
 "  --version          show the version.\n"
 msgstr ""
@@ -196,6 +197,11 @@ msgstr ""
 "  --get <Schalter>    den angegebenen Schalter nach Stdout ausgeben\n"
 "  --origin <Schalter> die Quelle des Schalters nach Stdout ausgeben,\n"
 "                      mögliche Werte: vendor, system, user, env\n"
+" --status             eine Zusammenfassung aller Parameter ausgeben, die "
+"das\n"
+"                      Verhalten des Programms, die daraus entstehenden\n"
+"                      Schalter und ihre Quelle angeben\n"
+"  --query             wie --status, aber in deb822-Format.\n"
 "  --query-features <Bereich>\n"
 "                      den Status der Funktionalitäten für den übergebenen\n"
 "                      Bereich ausgeben\n"
@@ -206,10 +212,6 @@ msgstr ""
 "                      in einem Shell-Skript, in Make oder auf der\n"
 "                      Befehlszeile zu importieren\n"
 "  --dump              alle Kompilierschalter mit ihren Werten ausgeben\n"
-" --status             eine Zusammenfassung aller Parameter ausgeben, die "
-"das\n"
-"                      Verhalten von dpkg-buildflags und die daraus\n"
-"                      entstehenden Schalter und ihre Quelle angeben\n"
 "  --help              diese Hilfemeldung anzeigen\n"
 "  --version           die Version anzeigen\n"
 
@@ -453,21 +455,9 @@ msgid "unknown option or argument %s"
 msgstr "unbekannte Option oder Argument %s"
 
 #: scripts/dpkg-buildpackage.pl
-msgid "using a gain-root-command while being root"
-msgstr "Verwendung eines root-werde-Befehls, obwohl bereits root"
-
-#: scripts/dpkg-buildpackage.pl
-msgid ""
-"fakeroot not found, either install the fakeroot\n"
-"package, specify a command with the -r option, or run this as root"
-msgstr ""
-"Fakeroot nicht gefunden; installieren Sie entweder das Fakeroot-Paket,\n"
-"geben Sie einen Befehl mit der Option -r an oder führen Sie dies als root aus"
-
-#: scripts/dpkg-buildpackage.pl
 #, perl-format
-msgid "gain-root-command '%s' not found"
-msgstr "root-werde-Befehl »%s« nicht gefunden"
+msgid "option %s is only meaningful with option %s"
+msgstr "Option %s hat nur zusammen mit der Option %s eine Bedeutung"
 
 #: scripts/dpkg-buildpackage.pl
 #, perl-format
@@ -547,13 +537,57 @@ msgid "unable to determine %s"
 msgstr "%s kann nicht bestimmt werden"
 
 #: scripts/dpkg-buildpackage.pl
+msgid "using a gain-root-command while being root"
+msgstr "Verwendung eines root-werde-Befehls, obwohl bereits root"
+
+#: scripts/dpkg-buildpackage.pl
+msgid ""
+"fakeroot not found, either install the fakeroot\n"
+"package, specify a command with the -r option, or run this as root"
+msgstr ""
+"Fakeroot nicht gefunden; installieren Sie entweder das Fakeroot-Paket,\n"
+"geben Sie einen Befehl mit der Option -r an oder führen Sie dies als root aus"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "gain-root-command '%s' not found"
+msgstr "root-werde-Befehl »%s« nicht gefunden"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "disallowed target in %s field keyword %s"
+msgstr "nicht erlaubtes Ziel im %s-Feld-Schlüsselwort %s"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "unknown %s field keyword %s in dpkg namespace"
+msgstr "unbekanntes %s-Feld-Schlüsselwort %s im Dpkg-Namensraum"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "unknown %s field keyword %s"
+msgstr "unbekanntes %s-Feldschlüsselwort %s"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "field %s contains duplicate keyword %s"
+msgstr "Feld %s enthält doppeltes Schlüsselwort %s"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "%s field contains both global and implementation specific keywords"
+msgstr ""
+"Feld %s enthält sowohl globale als auch implementierungsspezifische "
+"Schlüsselwörter"
+
+#: scripts/dpkg-buildpackage.pl
 #, perl-format
 msgid "unknown %% substitution in hook: %%%s"
 msgstr "unbekannte %% Substitution in Hook: %%%s"
 
 #: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-genbuildinfo.pl scripts/dpkg-name.pl scripts/Dpkg/Arch.pm
-#: scripts/Dpkg/IPC.pm scripts/Dpkg/Shlibs.pm
+#: scripts/Dpkg/IPC.pm scripts/Dpkg/OpenPGP.pm scripts/Dpkg/Shlibs.pm
 #, perl-format
 msgid "cannot open %s"
 msgstr "%s kann nicht geöffnet werden"
@@ -706,6 +740,22 @@ msgid "install new files list file"
 msgstr "neue Dateilistendatei installieren"
 
 #: scripts/dpkg-genbuildinfo.pl
+#, fuzzy
+#| msgid ""
+#| "Options:\n"
+#| "  --build=<type>[,...]     specify the build <type>: full, source, "
+#| "binary,\n"
+#| "                             any, all (default is 'full').\n"
+#| "  -c<control-file>         get control info from this file.\n"
+#| "  -l<changelog-file>       get per-version info from this file.\n"
+#| "  -f<files-list-file>      get .deb files list from this file.\n"
+#| "  -F<changelog-format>     force changelog format.\n"
+#| "  -O[<buildinfo-file>]     write to stdout (or <buildinfo-file>).\n"
+#| "  -u<upload-files-dir>     directory with files (default is '..').\n"
+#| "  --always-include-path    always include Build-Path.\n"
+#| "  --admindir=<directory>   change the administrative directory.\n"
+#| "  -?, --help               show this help message.\n"
+#| "      --version            show the version.\n"
 msgid ""
 "Options:\n"
 "  --build=<type>[,...]     specify the build <type>: full, source, binary,\n"
@@ -716,6 +766,7 @@ msgid ""
 "  -F<changelog-format>     force changelog format.\n"
 "  -O[<buildinfo-file>]     write to stdout (or <buildinfo-file>).\n"
 "  -u<upload-files-dir>     directory with files (default is '..').\n"
+"  --always-include-kernel  always include Build-Kernel-Version.\n"
 "  --always-include-path    always include Build-Path.\n"
 "  --admindir=<directory>   change the administrative directory.\n"
 "  -?, --help               show this help message.\n"
@@ -2533,10 +2584,6 @@ msgid "continued value line not in field"
 msgstr "fortgeführte Wertzeile nicht im Feld"
 
 #: scripts/Dpkg/Control/HashCore.pm
-msgid "OpenPGP signature not allowed here"
-msgstr "OpenPGP-Signatur hier nicht erlaubt"
-
-#: scripts/Dpkg/Control/HashCore.pm
 msgid "expected OpenPGP signature, found end of file after blank line"
 msgstr "OpenPGP-Signatur erwartet, Dateiende nach einer Leerzeile gefunden"
 
@@ -2548,6 +2595,10 @@ msgstr "OpenPGP-Signatur erwartet, etwas anderes gefunden »%s«"
 #: scripts/Dpkg/Control/HashCore.pm
 msgid "unfinished OpenPGP signature"
 msgstr "unvollständige OpenPGP-Signatur"
+
+#: scripts/Dpkg/Control/HashCore.pm
+msgid "OpenPGP signature not allowed here"
+msgstr "OpenPGP-Signatur hier nicht erlaubt"
 
 #: scripts/Dpkg/Control/HashCore.pm
 msgid "line with unknown format (not field-colon-value)"
@@ -2565,6 +2616,11 @@ msgstr "im ersten Block fehlt ein Feld »Source«"
 #, perl-format
 msgid "block lacks the '%s' field"
 msgstr "im Block fehlt das Feld »%s«"
+
+#: scripts/Dpkg/Control/Tests/Entry.pm
+#, perl-format
+msgid "block lacks either %s or %s fields"
+msgstr "im Block fehlen entweder die Felder %s oder %s"
 
 #: scripts/Dpkg/Deps.pm
 #, perl-format
@@ -2618,33 +2674,25 @@ msgid "error"
 msgstr "Fehler"
 
 #: scripts/Dpkg/ErrorHandling.pm
-#, perl-format
-msgid "%s gave error exit status %s"
+#, fuzzy, perl-format
+#| msgid "%s gave error exit status %s"
+msgid "%s subprocess returned exit status %d"
 msgstr "Fehler-Exitstatus von %s war %s"
 
 #: scripts/Dpkg/ErrorHandling.pm
 #, perl-format
-msgid "%s died from signal %s"
-msgstr "%s wurde durch Signal %s getötet"
+msgid "%s subprocess was killed by signal %d"
+msgstr ""
 
 #: scripts/Dpkg/ErrorHandling.pm
-#, perl-format
-msgid "%s failed with unknown exit code %d"
+#, fuzzy, perl-format
+#| msgid "%s failed with unknown exit code %d"
+msgid "%s subprocess failed with unknown status code %d"
 msgstr "%s fehlgeschlagen mit unbekanntem Exit-Code %d"
 
 #: scripts/Dpkg/ErrorHandling.pm
 msgid "Use --help for program usage information."
 msgstr "Verwenden Sie --help für Programmbenutzungsinformationen"
-
-#: scripts/Dpkg/File.pm
-msgid "File::FcntlLock not available; using flock which is not NFS-safe"
-msgstr ""
-"File::FcntlLock nicht verfügbar: verwende flock, der für NFS nicht sicher ist"
-
-#: scripts/Dpkg/File.pm
-#, perl-format
-msgid "failed to get a write lock on %s"
-msgstr "Fehler beim Erlangen einer Schreibsperre auf %s"
 
 #: scripts/Dpkg/IPC.pm
 #, perl-format
@@ -2683,6 +2731,42 @@ msgstr[1] "%s war nicht innerhalb von %d Sekunden beendet"
 #: scripts/Dpkg/Interface/Storable.pm
 msgid "<standard input>"
 msgstr "<Standardeingabe>"
+
+#: scripts/Dpkg/Lock.pm
+msgid "File::FcntlLock not available; using flock which is not NFS-safe"
+msgstr ""
+"File::FcntlLock nicht verfügbar: verwende flock, der für NFS nicht sicher ist"
+
+#: scripts/Dpkg/Lock.pm
+#, perl-format
+msgid "failed to get a write lock on %s"
+msgstr "Fehler beim Erlangen einer Schreibsperre auf %s"
+
+#: scripts/Dpkg/OpenPGP.pm
+msgid "signature file is already OpenPGP ASCII armor, copying"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP.pm
+msgid "cannot OpenPGP ASCII armor signature file due to missing gpg"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP.pm
+#, fuzzy, perl-format
+#| msgid "cannot create pipe for %s"
+msgid "cannot create signature file %s"
+msgstr "Pipe für %s kann nicht angelegt werden"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, fuzzy, perl-format
+#| msgid "cannot exec dpkg"
+msgid "cannot execute %s program"
+msgstr "dpkg kann nicht ausgeführt werden"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, fuzzy, perl-format
+#| msgid "cannot stat file %s"
+msgid "cannot write signature file %s"
+msgstr "Datei %s kann nicht mit stat abgefragt werden"
 
 #: scripts/Dpkg/Package.pm
 msgid "may not be empty string"
@@ -3871,6 +3955,9 @@ msgstr "Versionsnummer enthält ungültiges Zeichen »%s«"
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
+#~ msgid "%s died from signal %s"
+#~ msgstr "%s wurde durch Signal %s getötet"
+
 #~ msgid "'hardening' flag found but 'hardening-wrapper' not installed"
 #~ msgstr ""
 #~ "Schalter »hardening« gefunden, aber »hardening-wrapper« nicht installiert"
@@ -4423,9 +4510,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 #~ msgid "exec %s"
 #~ msgstr "ausführen von %s"
 
-#~ msgid "cannot exec dpkg"
-#~ msgstr "dpkg kann nicht ausgeführt werden"
-
 #~ msgid "git config exited nonzero"
 #~ msgstr "git config mit nicht-Null-Status beendet"
 
@@ -4459,9 +4543,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "source control file %s"
 #~ msgstr "Quell-Steuerdatei %s"
-
-#~ msgid "Files field contains bad line `%s'"
-#~ msgstr "Files-Feld enthält ungültige Zeile »%s«"
 
 #~ msgid "Conflicting sizes `%u' and `%u' for file `%s'"
 #~ msgstr "Widersprüchliche Größen »%u« und »%u« für Datei »%s«"

@@ -41,6 +41,7 @@ EXTRA_DIST = \
 	doc/coding-style.txt \
 	doc/frontend.txt \
 	doc/lcov-inject.pl \
+	doc/rootless-builds.txt \
 	doc/triggers.txt \
 	debian/changelog \
 	debian/compat \
@@ -49,8 +50,8 @@ EXTRA_DIST = \
 	debian/dpkg-dev.docs \
 	debian/dpkg-dev.install \
 	debian/dpkg-dev.manpages \
-	debian/dpkg-dev.preinst \
 	debian/dpkg-dev.lintian-overrides \
+	debian/dpkg.alternatives.logrotate \
 	debian/dpkg.cfg \
 	debian/dpkg.cron.daily \
 	debian/dpkg.docs \
@@ -58,14 +59,12 @@ EXTRA_DIST = \
 	debian/dpkg.manpages \
 	debian/dpkg.postinst \
 	debian/dpkg.postrm \
-	debian/dpkg.prerm \
 	debian/dpkg.logrotate \
 	debian/dpkg.lintian-overrides \
 	debian/dselect.cfg \
 	debian/dselect.docs \
 	debian/dselect.install \
 	debian/dselect.manpages \
-	debian/dselect.preinst \
 	debian/dselect.lintian-overrides \
 	debian/libdpkg-dev.docs \
 	debian/libdpkg-dev.install \
@@ -75,11 +74,12 @@ EXTRA_DIST = \
 	debian/libdpkg-perl.lintian-overrides \
 	debian/source/lintian-overrides \
 	debian/source/format \
-	debian/source/options \
 	debian/usertags \
 	debian/rules \
 	debian/shlibs.default \
 	debian/shlibs.override \
+	po/its/polkit.its \
+	po/its/polkit.loc \
 	$(test_scripts) \
 	$(test_data) \
 	$(nil)
@@ -153,6 +153,7 @@ test_scripts = \
 	t/pod-coverage.t \
 	t/synopsis.t \
 	t/minimum-version.t \
+	t/module-version.t \
 	t/syntax.t \
 	t/strict.t \
 	t/critic.t \

@@ -123,12 +123,13 @@ Setzt eine Ausgabesubstitutionsvariable. Lesen Sie \fBdeb\-substvars\fP(5) für
 eine Besprechung des Ausgabesubstitution.
 .TP 
 \fB\-T\fP\fISubstvars\-Datei\fP
-Lese die Substitutionsvariablen aus \fISubstvars\-Datei\fP; standardmäßig
-\fBdebian/substvars\fP. Bei den ausgegeben Feldern erfolgt keine
-Variablensubstitution, die besondere Variable \fIFormat\fP wird allerdings das
-Feld mit dem gleichen Namen überschreiben. Diese Option kann mehrfach
-verwandt werden, um Substitutionsvariablen aus mehreren Dateien einzulesen
-(seit Dpkg 1.15.6).
+Read substitution variables in \fIsubstvars\-file\fP; the default is
+\fBdebian/substvars\fP.  No variable substitution is done on any of the fields
+that are output, except for the contents extracted from each binary package
+\fBDescription\fP field (since dpkg 1.19.0), however the special variable
+\fIFormat\fP will override the field of the same name.  This option can be used
+multiple times to read substitution variables from multiple files (since
+dpkg 1.15.6).
 
 .TP 
 \fB\-D\fP\fIFeld\fP\fB=\fP\fIWert\fP

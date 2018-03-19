@@ -93,7 +93,7 @@ für Informationen über alternative Formate.
 \fB\-O\fP[\fIDateiname\fP]
 Gibt die Buildinfo\-Datei zur Standardausgabe (oder \fIDateiname\fP, falls
 angegeben) aus, statt nach
-\fIVerz\fP\fB/\fP\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fIArch\fP\fB.buildinfo\fP (wobei
+\fIVerz\fP\fB/\fP\fIQuellname\fP\fB_\fP\fIBinärversion\fP\fB_\fP\fIArch\fP\fB.buildinfo\fP (wobei
 \fIVerz\fP standardmäßig \fB..\fP oder \fIHochladedateiverzeichnis\fP, falls \fB\-u\fP
 verwandt wurde, ist).
 .TP 
@@ -102,6 +102,12 @@ Suche nach Dateien, die hochgeladen werden sollen, in
 \fIHochladedateiverzeichnis\fP statt in \fB..\fP (\fBdpkg\-genbuildinfo\fP muss diese
 Dateien finden, so dass es ihre Größen und Prüfsummen in die
 \&\fB.buildinfo\fP\-Datei aufnehmen kann.
+.TP 
+\fB\-\-always\-include\-kernel\fP
+By default, the \fBBuild\-Kernel\-Version\fP field will not be written out.
+
+Specify this option (since dpkg 1.19.0) to always write a
+\fBBuild\-Kernel\-Version\fP field when generating the \fB.buildinfo\fP.
 .TP 
 \fB\-\-always\-include\-path\fP
 Standardmäßig wird das Feld \fBBuild\-Path\fP nur geschrieben, falls das

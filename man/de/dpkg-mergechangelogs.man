@@ -71,7 +71,7 @@ Gebe die Version aus und beende sich.
 .P
 Alles, was nicht von Dpkg::Changelog ausgewertet werden kann, geht beim
 Zusammenführen verloren. Dies betrifft Zeug wie Modelines von Vim,
-Kommentare, die eigentlich nicht da sein sollten, usw.
+Emacs\-Variablen, Kommentare, die eigentlich nicht da sein sollten, usw.
 .
 .SH "INTEGRATION MIT GIT"
 .P

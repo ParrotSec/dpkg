@@ -81,9 +81,9 @@ Umgebungsvariablen mittels eval zu setzen.
 Ähnlich wie \fB\-\-print\-unset\fP, gebe einen Export\-Befehl aus, der alle
 Variablen löscht.
 .TP 
-\fB\-c\fP, \fB\-\-command\fP \fIBefehl\fP
-Führe einen \fIBefehl\fP in einer Umgebung aus, in der alle Variablen auf die
-festgelegten Werte gesetzt sind.
+\fB\-c\fP, \fB\-\-command\fP \fIBefehlszeichenkette\fP
+Führe eine \fIBefehlszeichenkette\fP in einer Umgebung aus, in der alle
+Variablen auf die festgelegten Werte gesetzt sind.
 .TP 
 \fB\-L\fP, \fB\-\-list\-known\fP
 Gib eine Liste von gültigen Architekturnamen aus. Möglicherweise durch eine
@@ -371,7 +371,7 @@ in dem sich die Architekturtabellen befinden (seit Dpkg
 Alle langen Befehle und Optionennamen sind seit Dpkg 1.17.17 verfügbar.
 .
 .SH "SIEHE AUCH"
-\fBdpkg\-buildpackage\fP(1), \fBdpkg\-cross\fP(1).
+\fBdpkg\-buildpackage\fP(1).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und

@@ -400,7 +400,7 @@ aktuelle Liste der überprüfbaren \fISachen\fP ist:
 \fBtrigname\fP
 Überprüft den übergebenen Triggernamen (seit Dpkg 1.18.16).
 .TP 
-\fBpkgname\fP
+\fBarchname\fP
 Überprüft den übergebenen Architekturnamen (seit Dpkg 1.18.16).
 .TP 
 \fBversion\fP

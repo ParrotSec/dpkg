@@ -82,7 +82,7 @@ niemals auftauchen.
 Typischerweise ist das die Original\-Paketversionsnummer, in der Form, die
 der Programmautor verwendet. Es kann auch eine Debian\-Revisionsnummer
 enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der
-Sortieralgorithmus sind in \fBdeb\-version\fP(5) beschrieben.
+Sortieralgorithmus sind in \fBdeb\-version\fP(7) beschrieben.
 .TP 
 \fBDistribution:\fP \fIDistribution\fPen (verpflichtend)
 Listet eine oder mehrere durch Leerzeichen getrennte Distributiionen auf,
@@ -185,7 +185,7 @@ Das Feld \fBFiles\fP ist inkonsistent gegenüber den anderen
 verwirrende Namen. Das Feld \fBDistribution\fP enthält Informationen darüber,
 was normalerweise als Suite bezeichnet wird.
 .SH "SIEHE AUCH"
-\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(5).
+\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und

@@ -21,7 +21,7 @@ use warnings;
 
 our $VERSION = '0.01';
 
-use POSIX qw(:errno_h);
+use Errno qw(ENOENT);
 use Cwd;
 use File::Basename;
 use File::Temp qw(tempfile);
@@ -36,6 +36,7 @@ use Dpkg::Source::Patch;
 use Dpkg::Exit qw(push_exit_handler pop_exit_handler);
 use Dpkg::Source::Functions qw(erasedir);
 use Dpkg::Source::Package::V3::Native;
+use Dpkg::OpenPGP;
 
 use parent qw(Dpkg::Source::Package);
 
@@ -409,9 +410,10 @@ sub do_build {
     }
 
     $self->add_file($tarname) if $tarname;
-    # XXX: Re-enable once a stable dpkg supports extracting upstream signatures
-    # for source 1.0 format, either in 1.17.x or 1.18.x.
-    #$self->add_file($tarsign) if $tarsign and -e $tarsign;
+    if ($tarname and -e "$tarname.sig" and not -e "$tarname.asc") {
+        openpgp_sig_to_asc("$tarname.sig", "$tarname.asc");
+    }
+    $self->add_file($tarsign) if $tarsign and -e $tarsign;
 
     if ($sourcestyle =~ m/[kpKP]/) {
         if (stat($origdir)) {

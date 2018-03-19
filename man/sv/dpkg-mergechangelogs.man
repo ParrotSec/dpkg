@@ -65,9 +65,9 @@ Visar version och avslutar.
 .
 .SH BEGRÄNSNINGAR
 .P
-Allt som inte tolkas av Dpkg::Changelog försvinner under
-sammanslagningen. Det kan gälla saker som vim\-lägesrader, kommentarer som
-inte skulle vara där, osv.
+Anything that is not parsed by Dpkg::Changelog is lost during the merge.
+This might include stuff like Vim modelines, Emacs variables, comments which
+were not supposed to be there, etc.
 .
 .SH "INTEGRATION MED GIT"
 .P

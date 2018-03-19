@@ -22,14 +22,14 @@
 use strict;
 use warnings;
 
+use List::Util qw(none);
 use POSIX qw(:errno_h :fcntl_h);
 use File::Find;
 
 use Dpkg ();
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
-use Dpkg::Util qw(:list);
-use Dpkg::File;
+use Dpkg::Lock;
 use Dpkg::Arch qw(get_host_arch debarch_eq debarch_is debarch_list_parse);
 use Dpkg::Package;
 use Dpkg::BuildProfiles qw(get_build_profiles);
@@ -196,6 +196,10 @@ my $src_fields = $control->get_source();
 foreach (keys %{$src_fields}) {
     if (m/^Source$/) {
 	set_source_package($src_fields->{$_});
+    } elsif (m/^Description$/) {
+        # Description in binary packages is not inherited, do not copy this
+        # field, only initialize the description substvars.
+        $substvars->set_desc_substvars($src_fields->{$_});
     } else {
         field_transfer_single($src_fields, $fields);
     }

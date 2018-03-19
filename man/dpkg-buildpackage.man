@@ -63,7 +63,7 @@ build has been requested with \fB\-\-build\fP or equivalent options), or
 \fBbuild\-indep\fP and \fBbinary\-indep\fP (if an \fBall\fP and not \fBany\fP
 build has been requested with \fB\-\-build\fP or equivalent options).
 .IP \fB6.\fP 3
-Unless a source-only build has been requested, it runs the \fBbuildinfo\fP
+It runs the \fBbuildinfo\fP
 hook and calls \fBdpkg\-genbuildinfo\fP to generate a \fB.buildinfo\fP file.
 Several \fBdpkg\-buildpackage\fP options are forwarded to
 \fBdpkg\-genbuildinfo\fP.
@@ -73,9 +73,9 @@ generate a \fB.changes\fP file.
 The name of the \fB.changes\fP file will depend on the type of build and
 will be as specific as necessary but not more;
 for a build that includes \fBany\fP the name will be
-\fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fIarch\fP\fB.changes\fP,
+\fIsource-name\fP\fB_\fP\fIbinary-version\fP\fB_\fP\fIarch\fP\fB.changes\fP,
 or otherwise for a build that includes \fBall\fP the name will be
-\fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fBall.changes\fP,
+\fIsource-name\fP\fB_\fP\fIbinary-version\fP\fB_\fP\fBall.changes\fP,
 or otherwise for a build that includes \fBsource\fP the name will be
 \fIsource-name\fP\fB_\fP\fIsource-version\fP\fB_\fP\fBsource.changes\fP.
 Many \fBdpkg\-buildpackage\fP options are forwarded to
@@ -353,7 +353,7 @@ their commands fail, so watch out for unintended consequences.
 
 The current \fIhook-name\fP supported are:
 
-.B init preclean source build binary changes postclean check sign done
+.B init preclean source build binary buildinfo changes postclean check sign done
 
 The \fIhook-command\fP supports the following substitution format string,
 which will get applied to it before execution:
@@ -513,7 +513,18 @@ standalone should be supported.
 \fBdpkg\-architecture\fP is called with the \fB\-a\fP and \fB\-t\fP
 parameters forwarded. Any variable that is output by its \fB\-s\fP
 option is integrated in the build environment.
-
+.TP
+.B DEB_RULES_REQUIRES_ROOT
+This variable is set to the value obtained from the \fBRules\-Requires\-Root\fP
+field or from the command-line.
+When set, it will be a valid value for the \fBRules\-Requires\-Root\fP field.
+It is used to notify \fBdebian/rules\fP whether the \fBrootless\-builds.txt\fP
+specification is supported.
+.TP
+.B DEB_GAIN_ROOT_CMD
+This variable is set to \fIgain-root-command\fP when the field
+\fBRules\-Requires\-Root\fP is set to a value different to \fBno\fP and
+\fBbinary-targets\fP.
 .TP
 .B SOURCE_DATE_EPOCH
 This variable is set to the Unix timestamp since the epoch of the

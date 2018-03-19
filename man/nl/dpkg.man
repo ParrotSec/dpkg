@@ -415,7 +415,7 @@ Valideert de opgegeven pakketnaam (sinds dpkg 1.18.16).
 \fBtrigname\fP
 Valideert de opgegeven triggernaam (sinds dpkg 1.18.16).
 .TP 
-\fBpkgname\fP
+\fBarchname\fP
 Valideert de opgegeven architectuurnaam (sinds dpkg 1.18.16).
 .TP 
 \fBversion\fP
@@ -526,10 +526,9 @@ gebruiken heeft tot gevolg dat het pakket dat van het verwijderde pakket
 afhankelijk was, automatisch gedeconfigureerd wordt.
 .TP 
 \fB\-D\fP\fIoctaal\fP\fB, \-\-debug=\fP\fIoctaal\fP
-Schakel debuggen in. \fIoctaal\fP wordt gevormd door op de gewenste waarden uit
-de onderstaande lijst de bitwise OR\-bewerking uit te voeren (merk op dat
-deze waarden in toekomstige uitgaven kunnen veranderen). \fB\-Dh\fP of
-\fB\-\-debug=help\fP geeft deze debugwaarden weer.
+Switch debugging on. \fIoctal\fP is formed by bitwise\-oring desired values
+together from the list below (note that these values may change in future
+releases). \fB\-Dh\fP or \fB\-\-debug=help\fP display these debugging values.
 
      Getal   Beschrijving
          1   Algemene informatieve voortgangsinformatie

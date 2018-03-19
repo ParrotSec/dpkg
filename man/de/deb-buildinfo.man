@@ -49,11 +49,11 @@ spezifizierten OpenPGP\-ASCII\-Hülle eingeschlossen sein.
 Der Name der \fB.buildinfo\fP\-Datei wird von der Art des Baus abhängen und wird
 so spezifisch wie notwendig sein, aber nicht mehr; für einen Bau, der \fBany\fP
 enthält, wird der Name
-\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fIArch\fP\fB.buildinfo\fP oder andernfalls für
+\fIQuellname\fP\fB_\fP\fIBinärversion\fP\fB_\fP\fIArch\fP\fB.buildinfo\fP oder andernfalls für
 einen Bau, der \fBall\fP enthält, wird der Name
 \fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fBall.buildinfo\fP oder andernfalls für
 einen Bau, der \fBsource\fP enthält, wird der Name
-\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fBsource.buildinfo\fP lauten.
+\fIQuellname\fP\fB_\fP\fIBinärversion\fP\fB_\fP\fBsource.buildinfo\fP lauten.
 .
 .SH FELDER
 .TP 
@@ -87,7 +87,7 @@ in der Liste niemals auftauchen.
 Typischerweise ist das die Original\-Paketversionsnummer, in der Form, die
 der Programmautor verwendet. Es kann auch eine Debian\-Revisionsnummer
 enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der
-Sortieralgorithmus sind in \fBdeb\-version\fP(5) beschrieben.
+Sortieralgorithmus sind in \fBdeb\-version\fP(7) beschrieben.
 .TP 
 \fBBinary\-Only\-Changes:\fP
 .TQ
@@ -130,6 +130,11 @@ wurde. Typische Architekturen sind \fBamd64\fP, \fBarmel\fP, \fBi386\fP, usw.
 \fBBuild\-Date:\fP \fIBaudatum\fP
 Das Datum, an dem das Paket letztmalig gebaut wurde. Es muss im gleichen
 Format wie in einem Eintrag bei \fBdeb\-changelog\fP(5) sein.
+.TP 
+\fBBuild\-Kernel\-Version:\fP \fIbuild\-kernel\-version\fP
+The release and version (in an unspecified format) of the kernel running on
+the build system.  This field is only going to be present if the builder has
+explicitly requested it, to avoid leaking possibly sensitive information.
 .TP 
 \fBBuild\-Path:\fP \fIBaupfad\fP
 Der absolute Baupfad, der dem entpackten Quellbaum entspricht. Dieses Feld
@@ -176,7 +181,7 @@ doppelten Anführungszeichen (,=’) gefolgt wird.
 .\" .RE
 .
 .SH "SIEHE AUCH"
-\fBdeb\-changes\fP(5), \fBdeb\-version\fP(5), \fBdpkg\-genbuildinfo\fP(1).
+\fBdeb\-changes\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-genbuildinfo\fP(1).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und

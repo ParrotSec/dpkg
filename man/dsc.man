@@ -91,7 +91,7 @@ Typically, this is the original package's version number in whatever form
 the program's author uses.
 It may also include a Debian revision number (for non-native packages).
 The exact format and sorting algorithm are described in
-.BR deb\-version (5).
+.BR deb\-version (7).
 .TP
 .BI Origin: " name"
 The name of the distribution this package is originating from.
@@ -105,6 +105,16 @@ of the software that was packaged.
 Lists all the names and email addresses of co-maintainers of the package,
 in the same format as the \fBMaintainer\fP field.
 Multiple co-maintainers should be separated by a comma.
+.TP
+.BI Description " \fIshort-description\fP"
+.TQ
+.BI " " "long-description"
+The format for the source package description is a short brief summary on the
+first line (after the \fBDescription\fP field).
+The following lines should be used as a longer, more detailed description.
+Each line of the long description must be preceded by a space, and blank
+lines in the long description must contain a single ‘\fB.\fP’ following
+the preceding space.
 .TP
 .BI Homepage: " url"
 The upstream project home page \fIurl\fP.
@@ -138,7 +148,7 @@ See \fBdeb\-src\-control\fP(5) for more details.
 .TP
 .BI Testsuite: " name-list"
 This field declares that the source package contains the specified test suites.
-The value is a space-separated list of test suites.
+The value is a comma-separated list of test suites.
 If the \fBautopkgtest\fP value is present, a \fIdebian/tests/control\fP is
 expected to be present, if the file is present but not the value, then
 \fBdpkg\-source\fP will automatically add it, preserving previous values.
@@ -235,5 +245,5 @@ The \fBFormat\fP field conflates the format for the \fB.dsc\fP file itself
 and the format of the extracted source package.
 .SH SEE ALSO
 .BR deb\-src\-control (5),
-.BR deb\-version (5),
+.BR deb\-version (7),
 .BR dpkg\-source (1).

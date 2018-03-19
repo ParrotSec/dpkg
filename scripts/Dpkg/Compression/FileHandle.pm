@@ -21,7 +21,6 @@ use warnings;
 
 our $VERSION = '1.01';
 
-use POSIX qw(:signal_h :sys_wait_h);
 use Carp;
 
 use Dpkg::Compression;
@@ -129,7 +128,7 @@ sub new {
     my $self = IO::File->new();
     # Tying is required to overload the open functions and to auto-open
     # the file on first read/write operation
-    tie *$self, $class, $self;
+    tie *$self, $class, $self; ## no critic (Miscellanea::ProhibitTies)
     bless $self, $class;
     # Initializations
     *$self->{compression} = 'auto';
@@ -432,7 +431,9 @@ sub _cleanup {
     my $cmdline = *$self->{compressor}{cmdline} // '';
     *$self->{compressor}->wait_end_process(nocheck => *$self->{allow_sigpipe});
     if (*$self->{allow_sigpipe}) {
-        unless (($? == 0) || (WIFSIGNALED($?) && (WTERMSIG($?) == SIGPIPE))) {
+        require POSIX;
+        unless (($? == 0) || (POSIX::WIFSIGNALED($?) &&
+                              (POSIX::WTERMSIG($?) == POSIX::SIGPIPE()))) {
             subprocerr($cmdline);
         }
 	*$self->{allow_sigpipe} = 0;

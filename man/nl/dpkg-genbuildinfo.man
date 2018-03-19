@@ -91,17 +91,22 @@ Geeft de indeling van het bestand changelog aan. Zie
 \fBdpkg\-parsechangelog\fP(1) voor informatie over alternatieve indelingen.
 .TP 
 \fB\-O\fP[\fIbestandsnaam\fP]
-Geef het bestand buildinfo weer op de standaarduitvoer (of in
-\fIbestandsnaam\fP als dit opgegeven werd), eerder dan in
-\fImap\fP\fB/\fP\fIbroncodenaam\fP\fB_\fP\fIbroncodeversie\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP
-(waarbij \fImap\fP standaard \fB..\fP is of \fImap\-upload\-bestanden\fP indien \fB\-u\fP
-gebruikt werd).
+Print the buildinfo file to standard output (or \fIfilename\fP if specified)
+rather than to
+\fIdir\fP\fB/\fP\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP (where
+\fIdir\fP is \fB..\fP by default or \fIupload\-files\-dir\fP if \fB\-u\fP was used).
 .TP 
 \fB\-u\fP\fImap\-upload\-bestanden\fP
 Zoek de bestanden die geüpload moeten worden in \fImap\-upload\-bestanden\fP
 eerder dan in \fB..\fP (\fBdpkg\-genbuildinfo\fP moet deze bestanden kunnen vinden,
 zodat het hun grootte en hun controlesom kan opnemen in het bestand
 \&\fB.buildinfo\fP)
+.TP 
+\fB\-\-always\-include\-kernel\fP
+By default, the \fBBuild\-Kernel\-Version\fP field will not be written out.
+
+Specify this option (since dpkg 1.19.0) to always write a
+\fBBuild\-Kernel\-Version\fP field when generating the \fB.buildinfo\fP.
 .TP 
 \fB\-\-always\-include\-path\fP
 Standaard zal het veld \fBBuild\-Path\fP enkel opgeschreven worden als de

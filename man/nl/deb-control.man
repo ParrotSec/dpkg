@@ -49,12 +49,18 @@ voor het veld \fBDescription\fP; zie hierna)
 De waarde van dit veld bepaalt de pakketnaam en wordt door de meeste
 installatiegereedschappen gebruikt om bestandsnamen te genereren.
 .TP 
+\fBPackage\-Type:\fP \fBdeb\fP|\fBudeb\fP|\fItype\fP
+Dit veld definieert het pakkettype. \fBudeb\fP is voor pakketten waarvan de
+omvang aan beperkingen onderworpen is en die door het installatieprogramma
+van Debian gebruikt worden. \fBdeb\fP is de standaardwaarde, die verondersteld
+wordt als het veld ontbreekt. In de toekomst kunnen nog andere types
+toegevoegd worden.
+.TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
-auteur van het programma er ook aan geeft. Het kan ook een
-Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
-exacte indeling en het sorteringsalgoritme worden beschreven in
-\fBdeb\-version\fP(5).
+Typically, this is the original package's version number in whatever form
+the program's author uses. It may also include a Debian revision number (for
+non\-native packages). The exact format and sorting algorithm are described
+in \fBdeb\-version\fP(7).
 .TP 
 \fBMaintainer:\fP \fIvolledige\-naam\-en\-e\-mail\fP (aanbevolen)
 Moet opgemaakt worden volgens de indeling “Joe Bloggs
@@ -264,6 +270,10 @@ facultatief een versienummer toegevoegd worden volgens dezelfde syntaxis als
 hierboven werd beschreven.
 .
 .TP 
+\fBEnhances:\fP\fI pakketlijst\fP
+This is a list of packages that this one enhances.  It is similar to
+\fBSuggests\fP but in the opposite direction.
+.TP 
 \fBProvides:\fP\fI pakketlijst\fP
 Dit is een lijst van virtuele pakketten waarin door dit pakket voorzien
 wordt. Gewoonlijk wordt dit gebruikt in het geval meerdere pakketten
@@ -340,4 +350,4 @@ Description: GNU grep, egrep en fgrep.
 .\" .RE
 .
 .SH "ZIE OOK"
-\fBdeb\fP(5), \fBdeb\-version\fP(5), \fBdebtags\fP(1), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).
+\fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).

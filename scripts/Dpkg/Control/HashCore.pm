@@ -199,14 +199,23 @@ sub parse {
     local $_;
 
     while (<$fh>) {
+        # In the common case there will be just a trailing \n character,
+        # so using chomp here which is very fast will avoid the latter
+        # s/// doing anything, which gives usa significant speed up.
 	chomp;
-	next if m/^\s*$/ and $paraborder;
-	next if (m/^#/);
+        my $armor = $_;
+        s/\s+$//;
+
+        next if length == 0 and $paraborder;
+
+        my $lead = substr $_, 0, 1;
+        next if $lead eq '#';
 	$paraborder = 0;
-	if (m/^(\S+?)\s*:\s*(.*)$/) {
+
+        my ($name, $value) = split /\s*:\s*/, $_, 2;
+        if (defined $name and $name =~ m/^\S+?$/) {
 	    $parabody = 1;
-	    my ($name, $value) = ($1, $2);
-	    if ($name =~ m/^-/) {
+            if ($lead eq '-') {
 		$self->parse_error($desc, g_('field cannot start with a hyphen'));
 	    }
 	    if (exists $self->{$name}) {
@@ -214,7 +223,6 @@ sub parse {
 		    $self->parse_error($desc, g_('duplicate field %s found'), $name);
 		}
 	    }
-	    $value =~ s/\s*$//;
 	    $self->{$name} = $value;
 	    $cf = $name;
 	} elsif (m/^\s(\s*\S.*)$/) {
@@ -222,23 +230,12 @@ sub parse {
 	    unless (defined($cf)) {
 		$self->parse_error($desc, g_('continued value line not in field'));
             }
-	    $line =~ s/\s*$//;
 	    if ($line =~ /^\.+$/) {
 		$line = substr $line, 1;
 	    }
 	    $self->{$cf} .= "\n$line";
-	} elsif (m/^-----BEGIN PGP SIGNED MESSAGE-----[\r\t ]*$/) {
-	    $expect_pgp_sig = 1;
-	    if ($$self->{allow_pgp} and not $parabody) {
-		# Skip OpenPGP headers
-		while (<$fh>) {
-		    last if m/^\s*$/;
-		}
-	    } else {
-		$self->parse_error($desc, g_('OpenPGP signature not allowed here'));
-	    }
-	} elsif (m/^\s*$/ ||
-	         ($expect_pgp_sig && m/^-----BEGIN PGP SIGNATURE-----[\r\t ]*$/)) {
+        } elsif (length == 0 ||
+                 ($expect_pgp_sig && $armor =~ m/^-----BEGIN PGP SIGNATURE-----[\r\t ]*$/)) {
 	    if ($expect_pgp_sig) {
 		# Skip empty lines
 		$_ = <$fh> while defined && m/^\s*$/;
@@ -264,6 +261,16 @@ sub parse {
 		$$self->{is_pgp_signed} = 1;
 	    }
 	    last; # Finished parsing one block
+        } elsif ($armor =~ m/^-----BEGIN PGP SIGNED MESSAGE-----[\r\t ]*$/) {
+            $expect_pgp_sig = 1;
+            if ($$self->{allow_pgp} and not $parabody) {
+                # Skip OpenPGP headers
+                while (<$fh>) {
+                    last if m/^\s*$/;
+                }
+            } else {
+                $self->parse_error($desc, g_('OpenPGP signature not allowed here'));
+            }
 	} else {
 	    $self->parse_error($desc,
 	                       g_('line with unknown format (not field-colon-value)'));
@@ -464,7 +471,7 @@ use parent -norequire, qw(Tie::ExtraHash);
 sub new {
     my $class = shift;
     my $hash = {};
-    tie %{$hash}, $class, @_;
+    tie %{$hash}, $class, @_; ## no critic (Miscellanea::ProhibitTies)
     return $hash;
 }
 
@@ -485,10 +492,9 @@ sub FETCH {
 
 sub STORE {
     my ($self, $key, $value) = @_;
-    my $parent = $self->[1];
     $key = lc($key);
     if (not exists $self->[0]->{$key}) {
-	push @{$parent->{in_order}}, field_capitalize($key);
+        push @{$self->[1]->{in_order}}, field_capitalize($key);
     }
     $self->[0]->{$key} = $value;
 }

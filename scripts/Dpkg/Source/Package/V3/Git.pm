@@ -31,6 +31,7 @@ use File::Temp qw(tempdir);
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
 use Dpkg::Exit qw(push_exit_handler pop_exit_handler);
+use Dpkg::Path qw(find_command);
 use Dpkg::Source::Functions qw(erasedir);
 
 use parent qw(Dpkg::Source::Package);
@@ -45,12 +46,8 @@ delete $ENV{GIT_OBJECT_DIRECTORY};
 delete $ENV{GIT_ALTERNATE_OBJECT_DIRECTORIES};
 delete $ENV{GIT_WORK_TREE};
 
-sub import {
-    foreach my $dir (split(/:/, $ENV{PATH})) {
-        if (-x "$dir/git") {
-            return 1;
-        }
-    }
+sub prerequisites {
+    return 1 if find_command('git');
     error(g_('cannot unpack git-format source package because ' .
              'git is not in the PATH'));
 }

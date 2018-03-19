@@ -22,12 +22,12 @@
 use strict;
 use warnings;
 
+use List::Util qw(any none);
 use Encode;
 use POSIX qw(:errno_h :locale_h);
 
 use Dpkg ();
 use Dpkg::Gettext;
-use Dpkg::Util qw(:list);
 use Dpkg::File;
 use Dpkg::Checksums;
 use Dpkg::ErrorHandling;
@@ -233,6 +233,10 @@ foreach (keys %{$src_fields}) {
         set_source_package($v);
     } elsif (m/^Section$|^Priority$/i) {
         $sourcedefault{$_} = $v;
+    } elsif (m/^Description$/i) {
+        # Description in changes is computed, do not copy this field, only
+        # initialize the description substvars.
+        $substvars->set_desc_substvars($v);
     } else {
         field_transfer_single($src_fields, $fields);
     }
@@ -353,6 +357,7 @@ foreach my $pkg ($control->get_packages()) {
     push @f, @{$p2f{$p}} if defined $p2f{$p};
 
     # Add description of all binary packages
+    $d = $substvars->substvars($d);
     my $desc = encode_utf8(sprintf('%-10s - %-.65s', $p, decode_utf8($d)));
     $desc .= " ($pkg_type)" if $pkg_type ne 'deb';
     push @descriptions, $desc;

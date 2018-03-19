@@ -91,10 +91,6 @@ Eg:      ftp site: ftp.debian.org
     distributions: dists/stable/main dists/stable/contrib
      download dir: debian
 
-If you want to install package from non-US consider adding a second ftp site
-with "debian-non-US" as debian directory and "dists/stable/non-US" as
-distribution.
-
 You may have to use an authenticated FTP proxy in order to reach the
 FTP site:
 
@@ -114,15 +110,15 @@ my $ftp;
 sub download() {
  foreach (@{$CONFIG{site}}) {
 
-    $ftp = do_connect ($_->[0], # Ftp server
-                       $_->[4], # username
-		       $_->[5], # password
-		       $_->[1], # ftp dir
-		       $_->[3], # passive
-		       $CONFIG{use_auth_proxy},
-		       $CONFIG{proxyhost},
-		       $CONFIG{proxylogname},
-		       $CONFIG{proxypassword});
+    $ftp = do_connect(ftpsite => $_->[0],
+                      ftpdir => $_->[1],
+                      passive => $_->[3],
+                      username => $_->[4],
+                      password => $_->[5],
+                      useproxy => $CONFIG{use_auth_proxy},
+                      proxyhost => $CONFIG{proxyhost},
+                      proxylogname => $CONFIG{proxylogname},
+                      proxypassword => $CONFIG{proxypassword});
 
     my @dists = @{$_->[2]};
 

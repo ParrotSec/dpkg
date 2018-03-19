@@ -65,18 +65,17 @@ wurde) oder \fBbuild\-arch\fP und \fBbinary\-arch\fP (falls ein \fBany\fP\- und 
 \fBbuild\-indep\fP und \fBbinary\-indep\fP (falls ein \fBall\fP\- und nicht \fBany\fP\-Bau
 mit \fB\-\-build\fP oder äquivalenten Optionen erbeten wurde).
 .IP \fB6.\fP 3
-Falls kein reiner Quellbau angefordert wurde, führt es den Hook \fBbuildinfo\fP
-aus und ruft \fBdpkg\-genbuildinfo\fP auf, um eine \fB.buildinfo\fP\-Datei zu
-erstellen. Viele Optionen von \fBdpkg\-buildpackage\fP werden an
-\fBdpkg\-genbuildinfo\fP weitergeleitet.
+Es führt den Hook \fBbuildinfo\fP aus und ruft \fBdpkg\-genbuildinfo\fP auf, um
+eine \fB.buildinfo\fP\-Datei zu erstellen. Viele Optionen von
+\fBdpkg\-buildpackage\fP werden an \fBdpkg\-genbuildinfo\fP weitergeleitet.
 .IP \fB7.\fP 3
 Es führt die \fBchanges\fP\-Hooks aus und ruft \fBdpkg\-genchanges\fP auf, um eine
 \&\fB.changes\fP\-Datei zu erstellen. Der Name der \fB.changes\fP\-Datei wird von der
 Art des Baus abhängen und wird so spezifisch wie notwendig sein, aber nicht
 mehr; für einen Bau, der \fBany\fP enthält, wird der Name
-\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fIArch\fP\fB.changes\fP oder andernfalls für
+\fIQuellname\fP\fB_\fP\fIBinärversion\fP\fB_\fP\fIArch\fP\fB.changes\fP oder andernfalls für
 einen Bau, der \fBall\fP enthält, wird der Name
-\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fBall.changes\fP oder andernfalls für einen
+\fIQuellname\fP\fB_\fP\fIBinärversion\fP\fB_\fP\fBall.changes\fP oder andernfalls für einen
 Bau, der \fBsource\fP enthält, wird der Name
 \fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fBsource.changes\fP lauten. Viele Optionen
 von \fBdpkg\-buildpackage\fP werden an \fBdpkg\-genchanges\fP weitergegeben.
@@ -329,7 +328,8 @@ Konsequenzen auf.
 
 Die derzeit unterstützten \fIHook\-Name\fPn sind:
 
-\fBinit preclean source build binary changes postclean check sign done\fP
+\fBinit preclean source build binary buildinfo changes postclean check sign
+done\fP
 
 Der \fIHook\-Befehl\fP unterstützt die folgende Ersetzungsformatzeichenkette,
 die vor seiner Ausführung angewandt wird:
@@ -487,7 +487,17 @@ ist und es möglich sein soll, sie unabhängig aufrufen zu können.
 Beim Aufruf von \fBdpkg\-architecture\fP werden die Parameter von \fB\-a\fP und
 \fB\-t\fP durchgereicht. Jede Variable, die von seiner Option \fB\-s\fP ausgegeben
 wird, wird in die Bauumgebung integriert.
-
+.TP 
+\fBDEB_RULES_REQUIRES_ROOT\fP
+This variable is set to the value obtained from the \fBRules\-Requires\-Root\fP
+field or from the command\-line.  When set, it will be a valid value for the
+\fBRules\-Requires\-Root\fP field.  It is used to notify \fBdebian/rules\fP whether
+the \fBrootless\-builds.txt\fP specification is supported.
+.TP 
+\fBDEB_GAIN_ROOT_CMD\fP
+Diese Variable wird auf \fIroot\-werde\-Befehl\fP gesetzt, wenn das Feld
+\fBRules\-Requires\-Root\fP auf einen von \fBno\fP und \fBbinary\-targets\fP
+verschiedenen Wert gesetzt wird.
 .TP 
 \fBSOURCE_DATE_EPOCH\fP
 Diese Variable wird auf den Unix\-Zeitstempel seit der Epoche des letzten

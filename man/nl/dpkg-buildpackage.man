@@ -68,22 +68,20 @@ gelijkwaardige opties), ofwel \fBbuild\-indep\fP en \fBbinary\-indep\fP (indien 
 bouw van het type \fBall\fP maar niet \fBany\fP aangevraagd werd met \fB\-\-build\fP of
 gelijkwaardige opties).
 .IP \fB6.\fP 3
-Tenzij een source\-only build (enkel een bouw van het broncodepakket)
-gevraagd werd, voert het de uitbreiding (hook) \fBbuildinfo\fP uit en roept
-\fBdpkg\-genbuildinfo\fP aan om een bestand \fB.buildinfo\fP aan te
-maken. Verschillende opties van \fBdpkg\-buildpackage\fP worden aan
-\fBdpkg\-genbuildinfo\fP overgemaakt.
+It runs the \fBbuildinfo\fP hook and calls \fBdpkg\-genbuildinfo\fP to generate a
+\&\fB.buildinfo\fP file.  Several \fBdpkg\-buildpackage\fP options are forwarded to
+\fBdpkg\-genbuildinfo\fP.
 .IP \fB7.\fP 3
-Het voert de uitbreiding (hook) \fBchanges\fP uit en roept \fBdpkg\-genchanges\fP
-aan om een bestand \fB.changes\fP aan te maken. De naam van het
-\&\fB.changes\fP\-bestand is afhankelijk van het bouwtype en zal zo specifiek als
-nodig zijn, maar niet meer dan dat. Voor een bouw die \fBany\fP bevat, zal de
-naam \fIbroncodenaam\fP\fB_\fP\fIbroncodeversie\fP\fB_\fP\fIarch\fP\fB.changes\fP zijn. Voor
-een bouw die \fBall\fP bevat, zal de naam
-\fIbroncodenaam\fP\fB_\fP\fIbroncodeversie\fP\fB_\fP\fBall.changes\fP zijn. En voor een
-bouw die \fBsource\fP bevat, zal de naam
-\fIbroncodenaam\fP\fB_\fP\fIbroncodeversie\fP\fB_\fP\fBsource.changes\fP zijn. Veel opties
-van \fBdpkg\-buildpackage\fP worden aan \fBdpkg\-genchanges\fP overgemaakt.
+It runs the \fBchanges\fP hook and calls \fBdpkg\-genchanges\fP to generate a
+\&\fB.changes\fP file.  The name of the \fB.changes\fP file will depend on the type
+of build and will be as specific as necessary but not more; for a build that
+includes \fBany\fP the name will be
+\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fIarch\fP\fB.changes\fP, or otherwise for
+a build that includes \fBall\fP the name will be
+\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fBall.changes\fP, or otherwise for a
+build that includes \fBsource\fP the name will be
+\fIsource\-name\fP\fB_\fP\fIsource\-version\fP\fB_\fP\fBsource.changes\fP.  Many
+\fBdpkg\-buildpackage\fP options are forwarded to \fBdpkg\-genchanges\fP.
 .IP \fB8.\fP 3
 Het voert de uitbreiding (hook) \fBpostclean\fP uit en als \fB\-tc\fP of
 \fB\-\-post\-clean\fP werd opgegeven zal het nogmaals \fBfakeroot debian/rules
@@ -342,7 +340,8 @@ onbedoelde consequenties.
 
 Momenteel worden de volgende \fIhook\-namen\fP ondersteund
 
-\fBinit preclean source build binary changes postclean check sign done\fP
+\fBinit preclean source build binary buildinfo changes postclean check sign
+done\fP
 
 Het \fIhook\-commando\fP ondersteunt de volgende
 substitutie\-indelingstekenreeksen, die er voorafgaand aan de uitvoering op
@@ -504,7 +503,17 @@ uitvoering ervan ondersteund moet zijn.
 \fBdpkg\-architecture\fP wordt aangeroepen met de doorgegeven parameters \fB\-a\fP
 en \fB\-t\fP. Eventuele variabelen die zijn optie \fB\-s\fP als uitvoer geeft,
 worden in de bouwomgeving geïntegreerd.
-
+.TP 
+\fBDEB_RULES_REQUIRES_ROOT\fP
+This variable is set to the value obtained from the \fBRules\-Requires\-Root\fP
+field or from the command\-line.  When set, it will be a valid value for the
+\fBRules\-Requires\-Root\fP field.  It is used to notify \fBdebian/rules\fP whether
+the \fBrootless\-builds.txt\fP specification is supported.
+.TP 
+\fBDEB_GAIN_ROOT_CMD\fP
+This variable is set to \fIgain\-root\-command\fP when the field
+\fBRules\-Requires\-Root\fP is set to a value different to \fBno\fP and
+\fBbinary\-targets\fP.
 .TP 
 \fBSOURCE_DATE_EPOCH\fP
 Deze variabele wordt ingesteld op de Unix\-tijd (timestamp) sinds het

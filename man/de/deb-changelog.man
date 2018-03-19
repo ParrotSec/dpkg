@@ -7,7 +7,7 @@
 .\" Copyright © 2008, 2010 Russ Allbery <rra@debian.org>
 .\" Copyright © 2010 Charles Plessy <plessy@debian.org>
 .\" Copyright © 2014 Bill Allombert <ballombe@debian.org>
-.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2015-2017 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -143,6 +143,14 @@ mit den Betreuer\- und Datumsdetails müssen durch genau ein Leerzeichen
 eingeleitet werden. Die Details zum Betreuer und das Datum müssen durch
 genau zwei Leerzeichen getrennt sein.
 .PP
+Jede Zeile, die komplett (d.h. ohne einführende Leerzeichen) aus Kommentaren
+im Stil \fB#\fP oder \fB/* */\fP, RCS\-Schlüsselwörtern, Modelines von Vim oder
+lokalen Emacs\-Variablen besteht, sollte ignoriert werden.
+.PP
+Uralte Changelog\-Einträge in anderen Formaten am Ende der Datei sollten
+akzeptiert und in der Ausgabe erhalten werden. Ihr Inhalt darf ansonsten
+aber ignoriert und die Auswertung an diesem Punkt beendet werden.
+.PP
 Der gesamte Changelog muss in UTF\-8 kodiert sein.
 .SH DATEIEN
 .TP 
@@ -167,7 +175,7 @@ dpkg (1.17.18) unstable; urgency=low
 .fi
 .
 .SH "SIEHE AUCH"
-\fBdeb\-version\fP(5), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).
+\fBdeb\-version\fP(7), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und

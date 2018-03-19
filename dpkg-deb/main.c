@@ -104,7 +104,8 @@ usage(const struct cmdinfo *cip, const char *value)
 "                                     Allowed values: 0.939000, 2.0 (default).\n"
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
-"      --uniform-compression        Use the compression params on all members.\n"
+"      --root-owner-group           Forces the owner and groups to root.\n"
+"      --[no-]uniform-compression   Use the compression params on all members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when building.\n"
 "                                     Allowed types: gzip, xz, none.\n"
@@ -140,7 +141,8 @@ static const char printforhelp[] =
 int debugflag = 0;
 int nocheckflag = 0;
 int opt_verbose = 0;
-int opt_uniform_compression = 0;
+int opt_root_owner_group = 0;
+int opt_uniform_compression = 1;
 
 struct deb_version deb_format = DEB_VERSION(2, 0);
 
@@ -215,7 +217,9 @@ static const struct cmdinfo cmdinfos[]= {
   { "debug",         'D', 0, &debugflag,     NULL,         NULL,          1 },
   { "verbose",       'v', 0, &opt_verbose,   NULL,         NULL,          1 },
   { "nocheck",       0,   0, &nocheckflag,   NULL,         NULL,          1 },
+  { "root-owner-group",    0, 0, &opt_root_owner_group,    NULL, NULL,    1 },
   { "uniform-compression", 0, 0, &opt_uniform_compression, NULL, NULL,    1 },
+  { "no-uniform-compression", 0, 0, &opt_uniform_compression, NULL, NULL, 0 },
   { NULL,            'z', 1, NULL,           NULL,         set_compress_level },
   { NULL,            'Z', 1, NULL,           NULL,         set_compress_type  },
   { NULL,            'S', 1, NULL,           NULL,         set_compress_strategy },

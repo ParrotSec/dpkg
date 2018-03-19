@@ -88,14 +88,14 @@ che effettua l'effettivo cambiamento nello script del manutentore nella
 versione \fB3.0\-1\fP, dovrebbe impostare \fIversione\-prec\fP a \fB3.0\-1~\fP.
 .TP 
 \fBpacchetto\fP
-The package name. When the package is “Multi\-Arch: same” this parameter must
-include the architecture qualifier, otherwise it should \fBnot\fP usually
-include the architecture qualifier (as it would disallow cross\-grades, or
-switching from being architecture specific to architecture \fBall\fP or vice
-versa).  If the parameter is empty or omitted, the
-\fBDPKG_MAINTSCRIPT_PACKAGE\fP and \fBDPKG_MAINTSCRIPT_ARCH\fP environment
-variables (as set by \fBdpkg\fP)  will be used to generate an arch\-qualified
-package name.
+The package name owning the pathname(s).  When the package is “Multi\-Arch:
+same” this parameter must include the architecture qualifier, otherwise it
+should \fBnot\fP usually include the architecture qualifier (as it would
+disallow cross\-grades, or switching from being architecture specific to
+architecture \fBall\fP or vice versa).  If the parameter is empty or omitted,
+the \fBDPKG_MAINTSCRIPT_PACKAGE\fP and \fBDPKG_MAINTSCRIPT_ARCH\fP environment
+variables (as set by \fBdpkg\fP when running the maintainer scripts) will be
+used to generate an arch\-qualified package name.
 .TP 
 \fB\-\-\fP
 Tutti i parametri degli script dei manutentori devono essere passati al

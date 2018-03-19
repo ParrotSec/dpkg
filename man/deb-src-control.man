@@ -72,6 +72,17 @@ This documents the most recent version of the distribution policy standards
 this package complies with.
 
 .TP
+.BI Description " \fIshort-description\fP"
+.TQ
+.BI " " "long-description"
+The format for the source package description is a short brief summary on the
+first line (after the \fBDescription\fP field).
+The following lines should be used as a longer, more detailed description.
+Each line of the long description must be preceded by a space, and blank
+lines in the long description must contain a single ‘\fB.\fP’ following
+the preceding space.
+
+.TP
 .BI Homepage: " url"
 The upstream project home page URL.
 
@@ -80,6 +91,39 @@ The upstream project home page URL.
 The \fIurl\fP of the bug tracking system for this package. The current
 used format is \fIbts-type\fP\fB://\fP\fIbts-address\fP, like
 \fBdebbugs://bugs.debian.org\fP. This field is usually not needed.
+
+.TP
+.BR Rules\-Requires\-Root: " \fBno\fP|\fBbinary-targets\fP|\fIimpl-keywords\fP
+This field is used to indicate whether the \fBdebian/rules\fP file requires
+(fake)root privileges to run some of its targets, and if so when.
+.RS
+.TP
+.B no
+The binary targets will not require (fake)root at all.
+.TP
+.B binary\-targets
+The binary targets must always be run under (fake)root.
+This value is the default when the field is omitted; adding the field
+with an explicit \fBbinary\-targets\fP while not strictly needed, marks
+it as having been analyzed for this requirement.
+.TP
+.I impl-keywords
+This is a space-separated list of keywords which define when (fake)root
+is required.
+
+Keywords consist of \fInamespace\fP/\fIcases\fP.
+The \fInamespace\fP part cannot contain "/" or whitespace.
+The \fIcases\fP part cannot contain whitespace.
+Furthermore, both parts must consist entirely of printable ASCII characters.
+
+Each tool/package will define a namespace named after itself and provide
+a number of cases where (fake)root is required.
+(See "Implementation provided keywords" in \fIrootless-builds.txt\fP).
+
+When the field is set to one of the \fIimpl-keywords\fP, the builder will
+expose an interface that is used to run a command under (fake)root.
+(See "Gain Root API" in \fIrootless-builds.txt\fP.)
+.RE
 
 .TP
 .BI Vcs\-Arch: " url"
@@ -188,14 +232,19 @@ and
 fields is a list of groups of alternative packages.
 Each group is a list of packages separated by vertical bar (or “pipe”)
 symbols, ‘\fB|\fP’.
-The groups are separated by commas.
+The groups are separated by commas ‘\fB,\fP’, and can end with a
+trailing comma that will be eliminated when generating the fields
+for \fBdeb\-control\fP(5) (since dpkg 1.10.14).
 Commas are to be read as “AND”, and pipes as “OR”, with pipes
 binding more tightly.
 Each package name is optionally followed by an architecture qualifier
 appended after a colon ‘\fB:\fP’,
-optionally followed by a version number specification in parentheses, an
-architecture specification in square brackets, and a restriction formula
-consisting of one or more lists of profile names in angle brackets.
+optionally followed by a version number specification in parentheses
+‘\fB(\fP’ and ‘\fB)\fP’, an
+architecture specification in square brackets ‘\fB[\fP’ and ‘\fB]\fP’,
+and a restriction formula
+consisting of one or more lists of profile names in angle brackets
+‘\fB<\fP’ and ‘\fB>\fP’.
 
 The syntax of the
 .BR Build\-Conflicts ,
@@ -203,7 +252,9 @@ The syntax of the
 and
 .B Build\-Conflicts\-Indep
 fields is a list of comma-separated package names, where the comma is read
-as an “AND”.
+as an “AND”, and where the list can end with a trailing comma that will
+be eliminated when generating the fields for \fBdeb\-control\fP(5)
+(since dpkg 1.10.14).
 Specifying alternative packages using a “pipe” is not supported.
 Each package name is optionally followed by a version number specification in
 parentheses, an architecture specification in square brackets, and a
@@ -261,6 +312,13 @@ This field is used to name the binary package name. The same restrictions as
 to a source package name apply.
 
 .TP
+.BR Package\-Type: " \fBdeb\fP|\fBudeb\fP|\fItype\fP"
+This field defines the type of the package.
+\fBudeb\fP is for size-constrained packages used by the debian installer.
+\fBdeb\fP is the default value, it is assumed if the field is absent.
+More types might be added in the future.
+
+.TP
 .BR Architecture: " \fIarch\fP|\fBall\fP|\fBany\fP (required)"
 The architecture specifies on which type of hardware this package runs. For
 packages that run on all architectures, use the
@@ -288,24 +346,6 @@ In other words, if a binary package paragraph is annotated with a non-empty
 \fBBuild\-Profiles\fP field, then this binary package is generated if and
 only if the condition expressed by the conjunctive normal form expression
 evaluates to true.
-
-.TP
-.BR Package\-Type: " \fBdeb\fP|\fBudeb\fP"
-This field defines the type of the package.
-\fBudeb\fP is for size-constrained packages used by the debian installer.
-\fBdeb\fP is the default value, it is assumed if the field is absent.
-More types might be added in the future.
-
-.TP
-.BI Subarchitecture: " value"
-.TQ
-.BI Kernel\-Version: " value"
-.TQ
-.BI Installer\-Menu\-Item: " value"
-These fields are used by the debian\-installer and are usually not needed.
-See /usr/share/doc/debian\-installer/devel/modules.txt from the
-.B debian\-installer
-package for more details about them.
 
 .TP
 .BR Essential: " \fByes\fP|\fBno\fP"
@@ -346,28 +386,44 @@ These fields declare relationships between packages. They are discussed in
 the
 .BR deb\-control (5)
 manpage.
+When these fields are found in \fIdebian/control\fP they can also end with
+a trailing comma (since dpkg 1.10.14), have architecture specifications and
+restriction formulas which will all get reduced when generating the fields
+for \fBdeb\-control\fP(5).
+
+.TP
+.BI Subarchitecture: " value"
+.TQ
+.BI Kernel\-Version: " value"
+.TQ
+.BI Installer\-Menu\-Item: " value"
+These fields are used by the debian\-installer in \fBudeb\fPs and are
+usually not needed.
+See /usr/share/doc/debian\-installer/devel/modules.txt from the
+.B debian\-installer
+package for more details about them.
 
 .SH USER-DEFINED FIELDS
 It is allowed to add additional user-defined fields to the control file. The
 tools will ignore these fields. If you want the fields to be copied over to
 the output files, such as the binary packages, you need to use a custom naming
 scheme: the fields should start with an \fBX\fP, followed by zero or more of
-the letters \fBBCS\fP and a hyphen.
+the letters \fBSBC\fP and a hyphen.
 
+.TP
+.B S
+The field will appear in the source package control file, see \fBdsc\fP(5).
 .TP
 .B B
 The field will appear in the control file in the binary package, see
 \fBdeb\-control\fP(5).
-.TP
-.B S
-The field will appear in the source package control file, see \fBdsc\fP(5).
 .TP
 .B C
 The field will appear in the upload control (.changes) file, see
 \fBdeb\-changes\fP(5).
 
 .P
-Note that the \fBX\fP[\fBBCS\fP]\fB\-\fP prefixes are stripped when the
+Note that the \fBX\fP[\fBSBC\fP]\fB\-\fP prefixes are stripped when the
 fields are copied over to the output files. A field \fBXC\-Approved\-By\fP
 will appear as \fBApproved\-By\fP in the changes file and will not appear
 in the binary or source package control files.
@@ -418,5 +474,5 @@ Description: Debian package development tools
 
 .SH SEE ALSO
 .BR deb\-control (5),
-.BR deb\-version (5),
+.BR deb\-version (7),
 .BR dpkg\-source (1)

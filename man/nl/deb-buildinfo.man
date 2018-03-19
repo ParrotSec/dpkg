@@ -46,23 +46,25 @@ zie hierna)
 De controle\-data mogen ingesloten liggen in een OpenPGP\-handtekening met
 ASCII\-harnas volgens de specificatie RFC4880.
 .PP
-De naam van het \fB.buildinfo\fP\-bestand is afhankelijk van het type bouw en is
-zo specifiek als nodig, maar niet meer. Voor een bouw die \fBany\fP vermeldt,
-is de naam
-\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP. In geval het
-een bouw betreft die \fBall\fP vermeldt, is de naam
-\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBall.buildinfo\fP. En in geval het
-een bouw betreft die \fBsource\fP vermeldt, is de naam
-\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBsource.buildinfo\fP.
+The name of the \fB.buildinfo\fP file will depend on the type of build and will
+be as specific as necessary but not more; for a build that includes \fBany\fP
+the name will be
+\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP, or otherwise
+for a build that includes \fBall\fP the name will be
+\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fBall.buildinfo\fP, or otherwise for a
+build that includes \fBsource\fP the name will be
+\fIsource\-name\fP\fB_\fP\fIsource\-version\fP\fB_\fP\fBsource.buildinfo\fP.
 .
 .SH VELDEN
 .TP 
 \fBFormat:\fP \fIindelingsversie\fP (verplicht)
-The value of this field declares the format version of the file.  The syntax
-of the field value is a version number with a major and minor component.
-Backward incompatible changes to the format will bump the major version, and
-backward compatible changes (such as field additions) will bump the minor
-version.  The current format version is \fB1.0\fP.
+De waarde van dit veld bepaalt de indelingsversie van het bestand. De
+syntaxis van de veldwaarde is een versienummer met een hoofdversie\- en een
+onderversiecomponent. Wijzigingen aan de indeling die niet neerwaarts
+compatibel zijn, hebben een verhoging van het hoofdversienummer tot gevolg
+en neerwaarts compatibele veranderingen (zoals het toevoegen van extra
+velden) verhogen het onderversienummer. De huidige indelingsversie is
+\fB1.0\fP.
 .TP 
 \fBSource:\fP \fIbroncode\-naam\fP [\fB(\fP\fIbroncode\-versie\fP\fB)\fP] (verplicht)
 De naam van het broncodepakket. Indien de versie van het broncodepakket
@@ -84,11 +86,10 @@ voor het pakket gebouwd wordt, is ook de bijzondere vermelding \fBsource\fP
 aanwezig. Jokertekens voor architecturen mogen nooit voorkomen in de lijst.
 .TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
-auteur van het programma er ook voor gebruikt. Het kan ook een
-Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
-exacte indeling en het sorteringsalgoritme worden beschreven in
-\fBdeb\-version\fP(5).
+Typically, this is the original package's version number in whatever form
+the program's author uses.  It may also include a Debian revision number
+(for non\-native packages).  The exact format and sorting algorithm are
+described in \fBdeb\-version\fP(7).
 .TP 
 \fBBinary\-Only\-Changes:\fP
 .TQ
@@ -133,14 +134,19 @@ worden. Gebruikelijke architecturen zijn \fBamd64\fP, \fBarmel\fP, \fBi386\fP, e
 De datum waarop het pakket gebouwd werd. Hij moet dezelfde indeling hebben
 als de datum in een \fBdeb\-changelog\fP(5)\-item.
 .TP 
+\fBBuild\-Kernel\-Version:\fP \fIbuild\-kernel\-version\fP
+The release and version (in an unspecified format) of the kernel running on
+the build system.  This field is only going to be present if the builder has
+explicitly requested it, to avoid leaking possibly sensitive information.
+.TP 
 \fBBuild\-Path:\fP \fIbouwpad\fP
 Het absoluut bouwpad, wat overeenkomt met de uitgepakte broncodeboom. Dit
 veld is enkel aanwezig als de leverancier het op de witte lijst geplaatst
 heeft aan de hand van een patroonvergelijking, om zo het eventueel weglekken
 van gevoelige informatie te voorkomen.
 
-Op Debian en zijn derivaten zullen enkel bouwpaden die beginnen met
-\fI/build/\fP aanleiding geven tot het aanmaken van dit veld.
+On Debian and derivatives only build paths starting with \fI/build/\fP will
+emit this field.
 .TP 
 \fBInstalled\-Build\-Depends:\fP (verplicht)
 .TQ
@@ -179,4 +185,4 @@ de backslashes worden gemaskeerd (‘\e\e’).
 .\" .RE
 .
 .SH "ZIE OOK"
-\fBdeb\-changes\fP(5), \fBdeb\-version\fP(5), \fBdpkg\-genbuildinfo\fP(1).
+\fBdeb\-changes\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-genbuildinfo\fP(1).

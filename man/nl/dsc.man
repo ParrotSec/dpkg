@@ -93,11 +93,10 @@ De waarde van dit veld wordt gewoonlijk gegenereerd op basis van de
 broncodepakket.
 .TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
-auteur van het programma er ook voor gebruikt. Het kan ook een
-Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
-exacte indeling en het sorteringsalgoritme worden beschreven in
-\fBdeb\-version\fP(5).
+Typically, this is the original package's version number in whatever form
+the program's author uses.  It may also include a Debian revision number
+(for non\-native packages).  The exact format and sorting algorithm are
+described in \fBdeb\-version\fP(7).
 .TP 
 \fBOrigin:\fP\fI naam\fP
 De naam van de distributie waaruit dit pakket afkomstig is.
@@ -112,6 +111,15 @@ Somt al de namen en de e\-mailadressen op van de personen die het pakket mee
 onderhouden volgens dezelfde indeling als van het veld
 \fBMaintainer\fP. Meerdere mede\-onderhouders moeten onderling door een komma
 gescheiden worden.
+.TP 
+\fBDescription\fP\fI short\-description\fP
+.TQ
+\fB \fP\fIuitgebreide\-beschrijving\fP
+The format for the source package description is a short brief summary on
+the first line (after the \fBDescription\fP field).  The following lines should
+be used as a longer, more detailed description.  Each line of the long
+description must be preceded by a space, and blank lines in the long
+description must contain a single ‘\fB.\fP’ following the preceding space.
 .TP 
 \fBHomepage:\fP\fI URL\fP
 De \fIURL\fP van de homepage van het toeleverend project (upstream).
@@ -144,12 +152,11 @@ versiecontrolesysteem dat gebruikt wordt om dit pakket te onderhouden. Zie
 \fBdeb\-src\-control\fP(5) voor verdere informatie.
 .TP 
 \fBTestsuite:\fP\fI namenlijst\fP
-Dit veld declareert dat het broncodepakket de opgegeven testsuites bevat. De
-waarde is een lijst van onderling door spaties gescheiden testsuites. Indien
-de waarde \fBautopkgtest\fP bestaat, wordt verondersteld dat het bestand
-\fIdebian/tests/control\fP bestaat. Indien het bestand bestaat, maar de waarde
-niet, dan zal \fBdpkg\-source\fP die automatisch toevoegen met behoud van de
-vroegere waarden.
+This field declares that the source package contains the specified test
+suites.  The value is a comma\-separated list of test suites.  If the
+\fBautopkgtest\fP value is present, a \fIdebian/tests/control\fP is expected to be
+present, if the file is present but not the value, then \fBdpkg\-source\fP will
+automatically add it, preserving previous values.
 .TP 
 \fBTestsuite\-Triggers:\fP\fI pakketlijst\fP
 Dit veld declareert de door komma's gescheiden unie van alle testvereisten
@@ -243,4 +250,4 @@ lijst bestanden in de andere verwante velden.
 Het veld \fBFormat\fP combineert de indeling van het \fB.dsc\fP\-bestand zelf en de
 indeling van het uitgepakte broncodepakket.
 .SH "ZIE OOK"
-\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(5), \fBdpkg\-source\fP(1).
+\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1).

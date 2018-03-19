@@ -68,9 +68,9 @@ Affiche le numéro de version puis quitte.
 .
 .SH LIMITATIONS
 .P
-Tout ce qui ne peut pas être analysé par Dpkg::Changelog est perdu lors de
-la fusion. Cela peut comprendre des lignes de mode vim, des commentaires qui
-ne sont pas censés se trouver là,\ etc.
+Anything that is not parsed by Dpkg::Changelog is lost during the merge.
+This might include stuff like Vim modelines, Emacs variables, comments which
+were not supposed to be there, etc.
 .
 .SH "INTÉGRATION AVEC GIT"
 .P

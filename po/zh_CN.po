@@ -9,14 +9,15 @@
 # Anthony Wong <ypwong@debian.org.hk>, 2007.
 # Deng Xiyue <manphiz-guest@users.alioth.debian.org>, 2007, 2008, 2009.
 # Aron Xu <happyaron.xu@gmail.com>, 2009, 2010.
-# Zhou Mo <cdluminate@gmail.com>, 2014, 2015, 2016.
+# Zhou Mo <cdluminate@gmail.com>, 2014, 2015, 2016, 2017.
+# Boyuan Yang <073plan@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.18.x\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2017-05-17 13:17+0200\n"
-"PO-Revision-Date: 2016-05-20 16:45+0000\n"
+"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"PO-Revision-Date: 2017-07-04 03:00+0000\n"
 "Last-Translator: Zhou Mo <cdluminate@gmail.com>\n"
 "Language-Team: Chinese (simplified) <debian-l10n-chinese@lists.debian.org>\n"
 "Language: zh_CN\n"
@@ -86,7 +87,7 @@ msgstr "不能为空字符串"
 
 #: lib/dpkg/arch.c
 msgid "must start with an alphanumeric"
-msgstr "必须以字母开头"
+msgstr "必须以字母或数字开头"
 
 #: lib/dpkg/arch.c lib/dpkg/parsehelp.c
 #, c-format
@@ -407,12 +408,24 @@ msgid "unable to install updated status of '%.250s'"
 msgstr "无法安装 %.250s 的更新状态"
 
 #: lib/dpkg/deb-version.c
+#, fuzzy
+#| msgid "format version with empty major component"
+msgid "format version with too big major component"
+msgstr "格式版本的主版本为空"
+
+#: lib/dpkg/deb-version.c
 msgid "format version with empty major component"
 msgstr "格式版本的主版本为空"
 
 #: lib/dpkg/deb-version.c
 msgid "format version has no dot"
 msgstr "格式版本没有点号"
+
+#: lib/dpkg/deb-version.c
+#, fuzzy
+#| msgid "format version with empty minor component"
+msgid "format version with too big minor component"
+msgstr "格式版本的次版本为空"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with empty minor component"
@@ -802,6 +815,11 @@ msgstr "无法读取 %.250s 的 filedescriptor 标志位"
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "无法设置 %.250s 的 close-on-exec 标志位"
 
+#: lib/dpkg/options-parsers.c
+#, c-format
+msgid "--%s needs a valid package name but '%.250s' is not: %s"
+msgstr "--%s 需要一个有效的软件包名。而 %.250s 不是: %s"
+
 #: lib/dpkg/options.c
 #, c-format
 msgid "configuration error: %s:%d: %s"
@@ -896,11 +914,6 @@ msgstr "废弃的选项 ’--%s‘"
 #, c-format
 msgid "conflicting actions -%c (--%s) and -%c (--%s)"
 msgstr "操作 -%c (--%s) 和 -%c (--%s) 互相冲突"
-
-#: lib/dpkg/options-parsers.c
-#, c-format
-msgid "--%s needs a valid package name but '%.250s' is not: %s"
-msgstr "--%s 需要一个有效的软件包名。而 %.250s 不是: %s"
 
 #: lib/dpkg/parse.c
 #, c-format
@@ -1108,10 +1121,8 @@ msgid "version string has embedded spaces"
 msgstr "版本号里嵌有空格字符"
 
 #: lib/dpkg/parsehelp.c
-#, fuzzy
-#| msgid "epoch in version is negative"
 msgid "epoch in version is empty"
-msgstr "版本中的版次为负数"
+msgstr "版本中的版次为空"
 
 #: lib/dpkg/parsehelp.c
 msgid "epoch in version is not number"
@@ -1130,14 +1141,10 @@ msgid "nothing after colon in version number"
 msgstr "版本号的冒号后面没有任何东西"
 
 #: lib/dpkg/parsehelp.c
-#, fuzzy
-#| msgid "version string is empty"
 msgid "revision number is empty"
 msgstr "版本号为空"
 
 #: lib/dpkg/parsehelp.c
-#, fuzzy
-#| msgid "version string is empty"
 msgid "version number is empty"
 msgstr "版本号为空"
 
@@ -1185,10 +1192,9 @@ msgid "(no description available)"
 msgstr "(无可用描述)"
 
 #: lib/dpkg/pkg-show.c
-#, fuzzy, c-format
-#| msgid "version '%s' has bad syntax"
+#, c-format
 msgid "version '%s' has bad syntax: %s"
-msgstr "版本号 '%s' 语法错误"
+msgstr "版本号 '%s' 语法错误: %s"
 
 #: lib/dpkg/pkg-spec.c
 #, c-format
@@ -1233,19 +1239,22 @@ msgstr "%s (子进程)：%s\n"
 msgid "fork failed"
 msgstr "fork 失败"
 
-#: lib/dpkg/subproc.c src/unpack.c
-#, c-format
-msgid "subprocess %s returned error exit status %d"
+#: lib/dpkg/subproc.c
+#, fuzzy, c-format
+#| msgid "subprocess %s returned error exit status %d"
+msgid "%s subprocess returned error exit status %d"
 msgstr "子进程 %s 返回错误状态 %d"
 
 #: lib/dpkg/subproc.c
-#, c-format
-msgid "subprocess %s was interrupted"
+#, fuzzy, c-format
+#| msgid "subprocess %s was interrupted"
+msgid "%s subprocess was interrupted"
 msgstr "子进程 %s 被中断"
 
 #: lib/dpkg/subproc.c
-#, c-format
-msgid "subprocess %s was killed by signal (%s)%s"
+#, fuzzy, c-format
+#| msgid "subprocess %s was killed by signal (%s)%s"
+msgid "%s subprocess was killed by signal (%s)%s"
 msgstr "子进程 %s 被信号(%s)%s 终止了"
 
 #: lib/dpkg/subproc.c
@@ -1253,13 +1262,15 @@ msgid ", core dumped"
 msgstr "，核心已转储"
 
 #: lib/dpkg/subproc.c
-#, c-format
-msgid "subprocess %s failed with wait status code %d"
+#, fuzzy, c-format
+#| msgid "subprocess %s failed with wait status code %d"
+msgid "%s subprocess failed with wait status code %d"
 msgstr "子进程 %s 失败，获得的等待状态号为 %d"
 
-#: lib/dpkg/subproc.c utils/update-alternatives.c
-#, c-format
-msgid "wait for subprocess %s failed"
+#: lib/dpkg/subproc.c
+#, fuzzy, c-format
+#| msgid "wait for subprocess %s failed"
+msgid "wait for %s subprocess failed"
 msgstr "等待子进程 %s 失败"
 
 #: lib/dpkg/treewalk.c
@@ -1794,9 +1805,9 @@ msgid "archive '%s' is not a regular file"
 msgstr "归档 '%s' 不是普通文件"
 
 #: src/archives.c src/divertcmd.c src/enquiry.c src/main.c src/packages.c
-#: src/querycmd.c src/select.c src/statcmd.c src/trigcmd.c dpkg-deb/build.c
-#: dpkg-deb/extract.c dpkg-deb/info.c dpkg-deb/main.c dpkg-split/info.c
-#: dpkg-split/main.c dpkg-split/queue.c
+#: src/querycmd.c src/select.c src/statcmd.c src/trigcmd.c src/verify.c
+#: dpkg-deb/build.c dpkg-deb/extract.c dpkg-deb/info.c dpkg-deb/main.c
+#: dpkg-split/info.c dpkg-split/main.c dpkg-split/queue.c
 msgid "<standard output>"
 msgstr "<标准输出>"
 
@@ -2634,7 +2645,7 @@ msgstr ""
 "引发依赖问题。您可以通过 dpkg --add-architecture\n"
 "添加这个外来体系结构以修复此问题：\n"
 
-#: src/enquiry.c src/querycmd.c
+#: src/enquiry.c src/querycmd.c src/verify.c
 #, c-format
 msgid "package '%s' is not installed"
 msgstr "软件包 %s 没有被安装"
@@ -2721,46 +2732,39 @@ msgid "cannot satisfy pre-dependencies for %.250s (wanted due to %.250s)"
 msgstr "无法满足 %.250s 的预依赖关系，起因是 %.250s"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "--%s takes one package name argument"
+#, c-format
 msgid "--%s takes one <pkgname> argument"
-msgstr "--%s 需要一个软件包名作为参数"
+msgstr "--%s 需要一个 <pkgname> 作为参数"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "package '%s' is not installed"
+#, c-format
 msgid "package name '%s' is invalid: %s"
-msgstr "软件包 %s 没有被安装"
+msgstr "软件包名 %s 无效: %s"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "--%s takes one package name argument"
+#, c-format
 msgid "--%s takes one <trigname> argument"
-msgstr "--%s 需要一个软件包名作为参数"
+msgstr "--%s 需要一个 <trigname> 作为参数"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "trigger name contains invalid character"
+#, c-format
 msgid "trigger name '%s' is invalid: %s"
-msgstr "触发器名包含无效字符"
+msgstr "触发器名 %s 无效: %s"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "--%s takes one package name argument"
+#, c-format
 msgid "--%s takes one <archname> argument"
-msgstr "--%s 需要一个软件包名作为参数"
+msgstr "--%s 需要一个 <archname> 作为参数"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "architecture '%s' is illegal: %s"
+#, c-format
 msgid "architecture name '%s' is invalid: %s"
-msgstr "%s 体系结构非法：%s"
+msgstr "体系结构名称 '%s' 无效: %s"
 
 #: src/enquiry.c
-#, fuzzy, c-format
-#| msgid "--%s takes no arguments"
+#, c-format
 msgid "--%s takes one <version> argument"
-msgstr "--%s 不需要任何参数"
+msgstr "--%s 需要一个 <version> 参数"
 
 #: src/enquiry.c
 #, c-format
@@ -2834,6 +2838,51 @@ msgstr ""
 msgid "overriding problem because --force enabled:"
 msgstr "由于开启了 --force 选项，以下问题被忽略："
 
+#: src/filesdb-hash.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少结尾换行符"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少值"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少值分隔符"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "软件包 '%2$s' 的控制文件 '%1$s' 含有空文件名"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "cannot open control file '%s' for package '%s'"
+msgstr "无法打开软件包 %2$s 的 %1$s 控制文件"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "cannot stat control file '%s' for package '%s'"
+msgstr "无法取得软件包 %2$s 的 %1$s 控制文件状态"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "control file '%s' for package '%s' is not a regular file"
+msgstr "软件包 '%2$s' 的 '%1$s' 控制文件文件不是常规文件"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "cannot read control file '%s' for package '%s'"
+msgstr "无法读取软件包 '%2$s' 的 '%1$s' 控制文件"
+
+#: src/filesdb-hash.c
+#, c-format
+msgid "cannot close control file '%s' for package '%s'"
+msgstr "无法关闭软件包 '%2$s' 的 '%1$s' 控制文件"
+
 #: src/filesdb.c
 #, c-format
 msgid "unable to open files list file for package '%.250s'"
@@ -2887,51 +2936,6 @@ msgstr "(正在读取数据库 ... "
 msgid "%d file or directory currently installed.)\n"
 msgid_plural "%d files and directories currently installed.)\n"
 msgstr[0] "系统当前共安装有 %d 个文件和目录。)\n"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少结尾换行符"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少值"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr "软件包 '%2$s' 的控制文件 '%1$s' 缺少值分隔符"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr "软件包 '%2$s' 的控制文件 '%1$s' 含有空文件名"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "cannot open control file '%s' for package '%s'"
-msgstr "无法打开软件包 %2$s 的 %1$s 控制文件"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "cannot stat control file '%s' for package '%s'"
-msgstr "无法取得软件包 %2$s 的 %1$s 控制文件状态"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "control file '%s' for package '%s' is not a regular file"
-msgstr "软件包 '%2$s' 的 '%1$s' 控制文件文件不是常规文件"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "cannot read control file '%s' for package '%s'"
-msgstr "无法读取软件包 '%2$s' 的 '%1$s' 控制文件"
-
-#: src/filesdb-hash.c
-#, c-format
-msgid "cannot close control file '%s' for package '%s'"
-msgstr "无法关闭软件包 '%2$s' 的 '%1$s' 控制文件"
 
 #: src/help.c
 msgid "not installed"
@@ -3032,48 +3036,7 @@ msgid "Debian '%s' package management program version %s.\n"
 msgstr "Debian %s 软件包管理程序 %s 版。\n"
 
 #: src/main.c
-#, fuzzy, c-format
-#| msgid ""
-#| "Commands:\n"
-#| "  -i|--install       <.deb file name> ... | -R|--recursive "
-#| "<directory> ...\n"
-#| "  --unpack           <.deb file name> ... | -R|--recursive "
-#| "<directory> ...\n"
-#| "  -A|--record-avail  <.deb file name> ... | -R|--recursive "
-#| "<directory> ...\n"
-#| "  --configure        <package> ... | -a|--pending\n"
-#| "  --triggers-only    <package> ... | -a|--pending\n"
-#| "  -r|--remove        <package> ... | -a|--pending\n"
-#| "  -P|--purge         <package> ... | -a|--pending\n"
-#| "  -V|--verify <package> ...        Verify the integrity of package(s).\n"
-#| "  --get-selections [<pattern> ...] Get list of selections to stdout.\n"
-#| "  --set-selections                 Set package selections from stdin.\n"
-#| "  --clear-selections               Deselect every non-essential package.\n"
-#| "  --update-avail [<Packages-file>] Replace available packages info.\n"
-#| "  --merge-avail [<Packages-file>]  Merge with info from file.\n"
-#| "  --clear-avail                    Erase existing available info.\n"
-#| "  --forget-old-unavail             Forget uninstalled unavailable pkgs.\n"
-#| "  -s|--status <package> ...        Display package status details.\n"
-#| "  -p|--print-avail <package> ...   Display available version details.\n"
-#| "  -L|--listfiles <package> ...     List files 'owned' by package(s).\n"
-#| "  -l|--list [<pattern> ...]        List packages concisely.\n"
-#| "  -S|--search <pattern> ...        Find package(s) owning file(s).\n"
-#| "  -C|--audit [<package> ...]       Check for broken package(s).\n"
-#| "  --yet-to-unpack                  Print packages selected for "
-#| "installation.\n"
-#| "  --predep-package                 Print pre-dependencies to unpack.\n"
-#| "  --add-architecture <arch>        Add <arch> to the list of "
-#| "architectures.\n"
-#| "  --remove-architecture <arch>     Remove <arch> from the list of "
-#| "architectures.\n"
-#| "  --print-architecture             Print dpkg architecture.\n"
-#| "  --print-foreign-architectures    Print allowed foreign architectures.\n"
-#| "  --assert-<feature>               Assert support for the specified "
-#| "feature.\n"
-#| "  --compare-versions <a> <op> <b>  Compare version numbers - see below.\n"
-#| "  --force-help                     Show help on forcing.\n"
-#| "  -Dh|--debug=help                 Show help on debugging.\n"
-#| "\n"
+#, c-format
 msgid ""
 "Commands:\n"
 "  -i|--install       <.deb file name> ... | -R|--recursive <directory> ...\n"
@@ -3117,30 +3080,32 @@ msgstr ""
 "  -i|--install       <.deb 文件名> ... | -R|--recursive <目录> ...\n"
 "  --unpack           <.deb 文件名> ... | -R|--recursive <目录> ...\n"
 "  -A|--record-avail  <.deb 文件名> ... | -R|--recursive <目录> ...\n"
-"  --configure        <软件包名> ... | -a|--pending\n"
-"  --triggers-only    <软件包名> ... | -a|--pending\n"
-"  -r|--remove        <软件包名> ... | -a|--pending\n"
-"  -P|--purge         <软件包名> ... | -a|--pending\n"
+"  --configure        <软件包名>    ... | -a|--pending\n"
+"  --triggers-only    <软件包名>    ... | -a|--pending\n"
+"  -r|--remove        <软件包名>    ... | -a|--pending\n"
+"  -P|--purge         <软件包名>    ... | -a|--pending\n"
 "  -V|--verify <软件包名> ...       检查包的完整性。\n"
 "  --get-selections [<表达式> ...]  把已选中的软件包列表打印到标准输出。\n"
 "  --set-selections                 从标准输入里读出要选择的软件。\n"
 "  --clear-selections               取消选中所有不必要的软件包。\n"
 "  --update-avail <软件包文件>      替换现有可安装的软件包信息。\n"
-"  --merge-avail <软件包文件>       把文件中的信息合并到系统中。\n"
+"  --merge-avail  <软件包文件>      把文件中的信息合并到系统中。\n"
 "  --clear-avail                    清除现有的软件包信息。\n"
 "  --forget-old-unavail             忘却已被卸载的不可安装的软件包。\n"
-"  -s|--status <软件包名> ...       显示指定软件包的详细状态。\n"
+"  -s|--status      <软件包名> ...  显示指定软件包的详细状态。\n"
 "  -p|--print-avail <软件包名> ...  显示可供安装的软件版本。\n"
-"  -L|--listfiles <软件包名> ...    列出属于指定软件包的文件。\n"
-"  -l|--list [<表达式> ...]         简明地列出软件包的状态。\n"
+"  -L|--listfiles   <软件包名> ...  列出属于指定软件包的文件。\n"
+"  -l|--list  [<表达式> ...]        简明地列出软件包的状态。\n"
 "  -S|--search <表达式> ...         搜索含有指定文件的软件包。\n"
 "  -C|--audit [<表达式> ...]        检查是否有软件包残损。\n"
 "  --yet-to-unpack                  列出标记为待解压的软件包。\n"
 "  --predep-package                 列出待解压的预依赖。\n"
-"  --add-architecture <体系结构>    添加 <体系结构> 到体系结构列表。\n"
+"  --add-architecture    <体系结构> 添加 <体系结构> 到体系结构列表。\n"
 "  --remove-architecture <体系结构> 从架构列表中移除 <体系结构>。\n"
 "  --print-architecture             显示 dpkg 体系结构。\n"
 "  --print-foreign-architectures    显示已启用的异质体系结构。\n"
+"  --assert-<特性>                  对指定特性启用断言支持。\n"
+"  --validate-<属性> <字符串>       验证一个 <属性>的 <字符串>。\n"
 "  --compare-vesions <a> <关系> <b> 比较版本号 - 见下。\n"
 "  --force-help                     显示本强制选项的帮助信息。\n"
 "  -Dh|--debug=help                 显示有关出错调试的帮助信息。\n"
@@ -3174,6 +3139,8 @@ msgid ""
 "Validatable things: pkgname, archname, trigname, version.\n"
 "\n"
 msgstr ""
+"可验证的属性：pkgname, archname, trigname, version.\n"
+"\n"
 
 #: src/main.c
 #, c-format
@@ -4055,8 +4022,9 @@ msgid "cannot set security execution context for maintainer script"
 msgstr "无法为维护者脚本设置安全执行上下文"
 
 #: src/script.c
-#, c-format
-msgid "installed %s script"
+#, fuzzy, c-format
+#| msgid "installed %s script"
+msgid "installed %s package %s script"
 msgstr "已安装 %s 脚本"
 
 #: src/script.c
@@ -4065,13 +4033,15 @@ msgid "unable to stat %s '%.250s'"
 msgstr "无法获取 %s  %.250s 的状态"
 
 #: src/script.c
-#, c-format
-msgid "new %s script"
+#, fuzzy, c-format
+#| msgid "new %s script"
+msgid "new %s package %s script"
 msgstr "新的 %s 脚本"
 
 #: src/script.c
-#, c-format
-msgid "old %s script"
+#, fuzzy, c-format
+#| msgid "old %s script"
+msgid "old %s package %s script"
 msgstr "旧的 %s 脚本"
 
 #: src/script.c
@@ -4452,6 +4422,11 @@ msgstr "重新组装成的软件包文件"
 
 #: src/unpack.c
 #, c-format
+msgid "subprocess %s returned error exit status %d"
+msgstr "子进程 %s 返回错误状态 %d"
+
+#: src/unpack.c
+#, c-format
 msgid "Authenticating %s ...\n"
 msgstr "正在验证 %s ...\n"
 
@@ -4822,12 +4797,12 @@ msgstr "不检查控制区域的内容"
 #: dpkg-deb/build.c
 #, c-format
 msgid "building an unknown package in '%s'."
-msgstr "正在 '%s' 中编译未知软件包。"
+msgstr "正在 '%s' 中构建未知软件包。"
 
 #: dpkg-deb/build.c
 #, c-format
 msgid "building package '%s' in '%s'."
-msgstr "正在 '%2$s' 中编译软件包 '%1$s'。"
+msgstr "正在 '%2$s' 中构建软件包 '%1$s'。"
 
 #: dpkg-deb/build.c
 #, c-format
@@ -4887,8 +4862,9 @@ msgid "file '%.250s' is corrupt - bad archive header magic"
 msgstr "文件 %.250s 损毁 - 归档头部魔数无效"
 
 #: dpkg-deb/extract.c
-#, c-format
-msgid "file '%.250s' is not a debian binary archive (try dpkg-split?)"
+#, fuzzy, c-format
+#| msgid "file '%.250s' is not a debian binary archive (try dpkg-split?)"
+msgid "file '%.250s' is not a Debian binary archive (try dpkg-split?)"
 msgstr "文件 %.250s 不是 debian 的二进制包文件(不妨尝试 dpkg-split?)"
 
 #: dpkg-deb/extract.c
@@ -4930,9 +4906,12 @@ msgid "archive '%.250s' contains two control members, giving up"
 msgstr "归档 %.250s 含有两个控制成员，放弃操作"
 
 #: dpkg-deb/extract.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| " new debian package, version %d.%d.\n"
+#| " size %jd bytes: control archive=%jd bytes.\n"
 msgid ""
-" new debian package, version %d.%d.\n"
+" new Debian package, version %d.%d.\n"
 " size %jd bytes: control archive=%jd bytes.\n"
 msgstr ""
 " 新格式的 debian 软件包，格式版本 %d.%d。\n"
@@ -4953,9 +4932,12 @@ msgid "cannot skip archive control member from '%s': %s"
 msgstr "无法跳过 %s 中的归档 control 成员：%s"
 
 #: dpkg-deb/extract.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| " old debian package, version %d.%d.\n"
+#| " size %jd bytes: control archive=%jd, main archive=%jd.\n"
 msgid ""
-" old debian package, version %d.%d.\n"
+" old Debian package, version %d.%d.\n"
 " size %jd bytes: control archive=%jd, main archive=%jd.\n"
 msgstr ""
 " 旧格式的 debian 软件包，版本 %d.%d。\n"
@@ -4970,8 +4952,9 @@ msgstr ""
 " 使用的是 ASCII 模式，从而导致了包文件被损坏"
 
 #: dpkg-deb/extract.c
-#, c-format
-msgid "'%.255s' is not a debian format archive"
+#, fuzzy, c-format
+#| msgid "'%.255s' is not a debian format archive"
+msgid "'%.255s' is not a Debian format archive"
 msgstr "%.255s 并非 debian 格式的包文件"
 
 #: dpkg-deb/extract.c
@@ -4988,16 +4971,18 @@ msgid "decompressing archive member"
 msgstr "解压缩归档成员"
 
 #: dpkg-deb/extract.c
-msgid "failed to chdir to directory"
-msgstr "chdir 到目录失败"
-
-#: dpkg-deb/extract.c
 msgid "failed to create directory"
 msgstr "新建目录失败"
 
 #: dpkg-deb/extract.c
-msgid "failed to chdir to directory after creating it"
-msgstr "新建目录后，chdir 到该目录失败"
+#, fuzzy, c-format
+#| msgid "unexpected eof in package name at line %d"
+msgid "unexpected pre-existing pathname %s"
+msgstr "在第 %d 行的软件包名中发现了文件结束符，这出乎我们的意料"
+
+#: dpkg-deb/extract.c
+msgid "failed to chdir to directory"
+msgstr "chdir 到目录失败"
 
 #: dpkg-deb/extract.c
 msgid "<decompress>"
@@ -5148,7 +5133,31 @@ msgstr ""
 "\n"
 
 #: dpkg-deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  -v, --verbose                    Enable verbose output.\n"
+#| "  -D, --debug                      Enable debugging output.\n"
+#| "      --showformat=<format>        Use alternative format for --show.\n"
+#| "      --deb-format=<format>        Select archive format.\n"
+#| "                                     Allowed values: 0.939000, 2.0 "
+#| "(default).\n"
+#| "      --nocheck                    Suppress control file check (build "
+#| "bad\n"
+#| "                                     packages).\n"
+#| "      --uniform-compression        Use the compression params on all "
+#| "members.\n"
+#| "  -z#                              Set the compression level when "
+#| "building.\n"
+#| "  -Z<type>                         Set the compression type used when "
+#| "building.\n"
+#| "                                     Allowed types: gzip, xz, none.\n"
+#| "  -S<strategy>                     Set the compression strategy when "
+#| "building.\n"
+#| "                                     Allowed values: none; extreme (xz);\n"
+#| "                                     filtered, huffman, rle, fixed "
+#| "(gzip).\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  -v, --verbose                    Enable verbose output.\n"
@@ -5159,7 +5168,8 @@ msgid ""
 "(default).\n"
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
-"      --uniform-compression        Use the compression params on all "
+"      --root-owner-group           Forces the owner and groups to root.\n"
+"      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
@@ -5827,6 +5837,11 @@ msgstr "无法追加至 %s"
 
 #: utils/update-alternatives.c
 #, c-format
+msgid "wait for subprocess %s failed"
+msgstr "等待子进程 %s 失败"
+
+#: utils/update-alternatives.c
+#, c-format
 msgid "unable to remove '%s'"
 msgstr "无法移除 %s"
 
@@ -6257,6 +6272,17 @@ msgstr "%s/%s 的自动更新功能已禁用；保持现状"
 msgid "to return to automatic updates use '%s --auto %s'"
 msgstr "要恢复成自动更新请执行 %s --auto %s。"
 
+#: utils/update-alternatives.polkit.in
+msgid "Run update-alternatives to modify system alternative selections"
+msgstr ""
+
+#: utils/update-alternatives.polkit.in
+msgid "Authentication is required to run update-alternatives"
+msgstr ""
+
+#~ msgid "failed to chdir to directory after creating it"
+#~ msgstr "新建目录后，chdir 到该目录失败"
+
 #~ msgid "obsolete option '--%s'; please use '--%s' instead"
 #~ msgstr "废弃的选项 --%s，请使用 --%s 代替"
 
@@ -6325,9 +6351,6 @@ msgstr "要恢复成自动更新请执行 %s --auto %s。"
 
 #~ msgid "EOF on stdin at conffile prompt"
 #~ msgstr "在 conffile 提示输入时在标准输入读到了 EOF "
-
-#~ msgid "unexpected eof in package name at line %d"
-#~ msgstr "在第 %d 行的软件包名中发现了文件结束符，这出乎我们的意料"
 
 #~ msgid "unexpected eof after package name at line %d"
 #~ msgstr "在第 %d 行的软件包名后发现文件结束符，这出乎我们的意料"

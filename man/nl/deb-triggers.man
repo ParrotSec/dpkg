@@ -89,16 +89,11 @@ worden, zal dit een vroege cyclus van triggerverwerking vermijden en het
 mogelijk maken om de trigger slechts eenmaal uit te voeren als een van de
 laatste stappen in de opwaardering.
 .PP
-De varianten “\-noawait” worden slechts vanaf dpkg 1.16.1 ondersteund en
-zullen tot fouten leiden als zij met een oudere versie van dpkg gebruikt
-worden. Het wordt dus aangeraden om bij elk pakket dat gebruik wil maken van
-deze stuurcommando's, een “Pre\-Depends: dpkg (>= 1.16.1)” toe te voegen.
+The “\-noawait” variants are supported since dpkg 1.16.1, and will lead to
+errors if used with an older dpkg.
 .PP
-De aliasvarianten “\-await” worden slechts vanaf dpkg 1.17.21 ondersteund en
-zullen tot fouten leiden als zij met een oudere versie van dpkg gebruikt
-worden. Het wordt dus aangeraden om bij elk pakket dat gebruik wil maken van
-deze stuurcommando's, een “Pre\-Depends: dpkg (>= 1.17.21)” toe te
-voegen.
+The “\-await” alias variants are supported since dpkg 1.17.21, and will lead
+to errors if used with an older dpkg.
 .
 .SH "ZIE OOK"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

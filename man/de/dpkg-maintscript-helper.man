@@ -88,14 +88,15 @@ wechselt, aber die eigentliche Umstellung in den Betreuerskripten in Version
 \fB3.0\-1\fP durchführt, sollte \fIvorhergehende_Version\fP auf \fB3.0\-1~\fP setzen.
 .TP 
 \fIPaket\fP
-Der Paketname. Wenn das Paket „Multi\-Arch: same“ ist, muss dieser Parameter
-die Architektur\-Spezifikation enthalten, andernfalls sollte er normalerweise
-die Architektur\-Spezifikation \fBnicht\fP enthalten (da dies Cross\-Grades
-verhindern oder die Umstellung von architekturspezifisch auf die Architektur
-\fBall\fP oder umgekehrt verhindern würde). Falls dieser Parameter leer oder
-nicht angegeben ist, werden die (von \fBdpkg\fP gesetzten) Umgebungsvariablen
-\fBDPKG_MAINTSCRIPT_PACKAGE\fP und \fBDPKG_MAINTSCRIPT_ARCH\fP verwandt, um den
-Architektur\-spezifizierten Paketnamen zu erstellen.
+Der Paketname, dem der Pfadname gehört. Wenn das Paket „Multi\-Arch: same“
+ist, muss dieser Parameter die Architektur\-Spezifikation enthalten,
+andernfalls sollte er normalerweise die Architektur\-Spezifikation \fBnicht\fP
+enthalten (da dies Cross\-Grades verhindern oder die Umstellung von
+architekturspezifisch auf die Architektur \fBall\fP oder umgekehrt verhindern
+würde). Falls dieser Parameter leer oder nicht angegeben ist, werden die
+(von \fBdpkg\fP bei der Ausführung der Betreuerskripte gesetzten)
+Umgebungsvariablen \fBDPKG_MAINTSCRIPT_PACKAGE\fP und \fBDPKG_MAINTSCRIPT_ARCH\fP
+verwandt, um den Architektur\-spezifizierten Paketnamen zu erstellen.
 .TP 
 \fB\-\-\fP
 Alle Parameter der Betreuerskripte müssen nach \fB\-\-\fP an das Programm

@@ -134,10 +134,40 @@ the flag is set/modified by a user-specific configuration;
 the flag is set/modified by an environment-specific configuration.
 .RE
 .TP
+.BI \-\-query
+Print any information that can be useful to explain the behaviour of the
+program: current vendor, relevant environment variables, feature areas,
+state of all feature flags, and the compiler flags with their origin
+(since dpkg 1.19.0).
+.IP
+For example:
+.nf
+  Vendor: Debian
+  Environment:
+   DEB_CFLAGS_SET=-O0 -Wall
+
+  Area: qa
+  Features:
+   bug=no
+   canary=no
+
+  Area: reproducible
+  Features:
+   timeless=no
+
+  Flag: CFLAGS
+  Value: -O0 -Wall
+  Origin: env
+
+  Flag: CPPFLAGS
+  Value: -D_FORTIFY_SOURCE=2
+  Origin: vendor
+.fi
+.TP
 .BI \-\-query\-features " area"
 Print the features enabled for a given area (since dpkg 1.16.2).
 The only currently recognized
-areas on Debian and derivatives are \fBqa\fP, \fBreproducible\fP,
+areas on Debian and derivatives are \fBfuture\fP, \fBqa\fP, \fBreproducible\fP,
 \fBsanitize\fP and \fBhardening\fP, see the \fBFEATURE AREAS\fP
 section for more details.
 Exits with 0 if the area is known otherwise exits with 1.
@@ -216,6 +246,16 @@ Thus disabling everything in the \fBhardening\fP area and enabling only
 .P
   export DEB_BUILD_MAINT_OPTIONS=hardening=\-all,+format,+fortify
 .
+.SS future
+Several compile-time options (detailed below) can be used to enable features
+that should be enabled by default, but cannot due to backwards compatibility
+reasons.
+.TP
+.B lfs
+This setting (disabled by default) enables Large File Support on 32-bit
+architectures where their ABI does not include LFS by default, by adding
+\fB-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64\fP to \fBCPPFLAGS\fP.
+.
 .SS qa
 Several compile-time options (detailed below) can be used to help detect
 problems in the source code or build system.
@@ -242,6 +282,9 @@ to \fB\-D__DEB_CANARY_\fP\fIflag\fP_\fIrandom-id\fP\fB__\fP, and
 Several compile-time options (detailed below) can be used to help sanitize
 a resulting binary against memory corruptions, memory leaks, use after free,
 threading data races and undefined behavior bugs.
+\fBNote\fP: these options should \fBnot\fP be used for production builds
+as they can reduce reliability for conformant code, reduce security or
+even functionality.
 .TP
 .B address
 This setting (disabled by default) adds \fB\-fsanitize=address\fP to

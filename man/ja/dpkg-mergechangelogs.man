@@ -57,8 +57,9 @@ changelog は \fIout\fP ファイルに保存されるが、パラメータが�
 .
 .SH 制限事項
 .P
-Dpkg::Changelog で解析できない内容は、マージの際に消失する。これには vim
-のモードライン、存在しているとは見なされないコメントなどが挙げられる。
+Anything that is not parsed by Dpkg::Changelog is lost during the merge.
+This might include stuff like Vim modelines, Emacs variables, comments which
+were not supposed to be there, etc.
 .
 .SH "GIT との連携"
 .P

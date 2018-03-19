@@ -1,4 +1,4 @@
-.\" dpkg manual page - deb-version(5)
+.\" dpkg manual page - deb-version(7)
 .\"
 .\" Copyright © 1996-1998 Ian Jackson and Christian Schwarz
 .\"   for parts of the text reused from the Debian Policy
@@ -23,7 +23,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH deb\-version 5 %RELEASE_DATE% %VERSION% dpkg\-Programmsammlung
+.TH deb\-version 7 %RELEASE_DATE% %VERSION% dpkg\-Programmsammlung
 .nh
 .SH BEZEICHNUNG
 deb\-version \- Versionsnummer\-Format von Debian\-Paketen

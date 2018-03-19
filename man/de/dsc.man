@@ -93,7 +93,7 @@ Der Feldwert wird im Allgemeinen aus den \fBArchitecture\fP\-Feldern aus der
 Typischerweise ist das die Original\-Paketversionsnummer, in der Form, die
 der Programmautor verwendet. Es kann auch eine Debian\-Revisionsnummer
 enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der
-Sortieralgorithmus sind in \fBdeb\-version\fP(5) beschrieben.
+Sortieralgorithmus sind in \fBdeb\-version\fP(7) beschrieben.
 .TP 
 \fBOrigin:\fP\fI Name\fP
 Der Name der Distribution, aus der dieses Paket ursprünglich stammt.
@@ -107,6 +107,15 @@ Autor der Software, die paketiert wurde.
 Listet die Namen und E\-Mail\-Adressen der Ko\-Betreuer des Pakets auf, im
 gleichen Format wie das Feld \fBMaintainer\fP. Mehrere Ko\-Betreuer sollten
 durch Kommata getrennt werden.
+.TP 
+\fBDescription\fP\fI short\-description\fP
+.TQ
+\fB \fP\fILangbeschreibung\fP
+The format for the source package description is a short brief summary on
+the first line (after the \fBDescription\fP field).  The following lines should
+be used as a longer, more detailed description.  Each line of the long
+description must be preceded by a space, and blank lines in the long
+description must contain a single ‘\fB.\fP’ following the preceding space.
 .TP 
 \fBHomepage:\fP\fI URL\fP
 Die \fIURL\fP des Original\- (Upstream\-)Projekts.
@@ -140,7 +149,7 @@ weitere Details.
 .TP 
 \fBTestsuite:\fP\fI Namenliste\fP
 Dieses Feld verkündigt, dass das Quellpaket die angegebene Testsammlung
-enthält. Der Wert ist eine durch Leerzeichen getrennte Liste von
+enthält. Der Wert ist eine durch Kommata getrennte Liste von
 Testsammlungen. Falls der Wert \fBautopkgtest\fP vorkommt, wird erwartet, dass
 \fIdebian/tests/control\fP vorhanden ist. Falls nur die Datei aber nicht der
 Wert vorhanden ist, wird \fBdpkg\-source\fP den Wert automatisch (unter
@@ -236,7 +245,7 @@ anderen dazugehörigen Feldern passen.
 Das Feld \fBFormat\fP fügt das Format für die Datei \fB.dsc\fP und das Format des
 extrahierten Quellpakets zusammen.
 .SH "SIEHE AUCH"
-\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(5), \fBdpkg\-source\fP(1).
+\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1).
 .SH ÜBERSETZUNG
 Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
