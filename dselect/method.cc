@@ -27,7 +27,6 @@
 #include <sys/file.h>
 #include <sys/wait.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
@@ -61,7 +60,7 @@ sthfailed(const char * reasoning)
 {
   curseson();
   clear();
-  printw(_("\n\n%s: %s\n"), DSELECT, reasoning);
+  printw("\n\n%s: %s\n", DSELECT, reasoning);
   attrset(A_BOLD);
   addstr(_("\nPress <enter> to continue."));
   attrset(A_NORMAL);
@@ -71,8 +70,10 @@ sthfailed(const char * reasoning)
 static void cu_unlockmethod(int, void**) {
   struct flock fl;
 
-  assert(methodlockfile);
-  assert(methlockfd);
+  if (methodlockfile == NULL)
+    internerr("method lock file is NULL");
+  if (methlockfd < 0)
+    internerr("method lock fd is %d < 0", methlockfd);
   fl.l_type=F_UNLCK; fl.l_whence= SEEK_SET; fl.l_start=fl.l_len=0;
   if (fcntl(methlockfd,F_SETLK,&fl) == -1)
     sthfailed(_("cannot unlock access method area"));
@@ -124,7 +125,7 @@ static enum urqresult lockmethod(void) {
     sthfailed(_("cannot lock access method area"));
     return urqr_fail;
   }
-  push_cleanup(cu_unlockmethod, ~0, nullptr, 0, 0);
+  push_cleanup(cu_unlockmethod, ~0, 0);
   return urqr_normal;
 }
 

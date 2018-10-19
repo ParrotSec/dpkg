@@ -26,16 +26,19 @@ BEGIN {
     use_ok('Dpkg::Control::FieldsCore');
 }
 
-#my $datadir = test_get_data_path('t/Dpkg_Control_Fields');
+#my $datadir = test_get_data_path();
 
 my @src_dep_fields = qw(
     Build-Depends Build-Depends-Arch Build-Depends-Indep
     Build-Conflicts Build-Conflicts-Arch Build-Conflicts-Indep
 );
-my @bin_dep_fields = qw(
+my @bin_dep_normal_fields = qw(
     Pre-Depends Depends Recommends Suggests Enhances
+);
+my @bin_dep_union_fields = qw(
     Conflicts Breaks Replaces Provides Built-Using
 );
+my @bin_dep_fields = (@bin_dep_normal_fields, @bin_dep_union_fields);
 my @src_checksums = qw(
     Checksums-Md5 Checksums-Sha1 Checksums-Sha256
 );

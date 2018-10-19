@@ -6,11 +6,10 @@ Uploaders: Guillem Jover <guillem@debian.org>
 Origin: debian
 Bugs: debbugs://bugs.debian.org
 Homepage: https://wiki.debian.org/Teams/Dpkg
-Vcs-Browser: https://anonscm.debian.org/cgit/dpkg/dpkg.git
-Vcs-Git: https://anonscm.debian.org/git/dpkg/dpkg.git
-Standards-Version: 4.1.0
-# We cannot enable R³ until debhelper supports it.
-#Rules-Requires-Root: no
+Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
+Standards-Version: 4.1.1
+Rules-Requires-Root: no
 Build-Depends:
  debhelper (>= 10),
  pkg-config,
@@ -22,7 +21,10 @@ Build-Depends:
  libbz2-dev,
  liblzma-dev,
  libselinux1-dev [linux-any],
- libncursesw5-dev,
+ libncurses-dev (>= 6.1+20180210) | libncursesw5-dev,
+# Needed for the functional test.
+ bzip2 <!nocheck>,
+ xz-utils <!nocheck>,
 
 Package: dpkg
 Architecture: any
@@ -38,6 +40,8 @@ Suggests:
  apt,
  debsig-verify,
 Breaks:
+# Due to --status-fd not duplicating output.
+ libapt-pkg5.0 (<< 1.7~b),
 # Due to removal of dpkg-divert compat symlink.
  amule (<< 2.3.1+git1a369e47-3),
 # Due to removal of dpkg-statoverride compat symlink.
@@ -120,10 +124,7 @@ Architecture: all
 Multi-Arch: foreign
 Depends:
  ${misc:Depends},
-# XXX: This needs to be perl:any, but that breaks debootstrap in jessie
-# (the current stable), it could be fixed once and iff stretch is stable
-# and contains a fixed debootstrap.
- perl,
+ perl:any,
 # Needed for arch tuples.
  dpkg (>= 1.18.11),
 Recommends:
@@ -140,6 +141,8 @@ Suggests:
  gcc | c-compiler,
  binutils,
  patch,
+# Used (if available) by Dpkg::Source::Package::V2.
+ sensible-utils,
 # Needed by Dpkg::Source::Package::V3::Git
  git,
 # Needed by Dpkg::Source::Package::V3::Bzr
@@ -163,14 +166,14 @@ Description: Dpkg perl modules
   - Dpkg::Build::Info: build information functions
   - Dpkg::BuildFlags: set, modify and query compilation build flags
   - Dpkg::BuildOptions: parse and manipulate DEB_BUILD_OPTIONS
-  - Dpkg::BuildProfile: parse and manipulate build profiles
+  - Dpkg::BuildProfiles: parse and manipulate build profiles
   - Dpkg::Changelog: parse changelogs
   - Dpkg::Changelog::Entry: represents a changelog entry
   - Dpkg::Changelog::Parse: generic changelog parser for dpkg-parsechangelog
   - Dpkg::Checksums: generate and parse checksums
   - Dpkg::Compression: simple database of available compression methods
-  - Dpkg::Compression::Process: wrapper around compression tools
   - Dpkg::Compression::FileHandle: transparently (de)compress files
+  - Dpkg::Compression::Process: wrapper around compression tools
   - Dpkg::Conf: parse dpkg configuration files
   - Dpkg::Control: parse and manipulate Debian control information
     (.dsc, .changes, Packages/Sources entries, etc.)
@@ -179,7 +182,14 @@ Description: Dpkg perl modules
   - Dpkg::Control::Hash: parse and manipulate a block of RFC822-like fields
   - Dpkg::Control::Info: parse files like debian/control
   - Dpkg::Control::Tests: parse files like debian/tests/control
+  - Dpkg::Control::Tests::Entry: represents a debian/tests/control stanza
   - Dpkg::Deps: parse and manipulate dependencies
+  - Dpkg::Deps::Simple: represents a single dependency statement
+  - Dpkg::Deps::Multiple: base module to represent multiple dependencies
+  - Dpkg::Deps::Union: list of unrelated dependencies
+  - Dpkg::Deps::AND: list of AND dependencies
+  - Dpkg::Deps::OR: list of OR dependencies
+  - Dpkg::Deps::KnownFacts: list of installed and virtual packages
   - Dpkg::Exit: push, pop and run exit handlers
   - Dpkg::Gettext: wrapper around Locale::gettext
   - Dpkg::IPC: spawn sub-processes and feed/retrieve data

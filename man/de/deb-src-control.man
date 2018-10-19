@@ -73,14 +73,15 @@ Dies dokumentiert die neuste Version der Standards der Distribution, an den
 sich das Paket hält.
 
 .TP 
-\fBDescription\fP\fI short\-description\fP
+\fBDescription\fP\fI Kurzbeschreibung\fP
 .TQ
 \fB \fP\fILangbeschreibung\fP
-The format for the source package description is a short brief summary on
-the first line (after the \fBDescription\fP field).  The following lines should
-be used as a longer, more detailed description.  Each line of the long
-description must be preceded by a space, and blank lines in the long
-description must contain a single ‘\fB.\fP’ following the preceding space.
+Das Format der Quellpaketbeschreibung ist eine kurze knappe Zusammenfassung
+auf der ersten Zeile (nach dem Feld \fBDescription\fP). Die folgenden Zeilen
+sollten als längere, detailliertere Beschreibung verwendet werden. Jede
+Zeile der Langbeschreibung muss von einem Leerzeichen begonnen werden, und
+Leerzeilen in der Langbeschreibung müssen einen einzelnen ‚\fB.\fP’ hinter dem
+einleitenden Leerzeichen enthalten.
 
 .TP 
 \fBHomepage:\fP\fI URL\fP
@@ -125,6 +126,14 @@ Wenn das Feld auf eines der \fIImpl\-Schlüsselwörter\fP gesetzt wird, wird das
 Bauprogramm eine Schnittstelle bereitstellen, die zur Ausführung unter
 (fake)root verwandt wird (siehe »Gain Root API« in \fIrootless\-builds.txt\fP).
 .RE
+
+.TP 
+\fBTestsuite:\fP\fI Namenliste\fP
+.TQ
+\fBTestsuite\-Triggers:\fP\fI Paketliste\fP
+Diese Felder sind in der Handbuchseite \fBdsc\fP(5) beschrieben, da sie aus
+Informationen, die aus \fBdebian/tests/control\fP abgeleitet sind, erstellt
+oder wörtlich in die control\-Datei der Quellen kopiert werden.
 
 .TP 
 \fBVcs\-Arch*:\fP\fI URL\fP
@@ -416,8 +425,8 @@ Maintainer: Dpkg Developers <debian\-dpkg@lists.debian.org>
 # dieses Feld wird in das Binär\- und Quellpaket kopiert
 XBS\-Upstream\-Release\-Status: stable
 Homepage: https://wiki.debian.org/Teams/Dpkg
-Vcs\-Browser: https://anonscm.debian.org/cgit/dpkg/dpkg.git
-Vcs\-Git: https://anonscm.debian.org/git/dpkg/dpkg.git
+Vcs\-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs\-Git: https://git.dpkg.org/git/dpkg/dpkg.git
 Standards\-Version: 3.7.3
 Build\-Depends: pkg\-config, debhelper (>= 4.1.81),
  libselinux1\-dev (>= 1.28\-4) [!linux\-any]

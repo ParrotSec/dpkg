@@ -92,10 +92,18 @@ Prüfe auf einen Prozess mit der angegebenen Eltern\-PID \fIPPID\fP (seit Versio
 1.17.7). Die \fIPPID\fP muss eine Zahl größer Null sein.
 .TP 
 \fB\-p\fP, \fB\-\-pidfile\fP \fIpid\-Datei\fP
-Prüfe, ob ein Prozess \fIpid\-Datei\fP erstellt hat. Hinweis: Wird diese
-Abgleichoption alleine verwandt, könnte auf nicht geplante Prozesse
-eingewirkt werden, falls der alte Prozess beendet wurde, ohne dass er
-\fIpid\-Datei\fP entfernen konnte.
+Überprüfe, ob ein Prozess die Datei \fIpid\-Datei\fP angelegt hat.
+.IP
+Hinweis: Wird diese Abgleichoption alleine verwandt, könnte auf nicht
+geplante Prozesse eingewirkt werden, falls der alte Prozess beendet wurde,
+ohne dass er \fIpid\-Datei\fP entfernen konnte.
+.IP
+\fBWarnung\fP: Es ist ein Sicherheitsrisiko, diese Abgleichoption alleine mit
+einem Daemon, der die PID\-Datei als ein nicht privilegierte Benutzer
+schreibt, zu verwenden, da bei einer Kompromittierung des Daemons, dem
+Inhalt der PID\-Datei nicht vertraut werden kann und dann ein privilegiertes
+laufendes Programm (wie ein Init\-Skript, das als root ausgeführt wird)
+schlussendlich auf einem Systemprozess agieren würde.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIProgramm\fP
 Überprüfe auf Prozesse, die Instanzen von diesem Programm sind. Das Argument

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-man 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"POT-Creation-Date: 2018-10-08 11:37+0200\n"
 "PO-Revision-Date: 2016-12-17 16:42+0100\n"
 "Last-Translator: TAKAHASHI Motonobu <monyo@monyo.com>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -1699,8 +1699,8 @@ msgid ""
 msgstr ""
 
 #. type: SH
-#: deb-changes.man dsc.man dpkg.man dpkg-buildpackage.man dpkg-deb.man
-#: dpkg-name.man dpkg-source.man dpkg-split.man dselect.man
+#: deb-changes.man deb-control.man dsc.man dpkg.man dpkg-buildpackage.man
+#: dpkg-deb.man dpkg-name.man dpkg-source.man dpkg-split.man dselect.man
 #, no-wrap
 msgid "BUGS"
 msgstr "バグ"
@@ -1709,7 +1709,7 @@ msgstr "バグ"
 #: deb-changes.man
 msgid ""
 "The B<Files> field is inconsistent with the other B<Checksums> fields.  The "
-"B<Change-By> and B<Maintainer> fields have confusing names.  The "
+"B<Changed-By> and B<Maintainer> fields have confusing names.  The "
 "B<Distribution> field contains information about what is commonly referred "
 "to as a suite."
 msgstr ""
@@ -2554,6 +2554,27 @@ msgid ""
 "used reason is B<debug-symbols>."
 msgstr ""
 
+#. type: TP
+#: deb-control.man
+#, fuzzy, no-wrap
+#| msgid "B<Date:>I< date>"
+msgid "B<Build-Ids:>I< elf-build-id-list>"
+msgstr "B<Date:>I< date>"
+
+#. type: Plain text
+#: deb-control.man
+msgid ""
+"This field specifies a whitespace separated list of ELF build-ids. These are "
+"unique identifiers for semantically identical ELF objects, for each of these "
+"within the package."
+msgstr ""
+
+#. type: Plain text
+#: deb-control.man
+msgid ""
+"The format or the way to compute each build-id is not defined by design."
+msgstr ""
+
 #. type: SH
 #: deb-control.man deb-conffiles.man deb-src-control.man deb-origin.man
 #: start-stop-daemon.man
@@ -2606,6 +2627,14 @@ msgstr ""
 " look at every character. The result is typically many times faster\n"
 " than Unix grep or egrep. (Regular expressions containing backreferencing\n"
 " will run more slowly, however).\n"
+
+#. type: Plain text
+#: deb-control.man
+msgid ""
+"The B<Build-Ids> field uses a rather generic name out of its original "
+"context within an ELF object, which serves a very specific purpose and "
+"executable format."
+msgstr ""
 
 #. type: Plain text
 #: deb-control.man
@@ -2940,6 +2969,34 @@ msgid ""
 "expose an interface that is used to run a command under (fake)root.  (See "
 "\"Gain Root API\" in I<rootless-builds.txt>.)"
 msgstr ""
+
+#. type: TP
+#: deb-src-control.man dsc.man
+#, fuzzy, no-wrap
+#| msgid "B<Suggests:>I< package-list>"
+msgid "B<Testsuite:>I< name-list>"
+msgstr "B<Suggests:>I< パッケージのリスト>"
+
+#. type: TP
+#: deb-src-control.man dsc.man
+#, fuzzy, no-wrap
+#| msgid "B<Suggests:>I< package-list>"
+msgid "B<Testsuite-Triggers:>I< package-list>"
+msgstr "B<Suggests:>I< パッケージのリスト>"
+
+#. type: Plain text
+#: deb-src-control.man
+#, fuzzy
+#| msgid ""
+#| "These fields are described in the B<deb-control>(5)  manual page, as they "
+#| "are copied literally to the control file of the binary package."
+msgid ""
+"These fields are described in the B<dsc>(5)  manual page, as they are "
+"generated from information inferred from B<debian/tests/control> or copied "
+"literally to the source control file."
+msgstr ""
+"これらのフィールドは、バイナリパッケージの control ファイルにそのままコピーさ"
+"れるため、B<deb-control>(5) のマニュアルページで解説されている。"
 
 #. type: TP
 #: deb-src-control.man dsc.man
@@ -3526,8 +3583,8 @@ msgid ""
 "# this field is copied to the binary and source packages\n"
 "XBS-Upstream-Release-Status: stable\n"
 "Homepage: https://wiki.debian.org/Teams/Dpkg\n"
-"Vcs-Browser: https://anonscm.debian.org/cgit/dpkg/dpkg.git\n"
-"Vcs-Git: https://anonscm.debian.org/git/dpkg/dpkg.git\n"
+"Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git\n"
+"Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git\n"
 "Standards-Version: 3.7.3\n"
 "Build-Depends: pkg-config, debhelper (E<gt>= 4.1.81),\n"
 " libselinux1-dev (E<gt>= 1.28-4) [!linux-any]\n"
@@ -3636,8 +3693,10 @@ msgstr ""
 
 #. type: Plain text
 #: deb-src-files.man
-msgid "I<filename> I<section> I<priority>"
-msgstr ""
+#, fuzzy
+#| msgid "I<package> I<priority> I<section> [I<maintainerinfo>]"
+msgid "I<filename> I<section> I<priority> [ I<keyword=value\\&...\\&> ]"
+msgstr "I<package> I<priority> I<section> [I<maintainerinfo>]"
 
 #. type: Plain text
 #: deb-src-files.man
@@ -3659,6 +3718,14 @@ msgid ""
 msgstr ""
 "I<priority> と I<section> は、.deb ファイルの対応する制御フィールドに各々対応"
 "づけられる。指定可能な値については Debian policy を参照のこと。"
+
+#. type: Plain text
+#: deb-src-files.man
+msgid ""
+"I<keyword=value\\&...\\&> corresponds to an optional whitespace-delimited "
+"list of attributes for this entry.  The only currently supported keyword is "
+"B<automatic> with value B<yes>, to mark automatically generated files."
+msgstr ""
 
 #. type: SH
 #: deb-src-files.man deb-version.man dpkg-architecture.man
@@ -5956,15 +6023,25 @@ msgstr "B<interest-noawait> I<trigger-name>"
 msgid ""
 "Specifies that the package is interested in the named trigger. All triggers "
 "in which a package is interested must be listed using this directive in the "
-"triggers control file. The “noawait” variant does not put the triggering "
-"packages in triggers-awaited state. This should be used when the "
-"functionality provided by the trigger is not crucial."
+"triggers control file."
 msgstr ""
 "パッケージが、指定されたトリガをウォッチすることを示す。パッケージがウォッチ"
 "するすべてのトリガは、トリガ制御ファイル内で本ディレクティブを用いて列挙して"
 "おく必要がある。\"noawait\" をつけることで、ステータスが trigger-awaitedで"
 "あっても、パッケージがトリガされなくなる。これは、トリガによって提供される機"
 "能が重要でない場合に使用すべきである。"
+
+#. type: Plain text
+#: deb-triggers.man
+msgid ""
+"The “await” variants put the triggering package in triggers-awaited state "
+"depending on how the trigger was activated.  The “noawait” variant does not "
+"put the triggering packages in triggers-awaited state, even if the "
+"triggering package declared an “await” activation (either with an B<activate-"
+"await> or B<activate> directive, or by using the B<dpkg-trigger> B<--no-"
+"await> command-line option).  The “noawait” variant should be used when the "
+"functionality provided by the trigger is not crucial."
+msgstr ""
 
 #. type: TP
 #: deb-triggers.man
@@ -6000,9 +6077,7 @@ msgid ""
 "Arranges that changes to this package's state will activate the specified "
 "trigger. The trigger will be activated at the start of the following "
 "operations: unpack, configure, remove (including for the benefit of a "
-"conflicting package), purge and deconfigure.  The “noawait” variant does not "
-"put the triggering packages in triggers-awaited state. This should be used "
-"when the functionality provided by the trigger is not crucial."
+"conflicting package), purge and deconfigure."
 msgstr ""
 "本パッケージの状態が変化した際に、指定したトリガを有効化するように設定する。"
 "トリガは次の操作の開始により有効化される: unpack, configure, remove(競合状態"
@@ -6010,6 +6085,28 @@ msgstr ""
 "けることで、ステータスが trigger-awaited であっても、パッケージがトリガされな"
 "くなる。これは、トリガによって提供される機能が重要でない場合に使用すべきであ"
 "る。"
+
+#. type: Plain text
+#: deb-triggers.man
+#, fuzzy
+#| msgid ""
+#| "Specifies that the package is interested in the named trigger. All "
+#| "triggers in which a package is interested must be listed using this "
+#| "directive in the triggers control file. The \"noawait\" variant does not "
+#| "put the triggering packages in triggers-awaited state. This should be "
+#| "used when the functionality provided by the trigger is not crucial."
+msgid ""
+"The “await” variants only put the triggering package in triggers-awaited "
+"state if the interest directive is also “await”.  The “noawait” variant "
+"never puts the triggering packages in triggers-awaited state.  The “noawait” "
+"variant should be used when the functionality provided by the trigger is not "
+"crucial."
+msgstr ""
+"パッケージが、指定されたトリガをウォッチすることを示す。パッケージがウォッチ"
+"するすべてのトリガは、トリガ制御ファイル内で本ディレクティブを用いて列挙して"
+"おく必要がある。\"noawait\" をつけることで、ステータスが trigger-awaitedで"
+"あっても、パッケージがトリガされなくなる。これは、トリガによって提供される機"
+"能が重要でない場合に使用すべきである。"
 
 #. type: Plain text
 #: deb-triggers.man
@@ -6077,6 +6174,17 @@ msgstr ""
 "\"-noawait\" は、dpk 1.16.1 以降でのみサポートされ、それ以前の dpkg で使用す"
 "るとエラーとなる。そのため、これらのディレクティブを使用するパッケージ"
 "は、\"Pre-Depends: dpkg (E<gt>= 1.16.1)\" を付加することが推奨される。"
+
+#. type: Plain text
+#: deb-triggers.man
+msgid ""
+"When a package provides an B<interest-noawait> directive, any activation "
+"will set the triggering package into “noawait” mode, regardless of the "
+"awaiting mode requested by the activation (either “await” or “noawait”).  "
+"When a package provides an B<interest> or B<interest-await> directive, any "
+"activation will set the triggering package into “await” or “noawait“ "
+"depending on how it was activated."
+msgstr ""
 
 #.  FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.
 #. type: Plain text
@@ -6155,7 +6263,8 @@ msgstr ""
 #: dsc.man
 msgid ""
 "The source formats currently supported by B<dpkg> are B<1.0>, B<2.0>, B<3.0 "
-"(native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> and B<3.0 (custom)>."
+"(native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> and B<3.0 (custom)>.  "
+"See B<dpkg-source>(1) for their description."
 msgstr ""
 
 #. type: TP
@@ -6254,13 +6363,6 @@ msgid ""
 "used to maintain this package.  See B<deb-src-control>(5) for more details."
 msgstr ""
 
-#. type: TP
-#: dsc.man
-#, fuzzy, no-wrap
-#| msgid "B<Suggests:>I< package-list>"
-msgid "B<Testsuite:>I< name-list>"
-msgstr "B<Suggests:>I< パッケージのリスト>"
-
 #. type: Plain text
 #: dsc.man
 msgid ""
@@ -6271,20 +6373,14 @@ msgid ""
 "automatically add it, preserving previous values."
 msgstr ""
 
-#. type: TP
-#: dsc.man
-#, fuzzy, no-wrap
-#| msgid "B<Suggests:>I< package-list>"
-msgid "B<Testsuite-Triggers:>I< package-list>"
-msgstr "B<Suggests:>I< パッケージのリスト>"
-
 #. type: Plain text
 #: dsc.man
 msgid ""
 "This field declares the comma-separated union of all test dependencies "
 "(B<Depends> fields in I<debian/tests/control> file), with all restrictions "
-"removed, and OR dependencies flattened, except for binaries generated by "
-"this source package and meta-dependencies such as B<@> or B<@builddeps@>."
+"removed, and OR dependencies flattened (that is, converted to separate AND "
+"relationships), except for binaries generated by this source package and "
+"meta-dependencies such as B<@> or B<@builddeps@>."
 msgstr ""
 
 #. type: Plain text
@@ -7999,13 +8095,21 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg.man
-msgid "B<depends>: Turn all dependency problems into warnings."
+#, fuzzy
+#| msgid "B<depends>: Turn all dependency problems into warnings."
+msgid ""
+"B<depends>: Turn all dependency problems into warnings.  This affects the "
+"B<Pre-Depends> and B<Depends> fields."
 msgstr "B<depends>: すべての依存関係の問題を警告として扱う。"
 
 #. type: Plain text
 #: dpkg.man
+#, fuzzy
+#| msgid ""
+#| "B<depends-version>: Don't care about versions when checking dependencies."
 msgid ""
-"B<depends-version>: Don't care about versions when checking dependencies."
+"B<depends-version>: Don't care about versions when checking dependencies.  "
+"This affects the B<Pre-Depends> and B<Depends> fields."
 msgstr "B<depends-version>: 依存関係の確認の際に、バージョンを無視する。"
 
 #. type: Plain text
@@ -8014,15 +8118,20 @@ msgstr "B<depends-version>: 依存関係の確認の際に、バージョンを�
 #| msgid "B<breaks>: Install, even if this would break another package."
 msgid ""
 "B<breaks>: Install, even if this would break another package (since dpkg "
-"1.14.6)."
+"1.14.6).  This affects the B<Breaks> field."
 msgstr ""
 "B<breaks>: 別のパッケージの機能不全を引き起こす場合でもインストールする。"
 
 #. type: Plain text
 #: dpkg.man
+#, fuzzy
+#| msgid ""
+#| "B<conflicts>: Install, even if it conflicts with another package. This is "
+#| "dangerous, for it will usually cause overwriting of some files."
 msgid ""
 "B<conflicts>: Install, even if it conflicts with another package. This is "
-"dangerous, for it will usually cause overwriting of some files."
+"dangerous, for it will usually cause overwriting of some files.  This "
+"affects the B<Conflicts> field."
 msgstr ""
 "B<conflicts>: 他のパッケージと競合してもインストールする。たいていはいくつか"
 "ファイルを上書きすることになるため、危険である。"
@@ -8183,7 +8292,7 @@ msgstr ""
 #. type: Plain text
 #: dpkg.man
 msgid ""
-"B<script-chrootless>: Run maintainer scrips without B<chroot>(2)ing into "
+"B<script-chrootless>: Run maintainer scripts without B<chroot>(2)ing into "
 "B<instdir> even if the package does not support this mode of operation "
 "(since dpkg 1.18.5)."
 msgstr ""
@@ -8236,9 +8345,14 @@ msgstr "B<--ignore-depends>=I<package>,..."
 
 #. type: Plain text
 #: dpkg.man
+#, fuzzy
+#| msgid ""
+#| "Ignore dependency-checking for specified packages (actually, checking is "
+#| "performed, but only warnings about conflicts are given, nothing else)."
 msgid ""
 "Ignore dependency-checking for specified packages (actually, checking is "
-"performed, but only warnings about conflicts are given, nothing else)."
+"performed, but only warnings about conflicts are given, nothing else).  This "
+"affects the B<Pre-Depends>, B<Depends> and B<Breaks> fields."
 msgstr ""
 "指定したパッケージに関する依存関係の確認を行わない (実際は、依存関係の確認は"
 "行われるが、競合が発生しても警告メッセージのみで処理を続行する)。"
@@ -8326,9 +8440,9 @@ msgstr "B<--admindir=>I<dir>"
 #| "give information about status of installed or uninstalled packages, etc.  "
 #| "(Defaults to I<%ADMINDIR%>)"
 msgid ""
-"Change default administrative directory, which contains many files that give "
-"information about status of installed or uninstalled packages, etc.  "
-"(Defaults to «I<%ADMINDIR%>»)"
+"Set the administrative directory to I<directory>.  This directory contains "
+"many files that give information about status of installed or uninstalled "
+"packages, etc.  Defaults to «I<%ADMINDIR%>»."
 msgstr ""
 "デフォルトの管理ディレクトリを変更する (デフォルトは I<%ADMINDIR%>)。管理ディ"
 "レクトリには、パッケージのインストール状況に関する情報が格納された多種多様な"
@@ -8349,10 +8463,10 @@ msgstr "B<--instdir=>I<dir>"
 #| "B<chroot>(2) before running package's installation scripts, which means "
 #| "that the scripts see B<instdir> as a root directory.  (Defaults to I</>)"
 msgid ""
-"Change default installation directory which refers to the directory where "
-"packages are to be installed. B<instdir> is also the directory passed to "
-"B<chroot>(2) before running package's installation scripts, which means that "
-"the scripts see B<instdir> as a root directory.  (Defaults to «I</>»)"
+"Set the installation directory, which refers to the directory where packages "
+"are to be installed. B<instdir> is also the directory passed to B<chroot>(2) "
+"before running package's installation scripts, which means that the scripts "
+"see B<instdir> as a root directory.  Defaults to «I</>»."
 msgstr ""
 "デフォルトのインストールディレクトリを変更する。インストールディレクトリは、"
 "パッケージのインストール先となるディレクトリである。B<instdir> は、パッケージ"
@@ -8373,8 +8487,9 @@ msgstr "B<--root=>I<dir>"
 #| "Changing B<root> changes B<instdir> to I<dir> and B<admindir> to I<dir>B</"
 #| "var/lib/dpkg>."
 msgid ""
-"Changing B<root> changes B<instdir> to «I<dir>» and B<admindir> to «I<dir>B<"
-"%ADMINDIR%>»."
+"Set the root directory to B<directory>, which sets the installation "
+"directory to «I<dir>» and the administrative directory to «I<dir>B<%ADMINDIR"
+"%>»."
 msgstr ""
 "B<root> を変更すると、B<instdir> が I<dir> に変更され、B<admindir> が "
 "I<dir>B<%ADMINDIR%> に変更される。"
@@ -8776,6 +8891,21 @@ msgid "For conffile changes where I<decision> is either B<install> or B<keep>."
 msgstr ""
 
 #. type: TP
+#: dpkg.man dpkg-query.man
+#, fuzzy, no-wrap
+#| msgid "B<--no-triggers>"
+msgid "B<--no-pager>"
+msgstr "B<--no-triggers>"
+
+#. type: Plain text
+#: dpkg.man dpkg-query.man
+#, fuzzy
+#| msgid "The Debian system name of the host machine."
+msgid ""
+"Disables the use of any pager when showing information (since dpkg 1.19.2)."
+msgstr "ホストマシンの Debian システム名"
+
+#. type: TP
 #: dpkg.man
 #, no-wrap
 msgid "B<--no-debsig>"
@@ -8886,8 +9016,11 @@ msgstr ""
 
 #. type: SH
 #: dpkg.man dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
-#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-deb.man dpkg-divert.man
-#: dpkg-gensymbols.man dpkg-query.man dpkg-source.man dpkg-split.man
+#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-distaddfile.man
+#: dpkg-deb.man dpkg-divert.man dpkg-genchanges.man dpkg-gencontrol.man
+#: dpkg-gensymbols.man dpkg-maintscript-helper.man dpkg-mergechangelogs.man
+#: dpkg-name.man dpkg-parsechangelog.man dpkg-query.man dpkg-scanpackages.man
+#: dpkg-scansources.man dpkg-shlibdeps.man dpkg-source.man dpkg-split.man
 #: dpkg-statoverride.man dpkg-trigger.man dpkg-vendor.man dselect.man
 #: update-alternatives.man
 #, no-wrap
@@ -8895,7 +9028,7 @@ msgid "ENVIRONMENT"
 msgstr "環境変数"
 
 #. type: SS
-#: dpkg.man dpkg-buildpackage.man
+#: dpkg.man dpkg-buildpackage.man dpkg-query.man
 #, no-wrap
 msgid "External environment"
 msgstr ""
@@ -8946,19 +9079,7 @@ msgstr ""
 "成するディレクトリとして使用する。"
 
 #. type: TP
-#: dpkg.man
-#, no-wrap
-msgid "B<PAGER>"
-msgstr "B<PAGER>"
-
-#. type: Plain text
-#: dpkg.man
-msgid "The program B<dpkg> will execute when displaying the conffiles."
-msgstr ""
-"B<dpkg> が設定ファイルの内容を表示するときに、実際に起動するプログラム。"
-
-#. type: TP
-#: dpkg.man
+#: dpkg.man dpkg-query.man
 #, no-wrap
 msgid "B<SHELL>"
 msgstr "B<SHELL>"
@@ -8967,50 +9088,97 @@ msgstr "B<SHELL>"
 #: dpkg.man
 #, fuzzy
 #| msgid "The program B<dpkg> will execute when starting a new shell."
-msgid "The program B<dpkg> will execute when starting a new interactive shell."
+msgid ""
+"The program B<dpkg> will execute when starting a new interactive shell, or "
+"when spawning a command via a shell."
 msgstr "B<dpkg> が新しいシェルを起動するときに、実際に起動するプログラム。"
 
 #. type: TP
 #: dpkg.man dpkg-query.man
 #, no-wrap
-msgid "B<COLUMNS>"
-msgstr "B<COLUMNS>"
+msgid "B<PAGER>"
+msgstr "B<PAGER>"
+
+#. type: TQ
+#: dpkg.man dpkg-query.man
+#, fuzzy, no-wrap
+#| msgid "B<PAGER>"
+msgid "B<DPKG_PAGER>"
+msgstr "B<PAGER>"
 
 #. type: Plain text
 #: dpkg.man
-#, fuzzy
-#| msgid ""
-#| "Sets the number of columns B<dpkg> should use when displaying formatted "
-#| "text. Currently only used by -l."
 msgid ""
-"Sets the number of columns B<dpkg> should use when displaying formatted "
-"text.  Currently only used by B<--list>."
+"The program B<dpkg> will execute when running a pager, for example when "
+"displaying the conffile differences.  If B<SHELL> is not set, «B<sh>» will "
+"be used instead.  The B<DPKG_PAGER> overrides the B<PAGER> environment "
+"variable (since dpkg 1.19.2)."
 msgstr ""
-"B<dpkg> が整形済テキストを表示する時に使用するコラム数。現在は -l オプション"
-"でのみ参照されている。"
 
 #. type: TP
-#: dpkg.man dpkg-buildpackage.man
+#: dpkg.man dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
+#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-distaddfile.man
+#: dpkg-deb.man dpkg-divert.man dpkg-genchanges.man dpkg-gencontrol.man
+#: dpkg-gensymbols.man dpkg-maintscript-helper.man dpkg-mergechangelogs.man
+#: dpkg-name.man dpkg-parsechangelog.man dpkg-query.man dpkg-scanpackages.man
+#: dpkg-scansources.man dpkg-shlibdeps.man dpkg-source.man dpkg-split.man
+#: dpkg-statoverride.man dpkg-trigger.man dpkg-vendor.man
 #, fuzzy, no-wrap
 #| msgid "B<DPKG_CONFFILE_OLD>"
 msgid "B<DPKG_COLORS>"
 msgstr "B<DPKG_CONFFILE_OLD>"
 
 #. type: Plain text
-#: dpkg.man dpkg-buildpackage.man
+#: dpkg.man dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
+#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-distaddfile.man
+#: dpkg-deb.man dpkg-divert.man dpkg-genchanges.man dpkg-gencontrol.man
+#: dpkg-gensymbols.man dpkg-mergechangelogs.man dpkg-name.man
+#: dpkg-parsechangelog.man dpkg-query.man dpkg-scanpackages.man
+#: dpkg-scansources.man dpkg-shlibdeps.man dpkg-source.man dpkg-split.man
+#: dpkg-statoverride.man dpkg-trigger.man dpkg-vendor.man
 msgid ""
 "Sets the color mode (since dpkg 1.18.5).  The currently accepted values are: "
 "B<auto> (default), B<always> and B<never>."
 msgstr ""
 
+#. type: TP
+#: dpkg.man
+#, fuzzy, no-wrap
+#| msgid "B<DPKG_CONFFILE_OLD>"
+msgid "B<DPKG_FRONTEND_LOCKED>"
+msgstr "B<DPKG_CONFFILE_OLD>"
+
+#. type: Plain text
+#: dpkg.man
+msgid ""
+"Set by a package manager frontend to notify dpkg that it should not acquire "
+"the frontend lock (since dpkg 1.19.1)."
+msgstr ""
+
 #. type: SS
-#: dpkg.man dpkg-buildpackage.man
+#: dpkg.man dpkg-buildpackage.man dpkg-query.man
 #, no-wrap
 msgid "Internal environment"
 msgstr ""
 
 #. type: TP
+#: dpkg.man dpkg-query.man
+#, no-wrap
+msgid "B<LESS>"
+msgstr ""
+
+#. type: Plain text
 #: dpkg.man
+msgid ""
+"Defined by B<dpkg> to “B<-FRSXMQ>”, if not already set, when spawning a "
+"pager (since dpkg 1.19.2).  To change the default behavior, this variable "
+"can be preset to some other value including an empty string, or the B<PAGER> "
+"or B<DPKG_PAGER> variables can be set to disable specific options with «B<-"
+"+>», for example B<DPKG_PAGER=\"less -+F\">."
+msgstr ""
+
+#. type: TP
+#: dpkg.man dpkg-divert.man dpkg-statoverride.man
 #, fuzzy, no-wrap
 #| msgid "B<DPKG_SHELL_REASON>"
 msgid "B<DPKG_ROOT>"
@@ -10873,6 +11041,31 @@ msgid ""
 "«%PKGDATADIR%»."
 msgstr ""
 
+#. type: TP
+#: dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
+#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-distaddfile.man
+#: dpkg-genchanges.man dpkg-gencontrol.man dpkg-gensymbols.man
+#: dpkg-mergechangelogs.man dpkg-name.man dpkg-parsechangelog.man
+#: dpkg-scanpackages.man dpkg-scansources.man dpkg-shlibdeps.man
+#: dpkg-source.man dpkg-vendor.man
+#, fuzzy, no-wrap
+#| msgid "B<DPKG_CONFFILE_OLD>"
+msgid "B<DPKG_NLS>"
+msgstr "B<DPKG_CONFFILE_OLD>"
+
+#. type: Plain text
+#: dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
+#: dpkg-genbuildinfo.man dpkg-checkbuilddeps.man dpkg-distaddfile.man
+#: dpkg-genchanges.man dpkg-gencontrol.man dpkg-gensymbols.man
+#: dpkg-mergechangelogs.man dpkg-name.man dpkg-parsechangelog.man
+#: dpkg-scanpackages.man dpkg-scansources.man dpkg-shlibdeps.man
+#: dpkg-source.man dpkg-vendor.man
+msgid ""
+"If set, it will be used to decide whether to activate Native Language "
+"Support, also known as internationalization (or i18n) support (since dpkg "
+"1.19.0).  The accepted values are: B<0> and B<1> (default)."
+msgstr ""
+
 #. type: Plain text
 #: dpkg-architecture.man
 msgid "All long command and option names available only since dpkg 1.17.17."
@@ -12055,16 +12248,22 @@ msgstr "B<pie>"
 #. type: Plain text
 #: dpkg-buildflags.man
 msgid ""
-"This setting (with no default since dpkg 1.18.23, and injected by default by "
-"gcc on the amd64, arm64, armel, armhf, i386, kfreebsd-amd64, kfreebsd-i386, "
-"mips, mipsel, mips64el, ppc64el, s390x, sparc and sparc64 Debian "
-"architectures)  adds the required options via gcc specs files if needed to "
-"enable or disable PIE. When enabled and injected by gcc, adds nothing. When "
-"enabled and not injected by gcc, adds B<-fPIE> to B<CFLAGS>, B<CXXFLAGS>, "
-"B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and B<FCFLAGS>, and B<-"
-"fPIE -pie> to B<LDFLAGS>. When disabled and injected by gcc, adds B<-fno-"
-"PIE> to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, "
-"B<FFLAGS> and B<FCFLAGS>, and B<-fno-PIE -no-pie> to B<LDFLAGS>."
+"This setting (with no global default since dpkg 1.18.23, as it is enabled by "
+"default now by gcc on the amd64, arm64, armel, armhf, hurd-i386, i386, "
+"kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, "
+"ppc64el, riscv64, s390x, sparc and sparc64 Debian architectures) adds the "
+"required options to enable or disable PIE via gcc specs files, if needed, "
+"depending on whether gcc injects on that architecture the flags by itself or "
+"not.  When the setting is enabled and gcc injects the flags, it adds "
+"nothing.  When the setting is enabled and gcc does not inject the flags, it "
+"adds B<-fPIE> (via I<%PKGDATADIR%/pie-compiler.specs>) to B<CFLAGS>, "
+"B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and "
+"B<FCFLAGS>, and B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) to "
+"B<LDFLAGS>.  When the setting is disabled and gcc injects the flags, it adds "
+"B<-fno-PIE> (via I<%PKGDATADIR%/no-pie-compile.specs>) to B<CFLAGS>, "
+"B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and "
+"B<FCFLAGS>, and B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) "
+"to B<LDFLAGS>."
 msgstr ""
 
 #. type: Plain text
@@ -12232,6 +12431,43 @@ msgid ""
 "This setting (enabled by default) adds B<-Wdate-time> to B<CPPFLAGS>.  This "
 "will cause warnings when the B<__TIME__>, B<__DATE__> and B<__TIMESTAMP__> "
 "macros are used."
+msgstr ""
+
+#. type: TP
+#: dpkg-buildflags.man
+#, fuzzy, no-wrap
+#| msgid "B<--debug>"
+msgid "B<fixfilepath>"
+msgstr "B<--debug>"
+
+#. type: Plain text
+#: dpkg-buildflags.man
+#, fuzzy
+#| msgid ""
+#| "This setting (enabled by default) adds B<-fstack-protector --param=ssp-"
+#| "buffer-size=4> to B<CFLAGS> and B<CXXFLAGS>. This adds safety checks "
+#| "against stack overwrites. This renders many potential code injection "
+#| "attacks into aborting situations. In the best case this turns code "
+#| "injection vulnerabilities into denial of service or into non-issues "
+#| "(depending on the application)."
+msgid ""
+"This setting (disabled by default) adds B<-ffile-prefix-map=>I<BUILDPATH>B<=."
+"> to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, "
+"B<FFLAGS> and B<FCFLAGS> where B<BUILDPATH> is set to the top-level "
+"directory of the package being built.  This has the effect of removing the "
+"build path from any generated file."
+msgstr ""
+"この設定 (デフォルト有効) により、B<CFLAGS> および B<CXXFLAGS> に B<-fstack-"
+"protector --param=ssp-buffer-size=4> が追加される。これにより、スタックの上書"
+"きに対する安全性チェックが追加され、多くの潜在的なコードインジェクション攻撃"
+"が抑止される。(アプリケーションにもよるが) 最良のケースでは、コードインジェク"
+"ションの脆弱性を単なるサービス拒否に留めたり、無力化したりすることができる。"
+
+#. type: Plain text
+#: dpkg-buildflags.man
+msgid ""
+"If both B<fixdebugpath> and B<fixfilepath> are set, this option takes "
+"precedence, because it is a superset of the former."
 msgstr ""
 
 #. type: TP
@@ -12910,9 +13146,10 @@ msgstr "B<--force>"
 #: dpkg-buildpackage.man
 msgid ""
 "Builds the source package.  Note: when using this value standalone and if "
-"what you want is simply to (re-)build the source package, using B<dpkg-"
-"source> is always better as it does not require any build dependencies to be "
-"installed to be able to call the B<clean> target."
+"what you want is simply to (re-)build the source package from a clean source "
+"tree, using B<dpkg-source> directly is always a better option as it does not "
+"require any build dependencies to be installed which are otherwise needed to "
+"be able to call the B<clean> target."
 msgstr ""
 
 #. type: TP
@@ -13383,6 +13620,20 @@ msgstr ""
 #. type: TP
 #: dpkg-buildpackage.man
 #, fuzzy, no-wrap
+#| msgid "B<--as-root>"
+msgid "B<--rules-requires-root>"
+msgstr "B<--as-root>"
+
+#. type: Plain text
+#: dpkg-buildpackage.man
+msgid ""
+"Do not honor the B<Rules-Requires-Root> field, falling back to its legacy "
+"default value (since dpkg 1.19.1)."
+msgstr ""
+
+#. type: TP
+#: dpkg-buildpackage.man
+#, fuzzy, no-wrap
 #| msgid "B<-C>, B<--no-close>"
 msgid "B<-nc>, B<--no-pre-clean>"
 msgstr "B<-C>, B<--no-close>"
@@ -13394,9 +13645,10 @@ msgstr "B<-C>, B<--no-close>"
 #| "Do not clean the source tree (implies B<-b> if nothing else has been "
 #| "selected among B<-B>, B<-A> or B<-S>)."
 msgid ""
-"Do not clean the source tree (long option since dpkg 1.18.8).  Implies B<-b> "
-"if nothing else has been selected among B<-F>, B<-g>, B<-G>, B<-B>, B<-A> or "
-"B<-S>.  Implies B<-d> with B<-S> (since dpkg 1.18.0)."
+"Do not clean the source tree before building (long option since dpkg "
+"1.18.8).  Implies B<-b> if nothing else has been selected among B<-F>, B<-"
+"g>, B<-G>, B<-B>, B<-A> or B<-S>.  Implies B<-d> with B<-S> (since dpkg "
+"1.18.0)."
 msgstr ""
 "ソースツリーを消去しない (B<-B>, B<-A>, B<-S> いずれもが指定されない場合は、"
 "B<-b> が指定されたと見なされる)。"
@@ -13412,7 +13664,9 @@ msgstr "B<-p>I<package>"
 #: dpkg-buildpackage.man
 #, fuzzy
 #| msgid "The Debian cpu name of the build machine."
-msgid "Clean the source tree before building (since dpkg 1.18.8)."
+msgid ""
+"Clean the source tree before building (since dpkg 1.18.8).  This is the "
+"default behavior."
 msgstr "ビルドマシンの Debian CPU 名"
 
 #. type: TP
@@ -13434,6 +13688,20 @@ msgid ""
 msgstr ""
 "パッケージのビルド後にソースツリーを消去する (I<gain-root-command> B<debian/"
 "rules clean> が用いられる)。"
+
+#. type: TP
+#: dpkg-buildpackage.man
+#, fuzzy, no-wrap
+#| msgid "B<-C>, B<--no-close>"
+msgid "B<--no-post-clean>"
+msgstr "B<-C>, B<--no-close>"
+
+#. type: Plain text
+#: dpkg-buildpackage.man
+msgid ""
+"Do not clean the source tree after the package has been built (since dpkg "
+"1.19.1).  This is the default behavior."
+msgstr ""
 
 #. type: TP
 #: dpkg-buildpackage.man
@@ -15515,8 +15783,10 @@ msgstr "[B<--add>] I<file>"
 
 #. type: Plain text
 #: dpkg-divert.man
-msgid "Add a diversion for I<file>."
-msgstr "I<file> を退避ファイルに追加する。"
+msgid ""
+"Add a diversion for I<file>.  The file is currently not renamed, see B<--"
+"rename>."
+msgstr ""
 
 #. type: TP
 #: dpkg-divert.man
@@ -15526,8 +15796,10 @@ msgstr "B<--remove>I< file>"
 
 #. type: Plain text
 #: dpkg-divert.man
-msgid "Remove a diversion for I<file>."
-msgstr "I<file> を退避ファイルから削除する。"
+msgid ""
+"Remove a diversion for I<file>.  The file is currently not renamed, see B<--"
+"rename>."
+msgstr ""
 
 #. type: TP
 #: dpkg-divert.man
@@ -15584,10 +15856,40 @@ msgstr "B<--admindir>I< directory>"
 #| msgid ""
 #| "Set the dpkg data directory to I<directory> (default: I<%ADMINDIR%>)."
 msgid ""
-"Set the B<dpkg> data directory to I<directory> (default: I<%ADMINDIR%>)."
+"Set the administrative directory to I<directory>.  Defaults to «I<%ADMINDIR"
+"%>»."
 msgstr ""
 "dpkg データディレクトリを I<directory> (デフォルトは I<%ADMINDIR%>) に設定す"
 "る。"
+
+#. type: TP
+#: dpkg-divert.man dpkg-statoverride.man
+#, fuzzy, no-wrap
+#| msgid "B<--admindir>I< directory>"
+msgid "B<--instdir>I< directory>"
+msgstr "B<--admindir>I< directory>"
+
+#. type: Plain text
+#: dpkg-divert.man
+msgid ""
+"Set the installation directory, which refers to the directory where packages "
+"get installed (since dpkg 1.19.2). Defaults to «I</>»."
+msgstr ""
+
+#. type: TP
+#: dpkg-divert.man dpkg-statoverride.man
+#, fuzzy, no-wrap
+#| msgid "B<--depotdir>I< directory>"
+msgid "B<--root>I< directory>"
+msgstr "B<--depotdir>I< directory>"
+
+#. type: Plain text
+#: dpkg-divert.man dpkg-statoverride.man
+msgid ""
+"Set the root directory to B<directory>, which sets the installation "
+"directory to «I<directory>» and the administrative directory to "
+"«I<directory>B<%ADMINDIR%>» (since dpkg 1.19.2)."
+msgstr ""
 
 #. type: TP
 #: dpkg-divert.man
@@ -15656,12 +15958,36 @@ msgstr "B<--rename>"
 
 #. type: Plain text
 #: dpkg-divert.man
+#, fuzzy
+#| msgid ""
+#| "Actually move the file aside (or back). B<dpkg-divert> will abort "
+#| "operation in case the destination file already exists."
 msgid ""
 "Actually move the file aside (or back). B<dpkg-divert> will abort operation "
-"in case the destination file already exists."
+"in case the destination file already exists.  This is the common behavior "
+"used for diversions of files from the non-B<Essential> package set (see B<--"
+"no-rename> for more details)."
 msgstr ""
 "実際にファイルを退避 (もしくは復帰) させる。B<dpkg-divert> は、退避 (復帰) 先"
 "のファイルが既に存在していると動作を中断する。"
+
+#. type: TP
+#: dpkg-divert.man
+#, fuzzy, no-wrap
+#| msgid "B<--rename>"
+msgid "B<--no-rename>"
+msgstr "B<--rename>"
+
+#. type: Plain text
+#: dpkg-divert.man
+msgid ""
+"Specifies that the file should not be renamed while adding or removing the "
+"diversion into the database (since dpkg 1.19.1).  This is intended for "
+"diversions of files from the B<Essential> package set, where the temporary "
+"disappearance of the original file is not acceptable, as it can render the "
+"system non-functional.  This is the default behavior, but that will change "
+"in the dpkg 1.20.x cycle."
+msgstr ""
 
 #. type: TP
 #: dpkg-divert.man
@@ -15676,14 +16002,27 @@ msgstr ""
 "テストモード。実際にはなにも実行せず、なにを実行するかを表示するだけである。"
 
 #. type: Plain text
-#: dpkg-divert.man dpkg-query.man dpkg-statoverride.man dpkg-trigger.man
+#: dpkg-divert.man dpkg-statoverride.man
+#, fuzzy
+#| msgid ""
+#| "If set and the B<--admindir> option has not been specified, it will be "
+#| "used as the base administrative directory."
+msgid ""
+"If set and the B<--instdir> or B<--root> options have not been specified, it "
+"will be used as the filesystem root directory (since dpkg 1.19.2)."
+msgstr ""
+"B<--admindir> オプションが指定されていない場合に、この変数が設定されている"
+"と、この値が administrative ディレクトリの起点として使用される。"
+
+#. type: Plain text
+#: dpkg-divert.man dpkg-statoverride.man
 #, fuzzy
 #| msgid ""
 #| "If set and the B<--admindir> option has not been specified, it will be "
 #| "used as the dpkg data directory."
 msgid ""
-"If set and the B<--admindir> option has not been specified, it will be used "
-"as the B<dpkg> data directory."
+"If set and the B<--admindir> or B<--root> options have not been specified, "
+"it will be used as the B<dpkg> data directory."
 msgstr ""
 "B<--admindir> オプションが設定されておらず、この変数が設定されている場合、こ"
 "の変数の値が dpkg データディレクトリとして用いられる。"
@@ -17511,6 +17850,33 @@ msgstr ""
 "B<-e> を複数回指定する必要がある)。"
 
 #. type: TP
+#: dpkg-gensymbols.man dpkg-shlibdeps.man
+#, fuzzy, no-wrap
+#| msgid "B<--altdir>I< directory>"
+msgid "B<-l>I<directory>"
+msgstr "B<--altdir> I<directory>"
+
+#. type: Plain text
+#: dpkg-gensymbols.man
+#, fuzzy
+#| msgid ""
+#| "Include dependencies appropriate for the shared libraries required by "
+#| "I<executable>."
+msgid ""
+"Prepend I<directory> to the list of directories to search for private shared "
+"libraries (since dpkg 1.19.1). This option can be used multiple times."
+msgstr "I<executable> が必要とする共有ライブラリのための依存関係を含める。"
+
+#. type: Plain text
+#: dpkg-gensymbols.man dpkg-shlibdeps.man
+msgid ""
+"Note: Use this option instead of setting B<LD_LIBRARY_PATH>, as that "
+"environment variable is used to control the run-time linker and abusing it "
+"to set the shared library paths at build-time can be problematic when cross-"
+"compiling for example."
+msgstr ""
+
+#. type: TP
 #: dpkg-gensymbols.man
 #, no-wrap
 msgid "B<-I>I<filename>"
@@ -18408,6 +18774,13 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg-maintscript-helper.man
+msgid ""
+"Sets the color mode (since dpkg 1.19.1).  The currently accepted values are: "
+"B<auto> (default), B<always> and B<never>."
+msgstr ""
+
+#. type: Plain text
+#: dpkg-maintscript-helper.man
 #, fuzzy
 #| msgid "B<installed>"
 msgid "B<dh_installdeb>(1)."
@@ -18939,7 +19312,8 @@ msgid ""
 "B<rfc822>.  B<dpkg> is the classic output format (from before this option "
 "existed) and the default. It consists of one paragraph in Debian control "
 "format (see B<deb-control>(5)). If more than one entry is requested, then "
-"most fields are taken from the most recent entry, except otherwise stated:"
+"most fields are taken from the first entry (usually the most recent entry), "
+"except otherwise stated:"
 msgstr ""
 "出力形式を指定する。現在サポートされている値は I<dpkg> および I<rfc822> であ"
 "る。I<dpkg> は従来からの (このオプションが存在する前からの) 出力形式であり、"
@@ -19069,6 +19443,20 @@ msgid ""
 msgstr ""
 "B<rfc822> 形式でも同じフィールドが用いられるが、出力については、changelog の"
 "エントリ毎に別の段落に分割され、各エントリのメタデータが保持される。"
+
+#. type: TP
+#: dpkg-parsechangelog.man
+#, fuzzy, no-wrap
+#| msgid "B<--verbose>"
+msgid "B<--reverse>"
+msgstr "B<--verbose>"
+
+#. type: Plain text
+#: dpkg-parsechangelog.man
+msgid ""
+"Include all changes in reverse order (since dpkg 1.19.1).  Note: for the "
+"B<dpkg> format the first entry will be the most ancient entry."
+msgstr ""
 
 #. type: TP
 #: dpkg-parsechangelog.man update-alternatives.man
@@ -19547,17 +19935,26 @@ msgstr ""
 
 #. type: TP
 #: dpkg-query.man
-#, no-wrap
-msgid "B<-s>, B<--status> I<package-name>..."
+#, fuzzy, no-wrap
+#| msgid "B<-s>, B<--status> I<package-name>..."
+msgid "B<-s>, B<--status> [I<package-name>...]"
 msgstr "B<-s>, B<--status> I<package-name>..."
 
 #. type: Plain text
 #: dpkg-query.man
+#, fuzzy
+#| msgid ""
+#| "Report status of specified package. This just displays the entry in the "
+#| "installed package status database. When multiple I<package-name> are "
+#| "listed, the requested status entries are separated by an empty line, with "
+#| "the same order as specified on the argument list."
 msgid ""
 "Report status of specified package. This just displays the entry in the "
-"installed package status database. When multiple I<package-name> are listed, "
-"the requested status entries are separated by an empty line, with the same "
-"order as specified on the argument list."
+"installed package status database.  If no I<package-name> is specified it "
+"will display all package entries in the status database (since dpkg "
+"1.19.1).  When multiple I<package-name> entries are listed, the requested "
+"status entries are separated by an empty line, with the same order as "
+"specified on the argument list."
 msgstr ""
 "指定したパッケージの状況を表示する。実際は、インストールされたパッケージの状"
 "況データベースの内容が表示される。I<package-name> が複数指定された場合、各"
@@ -19713,17 +20110,25 @@ msgstr ""
 
 #. type: TP
 #: dpkg-query.man
-#, no-wrap
-msgid "B<-p>, B<--print-avail> I<package-name>..."
+#, fuzzy, no-wrap
+#| msgid "B<-p>, B<--print-avail> I<package-name>..."
+msgid "B<-p>, B<--print-avail> [I<package-name>...]"
 msgstr "B<-p>, B<--print-avail> I<package-name>..."
 
 #. type: Plain text
 #: dpkg-query.man
+#, fuzzy
+#| msgid ""
+#| "Display details about I<package-name>, as found in I<%ADMINDIR%/"
+#| "available>. When multiple I<package-name> are listed, the requested "
+#| "I<available> entries are separated by an empty line, with the same order "
+#| "as specified on the argument list."
 msgid ""
-"Display details about I<package-name>, as found in I<%ADMINDIR%/available>. "
-"When multiple I<package-name> are listed, the requested I<available> entries "
-"are separated by an empty line, with the same order as specified on the "
-"argument list."
+"Display details about packages, as found in I<%ADMINDIR%/available>.  If no "
+"I<package-name> is specified, it will display all package entries in the "
+"I<available> database (since dpkg 1.19.1).  When multiple I<package-name> "
+"are listed, the requested I<available> entries are separated by an empty "
+"line, with the same order as specified on the argument list."
 msgstr ""
 "I<%ADMINDIR%/available> にある I<package-name> の詳細を表示する。I<package-"
 "name> が複数指定された場合、各 I<available> のエントリは、引数のリストで指定"
@@ -19924,16 +20329,28 @@ msgstr ""
 #. type: TP
 #: dpkg-query.man
 #, fuzzy, no-wrap
+#| msgid "B<source:Version>"
+msgid "B<binary:Synopsis>"
+msgstr "B<source:Version>"
+
+#. type: Plain text
+#: dpkg-query.man
+#, fuzzy
+#| msgid "The package architecture (since dpkg 1.16.1)."
+msgid "It contains the package short description (since dpkg 1.19.1)."
+msgstr "パッケージのアーキテクチャ (dpkg 1.16.1 以降)"
+
+#. type: TP
+#: dpkg-query.man
+#, fuzzy, no-wrap
 #| msgid "B<binary:Version>"
 msgid "B<binary:Summary>"
 msgstr "B<binary:Version>"
 
 #. type: Plain text
 #: dpkg-query.man
-#, fuzzy
-#| msgid "The package architecture (since dpkg 1.16.1)."
-msgid "It contains the package short description (since dpkg 1.16.2)."
-msgstr "パッケージのアーキテクチャ (dpkg 1.16.1 以降)"
+msgid "This is an alias for B<binary:Synopsis> (since dpkg 1.16.2)."
+msgstr ""
 
 #. type: TP
 #: dpkg-query.man
@@ -20070,10 +20487,44 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg-query.man
+#, fuzzy
+#| msgid "The Debian cpu name of the build machine."
 msgid ""
-"This setting influences the output of the B<--list> option by changing the "
-"width of its output."
-msgstr "この設定により、B<--list> オプションによる出力の横幅が設定される。"
+"Sets the program to execute when spawning a command via a shell (since dpkg "
+"1.19.2)."
+msgstr "ビルドマシンの Debian CPU 名"
+
+#. type: Plain text
+#: dpkg-query.man
+msgid ""
+"Sets the pager command to use (since dpkg 1.19.1), which will be executed "
+"with «B<$SHELL -c>».  If B<SHELL> is not set, «B<sh>» will be used instead.  "
+"The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg "
+"1.19.2)."
+msgstr ""
+
+#. type: Plain text
+#: dpkg-query.man dpkg-trigger.man
+#, fuzzy
+#| msgid ""
+#| "If set and the B<--admindir> option has not been specified, it will be "
+#| "used as the dpkg data directory."
+msgid ""
+"If set and the B<--admindir> option has not been specified, it will be used "
+"as the B<dpkg> data directory."
+msgstr ""
+"B<--admindir> オプションが設定されておらず、この変数が設定されている場合、こ"
+"の変数の値が dpkg データディレクトリとして用いられる。"
+
+#. type: Plain text
+#: dpkg-query.man
+msgid ""
+"Defined by B<dpkg-query> to “B<-FRSXMQ>”, if not already set, when spawning "
+"a pager (since dpkg 1.19.2).  To change the default behavior, this variable "
+"can be preset to some other value including an empty string, or the B<PAGER> "
+"or B<DPKG_PAGER> variables can be set to disable specific options with «B<-"
+"+>», for example B<DPKG_PAGER=\"less -+F\">."
+msgstr ""
 
 #. type: TH
 #: dpkg-scanpackages.man
@@ -20782,13 +21233,6 @@ msgid ""
 "I<executable>.  This option can be used multiple times."
 msgstr "I<executable> が必要とする共有ライブラリのための依存関係を含める。"
 
-#. type: TP
-#: dpkg-shlibdeps.man
-#, fuzzy, no-wrap
-#| msgid "B<--altdir>I< directory>"
-msgid "B<-l>I<directory>"
-msgstr "B<--altdir> I<directory>"
-
 #. type: Plain text
 #: dpkg-shlibdeps.man
 #, fuzzy
@@ -20799,15 +21243,6 @@ msgid ""
 "Prepend I<directory> to the list of directories to search for private shared "
 "libraries (since dpkg 1.17.0). This option can be used multiple times."
 msgstr "I<executable> が必要とする共有ライブラリのための依存関係を含める。"
-
-#. type: Plain text
-#: dpkg-shlibdeps.man
-msgid ""
-"Note: Use this option instead of setting B<LD_LIBRARY_PATH>, as that "
-"environment variable is used to control the run-time linker and abusing it "
-"to set the shared library paths at build-time can be problematic when cross-"
-"compiling for example."
-msgstr ""
 
 #. type: TP
 #: dpkg-shlibdeps.man
@@ -22590,11 +23025,18 @@ msgstr ""
 #| "with the B<-p1> option of B<patch>. It will thus emit a warning when it "
 #| "encounters such options, and the build is likely to fail."
 msgid ""
-"All patches listed in B<debian/patches/debian.series> or B<debian/patches/"
-"series> are then applied.  If the former file is used and the latter one "
-"doesn't exist (or is a symlink), then the latter is replaced with a symlink "
-"to the former. This is meant to simplify usage of B<quilt> to manage the set "
-"of patches. Note however that while B<dpkg-source> parses correctly series "
+"All patches listed in B<debian/patches/>I<vendor>B<.series> or B<debian/"
+"patches/series> are then applied, where I<vendor> will be the lowercase name "
+"of the current vendor, or B<debian> if there is no vendor defined.  If the "
+"former file is used and the latter one doesn't exist (or is a symlink), then "
+"the latter is replaced with a symlink to the former.  This is meant to "
+"simplify usage of B<quilt> to manage the set of patches.  Vendor-specific "
+"series files are intended to make it possible to serialize multiple "
+"development branches based on the vendor, in a declarative way, in "
+"preference to open-coding this handling in B<debian/rules>.  This is "
+"particularly useful when the source would need to be patched conditionally "
+"because the affected files do not have built-in conditional occlusion "
+"support.  Note however that while B<dpkg-source> parses correctly series "
 "files with explicit options used for patch application (stored on each line "
 "after the patch filename and one or more spaces), it does ignore those "
 "options and always expect patches that can be applied with the B<-p1> option "
@@ -23680,6 +24122,13 @@ msgstr ""
 
 #. type: SS
 #: dpkg-source.man
+#, fuzzy, no-wrap
+#| msgid "debian/patches/series"
+msgid "debian/patches/I<vendor>.series"
+msgstr "debian/patches/series"
+
+#. type: SS
+#: dpkg-source.man
 #, no-wrap
 msgid "debian/patches/series"
 msgstr "debian/patches/series"
@@ -23699,10 +24148,13 @@ msgstr "debian/patches/series"
 msgid ""
 "This file lists all patches that have to be applied (in the given order)  on "
 "top of the upstream source package. Leading and trailing spaces are "
-"stripped.  Lines starting with ‘B<#>’ are comments and are skipped.  Empty "
-"lines are ignored.  Remaining lines start with a patch filename (relative to "
-"the B<debian/patches/> directory) up to the first space character or the end "
-"of line. Optional B<quilt> options can follow up to the end of line or the "
+"stripped.  The I<vendor> will be the lowercase name of the current vendor, "
+"or B<debian> if there is no vendor defined.  If the vendor-specific series "
+"file does not exist, the vendor-less series file will be used.  Lines "
+"starting with ‘B<#>’ are comments and are skipped.  Empty lines are "
+"ignored.  Remaining lines start with a patch filename (relative to the "
+"B<debian/patches/> directory) up to the first space character or the end of "
+"line. Optional B<quilt> options can follow up to the end of line or the "
 "first ‘B<#>’ preceded by one or more spaces (which marks the start of a "
 "comment up to the end of line)."
 msgstr ""
@@ -24314,11 +24766,18 @@ msgstr ""
 #| "Change the I<directory> of the dpkg database where the statoverride file "
 #| "is also stored. Defaults to I<%ADMINDIR%>."
 msgid ""
-"Change the I<directory> of the B<dpkg> database where the statoverride file "
-"is also stored. Defaults to I<%ADMINDIR%>."
+"Set the administrative directory to I<directory>.  This is where the "
+"I<statoverride> file is stored.  Defaults to «I<%ADMINDIR%>»."
 msgstr ""
 "dpkg データベースのディレクトリを変更する。statoverride ファイルもここに保存"
 "される。デフォルトは I<%ADMINDIR%> である。"
+
+#. type: Plain text
+#: dpkg-statoverride.man
+msgid ""
+"Set the installation directory, which refers to the directory where packages "
+"get installed (since dpkg 1.19.2).  Defaults to «I</>»."
+msgstr ""
 
 #. type: TP
 #: dpkg-statoverride.man update-alternatives.man
@@ -24516,8 +24975,9 @@ msgstr "B<--no-await>"
 #. type: Plain text
 #: dpkg-trigger.man
 msgid ""
-"This option does the inverse of B<--no-await> (since dpkg 1.17.21).  It is "
-"currently the default behavior."
+"This option does the inverse of B<--no-await> (since dpkg 1.17.21).  If the "
+"interested package has declared a “noawait” directive, then this option will "
+"not be effective.  It is currently the default behavior."
 msgstr ""
 
 #. type: TP
@@ -26134,15 +26594,36 @@ msgstr "B<-p>, B<--pidfile> I<pid-file>"
 
 #. type: Plain text
 #: start-stop-daemon.man
+msgid "Check whether a process has created the file I<pid-file>."
+msgstr ""
+
+#. type: Plain text
+#: start-stop-daemon.man
+#, fuzzy
+#| msgid ""
+#| "Check whether a process has created the file I<pid-file>. Note: using "
+#| "this matching option alone might cause unintended processes to be acted "
+#| "on, if the old process terminated without being able to remove the I<pid-"
+#| "file>."
 msgid ""
-"Check whether a process has created the file I<pid-file>. Note: using this "
-"matching option alone might cause unintended processes to be acted on, if "
-"the old process terminated without being able to remove the I<pid-file>."
+"Note: using this matching option alone might cause unintended processes to "
+"be acted on, if the old process terminated without being able to remove the "
+"I<pid-file>."
 msgstr ""
 "プロセスが I<pid-file> を作成したかどうかをチェックする。このオプションを単体"
 "で使用した場合、以前のプロセスが I<pid-file> を削除できないまま終了してしまっ"
 "た際に、意図しないプロセスが動作中であると判断される場合があるため留意するこ"
 "と。"
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid ""
+"B<Warning:> Using this match option alone with a daemon that writes the "
+"pidfile as an unprivileged user is a security risk, because if the daemon "
+"gets compromised the contents of the pidfile cannot be trusted, and then a "
+"privileged runner (such as an init script executed as root) would end up "
+"acting on any system process."
+msgstr ""
 
 #. type: TP
 #: start-stop-daemon.man
@@ -27803,6 +28284,35 @@ msgstr "B<update-alternatives --auto vi>"
 #: update-alternatives.man
 msgid "B<ln>(1), FHS, the Filesystem Hierarchy Standard."
 msgstr "B<ln>(1), FHS, the Filesystem Hierarchy Standard."
+
+#~ msgid "The program B<dpkg> will execute when displaying the conffiles."
+#~ msgstr ""
+#~ "B<dpkg> が設定ファイルの内容を表示するときに、実際に起動するプログラム。"
+
+#~ msgid "B<COLUMNS>"
+#~ msgstr "B<COLUMNS>"
+
+#, fuzzy
+#~| msgid ""
+#~| "Sets the number of columns B<dpkg> should use when displaying formatted "
+#~| "text. Currently only used by -l."
+#~ msgid ""
+#~ "Sets the number of columns B<dpkg> should use when displaying formatted "
+#~ "text.  Currently only used by B<--list>."
+#~ msgstr ""
+#~ "B<dpkg> が整形済テキストを表示する時に使用するコラム数。現在は -l オプショ"
+#~ "ンでのみ参照されている。"
+
+#~ msgid "Add a diversion for I<file>."
+#~ msgstr "I<file> を退避ファイルに追加する。"
+
+#~ msgid "Remove a diversion for I<file>."
+#~ msgstr "I<file> を退避ファイルから削除する。"
+
+#~ msgid ""
+#~ "This setting influences the output of the B<--list> option by changing "
+#~ "the width of its output."
+#~ msgstr "この設定により、B<--list> オプションによる出力の横幅が設定される。"
 
 #, fuzzy
 #~| msgid ""

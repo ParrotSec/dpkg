@@ -553,16 +553,20 @@ cause the whole system to stop working, so use with caution.
 
 \fBdepends\fP:
 Turn all dependency problems into warnings.
+This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
 
 \fBdepends\-version\fP:
 Don't care about versions when checking dependencies.
+This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
 
 \fBbreaks\fP:
 Install, even if this would break another package (since dpkg 1.14.6).
+This affects the \fBBreaks\fP field.
 
 \fBconflicts\fP:
 Install, even if it conflicts with another package. This is dangerous,
 for it will usually cause overwriting of some files.
+This affects the \fBConflicts\fP field.
 
 \fBconfmiss\fP:
 Always install the missing conffile without prompting. This is dangerous,
@@ -623,7 +627,7 @@ any software not doing syncs before atomic renames.
 losing data, use with care.\fP
 
 \fBscript-chrootless\fP:
-Run maintainer scrips without \fBchroot\fP(2)ing into \fBinstdir\fP even
+Run maintainer scripts without \fBchroot\fP(2)ing into \fBinstdir\fP even
 if the package does not support this mode of operation (since dpkg 1.18.5).
 
 \fIWarning: This can destroy your host system, use with extreme care.\fP
@@ -647,6 +651,7 @@ Install a package even if it fails authenticity check.
 \fB\-\-ignore\-depends\fP=\fIpackage\fP,...
 Ignore dependency-checking for specified packages (actually, checking is
 performed, but only warnings about conflicts are given, nothing else).
+This affects the \fBPre\-Depends\fP, \fBDepends\fP and \fBBreaks\fP fields.
 .TP
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
 Do everything which is supposed to be done, but don't write any
@@ -669,20 +674,22 @@ Don't install a package if a newer version of the same package is already
 installed. This is an alias of \fB\-\-refuse\-downgrade\fP.
 .TP
 .BI \-\-admindir= dir
-Change default administrative directory, which contains many files that
-give information about status of installed or uninstalled packages, etc.
-(Defaults to «\fI%ADMINDIR%\fP»)
+Set the administrative directory to \fIdirectory\fP.
+This directory contains many files that give information about status of
+installed or uninstalled packages, etc.
+Defaults to «\fI%ADMINDIR%\fP».
 .TP
 .BI \-\-instdir= dir
-Change default installation directory which refers to the directory where
+Set the installation directory, which refers to the directory where
 packages are to be installed. \fBinstdir\fP is also the directory passed
 to \fBchroot\fP(2) before running package's installation scripts, which
 means that the scripts see \fBinstdir\fP as a root directory.
-(Defaults to «\fI/\fP»)
+Defaults to «\fI/\fP».
 .TP
 .BI \-\-root= dir
-Changing \fBroot\fP changes \fBinstdir\fP to «\fIdir\fP» and
-\fBadmindir\fP to «\fIdir\fP\fB%ADMINDIR%\fP».
+Set the root directory to \fBdirectory\fP, which sets the installation
+directory to «\fIdir\fP» and the administrative
+directory to «\fIdir\fP\fB%ADMINDIR%\fP».
 .TP
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Only process the packages that are selected for installation. The
@@ -827,6 +834,9 @@ For conffile changes where \fIdecision\fP is either \fBinstall\fP or
 \fBkeep\fP.
 .RE
 .TP
+.B \-\-no\-pager
+Disables the use of any pager when showing information (since dpkg 1.19.2).
+.TP
 \fB\-\-no\-debsig\fP
 Do not try to verify package signatures.
 .TP
@@ -873,22 +883,36 @@ specific configuration file.
 If set, \fBdpkg\fP will use it as the directory in which to create
 temporary files and directories.
 .TP
-.B PAGER
-The program \fBdpkg\fP will execute when displaying the conffiles.
-.TP
 .B SHELL
-The program \fBdpkg\fP will execute when starting a new interactive shell.
+The program \fBdpkg\fP will execute when starting a new interactive shell,
+or when spawning a command via a shell.
 .TP
-.B COLUMNS
-Sets the number of columns \fBdpkg\fP should use when displaying formatted
-text.
-Currently only used by \fB\-\-list\fP.
+.B PAGER
+.TQ
+.B DPKG_PAGER
+The program \fBdpkg\fP will execute when running a pager, for example when
+displaying the conffile differences.
+If \fBSHELL\fP is not set, «\fBsh\fP» will be used instead.
+The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment variable
+(since dpkg 1.19.2).
 .TP
 .B DPKG_COLORS
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: \fBauto\fP (default), \fBalways\fP and
 \fBnever\fP.
+.TP
+.B DPKG_FRONTEND_LOCKED
+Set by a package manager frontend to notify dpkg that it should not acquire
+the frontend lock (since dpkg 1.19.1).
 .SS Internal environment
+.TP
+.B LESS
+Defined by \fBdpkg\fP to “\fB-FRSXMQ\fP”, if not already set, when
+spawning a pager (since dpkg 1.19.2).
+To change the default behavior, this variable can be preset to some other
+value including an empty string, or the \fBPAGER\fP or \fBDPKG_PAGER\fP
+variables can be set to disable specific options with «\fB\-+\fP», for
+example \fBDPKG_PAGER="less \-+F"\fP.
 .TP
 .B DPKG_ROOT
 Defined by \fBdpkg\fP on the maintainer script environment to indicate

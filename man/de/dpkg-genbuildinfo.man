@@ -104,10 +104,10 @@ Dateien finden, so dass es ihre Größen und Prüfsummen in die
 \&\fB.buildinfo\fP\-Datei aufnehmen kann.
 .TP 
 \fB\-\-always\-include\-kernel\fP
-By default, the \fBBuild\-Kernel\-Version\fP field will not be written out.
+Standardmäßig wird das Feld \fBBuild\-Kernel\-Version\fP nicht rausgeschrieben.
 
-Specify this option (since dpkg 1.19.0) to always write a
-\fBBuild\-Kernel\-Version\fP field when generating the \fB.buildinfo\fP.
+Legen Sie diese Option (seit Dpkg 1.19.0) fest, damit beim Erstellen der
+\&\fB.buildinfo\fP immer das Feld \fBBuild\-Kernel\-Version\fP geschrieben wird.
 .TP 
 \fB\-\-always\-include\-path\fP
 Standardmäßig wird das Feld \fBBuild\-Path\fP nur geschrieben, falls das
@@ -145,6 +145,16 @@ ein\- oder ausgeschaltet werden soll. Die besondere Funktionalität „\fBall\fP
 kann zum Ein\- bzw. Ausschalten aller anderen Funktionalitäten verwandt
 werden. Die Funktionalität „\fBpath\fP“ steuert, ob das Feld \fBBuild\-Path\fP
 bedingungslos aufgenmmen werden soll.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 .
 .SH DATEIEN
 .TP 

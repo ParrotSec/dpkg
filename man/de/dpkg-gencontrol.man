@@ -130,6 +130,18 @@ Zeige den Bedienungshinweis und beende.
 \fB\-\-version\fP
 Gebe die Version aus und beende sich.
 .
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
+.
 .SH DATEIEN
 .TP 
 \fBdebian/control\fP

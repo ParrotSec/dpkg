@@ -125,13 +125,13 @@ Stel een uitvoersubstitutievariabele in. Zie \fBdeb\-substvars\fP(5) voor een
 bespreking van uitvoersubstitutie.
 .TP 
 \fB\-T\fP\fIsubstvars\-bestand\fP
-Read substitution variables in \fIsubstvars\-file\fP; the default is
-\fBdebian/substvars\fP.  No variable substitution is done on any of the fields
-that are output, except for the contents extracted from each binary package
-\fBDescription\fP field (since dpkg 1.19.0), however the special variable
-\fIFormat\fP will override the field of the same name.  This option can be used
-multiple times to read substitution variables from multiple files (since
-dpkg 1.15.6).
+Lees de substitutievariabelen uit \fIsubstvars\-bestand\fP. Standaard is dat
+\fBdebian/substvars\fP. Er wordt geen variabelesubstitutie toegepast op de
+velden uit de uitvoer, behalve voor de inhoud die geëxtraheerd werd uit het
+veld \fBDescription\fP van elk binair pakket (sinds dpkg 1.19.0). Nochtans zal
+de bijzondere variabele \fIFormat\fP het veld met dezelfde naam vervangen. Deze
+optie kan meermaals gebruikt worden om substitutievariabelen uit
+verschillende bestanden te lezen (sinds dpkg 1.15.6).
 
 .TP 
 \fB\-D\fP\fIveld\fP\fB=\fP\fIwaarde\fP
@@ -177,6 +177,17 @@ Toon info over het gebruik en sluit af.
 .TP 
 \fB\-\-version\fP
 Toon de versie en sluit af.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
 .
 .SH BESTANDEN
 .TP 

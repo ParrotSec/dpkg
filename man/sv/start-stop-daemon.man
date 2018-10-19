@@ -87,9 +87,17 @@ Check for a process with the specified parent pid \fIppid\fP (since version
 1.17.7).  The \fIppid\fP must be a number greater than 0.
 .TP 
 \fB\-p\fP, \fB\-\-pidfile\fP \fIpidfil\fP
-Kontrollera om en process har skapat filen \fIpidfil\fP. Observera: om flaggan
-används på egen hand kan den orsaka att oönskade processer berörs, om den
-gamla processen avslutats utan att kunna ta bort \fIpidfil\fP.
+Sök efter processer vars process\-id anges i \fIpidfil\fP.
+.IP
+Note: using this matching option alone might cause unintended processes to
+be acted on, if the old process terminated without being able to remove the
+\fIpid\-file\fP.
+.IP
+\fBWarning:\fP Using this match option alone with a daemon that writes the
+pidfile as an unprivileged user is a security risk, because if the daemon
+gets compromised the contents of the pidfile cannot be trusted, and then a
+privileged runner (such as an init script executed as root) would end up
+acting on any system process.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIprogramfil\fP
 Se efter processer som är instanser av \fIprogramfil\fP. Flaggan \fIprogramfil\fP

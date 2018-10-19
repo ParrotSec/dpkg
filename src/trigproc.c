@@ -25,7 +25,6 @@
 
 #include <sys/stat.h>
 
-#include <assert.h>
 #include <fcntl.h>
 #include <stdlib.h>
 
@@ -34,11 +33,11 @@
 #include <dpkg/dpkg-db.h>
 #include <dpkg/pkg.h>
 #include <dpkg/pkg-queue.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 #include <dpkg/triglib.h>
 
 #include "main.h"
-#include "filesdb.h"
-#include "infodb.h"
 
 /*
  * Trigger processing algorithms:
@@ -161,6 +160,7 @@ trigproc_run_deferred(void)
 		push_error_context_jump(&ejbuf, print_error_perpackage,
 		                        pkg_name(pkg, pnaw_nonambig));
 
+		ensure_package_clientdata(pkg);
 		pkg->clientdata->trigprocdeferred = NULL;
 		trigproc(pkg, TRIGPROC_TRY);
 
@@ -335,8 +335,11 @@ check_trigger_cycle(struct pkginfo *processing_now)
 	debug(dbg_triggers, "check_triggers_cycle pnow=%s giveup=%s",
 	      pkg_name(processing_now, pnaw_always),
 	      pkg_name(giveup, pnaw_always));
-	assert(giveup->status == PKG_STAT_TRIGGERSAWAITED ||
-	       giveup->status == PKG_STAT_TRIGGERSPENDING);
+	if (giveup->status != PKG_STAT_TRIGGERSAWAITED &&
+	    giveup->status != PKG_STAT_TRIGGERSPENDING)
+		internerr("package %s in non-trigger state %s",
+		          pkg_name(giveup, pnaw_always),
+		          pkg_status_name(giveup));
 	pkg_set_status(giveup, PKG_STAT_HALFCONFIGURED);
 	modstatdb_note(giveup);
 	print_error_perpackage(_("triggers looping, abandoned"),
@@ -360,6 +363,7 @@ trigproc(struct pkginfo *pkg, enum trigproc_type type)
 
 	debug(dbg_triggers, "trigproc %s", pkg_name(pkg, pnaw_always));
 
+	ensure_package_clientdata(pkg);
 	if (pkg->clientdata->trigprocdeferred)
 		pkg->clientdata->trigprocdeferred->pkg = NULL;
 	pkg->clientdata->trigprocdeferred = NULL;
@@ -367,8 +371,11 @@ trigproc(struct pkginfo *pkg, enum trigproc_type type)
 	if (pkg->trigpend_head) {
 		enum dep_check ok;
 
-		assert(pkg->status == PKG_STAT_TRIGGERSPENDING ||
-		       pkg->status == PKG_STAT_TRIGGERSAWAITED);
+		if (pkg->status != PKG_STAT_TRIGGERSPENDING &&
+		    pkg->status != PKG_STAT_TRIGGERSAWAITED)
+			internerr("package %s in non-trigger state %s",
+			          pkg_name(pkg, pnaw_always),
+			          pkg_status_name(pkg));
 
 		if (dependtry > 1) {
 			gaveup = check_trigger_cycle(pkg);
@@ -529,18 +536,12 @@ trig_transitional_activate(enum modstatdb_rw cstatus)
 
 /*========== Hook setup. ==========*/
 
-static struct filenamenode *
-th_proper_nn_find(const char *name, bool nonew)
-{
-	return findnamenode(name, nonew ? fnn_nonew : 0);
-}
-
 TRIGHOOKS_DEFINE_NAMENODE_ACCESSORS
 
 static const struct trig_hooks trig_our_hooks = {
 	.enqueue_deferred = trigproc_enqueue_deferred,
 	.transitional_activate = trig_transitional_activate,
-	.namenode_find = th_proper_nn_find,
+	.namenode_find = th_nn_find,
 	.namenode_interested = th_nn_interested,
 	.namenode_name = th_nn_name,
 };

@@ -100,11 +100,13 @@ mit der Architektur\-Spezifizierung für \fBMulti\-Arch\fP\-\fBsame\fP\-Pakete) 
 installierte Version des Pakets getrennt durch einen Tabulator enthalten
 sind.
 .TP 
-\fB\-s\fP, \fB\-\-status\fP \fIPaketname\fP …
+\fB\-s\fP, \fB\-\-status\fP [\fIPaketname\fP …]
 Berichte Zustand des angegebenen Paketes. Dies zeigt nur den Eintrag in der
-Datenbank der Zustände der installierten Pakete. Wenn mehrere \fIPaketname\fP
-aufgeführt sind, werden die angeforderten Statuseinträge durch Leerzeilen
-getrennt, wobei die Reihenfolge identisch zu der in der Argumentenliste ist.
+Datenbank der Zustände der installierten Pakete. Falls kein \fIPaketname\fP
+festgelegt ist, werden alle Paketeinträge in der Statusdatenbank angezeigt
+(seit dpkg 1.19.1). Wenn mehrere \fIPaketname\fP\-Einträge aufgeführt sind,
+werden die angeforderten Statuseinträge durch Leerzeilen getrennt, wobei die
+Reihenfolge identisch zu der in der Argumentenliste ist.
 .TP 
 \fB\-L\fP, \fB\-\-listfiles\fP \fIPaketname\fP …
 Aufführen von Dateien, die durch \fIPaketname\fP installiert wurden. Wenn
@@ -153,11 +155,13 @@ oder ‚\fB/.\fP’ entfernt und ein »literal path lookup« durchgeführt.
 Dieser Befehl wird weder die zusätzlichen Dateien, die durch
 Betreuer\-Skripte angelegt wurden, noch Alternativen aufführen.
 .TP 
-\fB\-p\fP, \fB\-\-print\-avail\fP \fIPaketname\fP …
-Zeige Details über \fIPaketname\fP an, wie diese in \fI%ADMINDIR%/available\fP
-vorliegen. Wenn mehrere \fIPaketname\fP aufgeführt sind, werden die
-angeforderten \fIavailable\fP\-Einträge durch Leerzeilen getrennt, wobei die
-Reihenfolge identisch zu der in der Argumentenliste ist.
+\fB\-p\fP, \fB\-\-print\-avail\fP [\fIPaketname\fP …]
+Zeige Details über Pakete an, wie diese in \fI%ADMINDIR%/available\fP
+vorliegen. Falls kein \fIPaketname\fP festgelegt ist, werden alle in der
+Datenbank \fIavailable\fP verfügbaren Paketeinträge angezeigt (seit Dpkg
+1.19.1). Wenn mehrere \fIPaketname\fP aufgeführt sind, werden die angeforderten
+\fIavailable\fP\-Einträge durch Leerzeilen getrennt, wobei die Reihenfolge
+identisch zu der in der Argumentenliste ist.
 
 Benutzer APT\-basierter Oberflächen sollten \fBapt\-cache show\fP \fIPaketname\fP
 verwenden, da die Datei \fIavailable\fP nur bei der Benutzung von \fBdselect\fP
@@ -179,6 +183,9 @@ Gebe die Version aus und beende sich.
 Auch die »available«\-Datei laden, wenn die Befehle \fB\-\-show\fP und \fB\-\-list\fP
 verwandt werden, die jetzt standardmnäßig nur die Statusdatei laden (seit
 Dpkg 1.16.2).
+.TP 
+\fB\-\-no\-pager\fP
+Disables the use of any pager when showing information (since dpkg 1.19.2).
 .TP 
 \fB\-f\fP, \fB\-\-showformat=\fP\fIFormat\fP
 Diese Option wird dazu verwendet, das Format der Ausgabe anzugeben, das
@@ -254,8 +261,11 @@ Architektur\-Spezifizierung dient dazu, einen eindeutigen Paketnamen zu
 erzeugen, falls beispielsweise das Paket ein Feld \fBMulti\-Arch\fP mit dem Wert
 \fBsame\fP hat oder das Paket für eine fremde Architektur ist.
 .TP 
+\fBbinary:Synopsis\fP
+Es enthält die Kurzbeschreibung des Pakets (seit Dpkg 1.19.1).
+.TP 
 \fBbinary:Summary\fP
-Es enthält die Kurzbeschreibung des Pakets (seit Dpkg 1.16.2).
+Dies ist ein Alias für \fBbinary:Synopsis\fP (seit Dpkg 1.16.2).
 .TP 
 \fBdb:Status\-Abbrev\fP
 Es enthält den abgekürzten Paketstatus (als drei Zeichen) wie „ii “ oder
@@ -313,14 +323,35 @@ Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
 die Datenbank, Speicherzuweisungen usw.
 .
 .SH UMGEBUNG
+.SS "Externe Umgebung"
+.TP 
+\fBSHELL\fP
+Sets the program to execute when spawning a command via a shell (since dpkg
+1.19.2).
+.TP 
+\fBPAGER\fP
+.TQ
+\fBDPKG_PAGER\fP
+Sets the pager command to use (since dpkg 1.19.1), which will be executed
+with «\fB$SHELL \-c\fP».  If \fBSHELL\fP is not set, «\fBsh\fP» will be used instead.
+The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment variable (since dpkg
+1.19.2).
 .TP 
 \fBDPKG_ADMINDIR\fP
 Falls gesetzt und die Option \fB\-\-admindir\fP nicht verwandt wurde, wird dies
 als Datenverzeichnis von \fBdpkg\fP verwandt.
 .TP 
-\fBCOLUMNS\fP
-Diese Einstellung beeinflusst die Ausgabe der \fB\-\-list\fP\-Option durch
-Verändern der Breite ihrer Ausgabe.
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.SS "Interne Umgebung"
+.TP 
+\fBLESS\fP
+Defined by \fBdpkg\-query\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning
+a pager (since dpkg 1.19.2).  To change the default behavior, this variable
+can be preset to some other value including an empty string, or the \fBPAGER\fP
+or \fBDPKG_PAGER\fP variables can be set to disable specific options with
+«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
 .
 .SH "SIEHE AUCH"
 \fBdpkg\fP(1).

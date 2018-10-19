@@ -126,6 +126,15 @@ expose an interface that is used to run a command under (fake)root.
 .RE
 
 .TP
+.BI Testsuite: " name-list"
+.TQ
+.BI Testsuite\-Triggers: " package-list"
+These fields are described in the
+.BR dsc (5)
+manual page, as they are generated from information inferred from
+\fBdebian/tests/control\fP or copied literally to the source control file.
+
+.TP
 .BI Vcs\-Arch: " url"
 .TQ
 .BI Vcs\-Bzr: " url"
@@ -444,8 +453,8 @@ Maintainer: Dpkg Developers <debian\-dpkg@lists.debian.org>
 # this field is copied to the binary and source packages
 XBS\-Upstream\-Release\-Status: stable
 Homepage: https://wiki.debian.org/Teams/Dpkg
-Vcs\-Browser: https://anonscm.debian.org/cgit/dpkg/dpkg.git
-Vcs\-Git: https://anonscm.debian.org/git/dpkg/dpkg.git
+Vcs\-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs\-Git: https://git.dpkg.org/git/dpkg/dpkg.git
 Standards\-Version: 3.7.3
 Build\-Depends: pkg\-config, debhelper (>= 4.1.81),
  libselinux1\-dev (>= 1.28\-4) [!linux\-any]

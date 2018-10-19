@@ -437,6 +437,15 @@ manualsidan \fBFile::Glob\fP(3perl) för detaljer) i \fIbiblioteksfil\fP för at
 träffa multipla bibliotek med ett enda argument (annars behöver du flera
 \fB\-e\fP).
 .TP 
+\fB\-l\fP\fIkatalog\fP
+Prepend \fIdirectory\fP to the list of directories to search for private shared
+libraries (since dpkg 1.19.1). This option can be used multiple times.
+
+Observera: Använd den här flaggan istället för att sätta \fBLD_LIBRARY_PATH\fP,
+eftersom miljövariabeln används för att styra körtidslänkaren, och genom att
+utnyttja det för att ange sökvägen till delade bibliotek vid kompilering kan
+det uppstå problem, till exempel vid korskompilering.
+.TP 
 \fB\-I\fP\fIfilnamn\fP
 Använd \fIfilnamn\fP som referensfil för att generera symbolfilen som
 integreras i själva paketet.
@@ -501,6 +510,16 @@ Visar version och avslutar.
 Overrides the command check level, even if the \fB\-c\fP command\-line argument
 was given (note that this goes against the common convention of command\-line
 arguments having precedence over environment variables).
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.
 .SH "SE ÄVEN"
 \fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
 .br

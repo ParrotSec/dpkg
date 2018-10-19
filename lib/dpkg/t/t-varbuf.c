@@ -1,6 +1,6 @@
 /*
  * libdpkg - Debian packaging suite library routines
- * t-verbuf.c - test varbuf implementation
+ * t-varbuf.c - test varbuf implementation
  *
  * Copyright © 2009-2011, 2013-2015 Guillem Jover <guillem@debian.org>
  *
@@ -57,6 +57,26 @@ test_varbuf_prealloc(void)
 	test_pass(vb.used == 0);
 	test_pass(vb.size == 0);
 	test_pass(vb.buf == NULL);
+}
+
+static void
+test_varbuf_new(void)
+{
+	struct varbuf *vb;
+
+	vb = varbuf_new(0);
+	test_pass(vb != NULL);
+	test_pass(vb->used == 0);
+	test_pass(vb->size == 0);
+	test_pass(vb->buf == NULL);
+	varbuf_free(vb);
+
+	vb = varbuf_new(10);
+	test_pass(vb != NULL);
+	test_pass(vb->used == 0);
+	test_pass(vb->size >= 10);
+	test_pass(vb->buf != NULL);
+	varbuf_free(vb);
 }
 
 static void
@@ -350,10 +370,11 @@ test_varbuf_detach(void)
 
 TEST_ENTRY(test)
 {
-	test_plan(120);
+	test_plan(128);
 
 	test_varbuf_init();
 	test_varbuf_prealloc();
+	test_varbuf_new();
 	test_varbuf_grow();
 	test_varbuf_trunc();
 	test_varbuf_add_buf();

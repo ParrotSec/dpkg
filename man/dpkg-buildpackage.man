@@ -120,9 +120,10 @@ The allowed values are:
 .B source
 Builds the source package.
 Note: when using this value standalone and if what you want is simply to
-(re-)build the source package, using \fBdpkg\-source\fP is always better
-as it does not require any build dependencies to be installed to be able
-to call the \fBclean\fP target.
+(re-)build the source package from a clean source tree, using
+\fBdpkg\-source\fP directly is always a better option as it does not
+require any build dependencies to be installed which are otherwise
+needed to be able to call the \fBclean\fP target.
 .TP
 .B any
 Builds the architecture specific binary packages.
@@ -276,20 +277,30 @@ Do not check built-in build dependencies and conflicts (since dpkg 1.18.2).
 These are the distribution specific implicit build dependencies usually
 required in a build environment, the so called Build-Essential package set.
 .TP
+.B \-\-rules\-requires\-root
+Do not honor the \fBRules\-Requires\-Root\fP field, falling back to its
+legacy default value (since dpkg 1.19.1).
+.TP
 .BR \-nc ", " \-\-no\-pre\-clean
-Do not clean the source tree (long option since dpkg 1.18.8).
+Do not clean the source tree before building (long option since dpkg 1.18.8).
 Implies \fB\-b\fP if nothing else has been selected among \fB\-F\fP,
 \fB\-g\fP, \fB\-G\fP, \fB\-B\fP, \fB\-A\fP or \fB\-S\fP.
 Implies \fB\-d\fP with \fB\-S\fP (since dpkg 1.18.0).
 .TP
 .BR \-\-pre\-clean
 Clean the source tree before building (since dpkg 1.18.8).
+This is the default behavior.
 .TP
 .BR \-tc ", " \-\-post\-clean
 Clean the source tree (using
 .I gain-root-command
 .BR "debian/rules clean" )
 after the package has been built (long option since dpkg 1.18.8).
+.TP
+.BR \-\-no\-post\-clean
+Do not clean the source tree after the package has been built
+(since dpkg 1.19.1).
+This is the default behavior.
 .TP
 .BR \-r ", " \-\-root\-command= \fIgain-root-command\fP
 When
@@ -496,6 +507,11 @@ Overridden by the \fB\-P\fP option.
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: \fBauto\fP (default), \fBalways\fP and
 \fBnever\fP.
+.TP
+.B DPKG_NLS
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.19.0).
+The accepted values are: \fB0\fP and \fB1\fP (default).
 
 .SS Internal environment
 Even if \fBdpkg\-buildpackage\fP exports some variables, \fBdebian/rules\fP

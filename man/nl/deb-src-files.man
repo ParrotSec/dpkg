@@ -36,7 +36,7 @@ Het bestand \fIdebian/files\fP heeft een eenvoudige indeling waarbij de
 elementen door witruimte van elkaar gescheiden worden.
 .PP
 .in +5
-\fIbestandsnaam\fP \fIsectie\fP \fIprioriteit\fP
+\fIfilename\fP \fIsection\fP \fIpriority\fP [ \fIkeyword=value\&...\&\fP ]
 .in -5
 .PP
 \fIbestandsnaam\fP is de naam van het te distribueren voorwerp.
@@ -44,6 +44,10 @@ elementen door witruimte van elkaar gescheiden worden.
 \fIsectie\fP en \fIprioriteit\fP komen overeen met de respectieve controlevelden
 uit het .deb\-bestand. Welke waarden mogelijk zijn, is specifiek voor het
 archief van elke distributie.
+.PP
+\fIkeyword=value\&...\&\fP corresponds to an optional whitespace\-delimited list
+of attributes for this entry.  The only currently supported keyword is
+\fBautomatic\fP with value \fByes\fP, to mark automatically generated files.
 .
 .SH OPMERKINGEN
 Het is niet de bedoeling dat dit bestand rechtstreeks gewijzigd

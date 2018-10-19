@@ -82,9 +82,9 @@ met behulp van eval in te stellen.
 Toon een commando dat vergelijkbaar is met \fB\-\-print\-unset\fP, maar om alle
 variabelen leeg te maken.
 .TP 
-\fB\-c\fP, \fB\-\-command\fP \fIcommand\-string\fP
-Execute a \fIcommand\-string\fP in an environment which has all variables set to
-the determined value.
+\fB\-c\fP, \fB\-\-command\fP \fIcommando\-tekenreeks\fP
+Voer een \fIcommando\-tekenreeks\fP uit in een omgeving waarin alle variabelen
+ingesteld zijn op de vastgelegde waarde.
 .TP 
 \fB\-L\fP, \fB\-\-list\-known\fP
 Toon een lijst van geldige architectuurbenamingen. Kan eventueel ingeperkt
@@ -370,6 +370,16 @@ architectuurinformatie te bekomen tijdens het bouwen van een pakket.
 Indien deze variabele een waarde heeft, zal ze gebruikt worden als de
 data\-map van \fBdpkg\fP waarin zich de architectuurtabellen bevinden (sinds
 dpkg 1.14.17). Staat standaard ingesteld op «%PKGDATADIR%».
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.
 .SH OPMERKINGEN
 Alle lange commando\- en optienamen kunnen slechts sinds dpkg 1.17.17
 gebruikt worden.

@@ -84,10 +84,11 @@ toegevoegd. Jokertekens voor architecturen mogen nooit voorkomen in de
 lijst.
 .TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Typically, this is the original package's version number in whatever form
-the program's author uses.  It may also include a Debian revision number
-(for non\-native packages).  The exact format and sorting algorithm are
-described in \fBdeb\-version\fP(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
+auteur van het programma er ook voor gebruikt. Het kan ook een
+Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
+exacte indeling en het sorteringsalgoritme worden beschreven in
+\fBdeb\-version\fP(7).
 .TP 
 \fBDistribution:\fP \fIdistributie\fPs (verplicht)
 Somt een of meer met een spatie van elkaar gescheiden distributies op waarin
@@ -189,7 +190,7 @@ in het veld \fBFiles\fP en in de andere gerelateerde \fBChecksums\fP\-velden.
 .
 .SH BUGS
 Het veld \fBFiles\fP is niet consistent met de andere \fBChecksums\fP\-velden. De
-velden \fBChange\-By\fP en \fBMaintainer\fP hebben namen die verwarrend zijn. Het
+velden \fBChanged\-By\fP en \fBMaintainer\fP hebben namen die verwarrend zijn. Het
 veld \fBDistribution\fP bevat informatie over waar gewoonlijk met de term suite
 naar verwezen wordt.
 .SH "ZIE OOK"

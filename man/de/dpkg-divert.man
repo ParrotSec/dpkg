@@ -3,7 +3,7 @@
 .\" Copyright © 1995 Ian Jackson <ijackson@chiark.greenend.org.uk>
 .\" Copyright © 1999 Wichert Akkerman <wakkerma@debian.org>
 .\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
-.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2013, 2015-2018 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -48,10 +48,12 @@ diese Dateien enthält, installiert wird.
 .SH BEFEHLE
 .TP 
 [\fB\-\-add\fP] \fIDatei\fP
-Fügt eine Umleitung für \fIDatei\fP hinzu.
+Fügt eine Umleitung für \fIDatei\fP hinzu. Die Datei wird derzeit nicht
+umbenannt, siehe \fB\-\-rename\fP.
 .TP 
 \fB\-\-remove\fP\fI Datei\fP
-Entferne eine Umleitung für \fIDatei\fP.
+Entfernt eine Umleitung für \fIDatei\fP. Die Datei wird derzeit nicht
+umbenannt, siehe \fB\-\-rename\fP.
 .TP 
 \fB\-\-list\fP\fI Glob\-Muster\fP
 Liste Umleitungen auf, die auf \fIGlob\-Muster\fP passen.
@@ -67,8 +69,17 @@ Zeige den echten Namen für eine umgeleitete Datei an.
 .SH OPTIONEN
 .TP 
 \fB\-\-admindir\fP\fI Verzeichnis\fP
-Setze das \fBdpkg\fP\-Datenverzeichnis auf \fIVerzeichnis\fP (Standard:
-\fI%ADMINDIR%\fP).
+Set the administrative directory to \fIdirectory\fP.  Defaults to
+«\fI%ADMINDIR%\fP».
+.TP 
+\fB\-\-instdir\fP\fI directory\fP
+Set the installation directory, which refers to the directory where packages
+get installed (since dpkg 1.19.2). Defaults to «\fI/\fP».
+.TP 
+\fB\-\-root\fP\fI directory\fP
+Set the root directory to \fBdirectory\fP, which sets the installation
+directory to «\fIdirectory\fP» and the administrative directory to
+«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
 .TP 
 \fB\-\-divert\fP\fI Umleitziel\fP
 \fIUmleitziel\fP ist der Zielort, wo die Versionen der \fIDatei\fP, wie sie von
@@ -89,7 +100,19 @@ Ruhiger Modus, d.h. keine langatmige Ausgabe.
 .TP 
 \fB\-\-rename\fP
 Schiebe die Dateien tatsächlich beiseite (oder zurück). \fBdpkg\-divert\fP wird
-den Arbeitsvorgang abbrechen, falls die Zieldatei bereits existiert.
+den Arbeitsvorgang abbrechen, falls die Zieldatei bereits existiert. Dies
+ist das typische Verhalten, das für Umleitungen von Dateien aus der Gruppe
+der non\-\fBEssential\fP\-Pakete verwandt wird (siehe \fB\-\-no\-rename\fP für weitere
+Details).
+.TP 
+\fB\-\-no\-rename\fP
+Legt fest, dass die Datei beim Hinzufügen oder Entfernen der Umleitung in
+die Datenbank nicht umbenannt werden soll (seit Dpkg 1.19.1). Dies ist für
+Umleitungen von Dateien aus der Paketgruppe \fBEssential\fP gedacht, bei der
+das vorübergehende Verschwinden der ursprünglichen Datei nicht akzeptiert
+werden kann, da es zu einem nicht funktionalen System führen kann. Dies ist
+das Standardverhalten, was sich allerdings im Dpkg 1.20.x\-Zyklus ändern
+wird.
 .TP 
 \fB\-\-test\fP
 Testmodus, d.h. führe keine Änderungen durch, sondern zeige sie lediglich.
@@ -112,13 +135,21 @@ die Datenbank, Speicherzuweisungen usw.
 .
 .SH UMGEBUNG
 .TP 
+\fBDPKG_ROOT\fP
+If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
+will be used as the filesystem root directory (since dpkg 1.19.2).
+.TP 
 \fBDPKG_ADMINDIR\fP
-Falls gesetzt und die Option \fB\-\-admindir\fP nicht verwandt wurde, wird dies
-als Datenverzeichnis von \fBdpkg\fP verwandt.
+If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
+it will be used as the \fBdpkg\fP data directory.
 .TP 
 \fBDPKG_MAINTSCRIPT_PACKAGE\fP
 Falls gesetzt und die Optionen \fB\-\-local\fP und \fB\-\-package\fP nicht verwandt
 wurden, wird \fBdpkg\-divert\fP dies als Paketnamen verwenden.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
 .
 .SH DATEIEN
 .TP 

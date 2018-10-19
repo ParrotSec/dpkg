@@ -468,8 +468,8 @@ debian/control aufgeführt ist (oder falls es keine Datei debian/control
 gibt).
 .TP 
 \fB\-v\fP\fIVersion\fP
-Definiert die Paketversion. Standardmäßig wird eie Version aus
-debian/changelog ausgelesen. Benötigt, falls der Aufruf außerhalb des
+Definiert die Paketversion. Standardmäßig wird die Version aus
+debian/changelog entnommen. Benötigt, falls der Aufruf außerhalb des
 Quellpaketbaums erfolgt.
 .TP 
 \fB\-e\fP\fIBibliotheksdatei\fP
@@ -479,6 +479,16 @@ Expansion von Pfadnamen verwandt werden (siehe die Handbuchseite
 \fBFile::Glob\fP(3perl) für weitere Details) in \fIBibliotheksdatei\fP verwenden,
 um mehrere Bibliotheken mit einem einzelnen Argument zu passen (andernfalls
 benötigen Sie mehrere \fB\-e\fP).
+.TP 
+\fB\-l\fP\fIVerzeichnis\fP
+Stellt \fIVerzeichnis\fP der Liste der zu durchsuchenden privaten
+Laufzeitbibliotheken voran (seit Dpkg 1.19.1). Diese Option kann mehrfach
+angegeben werden.
+
+Hinweis: Verwenden Sie diese Variable, statt \fBLD_LIBRARY_PATH\fP zu setzten,
+da diese Umgebungsvariable verwandt wird, um den Laufzeit\-Linker zu steuern
+und ihr Missbrauch zum Setzen von Pfaden zu Laufzeitbibliotheken zur Bauzeit
+kann beispielsweise beim Cross\-Übersetzen problematisch werden.
 .TP 
 \fB\-I\fP\fIDateiname\fP
 Verwende \fIDateiname\fP als Referenzdatei, um die Symboldatei zu erstellen,
@@ -552,6 +562,17 @@ Setzt die Befehlsüberprüfungsstufe außer Kraft, selbst wenn das
 Befehlszeilenargument \fB\-c\fP übergeben wurde (beachten Sie, dass dies der
 üblichen Konvention widerspricht, demnach Befehlszeilenargumente Vorrang
 über Umgebungsvariablen haben).
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
+.
 .SH "SIEHE AUCH"
 \fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
 .br

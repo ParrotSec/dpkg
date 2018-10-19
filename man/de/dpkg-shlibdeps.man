@@ -116,7 +116,7 @@ befinden sich solche Dateien unter %ADMINDIR%.
 Systemabhängige Vorgaben für Abhängigkeitsinformationen von
 Laufzeitbibliotheken.
 .P
-Die extrahierten Abhängigkeiten werden direkt verwendet (es sei den, sie
+Die entnommenen Abhängigkeiten werden direkt verwendet (es sei den, sie
 werden als Dubletten herausgefiltert oder sie sind schwächer als eine andere
 Abhängigkeit).
 .SH OPTIONEN
@@ -237,6 +237,18 @@ Zeige den Bedienungshinweis und beende.
 .TP 
 \fB\-\-version\fP
 Gebe die Version aus und beende sich.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 .
 .SH DIAGNOSE
 .SS Warnungen

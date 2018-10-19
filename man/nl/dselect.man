@@ -153,10 +153,10 @@ als het interactief uitgevoerd wordt:
 .SS toegang
 Kies en configureer een benaderingsmethode om pakketbronnen te benaderen.
 .sp
-By default, \fBdselect\fP provides several methods such as \fIcdrom\fP,
+Standaard biedt \fBdselect\fP diverse benaderingsmethodes, zoals \fIcdrom\fP,
 \fImulti_cd\fP, \fInfs\fP, \fImulti_nfs\fP, \fIharddisk\fP, \fImounted\fP, \fImulti_mount\fP
-or \fIftp\fP, but other packages may provide additional methods, eg. the \fIapt\fP
-access method provided by the \fBapt\fP package.
+of \fIftp\fP, maar andere pakketten kunnen andere methodes aanbieden, zoals
+bijvoorbeeld het pakket \fBapt\fP dat de benaderingsmethode \fIapt\fP aanbiedt.
 .sp
 Het gebruik van de benaderingsmethode \fIapt\fP wordt sterk aanbevolen.
 .sp

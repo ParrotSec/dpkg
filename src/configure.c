@@ -29,7 +29,6 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <ctype.h>
 #include <string.h>
@@ -53,9 +52,10 @@
 #include <dpkg/path.h>
 #include <dpkg/subproc.h>
 #include <dpkg/command.h>
+#include <dpkg/pager.h>
 #include <dpkg/triglib.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
 #include "main.h"
 
 enum conffopt {
@@ -198,22 +198,27 @@ show_prompt(const char *cfgfile, const char *realold, const char *realnew,
 static void
 show_diff(const char *old, const char *new)
 {
+	struct pager *pager;
 	pid_t pid;
+
+	pager = pager_spawn(_("conffile difference visualizer"));
 
 	pid = subproc_fork();
 	if (!pid) {
 		/* Child process. */
-		char cmdbuf[1024];
+		struct command cmd;
 
-		sprintf(cmdbuf, DIFF " -Nu %.250s %.250s | %.250s",
-		        str_quote_meta(old), str_quote_meta(new),
-		        command_get_pager());
-
-		command_shell(cmdbuf, _("conffile difference visualizer"));
+		command_init(&cmd, DIFF, _("conffile difference visualizer"));
+		command_add_arg(&cmd, DIFF);
+		command_add_arg(&cmd, "-Nu");
+		command_add_arg(&cmd, old);
+		command_add_arg(&cmd, new);
+		command_exec(&cmd);
 	}
 
 	/* Parent process. */
 	subproc_reap(pid, _("conffile difference visualizer"), SUBPROC_NOCHECK);
+	pager_reap(pager);
 }
 
 /**
@@ -230,6 +235,10 @@ spawn_shell(const char *confold, const char *confnew)
 {
 	pid_t pid;
 
+	fputs(_("Useful environment variables:\n"), stderr);
+	fputs(" - DPKG_SHELL_REASON\n", stderr);
+	fputs(" - DPKG_CONFFILE_OLD\n", stderr);
+	fputs(" - DPKG_CONFFILE_NEW\n", stderr);
 	fputs(_("Type 'exit' when you're done.\n"), stderr);
 
 	pid = subproc_fork();
@@ -606,6 +615,7 @@ deferred_configure(struct pkginfo *pkg)
 	ok = dependencies_ok(pkg, NULL, &aemsgs);
 	if (ok == DEP_CHECK_DEFER) {
 		varbuf_destroy(&aemsgs);
+		ensure_package_clientdata(pkg);
 		pkg->clientdata->istobe = PKG_ISTOBE_INSTALLNEW;
 		enqueue_package(pkg);
 		return;
@@ -650,6 +660,7 @@ deferred_configure(struct pkginfo *pkg)
 
 	if (f_noact) {
 		pkg_set_status(pkg, PKG_STAT_INSTALLED);
+		ensure_package_clientdata(pkg);
 		pkg->clientdata->istobe = PKG_ISTOBE_NORMAL;
 		return;
 	}
@@ -681,7 +692,9 @@ deferred_configure(struct pkginfo *pkg)
 		pkg_set_status(pkg, PKG_STAT_HALFCONFIGURED);
 	}
 
-	assert(pkg->status == PKG_STAT_HALFCONFIGURED);
+	if (pkg->status != PKG_STAT_HALFCONFIGURED)
+		internerr("package %s in state %s, instead of half-configured",
+		          pkg_name(pkg, pnaw_always), pkg_status_name(pkg));
 
 	modstatdb_note(pkg);
 
@@ -824,7 +837,7 @@ md5hash(struct pkginfo *pkg, char *hashbuf, const char *fn)
 	fd = open(fn, O_RDONLY);
 
 	if (fd >= 0) {
-		push_cleanup(cu_closefd, ehflag_bombout, NULL, 0, 1, &fd);
+		push_cleanup(cu_closefd, ehflag_bombout, 1, &fd);
 		if (fd_md5(fd, hashbuf, -1, &err) < 0)
 			ohshit(_("cannot compute MD5 hash for file '%s': %s"),
 			       fn, err.str);

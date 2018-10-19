@@ -21,7 +21,6 @@
 #include <config.h>
 #include <compat.h>
 
-#include <assert.h>
 #include <limits.h>
 #include <string.h>
 #include <fcntl.h>
@@ -64,7 +63,7 @@ void reassemble(struct partinfo **partlist, const char *outputfile) {
              pi->filename, outputfile, err.str);
     close(fd_in);
 
-    printf("%d ",i+1);
+    printf("%u ", i + 1);
   }
   if (fsync(fd_out))
     ohshite(_("unable to sync file '%s'"), outputfile);
@@ -120,7 +119,9 @@ do_join(const char *const *argv)
   refi= NULL;
   for (pq= queue; pq; pq= pq->nextinqueue)
     if (!refi || pq->info.thispartn < refi->thispartn) refi= &pq->info;
-  assert(refi);
+  if (refi == NULL)
+    internerr("empty deb part queue");
+
   partlist= nfmalloc(sizeof(struct partinfo*)*refi->maxpartn);
   for (i = 0; i < refi->maxpartn; i++)
     partlist[i] = NULL;

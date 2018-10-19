@@ -57,10 +57,11 @@ wordt als het veld ontbreekt. In de toekomst kunnen nog andere types
 toegevoegd worden.
 .TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Typically, this is the original package's version number in whatever form
-the program's author uses. It may also include a Debian revision number (for
-non\-native packages). The exact format and sorting algorithm are described
-in \fBdeb\-version\fP(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
+auteur van het programma er ook aan geeft. Het kan ook een
+Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
+exacte indeling en het sorteringsalgoritme worden beschreven in
+\fBdeb\-version\fP(7).
 .TP 
 \fBMaintainer:\fP \fIvolledige\-naam\-en\-e\-mail\fP (aanbevolen)
 Moet opgemaakt worden volgens de indeling “Joe Bloggs
@@ -271,8 +272,8 @@ hierboven werd beschreven.
 .
 .TP 
 \fBEnhances:\fP\fI pakketlijst\fP
-This is a list of packages that this one enhances.  It is similar to
-\fBSuggests\fP but in the opposite direction.
+Dit is een lijst met pakketten waarvoor dit pakket uitbreidingen biedt. Het
+is vergelijkbaar met \fBSuggests\fP, maar in de omgekeerde richting.
 .TP 
 \fBProvides:\fP\fI pakketlijst\fP
 Dit is een lijst van virtuele pakketten waarin door dit pakket voorzien
@@ -323,6 +324,14 @@ dit veld gemarkeerd werden, zullen niet te vinden zijn in het
 hoofdcontrolebestand \fIdebian/control\fP van de broncode. De enige reden die
 momenteel gebruikt wordt, is \fBdebug\-symbols\fP.
 .
+.TP 
+\fBBuild\-Ids:\fP\fI elf\-build\-id\-list\fP
+This field specifies a whitespace separated list of ELF build\-ids. These are
+unique identifiers for semantically identical ELF objects, for each of these
+within the package.
+.
+The format or the way to compute each build\-id is not defined by design.
+.
 .SH VOORBEELD
 .\" .RS
 .nf
@@ -348,6 +357,11 @@ Description: GNU grep, egrep en fgrep.
  expressies met terugverwijzingen zullen trager zijn.
 .fi
 .\" .RE
+.
+.SH BUGS
+The \fBBuild\-Ids\fP field uses a rather generic name out of its original
+context within an ELF object, which serves a very specific purpose and
+executable format.
 .
 .SH "ZIE OOK"
 \fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).

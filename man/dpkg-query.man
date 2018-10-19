@@ -95,11 +95,14 @@ having the name (extended with the architecture qualifier for
 \fBMulti\-Arch\fP \fBsame\fP packages) and installed version of the package,
 separated by a tab.
 .TP
-.BR \-s ", " \-\-status " \fIpackage-name\fP..."
+.BR \-s ", " \-\-status " [\fIpackage-name\fP...]"
 Report status of specified package. This just displays the entry in
-the installed package status database. When multiple \fIpackage-name\fP
-are listed, the requested status entries are separated by an empty line,
-with the same order as specified on the argument list.
+the installed package status database.
+If no \fIpackage-name\fP is specified it will display all package entries
+in the status database (since dpkg 1.19.1).
+When multiple \fIpackage-name\fP entries are listed, the requested status
+entries are separated by an empty line, with the same order as specified
+on the argument list.
 .TP
 .BR \-L ", " \-\-listfiles " \fIpackage-name\fP..."
 List files installed to your system from \fIpackage-name\fP. When multiple
@@ -148,11 +151,13 @@ handled like a glob pattern, otherwise any trailing ‘\fB/\fP’ or
 This command will not list extra files created by maintainer scripts,
 nor will it list alternatives.
 .TP
-.BR \-p ", " \-\-print\-avail " \fIpackage-name\fP..."
-Display details about \fIpackage-name\fP, as found in
-\fI%ADMINDIR%/available\fP. When multiple \fIpackage-name\fP are
-listed, the requested \fIavailable\fP entries are separated by an empty
-line, with the same order as specified on the argument list.
+.BR \-p ", " \-\-print\-avail " [\fIpackage-name\fP...]"
+Display details about packages, as found in \fI%ADMINDIR%/available\fP.
+If no \fIpackage-name\fP is specified, it will display all package entries
+in the \fIavailable\fP database (since dpkg 1.19.1).
+When multiple \fIpackage-name\fP are listed, the requested \fIavailable\fP
+entries are separated by an empty line, with the same order as specified
+on the argument list.
 
 Users of APT-based frontends
 should use \fBapt\-cache show\fP \fIpackage-name\fP instead
@@ -175,6 +180,9 @@ Change the location of the \fBdpkg\fR database. The default location is
 Also load the available file when using the \fB\-\-show\fP and \fB\-\-list\fP
 commands, which now default to only querying the status file
 (since dpkg 1.16.2).
+.TP
+.B \-\-no\-pager
+Disables the use of any pager when showing information (since dpkg 1.19.2).
 .TP
 .BR \-f ", " \-\-showformat=\fIformat\fR
 This option is used to specify the format of the output \fB\-\-show\fP
@@ -249,8 +257,11 @@ An architecture qualifier will be present to make the package name unambiguous,
 for example if the package has a \fBMulti\-Arch\fP field with a value of
 \fBsame\fP or the package is of a foreign architecture.
 .TP
+.B binary:Synopsis
+It contains the package short description (since dpkg 1.19.1).
+.TP
 .B binary:Summary
-It contains the package short description (since dpkg 1.16.2).
+This is an alias for \fBbinary:Synopsis\fP (since dpkg 1.16.2).
 .TP
 .B db:Status\-Abbrev
 It contains the abbreviated package status (as three characters),
@@ -309,14 +320,38 @@ interactions with the system, such as accesses to the database,
 memory allocations, etc.
 .
 .SH ENVIRONMENT
+.SS External environment
+.TP
+.B SHELL
+Sets the program to execute when spawning a command via a shell
+(since dpkg 1.19.2).
+.TP
+.B PAGER
+.TQ
+.B DPKG_PAGER
+Sets the pager command to use (since dpkg 1.19.1), which will be executed
+with «\fB$SHELL -c\fP».
+If \fBSHELL\fP is not set, «\fBsh\fP» will be used instead.
+The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment variable
+(since dpkg 1.19.2).
 .TP
 .B DPKG_ADMINDIR
 If set and the \fB\-\-admindir\fP option has not been specified, it will
 be used as the \fBdpkg\fP data directory.
 .TP
-\fBCOLUMNS\fP
-This setting influences the output of the \fB\-\-list\fP option by changing
-the width of its output.
+.B DPKG_COLORS
+Sets the color mode (since dpkg 1.18.5).
+The currently accepted values are: \fBauto\fP (default), \fBalways\fP and
+\fBnever\fP.
+.SS Internal environment
+.TP
+.B LESS
+Defined by \fBdpkg\-query\fP to “\fB-FRSXMQ\fP”, if not already set, when
+spawning a pager (since dpkg 1.19.2).
+To change the default behavior, this variable can be preset to some other
+value including an empty string, or the \fBPAGER\fP or \fBDPKG_PAGER\fP
+variables can be set to disable specific options with «\fB\-+\fP», for
+example \fBDPKG_PAGER="less \-+F"\fP.
 .
 .SH SEE ALSO
 .BR dpkg (1).

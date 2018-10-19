@@ -84,8 +84,8 @@ struct conffile {
   bool obsolete;
 };
 
-struct filedetails {
-  struct filedetails *next;
+struct archivedetails {
+  struct archivedetails *next;
   const char *name;
   const char *msdosname;
   const char *size;
@@ -204,10 +204,11 @@ struct pkginfo {
   const char *otherpriority;
   const char *section;
   struct dpkg_version configversion;
-  struct filedetails *files;
   struct pkgbin installed;
   struct pkgbin available;
   struct perpackagestate *clientdata;
+
+  struct archivedetails *archives;
 
   struct {
     /* ->aw == this */
@@ -217,6 +218,22 @@ struct pkginfo {
   /* ->pend == this, non-NULL for us when Triggers-Pending. */
   struct trigaw *othertrigaw_head;
   struct trigpend *trigpend_head;
+
+  /**
+   * files_list_valid  files  Meaning
+   * ----------------  -----  -------
+   * false             NULL   Not read yet, must do so if want them.
+   * false             !NULL  Read, but rewritten and now out of date. If want
+   *                          info must throw away old and reread file.
+   * true              !NULL  Read, all is OK.
+   * true              NULL   Read OK, but, there were no files.
+   */
+  struct fileinlist *files;
+  off_t files_list_phys_offs;
+  bool files_list_valid;
+
+  /* The status has changed, it needs to be logged. */
+  bool status_dirty;
 };
 
 /**
@@ -304,8 +321,8 @@ enum parsedbflags {
   pdb_rejectstatus		= DPKG_BIT(2),
   /** Ignore priority/section info if we already have any. */
   pdb_weakclassification	= DPKG_BIT(3),
-  /** Ignore files info if we already have them. */
-  pdb_ignorefiles		= DPKG_BIT(4),
+  /** Ignore archives info if we already have them. */
+  pdb_ignore_archives		= DPKG_BIT(4),
   /** Ignore packages with older versions already read. */
   pdb_ignoreolder		= DPKG_BIT(5),
   /** Perform laxer version parsing. */
@@ -377,9 +394,21 @@ enum pkg_name_arch_when {
 void varbuf_add_pkgbin_name(struct varbuf *vb, const struct pkginfo *pkg,
                             const struct pkgbin *pkgbin,
                             enum pkg_name_arch_when pnaw);
-const char *pkgbin_name(struct pkginfo *pkg, struct pkgbin *pkgbin,
-                        enum pkg_name_arch_when pnaw);
-const char *pkg_name(struct pkginfo *pkg, enum pkg_name_arch_when pnaw);
+
+const char *
+pkgbin_name_archqual(const struct pkginfo *pkg, const struct pkgbin *pkgbin);
+
+const char *
+pkgbin_name(struct pkginfo *pkg, struct pkgbin *pkgbin,
+            enum pkg_name_arch_when pnaw);
+const char *
+pkg_name(struct pkginfo *pkg, enum pkg_name_arch_when pnaw);
+
+const char *
+pkgbin_name_const(const struct pkginfo *pkg, const struct pkgbin *pkgbin,
+                  enum pkg_name_arch_when pnaw);
+const char *
+pkg_name_const(const struct pkginfo *pkg, enum pkg_name_arch_when pnaw);
 
 void
 pkg_source_version(struct dpkg_version *version,
@@ -407,6 +436,7 @@ enum writedb_flags {
   wdb_must_sync			= DPKG_BIT(1),
 };
 
+void writedb_records(FILE *fp, const char *filename, enum writedb_flags flags);
 void writedb(const char *filename, enum writedb_flags flags);
 
 /* Note: The varbufs must have been initialized and will not be

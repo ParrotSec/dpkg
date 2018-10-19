@@ -86,18 +86,6 @@ sub run_hook {
     }
 }
 
-sub _parse_feature_area {
-    my ($self, $area, $use_feature) = @_;
-
-    require Dpkg::BuildOptions;
-
-    # Adjust features based on user or maintainer's desires.
-    my $opts = Dpkg::BuildOptions->new(envvar => 'DEB_BUILD_OPTIONS');
-    $opts->parse_features($area, $use_feature);
-    $opts = Dpkg::BuildOptions->new(envvar => 'DEB_BUILD_MAINT_OPTIONS');
-    $opts->parse_features($area, $use_feature);
-}
-
 sub _add_build_flags {
     my ($self, $flags) = @_;
 
@@ -112,6 +100,7 @@ sub _add_build_flags {
         },
         reproducible => {
             timeless => 1,
+            fixfilepath => 0,
             fixdebugpath => 1,
         },
         sanitize => {
@@ -141,9 +130,15 @@ sub _add_build_flags {
 
     ## Setup
 
+    require Dpkg::BuildOptions;
+
     # Adjust features based on user or maintainer's desires.
+    my $opts_build = Dpkg::BuildOptions->new(envvar => 'DEB_BUILD_OPTIONS');
+    my $opts_maint = Dpkg::BuildOptions->new(envvar => 'DEB_BUILD_MAINT_OPTIONS');
+
     foreach my $area (sort keys %use_feature) {
-        $self->_parse_feature_area($area, $use_feature{$area});
+        $opts_build->parse_features($area, $use_feature{$area});
+        $opts_maint->parse_features($area, $use_feature{$area});
     }
 
     require Dpkg::Arch;
@@ -155,6 +150,22 @@ sub _add_build_flags {
         warning(g_("unknown host architecture '%s'"), $arch);
         ($abi, $os, $cpu) = ('', '', '');
     }
+
+    ## Global defaults
+
+    my $default_flags;
+    if ($opts_build->has('noopt')) {
+        $default_flags = '-g -O0';
+    } else {
+        $default_flags = '-g -O2';
+    }
+    $flags->append('CFLAGS', $default_flags);
+    $flags->append('CXXFLAGS', $default_flags);
+    $flags->append('OBJCFLAGS', $default_flags);
+    $flags->append('OBJCXXFLAGS', $default_flags);
+    $flags->append('FFLAGS', $default_flags);
+    $flags->append('FCFLAGS', $default_flags);
+    $flags->append('GCJFLAGS', $default_flags);
 
     ## Area: future
 
@@ -195,15 +206,17 @@ sub _add_build_flags {
     my $build_path;
 
     # Mask features that might have an unsafe usage.
-    if ($use_feature{reproducible}{fixdebugpath}) {
+    if ($use_feature{reproducible}{fixfilepath} or
+        $use_feature{reproducible}{fixdebugpath}) {
         require Cwd;
 
-        $build_path = $ENV{DEB_BUILD_PATH} || Cwd::cwd();
+        $build_path = $ENV{DEB_BUILD_PATH} || Cwd::getcwd();
 
         # If we have any unsafe character in the path, disable the flag,
         # so that we do not need to worry about escaping the characters
         # on output.
         if ($build_path =~ m/[^-+:.0-9a-zA-Z~\/_]/) {
+            $use_feature{reproducible}{fixfilepath} = 0;
             $use_feature{reproducible}{fixdebugpath} = 0;
         }
     }
@@ -213,9 +226,19 @@ sub _add_build_flags {
        $flags->append('CPPFLAGS', '-Wdate-time');
     }
 
-    # Avoid storing the build path in the debug symbols.
-    if ($use_feature{reproducible}{fixdebugpath}) {
-        my $map = '-fdebug-prefix-map=' . $build_path . '=.';
+    # Avoid storing the build path in the binaries.
+    if ($use_feature{reproducible}{fixfilepath} or
+        $use_feature{reproducible}{fixdebugpath}) {
+        my $map;
+
+        # -ffile-prefix-map is a superset of -fdebug-prefix-map, prefer it
+        # if both are set.
+        if ($use_feature{reproducible}{fixfilepath}) {
+            $map = '-ffile-prefix-map=' . $build_path . '=.';
+        } else {
+            $map = '-fdebug-prefix-map=' . $build_path . '=.';
+        }
+
         $flags->append('CFLAGS', $map);
         $flags->append('CXXFLAGS', $map);
         $flags->append('OBJCFLAGS', $map);
@@ -267,8 +290,24 @@ sub _add_build_flags {
 
     # Mask builtin features that are not enabled by default in the compiler.
     my %builtin_pie_arch = map { $_ => 1 } qw(
-        amd64 arm64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386
-        mips mipsel mips64el powerpc ppc64 ppc64el s390x sparc sparc64
+        amd64
+        arm64
+        armel
+        armhf
+        hurd-i386
+        i386
+        kfreebsd-amd64
+        kfreebsd-i386
+        mips
+        mipsel
+        mips64el
+        powerpc
+        ppc64
+        ppc64el
+        riscv64
+        s390x
+        sparc
+        sparc64
     );
     if (not exists $builtin_pie_arch{$arch}) {
         $builtin_feature{hardening}{pie} = 0;
@@ -295,7 +334,7 @@ sub _add_build_flags {
     }
 
     # Mask features that might be influenced by other flags.
-    if ($flags->{build_options}->has('noopt')) {
+    if ($opts_build->has('noopt')) {
       # glibc 2.16 and later warn when using -O0 and _FORTIFY_SOURCE.
       $use_feature{hardening}{fortify} = 0;
     }

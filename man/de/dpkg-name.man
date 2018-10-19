@@ -57,7 +57,7 @@ der Zieldateiname haben.
 Dateien werden in ein Unterverzeichnis verschoben. Falls das als Argument
 existierende Verzeichnis existiert, dann werden die Dateien in das
 Verzeichnis verschoben, andernfalls wird das Zielverzeichnis aus dem
-»section«\-Feld des Steuerteils des Pakets extrahiert. Das Zielverzeichnis
+»section«\-Feld des Steuerteils des Pakets entnommen. Das Zielverzeichnis
 wird »unstable/binary\-\fIArchitektur\fP/\fIBereich\fP« sein. Falls die Sektion
 nicht in der Steuerdatei gefunden werden kann, dann wird \fBno\-section\fP
 angenommen, und in diesem Fall, wie auch für die Sektionen \fBnon\-free\fP und
@@ -76,6 +76,18 @@ Zeige den Bedienungshinweis und beende.
 .TP 
 \fB\-v\fP, \fB\-\-version\fP
 Gebe die Version aus und beende sich.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 .
 .SH FEHLER
 Einige Pakete folgen nicht der Namensstruktur

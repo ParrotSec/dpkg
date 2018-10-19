@@ -105,12 +105,12 @@ von ihrer Funktion abweicht, bitte verwenden Sie \fBsource:Version\fP oder
 \fBbinary:Version\fP wo zutreffend.
 .TP 
 \fBsource:Synopsis\fP
-The source package synopsis, extracted from the source stanza \fBDescription\fP
-field, if it exists (since dpkg 1.19.0).
+Die Quellpaketzusammenfassung, aus dem Feld \fBDescription\fP der Quellabsatzes
+entnommen, falls dieses existiert (seit Dpkg 1.19.0).
 .TP 
 \fBsource:Extended\-Description\fP
-The source package extended description, extracted from the source stanza
-\fBDescription\fP field, if it exists (since dpkg 1.19.0).
+Die erweiterte Quellpaketbeschreibung, aus dem Feld \fBDescription\fP des
+Quellabsatzes entnommen, falls dieses existiert (seit Dpkg 1.19.0).
 .TP 
 \fBInstalled\-Size\fP
 Die ungefähre Gesamtgröße der vom Paket installierten Dateien. Dieser Wert

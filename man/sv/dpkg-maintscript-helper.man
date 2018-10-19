@@ -253,6 +253,13 @@ Kommandot \fBsupports\fP returnerar 0 vid framgång, annars 1. Kommandot
 \fBsupports\fP kontrollerar om miljövariablerna som sätts av dpkg och som krävs
 av skriptet är närvarande, och kommer anse det som ett fel om
 miljövariablerna inte är tillräckliga.
+.
+.SH MILJÖVARIABLER
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.19.1).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.
 .SH "SE ÄVEN"
 .ad l
 \fBdh_installdeb\fP(1).

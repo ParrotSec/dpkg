@@ -29,7 +29,6 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <string.h>
 #include <time.h>
@@ -56,12 +55,12 @@
 #include <dpkg/tarfn.h>
 #include <dpkg/options.h>
 #include <dpkg/triglib.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
 #include "main.h"
 #include "archives.h"
 #include "filters.h"
-#include "infodb.h"
 
 static inline void
 fd_writeback_init(int fd)
@@ -199,7 +198,7 @@ filesavespackage(struct fileinlist *file,
      * we shouldn't try to make it take over this shared directory. */
     debug(dbg_eachfiledetail,"filesavespackage ...  is 3rd package");
 
-    if (!thirdpkg->clientdata->fileslistvalid) {
+    if (!thirdpkg->files_list_valid) {
       debug(dbg_eachfiledetail, "process_archive ... already disappeared!");
       continue;
     }
@@ -354,6 +353,7 @@ tarobject_extract(struct tarcontext *tc, struct tar_entry *te,
   char fnamebuf[256];
   char fnamenewbuf[256];
   char *newhash;
+  int rc;
 
   switch (te->type) {
   case TAR_FILETYPE_FILE:
@@ -363,7 +363,7 @@ tarobject_extract(struct tarcontext *tc, struct tar_entry *te,
     if (fd < 0)
       ohshite(_("unable to create '%.255s' (while processing '%.255s')"),
               path, te->name);
-    push_cleanup(cu_closefd, ehflag_bombout, NULL, 0, 1, &fd);
+    push_cleanup(cu_closefd, ehflag_bombout, 1, &fd);
     debug(dbg_eachfiledetail, "tarobject file open size=%jd",
           (intmax_t)te->size);
 
@@ -389,9 +389,11 @@ tarobject_extract(struct tarcontext *tc, struct tar_entry *te,
             namenode->statoverride->uid,
             namenode->statoverride->gid,
             namenode->statoverride->mode);
-    if (fchown(fd, st->uid, st->gid))
+    rc = fchown(fd, st->uid, st->gid);
+    if (forcible_nonroot_error(rc))
       ohshite(_("error setting ownership of '%.255s'"), te->name);
-    if (fchmod(fd, st->mode & ~S_IFMT))
+    rc = fchmod(fd, st->mode & ~S_IFMT);
+    if (forcible_nonroot_error(rc))
       ohshite(_("error setting permissions of '%.255s'"), te->name);
 
     /* Postpone the fsync, to try to avoid massive I/O degradation. */
@@ -498,16 +500,21 @@ tarobject_set_mtime(struct tar_entry *te, const char *path)
 static void
 tarobject_set_perms(struct tar_entry *te, const char *path, struct file_stat *st)
 {
+  int rc;
+
   if (te->type == TAR_FILETYPE_FILE)
     return; /* Already handled using the file descriptor. */
 
   if (te->type == TAR_FILETYPE_SYMLINK) {
-    if (lchown(path, st->uid, st->gid))
+    rc = lchown(path, st->uid, st->gid);
+    if (forcible_nonroot_error(rc))
       ohshite(_("error setting ownership of symlink '%.255s'"), path);
   } else {
-    if (chown(path, st->uid, st->gid))
+    rc = chown(path, st->uid, st->gid);
+    if (forcible_nonroot_error(rc))
       ohshite(_("error setting ownership of '%.255s'"), path);
-    if (chmod(path, st->mode & ~S_IFMT))
+    rc = chmod(path, st->mode & ~S_IFMT);
+    if (forcible_nonroot_error(rc))
       ohshite(_("error setting permissions of '%.255s'"), path);
   }
 }
@@ -631,7 +638,8 @@ linktosameexistingdir(const struct tar_entry *ti, const char *fname,
     varbuf_add_str(symlinkfn, instdir);
   } else {
     lastslash= strrchr(fname, '/');
-    assert(lastslash);
+    if (lastslash == NULL)
+      internerr("tar entry filename '%s' does not contain '/'", fname);
     varbuf_add_buf(symlinkfn, fname, (lastslash - fname) + 1);
   }
   varbuf_add_str(symlinkfn, ti->linkname);
@@ -843,6 +851,8 @@ tarobject(void *ctx, struct tar_entry *ti)
         continue;
       }
 
+      ensure_package_clientdata(otherpkg);
+
       /* Nope? Hmm, file conflict, perhaps. Check Replaces. */
       switch (otherpkg->clientdata->replacingfilesandsaid) {
       case 2:
@@ -963,7 +973,7 @@ tarobject(void *ctx, struct tar_entry *ti)
     /* Now we start to do things that we need to be able to undo
      * if something goes wrong. Watch out for the CLEANUP comments to
      * keep an eye on what's installed on the disk at each point. */
-    push_cleanup(cu_installnew, ~ehflag_normaltidy, NULL, 0, 1, nifd->namenode);
+    push_cleanup(cu_installnew, ~ehflag_normaltidy, 1, nifd->namenode);
 
     /*
      * CLEANUP: Now we either have the old file on the disk, or not, in
@@ -1034,6 +1044,8 @@ tarobject(void *ctx, struct tar_entry *ti)
 	}
       }
     } else if (S_ISLNK(stab.st_mode)) {
+      int rc;
+
       /* We can't make a symlink with two hardlinks, so we'll have to
        * copy it. (Pretend that making a copy of a symlink is the same
        * as linking to it.) */
@@ -1052,7 +1064,8 @@ tarobject(void *ctx, struct tar_entry *ti)
       varbuf_end_str(&symlinkfn);
       if (symlink(symlinkfn.buf,fnametmpvb.buf))
         ohshite(_("unable to make backup symlink for '%.255s'"), ti->name);
-      if (lchown(fnametmpvb.buf,stab.st_uid,stab.st_gid))
+      rc = lchown(fnametmpvb.buf, stab.st_uid, stab.st_gid);
+      if (forcible_nonroot_error(rc))
         ohshite(_("unable to chown backup symlink for '%.255s'"), ti->name);
       tarobject_set_se_context(fnamevb.buf, fnametmpvb.buf, stab.st_mode);
     } else {
@@ -1283,7 +1296,11 @@ void check_breaks(struct dependency *dep, struct pkginfo *pkg,
     char action[512];
 
     ensure_package_clientdata(fixbydeconf);
-    assert(fixbydeconf->clientdata->istobe == PKG_ISTOBE_NORMAL);
+
+    if (fixbydeconf->clientdata->istobe != PKG_ISTOBE_NORMAL)
+      internerr("package %s being fixed by deconf is not to be normal, "
+                "is to be %d",
+                pkg_name(pkg, pnaw_always), fixbydeconf->clientdata->istobe);
 
     sprintf(action, _("installation of %.250s"),
             pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
@@ -1345,8 +1362,13 @@ void check_conflict(struct dependency *dep, struct pkginfo *pkg,
             fixbyrm->want != PKG_WANT_HOLD) ||
            does_replace(pkg, &pkg->available, fixbyrm, &fixbyrm->installed)) &&
           (!fixbyrm->installed.essential || fc_removeessential)))) {
-      assert(fixbyrm->clientdata->istobe == PKG_ISTOBE_NORMAL ||
-             fixbyrm->clientdata->istobe == PKG_ISTOBE_DECONFIGURE);
+
+      if (fixbyrm->clientdata->istobe != PKG_ISTOBE_NORMAL &&
+          fixbyrm->clientdata->istobe != PKG_ISTOBE_DECONFIGURE)
+        internerr("package %s to be fixed by removal is not to be normal "
+                  "nor deconfigure, is to be %d",
+                  pkg_name(pkg, pnaw_always), fixbyrm->clientdata->istobe);
+
       fixbyrm->clientdata->istobe = PKG_ISTOBE_REMOVE;
       notice(_("considering removing %s in favour of %s ..."),
              pkg_name(fixbyrm, pnaw_nonambig),

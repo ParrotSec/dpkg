@@ -26,7 +26,6 @@
 
 #include <sys/types.h>
 
-#include <assert.h>
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -43,9 +42,9 @@
 #include <dpkg/triglib.h>
 #include <dpkg/string.h>
 #include <dpkg/options.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
-#include "infodb.h"
 #include "main.h"
 
 struct audit_problem {
@@ -170,7 +169,7 @@ static void describebriefly(struct pkginfo *pkg) {
   l= strlen(pkg->set->name);
   if (l>20) maxl -= (l-20);
 
-  pdesc = pkgbin_summary(pkg, &pkg->installed, &l);
+  pdesc = pkgbin_synopsis(pkg, &pkg->installed, &l);
   l = min(l, maxl);
 
   printf(" %-20s %.*s\n", pkg_name(pkg, pnaw_nonambig), l, pdesc);
@@ -478,7 +477,7 @@ predeppackage(const char *const *argv)
     if (pkg->want != PKG_WANT_INSTALL)
       continue;
     /* Ignore packages not available. */
-    if (!pkg->files)
+    if (!pkg->archives)
       continue;
     pkg->clientdata->istobe = PKG_ISTOBE_PREINSTALL;
     for (dep= pkg->available.depends; dep; dep= dep->next) {
@@ -495,7 +494,9 @@ predeppackage(const char *const *argv)
 
   if (!dep)
     return 1; /* Not found. */
-  assert(pkg);
+  if (pkg == NULL)
+    internerr("unexpected unfound package");
+
   startpkg= pkg;
   pkg->clientdata->istobe = PKG_ISTOBE_PREINSTALL;
 
@@ -511,7 +512,7 @@ predeppackage(const char *const *argv)
 
       possi_iter = deppossi_pkg_iter_new(possi, wpb_available);
       while (!pkg && (trypkg = deppossi_pkg_iter_next(possi_iter))) {
-        if (trypkg->files &&
+        if (trypkg->archives &&
             trypkg->clientdata->istobe == PKG_ISTOBE_NORMAL &&
             versionsatisfied(&trypkg->available, possi)) {
           pkg = trypkg;
@@ -525,7 +526,7 @@ predeppackage(const char *const *argv)
           if (!pkg_virtual_deppossi_satisfied(possi, provider))
             continue;
           trypkg = provider->up->up;
-          if (!trypkg->files)
+          if (!trypkg->archives)
             continue;
           if (trypkg->clientdata->istobe == PKG_ISTOBE_NORMAL) {
             pkg = trypkg;

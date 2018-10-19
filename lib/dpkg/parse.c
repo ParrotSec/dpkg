@@ -28,7 +28,6 @@
 #include <sys/mman.h>
 #endif
 
-#include <assert.h>
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
@@ -77,10 +76,10 @@ const struct fieldinfo fieldinfos[]= {
   { FIELD("Conflicts"),        f_dependency,      w_dependency,     dep_conflicts            },
   { FIELD("Enhances"),         f_dependency,      w_dependency,     dep_enhances             },
   { FIELD("Conffiles"),        f_conffiles,       w_conffiles                                },
-  { FIELD("Filename"),         f_filecharf,       w_filecharf,      FILEFOFF(name)           },
-  { FIELD("Size"),             f_filecharf,       w_filecharf,      FILEFOFF(size)           },
-  { FIELD("MD5sum"),           f_filecharf,       w_filecharf,      FILEFOFF(md5sum)         },
-  { FIELD("MSDOS-Filename"),   f_filecharf,       w_filecharf,      FILEFOFF(msdosname)      },
+  { FIELD("Filename"),         f_archives,        w_archives,       ARCHIVEFOFF(name)        },
+  { FIELD("Size"),             f_archives,        w_archives,       ARCHIVEFOFF(size)        },
+  { FIELD("MD5sum"),           f_archives,        w_archives,       ARCHIVEFOFF(md5sum)      },
+  { FIELD("MSDOS-Filename"),   f_archives,        w_archives,       ARCHIVEFOFF(msdosname)   },
   { FIELD("Description"),      f_charfield,       w_charfield,      PKGIFPOFF(description)   },
   { FIELD("Triggers-Pending"), f_trigpend,        w_trigpend                                 },
   { FIELD("Triggers-Awaited"), f_trigaw,          w_trigaw                                   },
@@ -218,6 +217,9 @@ pkg_parse_verify(struct parsedb_state *ps,
       pkgbin->multiarch == PKG_MULTIARCH_SAME)
     parse_error(ps, _("package has field '%s' but is architecture all"),
                 "Multi-Arch: same");
+
+  /* Generate the cached fully qualified package name representation. */
+  pkgbin->pkgname_archqual = pkgbin_name_archqual(pkg, pkgbin);
 
   /* Initialize deps to be arch-specific unless stated otherwise. */
   for (dep = pkgbin->depends; dep; dep = dep->next)
@@ -478,18 +480,21 @@ pkg_parse_copy(struct parsedb_state *ps,
     pkg_copy_eflags(dst_pkg, src_pkg);
     pkg_set_status(dst_pkg, src_pkg->status);
     dst_pkg->configversion = src_pkg->configversion;
-    dst_pkg->files = NULL;
+    dst_pkg->archives = NULL;
 
     dst_pkg->trigpend_head = src_pkg->trigpend_head;
     dst_pkg->trigaw = src_pkg->trigaw;
     for (ta = dst_pkg->trigaw.head; ta; ta = ta->sameaw.next) {
-      assert(ta->aw == src_pkg);
+      if (ta->aw != src_pkg)
+        internerr("trigger awaited package %s and origin package %s not linked properly",
+                  pkg_name(ta->aw, pnaw_always),
+                  pkgbin_name(src_pkg, src_pkgbin, pnaw_always));
       ta->aw = dst_pkg;
       /* ->othertrigaw_head is updated by trig_note_aw in *(pkg_db_find())
        * rather than in dst_pkg. */
     }
-  } else if (!(ps->flags & pdb_ignorefiles)) {
-    dst_pkg->files = src_pkg->files;
+  } else if (!(ps->flags & pdb_ignore_archives)) {
+    dst_pkg->archives = src_pkg->archives;
   }
 }
 
@@ -552,7 +557,7 @@ parsedb_open(const char *filename, enum parsedbflags flags)
 
   ps = parsedb_new(filename, fd, flags | pdb_close_fd);
 
-  push_cleanup(cu_closefd, ~ehflag_normaltidy, NULL, 0, 1, &ps->fd);
+  push_cleanup(cu_closefd, ~ehflag_normaltidy, 1, &ps->fd);
 
   return ps;
 }

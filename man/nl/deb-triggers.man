@@ -48,11 +48,15 @@ De triggerstuurcommando's die momenteel ondersteund worden zijn:
 .IP
 Specificeert dat het pakket geïnteresseerd is in de genoemde trigger. Alle
 triggers waarin een pakket geïnteresseerd is, moeten met behulp van deze
-instructie vermeld worden in het trigger\-controlebestand. De variant
-“noawait” plaatst de triggerende pakketten niet in de toestand
-triggers\-awaited (wachten op triggerafhandeling). Dit zou gebruikt moeten
-worden als de functionaliteit die door de trigger geleverd wordt, niet
-cruciaal is.
+instructie vermeld worden in het trigger\-controlebestand.
+.IP
+The “await” variants put the triggering package in triggers\-awaited state
+depending on how the trigger was activated.  The “noawait” variant does not
+put the triggering packages in triggers\-awaited state, even if the
+triggering package declared an “await” activation (either with an
+\fBactivate\-await\fP or \fBactivate\fP directive, or by using the \fBdpkg\-trigger\fP
+\fB\-\-no\-await\fP command\-line option).  The “noawait” variant should be used
+when the functionality provided by the trigger is not crucial.
 .TP 
 \fBactivate\fP \fItriggernaam\fP
 .TQ
@@ -64,10 +68,13 @@ Regelt dat wijzigingen aan de toestand van dit pakket de opgegeven trigger
 zullen activeren. De trigger zal geactiveerd worden bij het begin van de
 volgende operaties: unpack (uitpakken), configure (configureren), remove
 (verwijderen) (inclusief ten voordele van een tegenstrijdig pakket), purge
-(wissen) en deconfigure (deconfigureren). De variant “noawait” plaatst de
-triggerende pakketten niet in de toestand triggers\-awaited (wachten op
-triggerafhandeling). Dit zou gebruikt moeten worden als de functionaliteit
-die door de trigger geleverd wordt, niet cruciaal is.
+(wissen) en deconfigure (deconfigureren).
+.IP
+The “await” variants only put the triggering package in triggers\-awaited
+state if the interest directive is also “await”.  The “noawait” variant
+never puts the triggering packages in triggers\-awaited state.  The “noawait”
+variant should be used when the functionality provided by the trigger is not
+crucial.
 .IP
 Indien dit pakket tijdens het uitpakken van een ander pakket verdwijnt, zal
 de trigger geactiveerd worden wanneer de verdwijning opgemerkt wordt tegen
@@ -89,11 +96,18 @@ worden, zal dit een vroege cyclus van triggerverwerking vermijden en het
 mogelijk maken om de trigger slechts eenmaal uit te voeren als een van de
 laatste stappen in de opwaardering.
 .PP
-The “\-noawait” variants are supported since dpkg 1.16.1, and will lead to
-errors if used with an older dpkg.
+De varianten “\-noawait” worden vanaf dpkg 1.16.1 ondersteund en zullen tot
+fouten leiden als zij met een oudere versie van dpkg gebruikt worden.
 .PP
-The “\-await” alias variants are supported since dpkg 1.17.21, and will lead
-to errors if used with an older dpkg.
+De aliasvarianten “\-await” worden vanaf dpkg 1.17.21 ondersteund en zullen
+tot fouten leiden als zij met een oudere versie van dpkg gebruikt worden.
+.PP
+When a package provides an \fBinterest\-noawait\fP directive, any activation
+will set the triggering package into “noawait” mode, regardless of the
+awaiting mode requested by the activation (either “await” or “noawait”).
+When a package provides an \fBinterest\fP or \fBinterest\-await\fP directive, any
+activation will set the triggering package into “await” or “noawait“
+depending on how it was activated.
 .
 .SH "ZIE OOK"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

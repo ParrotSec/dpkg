@@ -46,13 +46,13 @@
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
 #include <dpkg/arch.h>
-#include <dpkg/path.h>
 #include <dpkg/subproc.h>
 #include <dpkg/command.h>
+#include <dpkg/pager.h>
 #include <dpkg/options.h>
+#include <dpkg/db-fsys.h>
 
 #include "main.h"
-#include "filesdb.h"
 #include "filters.h"
 
 static void DPKG_ATTR_NORET
@@ -342,6 +342,15 @@ set_debug(const struct cmdinfo *cpi, const char *value)
 }
 
 static void
+set_no_pager(const struct cmdinfo *ci, const char *value)
+{
+  pager_enable(false);
+
+  /* Let's communicate this to our backends. */
+  setenv("DPKG_PAGER", "cat", 1);
+}
+
+static void
 set_filter(const struct cmdinfo *cip, const char *value)
 {
   filter_add(value, cip->arg_int);
@@ -357,19 +366,14 @@ set_verify_format(const struct cmdinfo *cip, const char *value)
 static void
 set_instdir(const struct cmdinfo *cip, const char *value)
 {
-  char *new_instdir;
-
-  new_instdir = m_strdup(value);
-  path_trim_slash_slashdot(new_instdir);
-
-  instdir = new_instdir;
+  instdir = dpkg_fsys_set_dir(value);
 }
 
 static void
 set_root(const struct cmdinfo *cip, const char *value)
 {
-  set_instdir(cip, value);
-  admindir = str_fmt("%s%s", instdir, ADMINDIR);
+  instdir = dpkg_fsys_set_dir(value);
+  admindir = dpkg_fsys_get_path(ADMINDIR);
 }
 
 static void
@@ -642,8 +646,8 @@ set_force(const struct cmdinfo *cip, const char *value)
   }
 
   for (;;) {
-    comma= strchr(value,',');
-    l = comma ? (size_t)(comma - value) : strlen(value);
+    comma = strchrnul(value, ',');
+    l = (size_t)(comma - value);
     for (fip=forceinfos; fip->name; fip++)
       if (strncmp(fip->name, value, l) == 0 && strlen(fip->name) == l)
         break;
@@ -661,7 +665,8 @@ set_force(const struct cmdinfo *cip, const char *value)
       warning(_("obsolete force/refuse option '%s'"), fip->name);
     }
 
-    if (!comma) break;
+    if (*comma == '\0')
+      break;
     value= ++comma;
   }
 }
@@ -731,6 +736,7 @@ static const struct cmdinfo cmdinfos[]= {
   { "no-act",            0,   0, &f_noact,      NULL,      NULL,    1 },
   { "dry-run",           0,   0, &f_noact,      NULL,      NULL,    1 },
   { "simulate",          0,   0, &f_noact,      NULL,      NULL,    1 },
+  { "no-pager",          0,   0, NULL,          NULL,      set_no_pager,  0 },
   { "no-debsig",         0,   0, &f_nodebsig,   NULL,      NULL,    1 },
   /* Alias ('G') for --refuse. */
   {  NULL,               'G', 0, &fc_downgrade, NULL,      NULL,    0 },
@@ -885,6 +891,8 @@ commandfd(const char *const *argv)
 
     pop_error_context(ehflag_normaltidy);
   }
+
+  fclose(in);
 
   return ret;
 }

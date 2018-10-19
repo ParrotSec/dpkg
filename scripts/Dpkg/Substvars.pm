@@ -39,8 +39,7 @@ Dpkg::Substvars - handle variable substitution in strings
 
 =head1 DESCRIPTION
 
-It provides some an object which is able to substitute variables in
-strings.
+It provides an object which is able to substitute variables in strings.
 
 =cut
 
@@ -342,7 +341,8 @@ sub substvars {
                       g_('obsolete substitution variable ${%s}'), $vn);
             }
         } else {
-            warning($opts{msg_prefix} . g_('unknown substitution variable ${%s}'),
+            warning($opts{msg_prefix} .
+                    g_('substitution variable ${%s} used, but is not defined'),
 	            $vn) unless $opts{no_warn};
             $v = $lhs . $rhs;
         }
@@ -366,7 +366,8 @@ sub warn_about_unused {
         # that they are not required in the current situation
         # (example: debhelper's misc:Depends in many cases)
         next if $self->{vars}{$vn} eq '';
-        warning($opts{msg_prefix} . g_('unused substitution variable ${%s}'),
+        warning($opts{msg_prefix} .
+                g_('substitution variable ${%s} unused, but is defined'),
                 $vn);
     }
 }

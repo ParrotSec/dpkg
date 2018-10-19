@@ -190,6 +190,10 @@ het benaderen van de database, geheugentoewijzing, enz.
 .
 .SH OMGEVING
 .TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
 \fBSOURCE_DATE_EPOCH\fP
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding
 (timestamp) (in seconden sinds de epoch) in de \fBar\fP(5)\-container van

@@ -144,6 +144,10 @@ system, such as accesses to the database, memory allocations, etc.
 .
 .SH 環境変数
 .TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.TP 
 \fBSOURCE_DATE_EPOCH\fP
 If set, it will be used as the timestamp (as seconds since the epoch) in the
 \fBdeb\-split\fP(5)'s \fBar\fP(5) container.

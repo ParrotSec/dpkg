@@ -59,7 +59,7 @@ Das Datum, an dem das Paket letztmalig gebaut oder bearbeitet wurde. Es muss
 im gleichen Format wie in einem Eintrag bei \fBdeb\-changelog\fP(5) sein.
 
 Der Wert dieses Feldes wird normalerweise aus der Datei \fIdebian/changelog\fP
-ausgelesen.
+entnommen.
 .TP 
 \fBSource:\fP \fIQuellname\fP [\fB(\fP\fIQuellversion\fP\fB)\fP] (verpflichtend)
 Der Name des Quellpakets. Falls sich die Quellversion von der Binärversion
@@ -181,7 +181,7 @@ und den anderen zugehörigen \fBChecksums\fP\-Feldern passen.
 .
 .SH FEHLER
 Das Feld \fBFiles\fP ist inkonsistent gegenüber den anderen
-\fBChecksums\fP\-Feldern. Die Felder \fBChange\-By\fP und \fBMaintainer\fP haben
+\fBChecksums\fP\-Feldern. Die Felder \fBChanged\-By\fP und \fBMaintainer\fP haben
 verwirrende Namen. Das Feld \fBDistribution\fP enthält Informationen darüber,
 was normalerweise als Suite bezeichnet wird.
 .SH "SIEHE AUCH"

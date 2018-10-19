@@ -367,6 +367,17 @@ um die Architekturinformationen während eines Paketbaus zu erhalten.
 Falls dies gesetzt ist, wird es als Datenverzeichnis von \fBdpkg\fP verwandt,
 in dem sich die Architekturtabellen befinden (seit Dpkg
 1.14.17). Standardmäßig »%PKGDATADIR%«.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
+.
 .SH BEMERKUNGEN
 Alle langen Befehle und Optionennamen sind seit Dpkg 1.17.17 verfügbar.
 .

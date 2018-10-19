@@ -17,20 +17,26 @@ TEST_ENV_VARS = \
 	DPKG_PROGTAR=$(TAR) \
 	$(nil)
 
+t_headers_cpp_SOURCES = t-headers-cpp.cc
+
 # The tests are sorted in order of increasing complexity.
 test_programs = \
 	t-test \
 	t-test-skip \
 	t-macros \
+	t-headers-cpp \
 	t-c-ctype \
+	t-namevalue \
 	t-ehandle \
 	t-error \
 	t-string \
+	t-file \
 	t-buffer \
 	t-path \
 	t-progname \
 	t-subproc \
 	t-command \
+	t-pager \
 	t-varbuf \
 	t-ar \
 	t-tar \
@@ -40,6 +46,10 @@ test_programs = \
 	t-pkginfo \
 	t-pkg-list \
 	t-pkg-queue \
+	t-pkg-hash \
+	t-pkg-show \
+	t-fsys-dir \
+	t-fsys-hash \
 	t-trigger \
 	t-mod-db \
 	$(nil)

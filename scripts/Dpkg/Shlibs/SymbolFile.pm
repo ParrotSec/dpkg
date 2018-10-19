@@ -30,6 +30,10 @@ use Dpkg::Arch qw(get_host_arch);
 
 use parent qw(Dpkg::Interface::Storable);
 
+# Needed by the deprecated key, which is a correct use.
+no if $Dpkg::Version::VERSION ge '1.02',
+    warnings => qw(Dpkg::Version::semantic_change::overload::bool);
+
 my %blacklist = (
     __bss_end__ => 1,                   # arm
     __bss_end => 1,                     # arm
@@ -224,7 +228,7 @@ sub parse {
 		error(g_('symbol information must be preceded by a header (file %s, line %s)'), $file, $.);
 	    }
 	    # Symbol specification
-	    my $deprecated = ($1) ? $1 : 0;
+	    my $deprecated = ($1) ? Dpkg::Version->new($1) : 0;
 	    my $sym = _new_symbol($state->{base_symbol}, deprecated => $deprecated);
 	    if ($self->create_symbol($2, base => $sym)) {
 		$self->add_symbol($sym, ${$state->{obj_ref}});

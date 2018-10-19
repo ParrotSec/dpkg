@@ -3,7 +3,12 @@
 # Copyright © 2004 Scott James Remnant <scott@netsplit.com>
 # Copyright © 2006-2012 Guillem Jover <guillem@debian.org>
 
-WFLAGS := -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
+WFLAGS := \
+	-Wall -Wextra \
+	-Wno-missing-field-initializers \
+	-Wno-nonnull-compare \
+	-Wno-unused-parameter \
+	$(nil)
 
 # Use the in-tree dpkg-buildflags
 dpkg_buildflags = \
@@ -28,8 +33,9 @@ endif
 ifeq ($(DEB_HOST_ARCH_OS),linux)
 	confflags += --with-libselinux
 endif
-ifeq (,$(filter maintainer-build,$(DEB_BUILD_OPTIONS)))
+ifeq (,$(filter terse,$(DEB_BUILD_OPTIONS)))
 	confflags += --disable-silent-rules
+	testflags += TESTSUITEFLAGS=--verbose
 endif
 
 # Enable parallel test suite
@@ -49,7 +55,7 @@ configure:
 		echo $$(dpkg-parsechangelog -SVersion) >.dist-version; \
 	fi
 
-	autoreconf -v -i
+	./autogen
 
 # Configure the build tree
 build-tree/config.status: configure
@@ -82,8 +88,7 @@ check: build
 	dh_testdir
 
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	cd build-tree && $(MAKE) VERBOSE=1 TESTSUITEFLAGS=--verbose \
-	                         TEST_PARALLEL=$(NUMJOBS) check
+	cd build-tree && $(MAKE) $(testflags) TEST_PARALLEL=$(NUMJOBS) check
 endif
 
 # Install the package underneath debian/tmp

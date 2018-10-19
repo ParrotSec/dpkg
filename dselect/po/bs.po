@@ -1,13 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# translation of dselect to Bosnian.
+# Copyright © 2004 Dpkg Developers
+# This file is distributed under the same license as the dpkg package.
+# Safir Šećerović <sapphire@linux.org.ba>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"POT-Creation-Date: 2018-10-08 11:37+0200\n"
 "PO-Revision-Date: 2006-02-17 08:55+0200\n"
 "Last-Translator: Safir Šećerović <sapphire@linux.org.ba>\n"
 "Language-Team: Bosnian <lokal@linux.org.ba>\n"
@@ -810,14 +810,6 @@ msgstr ""
 
 #: dselect/methlist.cc
 msgid "No explanation available."
-msgstr ""
-
-#: dselect/method.cc
-#, c-format
-msgid ""
-"\n"
-"\n"
-"%s: %s\n"
 msgstr ""
 
 #: dselect/method.cc

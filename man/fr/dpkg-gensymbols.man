@@ -474,6 +474,16 @@ de \fBFile::Glob\fP(3perl) pour plus d'informations) dans
 bibliothèques avec un seul paramètre (afin d'éviter d'utiliser plusieurs
 options \fB\-e\fP).
 .TP 
+\fB\-l\fP\fIrépertoire\fP
+Prepend \fIdirectory\fP to the list of directories to search for private shared
+libraries (since dpkg 1.19.1). This option can be used multiple times.
+
+Note\ : Utilisez cette option plutôt que le réglage de \fBLD_LIBRARY_PATH\fP,
+parce que cette variable d'environnement est utilisé pour contrôler
+l'éditeur de liens d'exécution et et servir d'elle pour définir les chemins
+des bibliothèques partagées au moment de la construction peut être
+problématique, par exemple, lors d'une compilation croisée.
+.TP 
 \fB\-I\fP\fInom\-de\-fichier\fP
 Utilise \fInom\-de\-fichier\fP comme fichier de référence pour créer le fichier
 de symboles à intégrer dans le paquet lui\-même.
@@ -547,6 +557,16 @@ Affiche le numéro de version puis quitte.
 Overrides the command check level, even if the \fB\-c\fP command\-line argument
 was given (note that this goes against the common convention of command\-line
 arguments having precedence over environment variables).
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.
 .SH "VOIR AUSSI"
 \fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
 .br

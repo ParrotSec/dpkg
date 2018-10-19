@@ -46,14 +46,13 @@ zie hierna)
 De controle\-data mogen ingesloten liggen in een OpenPGP\-handtekening met
 ASCII\-harnas volgens de specificatie RFC4880.
 .PP
-The name of the \fB.buildinfo\fP file will depend on the type of build and will
-be as specific as necessary but not more; for a build that includes \fBany\fP
-the name will be
-\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP, or otherwise
-for a build that includes \fBall\fP the name will be
-\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fBall.buildinfo\fP, or otherwise for a
-build that includes \fBsource\fP the name will be
-\fIsource\-name\fP\fB_\fP\fIsource\-version\fP\fB_\fP\fBsource.buildinfo\fP.
+De naam van het \fB.buildinfo\fP\-bestand is afhankelijk van het type bouw en is
+zo specifiek als nodig, maar niet meer. Voor een bouw die \fBany\fP bevat, is
+de naam \fIbroncode\-naam\fP\fB_\fP\fIbinaire\-versie\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP. In
+geval het een bouw betreft die \fBall\fP bevat, is de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbinaire\-versie\fP\fB_\fP\fBall.buildinfo\fP. En in geval het
+een bouw betreft die \fBsource\fP bevat, is de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBsource.buildinfo\fP.
 .
 .SH VELDEN
 .TP 
@@ -86,10 +85,11 @@ voor het pakket gebouwd wordt, is ook de bijzondere vermelding \fBsource\fP
 aanwezig. Jokertekens voor architecturen mogen nooit voorkomen in de lijst.
 .TP 
 \fBVersion:\fP \fIversie\-tekenreeks\fP (verplicht)
-Typically, this is the original package's version number in whatever form
-the program's author uses.  It may also include a Debian revision number
-(for non\-native packages).  The exact format and sorting algorithm are
-described in \fBdeb\-version\fP(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de
+auteur van het programma er ook voor gebruikt. Het kan ook een
+Debian\-revisienummer bevatten (voor niet uit Debian stammende pakketten). De
+exacte indeling en het sorteringsalgoritme worden beschreven in
+\fBdeb\-version\fP(7).
 .TP 
 \fBBinary\-Only\-Changes:\fP
 .TQ
@@ -134,10 +134,11 @@ worden. Gebruikelijke architecturen zijn \fBamd64\fP, \fBarmel\fP, \fBi386\fP, e
 De datum waarop het pakket gebouwd werd. Hij moet dezelfde indeling hebben
 als de datum in een \fBdeb\-changelog\fP(5)\-item.
 .TP 
-\fBBuild\-Kernel\-Version:\fP \fIbuild\-kernel\-version\fP
-The release and version (in an unspecified format) of the kernel running on
-the build system.  This field is only going to be present if the builder has
-explicitly requested it, to avoid leaking possibly sensitive information.
+\fBBuild\-Kernel\-Version:\fP \fIbouwkernel\-versie\fP
+De uitgave en de versie (in een niet\-gespecificeerde indeling) van de kernel
+die op het bouwsysteem functioneert. Dit veld zal enkel aanwezig zijn als
+het bouwprogramma er expliciet om gevraagd heeft, om het eventueel weglekken
+van gevoelige informatie te voorkomen.
 .TP 
 \fBBuild\-Path:\fP \fIbouwpad\fP
 Het absoluut bouwpad, wat overeenkomt met de uitgepakte broncodeboom. Dit
@@ -145,8 +146,8 @@ veld is enkel aanwezig als de leverancier het op de witte lijst geplaatst
 heeft aan de hand van een patroonvergelijking, om zo het eventueel weglekken
 van gevoelige informatie te voorkomen.
 
-On Debian and derivatives only build paths starting with \fI/build/\fP will
-emit this field.
+Op Debian en zijn derivaten zullen enkel bouwpaden die beginnen met
+\fI/build/\fP aanleiding geven tot het aanmaken van dit veld.
 .TP 
 \fBInstalled\-Build\-Depends:\fP (verplicht)
 .TQ

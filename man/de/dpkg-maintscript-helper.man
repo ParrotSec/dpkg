@@ -270,6 +270,13 @@ Der Befehl \fBsupports\fP liefert im Erfolgsfall 0, ansonsten 1 zurück. Der
 Befehl \fBsupports\fP überprüft, ob die durch Dpkg gesetzten und vom Skript
 benötigten Umgebungsvariablen vorhanden sind und betrachtet es als
 Fehlschlag, falls die Umgebung nicht ausreichend ist.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.19.1). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.
 .SH "SIEHE AUCH"
 .ad l
 \fBdh_installdeb\fP(1).

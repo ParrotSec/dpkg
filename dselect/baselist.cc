@@ -25,7 +25,6 @@
 
 #include <sys/ioctl.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <string.h>
 #include <termios.h>
@@ -102,7 +101,7 @@ baselist::setupsigwinch()
   if (sigaction(SIGWINCH, nullptr, osigactp))
     ohshite(_("failed to get old SIGWINCH sigact"));
 
-  push_cleanup(cu_sigwinch, ~0, nullptr, 0, 2, osigactp, oblockedp);
+  push_cleanup(cu_sigwinch, ~0, 2, osigactp, oblockedp);
 
   sigwinch_mask(SIG_BLOCK);
 
@@ -155,7 +154,10 @@ baselist::draw_column_item(column &col, int y, const char *item)
 
 void baselist::setheights() {
   int y= ymax - (title_height + colheads_height + thisstate_height);
-  assert(y>=1);
+
+  if (y < 1)
+    internerr("widget y=%d < 1", y);
+
   if (showinfo==2 && y>=7) {
     list_height= 5;
     whatinfo_height= 1;
@@ -408,8 +410,8 @@ void baselist::wordwrapinfo(int offset, const char *m) {
 
   for (;;) {
     int offleft=offset; while (*m == ' ' && offleft>0) { m++; offleft--; }
-    const char *p= strchr(m,'\n');
-    int l= p ? (int)(p-m) : strlen(m);
+    const char *p = strchrnul(m, '\n');
+    int l = (int)(p - m);
     while (l && c_isspace(m[l - 1]))
       l--;
     if (!l || (*m == '.' && l == 1)) {
@@ -450,7 +452,8 @@ void baselist::wordwrapinfo(int offset, const char *m) {
       }
       wrapping = true;
     }
-    if (!p) break;
+    if (*p == '\0')
+      break;
     if (getcury(infopad) == (MAX_DISPLAY_INFO - 1)) {
       waddstr(infopad,
               "[The package description is too long and has been truncated...]");

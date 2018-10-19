@@ -27,7 +27,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -35,9 +34,9 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
-#include "infodb.h"
 #include "main.h"
 
 struct deppossi_pkg_iterator {
@@ -76,7 +75,8 @@ deppossi_pkg_iter_next(struct deppossi_pkg_iterator *iter)
       pkgbin = &pkg_cur->available;
       break;
     case wpb_by_istobe:
-      if (pkg_cur->clientdata->istobe == PKG_ISTOBE_INSTALLNEW)
+      if (pkg_cur->clientdata &&
+          pkg_cur->clientdata->istobe == PKG_ISTOBE_INSTALLNEW)
         pkgbin = &pkg_cur->available;
       else
         pkgbin = &pkg_cur->installed;
@@ -314,10 +314,14 @@ depisok(struct dependency *dep, struct varbuf *whynot,
    * Allow 250x3 for package names, versions, &c, + 250 for ourselves. */
   char linebuf[1024];
 
-  assert(dep->type == dep_depends || dep->type == dep_predepends ||
-	 dep->type == dep_breaks || dep->type == dep_conflicts ||
-	 dep->type == dep_recommends || dep->type == dep_suggests ||
-	 dep->type == dep_enhances);
+  if (dep->type != dep_depends &&
+      dep->type != dep_predepends &&
+      dep->type != dep_breaks &&
+      dep->type != dep_conflicts &&
+      dep->type != dep_recommends &&
+      dep->type != dep_suggests &&
+      dep->type != dep_enhances)
+    internerr("unknown dependency type %d", dep->type);
 
   if (canfixbyremove)
     *canfixbyremove = NULL;

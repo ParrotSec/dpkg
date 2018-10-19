@@ -3,7 +3,7 @@
  *
  * Copyright © 1995 Ian Jackson
  * Copyright © 2000, 2001 Wichert Akkerman
- * Copyright © 2006-2014 Guillem Jover <guillem@debian.org>
+ * Copyright © 2006-2015, 2017-2018 Guillem Jover <guillem@debian.org>
  * Copyright © 2011 Linaro Limited
  * Copyright © 2011 Raphaël Hertzog <hertzog@debian.org>
  *
@@ -45,14 +45,14 @@
 #include <dpkg/glob.h>
 #include <dpkg/buffer.h>
 #include <dpkg/options.h>
-
-#include "filesdb.h"
+#include <dpkg/db-fsys.h>
 
 
 static const char printforhelp[] = N_(
 "Use --help for help about diverting files.");
 
 static const char *admindir;
+const char *instdir;
 
 static bool opt_pkgname_match_any = true;
 static const char *opt_pkgname = NULL;
@@ -60,7 +60,7 @@ static const char *opt_divertto = NULL;
 
 static int opt_verbose = 1;
 static int opt_test = 0;
-static int opt_rename = 0;
+static int opt_rename = -1;
 
 
 static void
@@ -101,7 +101,10 @@ usage(const struct cmdinfo *cip, const char *value)
 "  --local                  all packages' versions are diverted.\n"
 "  --divert <divert-to>     the name used by other packages' versions.\n"
 "  --rename                 actually move the file aside (or back).\n"
+"  --no-rename              do not move the file aside (or back) (default).\n"
 "  --admindir <directory>   set the directory with the diversions file.\n"
+"  --instdir <directory>    set the root directory, but not the admin dir.\n"
+"  --root <directory>       set the directory of the root filesystem.\n"
 "  --test                   don't do anything, just demonstrate.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
@@ -118,6 +121,17 @@ usage(const struct cmdinfo *cip, const char *value)
 	exit(0);
 }
 
+static void
+opt_rename_setup(void)
+{
+	if (opt_rename >= 0)
+		return;
+
+	opt_rename = 0;
+	warning(_("please specify --no-rename explicitly, the default "
+	          "will change to --rename in 1.20.x"));
+}
+
 struct file {
 	const char *name;
 	enum {
@@ -131,7 +145,13 @@ struct file {
 static void
 file_init(struct file *f, const char *filename)
 {
-	f->name = filename;
+	struct varbuf usefilename = VARBUF_INIT;
+
+	varbuf_add_str(&usefilename, instdir);
+	varbuf_add_str(&usefilename, filename);
+	varbuf_end_str(&usefilename);
+
+	f->name = varbuf_detach(&usefilename);
 	f->stat_state = FILE_STAT_INVALID;
 }
 
@@ -221,7 +241,7 @@ file_copy(const char *src, const char *dst)
 	if (dstfd < 0)
 		ohshite(_("unable to create file '%s'"), tmp);
 
-	push_cleanup(cu_filename, ~ehflag_normaltidy, NULL, 0, 1, tmp);
+	push_cleanup(cu_filename, ~ehflag_normaltidy, 1, tmp);
 
 	if (fd_fd_copy(srcfd, dstfd, -1, &err) < 0)
 		ohshit(_("cannot copy '%s' to '%s': %s"), src, tmp, err.str);
@@ -387,6 +407,33 @@ divertdb_write(void)
 }
 
 static bool
+diversion_is_essential(struct filenamenode *namenode)
+{
+	struct pkginfo *pkg;
+	struct pkgiterator *pkg_iter;
+	struct filepackages_iterator *iter;
+	bool essential = false;
+
+	pkg_iter = pkg_db_iter_new();
+	while ((pkg = pkg_db_iter_next_pkg(pkg_iter))) {
+		if (pkg->installed.essential)
+			ensure_packagefiles_available(pkg);
+	}
+	pkg_db_iter_free(pkg_iter);
+
+	iter = filepackages_iter_new(namenode);
+	while ((pkg = filepackages_iter_next(iter))) {
+		if (pkg->installed.essential) {
+			essential = true;
+			break;
+		}
+	}
+	filepackages_iter_free(iter);
+
+	return essential;
+}
+
+static bool
 diversion_is_owned_by_self(struct pkgset *set, struct filenamenode *namenode)
 {
 	struct pkginfo *pkg;
@@ -421,6 +468,7 @@ diversion_add(const char *const *argv)
 	struct pkgset *pkgset;
 
 	opt_pkgname_match_any = false;
+	opt_rename_setup();
 
 	/* Handle filename. */
 	if (!filename || argv[1])
@@ -501,6 +549,9 @@ diversion_add(const char *const *argv)
 			       filename, pkgset->name);
 		opt_rename = false;
 	}
+	if (opt_rename && diversion_is_essential(fnn_from))
+		warning(_("diverting file '%s' from an Essential package with "
+		          "rename is dangerous, use --no-rename"), filename);
 	if (!opt_test) {
 		divertdb_write();
 		if (opt_rename)
@@ -550,6 +601,8 @@ diversion_remove(const char *const *argv)
 	struct diversion *contest, *altname;
 	struct file file_from, file_to;
 	struct pkgset *pkgset;
+
+	opt_rename_setup();
 
 	if (!filename || argv[1])
 		badusage(_("--%s needs a single argument"), cipaction->olong);
@@ -640,7 +693,7 @@ diversion_list(const char *const *argv)
 		struct diversion *altname;
 		const char *pkgname;
 
-		if (contest->useinstead == NULL)
+		if (contest == NULL || contest->useinstead == NULL)
 			continue;
 
 		altname = contest->useinstead->divert;
@@ -677,7 +730,7 @@ diversion_truename(const char *const *argv)
 	namenode = findnamenode(filename, fnn_nonew);
 
 	/* Print the given name if file is not diverted. */
-	if (namenode && namenode->divert->useinstead)
+	if (namenode && namenode->divert && namenode->divert->useinstead)
 		printf("%s\n", namenode->divert->useinstead->name);
 	else
 		printf("%s\n", filename);
@@ -699,7 +752,7 @@ diversion_listpackage(const char *const *argv)
 	namenode = findnamenode(filename, fnn_nonew);
 
 	/* Print nothing if file is not diverted. */
-	if (namenode == NULL)
+	if (namenode == NULL || namenode->divert == NULL)
 		return 0;
 
 	if (namenode->divert->pkgset == NULL)
@@ -735,6 +788,19 @@ set_divertto(const struct cmdinfo *cip, const char *value)
 		badusage(_("divert-to may not contain newlines"));
 }
 
+static void
+set_instdir(const struct cmdinfo *cip, const char *value)
+{
+	instdir = dpkg_fsys_set_dir(value);
+}
+
+static void
+set_root(const struct cmdinfo *cip, const char *value)
+{
+	instdir = dpkg_fsys_set_dir(value);
+	admindir = dpkg_fsys_get_path(ADMINDIR);
+}
+
 static const struct cmdinfo cmdinfo_add =
 	ACTION("add",         0, 0, diversion_add);
 
@@ -746,11 +812,14 @@ static const struct cmdinfo cmdinfos[] = {
 	ACTION("truename",    0, 0, diversion_truename),
 
 	{ "admindir",   0,   1,  NULL,         &admindir, NULL          },
+	{ "instdir",    0,   1,  NULL,         NULL,      set_instdir,  0 },
+	{ "root",       0,   1,  NULL,         NULL,      set_root,     0 },
 	{ "divert",     0,   1,  NULL,         NULL,      set_divertto  },
 	{ "package",    0,   1,  NULL,         NULL,      set_package   },
 	{ "local",      0,   0,  NULL,         NULL,      set_package   },
 	{ "quiet",      0,   0,  &opt_verbose, NULL,      NULL, 0       },
 	{ "rename",     0,   0,  &opt_rename,  NULL,      NULL, 1       },
+	{ "no-rename",  0,   0,  &opt_rename,  NULL,      NULL, 0       },
 	{ "test",       0,   0,  &opt_test,    NULL,      NULL, 1       },
 	{ "help",      '?',  0,  NULL,         NULL,      usage         },
 	{ "version",    0,   0,  NULL,         NULL,      printversion  },
@@ -768,6 +837,7 @@ main(int argc, const char * const *argv)
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
 	admindir = dpkg_db_set_dir(admindir);
+	instdir = dpkg_fsys_set_dir(instdir);
 
 	env_pkgname = getenv("DPKG_MAINTSCRIPT_PACKAGE");
 	if (opt_pkgname_match_any && env_pkgname)

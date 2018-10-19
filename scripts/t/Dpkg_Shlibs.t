@@ -21,7 +21,7 @@ use Test::Dpkg qw(:needs :paths);
 
 use Cwd;
 
-plan tests => 148;
+plan tests => 150;
 
 use Dpkg::Path qw(find_command);
 
@@ -31,7 +31,7 @@ my $tmp;
 my @tmp;
 my %tmp;
 
-my $datadir = test_get_data_path('t/Dpkg_Shlibs');
+my $datadir = test_get_data_path();
 
 my @librarypaths;
 
@@ -54,7 +54,7 @@ Dpkg::Shlibs::blank_library_paths();
 # We want relative paths inside the ld.so.conf fragments to work, and $srcdir
 # is usually a relative path, so let's temporarily switch directory.
 # XXX: An alternative would be to make parse_ldso_conf relative path aware.
-my $cwd = cwd();
+my $cwd = getcwd();
 test_needs_srcdir_switch();
 Dpkg::Shlibs::parse_ldso_conf('t/Dpkg_Shlibs/ld.so.conf');
 chdir($cwd);
@@ -104,7 +104,7 @@ $obj->parse_objdump_output($objdump);
 close $objdump;
 
 ok($obj->is_public_library(), 'libc6 is a public library');
-ok(!$obj->is_executable(), 'libc6 is not an executable');
+ok($obj->is_executable(), 'libc6 is an executable');
 
 is($obj->{SONAME}, 'libc.so.6', 'SONAME');
 is($obj->{HASH}, '0x13d99c', 'HASH');
@@ -350,6 +350,8 @@ open $objdump, '<', "$datadir/objdump.glib-ia64"
   or die "$datadir/objdump.glib-ia64: $!";
 $obj->parse_objdump_output($objdump);
 close $objdump;
+ok($obj->is_public_library(), 'glib-ia64 is a public library');
+ok(!$obj->is_executable(), 'glib-ia64 is not an executable');
 
 $sym = $obj->get_symbol('IA__g_free');
 is_deeply( $sym, { name => 'IA__g_free', version => '',
@@ -380,7 +382,8 @@ sub check_spacesym {
                       debug => '', type => 'F', weak => '',
                       local => '', global => 1, visibility => $visibility,
                       hidden => '', defined => 1 }, $name);
-    ok(defined $obj->{dynrelocs}{$name}, "dynreloc found for $name");
+    ok(defined $obj->{dynrelocs}{$name . "@@" . $version},
+       "dynreloc found for $name");
 }
 
 check_spacesym('symdefaultvernospacedefault', 'Base');

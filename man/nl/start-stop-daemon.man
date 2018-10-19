@@ -93,10 +93,17 @@ Ga na of een proces bestaat met het opgegeven moeder\-pid \fImoeder\-pid\fP
 (sinds versie 1.17.7). Het \fImoeder\-pid\fP moet een getal zijn groter dan 0.
 .TP 
 \fB\-p\fP, \fB\-\-pidfile\fP \fIpid\-bestand\fP
-Ga na of een proces het bestand \fIpid\-bestand\fP aangemaakt heeft. Opmerking:
-enkel deze vergelijkingsoptie gebruiken, kan ertoe leiden dat geageerd wordt
-op niet\-bedoelde processen in het geval het oude proces eindigde zonder dat
-het in staat was het \fIpid\-bestand\fP te verwijderen.
+Check whether a process has created the file \fIpid\-file\fP.
+.IP
+Note: using this matching option alone might cause unintended processes to
+be acted on, if the old process terminated without being able to remove the
+\fIpid\-file\fP.
+.IP
+\fBWarning:\fP Using this match option alone with a daemon that writes the
+pidfile as an unprivileged user is a security risk, because if the daemon
+gets compromised the contents of the pidfile cannot be trusted, and then a
+privileged runner (such as an init script executed as root) would end up
+acting on any system process.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIprogramma\fP
 Ga na of er processen bestaan die exemplaren zijn van dit \fIprogramma\fP. Het

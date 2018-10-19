@@ -268,9 +268,9 @@ sub reset {
 
     $self->{file} = '';
     $self->{id} = '';
-    $self->{SONAME} = '';
     $self->{HASH} = '';
     $self->{GNU_HASH} = '';
+    $self->{INTERP} = 0;
     $self->{SONAME} = '';
     $self->{NEEDED} = [];
     $self->{RPATH} = [];
@@ -325,7 +325,7 @@ sub parse_objdump_output {
 	    $section = 'dyninfo';
 	    next;
 	} elsif (/^Program Header:/) {
-	    $section = 'header';
+	    $section = 'program';
 	    next;
 	} elsif (/^Version definitions:/) {
 	    $section = 'verdef';
@@ -364,6 +364,10 @@ sub parse_objdump_output {
                     $self->{RPATH} = [ split /:/, $rpath ];
                 }
 	    }
+        } elsif ($section eq 'program') {
+            if (/^\s*INTERP\s+/) {
+                $self->{INTERP} = 1;
+            }
 	} elsif ($section eq 'none') {
 	    if (/^\s*.+:\s*file\s+format\s+(\S+)$/) {
 		$self->{format} = $1;
@@ -536,7 +540,8 @@ sub get_needed_libraries {
 
 sub is_executable {
     my $self = shift;
-    return exists $self->{flags}{EXEC_P} && $self->{flags}{EXEC_P};
+    return (exists $self->{flags}{EXEC_P} && $self->{flags}{EXEC_P}) ||
+           (exists $self->{INTERP} && $self->{INTERP});
 }
 
 sub is_public_library {

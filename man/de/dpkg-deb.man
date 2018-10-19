@@ -123,7 +123,7 @@ angelegt. Seine Rechte werden angepasst, um mit dem Inhalt des Pakets
 .TP 
 \fB\-X\fP, \fB\-\-vextract\fP \fIArchiv\-Verzeichnis\fP
 Ist wie \fB\-\-extract\fP (\fB\-x\fP) mit \fB\-\-verbose\fP (\fB\-v\fP), das beim Arbeiten
-eine Liste von extrahierten Dateien ausgibt.
+eine Liste von entpackten Dateien ausgibt.
 .TP 
 \fB\-R\fP, \fB\-\-raw\-extract\fP \fIArchiv\-Verzeichnis\fP
 Extrahiert den Dateisystembaum aus einem Paketarchiv in ein angegebenes
@@ -201,12 +201,13 @@ Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind
 \fBgzip\fP, \fBxz\fP (seit Dpkg 1.15.6) und \fBnone\fP (voreingestellt ist \fBxz\fP).
 .TP 
 \fB\-\-[no\-]uniform\-compression\fP
-Specify that the same compression parameters should be used for all archive
-members (i.e. \fBcontrol.tar\fP and \fBdata.tar\fP; since dpkg 1.17.6).  Otherwise
-only the \fBdata.tar\fP member will use those parameters. The only supported
-compression types allowed to be uniformly used are \fBnone\fP, \fBgzip\fP and
-\fBxz\fP.  The \fB\-\-no\-uniform\-compression\fP option disables uniform compression
-(since dpkg 1.19.0).  Uniform compression is the default (since dpkg
+Gibt an, dass die gleichen Komprimierungsparameter für alle Archivteile
+(d.h. \fBcontrol.tar\fP und \fBdata.tar\fP; seit Dpkg 1.17.6) verwandt werden
+sollen. Andernfalls wird nur der Teil \fBdata.tar\fP diese Parameter
+verwenden. Die einzigen unterstützten Kompressionstypen, die übergreifend
+benutzt werden dürfen, sind \fBnone\fP, \fBgzip\fP und \fBxz\fP. Die Option
+\fB\-\-no\-uniform\-compression\fP deaktiviert die übergreifende Komprimierung
+(seit Dpkg 1.19.0). Übergreifende Komprimierung ist die Vorgabe (seit Dpkg
 1.19.0).
 .TP 
 \fB\-\-root\-owner\-group\fP
@@ -252,6 +253,10 @@ Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
 die Datenbank, Speicherzuweisungen usw.
 .
 .SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
 .TP 
 \fBTMPDIR\fP
 Falls gesetzt, wird \fBdpkg\-deb\fP es als das Verzeichnis verwenden, in dem

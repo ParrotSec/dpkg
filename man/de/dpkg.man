@@ -562,16 +562,18 @@ grundlegende Unix\-Befehle. Diese zu entfernen kann dazu führen, dass das
 gesamte System nicht mehr arbeitet \- verwenden Sie diese Option daher mit
 Vorsicht.
 
-\fBdepends\fP: Verwandle alle Abhängigkeitsprobleme in Warnungen.
+\fBdepends\fP: Turn all dependency problems into warnings.  This affects the
+\fBPre\-Depends\fP and \fBDepends\fP fields.
 
-\fBdepends\-version\fP: Ignoriere Versionen bei der Prüfung von Abhängigkeiten.
+\fBdepends\-version\fP: Don't care about versions when checking dependencies.
+This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
 
-\fBbreaks\fP: Installiere, selbst falls dies ein anderes Paket beschädigt (seit
-Dpkg 1.14.6).
+\fBbreaks\fP: Install, even if this would break another package (since dpkg
+1.14.6).  This affects the \fBBreaks\fP field.
 
-\fBconflicts\fP: Installiere, selbst wenn es mit einem anderen Paket in
-Konflikt steht. Dies ist gefährlich, da dies gewöhnlich dazu führt, dass
-einige Dateien überschrieben werden.
+\fBconflicts\fP: Install, even if it conflicts with another package. This is
+dangerous, for it will usually cause overwriting of some files.  This
+affects the \fBConflicts\fP field.
 
 \fBconfmiss\fP: Installiere das fehlende Conffile immer ohne Rückfrage. Dies
 ist gefährlich, da es bedeutet, dass eine Änderung (die Entfernung) an der
@@ -649,9 +651,9 @@ fehlschlägt.
 
 .TP 
 \fB\-\-ignore\-depends\fP=\fIPaket\fP, …
-Ignoriere Abhängigkeitsüberprüfungen für bestimmte Pakete (tatsächlich wird
-die Überprüfung durchgeführt, aber nur Warnungen über Konflikte werden
-angezeigt, sonst nichts).
+Ignore dependency\-checking for specified packages (actually, checking is
+performed, but only warnings about conflicts are given, nothing else).  This
+affects the \fBPre\-Depends\fP, \fBDepends\fP and \fBBreaks\fP fields.
 .TP 
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
 Erledige alles, was gemacht werden soll, aber schreibe keine
@@ -675,20 +677,20 @@ Installiere ein Paket nicht, falls bereits eine neuere Version des gleichen
 Paketes installiert ist. Dies ist ein Alias für \fB\-\-refuse\-downgrade\fP.
 .TP 
 \fB\-\-admindir=\fP\fIVerz\fP
-Ändere das voreingestellte administrative Verzeichnis (standardmäßig
-»\fI%ADMINDIR%\fP«), in dem viele Dateien liegen, die Informationen über den
-Status von installierten und deinstallierten Pakete usw. liegen.
+Set the administrative directory to \fIdirectory\fP.  This directory contains
+many files that give information about status of installed or uninstalled
+packages, etc.  Defaults to «\fI%ADMINDIR%\fP».
 .TP 
 \fB\-\-instdir=\fP\fIVerz\fP
-Ändere das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt
-an, wo Pakete installiert werden. \fBinstdir\fP (standardmäßig »\fI/\fP«) ist auch
-das Verzeichnis, das an \fBchroot\fP(2) vor dem Aufruf der Installationsskripte
-des Paketes übergeben wird, was bedeutet, dass die Skripte \fBinstdir\fP als
-ein Wurzelverzeichnis sehen.
+Set the installation directory, which refers to the directory where packages
+are to be installed. \fBinstdir\fP is also the directory passed to \fBchroot\fP(2)
+before running package's installation scripts, which means that the scripts
+see \fBinstdir\fP as a root directory.  Defaults to «\fI/\fP».
 .TP 
 \fB\-root=\fP\fIVerz\fP
-Durch Ändern von \fBroot\fP wird \fBinstdir\fP auf »\fIVerz\fP« und \fBadmindir\fP auf
-»\fIVerz\fP\fB%ADMINDIR%\fP« geändert.
+Set the root directory to \fBdirectory\fP, which sets the installation
+directory to «\fIdir\fP» and the administrative directory to
+«\fIdir\fP\fB%ADMINDIR%\fP».
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Bearbeite nur die Pakete, die zur Installation ausgewählt sind. Die
@@ -835,6 +837,9 @@ Für Conffile\-Änderungen, wobei \fIEntscheidung\fP entweder \fBinstall\fP oder
 \fBkeep\fP ist.
 .RE
 .TP 
+\fB\-\-no\-pager\fP
+Disables the use of any pager when showing information (since dpkg 1.19.2).
+.TP 
 \fB\-\-no\-debsig\fP
 Versuche nicht, Paketsignaturen zu überprüfen.
 .TP 
@@ -882,21 +887,34 @@ benutzerspezifische Konfigurationsdatei gelesen wird.
 Falls gesetzt, wird \fBdpkg\fP es als das Verzeichnis verwenden, in dem
 temporäre Dateien und Verzeichnisse erstellt werden.
 .TP 
-\fBPAGER\fP
-Das Programm, das \fBdpkg\fP ausführen wird, wenn es die Conffiles anzeigt.
-.TP 
 \fBSHELL\fP
-Das Programm, das \fBdpkg\fP ausführen wird, wenn es eine neue interaktive
-Shell startet.
+The program \fBdpkg\fP will execute when starting a new interactive shell, or
+when spawning a command via a shell.
 .TP 
-\fBCOLUMNS\fP
-Setzt die Anzahl von Spalten die \fBdpkg\fP verwenden soll, wenn es
-formatierten Text anzeigt. Derzeit nur von \fB\-\-list\fP verwendet.
+\fBPAGER\fP
+.TQ
+\fBDPKG_PAGER\fP
+The program \fBdpkg\fP will execute when running a pager, for example when
+displaying the conffile differences.  If \fBSHELL\fP is not set, «\fBsh\fP» will
+be used instead.  The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment
+variable (since dpkg 1.19.2).
 .TP 
 \fBDPKG_COLORS\fP
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
 sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_FRONTEND_LOCKED\fP
+Wird von einer Paketverwalterprogrammoberfläche gesetzt, um Dpkg zu
+informieren, dass es nicht die Sperre der Oberfläche erlangen soll (seit
+Dpkg 1.19.1).
 .SS "Interne Umgebung"
+.TP 
+\fBLESS\fP
+Defined by \fBdpkg\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning a
+pager (since dpkg 1.19.2).  To change the default behavior, this variable
+can be preset to some other value including an empty string, or the \fBPAGER\fP
+or \fBDPKG_PAGER\fP variables can be set to disable specific options with
+«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
 .TP 
 \fBDPKG_ROOT\fP
 Durch \fBdpkg\fP in der Betreuerskriptumgebung definiert, um anzuzeigen, auf

@@ -34,8 +34,8 @@
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
 #include <dpkg/path.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
 #include "main.h"
 
 const char *const statusstrings[]= {
@@ -90,9 +90,9 @@ find_command(const char *prog)
   if (!path_list)
     ohshit(_("PATH is not set"));
 
-  for (path = path_list; path; path = path_end ? path_end + 1 : NULL) {
-    path_end = strchr(path, ':');
-    path_len = path_end ? (size_t)(path_end - path) : strlen(path);
+  for (path = path_list; path; path = *path_end ? path_end + 1 : NULL) {
+    path_end = strchrnul(path, ':');
+    path_len = (size_t)(path_end - path);
 
     varbuf_reset(&filename);
     varbuf_add_buf(&filename, path, path_len);
@@ -125,7 +125,8 @@ void checkpath(void) {
      * an ldconfig. */
 #if defined(__APPLE__) && defined(__MACH__)
     "update_dyld_shared_cache",
-#else
+#elif defined(__GLIBC__) || defined(__UCLIBC__) || \
+      defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
     "ldconfig",
 #endif
 #if BUILD_START_STOP_DAEMON

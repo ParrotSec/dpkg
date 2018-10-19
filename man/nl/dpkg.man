@@ -336,7 +336,7 @@ Zoekt pakketten op die geselecteerd werden om geïnstalleerd te worden, maar
 die om één of andere reden nog niet geïnstalleerd werden.
 .TP 
 \fB\-\-predep\-package\fP
-Toon een enkel pakket dat het doel is van een of meer relevante voorafgaande
+Toon één enkel pakket dat het doel is van een of meer relevante voorafgaande
 vereisten en dat zelf geen niet\-voldane voorafgaande vereisten heeft.
 .IP
 Indien er een dergelijk pakket is, geef het dan weer in de vorm van een item
@@ -526,9 +526,10 @@ gebruiken heeft tot gevolg dat het pakket dat van het verwijderde pakket
 afhankelijk was, automatisch gedeconfigureerd wordt.
 .TP 
 \fB\-D\fP\fIoctaal\fP\fB, \-\-debug=\fP\fIoctaal\fP
-Switch debugging on. \fIoctal\fP is formed by bitwise\-oring desired values
-together from the list below (note that these values may change in future
-releases). \fB\-Dh\fP or \fB\-\-debug=help\fP display these debugging values.
+Schakel debuggen in. \fIoctaal\fP wordt gevormd door de gewenste waarden uit de
+onderstaande lijst in een bitwise OR\-bewerking samen te nemen (merk op dat
+deze waarden in toekomstige uitgaven kunnen veranderen). \fB\-Dh\fP of
+\fB\-\-debug=help\fP geeft deze debugwaarden weer.
 
      Getal   Beschrijving
          1   Algemene informatieve voortgangsinformatie
@@ -585,17 +586,18 @@ beschouwd. Essentiële pakketten bevatten meestal hele basale Unix
 commando's. Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt
 met werken. Gebruik dit dus met voorzichtigheid.
 
-\fBdepends\fP: Verander alle vereistenproblemen in waarschuwingen.
+\fBdepends\fP: Turn all dependency problems into warnings.  This affects the
+\fBPre\-Depends\fP and \fBDepends\fP fields.
 
-\fBdepends\-version\fP: Bekommer u niet om versies bij het toetsen van
-vereisten.
+\fBdepends\-version\fP: Don't care about versions when checking dependencies.
+This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
 
-\fBbreaks\fP: Installeer, zelfs als dit een ander pakket defect zou maken
-(sinds dpkg 1.14.6).
+\fBbreaks\fP: Install, even if this would break another package (since dpkg
+1.14.6).  This affects the \fBBreaks\fP field.
 
-\fBconflicts\fP: Installeer, zelfs als er een tegenstelling is met een ander
-pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van
-bepaalde bestanden tot gevolg hebben.
+\fBconflicts\fP: Install, even if it conflicts with another package. This is
+dangerous, for it will usually cause overwriting of some files.  This
+affects the \fBConflicts\fP field.
 
 \fBconfmiss\fP: Installeer zonder vragen steeds de ontbrekende conffile
 (configuratiebestand). Dit is gevaarlijk, aangezien het betekent dat een
@@ -679,9 +681,9 @@ mislukt.
 
 .TP 
 \fB\-\-ignore\-depends\fP=\fIpakket\fP,...
-Negeer het toetsen van afhankelijkheden voor de opgegeven pakketten
-(eigenlijk wordt de controle wel uitgevoerd, maar er worden enkel
-waarschuwingen in verband met tegenstrijdigheden gegeven en verder niets).
+Ignore dependency\-checking for specified packages (actually, checking is
+performed, but only warnings about conflicts are given, nothing else).  This
+affects the \fBPre\-Depends\fP, \fBDepends\fP and \fBBreaks\fP fields.
 .TP 
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
 Voer alles wat gedaan moet worden, uit, maar schrijf geen veranderingen
@@ -704,20 +706,20 @@ Installeer een pakket niet als reeds een nieuwere versie van dat pakket
 geïnstalleerd is. Dit is een alias voor \fB\-\-refuse\-downgrade\fP.
 .TP 
 \fB\-\-admindir=\fP\fImap\fP
-Wijzig de standaard administratieve map waarin veel bestanden zitten met
-informatie over de status van geïnstalleerde of gede\-installeerde pakketten,
-enz. (Standaard is dat «\fI%ADMINDIR%\fP»)
+Set the administrative directory to \fIdirectory\fP.  This directory contains
+many files that give information about status of installed or uninstalled
+packages, etc.  Defaults to «\fI%ADMINDIR%\fP».
 .TP 
 \fB\-\-instdir=\fP\fImap\fP
-Wijzig de standaard installatiemap, wat een aanduiding is voor de map waarin
-pakketten geïnstalleerd zullen worden. \fBinstdir\fP is ook de map die aan
-\fBchroot\fP(2) doorgegeven wordt vooraleer de installatiescripts van een
-pakket uitgevoerd worden, waardoor de scripts \fBinstdir\fP als de hoofdmap
-beschouwen. (Standaard is dat «\fI/\fP»)
+Set the installation directory, which refers to the directory where packages
+are to be installed. \fBinstdir\fP is also the directory passed to \fBchroot\fP(2)
+before running package's installation scripts, which means that the scripts
+see \fBinstdir\fP as a root directory.  Defaults to «\fI/\fP».
 .TP 
 \fB\-\-root=\fP\fImap\fP
-Het wijzigen van \fBroot\fP verandert \fBinstdir\fP naar «\fImap\fP» en \fBadmindir\fP
-naar «\fIdir\fP\fB%ADMINDIR%\fP».
+Set the root directory to \fBdirectory\fP, which sets the installation
+directory to «\fIdir\fP» and the administrative directory to
+«\fIdir\fP\fB%ADMINDIR%\fP».
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Verwerk enkel de pakketten die geselecteerd werden om geïnstalleerd te
@@ -869,6 +871,9 @@ Voor conffile\-wijzigingen (wijzigingen aan een configuratiebestand) waarbij
 \fIbeslissing\fP ofwel \fBinstall\fP ofwel \fBkeep\fP is.
 .RE
 .TP 
+\fB\-\-no\-pager\fP
+Disables the use of any pager when showing information (since dpkg 1.19.2).
+.TP 
 \fB\-\-no\-debsig\fP
 Tracht pakket\-ondertekeningen niet te verifiëren.
 .TP 
@@ -917,22 +922,33 @@ het gebruikersspecifieke configuratiebestand kan gelezen worden.
 Indien de variabele ingesteld is, zal \fBdpkg\fP hem gebruiken als de map
 waarin tijdelijke bestanden en mappen kunnen aangemaakt worden.
 .TP 
-\fBPAGER\fP
-Het programma dat door \fBdpkg\fP zal uitgevoerd worden bij het tonen van de
-conffiles (configuratiebestanden).
-.TP 
 \fBSHELL\fP
-Het programma dat \fBdpkg\fP zal uitvoeren bij het starten van een nieuwe
-interactieve shell.
+The program \fBdpkg\fP will execute when starting a new interactive shell, or
+when spawning a command via a shell.
 .TP 
-\fBCOLUMNS\fP
-Stelt het aantal kolommen in dat \fBdpkg\fP moet gebruiken bij het laten zien
-van opgemaakte tekst. Wordt momenteel enkel gebruikt door \fB\-\-list\fP.
+\fBPAGER\fP
+.TQ
+\fBDPKG_PAGER\fP
+The program \fBdpkg\fP will execute when running a pager, for example when
+displaying the conffile differences.  If \fBSHELL\fP is not set, «\fBsh\fP» will
+be used instead.  The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment
+variable (since dpkg 1.19.2).
 .TP 
 \fBDPKG_COLORS\fP
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_FRONTEND_LOCKED\fP
+Set by a package manager frontend to notify dpkg that it should not acquire
+the frontend lock (since dpkg 1.19.1).
 .SS "Interne omgeving"
+.TP 
+\fBLESS\fP
+Defined by \fBdpkg\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning a
+pager (since dpkg 1.19.2).  To change the default behavior, this variable
+can be preset to some other value including an empty string, or the \fBPAGER\fP
+or \fBDPKG_PAGER\fP variables can be set to disable specific options with
+«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
 .TP 
 \fBDPKG_ROOT\fP
 Gedefinieerd door \fBdpkg\fP in de omgeving van het pakketonderhouderscript om

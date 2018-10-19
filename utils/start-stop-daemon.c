@@ -80,7 +80,6 @@
 #include <sys/select.h>
 #include <sys/ioctl.h>
 
-#include <assert.h>
 #include <errno.h>
 #include <limits.h>
 #include <time.h>
@@ -192,7 +191,7 @@ enum {
 };
 
 /* The minimum polling interval, 20ms. */
-static const long MIN_POLL_INTERVAL = 20 * NANOSEC_IN_MILLISEC;
+static const long MIN_POLL_INTERVAL = 20L * NANOSEC_IN_MILLISEC;
 
 static enum action_code action;
 static bool testmode = false;
@@ -300,6 +299,25 @@ fatal(const char *format, ...)
 		exit(STATUS_UNKNOWN);
 	else
 		exit(2);
+}
+
+#define BUG(...) bug(__FILE__, __LINE__, __func__, __VA_ARGS__)
+
+static void DPKG_ATTR_NORET DPKG_ATTR_PRINTF(4)
+bug(const char *file, int line, const char *func, const char *format, ...)
+{
+	va_list arglist;
+
+	fprintf(stderr, "%s:%s:%d:%s: internal error: ",
+	        progname, file, line, func);
+	va_start(arglist, format);
+	vfprintf(stderr, format, arglist);
+	va_end(arglist);
+
+	if (action == ACTION_STATUS)
+		exit(STATUS_UNKNOWN);
+	else
+		exit(3);
 }
 
 static void *
@@ -912,15 +930,15 @@ parse_schedule(const char *schedule_str)
 	} else {
 		count = 0;
 		repeatat = -1;
-		while (schedule_str != NULL) {
-			slash = strchr(schedule_str, '/');
-			str_len = slash ? (size_t)(slash - schedule_str) : strlen(schedule_str);
+		while (*schedule_str) {
+			slash = strchrnul(schedule_str, '/');
+			str_len = (size_t)(slash - schedule_str);
 			if (str_len >= sizeof(item_buf))
 				badusage("invalid schedule item: far too long"
 				         " (you must delimit items with slashes)");
 			memcpy(item_buf, schedule_str, str_len);
 			item_buf[str_len] = '\0';
-			schedule_str = slash ? slash + 1 : NULL;
+			schedule_str = *slash ? slash + 1 : slash;
 
 			parse_schedule_item(item_buf, &schedule[count]);
 			if (schedule[count].type == sched_forever) {
@@ -940,7 +958,9 @@ parse_schedule(const char *schedule_str)
 			schedule[count].value = repeatat;
 			count++;
 		}
-		assert(count == schedule_length);
+		if (count != schedule_length)
+			BUG("count=%d != schedule_length=%d",
+			    count, schedule_length);
 	}
 }
 
@@ -1289,10 +1309,16 @@ proc_get_psinfo(pid_t pid, struct psinfo *psinfo)
 	fp = fopen(filename, "r");
 	if (!fp)
 		return false;
-	if (fread(psinfo, sizeof(*psinfo), 1, fp) == 0)
+	if (fread(psinfo, sizeof(*psinfo), 1, fp) == 0) {
+		fclose(fp);
 		return false;
-	if (ferror(fp))
+	}
+	if (ferror(fp)) {
+		fclose(fp);
 		return false;
+	}
+
+	fclose(fp);
 
 	return true;
 }
@@ -2463,7 +2489,7 @@ run_stop_schedule(void)
 	else if (userspec)
 		set_what_stop("process(es) owned by '%s'", userspec);
 	else
-		fatal("internal error, no match option, please report");
+		BUG("no match option, please report");
 
 	anykilled = false;
 	retry_nr = 0;
@@ -2501,7 +2527,8 @@ run_stop_schedule(void)
 			else
 				continue;
 		default:
-			assert(!"schedule[].type value must be valid");
+			BUG("schedule[%d].type value %d is not valid",
+			    position, schedule[position].type);
 		}
 	}
 

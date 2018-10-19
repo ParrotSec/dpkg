@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-dev 1.16.8\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"POT-Creation-Date: 2018-10-08 11:37+0200\n"
 "PO-Revision-Date: 2014-12-02 20:24+0100\n"
 "Last-Translator: Omar Campagne <ocampagne@gmail.com>\n"
 "Language-Team: Spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -338,27 +338,29 @@ msgid ""
 "      --build=<type>[,...]    specify the build <type>: full, source, "
 "binary,\n"
 "                                any, all (default is 'full').\n"
-"  -F                          normal full build (source and binary; "
+"  -F, --build=full            normal full build (source and binary; "
 "default).\n"
-"  -g                          source and arch-indep build.\n"
-"  -G                          source and arch-specific build.\n"
-"  -b                          binary-only, no source files.\n"
-"  -B                          binary-only, only arch-specific files.\n"
-"  -A                          binary-only, only arch-indep files.\n"
-"  -S                          source-only, no binary files.\n"
+"  -g, --build=source,all      source and arch-indep build.\n"
+"  -G, --build=source,any      source and arch-specific build.\n"
+"  -b, --build=binary          binary-only, no source files.\n"
+"  -B, --build=any             binary-only, only arch-specific files.\n"
+"  -A, --build=all             binary-only, only arch-indep files.\n"
+"  -S, --build=source          source-only, no binary files.\n"
 "  -nc, --no-pre-clean         do not pre clean source tree (implies -b).\n"
-"       --pre-clean            pre clean source tree (default).\n"
-"  -tc, --post-clean           clean source tree when finished.\n"
-"  -D                          check build dependencies and conflicts "
+"      --pre-clean             pre clean source tree (default).\n"
+"      --no-post-clean         do not post clean source tree (default).\n"
+"  -tc, --post-clean           post clean source tree.\n"
+"  -D, --check-builddeps       check build dependencies and conflicts "
 "(default).\n"
-"  -d                          do not check build dependencies and "
+"  -d, --no-check-builddeps    do not check build dependencies and "
 "conflicts.\n"
-"      --[no-]check-builddeps  ditto.\n"
 "      --ignore-builtin-builddeps\n"
 "                              do not check builtin build dependencies.\n"
 "  -P, --build-profiles=<profiles>\n"
-"                              assume comma-separated build profiles as "
+"                              assume comma-separated build <profiles> as "
 "active.\n"
+"      --rules-requires-root   assume legacy Rules-Requires-Root field "
+"value.\n"
 "  -R, --rules-file=<rules>    rules file to execute (default is debian/"
 "rules).\n"
 "  -T, --rules-target=<target> call debian/rules <target>.\n"
@@ -706,6 +708,16 @@ msgstr ""
 msgid "unknown %% substitution in hook: %%%s"
 msgstr "variable de sustitución %% desconocida en gancho: %%%s"
 
+#: scripts/dpkg-buildpackage.pl
+msgid "short OpenPGP key IDs are broken; please use key fingerprints instead"
+msgstr ""
+
+#: scripts/dpkg-buildpackage.pl
+msgid ""
+"long OpenPGP key IDs are strongly discouraged; please use key fingerprints "
+"instead"
+msgstr ""
+
 #: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-genbuildinfo.pl scripts/dpkg-name.pl scripts/Dpkg/Arch.pm
 #: scripts/Dpkg/IPC.pm scripts/Dpkg/OpenPGP.pm scripts/Dpkg/Shlibs.pm
@@ -873,8 +885,9 @@ msgstr ""
 #: scripts/dpkg-gencontrol.pl scripts/dpkg-mergechangelogs.pl
 #: scripts/Dpkg/Compression/FileHandle.pm scripts/Dpkg/IPC.pm
 #: scripts/Dpkg/Interface/Storable.pm scripts/Dpkg/Source/Functions.pm
-#: scripts/Dpkg/Source/Package.pm scripts/Dpkg/Source/Package/V2.pm
-#: scripts/Dpkg/Source/Package/V3/Quilt.pm scripts/Dpkg/Source/Quilt.pm
+#: scripts/Dpkg/Source/BinaryFiles.pm scripts/Dpkg/Source/Package.pm
+#: scripts/Dpkg/Source/Package/V2.pm scripts/Dpkg/Source/Package/V3/Quilt.pm
+#: scripts/Dpkg/Source/Quilt.pm
 #, perl-format
 msgid "cannot write %s"
 msgstr "no se pudo escribir «%s»"
@@ -1085,8 +1098,8 @@ msgstr ""
 
 #: scripts/dpkg-genchanges.pl scripts/dpkg-source.pl scripts/Dpkg/BuildFlags.pm
 #: scripts/Dpkg/Compression/FileHandle.pm scripts/Dpkg/Interface/Storable.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/Package/V2.pm
-#: scripts/Dpkg/Source/Quilt.pm
+#: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
+#: scripts/Dpkg/Source/Package/V2.pm scripts/Dpkg/Source/Quilt.pm
 #, perl-format
 msgid "cannot read %s"
 msgstr "no se puede leer %s"
@@ -1312,6 +1325,8 @@ msgstr "no se ha podido instalar el fichero de control de salida «%s»"
 #| "      --version            show the version.\n"
 msgid ""
 "Options:\n"
+"  -l<library-path>         add directory to private shared library search "
+"list.\n"
 "  -p<package>              generate symbols file for package.\n"
 "  -P<package-build-dir>    temporary build directory instead of debian/tmp.\n"
 "  -e<library>              explicitly list libraries to scan.\n"
@@ -1653,6 +1668,7 @@ msgid ""
 "Parser options:\n"
 "      --format <output-format>\n"
 "                           set output format (defaults to 'dpkg').\n"
+"      --reverse            include all changes in reverse order.\n"
 "      --all                include all changes.\n"
 "  -s, --since <version>    include all changes later than <version>.\n"
 "  -v <version>             ditto.\n"
@@ -2189,7 +2205,8 @@ msgstr ""
 "fichero de información de bibliotecas compartidas «%s», línea %d: línea "
 "incorrecta «%s»"
 
-#: scripts/dpkg-shlibdeps.pl scripts/Dpkg/Checksums.pm
+#: scripts/dpkg-shlibdeps.pl scripts/Dpkg/Changelog/Parse.pm
+#: scripts/Dpkg/Checksums.pm
 #, perl-format
 msgid "cannot open file %s"
 msgstr "no se ha podido abrir el fichero «%s»"
@@ -2239,7 +2256,7 @@ msgstr "no se pudo obtener el estado («stat») del directorio «%s»"
 msgid "directory argument %s is not a directory"
 msgstr "el argumento de directorio «%s» no es un directorio"
 
-#: scripts/dpkg-source.pl scripts/Dpkg/Source/Package/V2.pm
+#: scripts/dpkg-source.pl scripts/Dpkg/Source/BinaryFiles.pm
 #: scripts/Dpkg/Source/Package/V3/Bzr.pm scripts/Dpkg/Source/Package/V3/Git.pm
 #, perl-format
 msgid "unable to chdir to '%s'"
@@ -2668,8 +2685,9 @@ msgid "you can only specify one of 'to' and 'until', using 'until'"
 msgstr "sólo puede definir o bien «to» o «until», usando «until»"
 
 #: scripts/Dpkg/Changelog.pm
-#, perl-format
-msgid "'%s' option specifies non-existing version"
+#, fuzzy, perl-format
+#| msgid "'%s' option specifies non-existing version"
+msgid "'%s' option specifies non-existing version '%s'"
 msgstr "la opción «%s» define un versión que no existe"
 
 #: scripts/Dpkg/Changelog.pm
@@ -2685,16 +2703,21 @@ msgid "use oldest entry that is later than the one specified"
 msgstr "usar la entrada más antigua que es posterior a la que se ha definido"
 
 #: scripts/Dpkg/Changelog.pm
-#, perl-format
-msgid "no such entry found, ignoring '%s' parameter"
+#, fuzzy, perl-format
+#| msgid "no such entry found, ignoring '%s' parameter"
+msgid "no such entry found, ignoring '%s' parameter '%s'"
 msgstr "no se ha encontrado esa entrada, ignorando el parámetro «%s»"
 
 #: scripts/Dpkg/Changelog.pm
-msgid "'since' option specifies most recent version, ignoring"
+#, fuzzy, perl-format
+#| msgid "'since' option specifies most recent version, ignoring"
+msgid "'since' option specifies most recent version '%s', ignoring"
 msgstr "la opción «since» define la versión más reciente, omitiendo"
 
 #: scripts/Dpkg/Changelog.pm
-msgid "'until' option specifies oldest version, ignoring"
+#, fuzzy, perl-format
+#| msgid "'until' option specifies oldest version, ignoring"
+msgid "'until' option specifies oldest version '%s', ignoring"
 msgstr "la opción «until» define la versión más antigua, omitiendo"
 
 #: scripts/Dpkg/Changelog/Debian.pm
@@ -2820,14 +2843,9 @@ msgstr ""
 
 #: scripts/Dpkg/Changelog/Parse.pm
 #, fuzzy, perl-format
-#| msgid "cannot create directory %s"
-msgid "cannot create pipe for %s"
-msgstr "no se puede crear el directorio «%s»"
-
-#: scripts/Dpkg/Changelog/Parse.pm
-#, perl-format
-msgid "tail of %s"
-msgstr "final de «%s»"
+#| msgid "cannot stat file %s"
+msgid "cannot seek into file %s"
+msgstr "no se puede obtener el estado (stat) del fichero «%s»"
 
 #: scripts/Dpkg/Changelog/Parse.pm
 #, fuzzy, perl-format
@@ -3215,6 +3233,12 @@ msgstr "no se permite el carácter «%s»"
 msgid "must start with an alphanumeric character"
 msgstr "debe empezar con un carácter alfanumérico"
 
+#: scripts/Dpkg/Shlibs.pm
+msgid ""
+"deprecated use of LD_LIBRARY_PATH with private library directory which "
+"interferes with cross-building, please use -l option instead"
+msgstr ""
+
 #: scripts/Dpkg/Shlibs/Objdump.pm
 #, fuzzy, perl-format
 #| msgid "cannot exec format parser: %s"
@@ -3327,6 +3351,37 @@ msgstr "no se puede cambiar la marca de tiempo de «%s»"
 #, perl-format
 msgid "cannot read timestamp from %s"
 msgstr "no se puede leer la marca de tiempo desde «%s»"
+
+#: scripts/Dpkg/Source/Functions.pm
+#, fuzzy, perl-format
+#| msgid "cannot open file %s"
+msgid "cannot open file %s for binary detection"
+msgstr "no se ha podido abrir el fichero «%s»"
+
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid "adding %s to %s"
+msgstr "añadiendo «%s» a «%s»"
+
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid "unwanted binary file: %s"
+msgstr "fichero binario no deseado: %s"
+
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid ""
+"detected %d unwanted binary file (add it in debian/source/include-binaries "
+"to allow its inclusion)."
+msgid_plural ""
+"detected %d unwanted binary files (add them in debian/source/include-"
+"binaries to allow their inclusion)."
+msgstr[0] ""
+"se ha detectado %d fichero binario (añada este en «debian/source/include-"
+"binaries» para permitir su inclusión)."
+msgstr[1] ""
+"se han detectado %d ficheros binarios (añada estos en «debian/source/include-"
+"binaries» para permitir su inclusión)."
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
@@ -3810,26 +3865,6 @@ msgstr "se han detecta cambios locales, los ficheros modificados son:"
 msgid "-b takes only one parameter with format '%s'"
 msgstr "-b sólo toma un parámetro con formato «%s»"
 
-#: scripts/Dpkg/Source/Package/V2.pm
-#, perl-format
-msgid "unwanted binary file: %s"
-msgstr "fichero binario no deseado: %s"
-
-#: scripts/Dpkg/Source/Package/V2.pm
-#, perl-format
-msgid ""
-"detected %d unwanted binary file (add it in debian/source/include-binaries "
-"to allow its inclusion)."
-msgid_plural ""
-"detected %d unwanted binary files (add them in debian/source/include-"
-"binaries to allow their inclusion)."
-msgstr[0] ""
-"se ha detectado %d fichero binario (añada este en «debian/source/include-"
-"binaries» para permitir su inclusión)."
-msgstr[1] ""
-"se han detectado %d ficheros binarios (añada estos en «debian/source/include-"
-"binaries» para permitir su inclusión)."
-
 #: scripts/Dpkg/Source/Package/V2.pm scripts/Dpkg/Source/Patch.pm
 #, perl-format
 msgid "cannot represent change to %s: %s"
@@ -3901,11 +3936,6 @@ msgstr ""
 #| msgid "cannot find '%s'"
 msgid "cannot find an editor"
 msgstr "no se puede encontrar «%s»"
-
-#: scripts/Dpkg/Source/Package/V2.pm
-#, perl-format
-msgid "adding %s to %s"
-msgstr "añadiendo «%s» a «%s»"
 
 #: scripts/Dpkg/Source/Package/V3/Bzr.pm
 msgid "cannot unpack bzr-format source package because bzr is not in the PATH"
@@ -4076,6 +4106,12 @@ msgstr "no contiene un repositorio bzr"
 #, perl-format
 msgid "can't create symlink %s"
 msgstr "no se puede crear el enlace simbólico «%s»"
+
+#: scripts/Dpkg/Source/Package/V3/Quilt.pm
+#, fuzzy, perl-format
+#| msgid "using options from %s: %s"
+msgid "using patch list from %s"
+msgstr "usando opciones de %s: %s"
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 #, perl-format
@@ -4372,13 +4408,15 @@ msgid "obsolete substitution variable ${%s}"
 msgstr "la variable de sustitución ${%s} no está en uso"
 
 #: scripts/Dpkg/Substvars.pm
-#, perl-format
-msgid "unknown substitution variable ${%s}"
-msgstr "la variable de sustitución ${%s} es desconocida"
+#, fuzzy, perl-format
+#| msgid "unused substitution variable ${%s}"
+msgid "substitution variable ${%s} used, but is not defined"
+msgstr "la variable de sustitución ${%s} no está en uso"
 
 #: scripts/Dpkg/Substvars.pm
-#, perl-format
-msgid "unused substitution variable ${%s}"
+#, fuzzy, perl-format
+#| msgid "unused substitution variable ${%s}"
+msgid "substitution variable ${%s} unused, but is defined"
 msgstr "la variable de sustitución ${%s} no está en uso"
 
 #: scripts/Dpkg/Vars.pm
@@ -4452,6 +4490,17 @@ msgstr "el número de versión contiene el carácter ilegal «%s»"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "la sección «epoch» del número de versión no es un número: «%s»"
+
+#, fuzzy
+#~| msgid "cannot create directory %s"
+#~ msgid "cannot create pipe for %s"
+#~ msgstr "no se puede crear el directorio «%s»"
+
+#~ msgid "tail of %s"
+#~ msgstr "final de «%s»"
+
+#~ msgid "unknown substitution variable ${%s}"
+#~ msgstr "la variable de sustitución ${%s} es desconocida"
 
 #~ msgid "%s died from signal %s"
 #~ msgstr "%s murió con la señal %s"

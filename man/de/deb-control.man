@@ -308,6 +308,14 @@ diesem Feld markiert wurden, werden nicht in der Hauptquellsteuerdatei
 \fIdebian/control\fP auftauchen. Die einzige derzeit verwandte Begründung ist
 \fBdebug\-symbols\fP.
 .
+.TP 
+\fBBuild\-Ids:\fP\fI elf\-build\-id\-list\fP
+This field specifies a whitespace separated list of ELF build\-ids. These are
+unique identifiers for semantically identical ELF objects, for each of these
+within the package.
+.
+The format or the way to compute each build\-id is not defined by design.
+.
 .SH BEISPIEL
 .\" .RS
 .nf
@@ -334,6 +342,11 @@ Description: GNU grep, egrep und fgrep.
  langsamer laufen.)
 .fi
 .\" .RE
+.
+.SH FEHLER
+The \fBBuild\-Ids\fP field uses a rather generic name out of its original
+context within an ELF object, which serves a very specific purpose and
+executable format.
 .
 .SH "SIEHE AUCH"
 \fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).

@@ -27,7 +27,6 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/ioctl.h>
 
 #if HAVE_LOCALE_H
 #include <locale.h>
@@ -38,7 +37,6 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <fnmatch.h>
-#include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,47 +51,16 @@
 #include <dpkg/string.h>
 #include <dpkg/path.h>
 #include <dpkg/file.h>
+#include <dpkg/pager.h>
 #include <dpkg/options.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
-#include "infodb.h"
 #include "main.h"
 
 static const char *showformat = "${binary:Package}\t${Version}\n";
 
 static int opt_loadavail = 0;
-
-static int getwidth(void) {
-  int fd;
-  long res;
-  struct winsize ws;
-  const char *columns;
-  char *endptr;
-
-  columns = getenv("COLUMNS");
-  if (columns) {
-    errno = 0;
-    res = strtol(columns, &endptr, 10);
-    if (errno == 0 && columns != endptr && *endptr == '\0' &&
-        res > 0 && res < INT_MAX)
-      return res;
-  }
-
-  if (!isatty(1))
-    return -1;
-  else {
-    res = 80;
-
-    fd = open("/dev/tty", O_RDONLY);
-    if (fd != -1) {
-      if (ioctl(fd, TIOCGWINSZ, &ws) == 0)
-        res = ws.ws_col;
-      close(fd);
-    }
-
-    return res;
-  }
-}
 
 static int
 pkg_array_match_patterns(struct pkg_array *array,
@@ -155,56 +122,36 @@ struct list_format {
 static void
 list_format_init(struct list_format *fmt, struct pkg_array *array)
 {
-  int w;
+  int i;
 
   if (fmt->nw != 0)
     return;
 
-  w = getwidth();
-  if (w == -1) {
-    int i;
+  fmt->nw = 14;
+  fmt->vw = 12;
+  fmt->aw = 12;
+  fmt->dw = 33;
 
-    fmt->nw = 14;
-    fmt->vw = 12;
-    fmt->aw = 12;
-    fmt->dw = 33;
+  for (i = 0; i < array->n_pkgs; i++) {
+    int plen, vlen, alen, dlen;
 
-    for (i = 0; i < array->n_pkgs; i++) {
-      int plen, vlen, alen, dlen;
+    if (array->pkgs[i] == NULL)
+      continue;
 
-      if (array->pkgs[i] == NULL)
-        continue;
+    plen = str_width(pkg_name(array->pkgs[i], pnaw_nonambig));
+    vlen = str_width(versiondescribe(&array->pkgs[i]->installed.version,
+                                     vdew_nonambig));
+    alen = str_width(dpkg_arch_describe(array->pkgs[i]->installed.arch));
+    pkgbin_synopsis(array->pkgs[i], &array->pkgs[i]->installed, &dlen);
 
-      plen = str_width(pkg_name(array->pkgs[i], pnaw_nonambig));
-      vlen = str_width(versiondescribe(&array->pkgs[i]->installed.version,
-                                       vdew_nonambig));
-      alen = str_width(dpkg_arch_describe(array->pkgs[i]->installed.arch));
-      pkgbin_summary(array->pkgs[i], &array->pkgs[i]->installed, &dlen);
-
-      if (plen > fmt->nw)
-        fmt->nw = plen;
-      if (vlen > fmt->vw)
-        fmt->vw = vlen;
-      if (alen > fmt->aw)
-        fmt->aw = alen;
-      if (dlen > fmt->dw)
-        fmt->dw = dlen;
-    }
-  } else {
-    w -= 80;
-    /* Let's not try to deal with terminals that are too small. */
-    if (w < 0)
-      w = 0;
-    /* Halve that so we can add it to both the name and description. */
-    w >>= 1;
-    /* Name width. */
-    fmt->nw = (14 + (w / 2));
-    /* Version width. */
-    fmt->vw = (12 + (w / 4));
-    /* Architecture width. */
-    fmt->aw = (12 + (w / 4));
-    /* Description width. */
-    fmt->dw = (33 + w);
+    if (plen > fmt->nw)
+      fmt->nw = plen;
+    if (vlen > fmt->vw)
+      fmt->vw = vlen;
+    if (alen > fmt->aw)
+      fmt->aw = alen;
+    if (dlen > fmt->dw)
+      fmt->dw = dlen;
   }
 }
 
@@ -285,7 +232,7 @@ pkg_array_list_item(struct pkg_array *array, struct pkginfo *pkg, void *pkg_data
   list_format_init(fmt, array);
   list_format_print_header(fmt);
 
-  pdesc = pkgbin_summary(pkg, &pkg->installed, &l);
+  pdesc = pkgbin_synopsis(pkg, &pkg->installed, &l);
   l = min(l, fmt->dw);
 
   list_format_print(fmt,
@@ -306,6 +253,7 @@ listpackages(const char *const *argv)
   int i;
   int rc = 0;
   struct list_format fmt;
+  struct pager *pager;
 
   if (!opt_loadavail)
     modstatdb_open(msdbrw_readonly);
@@ -316,6 +264,8 @@ listpackages(const char *const *argv)
   pkg_array_sort(&array, pkg_sorter_by_nonambig_name_arch);
 
   memset(&fmt, 0, sizeof(fmt));
+
+  pager = pager_spawn(_("showing package list on pager"));
 
   if (!*argv) {
     for (i = 0; i < array.n_pkgs; i++) {
@@ -331,6 +281,8 @@ listpackages(const char *const *argv)
 
   m_output(stdout, _("<standard output>"));
   m_output(stderr, _("<standard error>"));
+
+  pager_reap(pager);
 
   pkg_array_destroy(&array);
   modstatdb_shutdown();
@@ -437,7 +389,89 @@ searchfiles(const char *const *argv)
 }
 
 static int
-enqperpackage(const char *const *argv)
+print_status(const char *const *argv)
+{
+  const char *thisarg;
+  struct pkginfo *pkg;
+  int failures = 0;
+
+  modstatdb_open(msdbrw_readonly);
+
+  if (!*argv) {
+    writedb_records(stdout, _("<standard output>"), 0);
+  } else {
+    while ((thisarg = *argv++) != NULL) {
+      pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
+
+      if (pkg->status == PKG_STAT_NOTINSTALLED &&
+          pkg->priority == PKG_PRIO_UNKNOWN &&
+          str_is_unset(pkg->section) &&
+          !pkg->archives &&
+          pkg->want == PKG_WANT_UNKNOWN &&
+          !pkg_is_informative(pkg, &pkg->installed)) {
+        notice(_("package '%s' is not installed and no information is available"),
+               pkg_name(pkg, pnaw_nonambig));
+        failures++;
+      } else {
+        writerecord(stdout, _("<standard output>"), pkg, &pkg->installed);
+      }
+
+      if (*argv != NULL)
+        putchar('\n');
+    }
+  }
+
+  m_output(stdout, _("<standard output>"));
+  if (failures) {
+    fputs(_("Use dpkg --info (= dpkg-deb --info) to examine archive files.\n"),
+          stderr);
+    m_output(stderr, _("<standard error>"));
+  }
+
+  modstatdb_shutdown();
+
+  return failures;
+}
+
+static int
+print_avail(const char *const *argv)
+{
+  const char *thisarg;
+  struct pkginfo *pkg;
+  int failures = 0;
+
+  modstatdb_open(msdbrw_readonly | msdbrw_available_readonly);
+
+  if (!*argv) {
+    writedb_records(stdout, _("<standard output>"), wdb_dump_available);
+  } else {
+    while ((thisarg = *argv++) != NULL) {
+      pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
+
+      if (!pkg_is_informative(pkg, &pkg->available)) {
+        notice(_("package '%s' is not available"),
+               pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
+        failures++;
+      } else {
+        writerecord(stdout, _("<standard output>"), pkg, &pkg->available);
+      }
+
+      if (*argv != NULL)
+        putchar('\n');
+    }
+  }
+
+  m_output(stdout, _("<standard output>"));
+  if (failures)
+    m_output(stderr, _("<standard error>"));
+
+  modstatdb_shutdown();
+
+  return failures;
+}
+
+static int
+list_files(const char *const *argv)
 {
   const char *thisarg;
   struct fileinlist *file;
@@ -448,89 +482,57 @@ enqperpackage(const char *const *argv)
   if (!*argv)
     badusage(_("--%s needs at least one package name argument"), cipaction->olong);
 
-  if (cipaction->arg_int == act_printavail)
-    modstatdb_open(msdbrw_readonly | msdbrw_available_readonly);
-  else
-    modstatdb_open(msdbrw_readonly);
+  modstatdb_open(msdbrw_readonly);
 
   while ((thisarg = *argv++) != NULL) {
     pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
 
-    switch (cipaction->arg_int) {
-    case act_status:
-      if (pkg->status == PKG_STAT_NOTINSTALLED &&
-          pkg->priority == PKG_PRIO_UNKNOWN &&
-          str_is_unset(pkg->section) &&
-          !pkg->files &&
-          pkg->want == PKG_WANT_UNKNOWN &&
-          !pkg_is_informative(pkg, &pkg->installed)) {
-        notice(_("package '%s' is not installed and no information is available"),
-               pkg_name(pkg, pnaw_nonambig));
-        failures++;
-      } else {
-        writerecord(stdout, _("<standard output>"), pkg, &pkg->installed);
-      }
-      break;
-    case act_printavail:
-      if (!pkg_is_informative(pkg, &pkg->available)) {
-        notice(_("package '%s' is not available"),
-               pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
-        failures++;
-      } else {
-        writerecord(stdout, _("<standard output>"), pkg, &pkg->available);
-      }
-      break;
-    case act_listfiles:
-      switch (pkg->status) {
-      case PKG_STAT_NOTINSTALLED:
-        notice(_("package '%s' is not installed"),
-               pkg_name(pkg, pnaw_nonambig));
-        failures++;
-        break;
-      default:
-        ensure_packagefiles_available(pkg);
-        ensure_diversions();
-        file= pkg->clientdata->files;
-        if (!file) {
-          printf(_("Package '%s' does not contain any files (!)\n"),
-                 pkg_name(pkg, pnaw_nonambig));
-        } else {
-          while (file) {
-            namenode= file->namenode;
-            puts(namenode->name);
-            if (namenode->divert && !namenode->divert->camefrom) {
-              if (!namenode->divert->pkgset)
-		printf(_("locally diverted to: %s\n"),
-		       namenode->divert->useinstead->name);
-              else if (pkg->set == namenode->divert->pkgset)
-		printf(_("package diverts others to: %s\n"),
-		       namenode->divert->useinstead->name);
-              else
-		printf(_("diverted by %s to: %s\n"),
-		       namenode->divert->pkgset->name,
-		       namenode->divert->useinstead->name);
-            }
-            file= file->next;
-          }
-        }
-        break;
-      }
+    switch (pkg->status) {
+    case PKG_STAT_NOTINSTALLED:
+      notice(_("package '%s' is not installed"),
+             pkg_name(pkg, pnaw_nonambig));
+      failures++;
       break;
     default:
-      internerr("unknown action '%d'", cipaction->arg_int);
+      ensure_packagefiles_available(pkg);
+      ensure_diversions();
+      file = pkg->files;
+      if (!file) {
+        printf(_("Package '%s' does not contain any files (!)\n"),
+               pkg_name(pkg, pnaw_nonambig));
+      } else {
+        while (file) {
+          namenode = file->namenode;
+          puts(namenode->name);
+          if (namenode->divert && !namenode->divert->camefrom) {
+            if (!namenode->divert->pkgset)
+              printf(_("locally diverted to: %s\n"),
+                     namenode->divert->useinstead->name);
+            else if (pkg->set == namenode->divert->pkgset)
+              printf(_("package diverts others to: %s\n"),
+                     namenode->divert->useinstead->name);
+            else
+              printf(_("diverted by %s to: %s\n"),
+                     namenode->divert->pkgset->name,
+                     namenode->divert->useinstead->name);
+          }
+          file = file->next;
+        }
+      }
+      break;
     }
 
     if (*argv != NULL)
       putchar('\n');
-
-    m_output(stdout, _("<standard output>"));
   }
 
+  m_output(stdout, _("<standard output>"));
   if (failures) {
-    fputs(_("Use dpkg --info (= dpkg-deb --info) to examine archive files,\n"
-         "and dpkg --contents (= dpkg-deb --contents) to list their contents.\n"),stderr);
+    fputs(_("Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.\n"),
+             stderr);
     m_output(stderr, _("<standard error>"));
   }
+
   modstatdb_shutdown();
 
   return failures;
@@ -745,6 +747,12 @@ control_show(const char *const *argv)
   return 0;
 }
 
+static void
+set_no_pager(const struct cmdinfo *ci, const char *value)
+{
+  pager_enable(false);
+}
+
 static void DPKG_ATTR_NORET
 printversion(const struct cmdinfo *ci, const char *value)
 {
@@ -768,16 +776,16 @@ usage(const struct cmdinfo *ci, const char *value)
 
   printf(_(
 "Commands:\n"
-"  -s|--status <package> ...        Display package status details.\n"
-"  -p|--print-avail <package> ...   Display available version details.\n"
-"  -L|--listfiles <package> ...     List files 'owned' by package(s).\n"
-"  -l|--list [<pattern> ...]        List packages concisely.\n"
-"  -W|--show [<pattern> ...]        Show information on package(s).\n"
-"  -S|--search <pattern> ...        Find package(s) owning file(s).\n"
-"     --control-list <package>      Print the package control file list.\n"
-"     --control-show <package> <file>\n"
+"  -s, --status [<package>...]      Display package status details.\n"
+"  -p, --print-avail [<package>...] Display available version details.\n"
+"  -L, --listfiles <package>...     List files 'owned' by package(s).\n"
+"  -l, --list [<pattern>...]        List packages concisely.\n"
+"  -W, --show [<pattern>...]        Show information on package(s).\n"
+"  -S, --search <pattern>...        Find package(s) owning file(s).\n"
+"      --control-list <package>     Print the package control file list.\n"
+"      --control-show <package> <file>\n"
 "                                   Show the package control file.\n"
-"  -c|--control-path <package> [<file>]\n"
+"  -c, --control-path <package> [<file>]\n"
 "                                   Print path for package control file.\n"
 "\n"));
 
@@ -816,9 +824,9 @@ static const char *admindir;
  * The action entries are made with the ACTION macro, as they all
  * have a very similar structure. */
 static const struct cmdinfo cmdinfos[]= {
-  ACTION( "listfiles",                      'L', act_listfiles,     enqperpackage   ),
-  ACTION( "status",                         's', act_status,        enqperpackage   ),
-  ACTION( "print-avail",                    'p', act_printavail,    enqperpackage   ),
+  ACTION( "listfiles",                      'L', act_listfiles,     list_files      ),
+  ACTION( "status",                         's', act_status,        print_status    ),
+  ACTION( "print-avail",                    'p', act_printavail,    print_avail     ),
   ACTION( "list",                           'l', act_listpackages,  listpackages    ),
   ACTION( "search",                         'S', act_searchfiles,   searchfiles     ),
   ACTION( "show",                           'W', act_listpackages,  showpackages    ),
@@ -829,6 +837,7 @@ static const struct cmdinfo cmdinfos[]= {
   { "admindir",   0,   1, NULL, &admindir,   NULL          },
   { "load-avail", 0,   0, &opt_loadavail, NULL, NULL, 1    },
   { "showformat", 'f', 1, NULL, &showformat, NULL          },
+  { "no-pager",   0,   0, NULL, NULL,        set_no_pager  },
   { "help",       '?', 0, NULL, NULL,        usage         },
   { "version",    0,   0, NULL, NULL,        printversion  },
   {  NULL,        0,   0, NULL, NULL,        NULL          }

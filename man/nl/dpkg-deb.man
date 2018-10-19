@@ -207,22 +207,22 @@ worden. Toegestane waarden zijn \fBgzip\fP, \fBxz\fP (sinds dpkg 1.15.6) en
 \fBnone\fP (standaard is \fBxz\fP).
 .TP 
 \fB\-\-[no\-]uniform\-compression\fP
-Specify that the same compression parameters should be used for all archive
-members (i.e. \fBcontrol.tar\fP and \fBdata.tar\fP; since dpkg 1.17.6).  Otherwise
-only the \fBdata.tar\fP member will use those parameters. The only supported
-compression types allowed to be uniformly used are \fBnone\fP, \fBgzip\fP and
-\fBxz\fP.  The \fB\-\-no\-uniform\-compression\fP option disables uniform compression
-(since dpkg 1.19.0).  Uniform compression is the default (since dpkg
-1.19.0).
+Geef aan dat dezelfde compressieparameters gebruikt moeten worden voor alle
+archiefonderdelen (d.w.z. \fBcontrol.tar\fP en \fBdata.tar\fP; sinds dpkg
+1.17.6). Anders zullen die parameters enkel voor het onderdeel \fBdata.tar\fP
+gebruikt worden. De enige ondersteunde compressietypes waarvan het eenvormig
+gebruik toegelaten is, zijn \fBnone\fP, \fBgzip\fP en \fBxz\fP. De optie
+\fB\-\-no\-uniform\-compression\fP schakelt uniforme compressie uit (sinds dpkg
+1.19.0). Uniforme compressie is de standaard (sinds dpkg 1.19.0).
 .TP 
 \fB\-\-root\-owner\-group\fP
-Set the owner and group for each entry in the filesystem tree data to root
-with id 0 (since dpkg 1.19.0).
+Stel voor elk gegevensitem van de bestandssysteemboom de eigenaar en de
+groep in op 'root' met het id 0 (sinds dpkg 1.19.0).
 
-\fBNote\fP: This option can be useful for rootless builds (see
-\fIrootless\-builds.txt\fP), but should \fBnot\fP be used when the entries have an
-owner or group that is not root.  Support for these will be added later in
-the form of a meta manifest.
+\fBNoot\fP: Deze optie kan nuttig zijn voor een root\-loze bouw (zie
+\fIrootless\-builds.txt\fP), maar zou \fBniet\fP gebruikt mogen worden wanneer de
+eigenaar of de groep van de items niet 'root' is. Daarvoor zal later
+ondersteuning toegevoegd worden in de vorm van een meta\-manifest.
 .TP 
 \fB\-\-deb\-format=\fP\fIindeling\fP
 Stel in welke versie van archiefindeling bij het bouwen gebruikt moet worden
@@ -259,6 +259,10 @@ commandoregel of aan interacties met het systeem, zoals het benaderen van de
 database, het toewijzen van geheugen, enz.
 .
 .SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBTMPDIR\fP
 Indien dit ingesteld werd, zal \fBdpkg\-deb\fP het gebruiken als de map waarin

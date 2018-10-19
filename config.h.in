@@ -208,6 +208,9 @@
 /* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
 
+/* Define to 1 if you have the `strchrnul' function. */
+#undef HAVE_STRCHRNUL
+
 /* Define to 1 if you have the `strerror' function. */
 #undef HAVE_STRERROR
 
@@ -424,18 +427,6 @@
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
-
-/* Define to 'uint16_t' if not defined. */
-#undef u_int16_t
-
-/* Define to 'uint32_t' if not defined. */
-#undef u_int32_t
-
-/* Define to 'uint64_t' if not defined. */
-#undef u_int64_t
-
-/* Define to 'uint8_t' if not defined. */
-#undef u_int8_t
 
 /* Define to empty if the keyword `volatile' does not work. Warning: valid
    code using `volatile' can become incorrect without. Disable with care. */

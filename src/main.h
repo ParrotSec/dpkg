@@ -25,7 +25,7 @@
 #include <dpkg/debug.h>
 #include <dpkg/pkg-list.h>
 
-/* These two are defined in filesdb.h. */
+/* These two are defined in <dpkg/fsys.h>. */
 struct fileinlist;
 struct filenamenode;
 
@@ -56,21 +56,8 @@ struct perpackagestate {
 
   bool enqueued;
 
-  /**
-   * filelistvalid  files  Meaning
-   * -------------  -----  -------
-   * false          NULL   Not read yet, must do so if want them.
-   * false          !NULL  Read, but rewritten and now out of date. If want
-   *                         info must throw away old and reread file.
-   * true           !NULL  Read, all is OK.
-   * true           NULL   Read OK, but, there were no files.
-   */
-  bool fileslistvalid;
-  struct fileinlist *files;
   int replacingfilesandsaid;
   int cmdline_seen;
-
-  off_t listfile_phys_offs;
 
   /** Non-NULL iff in trigproc.c:deferred. */
   struct pkg_list *trigprocdeferred;
@@ -161,6 +148,10 @@ struct invoke_list {
 	struct invoke_hook *head, **tail;
 };
 
+/* from perpkgstate.c */
+
+void ensure_package_clientdata(struct pkginfo *pkg);
+
 /* from archives.c */
 
 int archivefiles(const char *const *argv);
@@ -237,6 +228,7 @@ void cu_prermremove(int argc, void **argv);
 void print_error_perpackage(const char *emsg, const void *data);
 void print_error_perarchive(const char *emsg, const void *data);
 void forcibleerr(int forceflag, const char *format, ...) DPKG_ATTR_PRINTF(2);
+int forcible_nonroot_error(int rc);
 int reportbroken_retexitstatus(int ret);
 bool skip_due_to_hold(struct pkginfo *pkg);
 

@@ -87,14 +87,16 @@ versie \fB3.0\-1\fP de eigenlijke omschakeling doorvoert in de scripts van de
 pakketonderhouder, moet \fIvorige\-versie\fP ingesteld worden op \fB3.0\-1~\fP.
 .TP 
 \fIpakket\fP
-The package name owning the pathname(s).  When the package is “Multi\-Arch:
-same” this parameter must include the architecture qualifier, otherwise it
-should \fBnot\fP usually include the architecture qualifier (as it would
-disallow cross\-grades, or switching from being architecture specific to
-architecture \fBall\fP or vice versa).  If the parameter is empty or omitted,
-the \fBDPKG_MAINTSCRIPT_PACKAGE\fP and \fBDPKG_MAINTSCRIPT_ARCH\fP environment
-variables (as set by \fBdpkg\fP when running the maintainer scripts) will be
-used to generate an arch\-qualified package name.
+De pakketnaam met die padnaam/namen. Als het pakket “Multi\-Arch: same” is,
+moet deze parameter de architectuurkwalificatie bevatten, anders zou er
+gewoonlijk \fBgeen\fP architectuurkwalificatie in moeten voorkomen (aangezien
+dit geen cross\-grades zou toelaten, of de omschakeling van
+architectuurspecifiek naar architectuur \fBall\fP en vice versa). Indien de
+parameter leeg is of weggelaten werd, zullen de omgevingsvariabelen
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP en \fBDPKG_MAINTSCRIPT_ARCH\fP (zoals die door
+\fBdpkg\fP ingesteld werden bij het uitvoeren van de scripts van de
+onderhouder) gebruikt worden om een pakketnaam met architectuurkwalificatie
+te genereren.
 .TP 
 \fB\-\-\fP
 Alle parameters van de scripts van de pakketonderhouder moeten doorgegeven
@@ -287,6 +289,13 @@ Het commando \fBsupports\fP geeft in geval van succes een 0 terug en anders een
 1. Het commando \fBsupports\fP gaat na of de omgevingsvariabelen die ingesteld
 worden door dpkg en die het script nodig heeft, voorhanden zijn. Indien de
 omgeving niet voldoet, zal dit als een mislukking beschouwd worden.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.19.1). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.
 .SH "ZIE OOK"
 .ad l
 \fBdh_installdeb\fP(1).

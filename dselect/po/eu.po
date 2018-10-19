@@ -1,5 +1,5 @@
-# Copyright (C) YEAR Software in the Public Interest, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright © 2004-2012 Dpkg Developers
+# This file is distributed under the same license as the dpkg package.
 #
 # Jordi Blasi <valpur@euskalnet.net>, 2004.
 # Piarres Beobide <pi@beobide.net>, 2004, 2005, 2006, 2008, 2009.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.16.8\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"POT-Creation-Date: 2018-10-08 11:37+0200\n"
 "PO-Revision-Date: 2012-09-01 12:21+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <debian-l10n-basque@lists.debian.org>\n"
@@ -1088,17 +1088,6 @@ msgid "No explanation available."
 msgstr "Ez dago azalpen erabilgarririk."
 
 #: dselect/method.cc
-#, c-format
-msgid ""
-"\n"
-"\n"
-"%s: %s\n"
-msgstr ""
-"\n"
-"\n"
-"%s: %s\n"
-
-#: dselect/method.cc
 msgid ""
 "\n"
 "Press <enter> to continue."
@@ -1719,6 +1708,15 @@ msgstr "%s %s pakete %s sekzioan"
 #, c-format
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s;  %s (lehen: %s).  %s"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "%s: %s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "%s: %s\n"
 
 #~ msgid "failed to re-block SIGWINCH"
 #~ msgstr "huts egin du SIGWINCH birblokeatzean"

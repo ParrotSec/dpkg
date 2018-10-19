@@ -68,20 +68,21 @@ gelijkwaardige opties), ofwel \fBbuild\-indep\fP en \fBbinary\-indep\fP (indien 
 bouw van het type \fBall\fP maar niet \fBany\fP aangevraagd werd met \fB\-\-build\fP of
 gelijkwaardige opties).
 .IP \fB6.\fP 3
-It runs the \fBbuildinfo\fP hook and calls \fBdpkg\-genbuildinfo\fP to generate a
-\&\fB.buildinfo\fP file.  Several \fBdpkg\-buildpackage\fP options are forwarded to
-\fBdpkg\-genbuildinfo\fP.
+Het voert de uitbreiding (hook) \fBbuildinfo\fP uit en roept
+\fBdpkg\-genbuildinfo\fP aan om een bestand \fB.buildinfo\fP aan te
+maken. Verschillende opties van \fBdpkg\-buildpackage\fP worden aan
+\fBdpkg\-genbuildinfo\fP overgemaakt.
 .IP \fB7.\fP 3
-It runs the \fBchanges\fP hook and calls \fBdpkg\-genchanges\fP to generate a
-\&\fB.changes\fP file.  The name of the \fB.changes\fP file will depend on the type
-of build and will be as specific as necessary but not more; for a build that
-includes \fBany\fP the name will be
-\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fIarch\fP\fB.changes\fP, or otherwise for
-a build that includes \fBall\fP the name will be
-\fIsource\-name\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fBall.changes\fP, or otherwise for a
-build that includes \fBsource\fP the name will be
-\fIsource\-name\fP\fB_\fP\fIsource\-version\fP\fB_\fP\fBsource.changes\fP.  Many
-\fBdpkg\-buildpackage\fP options are forwarded to \fBdpkg\-genchanges\fP.
+Het voert de uitbreiding (hook) \fBchanges\fP uit en roept \fBdpkg\-genchanges\fP
+aan om een bestand \fB.changes\fP aan te maken. De naam van het
+\&\fB.changes\fP\-bestand is afhankelijk van het bouwtype en zal zo specifiek als
+nodig zijn, maar niet meer dan dat. Voor een bouw die \fBany\fP bevat, zal de
+naam \fIbroncode\-naam\fP\fB_\fP\fIbinaire\-versie\fP\fB_\fP\fIarch\fP\fB.changes\fP zijn. Voor
+een bouw die \fBall\fP bevat, zal de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbinaire\-versie\fP\fB_\fP\fBall.changes\fP zijn. En voor een
+bouw die \fBsource\fP bevat, zal de naam
+\fIbroncode\-naam\fP\fB_\fP\fIbroncode\-versie\fP\fB_\fP\fBsource.changes\fP zijn. Veel
+opties van \fBdpkg\-buildpackage\fP worden aan \fBdpkg\-genchanges\fP overgemaakt.
 .IP \fB8.\fP 3
 Het voert de uitbreiding (hook) \fBpostclean\fP uit en als \fB\-tc\fP of
 \fB\-\-post\-clean\fP werd opgegeven zal het nogmaals \fBfakeroot debian/rules
@@ -120,11 +121,11 @@ De waarden die gebruikt mogen worden zijn:
 .RS
 .TP 
 \fBsource\fP
-Bouwt het broncodepakket. Opmerking: Indien u deze waarde op zichzelf staand
-gebruikt en indien het gewoon (opnieuw) bouwen van het bronpakket het enige
-is wat u wilt doen, dan is het altijd beter om \fBdpkg\-source\fP te gebruiken,
-aangezien dat niet vereist dat eventuele bouwvereisten geïnstalleerd worden
-om het doel \fBclean\fP te aanroepen.
+Builds the source package.  Note: when using this value standalone and if
+what you want is simply to (re\-)build the source package from a clean source
+tree, using \fBdpkg\-source\fP directly is always a better option as it does not
+require any build dependencies to be installed which are otherwise needed to
+be able to call the \fBclean\fP target.
 .TP 
 \fBany\fP
 Bouwt de architectuurspecifieke binaire pakketten.
@@ -163,19 +164,20 @@ Het equivalent van \fB\-\-build=source\fP.
 Het equivalent van \fB\-\-build=full\fP, \fB\-\-build=source,binary\fP of
 \fB\-\-build=source,any,all\fP (sinds dpkg 1.15.8).
 .TP 
-\fB\-\-target=\fP\fIdoel\fP[,...]
+\fB\-\-target=\fP\fItarget\fP[,...]
 .TQ
 \fB\-\-target \fP\fIdoel\fP[,...]
 .TQ
-\fB\-T\fP, \fB\-\-rules\-target=\fP\fIdoel\fP[,...]
-Roept na het opzetten van de bouwomgeving per opgegeven doel eenmaal
+\fB\-T\fP, \fB\-\-rules\-target=\fP\fItarget\fP[,...]
+Roept na het opzetten van de bouwomgeving per opgegeven target eenmaal
 \fBdebian/rules\fP \fIdoel\fP aan en stopt het proces van het bouwen van het
 pakket hier (sinds dpkg 1.15.0, de lange optie sinds dpkg 1.18.8, de
-ondersteuning voor meerdere doelen sinds dpkg 1.18.16). Indien ook
+ondersteuning voor meerdere targets sinds dpkg 1.18.16). Indien ook
 \fB\-\-as\-root\fP opgegeven werd, dan wordt het commando als systeembeheerder
-uitgevoerd (zie \fB\-\-root\-command\fP). Merk op dat gekende doelen die verplicht
-als systeembeheerder moeten uitgevoerd worden, deze optie niet nodig hebben
-(d.w.z. de doelen \fBclean\fP, \fBbinary\fP, \fBbinary\-arch\fP en \fBbinary\-indep\fP).
+uitgevoerd (zie \fB\-\-root\-command\fP). Merk op dat gekende targets die
+verplicht als systeembeheerder moeten uitgevoerd worden, deze optie niet
+nodig hebben (d.w.z. de targets \fBclean\fP, \fBbinary\fP, \fBbinary\-arch\fP en
+\fBbinary\-indep\fP).
 .TP 
 \fB\-\-as\-root\fP
 Enkel zinvol in samenhang met \fB\-\-target\fP (sinds dpkg 1.15.0). Vereist dat
@@ -275,18 +277,27 @@ Controleer ingebouwde bouwvereisten en tegenstrijdigheden niet (sinds dpkg
 gewoonlijk noodzakelijk zijn in een bouwomgeving, de zogenaamde set van
 pakketten van het type Build\-Essential.
 .TP 
+\fB\-\-rules\-requires\-root\fP
+Do not honor the \fBRules\-Requires\-Root\fP field, falling back to its legacy
+default value (since dpkg 1.19.1).
+.TP 
 \fB\-nc\fP, \fB\-\-no\-pre\-clean\fP
-Schoon de broncodeboom niet op (de lange optie sinds dpkg
-1.18.8). Impliceert \fB\-b\fP indien geen van de opties \fB\-F\fP, \fB\-g\fP, \fB\-G\fP,
-\fB\-B\fP, \fB\-A\fP of \fB\-S\fP gekozen werd. Gecombineerd met \fB\-S\fP impliceert dit
-\fB\-d\fP (sinds dpkg 1.18.0).
+Do not clean the source tree before building (long option since dpkg
+1.18.8).  Implies \fB\-b\fP if nothing else has been selected among \fB\-F\fP,
+\fB\-g\fP, \fB\-G\fP, \fB\-B\fP, \fB\-A\fP or \fB\-S\fP.  Implies \fB\-d\fP with \fB\-S\fP (since dpkg
+1.18.0).
 .TP 
 \fB\-\-pre\-clean\fP
-Schoon voor het bouwen de broncodeboom op (sinds dpkg 1.18.8).
+Clean the source tree before building (since dpkg 1.18.8).  This is the
+default behavior.
 .TP 
 \fB\-tc\fP, \fB\-\-post\-clean\fP
 Schoon de broncodeboom op (met \fIcommando\-om\-root\-te\-worden\fP \fBdebian/rules
 clean\fP) nadat het pakket gebouwd werd (de lange optie sinds dpkg 1.18.8).
+.TP 
+\fB\-\-no\-post\-clean\fP
+Do not clean the source tree after the package has been built (since dpkg
+1.19.1).  This is the default behavior.
 .TP 
 \fB\-r\fP, \fB\-\-root\-command=\fP\fIcommando\-om\-root\-te\-worden\fP
 Wanneer \fBdpkg\-buildpackage\fP een deel van het bouwproces in de hoedanigheid
@@ -485,6 +496,11 @@ optie \fB\-P\fP heeft hierop voorrang.
 \fBDPKG_COLORS\fP
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
 
 .SS "Interne omgeving"
 Zelfs al exporteert \fBdpkg\-buildpackage\fP sommige variabelen, toch mag
@@ -511,8 +527,8 @@ field or from the command\-line.  When set, it will be a valid value for the
 the \fBrootless\-builds.txt\fP specification is supported.
 .TP 
 \fBDEB_GAIN_ROOT_CMD\fP
-This variable is set to \fIgain\-root\-command\fP when the field
-\fBRules\-Requires\-Root\fP is set to a value different to \fBno\fP and
+Deze variabele wordt ingesteld op \fIgain\-root\-command\fP wanneer het veld
+\fBRules\-Requires\-Root\fP ingesteld staat op een andere waarde dan \fBno\fP of
 \fBbinary\-targets\fP.
 .TP 
 \fBSOURCE_DATE_EPOCH\fP
@@ -536,14 +552,14 @@ Tussen dpkg 1.14.17 en 1.16.1 exporteerde \fBdpkg\-buildpackage\fP
 compileervlaggen (\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBFFLAGS\fP, \fBCPPFLAGS\fP en
 \fBLDFLAGS\fP) met de waarden die door \fBdpkg\-buildflags\fP teruggegeven
 werden. Dit is niet langer het geval
-.SS "Standaard bouwdoelen"
-\fBdpkg\-buildpackage\fP gebruikt sinds dpkg 1.16.2 de doelen \fBbuild\-arch\fP en
-\fBbuild\-indep\fP. Deze doelen zijn dus verplicht. Maar om te vermijden dat
+.SS "Standaard bouwtargets"
+\fBdpkg\-buildpackage\fP gebruikt sinds dpkg 1.16.2 de targets \fBbuild\-arch\fP en
+\fBbuild\-indep\fP. Deze targets zijn dus verplicht. Maar om te vermijden dat
 bestaande pakketten defect raken en om de overgang te vergemakkelijken, zal
 het, indien het broncodepakket niet zowel architectuuronafhankelijke als
 architectuurspecifieke binaire pakketten bouwt (sinds dpkg 1.18.8),
-terugvallen op het gebruik van het doel \fBbuild\fP indien \fBmake \-f
-debian/rules \-qn\fP \fIbouwdoel\fP 2 teruggeeft als afsluitwaarde.
+terugvallen op het gebruik van het target \fBbuild\fP indien \fBmake \-f
+debian/rules \-qn\fP \fIbouwtarget\fP 2 teruggeeft als afsluitwaarde.
 .SH BUGS
 Het zou mogelijk moeten zijn om spaties en shell\-metatekens en initiële
 argumenten op te geven voor \fIcommando\-om\-root\-te\-worden\fP en

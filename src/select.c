@@ -37,9 +37,9 @@
 #include <dpkg/pkg-show.h>
 #include <dpkg/pkg-spec.h>
 #include <dpkg/options.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "filesdb.h"
-#include "infodb.h"
 #include "main.h"
 
 static void getsel1package(struct pkginfo *pkg) {
@@ -183,6 +183,7 @@ setselections(const char *const *argv)
         !pkg_is_informative(pkg, &pkg->available)) {
       db_possibly_outdated = true;
       warning(_("package not in status nor available database at line %d: %.250s"), lno, namevb.buf);
+      lno++;
       continue;
     }
 

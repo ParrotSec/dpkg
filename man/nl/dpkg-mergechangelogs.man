@@ -67,11 +67,22 @@ Toon info over het gebruik en sluit af.
 \fB\-\-version\fP
 Toon de versie en sluit af.
 .
+.SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.
 .SH BEPERKINGEN
 .P
-Anything that is not parsed by Dpkg::Changelog is lost during the merge.
-This might include stuff like Vim modelines, Emacs variables, comments which
-were not supposed to be there, etc.
+Alles wat niet door Dpkg::Changelog ontleed wordt, geraakt tijdens het
+samenvoegen verloren. Dit kan gaan om zaken zoals modusregels van Vim,
+variabelen van Emacs, commentaar die daar niet hoort te staan, enz.
 .
 .SH "INTEGRATIE MET GIT"
 .P

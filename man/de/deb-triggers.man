@@ -48,10 +48,16 @@ Die derzeit unterstützten Steuerdirektiven für Trigger sind:
 .IP
 Gibt an, dass das Paket an dem benannten Trigger interessiert ist. Alle
 Trigger, an denen ein Paket interessiert ist, müssen mit dieser Direktive in
-der Trigger\-Steuerdatei aufgeführt werden. Die Variante „noawait“ setzt die
-triggernden Pakete nicht in den Zustand »triggers\-awaited«. Dies sollte
-verwandt werden, wenn die von den Triggern bereitgestellte Funktionalität
-nicht äußerst wichtig ist.
+der Trigger\-Steuerdatei aufgeführt werden.
+.IP
+Die Variante „await“ setzt die triggernden Pakete in den Zustand
+„triggers\-awaited“. Die Variante „noawait“ setzt die triggernden Pakete
+nicht in den Zustand „triggers\-awaited“, selbst falls das triggernde Paket
+eine „await“\-Aktivierung deklariert hat (entweder mit den Direktiven
+\fBactivate\-await\fP oder \fBactivate\fP oder durch Verwendung der
+Befehlszeilenoption \fBdpkg\-trigger\fP \fB\-\-no\-await\fP). Die Variante „noawait“
+sollte verwandt werden, wenn die von den Triggern bereitgestellte
+Funktionalität nicht äußerst wichtig ist.
 .TP 
 \fBactivate\fP \fITrigger\-Name\fP
 .TQ
@@ -62,10 +68,13 @@ nicht äußerst wichtig ist.
 Sorgt dafür, dass Änderungen an dem Zustand dieses Pakets einen
 spezifizierten Trigger aktiviert. Der Trigger wird am Beginn folgender
 Operationen aktiviert: unpack, configure, remove (hinzugefügt zum Nutzen von
-Paketen, die im Konflikt zueinander stehen), purge und deconfigure. Die
+Paketen, die im Konflikt zueinander stehen), purge und deconfigure.
+.IP
+Die „await“\-Varianten setzen das Trigger\-auslösende Paket in den Zustand
+„triggers\-awaited“, falls die Direktive „interest“ auch „await“ ist. Die
 Variante „noawait“ setzt die triggernden Pakete nicht in den Zustand
-»triggers\-awaited«. Dies sollte verwandt werden, wenn die von den Triggern
-bereitgestellte Funktionalität nicht äußerst wichtig ist.
+„triggers\-awaited“. Die Variante „noawait“ sollte verwandt werden, wenn die
+von den Triggern bereitgestellte Funktionalität nicht äußerst wichtig ist.
 .IP
 Falls dieses Paket während des Entpackens eines anderen Pakets verschwindet,
 wird der Trigger aktiviert, wenn das Verschwinden während des Endes der
@@ -91,6 +100,14 @@ Dpkg zu Fehlern führen.
 .PP
 Die Alias\-Varianten „\-await“ werden seit Dpkg 1.17.21 unterstützt und bei
 älteren Dpkg zu Fehlern führen.
+.PP
+Wenn ein Paket eine Direktive \fBinterest\-noawait\fP bereitstellt, wird jede
+Aktivierung das triggernde Paket in den Modus „noawait“ setzen, unabhängig
+von dem durch die Aktivierung erbetenen Awaiting\-Modus (entweder „await“
+oder „noawait“). Wenn ein Paket eine Direktive \fBinterest\fP oder
+\fBinterest\-await\fP bereitstellt, werden alle Aktivierungen des triggernden
+Paketes in „await“ oder „noawait“ gebracht, abhängig von der Art der
+Aktivierung.
 .
 .SH "SIEHE AUCH"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

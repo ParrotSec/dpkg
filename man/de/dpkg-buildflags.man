@@ -177,11 +177,12 @@ Zum Beispiel:
 .fi
 .TP 
 \fB\-\-query\-features\fP\fI Bereich\fP
-Print the features enabled for a given area (since dpkg 1.16.2).  The only
-currently recognized areas on Debian and derivatives are \fBfuture\fP, \fBqa\fP,
-\fBreproducible\fP, \fBsanitize\fP and \fBhardening\fP, see the \fBFEATURE AREAS\fP
-section for more details.  Exits with 0 if the area is known otherwise exits
-with 1.
+Gibt die Funktionalitäten, die für den übergebenen Bereich aktiviert sind,
+aus (seit Dpkg 1.16.2). Die einzigen unter Debian und abgeleiteten
+Distributionen derzeit erkannten Bereiche sind \fBfuture\fP, \fBqa\fP,
+\fBreproducible\fP, \fBsanitize\fP und \fBhardening\fP. Lesen Sie den Abschnitt
+\fBFUNKTIONALITÄTSBEREICHE\fP für weitere Details. Beendet sich mit 0, falls
+der Bereich bekannt ist, andernfalls mit 1.
 .IP
 Das Ausgabeformat ist im RFC822\-Format, mit einem Abschnitt pro
 Funktionalität. Beispiel:
@@ -256,14 +257,16 @@ nur „format“ und „fortify“ zu aktiveren, kann Folgendes eingesetzt werde
   export DEB_BUILD_MAINT_OPTIONS=hardening=\-all,+format,+fortify
 .
 .SS future
-Several compile\-time options (detailed below) can be used to enable features
-that should be enabled by default, but cannot due to backwards compatibility
-reasons.
+Mehrere Optionen zur Kompilierung (Details weiter unten) können verwandt
+werden, um Funktionen zu aktivieren, die standardmäßig aktiviert sein
+sollten, dies aber aufgrund von Rückwärtskompatibilitätsgründen nicht sein
+können.
 .TP 
 \fBlfs\fP
-This setting (disabled by default) enables Large File Support on 32\-bit
-architectures where their ABI does not include LFS by default, by adding
-\fB\-D_LARGEFILE_SOURCE \-D_FILE_OFFSET_BITS=64\fP to \fBCPPFLAGS\fP.
+Diese Einstellung (standardmäßig deaktiviert) aktiviert die Unterstützung
+für große Dateien auf 32\-Bit\-Architekturen, bei denen ihre ABI diese
+Unterstützung nicht standardmäßig aktiviert, indem \fB\-D_LARGEFILE_SOURCE
+\-D_FILE_OFFSET_BITS=64\fP zu \fBCPPFLAGS\fP hinzugefügt wird.
 .
 .SS QS
 Mehrere Optionen zur Kompilierung (Details weiter unten) können verwandt
@@ -400,18 +403,24 @@ falls \fBrelro\fP nicht aktiviert ist.
 .
 .TP 
 \fBpie\fP
-Diese Einstellung (seit Dpkg 1.18.13 ohne Vorgabe und standardmäßig von GCC
-auf den Debian\-Architekturen Amd64, Arm64, Armel, Armhf, I386,
-Kfreebsd\-amd64, Kfreebsd\-i386, Mips, Mipsel, Mips64el, PPC64el, S390x, Sparc
-und Sparc64 hinzugefügt) fügt die benötigten Optionen mittels
-GCC\-Spec\-Dateien hinzu, falls sie zum Aktivieren oder Deaktivieren von PIE
-benötigt werden. Falls aktiviert und von GCC hinzugefügt, ergänzt
-nichts. Wenn aktiviert und nicht von GCC hinzugefügt, fügt \fB\-fPIE\fP zu
-\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP
-und \fBFCFLAGS\fP hinzu und \fB\-fPIE \-pie\fP zu \fBLDFLAGS\fP. Wenn deaktiviert und
-von GCC hinzugefügt, fügt \fB\-fno\-PIE\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP,
-\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP hinzu
-und \fB\-fno\-PIE \-no\-pie\fP zu \fBLDFLAGS\fP.
+Diese Einstellung (seit Dpkg 1.18.23 ohne globale Vorgabe, da sie jetzt
+standardmäßig durch GCC auf den Debian\-Architekturen Amd64, Arm64, Armel,
+Armhf, Hurd\-i386, I386, Kfreebsd\-amd64, Kfreebsd\-i386, Mips, Mipsel,
+Mips64el, Powerpc, PPC64, PPC64el, Riscv64, S390x, Sparc und Sparc64
+aktiviert ist) fügt, falls benötigt, die benötigten Optionen, um PIE zu
+aktivieren oder zu deaktiveren, über GCC\-Spezifikationsdateien hinzu,
+abhängig davon, ob GCC auf diesen Architekturen die Schalter selbst
+einspeist oder nicht. Wenn die Einstellung aktiviert ist und GCC den
+Schalter einspeist, fügt dies nichts hinzu. Wenn die Einstellung aktiviert
+ist und GCC den Schalter nicht einspeist, dann fügt es \fB\-fPIE\fP (mittels
+\fI%PKGDATADIR%/pie\-compiler.specs\fP) zu \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP,
+\fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP und \fB\-fPIE \-pie\fP
+(mittels \fI%PKGDATADIR%/pie\-link.specs\fP) zu \fBLDFLAGS\fP hinzu.  Wenn die
+Einstellung deaktiviert ist und GCC den Schalter einspeist, dann fügt es
+\fB\-fno\-PIE\fP (mittels \fI%PKGDATADIR%/no\-pie\-compile.specs\fP) zu \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und
+\fBFCFLAGS\fP und \fB\-fno\-PIE \-no\-pie\fP (mittels
+\fI%PKGDATADIR%/no\-pie\-link.specs\fP) zu \fBLDFLAGS\fP hinzu.
 
 »Position Independent Executable« (positionsunabhängige Programme) werden
 benötigt, um »Address Space Layout Randomization« (Bereitstellung eines
@@ -487,6 +496,17 @@ Diese (standardmäßig aktivierte) Einstellung fügt \fB\-Wdate\-time\fP zu
 \fB__DATE__\fP und \fB__TIMESTAMP__\fP verwandt werden.
 .
 .TP 
+\fBfixfilepath\fP
+Diese Einstellung (standardmäßig deaktiviert) fügt
+\fB\-ffile\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP hinzu,
+wobei \fBBUILDPATH\fP auf das oberste Verzeichnis des bauenden Pakets gesetzt
+wird. Dies führt dazu, dass der Baupfad aus allen erstellten Dateien
+entfernt wird.
+
+Falls sowohl \fBfixdebugpath\fP als auch \fBfixfilepath\fP gesetzt sind, hat diese
+Option Vorrang, da sie eine Obermenge erster ist.
+.TP 
 \fBfixdebugpath\fP
 Diese Einstellung (standardmäßig aktiviert) fügt
 \fB\-fdebug\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP,
@@ -547,6 +567,16 @@ Diese Variable setzt den Baupfad (seit Dpkg 1.18.8), der in Funktionalitäten
 wie \fBfixdebugpath\fP verwandt wird, so dass sie durch den Aufrufenden
 gesteuert werden können. Diese Variable ist derzeit spezifisch für Debian
 und Derivative.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 .
 .SH DATEIEN
 .SS Konfigurationsdateien

@@ -22,6 +22,9 @@
 #include <config.h>
 #include <compat.h>
 
+#if HAVE_SYS_SYSMACROS_H
+#include <sys/sysmacros.h>
+#endif
 #include <sys/stat.h>
 
 #include <errno.h>
@@ -154,7 +157,7 @@ tar_atol256(const char *s, size_t size, intmax_t min, uintmax_t max)
 
 	for (;;) {
 		n = (n << 8) | c;
-		if (--size <= 0)
+		if (--size == 0)
 			break;
 		c = *s++;
 	}

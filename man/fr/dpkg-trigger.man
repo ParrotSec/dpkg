@@ -80,8 +80,9 @@ inchangé. T peut être considéré installé même si les actions différées d
 n'ont pas encore été exécutées.
 .TP 
 \fB\-\-await\fP
-This option does the inverse of \fB\-\-no\-await\fP (since dpkg 1.17.21).  It is
-currently the default behavior.
+This option does the inverse of \fB\-\-no\-await\fP (since dpkg 1.17.21).  If the
+interested package has declared a “noawait” directive, then this option will
+not be effective.  It is currently the default behavior.
 .TP 
 \fB\-\-no\-act\fP
 Teste uniquement, n'apporte aucun changement.
@@ -106,6 +107,10 @@ allocations, etc.
 Si cette variable est positionnée et que l'option \fB\-\-admindir\fP n'est pas
 précisée, ce répertoire sera utilisé comme répertoire de données pour
 \fBdpkg\fP.
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
 .
 .SH "VOIR AUSSI"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

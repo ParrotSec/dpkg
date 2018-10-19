@@ -1,25 +1,4096 @@
-commit a059dd6ff6499ebe478466148fb82944590b8f86
+commit 6f07b5ebc6a833f4b2d4752e8579acb000cbe62b
 Author: Guillem Jover <guillem@debian.org>
-Date:   Wed Jan 17 03:27:54 2018 +0100
+Date:   Mon Oct 8 11:44:42 2018 +0200
 
-    Release 1.19.0.5
+    Release 1.19.2
 
  debian/changelog | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-commit b4f5930b862ee0819deee80a0980922e06984a92
+commit 903836642b50ae81775fc5f26c809d712a16784a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 8 11:40:26 2018 +0200
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |   2 +-
+ dselect/po/ca.po        |   2 +-
+ dselect/po/cs.po        |   2 +-
+ dselect/po/da.po        |   2 +-
+ dselect/po/de.po        |   2 +-
+ dselect/po/dselect.pot  |   4 +-
+ dselect/po/el.po        |   2 +-
+ dselect/po/es.po        |   2 +-
+ dselect/po/et.po        |   2 +-
+ dselect/po/eu.po        |   2 +-
+ dselect/po/fr.po        |   2 +-
+ dselect/po/gl.po        |   2 +-
+ dselect/po/hu.po        |   2 +-
+ dselect/po/id.po        |   2 +-
+ dselect/po/it.po        |   2 +-
+ dselect/po/ja.po        |   2 +-
+ dselect/po/ko.po        |   2 +-
+ dselect/po/nb.po        |   2 +-
+ dselect/po/nl.po        |   2 +-
+ dselect/po/nn.po        |   2 +-
+ dselect/po/pl.po        |   2 +-
+ dselect/po/pt.po        |   2 +-
+ dselect/po/pt_BR.po     |   2 +-
+ dselect/po/ro.po        |   2 +-
+ dselect/po/ru.po        |   2 +-
+ dselect/po/sk.po        |   2 +-
+ dselect/po/sv.po        |   2 +-
+ dselect/po/tl.po        |   2 +-
+ dselect/po/vi.po        |   2 +-
+ dselect/po/zh_CN.po     |   2 +-
+ dselect/po/zh_TW.po     |   2 +-
+ man/po/de.po            | 402 ++++++++++++++++++++++++++++++++++++++++-------
+ man/po/dpkg-man.pot     | 270 ++++++++++++++++++++++++++------
+ man/po/es.po            | 312 ++++++++++++++++++++++++++++++-------
+ man/po/fr.po            | 337 +++++++++++++++++++++++++++++++++-------
+ man/po/hu.po            | 268 ++++++++++++++++++++++++++------
+ man/po/it.po            | 335 ++++++++++++++++++++++++++++++++-------
+ man/po/ja.po            | 312 ++++++++++++++++++++++++++++++-------
+ man/po/nl.po            | 406 +++++++++++++++++++++++++++++++++++++++++-------
+ man/po/pl.po            | 314 ++++++++++++++++++++++++++++++-------
+ man/po/pt_BR.po         | 288 +++++++++++++++++++++++++++-------
+ man/po/ru.po            | 292 +++++++++++++++++++++++++++-------
+ man/po/sv.po            | 333 ++++++++++++++++++++++++++++++++-------
+ man/po/zh_CN.po         | 277 +++++++++++++++++++++++++++------
+ po/ast.po               |  23 ++-
+ po/bs.po                |  22 ++-
+ po/ca.po                |  35 ++++-
+ po/cs.po                |  35 ++++-
+ po/da.po                |  35 ++++-
+ po/de.po                |  53 ++++++-
+ po/dpkg.pot             |  24 ++-
+ po/dz.po                |  23 ++-
+ po/el.po                |  23 ++-
+ po/eo.po                |  35 ++++-
+ po/es.po                |  35 ++++-
+ po/et.po                |  23 ++-
+ po/eu.po                |  35 ++++-
+ po/fr.po                |  35 ++++-
+ po/gl.po                |  23 ++-
+ po/hu.po                |  23 ++-
+ po/id.po                |  24 ++-
+ po/it.po                |  35 ++++-
+ po/ja.po                |  35 ++++-
+ po/km.po                |  23 ++-
+ po/ko.po                |  24 ++-
+ po/ku.po                |  22 ++-
+ po/lt.po                |  23 ++-
+ po/mr.po                |  23 ++-
+ po/nb.po                |  24 ++-
+ po/ne.po                |  23 ++-
+ po/nl.po                |  35 ++++-
+ po/nn.po                |  22 ++-
+ po/pa.po                |  23 ++-
+ po/pl.po                |  56 ++++++-
+ po/pt.po                |  35 ++++-
+ po/pt_BR.po             |  22 ++-
+ po/ro.po                |  24 ++-
+ po/ru.po                |  35 ++++-
+ po/sk.po                |  24 ++-
+ po/sv.po                |  35 ++++-
+ po/th.po                |  35 ++++-
+ po/tl.po                |  22 ++-
+ po/tr.po                |  35 ++++-
+ po/vi.po                |  35 ++++-
+ po/zh_CN.po             |  35 ++++-
+ po/zh_TW.po             |  35 ++++-
+ scripts/po/ca.po        |  69 ++++----
+ scripts/po/de.po        |  72 +++++----
+ scripts/po/dpkg-dev.pot |  62 ++++----
+ scripts/po/es.po        |  69 ++++----
+ scripts/po/fr.po        |  71 +++++----
+ scripts/po/pl.po        |  75 +++++----
+ scripts/po/ru.po        |  75 +++++----
+ scripts/po/sv.po        |  69 ++++----
+ 94 files changed, 4980 insertions(+), 1038 deletions(-)
+
+commit a07a608516f2eb7abcf2fdb3922503ea20b3a508
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 1 02:58:30 2018 +0200
+
+    dpkg, dpkg-query: Add new --no-pager option
+    
+    This makes it possible to disable any pager usage from these programs.
+    For dpkg this also becomes a configuration option.
+    
+    Closes: #909754
+
+ debian/changelog   |  2 ++
+ man/dpkg-query.man |  3 +++
+ man/dpkg.man       |  3 +++
+ src/main.c         | 11 +++++++++++
+ src/querycmd.c     |  7 +++++++
+ 5 files changed, 26 insertions(+)
+
+commit 68b0f4dd8ac3f541926796a303015df782ef76ed
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 1 02:49:20 2018 +0200
+
+    libdpkg: Add a pager kill switch
+    
+    This way we will be able to forcefully disable it.
+
+ debian/changelog |  1 +
+ lib/dpkg/pager.c | 11 +++++++++++
+ lib/dpkg/pager.h |  5 +++++
+ 3 files changed, 17 insertions(+)
+
+commit 473cbd6a163eb685ec1fbd5301224c2964d7efb4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Oct 3 04:37:35 2018 +0200
+
+    libdpkg: Set stdout to be fully buffered when using a pager
+    
+    Force the output to fully buffered, because originally stdout was
+    a tty, so it was set as line buffered. This way we send as much as
+    possible to the pager, which will handle the output by itself.
+
+ debian/changelog | 1 +
+ lib/dpkg/pager.c | 5 +++++
+ 2 files changed, 6 insertions(+)
+
+commit 5d194d5d55d5a7ac62422b7c98aa23548c5d7349
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 2 04:57:47 2018 +0200
+
+    libdpkg: Ignore SIGPIPE when setting up a pager
+    
+    If the pager quits early, the parent will receive a SIGPIPE as the write
+    end of the pipe will not be available anymore. Instead we ignore SIGPIPE
+    and also EPIPE errors when writing to stdout.
+    
+    Otherwise if we quit the pager early, the program will exit with an
+    error code.
+    
+    Reported-by: Holger Levsen <holger@layer-acht.org>
+    Ref: #909754
+
+ debian/changelog |  3 +++
+ lib/dpkg/mlib.c  |  3 ++-
+ lib/dpkg/pager.c | 12 ++++++++++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+commit f59933deb70c1b67de20df4f00a9a4f0da42c05d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 2 04:32:43 2018 +0200
+
+    libdpkg: When spawning a pager set LESS to “-FRSXMQ” if not already set
+
+ debian/changelog   |  1 +
+ lib/dpkg/pager.c   |  3 +++
+ man/dpkg-query.man | 10 ++++++++++
+ man/dpkg.man       |  8 ++++++++
+ 4 files changed, 22 insertions(+)
+
+commit 799a9fbeda50739c2eb9b872cdad0ff78710587c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 1 02:47:52 2018 +0200
+
+    libdpkg: Honor DPKG_PAGER
+    
+    This makes it possible to use a dpkg specific pager.
+    
+    Suggested-by: Craig Sanders <cas@taz.net.au>
+    Ref: #909754
+
+ debian/changelog      | 2 ++
+ lib/dpkg/pager.c      | 4 +++-
+ man/dpkg-query.man    | 4 ++++
+ man/dpkg.man          | 4 ++++
+ t/codespell/stopwords | 1 +
+ 5 files changed, 14 insertions(+), 1 deletion(-)
+
+commit 9f7a5e6d0a6a9b300e4556db4be29aeb77546a2f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 1 02:48:27 2018 +0200
+
+    libdpkg: Do not spawn a pager if we are going to call «cat»
+    
+    There's no point in executing «cat», we are already dumping the contents
+    to stdout.
+
+ debian/changelog | 1 +
+ lib/dpkg/pager.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit ac4d95c3a18545787589433dbfefa377e45b7f8d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 2 03:52:22 2018 +0200
+
+    libdpkg: Call the pager with «$SHELL -c» to respect POSIX
+    
+    The PAGER environment variable is specified in POSIX as taking a pager
+    command and any number of arguments to be passed to «sh -c», so we have
+    to preserve that behavior or this breaks badly on systems where PAGER is
+    set that way.
+    
+    This actually gets in the way of improving the pager command presence
+    detection, but we'll fix that later on, by making the scanning of the
+    environment variable smarter or by trying to execute the fallbacks.
+    
+    Closes: #910009
+
+ debian/changelog   |  1 +
+ lib/dpkg/pager.c   |  5 +----
+ man/dpkg-query.man |  8 +++++++-
+ man/dpkg.man       | 11 +++++++----
+ 4 files changed, 16 insertions(+), 9 deletions(-)
+
+commit ce9b2e88602dcdff93963b9cb8aef302179b81c9
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 5 02:01:28 2018 +0200
+
+    libdpkg: Pass the file contents to the pager instead of the filename
+    
+    Let's just handle opening the file and passing its data to the pager
+    ourselves, as that gives us more control, and then can decide not to
+    run a pager at all, and do not need to mess with arguments which might
+    need to be passed to «sh -c».
+
+ debian/changelog |  1 +
+ lib/dpkg/file.c  | 17 ++++++++++++++++-
+ lib/dpkg/pager.c |  5 ++---
+ lib/dpkg/pager.h |  2 +-
+ src/configure.c  |  2 +-
+ src/querycmd.c   |  2 +-
+ 6 files changed, 22 insertions(+), 7 deletions(-)
+
+commit 91c8d3ff2bdfaf7b55566bd99dea08703c47a682
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 31 01:49:20 2018 +0200
+
+    dpkg-divert, dpkg-statoverride: Add new --instdir and --root options
+    
+    This makes it possible to use alternative installation directories.
+    And will make these commands honor those directories when specified
+    for dpkg, and passed down to the maintainer script via the DPKG_ROOT
+    environment variable.
+
+ debian/changelog          |  2 ++
+ man/dpkg-divert.man       | 22 ++++++++++++++++++----
+ man/dpkg-statoverride.man | 24 ++++++++++++++++++++----
+ man/dpkg.man              | 16 +++++++++-------
+ src/divertcmd.c           | 27 ++++++++++++++++++++++++++-
+ src/main.c                | 12 +++---------
+ src/statcmd.c             | 32 +++++++++++++++++++++++++++++---
+ 7 files changed, 107 insertions(+), 28 deletions(-)
+
+commit 3d494a7ab27debd8842157c50c46d5bb49952671
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 31 01:49:20 2018 +0200
+
+    libdpkg: Add new fsys-dir module
+    
+    This module handles setting and getting the filesystem root directory.
+
+ debian/changelog        |  1 +
+ lib/dpkg/Makefile.am    |  1 +
+ lib/dpkg/fsys-dir.c     | 93 +++++++++++++++++++++++++++++++++++++++++++++++++
+ lib/dpkg/fsys.h         |  4 +++
+ lib/dpkg/libdpkg.map    |  4 +++
+ lib/dpkg/t/.gitignore   |  1 +
+ lib/dpkg/t/Makefile.am  |  1 +
+ lib/dpkg/t/t-fsys-dir.c | 65 ++++++++++++++++++++++++++++++++++
+ po/POTFILES.in          |  1 +
+ 9 files changed, 171 insertions(+)
+
+commit eebc650619521acffdd7acfd00f833d6face21d3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 8 11:35:00 2018 +0200
+
+    dpkg: Fix --force-not-root
+    
+    Ignore EPERM for chown and chmod based syscalls. And give a more
+    meaningful error message on chroot().
+    
+    Closes: #614126
+
+ debian/changelog         |  2 ++
+ src/archives.c           | 23 +++++++++++++++++------
+ src/errors.c             |  8 ++++++++
+ src/main.h               |  1 +
+ src/script.c             |  9 ++++++++-
+ t/cppcheck/cppcheck.supp |  2 +-
+ 6 files changed, 37 insertions(+), 8 deletions(-)
+
+commit a0f59e04b299e67e700f6cc491aab45472814a2c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 8 02:46:26 2018 +0200
+
+    dpkg-split: Use nfstrnsave() instead of nfmalloc() + memcpy()
+
+ debian/changelog   |  2 ++
+ dpkg-split/queue.c | 10 ++++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+commit 76b05dce1342834fec1b3d9b6ff3fc33a33c1fb2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 17 00:12:56 2018 +0200
+
+    Dpkg::Source::Package::V2: Move binary file detection to BinaryFiles module
+    
+    This makes it possible to reuse the code by other modules.
+
+ debian/changelog                   |  2 ++
+ scripts/Dpkg/Source/BinaryFiles.pm | 53 ++++++++++++++++++++++++++++++++++++++
+ scripts/Dpkg/Source/Package/V2.pm  | 50 +++++------------------------------
+ 3 files changed, 61 insertions(+), 44 deletions(-)
+
+commit 837ecfdac680369ce71d96748a8a4762a414f654
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 16 23:47:10 2018 +0200
+
+    Dpkg::Source::Package::V2: Split BinaryFiles module into its own file
+
+ debian/changelog                   |   2 +
+ scripts/Dpkg/Source/BinaryFiles.pm | 108 +++++++++++++++++++++++++++++++++++++
+ scripts/Dpkg/Source/Package/V2.pm  |  87 ++----------------------------
+ scripts/Makefile.am                |   1 +
+ scripts/po/POTFILES.in             |   1 +
+ 5 files changed, 115 insertions(+), 84 deletions(-)
+
+commit ffe3d7aeed7e7eb9a1c22d45fd0e5c2af2c8bcad
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 16 23:42:08 2018 +0200
+
+    Dpkg::Source::Functions: Reimplement is_binary() w/o using diff(1)
+    
+    The check is very simple, and can be done w/o requiring calling diff(1)
+    for each input file.
+    
+    This makes the code shorter, more portable, and should be faster in the
+    non-binary cases.
+
+ debian/changelog                 |  1 +
+ scripts/Dpkg/Source/Functions.pm | 31 ++++++++-----------------------
+ 2 files changed, 9 insertions(+), 23 deletions(-)
+
+commit b89c8fd35c09df0df61f3424a630241bf4d79111
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Sep 27 04:56:37 2018 +0200
+
+    Dpkg: Add documentation about the module hierarchy and API
+
+ debian/changelog |   1 +
+ scripts/Dpkg.pm  | 165 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 166 insertions(+)
+
+commit f6c46ce78c7e3f5504ce5d18a16c5482597716e3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 29 23:34:32 2018 +0200
+
+    Dpkg::OpenPGP: Do not read the gpg user configuration file
+
+ debian/changelog        | 1 +
+ scripts/Dpkg/OpenPGP.pm | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 2d3a3fd28050ca76be4322e2d44b13627c0c5f72
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 29 23:32:34 2018 +0200
+
+    Dpkg::OpenPGP: Ignore Version field in enarmored output
+    
+    This will contain different data depending on the program used. We do
+    not really care about that, later versions of GnuPG have stopped
+    emitting it, and it makes the test suite fail when using GnuPG 1.x.
+    
+    Fixes: https://rt.cpan.org/Public/Bug/Display.html?id=127217
+
+ debian/changelog        | 3 +++
+ scripts/Dpkg/OpenPGP.pm | 1 +
+ 2 files changed, 4 insertions(+)
+
+commit 232728accd5a3d12e93ef1296f407ee02184fdce
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Oct 2 03:55:19 2018 +0200
+
+    debian: Break libapt-pkg5.0 instead of apt
+    
+    The behavior we are breaking is implemented in the shared library, not
+    the standalone binary, which affects other frontends, such as aptitude.
+    
+    The affected behavior was introduced in apt 1.4~beta1, and the last ABI
+    change of libapt-pkg was in apt 1.1~exp9, so earlier libapt-pkg*
+    versions are not affected.
+    
+    Analysis-by: Sven Joachim <svenjoac@gmx.de>
+    Closes: #909959
+
+ debian/changelog | 3 +++
+ debian/control   | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 60ff714ca5001bdc56f9dfb1e6f5f6b0d3fef3ad
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 7 04:41:27 2018 +0200
+
+    test: Skip version checks involving «dpkg --compare-versions» if not available
+    
+    For the CPAN distribution or a non-dpkg-based distribution we cannot
+    assume that dpkg will be installed, or even available at build time.
+    Skip these tests if the tools is missing.
+
+ debian/changelog         |  3 +++
+ scripts/t/Dpkg_Version.t | 17 +++++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+commit 0c730ce6028932e695e4d183ca31a09451a3dfca
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:50:57 2018 +0200
+
+    build: Improve test and author CPAN dependencies
+    
+    Split the test recommends from the requires and add develop recommends
+    into a prereqs metadata hierarchy.
+
+ debian/changelog    |  1 +
+ scripts/Build.PL.in | 22 ++++++++++++++++++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+commit ca81310a8ab4ae8ab2f6b054f6b6bed5fd1002ba
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:50:33 2018 +0200
+
+    build: Fix typo in CPAN recommends key
+
+ debian/changelog    | 1 +
+ scripts/Build.PL.in | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 7155d3f97d49149b739d0e8e6358122fa5b5e84b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:50:00 2018 +0200
+
+    build: Add a release_status key to the CPAN metadata
+    
+    This will enable the -TRIAL versioning that CPAN uses to avoid indexing
+    such releases.
+
+ cpan.am             | 5 ++++-
+ debian/changelog    | 1 +
+ scripts/Build.PL.in | 2 ++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 1e618ad140e24441a7ebdbfe0c4822aa0e06118c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:48:32 2018 +0200
+
+    build: Generalize PACKAGE_CPAN_SIGN by setting PACKAGE_DIST_IS_RELEASE instead
+    
+    Set the more generic name from within DPKG_DIST_IS_RELEASE, and use that
+    directly in the Build.PL.in file.
+
+ configure.ac        | 1 -
+ debian/changelog    | 1 +
+ m4/dpkg-build.m4    | 6 +++++-
+ scripts/Build.PL.in | 2 +-
+ 4 files changed, 7 insertions(+), 3 deletions(-)
+
+commit 13c1c95323beebfba21ad8e4e56e7c110089929d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:41:01 2018 +0200
+
+    build: Do not make the Build.PL script executable
+    
+    CPAN does not like that on the grounds that the script itself does not
+    know which perl to use.
+
+ cpan.am          | 3 +--
+ debian/changelog | 1 +
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 45528ea406807ccfb421acf4b17317c2aa1204ef
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 28 01:40:13 2018 +0200
+
+    build: Distribute a LICENSE file on CPAN
+    
+    We listed the licence name in the metadata, but were not shipping the
+    actual licence text.
+
+ cpan.am          | 1 +
+ debian/changelog | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 10eeb6efe8823c936e479b0ffefa1d3ae26a771b
+Author: Łukasz Dulny <BartekChom@poczta.onet.pl>
+Date:   Sat Oct 6 16:35:13 2018 +0200
+
+    po: Update Polish programs translation
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   3 +
+ po/pl.po         | 178 +++++++++++++++++++------------------------------------
+ 2 files changed, 65 insertions(+), 116 deletions(-)
+
+commit 3f12bd45d6f416277012de2a8cd27a68c48eab68
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 8 10:51:31 2018 +0200
+
+    man: Document the PAGER environment variable usage in dpkg-query(1)
+    
+    When we started making «dpkg-query --list» use a pager, we missed
+    documenting this environment variable.
+    
+    Fixes: commit 05458bb8d50cb3b0f29e53d2a079f2ef874b8f23
+
+ debian/changelog   | 1 +
+ man/dpkg-query.man | 3 +++
+ 2 files changed, 4 insertions(+)
+
+commit ef3fb80f0ba464a3531bdca6b9bd9b5483cb2977
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 5 02:47:02 2018 +0200
+
+    man: Clarify which fields are affected by dependency options
+    
+    This includes the --force-breaks, --force-conflicts, --force-depends,
+    --force-depends-versio and --ignore-depends.
+    
+    Prompted-by: James Clarke <jrtc27@debian.org> (on IRC)
+
+ debian/changelog | 2 ++
+ man/dpkg.man     | 5 +++++
+ 2 files changed, 7 insertions(+)
+
+commit e2b53a0ce84207b8ebd34422bae797ad435e44f1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 7 19:17:44 2018 +0200
+
+    man: Document Build-Ids field in deb-control(5)
+    
+    Prompted-by: Stuart Prescott <stuart@debian.org>
+
+ debian/changelog    |  2 ++
+ man/deb-control.man | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
+
+commit c1636078026746d530d2cc6127f8e90abaea74be
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 4 07:35:50 2018 +0200
+
+    man: Improve documentation on vendor-specific series files in dpkg-source(1)
+    
+    Turn the reference to the vendor-specific series file vendor-neutral,
+    and specify the order and default name. Explain one of the reasons for
+    the feature, and where it is particularly helpful.
+
+ debian/changelog    |  1 +
+ man/dpkg-source.man | 25 +++++++++++++++++++------
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+commit 42b567aaaa37adf092c9b4ed34ecc3d2409f63db
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 4 07:24:19 2018 +0200
+
+    man: Reference where the source formats are described in dsc(5)
+    
+    Prompted-by: Manuel A. Fernandez Montecelo <mafm@debian.org>
+
+ debian/changelog | 2 ++
+ man/dsc.man      | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit 622fd19a9c4100a7745e93d965fe674e69ea600a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 4 07:18:45 2018 +0200
+
+    man: Clarify what “flattened” means in dsc(5)'s Testsuite-Triggers
+    
+    Prompted-by: Mattia Rizzolo <mattia@debian.org> (on IRC)
+
+ debian/changelog | 2 ++
+ man/dsc.man      | 6 +++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit b10d78a0f7878ac42246f91cad37cdb311691ec7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 7 19:06:14 2018 +0200
+
+    man: Clarify --build=source explanation in dpkg-buildpackage(1)
+
+ debian/changelog          | 4 ++++
+ man/dpkg-buildpackage.man | 7 ++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+commit 9b20171a37a8cc67b748f916ca4b23d769cb1d2b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 7 14:08:22 2018 +0200
+
+    doc: Fix typos
+    
+    Warned-by: codespell
+
+ ChangeLog.old | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 765caaa74b5722a0d93f1144b9e890ac8a7f4ac7
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Sep 26 21:28:08 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2932t1f.
+
+ debian/changelog |  3 ++-
+ man/po/de.po     | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
+
+commit b4b1832e5aec4ed4cdf7ddab2bbd6d8a304e35e4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 20:46:43 2018 +0200
+
+    Bump version to 1.19.2
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 45731f6c15c80e187052733ce4b25a592b842b4f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 15:13:29 2018 +0200
+
+    Release 1.19.1
+
+ debian/changelog | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 99ac7e5b2fa390835265473cb266de86d24f6f15
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 04:35:23 2018 +0200
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |  10 +-
+ dselect/po/ca.po        |  22 +-
+ dselect/po/cs.po        |  22 +-
+ dselect/po/da.po        |  22 +-
+ dselect/po/de.po        |  22 +-
+ dselect/po/dselect.pot  |  12 +-
+ dselect/po/el.po        |  22 +-
+ dselect/po/es.po        |  39 +--
+ dselect/po/et.po        |  22 +-
+ dselect/po/eu.po        |  22 +-
+ dselect/po/fr.po        |  22 +-
+ dselect/po/gl.po        |  22 +-
+ dselect/po/hu.po        |  10 +-
+ dselect/po/id.po        |  22 +-
+ dselect/po/it.po        |  22 +-
+ dselect/po/ja.po        |  22 +-
+ dselect/po/ko.po        |  22 +-
+ dselect/po/nb.po        |  22 +-
+ dselect/po/nl.po        |  22 +-
+ dselect/po/nn.po        |  22 +-
+ dselect/po/pl.po        |  22 +-
+ dselect/po/pt.po        |  22 +-
+ dselect/po/pt_BR.po     |  22 +-
+ dselect/po/ro.po        |  22 +-
+ dselect/po/ru.po        |  22 +-
+ dselect/po/sk.po        |  22 +-
+ dselect/po/sv.po        |  22 +-
+ dselect/po/tl.po        |  22 +-
+ dselect/po/vi.po        |  22 +-
+ dselect/po/zh_CN.po     |  22 +-
+ dselect/po/zh_TW.po     |  22 +-
+ man/po/de.po            |  35 ++-
+ man/po/dpkg-man.pot     | 468 +++++++++++++++++++++++--------
+ man/po/es.po            | 552 +++++++++++++++++++++++++++++--------
+ man/po/fr.po            | 568 ++++++++++++++++++++++++++++++--------
+ man/po/hu.po            | 426 ++++++++++++++++++++++-------
+ man/po/it.po            | 512 ++++++++++++++++++++++++++--------
+ man/po/ja.po            | 543 ++++++++++++++++++++++++++++--------
+ man/po/nl.po            | 102 ++++++-
+ man/po/pl.po            | 557 +++++++++++++++++++++++++++++--------
+ man/po/pt_BR.po         | 437 ++++++++++++++++++++++-------
+ man/po/ru.po            | 454 +++++++++++++++++++++++--------
+ man/po/sv.po            | 560 ++++++++++++++++++++++++++++++--------
+ man/po/zh_CN.po         | 432 ++++++++++++++++++++++-------
+ po/ast.po               | 676 ++++++++++++++++++++++++---------------------
+ po/bs.po                | 603 +++++++++++++++++++++-------------------
+ po/ca.po                | 644 +++++++++++++++++++++++++------------------
+ po/cs.po                | 620 +++++++++++++++++++++++------------------
+ po/da.po                | 636 +++++++++++++++++++++++++------------------
+ po/de.po                |   2 +-
+ po/dpkg.pot             | 495 +++++++++++++++++----------------
+ po/dz.po                | 618 ++++++++++++++++++++++-------------------
+ po/el.po                | 642 ++++++++++++++++++++++++-------------------
+ po/eo.po                | 635 ++++++++++++++++++++++++------------------
+ po/es.po                | 687 +++++++++++++++++++++++++++-------------------
+ po/et.po                | 595 ++++++++++++++++++++++------------------
+ po/eu.po                | 665 +++++++++++++++++++++++++-------------------
+ po/fr.po                | 688 ++++++++++++++++++++++++++--------------------
+ po/gl.po                | 640 ++++++++++++++++++++++++-------------------
+ po/hu.po                | 610 ++++++++++++++++++++++-------------------
+ po/id.po                | 650 ++++++++++++++++++++++++-------------------
+ po/it.po                | 647 +++++++++++++++++++++++++------------------
+ po/ja.po                | 642 +++++++++++++++++++++++++------------------
+ po/km.po                | 618 ++++++++++++++++++++++-------------------
+ po/ko.po                | 650 ++++++++++++++++++++++++-------------------
+ po/ku.po                | 536 +++++++++++++++++++-----------------
+ po/lt.po                | 617 ++++++++++++++++++++++-------------------
+ po/mr.po                | 619 ++++++++++++++++++++++-------------------
+ po/nb.po                | 647 ++++++++++++++++++++++++-------------------
+ po/ne.po                | 616 ++++++++++++++++++++++-------------------
+ po/nl.po                | 670 +++++++++++++++++++++++++--------------------
+ po/nn.po                | 609 ++++++++++++++++++++++-------------------
+ po/pa.po                | 554 ++++++++++++++++++++-----------------
+ po/pl.po                | 711 +++++++++++++++++++++++++++---------------------
+ po/pt.po                | 638 +++++++++++++++++++++++++------------------
+ po/pt_BR.po             | 637 ++++++++++++++++++++++++-------------------
+ po/ro.po                | 702 ++++++++++++++++++++++++++---------------------
+ po/ru.po                | 649 ++++++++++++++++++++++++-------------------
+ po/sk.po                | 649 ++++++++++++++++++++++++-------------------
+ po/sv.po                | 641 +++++++++++++++++++++++++------------------
+ po/th.po                | 635 ++++++++++++++++++++++++------------------
+ po/tl.po                | 657 ++++++++++++++++++++++++--------------------
+ po/tr.po                | 620 +++++++++++++++++++++++------------------
+ po/vi.po                | 639 +++++++++++++++++++++++++------------------
+ po/zh_CN.po             | 612 +++++++++++++++++++++++------------------
+ po/zh_TW.po             | 644 +++++++++++++++++++++++++------------------
+ scripts/po/ca.po        | 266 ++++++++++++++----
+ scripts/po/de.po        |   2 +-
+ scripts/po/dpkg-dev.pot | 110 +++++---
+ scripts/po/es.po        | 148 ++++++----
+ scripts/po/fr.po        | 205 ++++++++++----
+ scripts/po/pl.po        | 143 ++++++----
+ scripts/po/ru.po        | 143 ++++++----
+ scripts/po/sv.po        | 143 ++++++----
+ 94 files changed, 20176 insertions(+), 13260 deletions(-)
+
+commit 5342507ccb5e95bf38548b6030332f1b0c33da51
+Author: 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+Date:   Mon Apr 16 12:22:17 2018 +0800
+
+    po: Update Traditional Chinese programs translation
+    
+    Update to 1029t61f19u.
+    
+    Closes: #905887
+    Signed-off-by: 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/zh_TW.po      | 799 ++++++++++++++++++-------------------------------------
+ 2 files changed, 256 insertions(+), 544 deletions(-)
+
+commit 7afd25e72f447a4a4b130f38bba28ff6661cbb6c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 14 21:35:16 2018 +0200
+
+    man: Add a warning in s-s-d(8) about using --pidfile alone with non-root files
+    
+    Prompted-by: Michael Orlitzky <michael@orlitzky.com>
+    Ref: https://redmine.kannel.org/issues/771
+
+ debian/changelog          |  2 ++
+ man/start-stop-daemon.man | 14 +++++++++++---
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+
+commit eca1fdbfe00d1b0bb8de2c96cbdba23164b46c64
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Sep 14 21:34:49 2018 +0200
+
+    libdpkg: Check that the public headers can be compiled with C++
+
+ debian/changelog            |  1 +
+ lib/dpkg/t/.gitignore       |  1 +
+ lib/dpkg/t/Makefile.am      |  3 ++
+ lib/dpkg/t/t-headers-cpp.cc | 82 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 87 insertions(+)
+
+commit a27e90bae7341901f48bada3451487c2229ab341
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 19 02:40:55 2018 +0200
+
+    debian: Add Breaks on apt for --status-fd duplicate removals
+    
+    apt was expecting duplicate entries, and was producing confusing
+    warnings. We add a versioned Breaks to avoid confusing users.
+
+ debian/changelog | 1 +
+ debian/control   | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit d726a1e0469320deae5dcd080750ddfd5438b17a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 15:10:51 2018 +0200
+
+    test: Change cppcheck test to cope with CPAN distribution paths
+    
+    The paths are different in the CPAN distribution, so we need to use a
+    glob to catch the file in both layouts.
+
+ t/cppcheck/cppcheck.supp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a71a4bceba236e4dcd511c24e7b43851180ab4a5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 15:10:51 2018 +0200
+
+    test: Make po checks cope with missing po files in CPAN distribution
+    
+    We do not distribute the PO files yet for CPAN, so the checks should not
+    fail when they are missing, even when testing with AUTHOR_TESTING=1.
+
+ scripts/Test/Dpkg.pm | 2 +-
+ t/po.t               | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 66f18c3b3695fb2b9cea847aaa419b588c676f7e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 05:56:11 2018 +0200
+
+    build: Distribute the data files from the CPAN Build.PL script
+    
+    When building the CPAN package, we need to also distribute the data
+    files, otherwise the modules will not work correctly once installed.
+
+ scripts/Build.PL.in | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit a6c7f3cbc6d193026099f7db87da25046a2107dc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Sep 26 05:54:48 2018 +0200
+
+    build: Perform Dpkg module substitution during CPAN module building
+    
+    We had an empty do_perl_subst variable in the dist-cpan autotools
+    target that resulted in copying an empty file, but that was shadowed by
+    a subsequent copy of the original. So we were ending up with a pristine
+    non-substituted file.
+    
+    We actually need to substitute the install paths during the CPAN module
+    building to preserve system and user settings at that point. Otherwise
+    the dpkg autotools configure settings might be completely out of touch
+    with the settings from the system where the CPAN module gets built.
+
+ cpan.am             |  7 ++-----
+ scripts/Build.PL.in | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 5 deletions(-)
+
+commit 351b496e1a4c1baaee18f1d4c624b87471aa0311
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Sep 19 20:44:42 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2930t1f.
+
+ man/po/de.po | 92 +++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 76 insertions(+), 16 deletions(-)
+
+commit 0955b9811116f054c9bacb8d6327036e381130b1
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Sep 19 20:30:50 2018 +0200
+
+    Update German scripts translation
+    
+    Update to 602t.
+
+ scripts/po/de.po | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit 2848db123e1452d2c71840b7c00ca198c3626d4e
+Author: Josh Triplett <josh@joshtriplett.org>
+Date:   Sat Sep 15 16:10:29 2018 -0700
+
+    perl: Replace all calls to Cwd::cwd with Cwd::getcwd
+    
+    The former calls /bin/pwd, while the latter uses the getcwd() syscall
+    directly.
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog              | 4 ++++
+ doc/lcov-inject.pl            | 2 +-
+ lib/dpkg/t/t-tarextract.t     | 2 +-
+ lib/dpkg/t/t-treewalk.t       | 2 +-
+ scripts/Dpkg/Vendor/Debian.pm | 2 +-
+ scripts/dpkg-genbuildinfo.pl  | 2 +-
+ scripts/dpkg-source.pl        | 2 +-
+ scripts/t/Dpkg_Shlibs.t       | 2 +-
+ 8 files changed, 11 insertions(+), 7 deletions(-)
+
+commit a7901786002cf4bd9f1dfbf3e4d844fc27478a8b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 18 23:34:59 2018 +0200
+
+    dpkg-parsechangelog: Add new --reverse option
+    
+    This option will make the output be in reverse order.
+
+ debian/changelog                | 2 ++
+ man/dpkg-parsechangelog.man     | 6 +++++-
+ scripts/Dpkg/Changelog.pm       | 9 +++++----
+ scripts/Dpkg/Changelog/Parse.pm | 2 +-
+ scripts/dpkg-parsechangelog.pl  | 3 +++
+ scripts/t/Dpkg_Changelog.t      | 6 +++++-
+ 6 files changed, 21 insertions(+), 7 deletions(-)
+
+commit 5eec3d31ff0ad5a22ced343969dda99b9e2af442
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 18 23:34:41 2018 +0200
+
+    scripts: Track automatic packages using the new file attribute
+    
+    This should make it possible to ignore the warning w/o hardcoding any
+    distribution specific package name pattern on the code.
+
+ debian/changelog           |  3 +++
+ man/deb-src-files.man      |  2 ++
+ scripts/dpkg-genchanges.pl | 14 +++++++++-----
+ scripts/dpkg-gencontrol.pl |  5 ++++-
+ 4 files changed, 18 insertions(+), 6 deletions(-)
+
+commit 37030e02cab5efe710834268f3d4ea426ec4a99a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Sep 18 23:34:31 2018 +0200
+
+    Dpkg::Dist::Files: Add support for file attributes
+    
+    This will make it possible to track key/value attributes for each file,
+    so that we can track interesting information and pass it to the various
+    programs parsing the debian/files file.
+
+ debian/changelog                       |  1 +
+ man/deb-src-files.man                  |  7 +++++++
+ scripts/Dpkg/Dist/Files.pm             | 17 ++++++++++++++---
+ scripts/t/Dpkg_Dist_Files.t            | 31 ++++++++++++++++++++++---------
+ scripts/t/Dpkg_Dist_Files/files-byhand |  4 ++--
+ 5 files changed, 46 insertions(+), 14 deletions(-)
+
+commit a034e7d53b0c96c419d71c86921d2a509b0d79bc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 30 16:42:21 2018 +0200
+
+    Dpkg::Vendor::Debian: Add fixfilepath support to reproducible feature
+    
+    This is a superset of the fixdebugpath feature supported by gcc-8, but
+    covering in addition mappings for macros such as __FILE__ and similar.
+
+ debian/changelog              |  1 +
+ man/dpkg-buildflags.man       | 11 +++++++++++
+ scripts/Dpkg/Vendor/Debian.pm | 21 +++++++++++++++++----
+ scripts/t/Dpkg_BuildFlags.t   |  1 +
+ 4 files changed, 30 insertions(+), 4 deletions(-)
+
+commit 9429372291069eab0f853f772fc76177413410ef
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Sep 16 03:31:25 2018 +0200
+
+    Dpkg::Deps::KnownFacts: Satisfy :native with arch:all packages too
+    
+    Architecture:all packages are treated as native ones as part of the
+    current multi-arch design, the only current exception is in
+    build dependencies with the :native arch-qualifier.
+    
+    It looks like this was an oversight when implementing the :native
+    support, as there's been no rationale found for the current behavior.
+    
+    Closes: #854438
+    Analysis-by: Johannes Schauer <josch@debian.org>
+
+ debian/changelog                |  5 +++++
+ scripts/Dpkg/Deps/KnownFacts.pm |  3 ++-
+ scripts/t/Dpkg_Deps.t           | 21 ++++++++++++++++++++-
+ 3 files changed, 27 insertions(+), 2 deletions(-)
+
+commit 04f63813361b97b7da13653d547736b00e852b90
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 15 02:33:24 2018 +0200
+
+    libdpkg: Fix filesystem digest parsing
+    
+    Allocate the digest into the non-freeing memory pool, as we have stopped
+    doing that for the entire loaded file with the switch to the file_slurp()
+    function. Otherwise when we release the varbuf the fsys nodes will be
+    pointing to garbage.
+    
+    Fixes: commit 1166bbb5f099580a0c1c26d0e29b1ae3fe11ad0f
+    Reported-by: Sven Joachim <svenjoac@gmx.de>
+    Bisected-by: Sven Joachim <svenjoac@gmx.de>
+
+ lib/dpkg/db-fsys-digest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e95082d78a4b11a411bb8c98dfc140ace452aa2b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 1 22:42:30 2018 +0200
+
+    dpkg-maintscript-helper: Check that DPKG_MAINTSCRIPT_PACKAGE is defined
+    
+    When we need the environment variablem check that it is defined, and
+    error out otherwise.
+    
+    Closes: #907772
+
+ debian/changelog                   | 2 ++
+ scripts/dpkg-maintscript-helper.sh | 8 ++++++++
+ 2 files changed, 10 insertions(+)
+
+commit 8fe2c1ebf907f325b6985f471a00843eca77992b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Sep 3 19:28:01 2018 +0200
+
+    Dpkg::Shlibs: Ignore nonexistent directories present in LD_LIBRARY_PATH
+    
+    We were trying to use realpath() on nonexistent directories, which means
+    we'd get undef. Instead just completely ignore nonexistent directories
+    from any processing.
+    
+    Fixes: commit 174a5bd2a080847d0ed901d269a2ba74476eba8b
+
+ debian/changelog       | 1 +
+ scripts/Dpkg/Shlibs.pm | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 56810aa960e9ac8a51da178bb32e487726f60530
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Sep 1 22:37:43 2018 +0200
+
+    Dpkg::Substvars: Fix typo
+
+ scripts/Dpkg/Substvars.pm | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit d717ac4c30c988868e13b716fac795d59f98841d
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Fri Aug 31 11:25:24 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2924t1f.
+
+ man/po/de.po | 205 +++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 130 insertions(+), 75 deletions(-)
+
+commit e571a402a5c5901ef64bc6caa92a2425e318956c
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Fri Aug 31 10:30:49 2018 +0200
+
+    Update Netherlands translation of manual pages
+    
+    Update to 2905t10f10u.
+    
+    This update only deals with strings which can be trivially unfuzzied.
+
+ man/po/nl.po | 213 +++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 134 insertions(+), 79 deletions(-)
+
+commit 5641702178c0d766ddde8f897c4b36f6db77d300
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Thu Aug 30 19:21:46 2018 +0200
+
+    German dpkg translation update
+    
+    Update to 1113t.
+
+ po/de.po | 454 ++++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 231 insertions(+), 223 deletions(-)
+
+commit 58a3470f3ac2ee394d6525ab4781838327e9bb13
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Thu Aug 30 08:35:56 2018 +0200
+
+    Update German scripts translation
+    
+    Update to 602t.
+
+ scripts/po/de.po | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
+commit b910e58aed06d3fbca0645bd68c2105d1dfa003c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 30 02:38:39 2018 +0200
+
+    data: Add missing purpose and column description for tupletable
+
+ data/tupletable  | 15 +++++++++++++++
+ debian/changelog |  1 +
+ 2 files changed, 16 insertions(+)
+
+commit 0d5602d95fbf696e117e1de2f5861ed360440f2e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 28 02:42:32 2018 +0200
+
+    test: Add new codespell author test
+
+ .gitlab-ci.yml        |  2 +-
+ Makefile.am           |  2 ++
+ README                |  1 +
+ debian/changelog      |  1 +
+ t/codespell.t         | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ t/codespell/stopwords | 14 ++++++++++++
+ 6 files changed, 82 insertions(+), 1 deletion(-)
+
+commit 5fce4747ab4050d06a572107df338fde85479e31
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 28 02:37:18 2018 +0200
+
+    test: Delete fixup lines from i18nspector output instead of emptying them
+    
+    The previous regex was just turning the line into an empty one, but
+    we count the length to check whether there was any output. In this
+    particular case this did not trigger because we have a chomp, that
+    would get rid of the last empty line, which happened to be fine as
+    we currently only emit one such empty line per file. But this is not
+    future-proof, so let's fix it before it bites us.
+
+ debian/changelog | 1 +
+ t/po.t           | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 0674000c375ae1fda818093fa8073d61a5ad6565
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 28 02:35:15 2018 +0200
+
+    dpkg-shlibdeps: Split string at \n boundary
+    
+    Having the string read as “\nTo” confuses codespell, as a typo for not.
+    Just break the string at the newline to make it more clear for humans
+    and spell checkers alike.
+    
+    Warned-by: codespell
+
+ scripts/dpkg-shlibdeps.pl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit aea951ca62fba38b8ce53e26db802a42304e0c27
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 28 02:33:52 2018 +0200
+
+    dselect: Rename $ans variable to $answer in multicd method
+    
+    This is detected by codespell as a spelling error. Just use the
+    non-abbreviated form to make it more clear and stop triggering
+    codespell.
+    
+    Warned-by: codespell
+
+ dselect/methods/multicd/install | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit e596defa91399a04792c7b37a6eb74a67cd10661
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 25 01:30:06 2018 +0200
+
+    scripts/t: Improve coverage of unit tests
+
+ debian/changelog                |  1 +
+ scripts/t/Dpkg_Arch.t           |  9 +++++++--
+ scripts/t/Dpkg_BuildFlags.t     | 42 ++++++++++++++++++++++++++++++++++++++++-
+ scripts/t/Dpkg_Build_Types.t    | 25 +++++++++++++++++++++++-
+ scripts/t/Dpkg_Checksums.t      | 30 ++++++++++++++++++++++++++++-
+ scripts/t/Dpkg_Control_Fields.t |  5 ++++-
+ scripts/t/Dpkg_OpenPGP.t        | 23 +++++++++++++---------
+ scripts/t/Dpkg_Substvars.t      | 19 ++++++++++++++++++-
+ 8 files changed, 138 insertions(+), 16 deletions(-)
+
+commit b051c0d58e99a76c3be616f374307d78503da5c5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 25 01:29:32 2018 +0200
+
+    libdpkg: Add new unit tests for namevalue, fsys-hash and pkg-hash modules
+
+ debian/changelog         |   1 +
+ lib/dpkg/t/.gitignore    |   3 +
+ lib/dpkg/t/Makefile.am   |   3 +
+ lib/dpkg/t/t-fsys-hash.c | 108 ++++++++++++++++++++++++++++
+ lib/dpkg/t/t-namevalue.c |  48 +++++++++++++
+ lib/dpkg/t/t-pkg-hash.c  | 178 +++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 341 insertions(+)
+
+commit 58fb0496a61053fec3c65a3460f1a47c93d31ff1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 24 21:20:14 2018 +0200
+
+    build: Disable C optimization levels when configuring for code coverage
+    
+    Optimizations mess up the coverage reporting, as the reslting object
+    layout changes substantialy to the point of it not matching what is
+    being actually covered by the test suite.
+
+ debian/changelog    | 1 +
+ m4/dpkg-coverage.m4 | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 85aa070f774df38d1dcf0dc2d451bf6848eee1c6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 25 02:32:40 2018 +0200
+
+    build: Only sign the perl distribution if we are doing an actual release
+    
+    Forcing the signing while not actually preparing a tarball for a
+    release disitribution, that is due to a signed tag, means that any
+    random «make distcheck» will trigger an annoying gpg prompt.
+
+ configure.ac        |  2 ++
+ cpan.am             |  2 +-
+ m4/dpkg-build.m4    | 13 +++++++++++++
+ scripts/Build.PL.in |  2 +-
+ 4 files changed, 17 insertions(+), 2 deletions(-)
+
+commit 786870e4bb9656b39df2bdeff5cc747e41d734c4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 25 01:28:17 2018 +0200
+
+    Dpkg::Control::Fields: Do not use & sigil for function calls
+    
+    Warned-by: perlcritic
+    Fixes: Subroutines::ProhibitAmpersandSigils
+
+ debian/changelog               | 1 +
+ scripts/Dpkg/Control/Fields.pm | 9 ++++++---
+ t/critic.t                     | 1 +
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+
+commit fd1b41d81578a97399284f72ae703c0a32e3f905
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 24 21:18:12 2018 +0200
+
+    Dpkg::OpenPGP: Return the destination path on successful ASCII armor conversion
+    
+    This way we can distinguish the failure from the success case.
+
+ debian/changelog        | 2 ++
+ scripts/Dpkg/OpenPGP.pm | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit b741076e2a70dfa9f385b6baa9bfc6b496bd902f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Aug 20 16:37:18 2018 +0200
+
+    Dpkg::Source::Package::V3::Quilt: Print series file used when applying patches
+    
+    We might use a vendor specific series file, so we should print the one
+    being used to notify if this fact.
+
+ debian/changelog                        | 2 ++
+ scripts/Dpkg/Source/Package/V3/Quilt.pm | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 174a5bd2a080847d0ed901d269a2ba74476eba8b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:35:01 2018 +0200
+
+    Dpkg::Shlibs: Warn when using LD_LIBRARY_PATH with a descendent of cwd
+    
+    This makes the deprecation explicit, so that we can start noticing
+    what is inappropriately setting this variable for a purpose it was
+    not designed for.
+
+ debian/changelog       |  2 ++
+ scripts/Dpkg/Shlibs.pm | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
+
+commit f277fc2e8e0fd80017e0fd4088789a09737c5c3a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:34:24 2018 +0200
+
+    dpkg-gensymbols: Add new -l option
+    
+    This option will make it possible to stop using LD_LIBRARY_PATH when
+    calling this script.
+
+ debian/changelog           |  2 ++
+ man/dpkg-gensymbols.man    | 11 +++++++++++
+ scripts/dpkg-gensymbols.pl |  3 +++
+ 3 files changed, 16 insertions(+)
+
+commit f4bae73fa1158846648d566cb28cdcb7e9aaa90f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:11:42 2018 +0200
+
+    dpkg-query: Support dumping all --status and --print-avail records
+    
+    When not passing any argument these commands will dump the entire
+    database. This way external programs will have a proper public
+    interface to get all package records, even when there are unmerged
+    journal entries.
+    
+    Closes: #616342
+
+ debian/changelog   |  2 ++
+ man/dpkg-query.man | 23 +++++++++------
+ src/querycmd.c     | 86 ++++++++++++++++++++++++++++--------------------------
+ 3 files changed, 60 insertions(+), 51 deletions(-)
+
+commit bf5467775d9a6d608026372ba5fd2f13984b4cb2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 10 03:31:35 2018 +0200
+
+    dpkg-query: Split enqperpackage() into each different action
+
+ debian/changelog |   1 +
+ src/querycmd.c   | 181 +++++++++++++++++++++++++++++++++++--------------------
+ 2 files changed, 116 insertions(+), 66 deletions(-)
+
+commit d88c981ada01b446a4cb01183ca0ab5a85b1a25c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 10 03:32:35 2018 +0200
+
+    dpkg-query: Flush output for --status, --print-avail and --listfiles at the end
+    
+    Do not flush the output on each entry output, instead wait until we have
+    finished to flush it all out. This should speed up the output.
+
+ debian/changelog | 2 ++
+ src/querycmd.c   | 3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 60e4b9c2e969cb876fd9282f92e73f799485620b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 22 02:12:15 2018 +0200
+
+    dpkg: Fix use after free in maintainer scripts handling
+    
+    Fixes: commit 44b0bf1a576e3b0cfcb4c87f18d4195c3ffccb8f
+
+ debian/changelog | 2 ++
+ src/script.c     | 5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 05458bb8d50cb3b0f29e53d2a079f2ef874b8f23
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jun 8 04:15:22 2018 +0200
+
+    dpkg-query: Run --list output through a pager if we are on a terminal
+    
+    The current code, checks whether we are running on a terminal, and then
+    truncates the output fields so that it can fit within. This causes data
+    loss and can confuse the user depending where the cut point has happened.
+    
+    Instead we remove that logic, and always redirect the outout through a
+    pager in case we are running on a terminal, which gives full information
+    and does not necessarily emit ugly output.
+    
+    Closes: #898603
+
+ debian/changelog   |   2 +
+ man/dpkg-query.man |   4 --
+ man/dpkg.man       |   5 ---
+ src/querycmd.c     | 110 +++++++++++++++--------------------------------------
+ 4 files changed, 33 insertions(+), 88 deletions(-)
+
+commit c2929d087701dd36f84e8ba5e25ba060466c1c2a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 05:10:12 2018 +0200
+
+    libdpkg, dpkg: Use new pager spawning support
+    
+    Use it instead of open-coding it, or piping it via a shell invocation,
+    which required metacharacter escaping.
+
+ debian/changelog |  2 ++
+ lib/dpkg/file.c  | 19 +++----------------
+ src/configure.c  | 19 ++++++++++++-------
+ 3 files changed, 17 insertions(+), 23 deletions(-)
+
+commit 3b8cd0ea54e2027fd7c972e3edcbbc8bb43afa52
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 05:10:12 2018 +0200
+
+    libdpkg: Add pager spawning and reaping support
+    
+    This will make using a pager way easier, and make it possible to remove
+    some redundant and unsafe system() usage.
+
+ debian/changelog     |  1 +
+ lib/dpkg/libdpkg.map |  2 ++
+ lib/dpkg/pager.c     | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ lib/dpkg/pager.h     |  6 +++++
+ 4 files changed, 73 insertions(+)
+
+commit 7a6cdb430bd85bd38601730fef816e7c89e5e1b8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Aug 27 01:27:49 2018 +0200
+
+    libdpkg: Require both stdin and stdout to be a tty to use a pager
+    
+    A pager requires both input being connected to a tty, and we want to use
+    it when the output goes to the tty, so require both.
+
+ debian/changelog | 2 ++
+ lib/dpkg/pager.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit e8dddc5bd19195f48aeeccdc6eb82bfc275e3627
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 05:10:12 2018 +0200
+
+    libdpkg: Split pager specific code into its own module
+    
+    We also namespace the pager function with the module name.
+
+ debian/changelog       |  1 +
+ lib/dpkg/Makefile.am   |  2 ++
+ lib/dpkg/command.c     | 21 --------------
+ lib/dpkg/command.h     |  1 -
+ lib/dpkg/file.c        |  3 +-
+ lib/dpkg/libdpkg.map   |  3 +-
+ lib/dpkg/pager.c       | 50 +++++++++++++++++++++++++++++++++
+ lib/dpkg/pager.h       | 43 +++++++++++++++++++++++++++++
+ lib/dpkg/t/.gitignore  |  1 +
+ lib/dpkg/t/Makefile.am |  1 +
+ lib/dpkg/t/t-command.c | 38 +------------------------
+ lib/dpkg/t/t-pager.c   | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/POTFILES.in         |  1 +
+ src/configure.c        |  3 +-
+ 14 files changed, 181 insertions(+), 62 deletions(-)
+
+commit 7f7eb8cc77e84dd03791f7317c38242e49760b49
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 05:10:12 2018 +0200
+
+    libdpkg: Fix internerr format string
+    
+    Do not print filename which is going to be NULL.
+    
+    Fixes: commit 9f7e58acdf28043bce2dfaf24ba27bb878418658
+
+ lib/dpkg/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 683e95c0b13b6274d1785741d63551cd39b6ee45
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:10:09 2018 +0200
+
+    libdpkg: Dump database package records in alphabetical order
+    
+    When dumping all stanzas from the package database, do it in
+    alphabetical order, so that we get reproducible output, both on disk
+    and for the upcoming output to stdout.
+
+ debian/changelog |  3 +++
+ lib/dpkg/dump.c  | 17 +++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+commit d2ec96cc99b15b97cfcecead3f2872c45a510855
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 10 02:22:39 2018 +0200
+
+    libdpkg: Factor out package stanza printing into its own function
+    
+    We will then be able to use it to print the package database into
+    stdout, for example.
+
+ debian/changelog     |  1 +
+ lib/dpkg/dpkg-db.h   |  1 +
+ lib/dpkg/dump.c      | 21 +++++++++++++++------
+ lib/dpkg/libdpkg.map |  1 +
+ 4 files changed, 18 insertions(+), 6 deletions(-)
+
+commit 23f575c23e9d141dd4b1b34bb41060b4f99ea611
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 9 03:05:46 2018 +0200
+
+    libdpkg: Add new m_dup() function
+
+ debian/changelog     |  1 +
+ lib/dpkg/dpkg.h      |  1 +
+ lib/dpkg/libdpkg.map |  1 +
+ lib/dpkg/mlib.c      | 13 +++++++++++++
+ 4 files changed, 16 insertions(+)
+
+commit 187d689217e274e79fa61018bc23a0d43f7d678c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 12 05:09:14 2018 +0200
+
+    libdpkg: Add new pkg_infodb_reset_dir()
+    
+    This makes it possible to update the infodb directory when we have
+    changed the underlying directory with dpkg_db_set_dir().
+
+ debian/changelog          |  1 +
+ lib/dpkg/db-ctrl-format.c | 18 +++++++++++++-----
+ lib/dpkg/db-ctrl.h        |  1 +
+ 3 files changed, 15 insertions(+), 5 deletions(-)
+
+commit 7094f7c428f1f871b1b83bf5f895ab66f9e3d55a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 22 22:38:50 2018 +0200
+
+    libdpkg: Add support for new test_get_srcdir() and test_get_builddir()
+
+ debian/changelog    |  1 +
+ lib/dpkg/t/t-test.c |  7 ++++++-
+ lib/dpkg/test.h     | 12 ++++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+
+commit 1166bbb5f099580a0c1c26d0e29b1ae3fe11ad0f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jan 13 14:46:46 2018 +0100
+
+    libdpkg: Switch db-fsys to use the new file_slurp() function
+    
+    This reduces code duplication.
+
+ debian/changelog          |  1 +
+ lib/dpkg/db-fsys-digest.c | 49 +++++++++++++----------------------------------
+ lib/dpkg/db-fsys-files.c  | 44 +++++++++++++-----------------------------
+ 3 files changed, 27 insertions(+), 67 deletions(-)
+
+commit 7ebd4d381b439baa730ad941340b3a1ac129497c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jan 13 14:46:46 2018 +0100
+
+    libdpkg: Add new file_slurp() function
+
+ debian/changelog       |  1 +
+ lib/dpkg/file.c        | 44 +++++++++++++++++++++++
+ lib/dpkg/file.h        |  5 +++
+ lib/dpkg/t/.gitignore  |  1 +
+ lib/dpkg/t/Makefile.am |  1 +
+ lib/dpkg/t/t-file.c    | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 148 insertions(+)
+
+commit 2edd9981db1f572588b2493f81d67915183865e8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jun 17 20:34:19 2018 +0200
+
+    libdpkg: Add new varbuf_new() and varbuf_free() functions
+
+ debian/changelog      |  1 +
+ lib/dpkg/libdpkg.map  |  2 ++
+ lib/dpkg/t/t-varbuf.c | 23 ++++++++++++++++++++++-
+ lib/dpkg/varbuf.c     | 18 ++++++++++++++++++
+ lib/dpkg/varbuf.h     |  2 ++
+ 5 files changed, 45 insertions(+), 1 deletion(-)
+
+commit ac47acc3f816672852bd5ad036e663aa150abe3f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 22 01:18:34 2018 +0200
+
+    libdpkg: Change dpkg_error to track errno values
+    
+    This will make it possible for the caller to check what errno caused an
+    error to be emitted, if any.
+
+ debian/changelog     |  1 +
+ lib/dpkg/error.c     | 14 +++++++++-----
+ lib/dpkg/error.h     |  3 ++-
+ lib/dpkg/t/t-error.c | 10 ++++++++--
+ 4 files changed, 20 insertions(+), 8 deletions(-)
+
+commit 05c5c373dad18117942ea59440f9867c2f0d6a73
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 12 03:22:37 2018 +0200
+
+    Switch from strchr() + strlen() to strchrnul()
+
+ debian/changelog          | 1 +
+ dselect/baselist.cc       | 7 ++++---
+ dselect/pkginfo.cc        | 6 +++---
+ lib/dpkg/pkg-format.c     | 7 ++-----
+ src/help.c                | 6 +++---
+ src/main.c                | 7 ++++---
+ utils/start-stop-daemon.c | 8 ++++----
+ 7 files changed, 21 insertions(+), 21 deletions(-)
+
+commit fbed23421fe867d76e6123d2cf79ffafeed5aafd
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 12 02:14:48 2018 +0200
+
+    libcompat: Add new strchrnul() compat function
+
+ configure.ac           |  1 +
+ debian/changelog       |  1 +
+ lib/compat/Makefile.am |  5 +++++
+ lib/compat/compat.h    |  6 ++++++
+ lib/compat/strchrnul.c | 37 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 50 insertions(+)
+
+commit c7c948d8b9ed774163d35c573f25029d69e45348
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jan 13 02:37:02 2018 +0100
+
+    libdpkg: Split push_cleanup() into push_cleanup_fallback()
+    
+    We separate the function in one that takes one callback, and another
+    that takes two. This simplifies most of the call sites which only need
+    one callback.
+
+ debian/changelog           |  1 +
+ dpkg-deb/info.c            |  2 +-
+ dselect/baselist.cc        |  2 +-
+ dselect/method.cc          |  2 +-
+ lib/dpkg/atomic-file.c     |  2 +-
+ lib/dpkg/db-ctrl-access.c  |  2 +-
+ lib/dpkg/db-ctrl-upgrade.c |  4 ++--
+ lib/dpkg/db-fsys-files.c   |  2 +-
+ lib/dpkg/ehandle.c         | 32 +++++++++++++++++++++++++++++---
+ lib/dpkg/ehandle.h         |  6 ++++--
+ lib/dpkg/file.c            |  2 +-
+ lib/dpkg/libdpkg.map       |  1 +
+ lib/dpkg/parse.c           |  2 +-
+ lib/dpkg/subproc.c         |  2 +-
+ lib/dpkg/t/t-ehandle.c     |  2 +-
+ lib/dpkg/triglib.c         |  4 ++--
+ src/archives.c             |  4 ++--
+ src/configure.c            |  2 +-
+ src/divertcmd.c            |  2 +-
+ src/remove.c               |  4 ++--
+ src/script.c               |  2 +-
+ src/unpack.c               | 32 ++++++++++++++++----------------
+ 22 files changed, 72 insertions(+), 42 deletions(-)
+
+commit ae6a3ddd2a774ee1cedc5ee0c87ab8c66ae5f786
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Aug 24 20:51:09 2018 +0200
+
+    libdpkg: Reset nfiles in files_db_reset()
+
+ debian/changelog     | 1 +
+ lib/dpkg/fsys-hash.c | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 93424411d3b840f1a88a42b97b226e34b193e81b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jun 2 16:05:32 2018 +0200
+
+    libdpkg: Switch to a new tiny struct to track file ondisk identity
+    
+    We only need the device and inode numbers for a given file to be able to
+    compare them for identity. Avoid storing the entire struct stat which is
+    rather fat.
+
+ debian/changelog     |  2 ++
+ lib/dpkg/fsys-hash.c |  4 ++--
+ lib/dpkg/fsys.h      | 10 +++++++++-
+ src/unpack.c         | 20 ++++++++++++--------
+ 4 files changed, 25 insertions(+), 11 deletions(-)
+
+commit 5a678bf493de3630cb2dd58e8d124a86c74568ab
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 14 06:08:56 2018 +0200
+
+    libdpkg: Factor out package files handling into its own module
+    
+    We need these functions from the list and mtree implementations. Move
+    them out so that they can be shared. In addition this is pure in-core
+    handling so it makes sense to split out from the db-fsys modules.
+
+ debian/changelog         |  1 +
+ lib/dpkg/Makefile.am     |  2 +
+ lib/dpkg/db-fsys-files.c | 67 +---------------------------------
+ lib/dpkg/pkg-files.c     | 95 ++++++++++++++++++++++++++++++++++++++++++++++++
+ lib/dpkg/pkg-files.h     | 46 +++++++++++++++++++++++
+ po/POTFILES.in           |  1 +
+ 6 files changed, 146 insertions(+), 66 deletions(-)
+
+commit 72c2b44655be986fa0422725a005f69d41a77841
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 14 06:08:56 2018 +0200
+
+    libdpkg: Use a pointer to pointer to track previous entry in pkg_files_blank()
+    
+    We reduce the nesting level, and avoid a conditional inside the loop.
+
+ debian/changelog         |  2 ++
+ lib/dpkg/db-fsys-files.c | 10 ++++------
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 7d8b505882cc9cae1913a909f1fafa515a227d96
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Aug 14 05:51:39 2018 +0200
+
+    libdpkg: Rename pkg-db module to pkg-hash
+    
+    It contains the package hash table implementation. The on-disk database
+    is handled elsewhere, and using db here instead of hash makes it fairly
+    confusing.
+
+ debian/changelog                  | 1 +
+ lib/dpkg/Makefile.am              | 2 +-
+ lib/dpkg/{pkg-db.c => pkg-hash.c} | 2 +-
+ po/POTFILES.in                    | 2 +-
+ 4 files changed, 4 insertions(+), 3 deletions(-)
+
+commit eed3a9097deb1be5251cd31fbf9ec4d482a155d1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Apr 6 01:14:42 2018 +0200
+
+    libdpkg: Move db-fsys code from src to lib/dpkg
+    
+    This will prepare the ground for external programs to start using
+    libdpkg to access the dpkg fsys database via a proper API, instead
+    of messing with the on-disk layout in so many improper ways.
+
+ debian/changelog                                |  1 +
+ lib/dpkg/Makefile.am                            |  5 +++++
+ src/filesdb-hash.c => lib/dpkg/db-fsys-digest.c |  7 +++----
+ src/divertdb.c => lib/dpkg/db-fsys-divert.c     |  7 +++----
+ src/filesdb.c => lib/dpkg/db-fsys-files.c       |  9 ++++-----
+ src/statdb.c => lib/dpkg/db-fsys-override.c     |  7 +++----
+ src/filesdb.h => lib/dpkg/db-fsys.h             | 10 +++++-----
+ lib/dpkg/libdpkg.map                            | 17 +++++++++++++++++
+ po/POTFILES.in                                  |  8 ++++----
+ src/Makefile.am                                 | 14 --------------
+ src/archives.c                                  |  2 +-
+ src/cleanup.c                                   |  2 +-
+ src/configure.c                                 |  2 +-
+ src/depcon.c                                    |  2 +-
+ src/divertcmd.c                                 |  3 +--
+ src/enquiry.c                                   |  2 +-
+ src/filters.c                                   |  2 +-
+ src/help.c                                      |  2 +-
+ src/main.c                                      |  2 +-
+ src/main.h                                      |  2 +-
+ src/packages.c                                  |  2 +-
+ src/querycmd.c                                  |  2 +-
+ src/remove.c                                    |  2 +-
+ src/script.c                                    |  2 +-
+ src/select.c                                    |  2 +-
+ src/statcmd.c                                   |  2 +-
+ src/trigproc.c                                  |  2 +-
+ src/unpack.c                                    |  2 +-
+ src/verify.c                                    |  2 +-
+ 29 files changed, 64 insertions(+), 60 deletions(-)
+
+commit 6a5b37e98d8c0273203fc000a2539bc97101250f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 4 05:32:36 2018 +0200
+
+    dpkg: Move struct perpackagestate handling into its own file
+    
+    This is not really part of the fsys db handling, and we are not
+    making use of it anymore in it, so let's move it somewhere else
+    more appropriate.
+
+ debian/changelog  |  1 +
+ po/POTFILES.in    |  1 +
+ src/Makefile.am   |  1 +
+ src/filesdb.c     | 14 --------------
+ src/filesdb.h     |  2 --
+ src/main.h        |  4 ++++
+ src/perpkgstate.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 50 insertions(+), 16 deletions(-)
+
+commit a9663b000b9c96030c7062fa01c0bee038cd11f9
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 4 05:22:32 2018 +0200
+
+    libdpkg: Move files list information from dpkg clientdata to pkginfo
+    
+    This will make it possible to move the fsys database parsing and dumping
+    code out from dpkg into libdpkg.
+    
+    This is general package information, even if some clients might not be
+    interested in its contents, such as frontends that just manage metadata
+    and drive dpkg itself.
+
+ debian/changelog   |  1 +
+ lib/dpkg/dpkg-db.h | 13 +++++++++++++
+ lib/dpkg/pkg.c     |  3 +++
+ src/archives.c     |  2 +-
+ src/filesdb.c      | 47 +++++++++++++++++------------------------------
+ src/main.h         | 13 -------------
+ src/querycmd.c     |  2 +-
+ src/remove.c       |  8 ++++----
+ src/unpack.c       | 17 ++++++++---------
+ src/verify.c       |  2 +-
+ 10 files changed, 49 insertions(+), 59 deletions(-)
+
+commit abcf523423776b2042a10bf2e05c93475f6eb1ea
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 18 10:13:48 2018 +0200
+
+    dpkg: Check that clientdata is allocated before using it
+    
+    For functions that are supposed to just check the state of a package in
+    a read-only way, make sure the clientdata is allocated, instead of just
+    calling ensure_package_clientdata().
+
+ debian/changelog | 2 ++
+ src/depcon.c     | 3 ++-
+ src/packages.c   | 3 ++-
+ src/remove.c     | 1 +
+ 4 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 2d5e9185aa3582ff62f34ec3c66feea4439f9f03
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 18 10:13:48 2018 +0200
+
+    dpkg: Call ensure_package_clientdata() defensively
+    
+    We want to stop calling this function from the fsys loading code, so we
+    should make very sure it is being called before we access the clientdata
+    members, otherwise we'll just segfault.
+
+ debian/changelog | 1 +
+ src/archives.c   | 2 ++
+ src/configure.c  | 2 ++
+ src/remove.c     | 2 ++
+ src/trigproc.c   | 2 ++
+ src/unpack.c     | 1 +
+ 6 files changed, 10 insertions(+)
+
+commit 7ab849d1a814b2d2b2e29f9965fb5d51b654265a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 4 05:04:01 2018 +0200
+
+    libdpkg: Rename struct pkginfo files member to archives
+    
+    Rename matching types and macros, so that the purpose of the symbols
+    is clear, and to open the way for moving the fsys files list from the
+    dpkg clientdata.
+
+ debian/changelog     |  1 +
+ dpkg-deb/info.c      |  4 ++--
+ dselect/pkglist.cc   |  2 +-
+ lib/dpkg/dpkg-db.h   | 11 ++++++-----
+ lib/dpkg/dump.c      | 18 +++++++++---------
+ lib/dpkg/fields.c    | 22 +++++++++++-----------
+ lib/dpkg/parse.c     | 14 +++++++-------
+ lib/dpkg/parsedump.h | 11 ++++++++---
+ lib/dpkg/pkg.c       |  2 +-
+ src/enquiry.c        |  6 +++---
+ src/querycmd.c       |  2 +-
+ src/unpack.c         | 14 ++++++++------
+ 12 files changed, 58 insertions(+), 49 deletions(-)
+
+commit 3491a330369d51fe1a1fb5b738082d5e0f83badc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 06:45:56 2018 +0200
+
+    libdpkg: Document in pkg_db_get_pkg() which pkgbin members can be initialized
+    
+    The only member that can be safely initialized in a new pkginfo's
+    pkgbin is the arch member, because that's used as part of the lookup.
+    Anything else might get overwritten with the data from the new object,
+    for example during deb822 parsing.
+
+ lib/dpkg/pkg-db.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 92a85658bdf1e590c7d66af8047c347984db1b26
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 19:31:56 2018 +0200
+
+    libdpkg: Change pkg_name() and pkgbin_name() back to get non-const structs
+    
+    This partially reverts commit cd96cca4b2cf83f46d6e289418ed06e3c2ef7066.
+    
+    It is not safe to assume that the pkgname_arcqual member has been
+    populated before. The caller might have used a local variable filled
+    manually. So we should always check whether it is NULL and fill it
+    ourselves, before returning it.
+    
+    In addition now that we have the const function variants we can turn
+    these back into non-const so that we can do the archqualified package
+    name generation, and cache it for later use.
+
+ lib/dpkg/dpkg-db.h      | 11 +++++----
+ lib/dpkg/parse.c        |  2 +-
+ lib/dpkg/pkg-show.c     |  8 +++++--
+ lib/dpkg/t/.gitignore   |  1 +
+ lib/dpkg/t/Makefile.am  |  1 +
+ lib/dpkg/t/t-pkg-show.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 77 insertions(+), 7 deletions(-)
+
+commit d36b97a58ca207eae556f69637b4edaa2d1a169a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 22:13:38 2018 +0200
+
+    libdpkg, dselect: Use new pkg_name_const() and pkgbin_name_const()
+    
+    This will make it possible to switch the pkg_name() and pkgbin_name()
+    back to take non-const structs, and then fill the pkgname_archqual
+    cache on demand.
+
+ debian/changelog  |  1 +
+ dselect/pkgtop.cc |  2 +-
+ lib/dpkg/dump.c   | 24 ++++++++++++------------
+ 3 files changed, 14 insertions(+), 13 deletions(-)
+
+commit 8cbd195ff7227b7e628b378ae2961a793d53bdcc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 22:09:56 2018 +0200
+
+    libdpkg: Add new pkg_name() and pkgbin_name() const variants
+    
+    Because C does not have a C++ equivalent for the mutable keyword, we
+    cannot mark the pkgname_archqual member as such. Instead we will add a
+    new couple of const functions that will fallback to return a non-freeing
+    string to be used mostly in error handling code paths in case there is
+    no cached member, as otherwise we'd be "leaking" those strings (just
+    generating new instances that will be released as part of the pool)
+    every time we call these functions.
+
+ debian/changelog     |  1 +
+ lib/dpkg/dpkg-db.h   |  6 ++++++
+ lib/dpkg/libdpkg.map |  2 ++
+ lib/dpkg/pkg-show.c  | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 61 insertions(+)
+
+commit 55eaddc5411b6eae85686a511a9b122e84c0e7fd
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 06:45:56 2018 +0200
+
+    libdpkg: Factor out cached arch-qualified package name generation
+    
+    Move this into a proper function so that we can call it from multiple
+    places. In addition we always return a non-freeing allocated string,
+    in case the architecture is empty or none.
+
+ debian/changelog    |  2 ++
+ lib/dpkg/dpkg-db.h  |  4 ++++
+ lib/dpkg/parse.c    |  9 +--------
+ lib/dpkg/pkg-show.c | 17 +++++++++++++++++
+ 4 files changed, 24 insertions(+), 8 deletions(-)
+
+commit 3a4e91f3c42850cf5d965c74b1714f78f6b7767c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 15 22:07:53 2018 +0200
+
+    libdpkg: Fix pkgbin_name_needs_arch() to ignore empty and missing arches
+    
+    There's no point in arch-qualifying a package name if we got no
+    architecture to qualify it with.
+
+ debian/changelog    | 3 +++
+ lib/dpkg/pkg-show.c | 7 +++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 2b78637509e9f7c39ae0495c3f4718a60a55da9a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Aug 16 05:41:04 2018 +0200
+
+    libdpkg: Add missing db-ctrl symbols to the libdpkg.map file
+
+ lib/dpkg/libdpkg.map | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 482d420fe0fdd9e077342fb82d29d69facbbf78b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 12 03:23:08 2018 +0200
+
+    libdpkg: Fix dpkg_arch_find() Doxygen comment
+
+ debian/changelog | 1 +
+ lib/dpkg/arch.c  | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit 5b0721da81712f570ea744f11fa560f2492302a5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:31:49 2018 +0200
+
+    libdpkg: Fix header file title
+
+ lib/dpkg/ar.h              | 2 +-
+ lib/dpkg/db-ctrl-access.c  | 2 +-
+ lib/dpkg/db-ctrl-format.c  | 2 +-
+ lib/dpkg/db-ctrl-upgrade.c | 2 +-
+ lib/dpkg/options-parsers.c | 2 +-
+ lib/dpkg/pkg-format.h      | 2 +-
+ lib/dpkg/t/t-mod-db.c      | 2 +-
+ lib/dpkg/t/t-varbuf.c      | 2 +-
+ lib/dpkg/trigdeferred.c    | 2 +-
+ lib/dpkg/trigdeferred.h    | 2 +-
+ 10 files changed, 10 insertions(+), 10 deletions(-)
+
+commit 22fd958f173e4d7099085c54c843ee52ae223b24
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:34:02 2018 +0200
+
+    debian: Update libdpkg-perl public module list in package description
+
+ debian/changelog | 1 +
+ debian/control   | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+commit be099892298b4df19ba656b5d454c5fb964c2c94
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:33:08 2018 +0200
+
+    debian: Switch libdpkg-perl again to depend on perl:any
+    
+    The debootstrap package in Debian stable (stretch) has been fixed so we
+    can rerevert this change.
+
+ debian/changelog | 2 ++
+ debian/control   | 5 +----
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+commit 892f07de4227c9bdede6f68bd4bf7a79ca1e2517
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 8 11:12:06 2018 +0200
+
+    debian: Add sensible-utils to libdpkg-perl Suggests
+    
+    The Dpkg::Source::Package::V2 module will try to use sensible-editor if
+    it's present. Add the Suggests to make the relationship explicit.
+    
+    Warned-by: lintian
+
+ debian/changelog | 1 +
+ debian/control   | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit c3f8bca7e6cf4d75ca94dc4b92c9d7f63d23775f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 8 11:11:44 2018 +0200
+
+    debian: Enable verbose test suite only in non-terse builds
+
+ debian/changelog | 1 +
+ debian/rules     | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 108f8a9e0a9f7e992c4d61e202e26bb6eef6c7c6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 8 11:10:20 2018 +0200
+
+    debian: Rename maintainer-build DEB_BUILD_OPTIONS to terse
+    
+    Use the now official name for non-verbose builds.
+    
+    Ref: Debian policy 4.2.0
+
+ debian/changelog | 1 +
+ debian/rules     | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit e50f4c72b02a88a0124d0f2b671185504fea90cd
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 8 11:07:41 2018 +0200
+
+    debian: Do not pass VERBOSE to test suite
+    
+    The VERBOSE variable is only honored when using the automake test
+    drivers, which we are not using, not even the custom ones. Remove
+    the variable usage which is confusing as it is not doing anything.
+
+ .gitlab-ci.yml   | 4 ++--
+ debian/changelog | 2 ++
+ debian/rules     | 2 +-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 2a9a5392718371ad29605652fe55dc149fa4867c
+Author: Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+Date:   Tue Aug 14 00:14:58 2018 +0200
+
+    man: Fix markup
+    
+    Closes: #900033, #900035, #900040
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog     |  2 ++
+ man/dpkg-deb.man     |  8 ++++----
+ man/dpkg-split.man   |  4 ++--
+ man/dpkg-trigger.man | 10 +++++-----
+ 4 files changed, 13 insertions(+), 11 deletions(-)
+
+commit eacbf48370ce977d7bc8e9af027afd0b79ef35a0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 1 06:22:45 2018 +0200
+
+    man: Clarify awaiting state for interest and activate directives
+    
+    Closes: #904060
+
+ debian/changelog     |  2 ++
+ man/deb-triggers.man | 31 +++++++++++++++++++++++++------
+ man/dpkg-trigger.man |  2 ++
+ 3 files changed, 29 insertions(+), 6 deletions(-)
+
+commit 6227aa720d9ce637e676bdc0096fb8316576348f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 12:13:31 2018 +0200
+
+    Dpkg::Substvars: Reword used/unused warnings to clarify their meaning
+    
+    Clarify the unknown and unused substitution variable warnings, to try to
+    make them more clear as to what each implies.
+    
+    Closes: #904258
+
+ debian/changelog           | 2 ++
+ scripts/Dpkg/Substvars.pm  | 6 ++++--
+ scripts/t/Dpkg_Substvars.t | 4 ++--
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+commit a4f0c6f04636ed066eb7e5162403d20a369fceec
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Aug 11 03:32:37 2018 +0200
+
+    Fix some typos
+    
+    Thanks-to: Niels Thykier <niels@thykier.net> (for typo in dpkg(1))
+
+ ChangeLog.old                    | 12 ++++++------
+ debian/changelog                 |  4 ++--
+ debian/control                   |  2 +-
+ doc/rootless-builds.txt          |  2 +-
+ lib/compat/getopt.c              |  2 +-
+ lib/dpkg/path-remove.c           |  2 +-
+ man/dpkg.man                     |  2 +-
+ scripts/Dpkg/Source/Functions.pm |  2 +-
+ scripts/dpkg-buildpackage.pl     |  4 ++--
+ scripts/t/Dpkg_Changelog/shadow  |  8 ++++----
+ t/pod-coverage.t                 |  2 +-
+ 11 files changed, 21 insertions(+), 21 deletions(-)
+
+commit e40e1d1b09b5f475cd979225a562570b0967a73f
+Author: Zhou Mo <cdluminate@gmail.com>
+Date:   Fri Jun 1 09:49:32 2018 +0000
+
+    po: Update Simplified Chinese man pages translation
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |  1 +
+ man/po/zh_CN.po  | 22 +++++++++++-----------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
+
+commit 6e72819c017b32e95962deeb4e8cb186280ab655
+Author: Boyuan Yang <073plan@gmail.com>
+Date:   Tue Aug 7 06:25:53 2018 +0000
+
+    po: Update Simplified Chinese programs traslation
+    
+    Closes: #890806
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |  2 +-
+ po/zh_CN.po      | 36 +++++++++++++++++++-----------------
+ 2 files changed, 20 insertions(+), 18 deletions(-)
+
+commit c9fd5b18126f749332940e4462bf2f6542b33f2a
+Author: Zhou Mo <cdluminate@gmail.com>
+Date:   Fri Jun 1 09:48:34 2018 +0000
+
+    po: Update Simplified Chinese programs translation
+    
+    Closes: #900547
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/zh_CN.po      | 234 +++++++++++++++++++++++--------------------------------
+ 2 files changed, 98 insertions(+), 137 deletions(-)
+
+commit f2f04e66a9a810d7fcea162ff7c9b1930baac06e
+Author: Łukasz Dulny <bartekchom@poczta.onet.pl>
+Date:   Fri Aug 3 03:47:02 2018 +0200
+
+    po: Update Polish programs translation
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/pl.po         | 625 ++++++++++++++++++++-----------------------------------
+ 2 files changed, 224 insertions(+), 402 deletions(-)
+
+commit 76ec333432efa6a3eb20aeec4b919831cfbeecdd
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Aug 1 11:57:23 2018 +0200
+
+    Update Netherlands translation of manual pages
+    
+    Update to 2909t7f8u.
+    
+    This update only deals with strings which can be trivially unfuzzied.
+
+ man/po/nl.po | 300 +++++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 250 insertions(+), 50 deletions(-)
+
+commit 39c11d9961ee4e5217fa8579146777a23883549d
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Aug 1 11:55:55 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2923t1f.
+
+ man/po/de.po | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
+
+commit f1b4c8615c23f383c761cc2c55a47d84c0ce827f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 1 05:45:08 2018 +0200
+
+    man: Fix typo in field name in deb-changes(5)
+    
+    Closes: #902616
+    Reported-by: Uwe Kleine-König <ukleinek@debian.org>
+
+ debian/changelog    | 1 +
+ man/deb-changes.man | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit fc94ac887d42291dfd573c4794ec7336f5dec127
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:37:14 2018 +0200
+
+    test: Add new cppcheck integration author test
+
+ .gitlab-ci.yml           |  2 +-
+ Makefile.am              |  2 ++
+ README                   |  1 +
+ debian/changelog         |  1 +
+ t/cppcheck.t             | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ t/cppcheck/cppcheck.supp | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 93 insertions(+), 1 deletion(-)
+
+commit 31ba2b1b10cfcc2149bb43fe9b918355177e4341
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:36:23 2018 +0200
+
+    s-s-d: Do not leak a file descriptor on AIX
+    
+    Warned-by: cppcheck
+
+ debian/changelog          |  1 +
+ utils/start-stop-daemon.c | 10 ++++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+commit 6a45c7ab2e12e296f8c822c99f43d84f81da2c1a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:34:27 2018 +0200
+
+    s-s-d: Mark a literal integer long to avoid value truncation
+    
+    The variable holding the result is long, but the literal was an int,
+    so if there was truncation it would have happened regardless of the
+    holding variable type. Make sure no truncation happens.
+    
+    Warned-by: cppcheck
+
+ utils/start-stop-daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ec1bd98b02630c00e4e367b7fba07e7ccbd64c77
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:33:23 2018 +0200
+
+    libdpkg: Do not compare an unsigned int with <=
+    
+    Warned-by: cppcheck
+
+ lib/dpkg/tarfn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 87c060b24b724f30e79406bc66b5342581ee29f1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:32:02 2018 +0200
+
+    libdpkg: Improve unit test to use assigned variable
+    
+    Add a couple of checks to make the test more robust, and to use an
+    assigned variable.
+    
+    Warned-by: cppcheck
+
+ lib/dpkg/t/t-string.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 31cdb7e05970744bca91977b0212b4eeee5fb420
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:30:52 2018 +0200
+
+    libdpkg: Turn variable into unsigned to match format string
+    
+    Warned-by: cppcheck
+
+ lib/dpkg/db-ctrl-format.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 975efaa8c9e527a7f99d198deee7194101b3df8d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 31 03:55:40 2018 +0200
+
+    dselect: Disable copy constructor and = operator for methodlist class
+    
+    The constructor deals with dynamically allocated memory, so we should
+    not be using the default copy constructor and = operators, disabled
+    them to avoid surprises.
+    
+    Warned-by: cppcheck
+
+ dselect/method.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit c0c457246d25e7c64f65d1b37f976b7e804b10ab
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 31 03:53:59 2018 +0200
+
+    dselect: Use override attribute for virtual methods in derived classes
+    
+    C++11 makes it possible to use these attributes so that errors can be
+    avoided, by helping the compiler know when we mean methods to override
+    the ones from the parent class.
+    
+    Warned-by: cppcheck
+
+ dselect/method.h                   | 18 +++++++++---------
+ dselect/pkglist.h                  | 20 ++++++++++----------
+ scripts/t/Dpkg_Shlibs/patterns.cpp |  2 +-
+ 3 files changed, 20 insertions(+), 20 deletions(-)
+
+commit 3d4be1a816d1d3b9c3068d9c3008e0ee093034f3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:31:21 2018 +0200
+
+    dselect: Declare constructor with one argument as explicit
+    
+    Warned-by: cppcheck
+
+ dselect/pkglist.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d2ca3f4be39bb56bf0ae54f8ac9f7976ff0bf025
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:29:44 2018 +0200
+
+    dselect: Remove duplicate searchstring member declaration in derived class
+    
+    This is already declared in class baselist, no need to declare it
+    too in class methodlist.
+    
+    Warned-by: cppcheck
+
+ dselect/method.h | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit f2a40a75beeb71cd29f3503acdfdf4539379685d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:28:26 2018 +0200
+
+    dpkg-deb: Surround condition in ternary operator with parens
+    
+    This makes it extra clear the precedence of the operators.
+    
+    Warned-by: cppcheck
+
+ dpkg-deb/info.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 1f656230d0599005b4558423ae471e3e0364211b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:27:30 2018 +0200
+
+    dpkg-split: Fix format string to match variable declaration
+    
+    Warned-by: cppcheck
+
+ dpkg-split/join.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3b48f9c2d07ef829bb1727e622b14bca4883d61b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:26:41 2018 +0200
+
+    dpkg-statoverride: Remove redundant check
+    
+    The condition is checking for the same multiple times.
+    
+    Warned-by: cppcheck
+
+ src/statcmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9cc48e639eba62c41beb3b137b9cf8704dfc89ca
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 12 05:21:52 2018 +0200
+
+    libdpkg: Use memccpy() instead of strncpy()
+    
+    We were using strncpy() here as originally intended, to copy a string
+    into a struct member without copying the NUL-terminator. But now gcc
+    warns about the intended truncation, which might catch some people
+    unexpectedly.
+    
+    Switch to use memccpy() which has similar semantics, but is more
+    explicit.
+    
+    Warned-by: gcc-8
+
+ debian/changelog  | 1 +
+ lib/dpkg/t/t-ar.c | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 9ab6c592c04c06952019e5c9bba57b2b54aa3fae
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Jun 8 03:22:36 2018 +0200
+
+    Dpkg::Source: Do not change patch permissions if not necessary
+    
+    To be able to build a source tree, a user needs write permisions on it,
+    but not necessarily ownership of those files. We check the existing file
+    permissions and avoid changing them if not necessary, which helps in the
+    case where the user does not have ownership of those files, and they
+    were already present.
+    
+    Closes: #898010
+    Naming-by: Julian Andres Klode <jak@debian.org>
+
+ debian/changelog                        |  2 ++
+ scripts/Dpkg/Source/Functions.pm        | 13 +++++++++++++
+ scripts/Dpkg/Source/Package/V2.pm       |  4 ++--
+ scripts/Dpkg/Source/Package/V3/Quilt.pm |  4 ++--
+ scripts/Dpkg/Source/Quilt.pm            |  4 ++--
+ 5 files changed, 21 insertions(+), 6 deletions(-)
+
+commit 738c8d5d545e164c3e7450751960618443bf7431
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 30 01:26:08 2018 +0200
+
+    Dpkg::Deps: Split subpackages
+    
+    This makes the structure easier to comprehend, and easier to read,
+    otherwise it's difficutl to search for specific methods or functions
+    and know immediately to what module they belong. It also makes for
+    more structured POD.
+
+ debian/changelog                |    1 +
+ scripts/Dpkg/Deps.pm            | 1379 +--------------------------------------
+ scripts/Dpkg/Deps/AND.pm        |  182 ++++++
+ scripts/Dpkg/Deps/KnownFacts.pm |  244 +++++++
+ scripts/Dpkg/Deps/Multiple.pm   |  250 +++++++
+ scripts/Dpkg/Deps/OR.pm         |  174 +++++
+ scripts/Dpkg/Deps/Simple.pm     |  659 +++++++++++++++++++
+ scripts/Dpkg/Deps/Union.pm      |  119 ++++
+ scripts/Makefile.am             |    6 +
+ scripts/po/POTFILES.in          |    6 +
+ 10 files changed, 1659 insertions(+), 1361 deletions(-)
+
+commit 3d4afe2967eccd7805d067a3eab6938f7f099a63
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 30 04:31:32 2018 +0200
+
+    Dpkg::Deps::KnownFacts: Rename _evaluate_simple_dep to evaluate_simple_dep
+    
+    This method is currently used by Dpkg::Deps::Simple, and is marked as
+    private by way of its underscore prefix. This will be a problem once
+    we split the modules into different files, as then we are not supposed
+    to be using private methods from external modules.
+    
+    Rename the method, and document it explicitly as being private, while
+    only giving a partial prototype to deter its use.
+
+ scripts/Dpkg/Deps.pm | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+commit 8940f102eb5eecfb8ff55cde52d4866ab50dfd1f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 30 00:37:13 2018 +0200
+
+    Dpkg::Deps: Improve modules and method documentation
+    
+    Document each implemented method. This will make it easier to split the
+    modules into their own files.
+
+ debian/changelog     |   1 +
+ scripts/Dpkg/Deps.pm | 528 ++++++++++++++++++++++++++++++++++++---------------
+ 2 files changed, 378 insertions(+), 151 deletions(-)
+
+commit 7c98f09aecc4c3a3b5809f57a0a6dc8ad8a1f16f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jul 29 19:49:30 2018 +0200
+
+    scripts/t: Improve Dpkg::Deps test cases
+    
+    Add new TODO tests for behavior that is not yet implemented, but should.
+
+ debian/changelog      |  1 +
+ scripts/t/Dpkg_Deps.t | 42 +++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 38 insertions(+), 5 deletions(-)
+
+commit 8fd30b60465acd90ffea6aab19ce15eea94a122a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 22:10:55 2018 +0200
+
+    Dpkg::Deps: Clarify arch-qualified dependency simplification
+    
+    Dependency simplification can only really be done for metadata for which
+    we have all its context and information during the simplification
+    process. Anything that relies on the state of the dependencies cannot be
+    simplified. This means that any dependency that might change the
+    satisfiability due to the value of Multi-Arch field of the depended on
+    package cannot be simplified.
+    
+    Clarify this in the function commends, and add new test cases to cover
+    this.
+    
+    Prompted-by: Stuart Prescott <stuart@debian.org>
+
+ debian/changelog      |  2 ++
+ scripts/Dpkg/Deps.pm  |  3 +++
+ scripts/t/Dpkg_Deps.t | 22 +++++++++++++++++++++-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
+
+commit 72742b569f2cf908bc05fa96c5419120e42a10c6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jul 29 20:01:03 2018 +0200
+
+    Dpkg::Deps: Fix typo in POD
+
+ scripts/Dpkg/Deps.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 46ed057b6d95545f3ea55b72de29f52e9d8ba885
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jul 29 19:56:17 2018 +0200
+
+    Dpkg::Deps: Merge all Copyright notices into the same block
+    
+    There should be no difference between Copyright and Portions Copyright,
+    remove the distinction, and merge all these notices.
+
+ scripts/Dpkg/Deps.pm | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
+
+commit 1a16bcbe71db53a1f69d304e97df287452600ed3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jan 15 02:25:32 2018 +0100
+
+    build: Add a GitLab CI configuration
+    
+    We add a single test stage with four jobs, each checking the various
+    upstream build setups we want to make sure do not break. These are:
+    
+     - make distcheck
+     - make check (author tests)
+     - make check (VPATH)
+     - external functional test suite
+
+ .gitlab-ci.yml   | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Makefile.am      |  1 +
+ debian/changelog |  1 +
+ 3 files changed, 56 insertions(+)
+
+commit bfd4c9b72b7994252440b0b3cbfcb98d28d9fa8a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 03:12:06 2018 +0200
+
+    build: Preserve timestamps when distributing man pages
+    
+    We are distributing the man.stamp, so we need the timestamps of the
+    files to match the original ones, so that make can work its magic,
+    at least for man.stamp, the rest we do to be future-proof.
+
+ debian/changelog | 1 +
+ man/Makefile.am  | 8 ++++----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+commit 992e5eadb47acb802c2c3228e993871c45d118a0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 03:12:06 2018 +0200
+
+    build: Distribute the man.stamp from VPATH
+    
+    The pre-requisite might be available on the source or build directories
+    depending on whether we are building from git or a distribution tarball.
+    
+    We should use an automatic variable to always grab the file from VPATH
+    wherever it might be located.
+
+ debian/changelog | 1 +
+ man/Makefile.am  | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit ee2e18800f5fe0c63df39202586f38e28c00e860
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 03:13:05 2018 +0200
+
+    perl: Make Build.PL check Module::Build availability at run-time
+    
+    Doing a normal import via use, means that we need the module to be
+    present for the unit tests, when we only need it as part of the
+    distribution process.
+
+ scripts/Build.PL.in | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 1d0be95366c19fbc88c891dbedf7613aedbbdea5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 04:11:17 2018 +0200
+
+    Dpkg::Gettext: Document textdomain() and ngettext() replacement functions
+    
+    We should mention when these functions are present and what they do,
+    so that users know when they can rely on these.
+    
+    Warned-by: Test::Pod::Coverage
+
+ debian/changelog        |  2 ++
+ scripts/Dpkg/Gettext.pm | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
+
+commit e3c32720167a6c23fc19471d3e3273965c3dc9e5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 04:08:58 2018 +0200
+
+    Dpkg::Gettext: Fix fallback textdomain() to honor its expected interface
+    
+    Even though we will not use the domain value set by this function, we
+    should honor its original interface and return a domain string, and
+    update it when requested.
+
+ debian/changelog        | 1 +
+ scripts/Dpkg/Gettext.pm | 7 +++++++
+ 2 files changed, 8 insertions(+)
+
+commit 967373bc25ed6d7e816e13190a5281c057048292
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jul 28 03:31:43 2018 +0200
+
+    doc: Update test suite requirements in README
+
+ README           | 4 ++++
+ debian/changelog | 1 +
+ 2 files changed, 5 insertions(+)
+
+commit 7db2279a8c3a5316cd7bb44ab76899aa94c6563a
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Jul 25 11:11:56 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2923t1f.
+
+ man/po/de.po | 109 ++++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 75 insertions(+), 34 deletions(-)
+
+commit cf35077be42ef79da5d83ce26f4a27a22591f246
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Jul 25 09:47:13 2018 +0200
+
+    Update German scripts translation
+    
+    Update to 600t.
+
+ scripts/po/de.po | 62 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
+
+commit c353a449b26b85bf512d92976fe5c1af23deeb06
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:47:01 2018 +0200
+
+    dpkg-buildpackage: Mark profiles as a replaceable item in --help output
+
+ debian/changelog             | 1 +
+ scripts/dpkg-buildpackage.pl | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 869d40414e691ad2e7a6b42b48040a2bcd5e0e94
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:47:01 2018 +0200
+
+    dpkg-buildpackage: Fold --[no-]check-builddeps into short option descriptions
+    
+    This makes it easier to read which long option matches the short option.
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 1c741c507eadcdfc6dbb43610d3aab1387a3122e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:47:01 2018 +0200
+
+    dpkg-buildpackage: Add --build equivalents for short build type options
+    
+    This makes the --help output clearer, and matches the man page.
+
+ debian/changelog             |  2 ++
+ scripts/dpkg-buildpackage.pl | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
+
+commit 0a1573e5df2f38eb0d2c2c29654cb8c352474c1e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:47:01 2018 +0200
+
+    dpkg-buildpackage: Clarify pre and post-clean options and their default state
+
+ debian/changelog             | 2 ++
+ man/dpkg-buildpackage.man    | 3 ++-
+ scripts/dpkg-buildpackage.pl | 4 ++--
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 8a45c914095bcb19a873b20099e161efe3237bfc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:47:01 2018 +0200
+
+    dpkg-buildpackage: Add new --no-post-clean option
+    
+    This makes it possible to select the current default behavior.
+
+ debian/changelog             | 2 ++
+ man/dpkg-buildpackage.man    | 5 +++++
+ scripts/dpkg-buildpackage.pl | 3 +++
+ 3 files changed, 10 insertions(+)
+
+commit 4014981b968a8e3c734d5113ce7a323d3ace13ad
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:37:33 2018 +0200
+
+    dpkg-buildpackage: Rename and logic invert $noclean to $postclean
+    
+    Makes the purpose of the variable clear.
+
+ scripts/dpkg-buildpackage.pl | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit 48c809f7c8e1949519c209c6ec74a6e2db4fd164
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jul 24 00:33:01 2018 +0200
+
+    dpkg-buildpackage: Rename $cleansource to $postclean
+    
+    Makes the purpose of the variable clear.
+
+ scripts/dpkg-buildpackage.pl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit d5374bc618310917557daa9c9ac2f4930515a0b2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jun 16 18:33:15 2018 +0200
+
+    Dpkg::BuildFlags: Move default flags setting into the Dpkg::Vendor modules
+    
+    This should really be a vendor specific default. It's also documented
+    that way in the man page.
+
+ debian/changelog              |  2 ++
+ scripts/Dpkg/BuildFlags.pm    | 18 +++++++-----------
+ scripts/Dpkg/Vendor/Debian.pm | 18 +++++++++++++++++-
+ 3 files changed, 26 insertions(+), 12 deletions(-)
+
+commit 2d02a12697808b01b360e7ceb52864c0873f7eac
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Jun 16 18:33:15 2018 +0200
+
+    Dpkg::Vendor::Debian: Inline _parse_feature_area() into _add_build_flags()
+    
+    This function was being called on each foreach iteration to parse the
+    options within the DEB_BUILD_MAINT_OPTIONS and DEB_BUILD_OPTIONS
+    environment variables, and needed to parse these at construction time
+    every time. Inlining it should make it more performant and in addition
+    reduce line count.
+
+ debian/changelog              |  2 ++
+ scripts/Dpkg/Vendor/Debian.pm | 20 +++++++-------------
+ 2 files changed, 9 insertions(+), 13 deletions(-)
+
+commit 63e02e0aabe17cb87929037db3939b3e575e97f6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jun 14 02:53:23 2018 +0200
+
+    Dpkg::Shlibs: Disable bool overload Dpkg::Version warnings
+    
+    The usage in this file is correct, but we are still doing boolean
+    evaluation.
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Shlibs/Symbol.pm     | 4 ++++
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 4 ++++
+ 3 files changed, 9 insertions(+)
+
+commit 563fd74ef926b23207d58108071d91b7c8ba2507
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jun 14 02:51:24 2018 +0200
+
+    Dpkg::Shlibs::SymbolFile: Always assign proper Dpkg::Version to deprecated
+    
+    We should always assign a proper Dpkg::Version object to the deprecated
+    variable. Otherwise it can get confused with the scalar value 0 used on
+    boolean context to denote it is *not* deprecated, instead of it being
+    a version number 0.
+
+ debian/changelog                  | 4 ++++
+ scripts/Dpkg/Shlibs/SymbolFile.pm | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+commit 76daf7b7dd594d720f81fa32fbf3e19c1fb9e5ff
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Jun 5 05:25:58 2018 +0200
+
+    Dpkg::Version: Bump VERSION and improve semantic change description
+    
+    Give context to the warning message, otherwise it's not clear what is
+    going on. If the users to not conditionalize the warning usage they will
+    get a perl warning about the unknown warning category itself, bump the
+    module version to be able to discern this change, and update documentation
+    to reflect this.
+
+ scripts/Dpkg/Version.pm | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+commit 65d4418371f17df498027c3c414cafe6e8d0770a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon May 28 02:17:02 2018 +0200
+
+    man: Clarify PIE build flag feature semantics
+    
+    Mention the specific .specs files being used. Reword the description to
+    make it more clear what is going on.
+    
+    Closes: #900088
+
+ debian/changelog        |  1 +
+ man/dpkg-buildflags.man | 31 +++++++++++++++++++------------
+ 2 files changed, 20 insertions(+), 12 deletions(-)
+
+commit 6e5bd738efef1a0de4268ad12d87c27dfe91a687
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 26 05:29:30 2018 +0200
+
+    Use Synopsis instead of Summary for the short Description
+    
+    This unifies the term with the rest of the codebase, and makes it more
+    descriptive.
+
+ debian/changelog      |  3 +++
+ lib/dpkg/libdpkg.map  |  2 +-
+ lib/dpkg/pkg-format.c | 11 ++++++-----
+ lib/dpkg/pkg-show.c   |  8 ++++----
+ lib/dpkg/pkg-show.h   |  4 ++--
+ man/dpkg-query.man    |  5 ++++-
+ src/enquiry.c         |  2 +-
+ src/querycmd.c        |  4 ++--
+ 8 files changed, 23 insertions(+), 16 deletions(-)
+
+commit d9bc580a419232420abb9620638cfbfe74943ff2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 23 03:58:27 2018 +0200
+
+    test: Add new po author test
+    
+    Use i18nspector (if available) to check the .po and .pot files.
+
+ Makefile.am          |  1 +
+ debian/changelog     |  1 +
+ scripts/Test/Dpkg.pm | 26 ++++++++++++++++++++++++++
+ t/po.t               | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 78 insertions(+)
+
+commit be5de1e00e4e4f5e2cea171063414118a844ec7d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 25 02:36:54 2018 +0200
+
+    po: Remove previous msgid comments
+    
+    Warned-by: i18nspector
+    Fixes: stray-previous-msgid
+
+ man/po/nl.po | 242 -----------------------------------------------------------
+ po/nl.po     |  42 -----------
+ 2 files changed, 284 deletions(-)
+
+commit e5f9394ac03b7415259e2f7288df69dec4ab6612
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 25 02:35:43 2018 +0200
+
+    po: Fix boilerplate in .po files
+    
+    Warned-by: i18nspector
+    Fixes: boilerplate-in-initial-comments
+
+ dselect/po/bs.po    | 8 ++++----
+ dselect/po/el.po    | 8 +++-----
+ dselect/po/eu.po    | 4 ++--
+ dselect/po/nl.po    | 2 +-
+ dselect/po/ro.po    | 2 +-
+ dselect/po/zh_CN.po | 6 +++---
+ dselect/po/zh_TW.po | 7 +++----
+ man/po/hu.po        | 3 ++-
+ man/po/pt_BR.po     | 3 ++-
+ po/bs.po            | 8 ++++----
+ po/dz.po            | 9 +++++----
+ po/el.po            | 6 +++---
+ po/km.po            | 6 +++---
+ po/ku.po            | 4 ++--
+ po/pa.po            | 3 +--
+ po/ro.po            | 2 +-
+ 16 files changed, 40 insertions(+), 41 deletions(-)
+
+commit bc83e06c37a23145e0134e100ac8343f975fc8f3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 12:24:02 2018 +0200
+
+    debian: Fix bug closure
+
+ debian/changelog | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3c4272bb90086c05436b6e4b7a19fc11780c2afb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Oct 22 01:11:42 2010 +0200
+
+    Track package status dirtinness
+    
+    Now that the status changes are abstracted via a setter, which makes
+    sure only new changes are recorded, we can also record whether those
+    changes happened, so that we avoid unnecessarily logging unchanged
+    states.
+    
+    Closes: #365921
+
+ debian/changelog    |  2 ++
+ lib/dpkg/dbmodify.c | 14 +++++++++-----
+ lib/dpkg/dpkg-db.h  |  3 +++
+ lib/dpkg/pkg.c      |  2 ++
+ 4 files changed, 16 insertions(+), 5 deletions(-)
+
+commit 2dadfc74f74f66ee7685ad402ad99dc9ea1476c0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 12:08:58 2018 +0200
+
+    dpkg-buildpackage: Only check required build dependencies for known targets
+    
+    When we specify the debian/rules targets to call with --rules-target, we
+    should check only the build dependencies required bu those targets, and
+    nothing more.
+    
+    Reported-by: Johannes Schauer <josch@debian.org>
+
+ debian/changelog             | 3 +++
+ scripts/dpkg-buildpackage.pl | 5 +++++
+ 2 files changed, 8 insertions(+)
+
+commit 23322f43e80ce0c67a361b3b00c680e170fee58f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 12:02:38 2018 +0200
+
+    Dpkg::Build::Types: Add new set_build_type_from_targets() function
+
+ debian/changelog            |  1 +
+ scripts/Dpkg/Build/Types.pm | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+commit ca394f0f03e9ab025a09e4c99ad4ccfc73550f46
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 11:58:23 2018 +0200
+
+    Dpkg::Build::Types: Fix set_build_type_from_options() description
+
+ debian/changelog            | 1 +
+ scripts/Dpkg/Build/Types.pm | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 503ab33b937ced36c154952c026c0f608ae1180e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jul 5 05:19:09 2018 +0200
+
+    dpkg-buildpackage: Only check for fallback build targets on binary builds
+    
+    If we are not going to build any binary package, there is no point in
+    checking whether we need to run any of the build targets.
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 9 +++++----
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+commit 5cd52673aabdf5eaa58181972119a41041fc85f2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 13:13:19 2018 +0200
+
+    dpkg-buildpackage: Fix --rules-file option parsing
+    
+    Parse --rules-file instead of --rules-target, which made it a no-op.
+    
+    Fixes: commit 293bd243a19149165fc4fd8830b16a51d471a5e9
+    Stable-Candidate: 1.18.x
+
+ debian/changelog             | 2 ++
+ scripts/dpkg-buildpackage.pl | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 3525d759e6279de35f14bb6492ad0c7c5676f8c2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 13:14:57 2018 +0200
+
+    build: Distribute Build.PL from the builddir not sourcedir
+    
+    This file is generated by configure, so we will not find it in the
+    source directory.
+
+ cpan.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5a2885b3b91aeada6176f34fb9897345751c960f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jul 23 12:53:34 2018 +0200
+
+    build: Distribute autogen script
+    
+    Fixes: commit c72f539b979a0c8647d2a6c62ee45565cd243b3d
+
+ Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8b9dfc4fa3cdf3dc3d8e724edc7a402a481cb666
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Thu Jul 19 19:37:57 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2919t1f.
+
+ man/po/de.po | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+commit 40eccd5c044c874cf7fa5f8dc8e2c75379395d8a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon May 14 23:26:07 2018 +0200
+
+    scripts: Do not use stringy eval to define different sub implementations
+    
+    We can just assign an anonymous sub to the typeglob.
+
+ debian/changelog                |  3 +++
+ scripts/Dpkg/Gettext.pm         | 58 +++++++++++++++++++----------------------
+ scripts/dpkg-mergechangelogs.pl | 10 +++----
+ 3 files changed, 34 insertions(+), 37 deletions(-)
+
+commit aa0404293ff1a3d81353acb8c7495fe9eb382c92
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 12 22:56:13 2018 +0200
+
+    dpkg: Check for ldconfig command only on platforms that do have it
+    
+    We should implement a whitelist here, instead of a blacklist. Not all
+    ELF based libc do have a ldconfig command.
+
+ debian/changelog | 1 +
+ src/help.c       | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 178d8914519ead4113df423f2a275c21b712f666
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Jun 14 02:50:36 2018 +0200
+
+    Update git URLs for move away from alioth.debian.org
+    
+    The Alioth site has shut down, let's move to the new dpkg.org hosting.
+
+ README                  | 2 +-
+ configure.ac            | 4 ++--
+ debian/changelog        | 2 ++
+ debian/control          | 4 ++--
+ man/deb-src-control.man | 4 ++--
+ 5 files changed, 9 insertions(+), 7 deletions(-)
+
+commit 43c42496d0bc3bcbd12def7fff8f0935b1de3dc3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 10 15:04:39 2018 +0200
+
+    dpkg-divert: Do not assume that diversions are always present
+    
+    Several code paths assumed that the fsys nodes were only present when
+    they contained diversions, and no other nodes would be present, thus
+    did not make sure to check whether the divert struct members were valid.
+    
+    With the switch to a single fsys underlying implementation now triggers
+    can vivify namenodes in the hash, so we need to check whether the members
+    are valid all the time.
+    
+    Fixes: commit 2d7566140335d5338e5a98278d4df762936f67f4
+    Reported-by: Sven Joachim <svenjoac@gmx.de>
+    Bisected-by: Sven Joachim <svenjoac@gmx.de>
+
+ src/divertcmd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit df0a86de45006f9f2b2980a0ad2e81640271a685
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue May 8 14:16:38 2018 +0200
+
+    dpkg-buildpackage: Avoid using an uninitialized variable
+    
+    If DEB_SIGN_KEYID is not set in the environment or the signing key is
+    not passed via --sign-key, dpkg-buildpackage emits a perl warning.
+    
+    Warned-by: perl
+    Fixes: commit 6f903af181057a046a1344aadca552b113a2c2ee
+    Based-on-patch-by: Sven Joachim <svenjoac@gmx.de>
+
+ scripts/dpkg-buildpackage.pl | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit de903bf55ab658da953f22bd02296274cb680c58
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Sat May 5 20:01:39 2018 +0200
+
+    po: Fix list of source files in po/POTFILES.in
+    
+    Commit 542885e824d0 ("libdpkg: Move control database code into db-ctrl
+    modules") moved various files around, but did not remove the old
+    filenames from po/POTFILES.in and typoed one of the new filenames there.
+    
+    Fixes: commit 542885e824d005bc9a8a92e341f71fb323437b90
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ po/POTFILES.in | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+commit ec5c992b099d4e2773eee513ba2c7b246ace95f1
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Sat May 5 20:32:20 2018 +0200
+
+    German dpkg translation update
+    
+    Update to 1115t.
+
+ po/de.po | 148 +++++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 93 insertions(+), 55 deletions(-)
+
+commit f75c579ac18d0a9956cd1fd5275fe797e8cb89f8
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sat May 5 05:03:04 2018 +0200
+
+    Update German scripts translation
+    
+    Update to 600t.
+
+ scripts/po/de.po | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+commit 43dc5fa95f5241ce790b727c405f96caaad12c19
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 5 02:50:03 2018 +0200
+
+    Dpkg::Changelog::Parse: Stop using tail(1) to read the end of the file
+    
+    Instead of relying on the tail command, simply read the end of the
+    file ourselves, assuming a packed set of 80 character lines, reading
+    4096 bytes before the end, implies around 51 lines, which is close
+    to the 40 lines currently used.
+    
+    This should be both faster and should improve portability, because even
+    if we are using the POSIX -n option, some systems do not have a POSIX
+    compliant tail(1) on the default path, such as Solaris.
+    
+    Analysis-by: James Clarke <jrtc27@debian.org>
+
+ debian/changelog                |  4 ++++
+ scripts/Dpkg/Changelog/Parse.pm | 10 +++++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+commit 2dc4354934aa940ea37324e0aabde4f6379536f0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 5 02:40:24 2018 +0200
+
+    libdpkg: Use MD5_CTX instead of struct MD5Context
+    
+    The former is more portable as it's defined in more system md5.h
+    implementations, such as Solaris, while the latter is not.
+    
+    Analysis-support-by: Bruno Ramos from IRC
+
+ debian/changelog  | 2 ++
+ lib/dpkg/buffer.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 08755e7885dbab3d354252fda8144ff5a59a4c41
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat May 5 03:27:29 2018 +0200
+
+    debian: Fix libncurses-dev Build-Depends
+    
+    Fixes: commit 114121d649b57bea9236b807d7c57bc918c67723
+    Thanks-to: Sven Joachim <svenjoac@gmx.de>
+
+ debian/changelog | 3 ++-
+ debian/control   | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit cfb1a840cb45a38b484abec8c6f4f32cdbf4643c
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Fri May 4 20:30:18 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2919t1f.
+
+ man/po/de.po | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 69 insertions(+), 10 deletions(-)
+
+commit ff99aabc8c3d966911137aa05bef4b4cd80671ec
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Fri May 4 19:58:06 2018 +0200
+
+    Update German scripts translation
+    
+    Update to 601t.
+
+ scripts/po/de.po | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+commit 6675001502ece8e72c8b3853a76a9b248b91b295
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Apr 26 03:51:23 2018 +0200
+
+    dpkg: Print the environment variables setup for the conffile shell
+    
+    Make these variables more discoverable by printing them as a list
+    before spawning the conffile shell.
+
+ debian/changelog | 2 ++
+ src/configure.c  | 4 ++++
+ 2 files changed, 6 insertions(+)
+
+commit 80556f6590b4b2da3aaf14f5a27c1555b36f11a1
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 22 19:04:04 2018 +0200
+
+    dpkg: Fix a short-lived file descriptor leak
+    
+    Warned-by: coverity
+
+ src/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 6f903af181057a046a1344aadca552b113a2c2ee
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Aug 17 00:55:56 2016 +0200
+
+    dpkg-buildpackage: Validate OpenPGP signing key IDs
+    
+    We should not accept short key IDs, and warn about long key IDs.
+    Recommend to use fingerprints.
+
+ debian/changelog             |  2 ++
+ scripts/dpkg-buildpackage.pl | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+)
+
+commit 981a18c37036b68f368b0bfab71d2a984abba9e6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 8 22:43:09 2018 +0200
+
+    Dpkg::Version: Fix bool overload behavior
+    
+    The current bool overload has broken semantics, because it considers the
+    version "0" to be false.
+    
+    The bool overload used to have sane semantics (equivalent to is_valid())
+    before commit 5b9f353b2940de751df47036608afbe71992d622, but there it got
+    changed to return the stringified version if it was valid, or undef
+    otherwise, to fix a problem within dpkg-shlibdeps, instead of properly
+    fixing the local-only problem in the tool. This makes the overload hard
+    to use, and broke existing callers from external projects.
+    
+    We will emit a warning until dpkg 1.20.x to notify of the semantic change
+    in case there is code relying on the broken semantics. For fixed code the
+    warning can then be quiesced with:
+    
+      no warnings qw(Dpkg::Version::semantic_change::overload::bool);
+    
+    Closes: #895004
+
+ debian/changelog          |  4 ++++
+ scripts/Dpkg/Version.pm   | 20 +++++++++++++++++---
+ scripts/dpkg-shlibdeps.pl |  3 ++-
+ scripts/t/Dpkg_Version.t  | 17 ++++++++---------
+ t/pod-spell.t             |  1 +
+ 5 files changed, 32 insertions(+), 13 deletions(-)
+
+commit fd8f838450ab89e3011c1a48061e0247d205ea96
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 8 22:42:10 2018 +0200
+
+    scripts: Refresh test data and update code to match
+
+ scripts/t/Dpkg_Shlibs.t                       |   3 +-
+ scripts/t/Dpkg_Shlibs/objdump.basictags-amd64 |  89 ++-
+ scripts/t/Dpkg_Shlibs/objdump.basictags-i386  |  93 ++--
+ scripts/t/Dpkg_Shlibs/objdump.basictags-mips  |  91 ++-
+ scripts/t/Dpkg_Shlibs/objdump.ls              | 771 +++++++++++++++++---------
+ scripts/t/Dpkg_Shlibs/objdump.patterns        | 377 +++++++------
+ scripts/t/Dpkg_Shlibs/objdump.spacesyms       | 151 +++--
+ 7 files changed, 911 insertions(+), 664 deletions(-)
+
+commit c972dfdcd85d92a39998b81a0fb23dc63935b137
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 8 22:38:27 2018 +0200
+
+    Dpkg::Shlibs::Objdump: Fix ELF program detection
+    
+    An ELF executable is defined by whether the object has the EXEC_P flag
+    defined or an interpreter in the program header. The former applies to
+    statically linked programs, the latter to dynamically linked programs
+    and possibly some shared libraries that can be executed, such as the
+    ones provided by glibc.
+    
+    This is now more relevant as PIE makes normal executables show up as
+    shared objects, so they do not contain the EXEC_P flag, and were not
+    being detected as executables.
+
+ debian/changelog               |  2 ++
+ scripts/Dpkg/Shlibs/Objdump.pm | 10 ++++++++--
+ scripts/t/Dpkg_Shlibs.t        |  6 ++++--
+ 3 files changed, 14 insertions(+), 4 deletions(-)
+
+commit b9090a05af10b4f12adbc796fdc846c667ac7670
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 8 22:34:35 2018 +0200
+
+    Dpkg::Shlibs::Objdump: Remove duplicate assignment in reset() method
+
+ scripts/Dpkg/Shlibs/Objdump.pm | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 9dab03c99a64cd15536f153e0705ec16e686c2d5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Apr 12 05:52:02 2018 +0200
+
+    dpkg-source: Do not emit perl warnings on source formats w/o options
+    
+    At least the format "3.0 (native)" supports no format specific options,
+    which makes the describe_cmdline_options() return an empty list.
+
+ debian/changelog       | 2 ++
+ scripts/dpkg-source.pl | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit 542885e824d005bc9a8a92e341f71fb323437b90
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Apr 5 04:58:20 2018 +0200
+
+    libdpkg: Move control database code into db-ctrl modules
+    
+    This continues the work to generalize and make these interfaces
+    available to other users beside dpkg itself.
+
+ lib/dpkg/Makefile.am                               |  4 ++++
+ src/infodb-access.c => lib/dpkg/db-ctrl-access.c   |  5 ++---
+ src/infodb-format.c => lib/dpkg/db-ctrl-format.c   |  3 +--
+ src/infodb-upgrade.c => lib/dpkg/db-ctrl-upgrade.c |  5 ++---
+ src/infodb.h => lib/dpkg/db-ctrl.h                 | 10 +++++-----
+ po/POTFILES.in                                     |  3 +++
+ src/Makefile.am                                    |  9 +--------
+ src/archives.c                                     |  2 +-
+ src/depcon.c                                       |  2 +-
+ src/enquiry.c                                      |  2 +-
+ src/filesdb-hash.c                                 |  2 +-
+ src/filesdb.c                                      |  2 +-
+ src/packages.c                                     |  2 +-
+ src/querycmd.c                                     |  2 +-
+ src/remove.c                                       |  2 +-
+ src/script.c                                       |  2 +-
+ src/select.c                                       |  2 +-
+ src/trigproc.c                                     |  2 +-
+ src/unpack.c                                       |  2 +-
+ src/verify.c                                       |  2 +-
+ 20 files changed, 31 insertions(+), 34 deletions(-)
+
+commit 0615492cb4c79d1f552e49f4a10dbfc959f03b9c
+Author: Julian Andres Klode <jak@debian.org>
+Date:   Sun Jan 29 13:46:09 2017 +0100
+
+    libdpkg: Introduce frontend locking
+    
+    Currently, in order to run dpkg, frontends have to release the database
+    lock before invoking dpkg and re-acquire it afterwards, leaving a short
+    time where the database is unlocked and a different dpkg process or
+    frontend could lock it.
+    
+    Frontend locking addresses the problem by creating a "lock-frontend"
+    file that is acquired by the frontend and not released for dpkg
+    invocations. Thus, multiple frontends cannot race for the database lock.
+    
+    This change extends the frontend lock to dpkg itself, acquiring it
+    whenever the variable DPKG_FRONTEND_LOCKED is not set, so that a user
+    manually running dpkg or a frontend not supporting this protocol cannot
+    interfere with a currently running frontend.
+    
+    [guillem@debian.org:
+     - Add documentation.
+     - Rename frontend lock file.
+     - Fix error strings. ]
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog    |  4 ++++
+ doc/frontend.txt    | 22 +++++++++++-----------
+ lib/dpkg/dbmodify.c | 21 +++++++++++++++++++++
+ lib/dpkg/dpkg.h     |  1 +
+ man/dpkg.man        |  4 ++++
+ 5 files changed, 41 insertions(+), 11 deletions(-)
+
+commit 2d7566140335d5338e5a98278d4df762936f67f4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Apr 4 03:06:44 2018 +0200
+
+    libdpkg: Use a single struct filenamenode definition
+    
+    The struct filenamenode hash implementation is lightweight, and once
+    split from the bulk of the on-disk database handling there's no point
+    in reimplementing it, and then redefining the same struct in multiple
+    places, which is rather confusing for the reader, and even for static
+    analyzers.
+    
+    Closes: #746766
+
+ debian/changelog   |  2 ++
+ lib/dpkg/triglib.c | 32 +-------------------------------
+ lib/dpkg/triglib.h |  3 +++
+ src/trigcmd.c      |  2 ++
+ src/trigproc.c     |  8 +-------
+ 5 files changed, 9 insertions(+), 38 deletions(-)
+
+commit f1cc66e522a475710aa51a6d164a8cc0eda3cae7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Apr 4 02:51:51 2018 +0200
+
+    libdpkg: Move filesystem nodename hash implementation into a new module
+
+ lib/dpkg/Makefile.am             |   3 +
+ lib/dpkg/fsys-hash.c             | 169 +++++++++++++++++++++++++++++++
+ lib/dpkg/fsys-iter.c             | 126 +++++++++++++++++++++++
+ src/filesdb.h => lib/dpkg/fsys.h | 164 ++++++++++++++----------------
+ lib/dpkg/libdpkg.map             |  18 ++++
+ po/POTFILES.in                   |   2 +
+ src/filesdb.c                    | 209 ---------------------------------------
+ src/filesdb.h                    | 122 +----------------------
+ 8 files changed, 395 insertions(+), 418 deletions(-)
+
+commit c2715071aa64807c9b95edd7c6e4cd8c3eb4ad8c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Apr 4 02:48:32 2018 +0200
+
+    dpkg-divert: Warn when using --rename on a file from an Essential package
+    
+    Renaming a file from dpkg-divert for an Essential package is very
+    dangerous, because that file will not be available until dpkg has
+    unpacked the diverting package, which might render the system
+    non-functional.
+
+ debian/changelog |  1 +
+ src/divertcmd.c  | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+
+commit 599e3c1a9f3be8687c00b681f107e7b98bb454ae
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Apr 9 02:04:15 2018 +0200
+
+    dpkg-divert: Warn when using --add or --remove w/o --rename or --no-rename
+    
+    Using --no-rename as the default optimizes for the wrong case, as that's
+    the exception, and while the safest option, it is needed only by packages
+    that are part of the pseudo-Essential set. It's also cumbersome for the
+    --local case.
+    
+    We will emit a warning asking those to be explicit, so that we can switch
+    the default to --rename during the 1.20.x cycle.
+    
+    Prompted-by: Paul Wise <pabs@debian.org>
+
+ debian/changelog    |  1 +
+ man/dpkg-divert.man |  4 +++-
+ src/divertcmd.c     | 16 +++++++++++++++-
+ src/t/dpkg_divert.t |  9 +++++----
+ 4 files changed, 24 insertions(+), 6 deletions(-)
+
+commit ca90fbfa7c020bc92cdec9f3b2cad9076626f7a0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Apr 2 16:33:11 2018 +0200
+
+    dpkg-divert: Add new --no-rename option
+    
+    Document its intended usage and how it differs from --rename.
+    
+    This will make it possible to do a behavior switch during the 1.20.x
+    release cycle.
+
+ debian/changelog    |  2 ++
+ man/dpkg-divert.man | 12 +++++++++++-
+ src/divertcmd.c     |  4 +++-
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+commit 64fca5b2fc9b12d5971453d62bef439132b78d42
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 1 22:16:53 2018 +0200
+
+    dpkg: Add new fsys_hash_entries() function to abstract nfiles access
+    
+    This will be needed when moving the fsys hash implementation into
+    libdpkg.
+
+ src/filesdb.c | 11 +++++++++--
+ src/filesdb.h |  1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+commit 2c765a394f539a6e0e9c60b78a07b9c215ef644a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 23 05:34:06 2018 +0100
+
+    src: Fix database modules to not depend unnecessarily on main.h
+
+ src/divertdb.c | 2 +-
+ src/statdb.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d6c8af723fb79f96e1bcc3d87e952e0a7a9eea0e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 1 03:23:10 2018 +0200
+
+    dpkg-checkbuilddeps: Fix indentation
+
+ scripts/dpkg-checkbuilddeps.pl | 69 +++++++++++++++++++++---------------------
+ 1 file changed, 34 insertions(+), 35 deletions(-)
+
+commit 114121d649b57bea9236b807d7c57bc918c67723
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Apr 30 01:30:44 2018 +0200
+
+    debian: Add libncurses-dev as the first Build-Depends alternative
+    
+    This is part of the ncurses 6 transition, and the previous packages
+    are now transitional, let's use the current one and leave the old for
+    backwards compatibility.
+
+ debian/changelog | 1 +
+ debian/control   | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit c72f539b979a0c8647d2a6c62ee45565cd243b3d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Apr 26 03:36:36 2018 +0200
+
+    build: Add an autogen script
+    
+    This conforms to general expectations, and makes having to infer what
+    is needed to prepare the source tree more easily discoverable.
+
+ README           | 2 +-
+ autogen          | 5 +++++
+ debian/changelog | 1 +
+ debian/rules     | 2 +-
+ 4 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 22685bcfa8aa4b13bfd95a117320fc0bedfa6715
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 31 17:47:14 2018 +0200
+
+    build: Add CPAN distribution machinery
+    
+    Add a new dist-cpan target that takes care of preparing a perl
+    distribution to be uploaded to CPAN. Only the modules are shipped,
+    some of which do require dpkg tools being installed though.
+    
+    Closes: #821177
+
+ Makefile.am          |  4 ++-
+ configure.ac         |  9 ++++++-
+ cpan.am              | 48 ++++++++++++++++++++++++++++++++++
+ debian/changelog     |  1 +
+ scripts/.gitignore   |  1 +
+ scripts/Build.PL.in  | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/Test/Dpkg.pm | 20 +++++++++++---
+ 7 files changed, 152 insertions(+), 5 deletions(-)
+
+commit 9999d4b6bdefe5ccf54ffda534cd243ea1de89a4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 31 17:16:16 2018 +0200
+
+    build: Make PERL_MIN_VERSION also a configure output variable
+    
+    We need to rename the m4 macro to avoid infinite loops. We will need
+    this output variable for the CPAN support.
+
+ m4/dpkg-progs.m4 | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 5cc92fcf27b65c069a7e21da491debb0afa692a4
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 31 17:22:39 2018 +0200
+
+    Dpkg: Fix default DATADIR
+    
+    Even though we always override it from the build system the default
+    pathname got out-of-sync with the repository when the architecture
+    tables got moved into the data directory.
+    
+    Fixes: commit 97309bef8b664c2d58cb689a3e82848021ae9bad
+
+ scripts/Dpkg.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 94728ead2cc22af5043b16483aab1e4f5a50223c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Apr 29 01:26:10 2018 +0200
+
+    Revert "Dpkg::Deps: Accept $archqual for add_provided_package() method"
+    
+    This reverts commit 83272497c5be8c4e703ab179906cf904465fe775.
+    
+    This commit introduced a regression in the author test suite. And there's
+    a patch by Johannes 'josch' Schauer <josch@mister-muffin.de> which should
+    be fixing this and other problems. If this is needed after all, we will
+    need to refactor the functions first to take a hash instead of a long list
+    of arguments.
+
+ debian/changelog               |  1 -
+ scripts/Dpkg/Deps.pm           | 14 ++++----------
+ scripts/dpkg-checkbuilddeps.pl |  2 +-
+ scripts/dpkg-genbuildinfo.pl   |  3 +--
+ scripts/dpkg-gencontrol.pl     |  3 +--
+ 5 files changed, 7 insertions(+), 16 deletions(-)
+
+commit 9f7e58acdf28043bce2dfaf24ba27bb878418658
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 15 13:33:09 2017 +0100
+
+    Use internerr() or BUG() instead of assert()
+    
+    The problem with assert() is that it does not print the contents of
+    the variables. It also can be disabled on NDEBUG. But we always want
+    these consistency checks no matter what, and they are not performance
+    sensitive anyway.
+    
+    Enable -Wno-nonnull-compare so that we can keep doing run-time non-NULL
+    checks in functions, instead of just compile-time checks.
+
+ TODO                      |  1 -
+ debian/changelog          |  3 +++
+ debian/rules              |  7 ++++-
+ debian/usertags           |  3 ++-
+ dpkg-split/join.c         |  5 ++--
+ dselect/baselist.cc       |  6 +++--
+ dselect/main.cc           |  1 -
+ dselect/methlist.cc       | 11 +++++---
+ dselect/method.cc         |  7 ++---
+ dselect/methparse.cc      |  5 ++--
+ dselect/pkgdepcon.cc      |  4 +--
+ dselect/pkglist.cc        | 23 +++++++++++-----
+ dselect/pkgsublist.cc     |  9 ++++---
+ dselect/pkgtop.cc         |  5 ++--
+ lib/dpkg/arch.c           |  4 +--
+ lib/dpkg/dbmodify.c       | 18 +++++++++----
+ lib/dpkg/dump.c           | 68 +++++++++++++++++++++++++++++++----------------
+ lib/dpkg/file.c           |  4 +--
+ lib/dpkg/parse.c          |  6 +++--
+ lib/dpkg/path-remove.c    |  4 +--
+ lib/dpkg/pkg-array.c      |  5 ++--
+ lib/dpkg/pkg-db.c         |  7 ++---
+ lib/dpkg/pkg.c            |  6 +++--
+ lib/dpkg/triglib.c        | 15 ++++++++---
+ m4/dpkg-compiler.m4       |  1 +
+ src/archives.c            | 19 +++++++++----
+ src/configure.c           |  5 ++--
+ src/depcon.c              | 13 +++++----
+ src/enquiry.c             |  5 ++--
+ src/filesdb.c             | 10 ++++---
+ src/packages.c            | 23 +++++++++++-----
+ src/script.c              |  6 +++--
+ src/trigproc.c            | 15 +++++++----
+ src/unpack.c              | 18 +++++++++----
+ utils/start-stop-daemon.c |  8 +++---
+ 35 files changed, 235 insertions(+), 115 deletions(-)
+
+commit 9622251478262d26ab6e01aa865417370a533069
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 16:37:38 2018 +0200
+
+    s-s-d: Switch an internal error from a fatal() to a BUG() call
+    
+    This one is a programming bug, and should not be reported as a normal
+    fatal error.
+
+ debian/changelog          | 2 ++
+ utils/start-stop-daemon.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 4a6e59ebda3148aeffcab80db57bf114436232b0
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 16:36:29 2018 +0200
+
+    s-s-d: Add support for new bug() function and BUG() macro
+    
+    These will take care of reporting internal errors or programming bugs
+    in the code.
+
+ utils/start-stop-daemon.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+commit 88d4da0a6c8ae18ddce08cee27c16abb72f8c454
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 15:12:57 2018 +0200
+
+    dselect: Fix assert() to expect methlockfd to be initialized
+    
+    The assert should be checking whether the method lock fd has been
+    initialized, not whether it's not zero, which happens to be the case
+    with the default uninitialized -1 value.
+
+ debian/changelog  | 2 ++
+ dselect/method.cc | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit f87f8d43113a48e2a9b5261dca758e87895721f2
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 15 13:33:09 2017 +0100
+
+    dpkg: Switch DEBIAN/conffile parsing assert() into an ohshit()
+    
+    This is a run-time error, not a programming error.
+
+ debian/changelog | 2 ++
+ src/unpack.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit ecab1a59e2d2e2be01c08cd9ebe1f783eb26e5ae
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 15 13:33:09 2017 +0100
+
+    dselect: Assume that m_malloc() never returns NULL
+    
+    The m_-prefixed functions are already taking care of that.
+
+ dselect/cxx-support.cc | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
+
+commit cd96cca4b2cf83f46d6e289418ed06e3c2ef7066
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 16 04:33:31 2018 +0100
+
+    libdpkg: Make pkg_name() and pkgbin_name() get const structs
+    
+    Modifying the struct pkginfo and struct pkgbin complicates how the code
+    is used, and when the function can be called. Let's just initialize the
+    pkgname_archqual variable at parse time, so that we can use it at any
+    time, simplifying the overall code.
+
+ lib/dpkg/dpkg-db.h  |  7 +++----
+ lib/dpkg/dump.c     | 10 ++--------
+ lib/dpkg/parse.c    | 10 ++++++++++
+ lib/dpkg/pkg-show.c | 17 ++---------------
+ 4 files changed, 17 insertions(+), 27 deletions(-)
+
+commit ac3134292ecb5ea5f203c3fa1376cbc093d35518
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 16 04:17:16 2018 +0100
+
+    libdpkg: Add new str_concat() function
+
+ lib/dpkg/libdpkg.map  |  1 +
+ lib/dpkg/string.c     | 19 +++++++++++++++++++
+ lib/dpkg/string.h     |  1 +
+ lib/dpkg/t/t-string.c | 34 +++++++++++++++++++++++++++++++++-
+ 4 files changed, 54 insertions(+), 1 deletion(-)
+
+commit 738d1fdb056d3137f4d6291ac72386b0ced17769
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Mar 25 06:57:33 2018 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2915t1f.
+
+ man/po/de.po | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
+
+commit 3aa636491f02f84efc789f9f2f263d792fa7bd7a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 01:55:38 2018 +0100
+
+    debian: Add bzip2 and xz-utils to Build-Depends
+    
+    The functional test suite under t-func/ uses these compression tools
+    to unpack a test .deb package. This has not been a problem up-to-now
+    because dpkg-dev, which gets installed on the build systems, depends
+    also on these packages. But the dependencies are really missing.
+    
+    Prompted-by: Bálint Réczey <balint.reczey@canonical.com>
+
+ debian/changelog | 2 ++
+ debian/control   | 3 +++
+ 2 files changed, 5 insertions(+)
+
+commit 0d9c18d163ca37ef4c0c2127f8ec901f721d1473
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 24 19:37:51 2018 +0100
+
+    libcompat: Convert md5 module to use C99 int types
+    
+    In commit 1f4d0354fc4a8c80c6463b9aaebd93822247341b we opted to map the
+    BSD int types to the C99 to avoid modifying the imported code. But we
+    had to modify it anyway, those types are legacy and we require the C99
+    ones for the rest of the codebase. So let's just switch to them, and
+    get rid of the type compatibility mapping.
+
+ configure.ac     |  1 -
+ debian/changelog |  2 ++
+ lib/compat/md5.c | 20 ++++++++++----------
+ lib/compat/md5.h | 14 ++++++++------
+ m4/dpkg-types.m4 | 20 --------------------
+ 5 files changed, 20 insertions(+), 37 deletions(-)
+
+commit 1e892d4e03cc396bd84e7f478d9cba77bfa40c70
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 24 19:58:47 2018 +0100
+
+    libcompat: Add md5 module to the libcompat-test library
+    
+    We have slightly modified the source and might continue to do so in the
+    future, we should thus test that it builds correctly, even if we are not
+    needing it on the current build.
+
+ debian/changelog       | 3 +++
+ lib/compat/Makefile.am | 1 +
+ 2 files changed, 4 insertions(+)
+
+commit fd36605d790d82d42c6bfb83db0cc77a0cea3a35
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 24 06:08:36 2018 +0100
+
+    Revert "debian: Disable R³ field until debhelper supports it"
+    
+    This reverts commit ba52826a3429b9037e1876ba63c51afb211f151d.
+    
+    R³ is supported fully now by debhelper, so we can use it when building
+    ourselves.
+
+ debian/changelog | 1 -
+ debian/control   | 3 +--
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+commit 544dd8967940aeee11b47b53a8df6f88110a9a16
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Mar 22 04:00:07 2018 +0100
+
+    Dpkg::Vendor::Debian: Mark riscv64 as having gcc built-in PIE support
+
+ debian/changelog              | 1 +
+ scripts/Dpkg/Vendor/Debian.pm | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit cba523f59c2d8f18d8b1e9940681579f871034ce
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Mar 22 03:59:28 2018 +0100
+
+    Dpkg::Vendor::Debian: Split pie builtin arches one per line
+    
+    This makes changing them easier to see when diffing.
+
+ scripts/Dpkg/Vendor/Debian.pm | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+commit 83272497c5be8c4e703ab179906cf904465fe775
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 6 03:52:50 2017 +0100
+
+    Dpkg::Deps: Accept $archqual for add_provided_package() method
+
+ debian/changelog               |  1 +
+ scripts/Dpkg/Deps.pm           | 14 ++++++++++----
+ scripts/dpkg-checkbuilddeps.pl |  2 +-
+ scripts/dpkg-genbuildinfo.pl   |  3 ++-
+ scripts/dpkg-gencontrol.pl     |  3 ++-
+ 5 files changed, 16 insertions(+), 7 deletions(-)
+
+commit f7488217a506871f1aed58373220a76ea2e170ab
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 6 03:17:32 2017 +0100
+
+    Dpkg::Deps: Turn virtualpkg tracking from an arrayyref into a hashref
+    
+    This is more extensible and more clear.
+
+ debian/changelog             |  1 +
+ scripts/Dpkg/Deps.pm         | 19 ++++++++++++++-----
+ scripts/dpkg-genbuildinfo.pl |  3 +--
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+
+commit e7e4dbd3c1ca0d270a49787e6c8f34a488e09d5d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 01:36:03 2018 +0100
+
+    build: Enable gcc-7 -Wregister warning if available
+
+ debian/changelog    | 1 +
+ m4/dpkg-compiler.m4 | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 9fb2b44c59e409bf5541d77fd31c961ef1d01265
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 01:21:01 2018 +0100
+
+    build: Enable clang -Wdocumentation warning if available
+    
+    Fix a couple of function parameter typos surfaced by the new warning.
+    
+    Warned-by: clang
+
+ debian/changelog    | 1 +
+ dpkg-deb/build.c    | 8 ++++----
+ m4/dpkg-compiler.m4 | 1 +
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
+commit 2f8793d09cbe9c20bd62259c6361119aecf73105
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 05:18:18 2018 +0200
+
+    build: Sort warning options
+    
+    This makes it easier to add new ones without accidentally adding
+    duplicates.
+
+ m4/dpkg-compiler.m4 | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
+
+commit b268b7096a970ced824d0ab0dc62b6f0e770230c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Mar 25 05:16:32 2018 +0200
+
+    build: Automatically replace -Wno- with -W when testing compiler flags
+    
+    This is less error prone, less repetitive and the correct thing to do
+    ayway. Instead of manually passing the positive form for these flags.
+
+ debian/changelog    |  2 ++
+ m4/dpkg-compiler.m4 | 10 ++++------
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+commit a597f069a9147d5d868637e276f712e41e836512
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri Mar 2 00:38:18 2018 +0100
+
+    build: Mark command variables as precious
+
+ debian/changelog | 1 +
+ m4/dpkg-progs.m4 | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit fe789543b6f36ea0517812b21d47841a8e42911b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Jan 3 02:36:54 2018 +0100
+
+    deb-src-control(5): Document the Testsuite and Testsuite-Triggers fields
+    
+    Prompted-by: Mattia Rizzolo <mattia@debian.org> (on IRC)
+
+ debian/changelog        | 2 ++
+ man/deb-src-control.man | 9 +++++++++
+ 2 files changed, 11 insertions(+)
+
+commit ddb22cc8e90c329af1e38f1cdddb6f0c6d48712a
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Thu Feb 22 18:30:22 2018 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2914t1f.
+
+ man/po/de.po | 49 ++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 42 insertions(+), 7 deletions(-)
+
+commit 79b681f5675ce9068b5b5e93da0def5f93c9c247
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Thu Feb 22 18:22:19 2018 +0100
+
+    Update German scripts translation
+    
+    Update to 599t.
+
+ scripts/po/de.po | 65 +++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 36 insertions(+), 29 deletions(-)
+
+commit 003dd27ceea43e3d487a853f4e9d344eb1c3cb2a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 19 23:28:51 2018 +0100
+
+    debian: Fix some typos in the changelog
+
+ debian/changelog | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 6c45a0a42932f0156506ad9fbbb9b85c16ec2499
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Feb 5 19:22:20 2018 +0100
+
+    dpkg: Increment the line number on --set-selections on unknown packages
+    
+    When the package is not known, we do an early skip to the next loop
+    iteration, but forgot to increment the line number, which means that
+    these will be off.
+    
+    Closes: #888983
+    Reported-by: Heinz Repp <heinz.repp@arcor.de>
+
+ debian/changelog | 2 ++
+ src/select.c     | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit f6e152b63f9eb183313807898be0569f5321bdf6
+Author: Jack Bates <wdz7eo@nottheoilrig.com>
+Date:   Tue Jan 30 20:46:27 2018 +0000
+
+    scripts/mk: Export architecture variables by default
+    
+    The dpkg-architecture(1) man page states that these variables are
+    exported, and that's what dpkg-buildpackage does itself when setting
+    up the build environment. Doing this is always safe.
+    
+    Closes: #888964
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog           | 3 +++
+ scripts/mk/architecture.mk | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit e226e6cf5507eebd4888d3d11e1b65752af6752f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 3 03:24:00 2018 +0100
+
+    Dpkg::Source::Package: Print building lines for upstream tarball signatures
+    
+    When we are picking up upstream tarball signatures, we should also print
+    them as being used to create the source package.
+    
+    Closes: #888787
+
+ debian/changelog                  |  2 ++
+ scripts/Dpkg/Source/Package/V1.pm |  5 ++++-
+ scripts/Dpkg/Source/Package/V2.pm | 18 ++++++++++++------
+ 3 files changed, 18 insertions(+), 7 deletions(-)
+
+commit dde2a51557ccde71a536d5e4a9af236bcb45be9c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 3 03:24:00 2018 +0100
+
+    Dpkg::Source::Package::V2: Print one building line per existing tarball
+    
+    Lumping all found tarballs into a single line makes the output more
+    confusing.
+
+ debian/changelog                  | 1 +
+ scripts/Dpkg/Source/Package/V2.pm | 6 ++++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit b988d6be020eb8362167b195fb0de658a4db3642
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sun Nov 12 03:08:49 2017 +0100
 
     spec/R³: Declare specification as recommendation, stable
-    
-    (cherry picked from commit b988d6be020eb8362167b195fb0de658a4db3642)
 
  debian/changelog        | 1 +
  doc/rootless-builds.txt | 3 ++-
  2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit 44aac36c26877b7659f3b29766cd28bec5ea04fe
+commit 585db35d2356193e679dff3eb73d99e65c575f7b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 28 12:56:42 2017 +0200
+
+    dpkg-buildpackage: Add new --rules-requires-root
+    
+    This new option makes it possible to force falling back to the legacy
+    behavior of assuming that debian/rules files require root.
+
+ debian/changelog             | 1 +
+ man/dpkg-buildpackage.man    | 4 ++++
+ scripts/dpkg-buildpackage.pl | 8 +++++++-
+ 3 files changed, 12 insertions(+), 1 deletion(-)
+
+commit 566a4b61b6c3359c3d4cffa05519ecbc967b292c
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed Jan 3 02:20:20 2018 +0100
 
@@ -29,7 +4100,6 @@ Date:   Wed Jan 3 02:20:20 2018 +0100
     supports this specification.
     
     Wordsmithing-by: Niels Thykier <niels@thykier.net>
-    (cherry picked from commit 566a4b61b6c3359c3d4cffa05519ecbc967b292c)
 
  debian/changelog             | 1 +
  doc/rootless-builds.txt      | 9 +++++++++
@@ -37,20 +4107,19 @@ Date:   Wed Jan 3 02:20:20 2018 +0100
  scripts/dpkg-buildpackage.pl | 3 +++
  4 files changed, 20 insertions(+)
 
-commit d3ccdd8ff131c4c5c6abd17d490d27b5f6f5bd6c
+commit 36f8ff64764d301d151e55c256b9913f1ada94e3
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed Jan 3 01:59:17 2018 +0100
 
     spec/R³: The DEB_GAIN_ROOT_CMD should preserve the environment
     
     Proposed-by: Josh Triplett <josh@joshtriplett.org>
-    (cherry picked from commit 36f8ff64764d301d151e55c256b9913f1ada94e3)
 
  debian/changelog        | 2 ++
  doc/rootless-builds.txt | 3 ++-
  2 files changed, 4 insertions(+), 1 deletion(-)
 
-commit ef92e1b1bc911b83c7f7c1df686a4fd8439c927d
+commit f6095fa5db1e4d277a0660806875375d60286250
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed Jan 3 01:57:30 2018 +0100
 
@@ -58,14 +4127,12 @@ Date:   Wed Jan 3 01:57:30 2018 +0100
     
     The specification is clear on this, and we should not be setting this
     variable when the values are different to "no" and "binary-targets".
-    
-    (cherry picked from commit f6095fa5db1e4d277a0660806875375d60286250)
 
  debian/changelog             | 2 ++
  scripts/dpkg-buildpackage.pl | 5 +++++
  2 files changed, 7 insertions(+)
 
-commit e7fec820d93dd5108790f126caadb7db7b174a47
+commit 28fee8b445cd94bf7efd76f6c3fd0c62bdf94b6d
 Author: Guillem Jover <guillem@debian.org>
 Date:   Wed Jan 3 01:54:51 2018 +0100
 
@@ -76,8 +4143,6 @@ Date:   Wed Jan 3 01:54:51 2018 +0100
     
     Introduce ephemereal backwards compatibility by mapping the old name to
     the new one, even thught there are no known users.
-    
-    (cherry picked from commit 28fee8b445cd94bf7efd76f6c3fd0c62bdf94b6d)
 
  debian/changelog             |  4 ++++
  doc/rootless-builds.txt      | 14 +++++++++-----
@@ -85,20 +4150,34 @@ Date:   Wed Jan 3 01:54:51 2018 +0100
  scripts/dpkg-buildpackage.pl |  4 +++-
  4 files changed, 17 insertions(+), 7 deletions(-)
 
-commit e606532b171130be9f3a7ebc4188ed76444d8339
+commit cfb7a0e98b05e41cdbe9f695fd9f625c7a119b81
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Dec 10 13:36:11 2017 +0100
+
+    dpkg-gensymbols: Print "error" instead of "warning" when these are fatal
+    
+    It's confusing to emit the compare problems as warnings when they cause
+    the program to exit with an error exit code.
+    
+    Closes: #881488
+
+ debian/changelog           |  2 ++
+ scripts/dpkg-gensymbols.pl | 31 +++++++++++++++++++------------
+ 2 files changed, 21 insertions(+), 12 deletions(-)
+
+commit 81591e0f2590052ff221964c8c554bbbd39763b5
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sat Jan 13 02:34:46 2018 +0100
 
     Dpkg::Vendor::Debian: Mark hurd-i386 as having built-in PIE support
     
     Requested-by: Samuel Thibault <sthibault@debian.org>
-    (cherry picked from commit 81591e0f2590052ff221964c8c554bbbd39763b5)
 
  debian/changelog              | 2 ++
  scripts/Dpkg/Vendor/Debian.pm | 2 +-
  2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit 0419b862a70504164c15680a6d3267f158bde1aa
+commit ee0855cc66076691de4796be48f8a0d889fde001
 Author: Manuel A. Fernandez Montecelo <mafm@debian.org>
 Date:   Tue Jan 16 00:43:51 2018 +0100
 
@@ -110,14 +4189,50 @@ Date:   Tue Jan 16 00:43:51 2018 +0100
     Closes: #822914
     Stable-Candidate: 1.18.x
     Signed-off-by: Guillem Jover <guillem@debian.org>
-    (cherry picked from commit ee0855cc66076691de4796be48f8a0d889fde001)
 
  data/cputable         | 1 +
  debian/changelog      | 3 +++
  scripts/t/Dpkg_Arch.t | 4 ++--
  3 files changed, 6 insertions(+), 2 deletions(-)
 
-commit e7ad5635c104399ea1bbeaa0ef2902be3791ffcd
+commit 2f5816d8be40b449d2473b22f9e0c33b32f3bd78
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Dec 10 12:07:42 2017 +0100
+
+    scripts: Reject negated values in Architecture field
+    
+    Add new positive options argument to arch validators, as the Architecture
+    field should not accept negated architectures. We preserve the current
+    functions default behavior and add a new option to control whether to
+    reject negated architectures.
+    
+    Fixes: commit d355b340f3a6cde7fc1cb5649d82fbebd3b97ea1
+    Stable-Candidate: 1.18.x
+
+ debian/changelog           |  3 +++
+ scripts/Dpkg/Arch.pm       | 28 ++++++++++++++++++++++------
+ scripts/dpkg-genchanges.pl |  4 ++--
+ scripts/dpkg-gencontrol.pl |  2 +-
+ scripts/t/Dpkg_Arch.t      |  9 ++++++++-
+ 5 files changed, 36 insertions(+), 10 deletions(-)
+
+commit 797ed78bd87c77b6fa9c3867d0fefa90bb21014c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Dec 5 01:56:15 2017 +0100
+
+    scripts/mk: Add new buildtools variables
+    
+    This adds support for AS, STRIP, OBJCOPY, OBJDUMP, NM, AR and RANLIB.
+    
+    Prompted-by: Helmut Grohne <helmut@subdivi.de>
+
+ debian/changelog           |  2 ++
+ scripts/mk/buildtools.mk   | 14 ++++++++++++++
+ scripts/t/mk.t             |  7 +++++++
+ scripts/t/mk/buildtools.mk | 14 ++++++++++++++
+ 4 files changed, 37 insertions(+)
+
+commit b29058ea75ce28f95b373b0c36deffd4b57d466b
 Author: Dmitry Shachnev <mitya57@debian.org>
 Date:   Sun Dec 3 03:37:23 2017 +0100
 
@@ -126,13 +4241,93 @@ Date:   Sun Dec 3 03:37:23 2017 +0100
     Fixes: commit 0d2b3cee25b74dd3fd9ddc3a469b8b144368c963
     Closes: #880166
     Signed-off-by: Guillem Jover <guillem@debian.org>
-    (cherry picked from commit b29058ea75ce28f95b373b0c36deffd4b57d466b)
 
  debian/changelog                  | 3 +++
  scripts/Dpkg/Shlibs/SymbolFile.pm | 2 +-
  2 files changed, 4 insertions(+), 1 deletion(-)
 
-commit b98f0117f0c5a6c23e27a10d18aa8eabd5c8e82a
+commit 876855ff96f6dd72cbb92fa57bc316576f585737
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 29 18:40:54 2017 +0100
+
+    test: Infer automatically the unit test temp directory
+    
+    Add new test_get_temp_path() function, and replace all hardcoded
+    settings of the temporary directory and its creation.
+
+ debian/changelog              |  1 +
+ scripts/Test/Dpkg.pm          | 13 +++++++++++++
+ scripts/t/Dpkg_Compression.t  |  4 ++--
+ scripts/t/Dpkg_OpenPGP.t      |  4 +---
+ scripts/t/Dpkg_Path.t         |  4 ++--
+ scripts/t/Dpkg_Source_Patch.t |  2 +-
+ scripts/t/dpkg_buildpackage.t |  6 ++----
+ scripts/t/dpkg_source.t       |  6 ++----
+ 8 files changed, 24 insertions(+), 16 deletions(-)
+
+commit 33c866433dd4b186aae970e05c639b52ad5e7ece
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 29 18:40:54 2017 +0100
+
+    test: Infer automatically the unit test data directory
+    
+    We can easily know the name of the calling unit test, and can thus infer
+    the pathname for the data directory, instead of having to duplicate the
+    name, and potentially ending with it being out of sync.
+
+ debian/changelog                |  1 +
+ scripts/Test/Dpkg.pm            | 18 ++++++++++++++++--
+ scripts/t/Dpkg_Changelog.t      |  2 +-
+ scripts/t/Dpkg_Checksums.t      |  2 +-
+ scripts/t/Dpkg_Conf.t           |  2 +-
+ scripts/t/Dpkg_Control.t        |  2 +-
+ scripts/t/Dpkg_Control_Fields.t |  2 +-
+ scripts/t/Dpkg_Control_Tests.t  |  2 +-
+ scripts/t/Dpkg_Dist_Files.t     |  2 +-
+ scripts/t/Dpkg_OpenPGP.t        |  2 +-
+ scripts/t/Dpkg_Shlibs.t         |  2 +-
+ scripts/t/Dpkg_Source_Patch.t   |  2 +-
+ scripts/t/Dpkg_Source_Quilt.t   |  2 +-
+ scripts/t/Dpkg_Substvars.t      |  2 +-
+ scripts/t/mk.t                  |  4 +++-
+ 15 files changed, 32 insertions(+), 15 deletions(-)
+
+commit d6ba39af48a8c8eadc1b1542fcd6db0edf2dbe7f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 29 18:18:39 2017 +0100
+
+    test: Consider *.PL also to be perl files
+
+ debian/changelog     | 1 +
+ scripts/Test/Dpkg.pm | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 11e20af76b831cb569950c341cf78c55d7ad9a00
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 29 18:17:07 2017 +0100
+
+    test: Check POD in all perl scripts
+    
+    We should check POD syntax in any perl script that contains it, not just
+    within the Dpkg perl modules.
+
+ debian/changelog | 1 +
+ t/pod.t          | 6 ++----
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+commit eac83d72e7cd82a8a07e601f2381b39b62b1b2fa
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 29 15:37:54 2017 +0100
+
+    build: Set distribution tarball format to ustar
+    
+    Use it instead of the default v7 format.
+
+ configure.ac     | 2 +-
+ debian/changelog | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 5003d763fdd29fe9533b2927eb083d6e6d6d98d4
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sat Oct 28 03:27:46 2017 +0200
 
@@ -142,14 +4337,28 @@ Date:   Sat Oct 28 03:27:46 2017 +0200
     
     Closes: #879982
     Reported-by: Jakub Wilk <jwilk@jwilk.net>
-    (cherry picked from commit 5003d763fdd29fe9533b2927eb083d6e6d6d98d4)
 
  debian/changelog    |  3 +++
  dpkg-deb/dpkg-deb.h |  2 ++
  dpkg-deb/extract.c  | 16 ++++++++--------
  3 files changed, 13 insertions(+), 8 deletions(-)
 
-commit 592c91b958579f95994f327194d183cd5ece7ce6
+commit fe186374cd2a287723fe227fe37ea4a5373822c0
+Author: Paul Wise <pabs@debian.org>
+Date:   Mon Dec 4 15:12:50 2017 +0800
+
+    Dpkg::Changelog: Print versions for incorrect changelog range warnings
+    
+    Within scripts operating on lots of different package changelogs,
+    this can help track down where these warnings come from.
+    
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog          |  2 ++
+ scripts/Dpkg/Changelog.pm | 18 +++++++++---------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
+
+commit 0e894ddaa68792246bd03a5dcf3f2e56fd2aeb74
 Author: Guillem Jover <guillem@debian.org>
 Date:   Fri Oct 27 22:06:58 2017 +0200
 
@@ -161,31 +4370,120 @@ Date:   Fri Oct 27 22:06:58 2017 +0200
     Fixes: commit 2125e8dd7388e2adb9b6c837f4832fe8f0f63b25
     Reported-by: Mattia Rizzolo <mattia@debian.org> (on IRC)
     Closes: #881051
-    (cherry picked from commit 0e894ddaa68792246bd03a5dcf3f2e56fd2aeb74)
 
- debian/changelog              | 5 ++++-
+ debian/changelog              | 3 +++
  scripts/Dpkg/Vendor/Debian.pm | 2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-commit 796768306ae0564e934d18414c48f1dc2919eded
+commit bae5051ec6219be508b46bab785cddf1f04904f0
 Author: Guillem Jover <guillem@debian.org>
-Date:   Wed Jan 17 03:16:12 2018 +0100
+Date:   Sat Jan 13 02:35:24 2018 +0100
 
-    Bump version to 1.19.0.5
+    libdpkg: Include <sys/sysmacros.h> for makedev()
+    
+    The glibc implementation provides this macro in <sys/sysmacros.h> and
+    optionally the BSD variants in <sys/types.h>, although the latter are
+    being deprecated and emit a warning with newer glibc. Conditionally
+    include <sys/sysmacros.h> to prepare for the future removal from glibc.
 
- debian/changelog | 6 ++++++
- 1 file changed, 6 insertions(+)
+ debian/changelog | 1 +
+ lib/dpkg/tarfn.c | 3 +++
+ 2 files changed, 4 insertions(+)
 
-commit dab792ad3a8606bff46d2f2bdee44eea7dec4975
+commit 52564e68c64a3e39e0e50ea1ec06ac66eaab5ef3
+Author: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>
+Date:   Sun Dec 3 03:32:40 2017 +0100
+
+    po: Update Dutch translations
+    
+    Closes: #881401, #881403
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   2 +
+ man/po/nl.po     | 576 ++++++++++++++++++++++++++++++-------------------------
+ po/nl.po         |  93 ++++-----
+ 3 files changed, 366 insertions(+), 305 deletions(-)
+
+commit 63b4236297f2df1f909eeac156998be2f254b41e
+Author: Mert Dirik <mertdirik@gmail.com>
+Date:   Tue Jan 16 01:10:55 2018 +0100
+
+    po: Update Turkish programs translations
+    
+    Closes: #886252
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/tr.po         | 109 +++++++++++++++++--------------------------------------
+ 2 files changed, 35 insertions(+), 75 deletions(-)
+
+commit 0fa461b1c0823cf7a82ed10a72d3d5eb5530a9f6
+Author: Milo Casagrande <milo@milo.name>
+Date:   Sun Dec 3 03:25:06 2017 +0100
+
+    po: Update Italian programs translation
+    
+    Closes: #883085
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   1 +
+ po/it.po         | 629 +++++++++++++++++--------------------------------------
+ 2 files changed, 189 insertions(+), 441 deletions(-)
+
+commit b9798daaa596ad5d539bcdd5ca89de1cb0b81697
 Author: Guillem Jover <guillem@debian.org>
-Date:   Sun Oct 22 23:47:23 2017 +0200
+Date:   Mon Nov 20 15:32:32 2017 +0100
 
-    Release 1.19.0.4
+    po: Fix Spanish translation
 
- debian/changelog | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ po/es.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit a0cfee138889502f6a860b795680dbf33115ec17
+commit 3ed0cc75a0113a5eda762b9a19448e78ce43097e
+Author: Javier Fernandez-Sanguino <jfs@debian.org>
+Date:   Wed Nov 8 01:06:25 2017 +0100
+
+    Update Spanish translation
+
+ debian/changelog |   1 +
+ dselect/po/es.po |  94 +++++++--------------
+ po/es.po         | 243 ++++++++++++++++++-------------------------------------
+ 3 files changed, 108 insertions(+), 230 deletions(-)
+
+commit 28436a28b91f3bdbc7216150a15f1f087f06e66b
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Fri Nov 3 19:13:24 2017 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2910t1f.
+
+ man/po/de.po | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 58 insertions(+), 6 deletions(-)
+
+commit d3159e98fc7e2c405814a0edc1e3d5b2e40f55de
+Author: Sven Joachim <svenjoac@gmx.de>
+Date:   Fri Nov 3 17:10:59 2017 +0100
+
+    German dpkg translation update
+    
+    Update to 1109t.
+
+ debian/changelog |  3 ++
+ po/de.po         | 95 +++++++++++++++++---------------------------------------
+ 2 files changed, 31 insertions(+), 67 deletions(-)
+
+commit 0485bbdee8491e328b976cb1697c4aa54c28382b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Oct 23 00:58:21 2017 +0200
+
+    debian: Bump Standards-Version to 4.1.1 (no changes needed)
+
+ debian/changelog | 1 +
+ debian/control   | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit e1792f2285fc68fee89d63572a8de31b38dddce6
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sun Oct 22 23:28:06 2017 +0200
 
@@ -195,13 +4493,12 @@ Date:   Sun Oct 22 23:28:06 2017 +0200
     available, via implicit import from Dpkg::Source::Package.
     
     Reported-by: Ian Jackson <ijackson@chiark.greenend.org.uk>
-    (cherry picked from commit e1792f2285fc68fee89d63572a8de31b38dddce6)
 
  debian/changelog | 4 ++++
  debian/control   | 3 +++
  2 files changed, 7 insertions(+)
 
-commit a720679d1f19dc8a367c6a5aee554cfe35e4520e
+commit 948fe221afc7f540b2de6760affa94c9373c0452
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sun Oct 22 23:18:07 2017 +0200
 
@@ -209,14 +4506,103 @@ Date:   Sun Oct 22 23:18:07 2017 +0200
     
     We want to make debhelper users that will use R³ support not having to
     add a versioned Depends on the relevant dpkg-dev package.
-    
-    (cherry picked from commit 948fe221afc7f540b2de6760affa94c9373c0452)
 
- debian/changelog | 3 +++
+ debian/changelog | 2 ++
  debian/control   | 3 +++
- 2 files changed, 6 insertions(+)
+ 2 files changed, 5 insertions(+)
 
-commit 99be1f3508053ea2e50f3cef85bb8799cec8dd32
+commit 8998ff736606402771745ff27dc43b2cc1165b09
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 17:29:10 2017 +0200
+
+    dpkg-maintscript-helper: Add color support
+    
+    The initial color support only covered the C and perl programs, and
+    missed this shell script.
+
+ debian/changelog                   |  1 +
+ man/dpkg-maintscript-helper.man    |  8 +++++
+ scripts/dpkg-maintscript-helper.sh | 64 +++++++++++++++++++++++++++++++++++---
+ 3 files changed, 69 insertions(+), 4 deletions(-)
+
+commit 365c88f0d4e5dc136ff0c539e83835aa0d85808b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 19:46:55 2017 +0200
+
+    man: Document DPKG_NLS environment variable for all programs using it
+
+ debian/changelog             | 1 +
+ man/dpkg-architecture.man    | 5 +++++
+ man/dpkg-buildflags.man      | 5 +++++
+ man/dpkg-buildpackage.man    | 5 +++++
+ man/dpkg-checkbuilddeps.man  | 5 +++++
+ man/dpkg-distaddfile.man     | 5 +++++
+ man/dpkg-genbuildinfo.man    | 5 +++++
+ man/dpkg-genchanges.man      | 5 +++++
+ man/dpkg-gencontrol.man      | 5 +++++
+ man/dpkg-gensymbols.man      | 5 +++++
+ man/dpkg-mergechangelogs.man | 5 +++++
+ man/dpkg-name.man            | 5 +++++
+ man/dpkg-parsechangelog.man  | 5 +++++
+ man/dpkg-scanpackages.man    | 5 +++++
+ man/dpkg-scansources.man     | 5 +++++
+ man/dpkg-shlibdeps.man       | 5 +++++
+ man/dpkg-source.man          | 5 +++++
+ man/dpkg-vendor.man          | 5 +++++
+ 18 files changed, 86 insertions(+)
+
+commit ee81e7843c7127a4335ea902c58baf67043d61a3
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 18:51:30 2017 +0200
+
+    man: Document DPKG_COLORS environment variable for all programs using it
+
+ debian/changelog             | 1 +
+ man/dpkg-architecture.man    | 6 ++++++
+ man/dpkg-buildflags.man      | 5 +++++
+ man/dpkg-checkbuilddeps.man  | 5 +++++
+ man/dpkg-deb.man             | 5 +++++
+ man/dpkg-distaddfile.man     | 7 +++++++
+ man/dpkg-divert.man          | 5 +++++
+ man/dpkg-genbuildinfo.man    | 5 +++++
+ man/dpkg-genchanges.man      | 7 +++++++
+ man/dpkg-gencontrol.man      | 7 +++++++
+ man/dpkg-gensymbols.man      | 6 ++++++
+ man/dpkg-mergechangelogs.man | 7 +++++++
+ man/dpkg-name.man            | 7 +++++++
+ man/dpkg-parsechangelog.man  | 7 +++++++
+ man/dpkg-query.man           | 5 +++++
+ man/dpkg-scanpackages.man    | 7 +++++++
+ man/dpkg-scansources.man     | 7 +++++++
+ man/dpkg-shlibdeps.man       | 7 +++++++
+ man/dpkg-source.man          | 5 +++++
+ man/dpkg-split.man           | 5 +++++
+ man/dpkg-statoverride.man    | 5 +++++
+ man/dpkg-trigger.man         | 5 +++++
+ man/dpkg-vendor.man          | 5 +++++
+ 23 files changed, 131 insertions(+)
+
+commit 1cfd01e99fa80325d35948afaa3c483a8e876fb6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Oct 22 17:28:57 2017 +0200
+
+    doc: Fix typo in a date
+
+ doc/coding-style.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b484d99fb62631a5f7949f6069948242c42678c4
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Oct 22 07:01:20 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2907t1f.
+
+ man/po/de.po | 56 +++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
+
+commit db6c5b5043e51c196818c2d24070c089ca9ea1d4
 Author: Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
 Date:   Fri Oct 20 01:29:48 2017 +0200
 
@@ -225,44 +4611,47 @@ Date:   Fri Oct 20 01:29:48 2017 +0200
     Closes: #879124
     Warned-by: perl
     Signed-off-by: Guillem Jover <guillem@debian.org>
-    (cherry picked from commit db6c5b5043e51c196818c2d24070c089ca9ea1d4)
 
- debian/changelog                  | 5 ++++-
+ debian/changelog                  | 4 ++++
  scripts/Dpkg/Source/Package/V1.pm | 2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-commit c6ba24c010ea520a1fba7d7eba9f1022f1617d8d
+commit adddd73d8bdff96ce5343a03220c37c187bbe8c9
 Author: Guillem Jover <guillem@debian.org>
-Date:   Sun Oct 22 23:37:42 2017 +0200
+Date:   Sat Oct 21 13:21:45 2017 +0200
 
-    Bump version to 1.19.0.4
+    po: Remove obsolete FIXME comments in translations
+    
+    These have been fixed in the original msgid.
 
- debian/changelog | 6 ++++++
- 1 file changed, 6 insertions(+)
+ dselect/po/es.po | 3 +--
+ po/es.po         | 7 +------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-commit 61c026b850502c0d7f9ef7c9abc26ae9de831d48
-Author: Guillem Jover <guillem@debian.org>
-Date:   Sat Oct 21 16:01:24 2017 +0200
-
-    Release 1.19.0.3
-
- debian/changelog | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit 2881ea29227cf11477abcf3eabcc0449d44a0556
+commit 78e824f4e26156ee6edb8b80ad30125f818c11f3
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sat Oct 21 13:21:00 2017 +0200
 
     man: Add missing dot on the dpkg-buildflags «lfs» paragraph
     
     Spotted-by: Helge Kreutzmann <debian@helgefjell.de>
-    (cherry picked from commit 78e824f4e26156ee6edb8b80ad30125f818c11f3)
 
- debian/changelog        | 3 +++
+ debian/changelog        | 2 ++
  man/dpkg-buildflags.man | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit e16940da1af9f62f877840fb71e49eafea8a64fa
+commit c18496842f69044d3ae8d05378daf35779583c2a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Oct 21 13:17:45 2017 +0200
+
+    dselect: Stop marking an untranslatable string as such
+    
+    Spotted-by: Santiago Vila <sanvila@debian.org>
+
+ dselect/method.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b4e46fab018e3d5ae813642b20b955d8a5327b1e
 Author: Guillem Jover <guillem@debian.org>
 Date:   Thu Oct 19 01:39:14 2017 +0200
 
@@ -272,27 +4661,39 @@ Date:   Thu Oct 19 01:39:14 2017 +0200
     root we should setup the rootcommand, otherwise we should ignore it.
     
     Reported-by: Niels Thykier <niels@thykier.net>
-    (cherry picked from commit b4e46fab018e3d5ae813642b20b955d8a5327b1e)
 
  debian/changelog             |  2 ++
  scripts/dpkg-buildpackage.pl | 46 +++++++++++++++++++++++++-------------------
  2 files changed, 28 insertions(+), 20 deletions(-)
 
-commit 20ff9bdb8ff8c7919ce5424f4ae18a4d4074d80b
+commit c84fa61a459b9c6f9217c361485de6c0650b279f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu Oct 19 00:52:32 2017 +0200
+
+    dpkg-buildpackage: Run dpkg-source from the current directory
+    
+    It used to be the case that dpkg-source did not support running from
+    the current directory. That got fixed in commit
+    a7f16be86689ee46f4b2e445e5f08a63f447cdeb. Which means we can simplify
+    the code.
+
+ debian/changelog             |  2 ++
+ scripts/dpkg-buildpackage.pl | 16 +++-------------
+ 2 files changed, 5 insertions(+), 13 deletions(-)
+
+commit 96547b59076841cb85a2682870cf6742dbb9a3e3
 Author: Guillem Jover <guillem@debian.org>
 Date:   Thu Oct 19 00:51:54 2017 +0200
 
     dpkg-buildpackage: Pass the debian/control source stanza to R³ parser
     
     This meant the field was being ignored.
-    
-    (cherry picked from commit 96547b59076841cb85a2682870cf6742dbb9a3e3)
 
  debian/changelog             | 2 ++
  scripts/dpkg-buildpackage.pl | 2 +-
  2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit fe2cd2836a71c093be2405c86e4fdae264e3d2db
+commit ba52826a3429b9037e1876ba63c51afb211f151d
 Author: Guillem Jover <guillem@debian.org>
 Date:   Thu Oct 19 00:51:21 2017 +0200
 
@@ -302,32 +4703,33 @@ Date:   Thu Oct 19 00:51:21 2017 +0200
     does not, this will produce broken builds. Disable for now, until such
     debhelper has been released, and then we'll need to add some kind of
     relationship to avoid the problem.
-    
-    (cherry picked from commit ba52826a3429b9037e1876ba63c51afb211f151d)
 
- debian/changelog | 3 ++-
+ debian/changelog | 1 +
  debian/control   | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit 0177ce615bdd75ef44b627f3bff1f3ac33513fb2
+commit 4d731a01e5a7c845c59df9128198e38385f1da9a
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Wed Oct 18 20:49:41 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2907t1f.
+
+ man/po/de.po | 138 +++++++++++++++++++++++------------------------------------
+ 1 file changed, 53 insertions(+), 85 deletions(-)
+
+commit 99072a426755a8ee2b8d62114f05638f89af4d90
 Author: Guillem Jover <guillem@debian.org>
-Date:   Sat Oct 21 15:57:30 2017 +0200
+Date:   Wed Oct 18 01:16:43 2017 +0200
 
-    Bump version to 1.19.0.3
+    doc: Update gettext minimal version in README
 
- debian/changelog | 6 ++++++
- 1 file changed, 6 insertions(+)
+ README           | 2 +-
+ debian/changelog | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-commit 68abeec1eb41ab3e28d05480830dac2d12187ac4
-Author: Guillem Jover <guillem@debian.org>
-Date:   Wed Oct 18 01:28:51 2017 +0200
-
-    Release 1.19.0.2
-
- debian/changelog | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit d9146911e86c0913bef266aafdc4e59a8ec9a305
+commit 7e48a3921244dcaa0c2bf9fadd53a52ab230212a
 Author: Guillem Jover <guillem@debian.org>
 Date:   Tue Oct 17 22:42:16 2017 +0200
 
@@ -335,13 +4737,12 @@ Date:   Tue Oct 17 22:42:16 2017 +0200
     
     Reported-by: Ximin Luo <infinity0@debian.org>
     Stable-Candidate: 1.18.x
-    (cherry picked from commit 7e48a3921244dcaa0c2bf9fadd53a52ab230212a)
 
  debian/changelog             | 2 ++
  scripts/dpkg-buildpackage.pl | 6 ++++--
  2 files changed, 6 insertions(+), 2 deletions(-)
 
-commit 029aa41244e44c6d4675ac7af69df4ce29bbe2b0
+commit a3a9527efb1345ac71014dd59da911db05e99ea0
 Author: Guillem Jover <guillem@debian.org>
 Date:   Tue Oct 17 21:20:53 2017 +0200
 
@@ -354,13 +4755,12 @@ Date:   Tue Oct 17 21:20:53 2017 +0200
     
     Thanks-to: James Clarke <jrtc27@debian.org>
     Closes: #878899
-    (cherry picked from commit a3a9527efb1345ac71014dd59da911db05e99ea0)
 
  debian/changelog             | 3 +++
  scripts/dpkg-buildpackage.pl | 4 ++--
  2 files changed, 5 insertions(+), 2 deletions(-)
 
-commit a76fe8cc4d921992d66cb247f59046edf3b8560d
+commit 833274b1e2dc9551a346531dfd0b83bd417ad595
 Author: Guillem Jover <guillem@debian.org>
 Date:   Tue Oct 17 21:59:17 2017 +0200
 
@@ -370,31 +4770,47 @@ Date:   Tue Oct 17 21:59:17 2017 +0200
     due to recent changes in 1.19.0.
     
     Closes: #878919
-    (cherry picked from commit 833274b1e2dc9551a346531dfd0b83bd417ad595)
 
- debian/changelog | 5 ++++-
+ debian/changelog | 3 +++
  debian/control   | 3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ 2 files changed, 6 insertions(+)
 
-commit f22d34475eacf63a8714b4efca5ac57988e51c0c
+commit c721e45e62b5e1cdf228dea835acfe67ca059f35
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Oct 17 22:01:09 2017 +0200
+
+    Update German translation of manual pages
+    
+    Update to 2890t12f6u.
+
+ debian/changelog |  3 +++
+ man/po/de.po     | 25 +++++++++----------------
+ 2 files changed, 12 insertions(+), 16 deletions(-)
+
+commit 0b449f11f86006b830fa07b9eca0f5f5cd04f1e8
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Tue Oct 17 21:29:59 2017 +0200
+
+    Update German scripts translation
+    
+    Update to 599t.
+
+ debian/changelog |  3 +++
+ scripts/po/de.po | 50 ++++++++++++++++----------------------------------
+ 2 files changed, 19 insertions(+), 34 deletions(-)
+
+commit a8a817f6c601651185f0b44b23d4bc7c799a7cd7
 Author: Guillem Jover <guillem@debian.org>
-Date:   Wed Oct 18 01:24:57 2017 +0200
+Date:   Tue Oct 17 04:58:15 2017 +0200
 
-    Bump version to 1.19.0.2
+    build: Cleanup the correct polkit file
+    
+    Fixes: commit 5757ab6142a3785389bd2cd6375f103a1f626240
 
- debian/changelog | 6 ++++++
- 1 file changed, 6 insertions(+)
+ utils/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 0282e7905821fa8f471bef4fbbaf2ce97eb2855b
-Author: Guillem Jover <guillem@debian.org>
-Date:   Tue Oct 17 04:13:57 2017 +0200
-
-    Release 1.19.0.1
-
- debian/changelog | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-commit 721e06ada21618c9f6639b6edbb4a77181cdc93d
+commit 5757ab6142a3785389bd2cd6375f103a1f626240
 Author: Guillem Jover <guillem@debian.org>
 Date:   Tue Oct 17 04:43:38 2017 +0200
 
@@ -406,7 +4822,7 @@ Date:   Tue Oct 17 04:43:38 2017 +0200
  utils/Makefile.am   | 6 +++---
  4 files changed, 7 insertions(+), 4 deletions(-)
 
-commit 5c193ca42bd5e747f93fceb14dc26b3670e216ec
+commit e92108eac0c3acb33758bd5bdf1f0d25f1ee498e
 Author: Guillem Jover <guillem@debian.org>
 Date:   Tue Oct 17 04:07:19 2017 +0200
 
@@ -416,23 +4832,14 @@ Date:   Tue Oct 17 04:07:19 2017 +0200
  scripts/t/Dpkg_OpenPGP.t | 12 +++++++-----
  2 files changed, 9 insertions(+), 6 deletions(-)
 
-commit a373d18366374abb885ce156ba42abedbfb37b18
+commit 3a9c75bdda65c2a87fa802d7f1b10e578a49d0c0
 Author: Guillem Jover <guillem@debian.org>
-Date:   Tue Oct 17 04:13:03 2017 +0200
+Date:   Tue Oct 17 03:10:58 2017 +0200
 
-    Bump version to 1.19.0.1
+    Bump version to 1.19.1
 
  debian/changelog | 6 ++++++
  1 file changed, 6 insertions(+)
-
-commit 84c9328e8fd5e5bf8f10ba1c778eb053fec1af5c
-Merge: 1665fe4c7 90d2887c6
-Author: Guillem Jover <guillem@debian.org>
-Date:   Tue Oct 17 04:11:00 2017 +0200
-
-    Merge tag '1.19.0' into sid
-    
-    Release 1.19.0
 
 commit 90d2887c67f2b1d0915169cc49725bb774083aba
 Author: Guillem Jover <guillem@debian.org>

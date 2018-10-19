@@ -324,12 +324,13 @@ broncodepakket te vergelijken met de .orig\-map.
 
 \fBBouwopties (met \-\-build):\fP
 
-If a second non\-option argument is supplied it should be the name of the
-original source directory or tarfile or the empty string if the package is a
-Debian\-specific one and so has no debianization diffs. If no second argument
-is supplied then \fBdpkg\-source\fP will look for the original source tarfile
-\fIpackage\fP\fB_\fP\fIupstream\-version\fP\fB.orig.tar.gz\fP or the original source
-directory \fIdirectory\fP\fB.orig\fP depending on the \fB\-sX\fP arguments.
+Indien een tweede argument opgegeven wordt dat geen optie is, moet het de
+naam van de originele broncodemap zijn of van het tar\-archief of een lege
+tekenreeks als het pakket Debian\-specifiek is en dus geen diffs bevat in
+verband met de debianisering. Indien geen tweede argument opgegeven werd,
+zal \fBdpkg\-source\fP zoeken naar het tar\-bestand met de originele broncode
+\fIpakket\fP\fB_\fP\fItoeleveraarsversie\fP\fB.orig.tar.gz\fP of naar de map met de
+originele broncode \fImap\fP\fB.orig\fP, afhankelijk van de argumenten \fB\-sX\fP.
 
 \fB\-sa\fP, \fB\-sp\fP, \fB\-sk\fP, \fB\-su\fP en \fB\-sr\fP zullen geen bestaande tar\-bestanden
 of \-mappen overschrijven. Indien dat wel gewenst wordt, dan moeten in de
@@ -364,23 +365,27 @@ maken. Gebruik deze optie met zorg \- indien de map en het tar\-bestand niet
 overeenkomen zal er een slecht broncodearchief gegenereerd worden.
 .TP 
 \fB\-sn\fP
-Specifies to not look for any original source, and to not generate a diff.
-The second argument, if supplied, must be the empty string. This is used for
-Debian\-specific packages which do not have a separate upstream source and
-therefore have no debianization diffs.
+Geeft aan dat er niet naar een originele broncode gezocht moet worden en dat
+er geen diff\-bestand aangemaakt moet worden. Als er een tweede argument
+opgegeven wordt, moet het de lege tekenreeks zijn. Dit wordt gebruikt voor
+Debian\-specifieke pakketten die geen afzonderlijke toeleveraarsbroncode
+hebben en om die reden ook geen debianiserings\-diffs.
 .TP 
 \fB\-sa\fP of \fB\-sA\fP
-Specifies to look for the original source archive as a tarfile or as a
-directory \- the second argument, if any, may be either, or the empty string
-(this is equivalent to using \fB\-sn\fP).  If a tarfile is found it will unpack
-it to create the diff and remove it afterwards (this is equivalent to
-\fB\-sp\fP); if a directory is found it will pack it to create the original
-source and remove it afterwards (this is equivalent to \fB\-sr\fP); if neither
-is found it will assume that the package has no debianization diffs, only a
-straightforward source archive (this is equivalent to \fB\-sn\fP).  If both are
-found then \fBdpkg\-source\fP will ignore the directory, overwriting it, if
-\fB\-sA\fP was specified (this is equivalent to \fB\-sP\fP)  or raise an error if
-\fB\-sa\fP was specified.  \fB\-sA\fP is the default.
+Geeft aan dat naar de originele broncode gezocht moet worden in de vorm van
+een tar\-bestand of een map. Als er een tweede argument opgegeven wordt, mag
+dat een van die twee zijn of een lege tekenreeks (dit is het equivalent voor
+het gebruik van \fB\-sn\fP). Indien er een tar\-bestand gevonden wordt, zal het
+dat uitpakken om het diff\-bestand aan te maken en het daarna verwijderen
+(dit is het equivalent voor \fB\-sp\fP). Indien een map aangetroffen wordt, zal
+het die inpakken om de originele broncode te creëren en ze vervolgens
+verwijderen (dit is het equivalent voor \fB\-sr\fP). Indien geen van beide
+gevonden wordt, zal het aannemen dat het pakket geen debianiserings\-diffs
+heeft, maar enkel een eenvoudig broncodearchief (dit is het equivalent voor
+\fB\-sn\fP). Indien beide aangetroffen worden, dan zal \fBdpkg\-source\fP de map
+negeren, en ze overschrijven als \fB\-sA\fP opgegeven werd (dit is het
+equivalent voor \fB\-sP\fP) of een foutmelding geven als \fB\-sa\fP opgegeven
+werd. \fB\-sA\fP is de standaard.
 .TP 
 \fB\-\-abort\-on\-upstream\-changes\fP
 Het proces mislukt als het gegenereerde diff\-bestand wijzigingen aan
@@ -465,19 +470,23 @@ debian tar\-archief een onderliggende map \fBdebian\fP moet bevatten, maar dat
 het ook binaire bestanden kan bevatten buiten die map (zie de optie
 \fB\-\-include\-binaries\fP).
 .PP
-Vervolgens worden alle patches toegepast die opgesomd zijn in
-\fBdebian/patches/debian.series\fP of \fBdebian/patches/series\fP. Indien het
-eerste bestand gebruikt wordt en het laatste niet bestaat (of een
-symbolische koppeling is), dan zal het laatste vervangen worden door een
-symbolische koppeling naar het eerste. Dit is bedoeld om het gebruik van
-\fBquilt\fP bij het beheer van de set patches te vereenvoudigen. Merk nochtans
-op dat hoewel \fBdpkg\-source\fP op correcte wijze series\-bestanden ontleedt met
-expliciete opties die gebruikt worden voor het toepassen van patches (op
-elke regel opgeslagen na de bestandsnaam van de patch en één of meer
-spaties), het deze opties negeert en steeds patches verwacht die kunnen
-toegepast worden met de optie \fB\-p1\fP van \fBpatch\fP. Het zal dus een
-waarschuwing geven als het dergelijke opties tegenkomt en het bouwen zal
-waarschijnlijk mislukken.
+All patches listed in \fBdebian/patches/\fP\fIvendor\fP\fB.series\fP or
+\fBdebian/patches/series\fP are then applied, where \fIvendor\fP will be the
+lowercase name of the current vendor, or \fBdebian\fP if there is no vendor
+defined.  If the former file is used and the latter one doesn't exist (or is
+a symlink), then the latter is replaced with a symlink to the former.  This
+is meant to simplify usage of \fBquilt\fP to manage the set of patches.
+Vendor\-specific series files are intended to make it possible to serialize
+multiple development branches based on the vendor, in a declarative way, in
+preference to open\-coding this handling in \fBdebian/rules\fP.  This is
+particularly useful when the source would need to be patched conditionally
+because the affected files do not have built\-in conditional occlusion
+support.  Note however that while \fBdpkg\-source\fP parses correctly series
+files with explicit options used for patch application (stored on each line
+after the patch filename and one or more spaces), it does ignore those
+options and always expect patches that can be applied with the \fB\-p1\fP option
+of \fBpatch\fP. It will thus emit a warning when it encounters such options,
+and the build is likely to fail.
 .PP
 Voor alle bestanden waarop een patch toegepast werd, wordt de
 tijdsaanduiding teruggezet op het tijdstip van extraheren van het
@@ -765,6 +774,15 @@ waarschuwing brengt dit feit in herinnering.
 .
 .SH OMGEVING
 .TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.TP 
 \fBSOURCE_DATE_EPOCH\fP
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding
 (timestamp) (in seconden sinds de epoch) om de mtime vast te zetten op de
@@ -830,17 +848,19 @@ Vrij opgemaakte tekst die geplaatst wordt bovenaan de automatische patch die
 gegenereerd wordt bij de indelingen “2.0” en “3.0
 (quilt)”. \fBlocal\-patch\-header\fP wordt niet toegevoegd aan het gegenereerde
 broncodepakket, terwijl dat met \fBpatch\-header\fP wel het geval is.
+.SS debian/patches/\fIvendor\fP.series
 .SS debian/patches/series
-Dit bestand somt alle patches op die toegepast moeten worden (in de
-opgegeven volgorde) bovenop het broncodepakket van de toeleveraar. Spaties
-vooraan en achteraan worden weggehaald. Regels die beginnen met ‘\fB#\fP’ zijn
-commentaar en worden overgeslagen. Lege regels worden genegeerd. De overige
-regels beginnen met de bestandsnaam van een patch (relatief ten opzichte van
-de map \fBdebian/patches/\fP) tot aan de eerste spatie of het einde van de
-regel. Facultatieve \fBquilt\fP\-opties kunnen daarna komen tot aan het einde
-van de regel of tot aan het eerste ‘\fB#\fP’\-teken dat voorafgegaan wordt door
-één of meer spaties (hetgeen het begin van een commentaarstuk aangeeft dat
-doorloopt tot het einde van de regel).
+This file lists all patches that have to be applied (in the given order)  on
+top of the upstream source package. Leading and trailing spaces are
+stripped.  The \fIvendor\fP will be the lowercase name of the current vendor,
+or \fBdebian\fP if there is no vendor defined.  If the vendor\-specific series
+file does not exist, the vendor\-less series file will be used.  Lines
+starting with ‘\fB#\fP’ are comments and are skipped.  Empty lines are
+ignored.  Remaining lines start with a patch filename (relative to the
+\fBdebian/patches/\fP directory) up to the first space character or the end of
+line. Optional \fBquilt\fP options can follow up to the end of line or the
+first ‘\fB#\fP’ preceded by one or more spaces (which marks the start of a
+comment up to the end of line).
 .SH BUGS
 Het punt waarop de vervanging van velden plaats vindt, vergeleken met
 bepaalde standaardinstellingen voor uitvoervelden, is eerder onduidelijk.

@@ -90,10 +90,17 @@ Check for a process with the specified parent pid \fIppid\fP (since version
 1.17.7).  The \fIppid\fP must be a number greater than 0.
 .TP 
 \fB\-p\fP, \fB\-\-pidfile\fP \fIfile\-pid\fP
-Controlla se un processo ha creato il file \fIfile\-pid\fP. Nota: usare questa
-opzione di corrispondenza da sola può causare effetti su processi non
-desiderati, se il vecchio processo è stato terminato senza aver potuto
-rimuovere il \fIfile\-pid\fP.
+Check whether a process has created the file \fIpid\-file\fP.
+.IP
+Note: using this matching option alone might cause unintended processes to
+be acted on, if the old process terminated without being able to remove the
+\fIpid\-file\fP.
+.IP
+\fBWarning:\fP Using this match option alone with a daemon that writes the
+pidfile as an unprivileged user is a security risk, because if the daemon
+gets compromised the contents of the pidfile cannot be trusted, and then a
+privileged runner (such as an init script executed as root) would end up
+acting on any system process.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIeseguibile\fP
 Cerca i processi che sono istanze di questo \fIeseguibile\fP. L'argomento

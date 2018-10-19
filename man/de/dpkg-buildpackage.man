@@ -115,10 +115,11 @@ Die erlaubten Werte sind:
 .RS
 .TP 
 \fBsource\fP
-Baut das Quellpaket: Hinweis: Falls Sie diesen Wert alleine verwenden und
-falls Sie einfach das Quellpaket (neu) bauen möchten, ist die Verwendung von
-\fBdpkg\-source\fP immer besser, da dafür keine Bauabhängigkeiten installiert
-sein müssen, um das Ziel \fBclean\fP aufzurufen.
+Builds the source package.  Note: when using this value standalone and if
+what you want is simply to (re\-)build the source package from a clean source
+tree, using \fBdpkg\-source\fP directly is always a better option as it does not
+require any build dependencies to be installed which are otherwise needed to
+be able to call the \fBclean\fP target.
 .TP 
 \fBany\fP
 Baut das architekturspezifische Binärpaket.
@@ -268,17 +269,27 @@ Prüft die eingebauten Bauabhängigkeiten und \-konflikte nicht (seit Dpkg
 Abhängigkeiten, die normalerweise in der Bauumgebung benötigt werden, die
 sogenannte »Build\-Essential«\-Paketgruppe.
 .TP 
+\fB\-\-rules\-requires\-root\fP
+Berücksichtigt das Feld \fBRules\-Requires\-Root\fP nicht, sondern fällt auf den
+alten Vorgabewert zurück (seit Dpkg 1.19.1).
+.TP 
 \fB\-nc\fP, \fB\-\-no\-pre\-clean\fP
-Bereinige den Quellbaum nicht (lange Option seit Dpkg 1.18.8). Impliziert
-\fB\-b\fP, falls ansonsten nichts aus \fB\-F\fP, \fB\-g\fP, \fB\-G\fP, \fB\-B\fP, \fB\-A\fP oder
-\fB\-S\fP gewählt wurde. Impliziert \fB\-d\fP mit \fB\-S\fP (seit Dpkg 1.18.0).
+Bereinige den Quellbaum vor dem Bau nicht (lange Option seit Dpkg
+1.18.8). Impliziert \fB\-b\fP, falls ansonsten nichts aus \fB\-F\fP, \fB\-g\fP, \fB\-G\fP,
+\fB\-B\fP, \fB\-A\fP oder \fB\-S\fP gewählt wurde. Impliziert \fB\-d\fP mit \fB\-S\fP (seit Dpkg
+1.18.0).
 .TP 
 \fB\-\-pre\-clean\fP
-Bereinige den Quellbaum vor dem Bau (seit Dpkg 1.18.8).
+Bereinige den Quellbaum vor dem Bau (seit Dpkg 1.18.8). Dies ist das
+Standardverhalten.
 .TP 
 \fB\-tc\fP, \fB\-\-post\-clean\fP
 Den Quellbaum säubern (verwendet \fIroot\-werde\-Befehl\fP \fBdebian/rules clean\fP)
 nachdem das Paket gebaut wurde (lange Option seit Dpkg 1.18.8).
+.TP 
+\fB\-\-no\-post\-clean\fP
+Bereinigt den Quellbaum nicht, nachdem das Paket gebaut wurde (seit Dpkg
+1.19.1). Dies ist das Standardverhalten.
 .TP 
 \fB\-r\fP, \fB\-\-root\-command=\fP\fIroot\-werde\-Befehl\fP
 Wenn \fBdpkg\-buildpackage\fP einen Teil des Bauprozesses als Root ausführen
@@ -470,6 +481,12 @@ von Profilnamen. Wird durch die Option \fB\-P\fP außer Kraft gesetzt.
 \fBDPKG_COLORS\fP
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
 sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 
 .SS "Interne Umgebung"
 Selbst falls \fBdpkg\-buildpackage\fP einige Variablen exportiert, sollte
@@ -489,10 +506,11 @@ Beim Aufruf von \fBdpkg\-architecture\fP werden die Parameter von \fB\-a\fP und
 wird, wird in die Bauumgebung integriert.
 .TP 
 \fBDEB_RULES_REQUIRES_ROOT\fP
-This variable is set to the value obtained from the \fBRules\-Requires\-Root\fP
-field or from the command\-line.  When set, it will be a valid value for the
-\fBRules\-Requires\-Root\fP field.  It is used to notify \fBdebian/rules\fP whether
-the \fBrootless\-builds.txt\fP specification is supported.
+Diese Variable wird auf den Wert, der aus dem Feld \fBRules\-Requires\-Root\fP
+oder von der Befehlszeile erhalten wird, gesetzt. Wenn gesetzt, wird er ein
+gültiger Wert für das Feld \fBRules\-Requires\-Root\fP sein. Er wird dazu
+verwandt, \fBdebian/rules\fP anzugeben, ob die Spezifikation
+\fBrootless\-builds.txt\fP unterstützt wird.
 .TP 
 \fBDEB_GAIN_ROOT_CMD\fP
 Diese Variable wird auf \fIroot\-werde\-Befehl\fP gesetzt, wenn das Feld

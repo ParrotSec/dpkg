@@ -217,7 +217,7 @@ foreach (keys %{$pkg}) {
 	if (debarch_eq('all', $v)) {
 	    $fields->{$_} = $v;
 	} else {
-	    my @archlist = debarch_list_parse($v);
+	    my @archlist = debarch_list_parse($v, positive => 1);
 
 	    if (none { debarch_is($host_arch, $_) } @archlist) {
 		error(g_("current host architecture '%s' does not " .
@@ -406,7 +406,10 @@ if ($stdout) {
         }
     }
 
-    $dist->add_file($forcefilename, $section, $priority);
+    my %fileattrs;
+    $fileattrs{automatic} = 'yes' if $fields->{'Auto-Built-Package'};
+
+    $dist->add_file($forcefilename, $section, $priority, %fileattrs);
     $dist->save("$fileslistfile.new");
 
     rename "$fileslistfile.new", $fileslistfile

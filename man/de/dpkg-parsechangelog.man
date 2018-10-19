@@ -74,8 +74,9 @@ Setze das Ausgabeformat. Derzeit werden die Werte \fBdpkg\fP und \fBrfc822\fP
 unterstützt. \fBdpkg\fP ist das klassische Ausgabeformat (es existiert länger
 als diese Option), das voreingestellt ist. Es besteht aus einem Absatz im
 Debian\-Steuerformat (lesen Sie \fBdeb\-control\fP(5)). Falls mehr als ein
-Eintrag angefordert wird, dann werden die meisten Felder aus dem neusten
-Eintrag verwendet, falls dies nicht anders angegeben wird:
+Eintrag angefordert wird, dann werden die meisten Felder aus dem ersten
+Eintrag (normalerweise der neuste Eintrag) verwendet, falls dies nicht
+anders angegeben wird:
 .RS
 .TP 
 \fBSource:\fP\fI Paketname\fP
@@ -121,6 +122,11 @@ Es können zusätzliche benutzerdefinierte Felder vorhanden sein.
 Das \fBrfc822\fP\-Format verwendet die gleichen Felder, gibt aber einzelne
 Absätze für jeden Changelog\-Eintrag aus, so dass alle Metadaten für jeden
 Eintrag erhalten bleiben.
+.TP 
+\fB\-\-reverse\fP
+füge alle Änderungen in umgekehrter Reihenfolge hinzu (seit Dpkg
+1.19.1). Beachten Sie: Für das \fBdpkg\fP\-Format ist der erste Eintrag der
+älteste Eintrag.
 .TP 
 \fB\-\-all\fP
 alle Änderungen aufnehmen. Hinweis: Andere Optionen haben keine Wirkung,
@@ -193,6 +199,18 @@ Alle \fBAuswerter\-Optionen\fP außer \fB\-v\fP werden seit Dpkg 1.14.16 unterst
 .PP
 Das Auswerten kurzer Optionen mit nicht gebündelten Werten ist nur seit
 Dpkg\-Version 1.18.0 verfügbar.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterstützung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
 .
 .SH DATEIEN
 .TP 

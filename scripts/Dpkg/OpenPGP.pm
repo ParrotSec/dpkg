@@ -49,18 +49,21 @@ sub openpgp_sig_to_asc
         if ($is_openpgp_ascii_armor) {
             notice(g_('signature file is already OpenPGP ASCII armor, copying'));
             copy($sig, $asc);
-            return;
+            return $asc;
         }
 
         if (not find_command('gpg')) {
             warning(g_('cannot OpenPGP ASCII armor signature file due to missing gpg'));
         }
 
+        my @gpg_opts = qw(--no-options);
+
         open my $fh_asc, '>', $asc
             or syserr(g_('cannot create signature file %s'), $asc);
-        open my $fh_gpg, '-|', 'gpg', '-o', '-', '--enarmor', $sig
+        open my $fh_gpg, '-|', 'gpg', @gpg_opts, '-o', '-', '--enarmor', $sig
             or syserr(g_('cannot execute %s program'), 'gpg');
         while (my $line = <$fh_gpg>) {
+            next if $line =~ m/^Version: /;
             next if $line =~ m/^Comment: /;
 
             $line =~ s/ARMORED FILE/SIGNATURE/;
@@ -71,7 +74,7 @@ sub openpgp_sig_to_asc
         close $fh_gpg or subprocerr('gpg');
         close $fh_asc or syserr(g_('cannot write signature file %s'), $asc);
 
-        return $sig;
+        return $asc;
     }
 
     return;

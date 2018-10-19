@@ -80,7 +80,9 @@ noch nicht verarbeitet haben könnte.
 .TP 
 \fB\-\-await\fP
 Dies Option führt das inverse von \fB\-\-no\-await\fP aus (seit Dpkg
-1.17.21). Derzeit ist sie die Voreinstellung.
+1.17.21). Falls das interessierte Paket eine Direktive „noawait“ erklärt
+hat, dann wird diese Option nicht wirksam sein. Derzeit ist sie die
+Voreinstellung.
 .TP 
 \fB\-\-no\-act\fP
 Nur testen, nichts tatsächlich ändern.
@@ -104,6 +106,10 @@ die Datenbank, Speicherzuweisungen usw.
 \fBDPKG_ADMINDIR\fP
 Falls gesetzt und die Option \fB\-\-admindir\fP nicht verwandt wurde, wird dies
 als Datenverzeichnis von \fBdpkg\fP verwandt.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
 .
 .SH "SIEHE AUCH"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

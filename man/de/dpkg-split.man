@@ -188,6 +188,10 @@ Datenbank, Speicherzuweisungen usw.
 .
 .SH UMGEBUNG
 .TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
 \fBSOURCE_DATE_EPOCH\fP
 Falls gesetzt, wird es als Zeitstempel (als Sekunden seit der Epoche) in dem
 \fBar\fP(5)\-Container von \fBdeb\-split\fP(5) verwandt.

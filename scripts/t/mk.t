@@ -17,6 +17,8 @@ use strict;
 use warnings;
 
 use Test::More tests => 6;
+use Test::Dpkg qw(:paths);
+
 use File::Spec::Functions qw(rel2abs);
 
 use Dpkg ();
@@ -25,7 +27,7 @@ use Dpkg::IPC;
 use Dpkg::Vendor;
 
 my $srcdir = $ENV{srcdir} || '.';
-my $datadir = "$srcdir/t/mk";
+my $datadir = test_get_data_path();
 
 # Turn these into absolute names so that we can safely switch to the test
 # directory with «make -C».
@@ -80,6 +82,7 @@ $ENV{"TEST_$_"} = $buildflag{$_} foreach keys %buildflag;
 test_makefile('buildflags.mk');
 
 my %buildtools = (
+    AS => 'as',
     CPP => 'gcc -E',
     CC => 'gcc',
     CXX => 'g++',
@@ -89,6 +92,12 @@ my %buildtools = (
     F77 => 'f77',
     FC => 'f77',
     LD => 'ld',
+    STRIP => 'strip',
+    OBJCOPY => 'objcopy',
+    OBJDUMP => 'objdump',
+    NM => 'nm',
+    AR => 'ar',
+    RANLIB => 'ranlib',
     PKG_CONFIG => 'pkg-config',
 );
 

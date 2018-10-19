@@ -118,7 +118,7 @@ if (defined($options{opmode}) &&
     }
     if ($dir eq '.') {
 	# . is never correct, adjust automatically
-	$dir = basename(cwd());
+	$dir = basename(getcwd());
 	chdir '..' or syserr(g_("unable to chdir to '%s'"), '..');
     }
     # --format options are not allowed, they would take precedence
@@ -578,6 +578,7 @@ sub get_format_help {
     $srcpkg->upgrade_object_type(); # Fails if format is unsupported
 
     my @cmdline = $srcpkg->describe_cmdline_options();
+    return '' unless @cmdline;
 
     my $help_build = my $help_extract = '';
     my $help;

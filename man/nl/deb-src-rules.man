@@ -1,0 +1,87 @@
+.\" dpkg manual page - deb-src-rules(5)
+.\"
+.\" Copyright © 2016-2017 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-rules 5 05\-09\-2017 Debian\-project dpkg\-hulpprogramma's
+.SH NAAM
+deb\-src\-rules \- Aanwijzingenbestand van Debian\-bronpakketten
+.
+.SH OVERZICHT
+debian/rules
+.
+.SH BESCHRIJVING
+Dit bestand bevat de noodzakelijke instructies om op basis van het
+bronpakket de binaire pakketten te bouwen.
+.PP
+Het bestand \fIdebian/rules\fP is een uitvoerbare Makefile met een shebang die
+gewoonlijk ingesteld staat op "#!/usr/bin/make \-f".
+.PP
+De volgende targets van 'make' moeten erdoor ondersteund worden:
+
+.TP 
+\fBclean\fP
+De broncodeboom opschonen door elke wijziging ongedaan te maken die door een
+van de targets van het type 'build' of 'binary' doorgevoerd werden. Dit
+target wordt aanroepen met systeembeheerderprivileges.
+.TP 
+\fBbuild\-indep\fP
+Bouwen van de architectuuronafhankelijke bestanden die nodig zijn om een
+architectuuronafhankelijk binair pakket te bouwen. Indien er geen
+architectuuronafhankelijke binaire pakketten gegenereerd moeten worden, moet
+dit target toch aanwezig zijn, maar niets doen. Dit target mag geen
+systeembeheerderprivileges vereisen.
+.TP 
+\fBbuild\-arch\fP
+Bouwen van de architectuurafhankelijke bestanden die nodig zijn om een
+architectuurafhankelijk binair pakket te bouwen. Indien er geen
+architectuurafhankelijke binaire pakketten gegenereerd moeten worden, moet
+dit target toch aanwezig zijn, maar niets doen. Dit target mag geen
+systeembeheerderprivileges vereisen.
+.TP 
+\fBbuild\fP
+Bouwen van architectuuronafhankelijke en architectuurafhankelijke bestanden
+door ofwel te steunen (minstens transitief) op \fBbuild\-indep\fP en/of
+\fBbuild\-arch\fP, of door zelf de taken op te nemen die deze targets anders
+zouden uitvoeren. Dit target mag geen systeembeheerderprivileges vereisen.
+.TP 
+\fBbinary\-indep\fP
+Bouwen van architectuuronafhankelijke binaire pakketten. Dit target moet
+steunen (minstens transitief) op \fBbuild\-indep\fP of op \fBbuild\fP. Dit target
+wordt aanroepen met systeembeheerderprivileges.
+.TP 
+\fBbinary\-arch\fP
+Bouwen van architectuurafhankelijke binaire pakketten. Dit target moet
+steunen (minstens transitief) op \fBbuild\-arch\fP of op \fBbuild\fP. Dit target
+wordt aanroepen met systeembeheerderprivileges.
+.TP 
+\fBbinary\fP
+Bouwen van architectuuronafhankelijke en architectuurafhankelijke binaire
+pakketten door ofwel te steunen (minstens transitief) op \fBbinary\-indep\fP
+en/of \fBbinary\-arch\fP, of door zelf de taken op te nemen die deze targets
+anders zouden uitvoeren. Dit target wordt aanroepen met
+systeembeheerderprivileges.
+.
+.SH "ZIE OOK"
+.ad l
+.nh
+\fBdpkg\-architecture\fP(1), \fBdpkg\-vendor\fP(1), \fBdpkg\-buildflags\fP(1),
+\fBdpkg\-parsechangelog\fP(1), \fBdpkg\-shlibdeps\fP(1), \fBdpkg\-gencontrol\fP(1),
+\fBdpkg\-deb\fP(1), \fBdpkg\-distaddfile\fP(1).

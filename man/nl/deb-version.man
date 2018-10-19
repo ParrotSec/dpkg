@@ -69,11 +69,11 @@ gebaseerd op de versie van de toeleveraar. Het mag enkel alfanumerieke
 tekens bevatten en de tekens \fB+\fP \fB.\fP \fB~\fP (plus, punt, tilde) en wordt op
 dezelfde manier vergeleken als de \fItoeleveraarsversie\fP.
 .IP
-It is optional; if it isn't present then the \fIupstream\-version\fP may not
-contain a hyphen.  This format represents the case where a piece of software
-was written specifically to be turned into a Debian package, and so there is
-only one “debianization” of it and therefore no revision indication is
-required.
+Het is facultatief. Als het ontbreekt, mag de \fItoeleveraarsversie\fP geen
+verbindingsteken bevatten. Deze indeling komt voor in het geval een stuk
+software geschreven werd met de specifieke bedoeling er een Debian pakket
+van te maken, zodat er slechts één enkele “debianisering” van bestaat en er
+daarom geen revisieaanduiding nodig is.
 .IP
 Het is gebruikelijk om de \fIdebian\-revisie\fP terug op ‘1’ te laten beginnen
 telkens wanneer de \fItoeleveraarsversie\fP verhoogd wordt.

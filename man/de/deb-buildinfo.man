@@ -131,10 +131,11 @@ wurde. Typische Architekturen sind \fBamd64\fP, \fBarmel\fP, \fBi386\fP, usw.
 Das Datum, an dem das Paket letztmalig gebaut wurde. Es muss im gleichen
 Format wie in einem Eintrag bei \fBdeb\-changelog\fP(5) sein.
 .TP 
-\fBBuild\-Kernel\-Version:\fP \fIbuild\-kernel\-version\fP
-The release and version (in an unspecified format) of the kernel running on
-the build system.  This field is only going to be present if the builder has
-explicitly requested it, to avoid leaking possibly sensitive information.
+\fBBuild\-Kernel\-Version:\fP \fIBau\-Kernel\-Version\fP
+Die Veröffentlichung und die Version (in einem nicht festgelegten Format)
+des auf dem Bausystem laufenden Kernels. Dieses Feld ist nur vorhanden,
+falls der Bauende es explizit angefordert hat, um zu verhindern, dass
+vertrauliche Informationen versehentlich veröffentlicht werden.
 .TP 
 \fBBuild\-Path:\fP \fIBaupfad\fP
 Der absolute Baupfad, der dem entpackten Quellbaum entspricht. Dieses Feld

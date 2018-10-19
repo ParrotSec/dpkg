@@ -72,8 +72,17 @@ Toon de versie en sluit af.
 .SH OPTIES
 .TP 
 \fB\-\-admindir\fP \fImap\fP
-Wijzig de \fImap\fP voor de \fBdpkg\fP\-database waar ook het bestand met
-statusaanpassingen opgeslagen wordt. Standaard is dat \fI%ADMINDIR%\fP.
+Set the administrative directory to \fIdirectory\fP.  This is where the
+\fIstatoverride\fP file is stored.  Defaults to «\fI%ADMINDIR%\fP».
+.TP 
+\fB\-\-instdir\fP\fI directory\fP
+Set the installation directory, which refers to the directory where packages
+get installed (since dpkg 1.19.2).  Defaults to «\fI/\fP».
+.TP 
+\fB\-\-root\fP\fI directory\fP
+Set the root directory to \fBdirectory\fP, which sets the installation
+directory to «\fIdirectory\fP» and the administrative directory to
+«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
 .TP 
 \fB\-\-force\fP
 Verplicht een actie, zelfs als een redelijkheidstoets die anders zou
@@ -103,9 +112,17 @@ database, het toewijzen van geheugen, enz.
 .
 .SH OMGEVING
 .TP 
+\fBDPKG_ROOT\fP
+If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
+will be used as the filesystem root directory (since dpkg 1.19.2).
+.TP 
 \fBDPKG_ADMINDIR\fP
-Indien dit ingesteld werd en de optie \fB\-\-admindir\fP niet gebruikt werd, zal
-dit gebruikt worden als de datamap voor \fBdpkg\fP.
+If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
+it will be used as the \fBdpkg\fP data directory.
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .
 .SH BESTANDEN
 .TP 

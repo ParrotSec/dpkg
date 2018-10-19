@@ -155,15 +155,16 @@ linkermarge. De “volgende” regel met de gegevens over de onderhouder en de
 datum moet door exact één spatie voorafgegaan worden. Tussen de informatie
 over de onderhouder en de datum moeten exact twee spaties staan.
 .PP
-Any line that consists entirely (i.e., no leading whitespace) of \fB#\fP or
-\fB/* */\fP style comments, RCS keywords, Vim modelines or Emacs local
-variables should be ignored.
+Elke regel die volledig (d.w.z. zonder voorafgaande witruimte) bestaat uit
+commentaar in de \fB#\fP\- of de \fB/* */\fP\-vorm, RCS\-trefwoorden, modusregels van
+Vim of lokale variabelen van Emacs, moet genegeerd worden.
 .PP
-Ancient changelog entries with other formats at the end of the file should
-be accepted and preserved on output, but their contents might be otherwise
-ignored and parsing stopped at that point.
+Oudere changelog\-elementen met een andere indeling aan het einde van het
+bestand moeten aanvaard worden en in de uitvoer behouden blijven, maar de
+inhoud ervan daarentegen zou genegeerd kunnen worden en op dat punt zou het
+ontleden gestopt kunnen worden.
 .PP
-Het volledige changelog\-bestand moet in UTF\-8 op gemaakt zijn.
+Het volledige changelog\-bestand moet in UTF\-8 opgemaakt zijn.
 .SH BESTANDEN
 .TP 
 \fIdebian/changelog\fP

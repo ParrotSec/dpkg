@@ -1,8 +1,6 @@
-# translation of dpkg_po_el.po to Greek
-# translation of dpkg.po.orig.po to Greek
-# translation of dpkg.po to Greek
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# translation of dselect to Greek
+# Copyright © 2003-2005 Dpkg Developers
+# This file is distributed under the same license as the dpkg package.
 # Konstantinos Margaritis <markos@debian.org>, 2003.
 # George Papamichelakis <george@step.gr>, 2004.
 # George Papamichelakis <debian-l10n-greek@lists.debian.org>, 2004.
@@ -13,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-01-17 03:29+0100\n"
+"POT-Creation-Date: 2018-10-08 11:37+0200\n"
 "PO-Revision-Date: 2006-02-17 08:56+0200\n"
 "Last-Translator: quad-nrg.net <galaxico@quad-nrg.net>\n"
 "Language-Team: Greek <debian-l10n-greek@lists.debian.org>\n"
@@ -1051,17 +1049,6 @@ msgid "No explanation available."
 msgstr "Καμία διαθέσιμη εξήγηση."
 
 #: dselect/method.cc
-#, c-format
-msgid ""
-"\n"
-"\n"
-"%s: %s\n"
-msgstr ""
-"\n"
-"\n"
-"%s: %s\n"
-
-#: dselect/method.cc
 msgid ""
 "\n"
 "Press <enter> to continue."
@@ -1689,6 +1676,15 @@ msgstr "%s %s πακέτα στον τομέα %s"
 #, c-format
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s;  %s (ήταν: %s).  %s"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "%s: %s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "%s: %s\n"
 
 #~ msgid "failed to re-block SIGWINCH"
 #~ msgstr "απέτυχε η επανεμπλοκή του SIGWINCH"

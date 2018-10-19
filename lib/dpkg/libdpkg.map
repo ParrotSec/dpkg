@@ -46,6 +46,7 @@ LIBDPKG_PRIVATE {
 	catch_fatal_error;
 	push_checkpoint;
 	push_cleanup;
+	push_cleanup_fallback;
 	pop_cleanup;
 	onerr_abort;		# XXX variable, do not export
 	ohshitv;
@@ -79,6 +80,7 @@ LIBDPKG_PRIVATE {
 	m_strdup;
 	m_vasprintf;
 	m_asprintf;
+	m_dup;
 	m_dup2;
 	m_pipe;
 	m_output;
@@ -90,6 +92,7 @@ LIBDPKG_PRIVATE {
 
 	str_match_end;
 	str_fnv_hash;
+	str_concat;
 	str_fmt;
 	str_escape_fmt;
 	str_strip_quotes;
@@ -98,6 +101,7 @@ LIBDPKG_PRIVATE {
 	str_gen_crop;
 
 	# Variable buffer support
+	varbuf_new;
 	varbuf_init;
 	varbuf_reset;
 	varbuf_grow;
@@ -114,6 +118,7 @@ LIBDPKG_PRIVATE {
 	varbuf_snapshot;
 	varbuf_rollback;
 	varbuf_destroy;
+	varbuf_free;
 
 	# Path, directory and file functions
 	secure_unlink_statted;
@@ -176,9 +181,12 @@ LIBDPKG_PRIVATE {
 	command_add_argv;
 	command_add_args;
 	command_exec;
-	command_get_pager;
 	command_shell;
 	command_destroy;
+
+	pager_get_exec;
+	pager_spawn;
+	pager_reap;
 
 	setcloexec;
 
@@ -278,8 +286,10 @@ LIBDPKG_PRIVATE {
 	varbuf_add_source_version;
 	pkgbin_name;
 	pkg_name;
+	pkgbin_name_const;
+	pkg_name_const;
 	pkg_source_version;
-	pkgbin_summary;
+	pkgbin_synopsis;
 	pkg_abbrev_want;
 	pkg_abbrev_status;
 	pkg_abbrev_eflag;
@@ -360,6 +370,7 @@ LIBDPKG_PRIVATE {
 	parsedb_parse;
 	parsedb_close;
 	parsedb;
+	writedb_records;
 	writedb;
 
 	dpkg_db_set_dir;
@@ -379,6 +390,52 @@ LIBDPKG_PRIVATE {
 	modstatdb_checkpoint;
 	modstatdb_shutdown;
 	modstatdb_done;
+
+	# Package on-disk control database support
+	pkg_infodb_foreach;
+	pkg_infodb_get_dir;
+	pkg_infodb_get_file;
+	pkg_infodb_has_file;
+	pkg_infodb_upgrade;
+
+	# Package on-disk diversion database support
+	ensure_diversions;
+
+	# Filesystem node hash support
+	filesdbinit;
+	files_db_reset;
+	fsys_hash_entries;
+	findnamenode;
+
+	files_db_iter_new;
+	files_db_iter_next;
+	files_db_iter_free;
+
+	reversefilelist_init;
+	reversefilelist_next;
+	reversefilelist_abort;
+
+	filepackages_iter_new;
+	filepackages_iter_next;
+	filepackages_iter_free;
+
+	dpkg_fsys_set_dir;
+	dpkg_fsys_get_dir;
+	dpkg_fsys_get_path;
+
+	# Package on-disk filesystem database support
+	parse_filehash;
+	write_filelist_except;
+	write_filehash_except;
+	ensure_packagefiles_available;
+	ensure_allinstfiles_available;
+	ensure_allinstfiles_available_quiet;
+
+	# Package on-disk stat override database support
+	statdb_parse_uid;
+	statdb_parse_gid;
+	statdb_parse_mode;
+	ensure_statoverrides;
 
 	# Triggers support
 	trig_name_is_illegal;

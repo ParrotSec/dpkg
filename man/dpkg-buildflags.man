@@ -390,18 +390,25 @@ above). The option cannot become enabled if \fBrelro\fP is not enabled.
 .
 .TP
 .B pie
-This setting (with no default since dpkg 1.18.23, and injected by default
-by gcc on the amd64, arm64, armel, armhf, i386, kfreebsd-amd64, kfreebsd-i386,
-mips, mipsel, mips64el, ppc64el, s390x, sparc and sparc64 Debian architectures)
-adds the required options via gcc specs files if
-needed to enable or disable PIE. When enabled and injected by gcc,
-adds nothing. When enabled and not injected by gcc, adds \fB\-fPIE\fP
-to \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP,
-\fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and \fB\-fPIE \-pie\fP
-to \fBLDFLAGS\fP. When disabled and injected by gcc, adds \fB\-fno\-PIE\fP
-to \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP,
-\fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP, and
-\fB\-fno\-PIE \-no\-pie\fP to \fBLDFLAGS\fP.
+This setting (with no global default since dpkg 1.18.23, as it is enabled
+by default now by gcc on the amd64, arm64, armel, armhf, hurd-i386, i386,
+kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64,
+ppc64el, riscv64, s390x, sparc and sparc64 Debian architectures) adds
+the required options to enable or disable PIE via gcc specs files, if
+needed, depending on whether gcc injects on that architecture the flags
+by itself or not.
+When the setting is enabled and gcc injects the flags, it adds nothing.
+When the setting is enabled and gcc does not inject the flags, it adds
+\fB\-fPIE\fP (via \fI%PKGDATADIR%/pie-compiler.specs\fP) to \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP,
+\fBFFLAGS\fP and \fBFCFLAGS\fP, and
+\fB\-fPIE \-pie\fP (via \fI%PKGDATADIR%/pie-link.specs\fP) to \fBLDFLAGS\fP.
+When the setting is disabled and gcc injects the flags, it adds
+\fB\-fno\-PIE\fP (via \fI%PKGDATADIR%/no-pie-compile.specs\fP) to \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP,
+\fBFFLAGS\fP and \fBFCFLAGS\fP, and
+\fB\-fno\-PIE \-no\-pie\fP (via \fI%PKGDATADIR%/no-pie-link.specs\fP) to
+\fBLDFLAGS\fP.
 
 Position Independent
 Executable are needed to take advantage of Address Space Layout
@@ -469,6 +476,17 @@ This will cause warnings when the \fB__TIME__\fP, \fB__DATE__\fP and
 \fB__TIMESTAMP__\fP macros are used.
 .
 .TP
+.B fixfilepath
+This setting (disabled by default) adds
+.BI \-ffile\-prefix\-map= BUILDPATH =.
+to \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP,
+\fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP where \fBBUILDPATH\fP is
+set to the top-level directory of the package being built.
+This has the effect of removing the build path from any generated file.
+
+If both \fBfixdebugpath\fP and \fBfixfilepath\fP are set, this option
+takes precedence, because it is a superset of the former.
+.TP
 .B fixdebugpath
 This setting (enabled by default) adds
 .BI \-fdebug\-prefix\-map= BUILDPATH =.
@@ -529,6 +547,16 @@ If not set, it will discover the current vendor by reading
 This variable sets the build path (since dpkg 1.18.8) to use in features
 such as \fBfixdebugpath\fP so that they can be controlled by the caller.
 This variable is currently Debian and derivatives-specific.
+.TP
+.B DPKG_COLORS
+Sets the color mode (since dpkg 1.18.5).
+The currently accepted values are: \fBauto\fP (default), \fBalways\fP and
+\fBnever\fP.
+.TP
+.B DPKG_NLS
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.19.0).
+The accepted values are: \fB0\fP and \fB1\fP (default).
 .
 .SH FILES
 .SS Configuration files

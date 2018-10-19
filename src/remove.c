@@ -42,9 +42,9 @@
 #include <dpkg/dir.h>
 #include <dpkg/options.h>
 #include <dpkg/triglib.h>
+#include <dpkg/db-ctrl.h>
+#include <dpkg/db-fsys.h>
 
-#include "infodb.h"
-#include "filesdb.h"
 #include "main.h"
 
 /*
@@ -75,6 +75,7 @@ static void checkforremoval(struct pkginfo *pkgtoremove,
     varbuf_snapshot(raemsgs, &raemsgs_state);
     ok= dependencies_ok(depender,pkgtoremove,raemsgs);
     if (ok == DEP_CHECK_HALT &&
+        depender->clientdata &&
         depender->clientdata->istobe == PKG_ISTOBE_REMOVE)
       ok = DEP_CHECK_DEFER;
     if (ok == DEP_CHECK_DEFER)
@@ -101,6 +102,8 @@ void deferred_remove(struct pkginfo *pkg) {
     if (!f_noact)
       modstatdb_note(pkg);
   }
+
+  ensure_package_clientdata(pkg);
 
   if (pkg->status == PKG_STAT_NOTINSTALLED) {
     sincenothing = 0;
@@ -186,7 +189,7 @@ void deferred_remove(struct pkginfo *pkg) {
     oldpkgstatus= pkg->status;
     pkg_set_status(pkg, PKG_STAT_HALFCONFIGURED);
     modstatdb_note(pkg);
-    push_cleanup(cu_prermremove, ~ehflag_normaltidy, NULL, 0, 2,
+    push_cleanup(cu_prermremove, ~ehflag_normaltidy, 2,
                  (void *)pkg, (void *)&oldpkgstatus);
     maintscript_installed(pkg, PRERMFILE, "pre-removal", "remove", NULL);
 
@@ -263,7 +266,7 @@ removal_bulk_remove_files(struct pkginfo *pkg)
     modstatdb_note(pkg);
     push_checkpoint(~ehflag_bombout, ehflag_normaltidy);
 
-    reversefilelist_init(&rev_iter, pkg->clientdata->files);
+    reversefilelist_init(&rev_iter, pkg->files);
     leftover = NULL;
     while ((namenode = reversefilelist_next(&rev_iter))) {
       struct filenamenode *usenode;
@@ -386,7 +389,7 @@ static void removal_bulk_remove_leftover_dirs(struct pkginfo *pkg) {
   modstatdb_note(pkg);
   push_checkpoint(~ehflag_bombout, ehflag_normaltidy);
 
-  reversefilelist_init(&rev_iter, pkg->clientdata->files);
+  reversefilelist_init(&rev_iter, pkg->files);
   leftover = NULL;
   while ((namenode = reversefilelist_next(&rev_iter))) {
     struct filenamenode *usenode;
@@ -495,7 +498,7 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
      * are involved in diversions, except if we are the package doing the
      * diverting. */
     for (lconffp = &pkg->installed.conffiles; (conff = *lconffp) != NULL; ) {
-      for (searchfile= pkg->clientdata->files;
+      for (searchfile = pkg->files;
            searchfile && strcmp(searchfile->namenode->name,conff->name);
            searchfile= searchfile->next);
       if (!searchfile) {
@@ -561,7 +564,7 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
                 fnvb.buf, conff->name);
       }
       debug(dbg_conffdetail, "removal_bulk conffile cleaning dsd %s", fnvb.buf);
-      push_cleanup(cu_closedir, ~0, NULL, 0, 1, (void *)dsd);
+      push_cleanup(cu_closedir, ~0, 1, (void *)dsd);
       *p= '/';
       conffbasenamelen= strlen(++p);
       conffbasename= fnvb.buf+conffnameused-conffbasenamelen;
@@ -602,7 +605,7 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
     }
 
     /* Remove the conffiles from the file list file. */
-    write_filelist_except(pkg, &pkg->installed, pkg->clientdata->files,
+    write_filelist_except(pkg, &pkg->installed, pkg->files,
                           fnnf_old_conff);
 
     pkg->installed.conffiles = NULL;

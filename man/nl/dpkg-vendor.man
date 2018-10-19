@@ -68,6 +68,15 @@ gaan opzoeken via de omgevingsvariabele \fBDEB_VENDOR\fP of via
 Deze instelling definieert de huidige leverancier. Indien dit niet ingesteld
 werd, zal er gezocht worden naar de huidige leverancier door in
 \fB%PKGCONFDIR%/origins/default\fP te gaan kijken.
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
 .
 .SH "ZIE OOK"
 \fBdeb\-origin\fP(5).
