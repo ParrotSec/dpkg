@@ -81,8 +81,8 @@ gelijkheidsteken (“\fIvlag\fP=\fIwaarde\fP”). Dit is de standaardactie.
 .TP 
 \fB\-\-list\fP
 Geeft een lijst weer van vlaggen die door de huidige leverancier ondersteund
-wordt (één per regel). Zie het onderdeel \fBONDERSTEUNDE VLAGGEN\fP voor meer
-informatie daarover.
+wordt (één per regel). Zie het onderdeel \fBSUPPORTED FLAGS\fP (ondersteunde
+vlaggen) voor meer informatie daarover.
 .TP 
 \fB\-\-status\fP
 Laat eventuele informatie zien die nuttig kan zijn om het gedrag te
@@ -406,22 +406,23 @@ optie kan niet aangezet worden als \fBrelro\fP niet geactiveerd is.
 .
 .TP 
 \fBpie\fP
-This setting (with no global default since dpkg 1.18.23, as it is enabled by
-default now by gcc on the amd64, arm64, armel, armhf, hurd\-i386, i386,
-kfreebsd\-amd64, kfreebsd\-i386, mips, mipsel, mips64el, powerpc, ppc64,
-ppc64el, riscv64, s390x, sparc and sparc64 Debian architectures) adds the
-required options to enable or disable PIE via gcc specs files, if needed,
-depending on whether gcc injects on that architecture the flags by itself or
-not.  When the setting is enabled and gcc injects the flags, it adds
-nothing.  When the setting is enabled and gcc does not inject the flags, it
-adds \fB\-fPIE\fP (via \fI%PKGDATADIR%/pie\-compiler.specs\fP) to \fBCFLAGS\fP,
-\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP and
-\fBFCFLAGS\fP, and \fB\-fPIE \-pie\fP (via \fI%PKGDATADIR%/pie\-link.specs\fP) to
-\fBLDFLAGS\fP.  When the setting is disabled and gcc injects the flags, it adds
-\fB\-fno\-PIE\fP (via \fI%PKGDATADIR%/no\-pie\-compile.specs\fP) to \fBCFLAGS\fP,
-\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP and
-\fBFCFLAGS\fP, and \fB\-fno\-PIE \-no\-pie\fP (via \fI%PKGDATADIR%/no\-pie\-link.specs\fP)
-to \fBLDFLAGS\fP.
+Deze instelling (zonder standaardinstelling sinds dpkg 1.18.23, aangezien
+het nu standaard geactiveerd wordt door gcc op de Debian\-architecturen
+amd64, arm64, armel, armhf, hurd\-i386, i386, kfreebsd\-amd64, kfreebsd\-i386,
+mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc en
+sparc64) voegt zo nodig de vereiste opties toe om PIE te activeren of te
+deactiveren via gcc specs\-bestanden, afhankelijk van het feit of gcc op die
+architectuur de vlaggen zelf injecteert of niet. Indien de instelling
+geactiveerd is en gcc de vlaggen injecteert, voegt ze niets toe. Indien de
+instelling geactiveerd is en gcc de vlaggen niet injecteert, voegt ze
+\fB\-fPIE\fP toe (via \fI%PKGDATADIR%/pie\-compiler.specs\fP) aan \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en
+\fBFCFLAGS\fP, en \fB\-fPIE \-pie\fP (via \fI%PKGDATADIR%/pie\-link.specs\fP) aan
+\fBLDFLAGS\fP. Indien de instelling gedeactiveerd is en gcc de vlaggen
+injecteert, voegt ze \fB\-fno\-PIE\fP toe (via
+\fI%PKGDATADIR%/no\-pie\-compile.specs\fP) aan \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en \fBFCFLAGS\fP, en
+\fB\-fno\-PIE \-no\-pie\fP (via \fI%PKGDATADIR%/no\-pie\-link.specs\fP) aan \fBLDFLAGS\fP.
 
 Position Independent Executable (PIE \- positie\-onafhankelijke programma's)
 zijn nodig om voordeel te halen uit Address Space Layout Randomization (ASLR
@@ -497,14 +498,15 @@ Deze instelling (standaard geactiveerd) voegt \fB\-Wdate\-time\fP toe bij
 .
 .TP 
 \fBfixfilepath\fP
-This setting (disabled by default) adds
-\fB\-ffile\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP to \fBCFLAGS\fP, \fBCXXFLAGS\fP,
-\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP and \fBFCFLAGS\fP where
-\fBBUILDPATH\fP is set to the top\-level directory of the package being built.
-This has the effect of removing the build path from any generated file.
+Deze instelling (standaard gedeactiveerd) voegt
+\fB\-ffile\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP toe aan \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP en \fBFCFLAGS\fP, waarbij
+\fBBUILDPATH\fP ingesteld wordt op de basismap van het pakket dat gebouwd
+wordt. Dit heeft als effect dat het bouwpad verwijderd wordt van eventueel
+gegenereerde bestanden.
 
-If both \fBfixdebugpath\fP and \fBfixfilepath\fP are set, this option takes
-precedence, because it is a superset of the former.
+Indien zowel \fBfixdebugpath\fP als \fBfixfilepath\fP ingesteld zijn, heeft deze
+laatste optie voorrang, omdat het een superset is van de eerste.
 .TP 
 \fBfixdebugpath\fP
 Deze instelling (standaard geactiveerd) voegt
@@ -573,9 +575,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
 .
 .SH BESTANDEN
 .SS Configuratiebestanden

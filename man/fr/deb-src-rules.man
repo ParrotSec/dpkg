@@ -1,0 +1,92 @@
+.\" dpkg manual page - deb-src-rules(5)
+.\"
+.\" Copyright © 2016-2017 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-rules 5 2017\-09\-05 "Projet Debian" "Utilitaires de dpkg"
+.SH NOM
+deb\-src\-rules \- Fichier de règles des paquets source Debian
+.
+.SH SYNOPSIS
+debian/rules
+.
+.SH DESCRIPTION
+Ce fichier fournit les instructions nécessaires à la construction des
+paquets binaires à partir de paquets sources.
+.PP
+Le fichier \fIdebian/rules\fP est un Makefile exécutable avec un «\ shebang\ »
+qui est habituellement positionné sur «\ #!/usr/bin/make \-f\ ».
+.PP
+Il doit prendre en charge les cibles «\ make\ » suivantes\ :
+
+.TP 
+\fBclean\fP
+Nettoyer l'arborescence des sources, en supprimant toutes les modifications
+réalisées par toutes les constructions et cibles binaires. Cette cible sera
+appelée avec les droits du superutilisateur.
+.TP 
+\fBbuild\-indep\fP
+Construction des fichiers indépendants de l'architecture requis pour
+construire tout paquet binaire indépendant de l'architecture. S'il n'y a pas
+de paquet binaire indépendant de l'architecture à créer, la cible doit tout
+de même exister mais ne fait rien. Cette cible ne doit pas requérir les
+droits du superutilisateur.
+.TP 
+\fBbuild\-arch\fP
+Construction des fichiers dépendants de l'architecture requis pour
+construire tout paquet binaire dépendant de l'architecture. S'il n'y a pas
+de paquet binaire dépendant de l'architecture à créer, la cible doit tout de
+même exister mais ne fait rien. Cette cible ne doit pas requérir les droits
+du superutilisateur.
+.TP 
+\fBbuild\fP
+Construction des fichiers indépendants et dépendants de l'architecture, soit
+en dépendant (au moins transitivement) de \fBbuild\-indep\fP et/ou de
+\fBbuild\-arch\fP, ou en entrant en ligne de commande ce que les cibles
+feront. Cette cible ne doit pas requérir les droits du superutilisateur.
+.TP 
+\fBbinary\-indep\fP
+Construction des paquets binaires indépendants de l'architecture. Cette
+cible doit dépendre (au moins transitivement) soit de \fBbuild\-indep\fP, soit
+de \fBbuild\fP. Cette cible sera appelée avec les droits du superutilisateur.
+.TP 
+\fBbinary\-arch\fP
+Construction des paquets dépendants de l'architecture. Cette cible doit
+dépendre (au moins transitivement) soit de \fBbuild\-arch\fP, soit de
+\fBbuild\fP. Cette cible sera appelée avec les droits du superutilisateur.
+.TP 
+\fBbinary\fP
+Construction des paquets binaires indépendants et dépendants de
+l'architecture, soit en dépendant (au moins transitivement) de
+\fBbinary\-indep\fP et/ou de \fBbinary\-arch\fP, ou en entrant en ligne de commande
+ce que les cibles feront. Cette cible sera appelée avec les droits du
+superutilisateur.
+.
+.SH "VOIR AUSSI"
+.ad l
+.nh
+\fBdpkg\-architecture\fP(1), \fBdpkg\-vendor\fP(1), \fBdpkg\-buildflags\fP(1),
+\fBdpkg\-parsechangelog\fP(1), \fBdpkg\-shlibdeps\fP(1), \fBdpkg\-gencontrol\fP(1),
+\fBdpkg\-deb\fP(1), \fBdpkg\-distaddfile\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

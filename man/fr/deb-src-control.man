@@ -1,0 +1,475 @@
+.\" dpkg manual page - deb-src-control(5)
+.\"
+.\" Copyright © 2010 Oxan van Leeuwen <oxan@oxanvanleeuwen.nl>
+.\" Copyright © 2011 Raphaël Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-control 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-src\-control \- Format du fichier principal de contrôle dans les paquets
+source Debian
+.
+.SH SYNOPSIS
+debian/control
+.
+.SH DESCRIPTION
+Chaque paquet source Debian contient un fichier «\ control\ » maître, qui
+contient au moins deux paragraphes, séparés par une ligne vide. Le premier
+paragraphe donne toutes les informations à propos du paquet source en
+général et chaque paragraphe qui suit décrit exactement un paquet
+binaire. Chaque paragraphe contient au moins un champ. Un champ commence par
+le nom du champ, par exemple \fBPackage\fP ou \fBSection\fP (la casse n'est pas
+significative), suivi d'un caractère «\ deux\-points\ », du contenu du champ et
+d'un retour à la ligne. Les champs à lignes multiples sont aussi possibles,
+mais chaque ligne supplémentaire, qui ne comporte pas de nom de champ, doit
+commencer par au moins une espace. Le contenu des champs à lignes multiples
+est en général réassemblé en une ligne unique par les outils (sauf pour le
+champ \fBDescription\fP, voir ci\-dessous). Pour inclure des lignes vides dans
+un champ à lignes multiples, il est nécessaire de mettre un point après
+l'espace initiale. Les lignes commençant par \fB«\ #\ »\fP sont traitées comme
+des commentaires.
+.
+.SH "LES CHAMPS SOURCE"
+.TP 
+\fBSource:\fP \fInom\-du\-paquet\-source\fP (requis)
+The value of this field is the name of the source package, and should match
+the name of the source package in the debian/changelog file. A package name
+must consist only of lowercase letters (a\-z), digits (0\-9), plus (+) and
+minus (\-) signs, and periods (.). Package names must be at least two
+characters long and must start with a lowercase alphanumeric character
+(a\-z0\-9).
+
+.TP 
+\fBMaintainer:\fP \fInom\-complet\-et\-adresse\-électronique\fP (recommandé)
+Le format de ce champ sera «\ Jean Dupont <jdupont@foo.com>\ »\ ; il
+indique le responsable actuel du paquet, par opposition à l'auteur du
+logiciel ou au responsable originel.
+
+.TP 
+\fBUploaders:\fP\fI nom\-complet\-et\-adresse\-électronique\fP
+Affiche les noms et les adresses électroniques des co\-responsables du
+paquet, au même format que le champ \fBMaintainer\fP. Des co\-responsables
+multiples peuvent être séparés par des virgules.
+
+.TP 
+\fBStandards\-Version:\fP \fIchaîne\-de\-la\-version\fP
+Ce champ indique la version la plus récente des normes de la charte de la
+distribution auxquelles ce paquet se conforme.
+
+.TP 
+\fBDescription\fP \fIdescription\-courte\fP
+.TQ
+\fB \fP\fIdescription\-longue\fP
+Le format de la description du paquet est un résumé bref sur la première
+ligne (après le champ \fBDescription\fP). Les lignes suivantes peuvent servir à
+une description plus longue et plus détaillée. Chaque ligne de cette
+description longue doit être précédée d'une espace\ ; quand c'est une ligne
+blanche, elle doit contenir un seul «\ \fB.\fP\ » après cette espace.
+
+.TP 
+\fBHomepage:\fP\fI URL\fP
+URL de la page d'accueil du projet amont.
+
+.TP 
+\fBBugs:\fP\fI URL\fP
+L'\fIURL\fP du système de suivi de bogues (BTS) de ce paquet. Le format utilisé
+est \fItype_de_bts\fP\fB://\fP\fIadresse_du_btsE\fP, par exemple
+\fBdebbugs://bugs.debian.org\fP. Ce champ est en général inutile.
+
+.TP 
+\fBRules\-Requires\-Root:\fP \fBno\fP|\fBbinary\-targets\fP|\fImots\-clés\-implémentation\fP
+Ce champ est utilisé pour indiquer si le fichier \fBdebian/rules\fP exige des
+droits (fake)root pour exécuter certaines de ses cibles et quand, si c'est
+le cas.
+.RS
+.TP 
+\fBno\fP
+Les cibles binaires n'exigeront aucun (fake)root.
+.TP 
+\fBbinary\-targets\fP
+Les cibles binaires doivent toujours être exécutées avec les droits
+(fake)root. C'est la valeur par défaut quand le champ est omis\ ; l'ajout du
+champ avec un \fBbinary\-targets\fP explicite, alors qu'il n'est pas strictement
+nécessaire, marque qu'il a été analysé pour cette exigence.
+.TP 
+\fImots\-clés\-implémentation\fP
+Il s'agit d'une liste, séparée par des espaces, de mots\-clés qui définissent
+quand (fake)root est exigé.
+
+Les mots\-clés sont composés de \fIespace\-de\-nommage\fP/\fIcas\fP. La partie
+\fIespace\-de\-nommage\fP ne peut pas inclure de «\ /\ » ou d'espace. La partie
+\fIcas\fP ne peut pas inclure d'espace. Par ailleurs, les deux parties doivent
+être entièrement composées de caractères ASCII imprimables.
+
+Chaque outil ou paquet définira un espace de nommage nommé d'après lui\-même
+et fournira le nombre des cas où (fake)root est exigé. (Voir «\ Mots\-clés
+fournis par l'implémentation\ » dans \fIrootless\-builds.txt\fP).
+
+Quand le champ est défini pour un des \fImots\-clés\-implémentation\fP, le
+constructeur exposera une interface qui est utilisée pour exécuter une
+commande avec les droits (fake)root. (Voir «\ API pour obtenir les droits
+root\ » dans \fIrootless\-builds.txt\fP).
+.RE
+
+.TP 
+\fBTestsuite:\fP\fI liste\-de\-noms\fP
+.TQ
+\fBTestsuite\-Triggers:\fP\fI liste\-de\-paquets\fP
+Ces champs sont décrits dans la page de manuel de \fBdsc\fP(5), car ils sont
+créés à partir des informations déduites de \fBdebian/tests/control\fP ou
+copiés littéralement dans le fichier «\ control\ » du paquet source.
+
+.TP 
+\fBVcs\-Arch:\fP\fI URL\fP
+.TQ
+\fBVcs\-Bzr:\fP\fI URL\fP
+.TQ
+\fBVcs\-Cvs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Darcs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Git:\fP\fI URL\fP
+.TQ
+\fBVcs\-Hg:\fP\fI URL\fP
+.TQ
+\fBVcs\-Mtn:\fP\fI URL\fP
+.TQ
+\fBVcs\-Svn:\fP\fI URL\fP
+Ce champ indique l'\fIURL\fP du système de gestion de version utilisé pour la
+gestion du paquet. Les systèmes gérés sont \fBArch\fP, \fBBzr\fP (Bazaar), \fBCvs\fP,
+\fBDarcs\fP, \fBGit\fP, \fBHg\fP (Mercurial), \fBMtn\fP (Monotone) et \fBSvn\fP
+(Subversion). En général, ce champ fait référence à la dernière version du
+paquet, c'est\-à\-dire la branche principale ou le «\ trunk\ ».
+
+.TP 
+\fBVcs\-Browser:\fP\fI URL\fP
+Indique l'\fIURL\fP de l'interface web permettant de parcourir le dépôt du
+système de gestion de version.
+
+.TP 
+\fBOrigin:\fP\fI nom\fP
+Indique le nom de la distribution dont le paquet provient. Ce champ n'est
+souvent pas nécessaire.
+
+.TP 
+\fBSection:\fP \fIsection\fP
+Champ général qui indique la catégorie d'un paquet\ ; cette catégorie est
+fondée sur le programme que ce paquet installe. \fButils\fP, \fBnet\fP, \fBmail\fP,
+\fBtext\fP, \fBx11\fP,\ etc., représentent quelques catégories habituelles.
+
+.TP 
+\fBPriority:\fP\fI priorité\fP
+Définit l'importance du paquet à l'intérieur du système
+général. \fBrequired\fP, \fBstandard\fP, \fBoptional\fP, \fBextra\fP,\ etc., représentent
+des priorités habituelles.
+
+Les champs \fBSection\fP et \fBPriority\fP possèdent un ensemble défini de valeurs
+acceptées, tiré de la Charte particulière de la distribution.
+
+.TP 
+\fBBuild\-Depends:\fP\fI liste\-de\-paquets\fP
+Liste de paquets à installer et configurer pour pouvoir construire à partir
+du paquet source. Ces dépendances doivent être satisfaites lors de la
+construction des paquets binaires dépendant ou non de l'architecture, et des
+paquets source. Ajouter une dépendance à ce champ n'aura pas exactement le
+même effet que de l'inclure à la fois dans \fBBuild\-Depends\-Arch\fP et
+\fBBuild\-Depends\-Indep\fP, parce que la dépendance a aussi besoin d'être prise
+en compte lors de la construction du paquet source.
+.
+.TP 
+\fBBuild\-Depends\-Arch:\fP\fIliste\-de\-paquets\fP
+Liste analogue à \fBBuild\-Depends\fP, mais restreinte aux paquets nécessaires
+pour construire les paquets dépendants de l'architecture. Les paquets
+indiqués dans \fBBuild\-Depends\fP sont alors également installés. Ce champ est
+géré depuis la version\ 1.16.4 de dpkg\ ;\ pour pouvoir construire des paquets
+avec des versions plus anciennes de dpkg, il est préférable d'utiliser
+\fBBuild\-Depends\fP.
+
+.TP 
+\fBBuild\-Depends\-Indep:\fP\fI liste\-de\-paquets\fP
+Liste analogue à \fBBuild\-Depends\fP, mais restreinte aux paquets nécessaires
+pour construire les paquets indépendants de l'architecture. Les paquets
+indiqués dans \fBBuild\-Depends\fP sont alors aussi installés.
+
+.TP 
+\fBBuild\-Conflicts:\fP\fI liste de paquets\fP
+Liste de paquets qui ne doivent pas être installés lors de la construction
+du paquet, par exemple s'ils interfèrent avec le système de construction
+utilisé. Si une dépendance est ajoutée à cette liste, l'effet sera le même
+que si elle était ajoutée à la fois dans \fBBuild\-Conflicts\-Arch\fP et
+\fBBuild\-Conflicts\-Indep\fP, en ayant de plus l'effet d'être prise en compte
+pour les constructions de paquets uniquement source («\ source\-only
+builds\ »).
+
+.TP 
+\fBBuild\-Conflicts\-Arch:\fP\fI liste\-de\-paquets\fP
+Identique à \fBBuild\-Conflicts\fP, mais n'est prise en compte que pour les
+paquets dépendants de l'architecture. Ce champ est géré depuis la
+version\ 1.16.4 de dpkg\ ; pour pouvoir construire des paquets avec des
+versions plus anciennes de dpkg, il est préférable d'utiliser
+\fBBuild\-Conflicts\fP.
+
+.TP 
+\fBBuild\-Conflicts\-Indep:\fP\fI liste\-de\-paquets\fP
+liste analogue à \fBBuild\-Conflicts\fP mais restreinte à la construction des
+paquets indépendants de l'architecture.
+
+.PP
+La syntaxe des champs \fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP et
+\fBBuild\-Depends\-Indep\fP est une liste de groupes contenant des paquets
+alternatifs. Chaque groupe est une liste de paquets séparés par des barres
+verticales (le symbole du tube) «\ \fB|\fP\ ». Les groupes sont séparés par des
+virgules «\ \fB,\fP\ », et la liste peut finir par une virgule qui peut être
+éliminée lors de la création des champs pour \fBdeb\-control\fP(5) (depuis
+dpkg\ 1.10.14). Une virgule représente un «\ ET\ » logique et une barre
+verticale représente un «\ OU\ » logique\ ; le tube représente un lien plus
+fort. Chaque nom de paquet est suivi de façon optionnelle par un type
+d'architecture entre crochets après deux\-points «\ \fB:\fP\ », éventuellement
+suivi par un numéro de version entre parenthèses «\ \fB(\fP\ » et «\ \fB)\fP\ », une
+spécification d'architecture entre crochets «\ \fB[\fP\ » et «\ \fB]\fP\ », et une
+formule de restriction constituée d'une ou plusieurs listes de noms de
+profil entre chevrons «\ \fB<\fP\ » et «\ \fB>\fP\ ».
+
+La syntaxe des champs \fBBuild\-Conflicts\fP, \fBBuild\-Conflicts\-Arch\fP et
+\fBBuild\-Conflicts\-Indep\fP est une liste de paquets séparés par des virgules
+qui représentent le «\ ET\ » logique et peut finir par une virgule qui peut
+être éliminée lors de la création des champs pour \fBdeb\-control\fP(5) (depuis
+dpkg\ 1.10.14). L'indication de paquets alternatifs avec une barre verticale
+(le symbole du tube) «\ |\ » n'est pas prise en charge. Chaque nom de paquet
+peut être suivi de façon optionnelle par un numéro de version entre
+parenthèses, un type d'architecture entre crochets et une formule de
+restriction constituée d'une ou plusieurs listes de noms de profil entre
+chevrons.
+
+Un nom de type d'architecture peut être un nom d'architecture réelle de
+Debian (depuis dpkg\ 1.16.5), \fBany\fP (depuis dpkg\ 1.16.2) ou \fBnative\fP
+(depuis dpkg\ 1.16.5). S'il est omis, la valeur par défaut des champs
+\fBBuild\-Depends\fP est l'architecture de l'hôte actuel, la valeur par défaut
+des champs \fBBuild\-Conflicts\fP est \fBany\fP. Un nom d'architecture réelle de
+Debian correspondra exactement à l'architecture pour ce nom de paquet,
+\fBany\fP correspondra à toute architecture pour ce nom de paquet si le paquet
+a été marqué \fBMulti\-Arch: allowed\fP, et \fBnative\fP correspondra à
+l'architecturede construction actuelle si le paquet n'a été marqué
+\fBMulti\-Arch: foreign\fP.
+
+Une contrainte sur le numéro de version peut commencer par
+«\ \fB>>\fP\ », et dans ce cas toute version supérieure correspondra, et
+il peut indiquer (ou pas) le numéro de révision pour le paquet Debian (les
+deux numéros étant séparés par un trait d'union). Voici les relations
+acceptées pour les versions\ : «\ \fB>>\fP\ » pour supérieur à,
+«\ \fB<<\fP\ » pour inférieur à, «\ \fB>=\fP\ » pour supérieur ou égal,
+«\ \fB<=\fP\ » pour inférieur ou égal, et «\ \fB=\fP\ » pour égal à.
+
+Une indication d'architecture consiste en un ou plusieurs noms
+d'architectures, séparés par des espaces. Un nom d'architecture peut être
+précédé d'un point d'exclamation qui correspond alors au «\ NON\ » logique.
+
+Une formule de restriction consiste en une ou plusieurs listes de
+restriction séparées par des espaces. Chaque liste de restriction est
+incluse entre chevrons. Les éléments des listes de restriction sont des noms
+de profils de construction séparés par des espaces et pouvant être préfixés
+d'un point d'exclamation représentant un «\ NON\ » logique. Une formule de
+restriction représente une forme normale disjonctive.
+
+Veuillez noter que les dépendances des paquets du jeu \fBbuild\-essential\fP
+peuvent être omises et qu'il n'est pas possible de déclarer des conflits
+avec ces paquets. La liste des paquets concernés est fournie par le paquet
+build\-essential.
+
+
+.SH "CHAMPS BINAIRES"
+
+.LP
+Veuillez noter que les champs \fBPriority\fP, \fBSection\fP et \fBHomepage\fP peuvent
+être placés dans le paragraphe d'un paquet binaire et leur valeur remplace
+alors celle du paquet source.
+
+.TP 
+\fBPackage:\fP \fInom\-du\-paquet\-binaire\fP (requis)
+Ce champ sert à indiquer le nom du paquet binaire. Les restrictions sont les
+mêmes que celles des paquets source.
+
+.TP 
+\fBPackage\-Type:\fP \fBdeb\fP|\fBudeb\fP|\fItype\fP
+Ce champ indique le type de paquet. La valeur \fBudeb\fP est à utiliser pour
+les paquets à taille contrôlée utilisés par l'installateur Debian. La valeur
+\fBdeb\fP est la valeur par défaut qui est utilisée si le champ n'est pas
+présent. De nouveaux types pourraient être ajoutés au fil du temps.
+
+.TP 
+\fBArchitecture:\fP \fIarch\fP|\fBall\fP|\fBany\fP (requis)
+Ce champ indique l'architecture matérielle sur laquelle le paquet peut être
+utilisé. Les paquets qui peuvent être utilisés sur toute architecture
+doivent utiliser le champ \fBany\fP. Les paquets indépendants de
+l'architecture, tels les scripts shell ou Perl ou la documentation utilisent
+la valeur \fBall\fP. Pour restreindre un paquet à certaines architectures,
+leurs noms doivent être indiqués séparés par des espaces. Il est également
+possible d'utiliser des noms génériques d'architectures dans cette liste
+(voir \fBdpkg\-architecture\fP(1) pour plus d'informations sur ces architectures
+génériques).
+
+.TP 
+\fBBuild\-Profiles:\fP \fIformule\-de\-restriction\fP
+Ce champ précise les conditions pour lesquelles ce paquet binaire est ou
+n'est pas construit. Cette condition est exprimée en utilisant la même
+syntaxe de formule de restriction qui provient du champ \fBBuild\-Depends\fP.
+
+Si un paragraphe de paquet binaire ne contient pas ce champ, cela signifie
+de façon implicite que ce paquet se construit avec tous les profils de
+construction (y compris aucun profil).
+
+En d'autres termes, si un paragraphe de paquet binaire est annoté d'un champ
+\fBBuild\-Profiles\fP non vide, alors, ce paquet binaire est créé si et
+seulement si la condition exprimée par l'expression en forme normale
+conjonctive est évaluée à vrai.
+
+.TP 
+\fBEssential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBBuild\-Essential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBMulti\-Arch:\fP \fBsame\fP|\fBforeign\fP|\fBallowed\fP|\fBno\fP
+.TQ
+\fBTag:\fP\fI liste\-d'étiquettes\fP
+.TQ
+\fBDescription:\fP \fIdescription\-courte\fP (recommandé)
+Ces champs sont décrits dans la page de manuel de \fBdeb\-control\fP(5), car ils
+sont copiés littéralement dans le fichier «\ control\ » du paquet binaire.
+
+.TP 
+\fBDepends:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBPre\-Depends:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBRecommends:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBSuggests:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBBreaks:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBEnhances:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBReplaces:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBConflicts:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBProvides:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBBuilt\-Using:\fP\fI liste\-de\-paquets\fP
+Ces champs déclarent les relations entre les paquets. Ils sont discutés dans
+la page de manuel de \fBdeb\-control\fP(5). Quand ces champs se trouvent dans
+\fIdebian/control\fP, ils peuvent aussi se terminer par une virgule (depuis
+dpkg\ 1.10.14)\ ; ils comprennent des spécifications d'architecture et des
+formules de restriction qui seront réduites lors de la génération des champs
+pour \fBdeb\-control\fP(5).
+
+.TP 
+\fBSubarchitecture:\fP\fI valeur\fP
+.TQ
+\fBKernel\-Version:\fP\fI valeur\fP
+.TQ
+\fBInstaller\-Menu\-Item:\fP\fI valeur\fP
+Ces champs sont utilisés par l'installateur dans les \fBudeb\fP et ne sont en
+général pas nécessaires. Veuillez consulter
+/usr/share/doc/debian\-installer/devel/modules.txt fourni avec le paquet
+\fBdebian\-installer\fP pour plus de détails.
+
+.SH "LES CHAMPS UTILISATEUR"
+Il est autorisé d'ajouter au fichier de contrôle des champs supplémentaires
+définis par l'utilisateur. L'outil ignorera ces champs. Si vous souhaitez
+que ces champs soient copiés dans ces fichiers de sortie, tels que les
+paquets binaires, vous devez utiliser un schéma de nommage personnalisé\ :
+les champs démarreront par un \fBX\fP, suivi de zéro ou plusieurs des lettres
+\fBSBC\fP et un trait d'union.
+
+.TP 
+\fBS\fP
+Ce champ apparaîtra dans le fichier de contrôle du paquet des sources, voir
+\fBdsc\fP(5).
+.TP 
+\fBB\fP
+Le champ apparaîtra dans le fichier de contrôle du paquet binaire, voir
+\fBdeb\-control\fP(5).
+.TP 
+\fBC\fP
+Le champ apparaîtra dans le fichier de contrôle d'envoi (.changes), voir
+\fBdeb\-changes\fP(5).
+
+.P
+Veuillez noter que les préfixes \fBX\fP[\fBSBC\fP]\fB\-\fP sont retirés quand les
+champs sont copiés dans les fichiers de sortie. Un champ \fBXC\-Approved\-By\fP
+apparaîtra sous la forme \fBApproved\-By\fP dans le fichier des modifications et
+n'apparaîtra pas dans les fichiers de contrôle des paquets binaires ou
+source.
+
+Il faut prendre en compte le fait que ces champs définis par l'utilisateur
+se serviront de l'espace de nommage global lequel pourrait, dans le futur,
+entrer en conflit avec des champs officiellement reconnus. Pour éviter de
+telles situations, il est conseillé de les préfixer avec \fBPrivate\-\fP
+(exemple\ : \fBXB\-Private\-New\-Field\fP).
+
+.SH EXEMPLE
+.\" .RS
+.nf
+# Commentaire
+Source: dpkg
+Section: admin
+Priority: required
+Maintainer: Dpkg Developers <debian\-dpkg@lists.debian.org>
+# ce champ est copié dans les paquets source et binaires
+XBS\-Upstream\-Release\-Status: stable
+Homepage: https://wiki.debian.org/Teams/Dpkg
+Vcs\-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs\-Git: https://git.dpkg.org/git/dpkg/dpkg.git
+Standards\-Version: 3.7.3
+Build\-Depends: pkg\-config, debhelper (>= 4.1.81),
+ libselinux1\-dev (>= 1.28\-4) [!linux\-any]
+
+Package: dpkg\-dev
+Section: utils
+Priority: optional
+Architecture: all
+# champ personnalisé dans le paquet binaire
+XB\-Mentoring\-Contact: Raphael Hertzog <hertzog@debian.org>
+Depends: dpkg (>= 1.14.6), perl5, perl\-modules, cpio (>= 2.4.2\-2), bzip2, lzma,
+ patch (>= 2.2\-1), make, binutils, libtimedate\-perl
+Recommends: gcc | c\-compiler, build\-essential
+Suggests: gnupg, debian\-keyring
+Conflicts: dpkg\-cross (<< 2.0.0), devscripts (<< 2.10.26)
+Replaces: manpages\-pl (<= 20051117\-1)
+Description: Debian package development tools
+ This package provides the development tools (including dpkg\-source)
+ required to unpack, build and upload Debian source packages.
+ .
+ Most Debian source packages will require additional tools to build;
+ for example, most packages need make and the C compiler gcc.
+.fi
+
+
+.\" .RE
+.SH "VOIR AUSSI"
+\fBdeb\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1)
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

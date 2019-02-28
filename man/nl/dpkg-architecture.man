@@ -181,7 +181,8 @@ i386\-linux\-gnu, x86_64\-linux\-gnu. Voorbeelden van paden:
 /lib/powerpc64le\-linux\-gnu/, /usr/lib/i386\-kfreebsd\-gnu/.
 .
 .SH VARIABELEN
-De volgende variabelen worden door \fBdpkg\-architecture\fP ingesteld:
+De volgende variabelen worden door \fBdpkg\-architecture\fP ingesteld (zie de
+sectie \fBTERMS\fP voor een beschrijving van het naamgevingsschema):
 .IP \fBDEB_BUILD_ARCH\fP 4
 De Debian architectuur van de bouwmachine.
 .IP \fBDEB_BUILD_ARCH_ABI\fP 4
@@ -376,9 +377,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
 .
 .SH OPMERKINGEN
 Alle lange commando\- en optienamen kunnen slechts sinds dpkg 1.17.17

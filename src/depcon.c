@@ -224,16 +224,16 @@ findbreakcyclerecursive(struct pkginfo *pkg, struct cyclesofarlink *sofar)
 bool
 findbreakcycle(struct pkginfo *pkg)
 {
-  struct pkgiterator *iter;
+  struct pkg_hash_iter *iter;
   struct pkginfo *tpkg;
 
   /* Clear the visited flag of all packages before we traverse them. */
-  iter = pkg_db_iter_new();
-  while ((tpkg = pkg_db_iter_next_pkg(iter))) {
+  iter = pkg_hash_iter_new();
+  while ((tpkg = pkg_hash_iter_next_pkg(iter))) {
     ensure_package_clientdata(tpkg);
     tpkg->clientdata->color = PKG_CYCLE_WHITE;
   }
-  pkg_db_iter_free(iter);
+  pkg_hash_iter_free(iter);
 
   return findbreakcyclerecursive(pkg, NULL);
 }
@@ -335,7 +335,7 @@ depisok(struct dependency *dep, struct varbuf *whynot,
   case PKG_ISTOBE_DECONFIGURE:
     return true;
   case PKG_ISTOBE_NORMAL:
-    /* Only installed packages can be make dependency problems. */
+    /* Only installed packages can be made dependency problems. */
     switch (dep->up->status) {
     case PKG_STAT_INSTALLED:
     case PKG_STAT_TRIGGERSPENDING:

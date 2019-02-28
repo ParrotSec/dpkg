@@ -45,6 +45,12 @@ dpkg_error_set(struct dpkg_error *err, enum dpkg_msg_type type, int syserrno,
 	err->str = str.buf;
 }
 
+bool
+dpkg_has_error(struct dpkg_error *err)
+{
+	return err != NULL && err->type != DPKG_MSG_NONE;
+}
+
 int
 dpkg_put_warn(struct dpkg_error *err, const char *fmt, ...)
 {
@@ -103,6 +109,15 @@ dpkg_error_print(struct dpkg_error *err, const char *fmt, ...)
 		ohshit("%s: %s", str, err->str);
 
 	free(str);
+}
+
+void
+dpkg_error_move(struct dpkg_error *dst, struct dpkg_error *src)
+{
+	dst->type = src->type;
+	src->type = DPKG_MSG_NONE;
+	dst->str = src->str;
+	src->str = NULL;
 }
 
 void

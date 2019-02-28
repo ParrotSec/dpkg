@@ -39,10 +39,12 @@ in het geval van \fBdpkg\-source\fP en naar standaarduitvoer in het geval van
 variabelesubstituties uit op het uitvoerbestand.
 
 Een variabelesubstitutie heeft als vorm
-\fB${\fP\fIvariabelenaam\fP\fB}\fP. Variabelenamen bestaan uit alfanumerieke tekens,
-koppeltekens en dubbele punten en beginnen met een alfanumeriek
-teken. Variabelesubstituties worden bij herhaling uitgevoerd tot er geen
-meer overblijven. Na een substitutie wordt de volledige tekst van het veld
+\fB${\fP\fIvariabelenaam\fP\fB}\fP. Variabelenamen bestaan uit alfanumerieke tekens
+(a\-zA\-Z0\-9), koppeltekens (\-) en dubbele punten (:) en beginnen met een
+alfanumeriek teken. Ze zijn ook hoofdlettergevoelig, ook al kunnen ze
+verwijzen naar andere entiteiten die hoofdletterbehoudend
+zijn. Variabelesubstituties worden bij herhaling uitgevoerd tot er geen meer
+overblijven. Na een substitutie wordt de volledige tekst van het veld
 opnieuw doorzocht op nog meer uit te voeren substituties.
 
 Nadat alle substituties uitgevoerd werden, wordt de tekenreeks \fB${}\fP

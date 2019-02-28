@@ -290,11 +290,15 @@ Salta la richiesta di input sulla configurazione per le alternative che sono
 configurate in modo corretto in modalità automatica. Questa opzione è
 rilevante solo con \fB\-\-config\fP o \fB\-\-all\fP.
 .TP 
+\fB\-\-quiet\fP
+Do not generate any comments unless errors occur.
+.TP 
 \fB\-\-verbose\fP
 Generate more comments about what is being done.
 .TP 
-\fB\-\-quiet\fP
-Non genera alcun commento a meno che non si verifichi un errore.
+\fB\-\-debug\fP
+Generate even more comments, helpful for debugging, about what is being done
+(since version 1.19.3).
 .
 .SH "STATO D'USCITA"
 .TP 

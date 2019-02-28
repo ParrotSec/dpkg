@@ -96,7 +96,7 @@ prepare_rm_conffile() {
 	local md5sum old_md5sum
 	md5sum="$(md5sum "$CONFFILE" | sed -e 's/ .*//')"
 	old_md5sum="$(dpkg-query -W -f='${Conffiles}' "$PACKAGE" | \
-		sed -n -e "\'^ $CONFFILE ' { s/ obsolete$//; s/.* //; p }")"
+		sed -n -e "\\'^ $CONFFILE ' { s/ obsolete$//; s/.* //; p }")"
 	if [ "$md5sum" != "$old_md5sum" ]; then
 		mv -f "$CONFFILE" "$CONFFILE.dpkg-backup"
 	else
@@ -207,7 +207,7 @@ prepare_mv_conffile() {
 	local md5sum old_md5sum
 	md5sum="$(md5sum "$CONFFILE" | sed -e 's/ .*//')"
 	old_md5sum="$(dpkg-query -W -f='${Conffiles}' "$PACKAGE" | \
-		sed -n -e "\'^ $CONFFILE ' { s/ obsolete$//; s/.* //; p }")"
+		sed -n -e "\\'^ $CONFFILE ' { s/ obsolete$//; s/.* //; p }")"
 	if [ "$md5sum" = "$old_md5sum" ]; then
 		mv -f "$CONFFILE" "$CONFFILE.dpkg-remove"
 	fi
@@ -424,7 +424,7 @@ prepare_dir_to_symlink()
 	# we should not perform the switch.
 	export DPKG_MAINTSCRIPT_HELPER_INTERNAL_API="$version"
 	find "$PATHNAME" -print0 | \
-		xargs -0 -n1 $0 _internal_pkg_must_own_file "$PACKAGE" || \
+		xargs -0 -n1 "$0" _internal_pkg_must_own_file "$PACKAGE" || \
 		error "directory '$PATHNAME' contains files not owned by" \
 		      "package $PACKAGE, cannot switch to symlink"
 	unset DPKG_MAINTSCRIPT_HELPER_INTERNAL_API
@@ -465,7 +465,7 @@ finish_dir_to_symlink()
 		ABS_SYMLINK_TARGET="$SYMLINK_TARGET"
 	fi
 	rm "$PATHNAME/.dpkg-staging-dir"
-	find "$PATHNAME" -mindepth 1 -print0 | \
+	find "$PATHNAME" -mindepth 1 -maxdepth 1 -print0 | \
 		xargs -0 -i% mv -f "%" "$ABS_SYMLINK_TARGET/"
 
 	# Remove the staging directory.
@@ -568,7 +568,7 @@ COLOR_BOLD_WHITE='[1;37m'
 
 setup_colors()
 {
-	: ${DPKG_COLORS=auto}
+	: "${DPKG_COLORS=auto}"
 
 	case "$DPKG_COLORS" in
 	auto)

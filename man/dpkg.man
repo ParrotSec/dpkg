@@ -105,6 +105,11 @@ files, except configuration files).
 .B purge
 The package is selected to be purged (i.e. we want to remove everything
 from system directories, even configuration files).
+.TP
+.B unknown
+The package selection is unknown.
+A package that is also in a \fBnot\-installed\fP state, and with an
+\fBok\fP flag will be forgotten in the next database store.
 .SS Package flags
 .TP
 .B ok
@@ -183,10 +188,14 @@ improper \fBtriggers\-awaited\fP and \fBtriggers\-pending\fP states. This
 can be fixed later by running: \fBdpkg \-\-configure \-\-pending\fP.
 .TP
 \fB\-r\fP, \fB\-\-remove\fP \fIpackage\fP...|\fB\-a\fP|\fB\-\-pending\fP
-Remove an installed package. This removes everything except conffiles,
+Remove an installed package.
+This removes everything except conffiles and other data cleaned up by
+the \fIpostrm\fP script,
 which may avoid having to reconfigure the package if it is reinstalled
 later (conffiles are configuration files that are listed in the
 \fIDEBIAN/conffiles\fP control file).
+If there is no \fIDEBIAN/conffiles\fP control file nor \fIDEBIAN/postrm\fP
+script, this command is equivalent to calling \fB\-\-purge\fP.
 If \fB\-a\fP or \fB\-\-pending\fP is given instead of a package name,
 then all packages unpacked, but marked to be removed in file
 \fI%ADMINDIR%/status\fP, are removed.
@@ -206,7 +215,7 @@ Removing of a package consists of the following steps:
 .TP
 \fB\-P\fP, \fB\-\-purge\fP \fIpackage\fP...|\fB\-a\fP|\fB\-\-pending\fP
 Purge an installed or already removed package. This removes everything,
-including conffiles.
+including conffiles, and anything else cleaned up from \fIpostrm\fP.
 If \fB\-a\fP or \fB\-\-pending\fP is given instead of a package name,
 then all packages unpacked or removed, but marked to be purged in file
 \fI%ADMINDIR%/status\fP, are purged.
@@ -314,6 +323,9 @@ to deinstall any packages not in list given to \fB\-\-set\-selections\fP.
 .B \-\-yet\-to\-unpack
 Searches for packages selected for installation, but which for some
 reason still haven't been installed.
+.IP
+Note: This command makes use of both the available file and the package
+selections.
 .TP
 .B \-\-predep\-package
 Print a single package which is the target of one or more relevant
@@ -321,6 +333,9 @@ pre-dependencies and has itself no unsatisfied pre-dependencies.
 .IP
 If such a package is present, output it as a Packages file entry,
 which can be massaged as appropriate.
+.IP
+Note: This command makes use of both the available file and the package
+selections.
 .IP
 Returns 0 when a package is printed, 1 when no suitable package is
 available and 2 on error.
@@ -607,6 +622,17 @@ Overwrite one package's directory with another's file.
 
 \fBoverwrite\-diverted\fP:
 Overwrite a diverted file with an undiverted version.
+
+\fBstatoverride\-add\fP:
+Overwrite an existing stat override when adding it (since dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP:
+Ignore a missing stat override when removing it (since dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*):
+Use platform-specific Mandatory Access Controls (MAC) based security when
+installing files into the filesystem (since dpkg 1.19.5).
+On Linux systems the implementation uses SELinux.
 
 \fBunsafe\-io\fP:
 Do not perform safe I/O operations when unpacking (since dpkg 1.15.8.6).
@@ -901,6 +927,11 @@ Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: \fBauto\fP (default), \fBalways\fP and
 \fBnever\fP.
 .TP
+.B DPKG_FORCE
+Sets the force flags (since dpkg 1.19.5).
+When this variable is present, no built-in force defaults will be applied.
+If the variable is present but empty, all force flags will be disabled.
+.TP
 .B DPKG_FRONTEND_LOCKED
 Set by a package manager frontend to notify dpkg that it should not acquire
 the frontend lock (since dpkg 1.19.1).
@@ -930,6 +961,10 @@ is non-empty.
 Defined by \fBdpkg\fP on the maintainer script environment to indicate
 the \fBdpkg\fP administrative directory to use (since dpkg 1.16.0).
 This variable is always set to the current \fB\-\-admindir\fP value.
+.TP
+.B DPKG_FORCE
+Defined by \fBdpkg\fP on the subprocesses environment to all the currently
+enabled force option names separated by commas (since dpkg 1.19.5).
 .TP
 .B DPKG_SHELL_REASON
 Defined by \fBdpkg\fP on the shell spawned on the conffile prompt to

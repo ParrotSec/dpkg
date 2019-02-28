@@ -35,7 +35,7 @@ remplacées lors de l'exportation dans des fichiers Packages ou Sources. Le
 fichier d'«\ override\ » supplémentaire contient les valeurs remplacées.
 .PP
 Les éléments du fichier «\ override\ » supplémentaire sont séparés simplement
-par une espace. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
+par des espaces. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
 .PP
 .in +5
 \fIpaquet\fP \fInom\-de\-champ\fP \fIvaleur\fP
@@ -43,9 +43,9 @@ par une espace. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
 .PP
 \fIpaquet\fP est le nom du paquet binaire/source.
 .PP
-\fInom\-champ\fP est le nom du champ qui est remplacé. \fIvaleur\fP est la valeur à
-mettre dans ce champ. Elle peut contenir des espaces car la ligne est
-découpée en 3 colonnes au plus quand elle est analysée.
+\fInom\-de\-champ\fP est le nom du champ qui est remplacé. \fIvaleur\fP est la
+valeur à mettre dans ce champ. Elle peut contenir des espaces car la ligne
+est découpée en trois colonnes au plus quand elle est analysée.
 .PP
 Les fichiers de dérogation («\ override\ ») supplémentaires utilisés pour
 établir les fichiers officiels «\ Packages\ » se trouvent dans le répertoire

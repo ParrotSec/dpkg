@@ -48,38 +48,38 @@ recentere versie van een pakket dat die bestanden bevat.
 .SH COMMANDO'S
 .TP 
 [\fB\-\-add\fP] \fIbestand\fP
-Add a diversion for \fIfile\fP.  The file is currently not renamed, see
-\fB\-\-rename\fP.
+Voeg een omlegging toe voor \fIbestand\fP. Het bestand wordt momenteel niet
+hernoemd, zie \fB\-\-rename\fP.
 .TP 
-\fB\-\-remove\fP \fIbestand\fP
-Remove a diversion for \fIfile\fP.  The file is currently not renamed, see
-\fB\-\-rename\fP.
+\fB\-\-remove\fP\fI bestand\fP
+Verwijder een omlegging voor \fIbestand\fP. Het bestand wordt momenteel niet
+hernoemd, zie \fB\-\-rename\fP.
 .TP 
-\fB\-\-list\fP \fIglob\-patroon\fP
+\fB\-\-list\fP\fI glob\-patroon\fP
 Som de omleggingen op die aan \fIglob\-patroon\fP beantwoorden.
 .TP 
-\fB\-\-listpackage\fP \fIbestand\fP
+\fB\-\-listpackage\fP\fI bestand\fP
 Geef de naam van het pakket weer dat \fIbestand\fP omleidt (sinds dpkg
 1.15.0). Vermeldt LOCAL als \fIbestand\fP lokaal omgeleid werd en niets als
 \fIbestand\fP niet omgeleid werd.
 .TP 
-\fB\-\-truename\fP \fIbestand\fP
+\fB\-\-truename\fP\fI bestand\fP
 Vermeld de echte naam van een omgeleid bestand.
 .
 .SH OPTIES
 .TP 
-\fB\-\-admindir\fP \fImap\fP
-Set the administrative directory to \fIdirectory\fP.  Defaults to
-«\fI%ADMINDIR%\fP».
+\fB\-\-admindir\fP\fI map\fP
+Stel de  administratieve map in op \fImap\fP. Standaard is dit «\fI%ADMINDIR%\fP».
 .TP 
-\fB\-\-instdir\fP\fI directory\fP
-Set the installation directory, which refers to the directory where packages
-get installed (since dpkg 1.19.2). Defaults to «\fI/\fP».
+\fB\-\-instdir\fP\fI map\fP
+Stel de installatiemap in, welke verwijst naar de map waar pakketten
+geïnstalleerd worden (sinds dpkg 1.19.2). Staat standaard ingesteld op
+«\fI/\fP».
 .TP 
-\fB\-\-root\fP\fI directory\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdirectory\fP» and the administrative directory to
-«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
+\fB\-\-root\fP\fI map\fP
+Stel de hoofdmap in op \fBmap\fP, hetgeen de installatiemap instelt op
+«\fImap\fP» en de administratieve map op «\fImap\fP\fB%ADMINDIR%\fP» (sinds dpkg
+1.19.2).
 .TP 
 \fB\-\-divert\fP \fIleid\-om\-naar\fP
 \fIleid\-om\-naar\fP is de locatie waarnaartoe de versies van \fIbestand\fP die door
@@ -100,18 +100,19 @@ omgeleid zal worden, behalve bij \fIpakket\fP.
 Stille modus, m.a.w. geen breedsprakige uitvoer.
 .TP 
 \fB\-\-rename\fP
-Actually move the file aside (or back). \fBdpkg\-divert\fP will abort operation
-in case the destination file already exists.  This is the common behavior
-used for diversions of files from the non\-\fBEssential\fP package set (see
-\fB\-\-no\-rename\fP for more details).
+Zet het bestand effectief uit de weg (of terug). \fBdpkg\-divert\fP zal de
+bewerking afbreken indien het doelbestand reeds bestaat. Dit is het gangbare
+gedrag dat gebruikt wordt voor het omleggen van bestanden uit het geheel van
+niet\-\fBEssential\fP pakketten (zie \fB\-\-no\-rename\fP voor meer details).
 .TP 
 \fB\-\-no\-rename\fP
-Specifies that the file should not be renamed while adding or removing the
-diversion into the database (since dpkg 1.19.1).  This is intended for
-diversions of files from the \fBEssential\fP package set, where the temporary
-disappearance of the original file is not acceptable, as it can render the
-system non\-functional.  This is the default behavior, but that will change
-in the dpkg 1.20.x cycle.
+Geeft aan dat het bestand niet hernoemd mag worden als de omlegging
+toegevoegd wordt aan of verwijderd wordt uit de databank van omleggingen
+(sinds dpkg 1.19.1). Dit is bedoeld voor omleggingen van bestanden uit het
+geheel van \fBEssential\fP pakketten, waarvoor het tijdelijk verdwijnen van het
+originele bestand onaanvaardbaar is, aangezien dit het systeem onbruikbaar
+kan maken. Dit is het standaardgedrag, maar dat zal veranderen in de cyclus
+1.20.x van dpkg.
 .TP 
 \fB\-\-test\fP
 Testmodus. Voer m.a.w. geen enkele wijziging effectief uit. Geef enkel een
@@ -136,12 +137,13 @@ database, het toewijzen van geheugen, enz.
 .SH OMGEVING
 .TP 
 \fBDPKG_ROOT\fP
-If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
-will be used as the filesystem root directory (since dpkg 1.19.2).
+Indien dit ingesteld is en de opties \fB\-\-instdir\fP of \fB\-\-root\fP niet
+opgegeven werden, zal dit gebruikt worden als de hoofdmap voor het
+bestandssysteem (sinds dpkg 1.19.2).
 .TP 
 \fBDPKG_ADMINDIR\fP
-If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
-it will be used as the \fBdpkg\fP data directory.
+Indien dit ingesteld is en de opties \fB\-\-admindir\fP of \fB\-\-root\fP niet
+opgegeven werden, zal dit gebruikt worden als de datamap voor \fBdpkg\fP.
 .TP 
 \fBDPKG_MAINTSCRIPT_PACKAGE\fP
 Indien dit ingesteld werd en de opties \fB\-\-local\fP en \fB\-\-package\fP niet

@@ -39,7 +39,7 @@
 #include <dpkg/debug.h>
 #include <dpkg/db-fsys.h>
 
-static struct diversion *diversions = NULL;
+static struct fsys_diversion *diversions = NULL;
 static char *diversionsname;
 
 void
@@ -50,7 +50,7 @@ ensure_diversions(void)
 	char linebuf[MAXDIVERTFILENAME];
 	static FILE *file_prev;
 	FILE *file;
-	struct diversion *ov, *oicontest, *oialtname;
+	struct fsys_diversion *ov, *oicontest, *oialtname;
 
 	if (diversionsname == NULL)
 		diversionsname = dpkg_db_get_path(DIVERSIONSFILE);
@@ -101,19 +101,19 @@ ensure_diversions(void)
 	debug(dbg_general, "%s: new, (re)loading", __func__);
 
 	while (fgets_checked(linebuf, sizeof(linebuf), file, diversionsname) >= 0) {
-		oicontest = nfmalloc(sizeof(struct diversion));
-		oialtname = nfmalloc(sizeof(struct diversion));
+		oicontest = nfmalloc(sizeof(*oicontest));
+		oialtname = nfmalloc(sizeof(*oialtname));
 
-		oialtname->camefrom = findnamenode(linebuf, 0);
+		oialtname->camefrom = fsys_hash_find_node(linebuf, 0);
 		oialtname->useinstead = NULL;
 
 		fgets_must(linebuf, sizeof(linebuf), file, diversionsname);
-		oicontest->useinstead = findnamenode(linebuf, 0);
+		oicontest->useinstead = fsys_hash_find_node(linebuf, 0);
 		oicontest->camefrom = NULL;
 
 		fgets_must(linebuf, sizeof(linebuf), file, diversionsname);
 		oicontest->pkgset = strcmp(linebuf, ":") ?
-		                    pkg_db_find_set(linebuf) : NULL;
+		                    pkg_hash_find_set(linebuf) : NULL;
 		oialtname->pkgset = oicontest->pkgset;
 
 		if (oialtname->camefrom->divert ||

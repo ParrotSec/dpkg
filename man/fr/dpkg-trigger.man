@@ -23,7 +23,7 @@
 .TH dpkg\-trigger 1 %RELEASE_DATE% %VERSION% "suite dpkg"
 .nh
 .SH NOM
-dpkg\-trigger \- un utilitaire pour activer les actions différées de paquets
+dpkg\-trigger \- Un utilitaire pour activer les actions différées de paquets
 .
 .SH SYNOPSIS
 \fBdpkg\-trigger\fP [\fIoption\fP...] \fInom\-action\-différée\fP
@@ -41,7 +41,7 @@ suffisants. Peut également être utilisé pour des essais ou par les
 administrateurs système (noter que les actions différées ne seront alors pas
 exécutées par \fBdpkg\-trigger\fP).
 .PP
-Les syntaxes non\-reconnues pour le nom des actions différées constituent une
+Les syntaxes non reconnues pour le nom des actions différées constituent une
 erreur pour \fBdpkg\-trigger\fP.
 .
 .SH COMMANDES
@@ -61,9 +61,9 @@ Affiche le numéro de version puis quitte.
 .
 .SH OPTIONS
 .TP 
-\fB\-\-admindir\fP=\fIdir\fP
-Change the location of the \fBdpkg\fP database. The default location is
-\fI%ADMINDIR%\fP.
+\fB\-\-admindir\fP=\fIrépertoire\fP
+Change l'endroit où se trouve la base de données de \fBdpkg\fP. Par défaut,
+c'est \fI%ADMINDIR%\fP.
 .TP 
 \fB\-\-by\-package=\fP\fIpaquet\fP
 Indique le paquet qui sera marqué en attente de l'exécution de l'action
@@ -80,9 +80,9 @@ inchangé. T peut être considéré installé même si les actions différées d
 n'ont pas encore été exécutées.
 .TP 
 \fB\-\-await\fP
-This option does the inverse of \fB\-\-no\-await\fP (since dpkg 1.17.21).  If the
-interested package has declared a “noawait” directive, then this option will
-not be effective.  It is currently the default behavior.
+Cette option a l'effet inverse de \fB\-\-no\-await\fP (depuis dpkg\ 1.17.21). Si le
+paquet intéressé a déclaré une directive «noawait\ », cette option ne sera
+pas effective. C'est actuellement le comportement par défaut.
 .TP 
 \fB\-\-no\-act\fP
 Teste uniquement, n'apporte aucun changement.
@@ -90,16 +90,16 @@ Teste uniquement, n'apporte aucun changement.
 .SH "CODE DE SORTIE"
 .TP 
 \fB0\fP
-The requested action was successfully performed.  Or a check or assertion
-command returned true.
+L'action demandée s'est correctement déroulée. Ou bien une commande de
+vérification ou de déclaration renvoie «\ true\ ».
 .TP 
 \fB1\fP
-A check or assertion command returned false.
+Une commande de vérification ou de déclaration renvoie «\ false\ ».
 .TP 
 \fB2\fP
-Fatal or unrecoverable error due to invalid command\-line usage, or
-interactions with the system, such as accesses to the database, memory
-allocations, etc.
+Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande
+non valable, ou interactions avec le système, telles que des accès à la base
+de données, des allocations de mémoire,\ etc.
 .
 .SH ENVIRONNEMENT
 .TP 
@@ -109,8 +109,8 @@ précisée, ce répertoire sera utilisé comme répertoire de données pour
 \fBdpkg\fP.
 .TP 
 \fBDPKG_COLORS\fP
-Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
-\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
 .
 .SH "VOIR AUSSI"
 .\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.

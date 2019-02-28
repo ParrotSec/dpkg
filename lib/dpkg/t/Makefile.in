@@ -98,8 +98,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = $(am__EXEEXT_1) c-tarextract$(EXEEXT) \
-	c-treewalk$(EXEEXT) c-trigdeferred$(EXEEXT)
+check_PROGRAMS = $(am__EXEEXT_1) b-fsys-hash$(EXEEXT) \
+	b-pkg-hash$(EXEEXT) c-tarextract$(EXEEXT) c-treewalk$(EXEEXT) \
+	c-trigdeferred$(EXEEXT)
 subdir = lib/dpkg/t
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
@@ -135,16 +136,25 @@ am__EXEEXT_1 = t-test$(EXEEXT) t-test-skip$(EXEEXT) t-macros$(EXEEXT) \
 	t-pkg-queue$(EXEEXT) t-pkg-hash$(EXEEXT) t-pkg-show$(EXEEXT) \
 	t-fsys-dir$(EXEEXT) t-fsys-hash$(EXEEXT) t-trigger$(EXEEXT) \
 	t-mod-db$(EXEEXT)
-c_tarextract_SOURCES = c-tarextract.c
-c_tarextract_OBJECTS = c-tarextract.$(OBJEXT)
-c_tarextract_LDADD = $(LDADD)
+b_fsys_hash_SOURCES = b-fsys-hash.c
+b_fsys_hash_OBJECTS = b-fsys-hash.$(OBJEXT)
 am__DEPENDENCIES_1 =
-c_tarextract_DEPENDENCIES = $(top_builddir)/lib/dpkg/libdpkg.la \
+am__DEPENDENCIES_2 = $(top_builddir)/lib/dpkg/libdpkg.la \
 	$(am__DEPENDENCIES_1)
+am__DEPENDENCIES_3 = $(am__DEPENDENCIES_2)
+b_fsys_hash_DEPENDENCIES = $(am__DEPENDENCIES_3)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+b_pkg_hash_SOURCES = b-pkg-hash.c
+b_pkg_hash_OBJECTS = b-pkg-hash.$(OBJEXT)
+b_pkg_hash_DEPENDENCIES = $(am__DEPENDENCIES_3)
+c_tarextract_SOURCES = c-tarextract.c
+c_tarextract_OBJECTS = c-tarextract.$(OBJEXT)
+c_tarextract_LDADD = $(LDADD)
+c_tarextract_DEPENDENCIES = $(top_builddir)/lib/dpkg/libdpkg.la \
+	$(am__DEPENDENCIES_1)
 c_treewalk_SOURCES = c-treewalk.c
 c_treewalk_OBJECTS = c-treewalk.$(OBJEXT)
 c_treewalk_LDADD = $(LDADD)
@@ -325,7 +335,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/c-tarextract.Po \
+am__depfiles_remade = ./$(DEPDIR)/b-fsys-hash.Po \
+	./$(DEPDIR)/b-pkg-hash.Po ./$(DEPDIR)/c-tarextract.Po \
 	./$(DEPDIR)/c-treewalk.Po ./$(DEPDIR)/c-trigdeferred.Po \
 	./$(DEPDIR)/t-ar.Po ./$(DEPDIR)/t-arch.Po \
 	./$(DEPDIR)/t-buffer.Po ./$(DEPDIR)/t-c-ctype.Po \
@@ -380,22 +391,22 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = c-tarextract.c c-treewalk.c c-trigdeferred.c t-ar.c t-arch.c \
-	t-buffer.c t-c-ctype.c t-command.c t-deb-version.c t-ehandle.c \
-	t-error.c t-file.c t-fsys-dir.c t-fsys-hash.c \
-	$(t_headers_cpp_SOURCES) t-macros.c t-mod-db.c t-namevalue.c \
-	t-pager.c t-path.c t-pkg-hash.c t-pkg-list.c t-pkg-queue.c \
-	t-pkg-show.c t-pkginfo.c t-progname.c t-string.c t-subproc.c \
-	t-tar.c t-test.c t-test-skip.c t-trigger.c t-varbuf.c \
-	t-version.c
-DIST_SOURCES = c-tarextract.c c-treewalk.c c-trigdeferred.c t-ar.c \
-	t-arch.c t-buffer.c t-c-ctype.c t-command.c t-deb-version.c \
-	t-ehandle.c t-error.c t-file.c t-fsys-dir.c t-fsys-hash.c \
-	$(t_headers_cpp_SOURCES) t-macros.c t-mod-db.c t-namevalue.c \
-	t-pager.c t-path.c t-pkg-hash.c t-pkg-list.c t-pkg-queue.c \
-	t-pkg-show.c t-pkginfo.c t-progname.c t-string.c t-subproc.c \
-	t-tar.c t-test.c t-test-skip.c t-trigger.c t-varbuf.c \
-	t-version.c
+SOURCES = b-fsys-hash.c b-pkg-hash.c c-tarextract.c c-treewalk.c \
+	c-trigdeferred.c t-ar.c t-arch.c t-buffer.c t-c-ctype.c \
+	t-command.c t-deb-version.c t-ehandle.c t-error.c t-file.c \
+	t-fsys-dir.c t-fsys-hash.c $(t_headers_cpp_SOURCES) t-macros.c \
+	t-mod-db.c t-namevalue.c t-pager.c t-path.c t-pkg-hash.c \
+	t-pkg-list.c t-pkg-queue.c t-pkg-show.c t-pkginfo.c \
+	t-progname.c t-string.c t-subproc.c t-tar.c t-test.c \
+	t-test-skip.c t-trigger.c t-varbuf.c t-version.c
+DIST_SOURCES = b-fsys-hash.c b-pkg-hash.c c-tarextract.c c-treewalk.c \
+	c-trigdeferred.c t-ar.c t-arch.c t-buffer.c t-c-ctype.c \
+	t-command.c t-deb-version.c t-ehandle.c t-error.c t-file.c \
+	t-fsys-dir.c t-fsys-hash.c $(t_headers_cpp_SOURCES) t-macros.c \
+	t-mod-db.c t-namevalue.c t-pager.c t-path.c t-pkg-hash.c \
+	t-pkg-list.c t-pkg-queue.c t-pkg-show.c t-pkginfo.c \
+	t-progname.c t-string.c t-subproc.c t-tar.c t-test.c \
+	t-test-skip.c t-trigger.c t-varbuf.c t-version.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -664,6 +675,9 @@ test_scripts = \
 	t-trigdeferred.t \
 	$(nil)
 
+BENCHMARK_LDADD_FLAGS = -lrt $(LDADD)
+b_fsys_hash_LDADD = $(BENCHMARK_LDADD_FLAGS)
+b_pkg_hash_LDADD = $(BENCHMARK_LDADD_FLAGS)
 test_tmpdir = t.tmp
 TEST_RUNNER = '\
 	my $$harness = TAP::Harness->new({ \
@@ -722,6 +736,14 @@ clean-checkPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+
+b-fsys-hash$(EXEEXT): $(b_fsys_hash_OBJECTS) $(b_fsys_hash_DEPENDENCIES) $(EXTRA_b_fsys_hash_DEPENDENCIES) 
+	@rm -f b-fsys-hash$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(b_fsys_hash_OBJECTS) $(b_fsys_hash_LDADD) $(LIBS)
+
+b-pkg-hash$(EXEEXT): $(b_pkg_hash_OBJECTS) $(b_pkg_hash_DEPENDENCIES) $(EXTRA_b_pkg_hash_DEPENDENCIES) 
+	@rm -f b-pkg-hash$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(b_pkg_hash_OBJECTS) $(b_pkg_hash_LDADD) $(LIBS)
 
 c-tarextract$(EXEEXT): $(c_tarextract_OBJECTS) $(c_tarextract_DEPENDENCIES) $(EXTRA_c_tarextract_DEPENDENCIES) 
 	@rm -f c-tarextract$(EXEEXT)
@@ -865,6 +887,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/b-fsys-hash.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/b-pkg-hash.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/c-tarextract.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/c-treewalk.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/c-trigdeferred.Po@am__quote@ # am--include-marker
@@ -1081,7 +1105,9 @@ clean-am: clean-checkPROGRAMS clean-generic clean-libtool clean-local \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/c-tarextract.Po
+		-rm -f ./$(DEPDIR)/b-fsys-hash.Po
+	-rm -f ./$(DEPDIR)/b-pkg-hash.Po
+	-rm -f ./$(DEPDIR)/c-tarextract.Po
 	-rm -f ./$(DEPDIR)/c-treewalk.Po
 	-rm -f ./$(DEPDIR)/c-trigdeferred.Po
 	-rm -f ./$(DEPDIR)/t-ar.Po
@@ -1160,7 +1186,9 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/c-tarextract.Po
+		-rm -f ./$(DEPDIR)/b-fsys-hash.Po
+	-rm -f ./$(DEPDIR)/b-pkg-hash.Po
+	-rm -f ./$(DEPDIR)/c-tarextract.Po
 	-rm -f ./$(DEPDIR)/c-treewalk.Po
 	-rm -f ./$(DEPDIR)/c-trigdeferred.Po
 	-rm -f ./$(DEPDIR)/t-ar.Po

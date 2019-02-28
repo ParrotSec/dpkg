@@ -54,8 +54,8 @@ De waarde van dit veld is de naam van het broncodepakket en moet
 overeenkomen met de naam van het broncodepakket in het bestand
 debian/changelog. Een pakketnaam mag enkel bestaan uit kleine letters (a\-z),
 cijfers (0\-9), plussen (+) en minnen (\-) en punten (.). Pakketnamen moeten
-minstens twee tekens lang zijn en moeten met een alfanumeriek teken
-beginnen.
+minstens twee tekens lang zijn en moeten met een alfanumeriek teken (a\-z0\-9)
+in kleine letter beginnen.
 
 .TP 
 \fBMaintainer:\fP \fIvolledige\-naam\-en\-e\-mail\fP (aanbevolen)
@@ -136,9 +136,10 @@ onder (fake)root uit te voeren. (Zie "Gain Root API" in
 \fBTestsuite:\fP\fI namenlijst\fP
 .TQ
 \fBTestsuite\-Triggers:\fP\fI pakketlijst\fP
-These fields are described in the \fBdsc\fP(5)  manual page, as they are
-generated from information inferred from \fBdebian/tests/control\fP or copied
-literally to the source control file.
+Deze velden worden beschreven in de man\-pagina \fBdsc\fP(5), aangezien zij
+gegenereerd worden op basis van informatie, afgeleid uit
+\fBdebian/tests/control\fP, of letterlijk naar het controlebestand van de
+broncode gekopieerd worden.
 
 .TP 
 \fBVcs\-Arch:\fP\fI URL\fP

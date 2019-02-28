@@ -47,6 +47,7 @@ use Dpkg::Substvars;
 use Dpkg::Version;
 use Dpkg::Vars;
 use Dpkg::Changelog::Parse;
+use Dpkg::Source::Format;
 use Dpkg::Source::Package qw(get_default_diff_ignore_regex
                              set_default_diff_ignore_regex
                              get_default_tar_ignore_pattern);
@@ -238,8 +239,25 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
     # <https://reproducible-builds.org/specs/source-date-epoch/>
     $ENV{SOURCE_DATE_EPOCH} ||= $changelog->{timestamp} || time;
 
-    my $srcpkg = Dpkg::Source::Package->new(options => \%options);
+    # Select the format to use
+    if (not defined $build_format) {
+        my $format_file = "$dir/debian/source/format";
+        if (-e $format_file) {
+            my $format = Dpkg::Source::Format->new(filename => $format_file);
+            $build_format = $format->get();
+        } else {
+            warning(g_('no source format specified in %s, ' .
+                       'see dpkg-source(1)'), 'debian/source/format')
+                if $options{opmode} eq 'build';
+            $build_format = '1.0';
+        }
+    }
+
+    my $srcpkg = Dpkg::Source::Package->new(format => $build_format,
+                                            options => \%options);
     my $fields = $srcpkg->{fields};
+
+    $srcpkg->parse_cmdline_options(@cmdline_options);
 
     my @sourcearch;
     my %archadded;
@@ -394,29 +412,6 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
 	$fields->{'Binary'} =~ s/(.{0,980}), ?/$1,\n/g;
     }
 
-    # Select the format to use
-    if (not defined $build_format) {
-	if (-e "$dir/debian/source/format") {
-	    open(my $format_fh, '<', "$dir/debian/source/format")
-	        or syserr(g_('cannot read %s'), "$dir/debian/source/format");
-	    $build_format = <$format_fh>;
-	    chomp($build_format) if defined $build_format;
-	    error(g_('%s is empty'), "$dir/debian/source/format")
-		unless defined $build_format and length $build_format;
-	    close($format_fh);
-	} else {
-	    warning(g_('no source format specified in %s, ' .
-	               'see dpkg-source(1)'), 'debian/source/format')
-		if $options{opmode} eq 'build';
-	    $build_format = '1.0';
-	}
-    }
-    $fields->{'Format'} = $build_format;
-    $srcpkg->upgrade_object_type(); # Fails if format is unsupported
-    # Parse command line options
-    $srcpkg->init_options();
-    $srcpkg->parse_cmdline_options(@cmdline_options);
-
     if ($options{opmode} eq 'print-format') {
 	print $fields->{'Format'} . "\n";
 	exit(0);
@@ -542,8 +537,8 @@ sub set_testsuite_triggers_field
         deps_iterate($deps, sub { $testdeps{$_[0]->{package}} = 1 });
     }
 
-    # Remove our own binaries and meta-depends.
-    foreach my $pkg (@binarypackages, qw(@ @builddeps@)) {
+    # Remove our own binaries and its meta-depends variant.
+    foreach my $pkg (@binarypackages, qw(@)) {
         delete $testdeps{$pkg};
     }
     $fields->{'Testsuite-Triggers'} = join ', ', sort keys %testdeps;
@@ -573,9 +568,7 @@ sub print_option {
 sub get_format_help {
     $build_format //= '1.0';
 
-    my $srcpkg = Dpkg::Source::Package->new();
-    $srcpkg->{fields}->{'Format'} = $build_format;
-    $srcpkg->upgrade_object_type(); # Fails if format is unsupported
+    my $srcpkg = Dpkg::Source::Package->new(format => $build_format);
 
     my @cmdline = $srcpkg->describe_cmdline_options();
     return '' unless @cmdline;

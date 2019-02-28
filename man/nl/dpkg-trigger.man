@@ -81,9 +81,10 @@ geïnstalleerd beschouwd worden, zelfs al heeft I misschien de trigger nog
 niet verwerkt.
 .TP 
 \fB\-\-await\fP
-This option does the inverse of \fB\-\-no\-await\fP (since dpkg 1.17.21).  If the
-interested package has declared a “noawait” directive, then this option will
-not be effective.  It is currently the default behavior.
+Deze optie doet het tegenovergestelde van \fB\-\-no\-await\fP (sinds dpkg
+1.17.21). Indien het belanghebbende pakket een “noawait”\-opdracht
+gedeclareerd heeft, zal deze optie geen effect hebben. Dit is momenteel het
+standaardgedrag.
 .TP 
 \fB\-\-no\-act\fP
 Test de zaak enkel uit, maar voer geen enkele effectieve wijziging door.

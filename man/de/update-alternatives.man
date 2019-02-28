@@ -290,11 +290,15 @@ Stellen befinden, an denen ein Alternativ\-Link installiert werden muss.
 automatische Modus konfiguriert sind. Diese Option ist nur mit \fB\-\-config\fP
 oder \fB\-\-all\fP relevant.
 .TP 
+\fB\-\-quiet\fP
+Erzeuge keine Kommentare, es sei denn, ein Fehler tritt auf.
+.TP 
 \fB\-\-verbose\fP
 Erzeugt mehr Kommentare darüber, was getan wird.
 .TP 
-\fB\-\-quiet\fP
-Erzeuge keine Kommentare, es sei denn, ein Fehler tritt auf.
+\fB\-\-debug\fP
+Erzeugt mehr Kommentare darüber, hilfreich für die Fehlersuche, was getan
+wird (seit Version 1.19.3).
 .
 .SH RÜCKGABEWERT
 .TP 
@@ -435,7 +439,7 @@ Sie folgendes als Root aus:
 \fBln\fP(1), FHS, der Dateisystem Hierarchie\-Standard (Filesystem Hierarchy
 Standard).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -100,12 +100,12 @@ maintscript_pre_exec(struct command *cmd)
 	const char *changedir;
 	size_t instdirlen = strlen(instdir);
 
-	if (instdirlen > 0 && fc_script_chrootless)
+	if (instdirlen > 0 && in_force(FORCE_SCRIPT_CHROOTLESS))
 		changedir = instdir;
 	else
 		changedir = "/";
 
-	if (instdirlen > 0 && !fc_script_chrootless) {
+	if (instdirlen > 0 && !in_force(FORCE_SCRIPT_CHROOTLESS)) {
 		int rc;
 
 		if (strncmp(admindir, instdir, instdirlen) != 0)
@@ -116,7 +116,7 @@ maintscript_pre_exec(struct command *cmd)
 			ohshite(_("unable to setenv for subprocesses"));
 
 		rc = chroot(instdir);
-		if (rc && fc_nonroot && errno == EPERM)
+		if (rc && in_force(FORCE_NON_ROOT) && errno == EPERM)
 			ohshit(_("not enough privileges to change root "
 			         "directory with --force-not-root, consider "
 			         "using --force-script-chrootless?"));
@@ -140,7 +140,7 @@ maintscript_pre_exec(struct command *cmd)
 		      args.buf);
 		varbuf_destroy(&args);
 	}
-	if (instdirlen == 0 || fc_script_chrootless)
+	if (instdirlen == 0 || in_force(FORCE_SCRIPT_CHROOTLESS))
 		return cmd->filename;
 
 	if (strlen(cmd->filename) < instdirlen)
@@ -158,15 +158,14 @@ maintscript_pre_exec(struct command *cmd)
  * one, use the given fallback.
  */
 static int
-maintscript_set_exec_context(struct command *cmd, const char *fallback)
+maintscript_set_exec_context(struct command *cmd)
 {
-	int rc = 0;
-
 #ifdef WITH_LIBSELINUX
-	rc = setexecfilecon(cmd->filename, fallback);
+	return setexecfilecon(cmd->filename, "dpkg_script_t");
+#else
+	return 0;
 #endif
 
-	return rc < 0 ? rc : 0;
 }
 
 static int
@@ -199,7 +198,7 @@ maintscript_exec(struct pkginfo *pkg, struct pkgbin *pkgbin,
 
 		cmd->filename = cmd->argv[0] = maintscript_pre_exec(cmd);
 
-		if (maintscript_set_exec_context(cmd, "dpkg_script_t") < 0)
+		if (maintscript_set_exec_context(cmd) < 0)
 			ohshite(_("cannot set security execution context for "
 			          "maintainer script"));
 

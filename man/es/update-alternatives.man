@@ -279,11 +279,15 @@ Omite el dialogo de configuración de alternativas para aquellas configuradas
 adecuadamente en modo automático. Esta opción solo tiene sentido con
 \fB\-\-config\fP o \fB\-\-all\fP.
 .TP 
+\fB\-\-quiet\fP
+Do not generate any comments unless errors occur.
+.TP 
 \fB\-\-verbose\fP
 Generate more comments about what is being done.
 .TP 
-\fB\-\-quiet\fP
-No genera ningún comentario a menos que ocurra algún error.
+\fB\-\-debug\fP
+Generate even more comments, helpful for debugging, about what is being done
+(since version 1.19.3).
 .
 .SH "ESTADOS DE SALIDA"
 .TP 

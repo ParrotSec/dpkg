@@ -44,8 +44,8 @@ toutes les auto\-dépendances (dans les faits, cela supprime les dépendances
 qui sont déjà validées par la version du paquet déjà installé). Logiquement,
 il conserve les correspondances entre plusieurs dépendances dans le même
 paquet. L'ordre des dépendances est conservé du mieux possible\ : si une
-dépendance doit être supprimée à cause d'une autre dépendance qui se trouve
-dans un champ suivant, la dépendance remplaçante prendra la place de celle
+dépendance doit être supprimée à cause d'une autre dépendance qui apparaît
+plus loin dans le champ, la dépendance remplaçante prendra la place de celle
 éliminée.
 .sp
 Les autres champs (\fBEnhances\fP, \fBConflicts\fP, \fBBreaks\fP, \fBReplaces\fP et
@@ -65,10 +65,11 @@ Fixe le numéro de version du paquet binaire qui sera créé.
 Fixe la valeur d'une variable de substitution. Consultez \fBdeb\-substvars\fP(5)
 pour une discussion sur la valeur de substitution.
 .TP 
-\fB\-T\fP\fIfichier/substvars\fP
-Read substitution variables in \fIsubstvars\-file\fP; the default is
-\fBdebian/substvars\fP.  This option can be used multiple times to read
-substitution variables from multiple files (since dpkg 1.15.6).
+\fB\-T\fP\fIfichier\-substvars\fP
+Lecture des variables de substitution depuis \fIfichier\-substvars\fP\ ; la
+valeur par défaut est \fBdebian/substvars\fP. Cette option peut être utilisée
+plusieurs fois pour lire les variables de substitution depuis plusieurs
+fichiers (depuis dpkg\ 1.15.6).
 .TP 
 \fB\-D\fP\fIchamp\fP\fB=\fP\fIvaleur\fP
 Remplace ou ajoute en sortie un champ dans le fichier de contrôle.
@@ -88,7 +89,7 @@ défaut, c'est le fichier \fBdebian/changelog\fP.
 Lit ou écrit la liste des fichiers qui doivent être envoyés vers l'archive
 dans ce fichier plutôt que dans le fichier \fBdebian/files\fP.
 .TP 
-\fB\-F\fP\fIformat\-du\-fichiers\-des\-changements\fP
+\fB\-F\fP\fIformat\-du\-fichier\-des\-changements\fP
 Indique le format du fichier des changements. Voir \fBdpkg\-parsechangelog\fP(1)
 pour plus d'informations à propos des formats gérés.
 .TP 
@@ -112,16 +113,17 @@ l'option \fB\-U\fP pour supprimer ces champs du fichier «\ control\ ».
 .TP 
 \fB\-P\fP\fIrépertoire\-construction\-paquet\fP
 Cette option indique à \fBdpkg\-source\fP que le répertoire de construction du
-paquet est \fIrep\-de\-construction\-du\-paquet\fP au lieu de \fBdebian/tmp\fP. Cette
+paquet est \fIrépertoire\-construction\-paquet\fP au lieu de \fBdebian/tmp\fP. Cette
 valeur sert à trouver la valeur par défaut de la variable de substitution
 \fBInstalled\-Size\fP et celle du champ correspondant dans le fichier de
 contrôle (on utilise la commande \fBdu\fP)\ ; elle donne aussi l'emplacement par
 défaut pour le fichier de sortie.
 .TP 
 \fB\-O\fP[\fInom\-de\-fichier\fP]
-Print the control file to standard output (or \fIfilename\fP if specified,
-since dpkg 1.17.2), rather than to \fBdebian/tmp/DEBIAN/control\fP (or
-\fIpackage\-build\-dir\fP\fB/DEBIAN/control\fP if \fB\-P\fP was used).
+Affiche le fichier «\ control\ » sur la sortie standard (ou \fInom\-de\-fichier\fP,
+depuis dpkg\ 1.17.2), au lieu de \fBdebian/tmp/DEBIAN/control\fP (ou
+\fIrépertoire\-construction\-paquet\fP\fB/DEBIAN/control\fP si l'option \fB\-P\fP a été
+utilisée).
 .TP 
 \fB\-?\fP, \fB\-\-help\fP
 Affiche un message d'aide puis quitte.
@@ -132,13 +134,14 @@ Affiche le numéro de version puis quitte.
 .SH ENVIRONNEMENT
 .TP 
 \fBDPKG_COLORS\fP
-Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
-\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Si cette variable est définie, elle sera utilisée pour décider l'activation
+de la prise en charge des langues (NLS –\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par défaut).
 .
 .SH FICHIERS
 .TP 

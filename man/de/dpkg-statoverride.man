@@ -66,28 +66,56 @@ begrenze die Ausgabe auf Hinwegsetzungen, die auf den Glob passen.
 \fB\-\-help\fP
 Zeige den Bedienungshinweis und beende.
 .TP 
+\fB\-\-force\-help\fP
+Give help about the \fB\-\-force\-\fP\fIthing\fP options (since dpkg 1.19.5).
+.TP 
 \fB\-\-version\fP
 Gebe die Version aus und beende sich.
 .
 .SH OPTIONEN
 .TP 
 \fB\-\-admindir\fP\fI Verzeichnis\fP
-Set the administrative directory to \fIdirectory\fP.  This is where the
-\fIstatoverride\fP file is stored.  Defaults to «\fI%ADMINDIR%\fP».
+Setzt das administrative Verzeichnis auf \fIVerzeichnis\fP. Hier wird auch die
+Datei \fIstatoverride\fP gelagert. Standardmäßig \fI%ADMINDIR%\fP.
 .TP 
-\fB\-\-instdir\fP\fI directory\fP
-Set the installation directory, which refers to the directory where packages
-get installed (since dpkg 1.19.2).  Defaults to «\fI/\fP».
+\fB\-\-instdir\fP\fI Verzeichnis\fP
+Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in
+dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig »\fI/\fP«.
 .TP 
-\fB\-\-root\fP\fI directory\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdirectory\fP» and the administrative directory to
-«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
+\fB\-\-root\fP\fI Verzeichnis\fP
+Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
+Installationsverzeichnis auf »\fIVerzeichnis\fP« und das administrative
+Verzeichnis auf »\fIVerzeichnis\fP\fB%ADMINDIR%\fP« gesetzt wird (seit Dpkg
+1.19.2).
+.TP 
+\fB\-\-force\-\fP\fISachen\fP
+.TQ
+\fB\-\-no\-force\-\fP\fISachen\fP, \fB\-\-refuse\-\fP\fISachen\fP
+Force or refuse (\fBno\-force\fP and \fBrefuse\fP mean the same thing)  to do some
+things (since dpkg 1.19.5).  \fIthings\fP is a comma separated list of things
+specified below.  \fB\-\-force\-help\fP displays a message describing them.
+Things marked with (*) are forced by default.
+
+\fIWarning: These options are mostly intended to be used by experts only.
+Using them without fully understanding their effects may break your whole
+system.\fP
+
+\fBall\fP: Schaltet alle »force«\-Optionen ein (oder aus).
+
+\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
+(since dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
+(since dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
+based security when installing files into the filesystem (since dpkg
+1.19.5).  On Linux systems the implementation uses SELinux.
 .TP 
 \fB\-\-force\fP
-Erzwinge eine Aktion, selbst wenn eine Sinn\-Überprüfung diese normalerweise
-verböte. Dies ist notwendig, um sich über eine existierende Hinwegsetzung
-hinwegzusetzen.
+Force an action, even if a sanity check would otherwise prohibit it.  This
+is necessary to override an existing override.  This option is deprecated
+(since dpkg 1.19.5), it is replaced by \fB\-\-force\-all\fP.
 .TP 
 \fB\-\-update\fP
 Versuche den \fIPfad\fP sofort auf den neuen Eigentümer und neuen Modus zu
@@ -113,12 +141,16 @@ die Datenbank, Speicherzuweisungen usw.
 .SH UMGEBUNG
 .TP 
 \fBDPKG_ROOT\fP
-If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
-will be used as the filesystem root directory (since dpkg 1.19.2).
+Falls gesetzt und die Option \fB\-\-instdir\fP oder \fB\-\-root\fP nicht angegeben
+wurde, wird dies als Dateisystemwurzelverzeichnis verwandt.
 .TP 
 \fBDPKG_ADMINDIR\fP
-If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
-it will be used as the \fBdpkg\fP data directory.
+Falls gesetzt und die Option \fB\-\-admindir\fP oder \fB\-\-root\fP nicht verwandt
+wurde, wird dies als Datenverzeichnis von \fBdpkg\fP verwandt.
+.TP 
+\fBDPKG_FORCE\fP
+If set and none of the \fB\-\-force\-\fP\fI...\fP options have been specified, it
+will be used as the force options to use (since dpkg 1.19.5).
 .TP 
 \fBDPKG_COLORS\fP
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
@@ -137,7 +169,7 @@ Endung „\-old“ bevor es sie mit einer neuen ersetzt.
 .SH "SIEHE AUCH"
 \fBdpkg\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -282,7 +282,7 @@ Toon de versie en sluit af.
 \fB\-\-altdir\fP\fI map\fP
 Duidt de alternatievenmap aan als die anders dan de standaard moet zijn.
 .TP 
-\fB\-\-admindir\fP \fImap\fP
+\fB\-\-admindir\fP\fI map\fP
 Duidt de beheersmap aan als die anders dan de standaard moet zijn.
 .TP 
 \fB\-\-log\fP\fI bestand\fP
@@ -295,15 +295,19 @@ geïnstalleerd is waar een alternatief\-koppeling geïnstalleerd of verwijderd
 moet worden.
 .TP 
 \fB\-\-skip\-auto\fP
-Sla de configuratievraag over voor alternatieven in automatische modus die
-behoorlijk geconfigureerd zijn. Deze optie is enkel relevant in combinatie
+Voor alternatieven die in automatische modus behoorlijk geconfigureerd zijn,
+de configuratievraag overslaan. Deze optie is enkel relevant in combinatie
 met \fB\-\-config\fP of \fB\-\-all\fP.
+.TP 
+\fB\-\-quiet\fP
+Geen commentaar genereren tenzij er zich fouten voordoen.
 .TP 
 \fB\-\-verbose\fP
 Genereer meer commentaar bij wat er gedaan wordt.
 .TP 
-\fB\-\-quiet\fP
-Genereer geen commentaar tenzij er zich fouten voordoen.
+\fB\-\-debug\fP
+Zelfs nog meer commentaar genereren bij wat er gedaan wordt, nuttig bij het
+debuggen (sinds versie 1.19.3).
 .
 .SH AFSLUITSTATUS
 .TP 

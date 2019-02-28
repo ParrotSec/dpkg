@@ -78,7 +78,7 @@ void
 ensure_packagefiles_available(struct pkginfo *pkg)
 {
   const char *filelistfile;
-  struct fileinlist **lendp;
+  struct fsys_namenode_list **lendp;
   char *loaded_list_end, *thisline, *nextline, *ptr;
   struct varbuf buf = VARBUF_INIT;
   struct dpkg_error err = DPKG_ERROR_INIT;
@@ -122,7 +122,7 @@ ensure_packagefiles_available(struct pkginfo *pkg)
     lendp = &pkg->files;
     thisline = buf.buf;
     while (thisline < loaded_list_end) {
-      struct filenamenode *namenode;
+      struct fsys_namenode *namenode;
 
       ptr = memchr(thisline, '\n', loaded_list_end - thisline);
       if (ptr == NULL)
@@ -138,7 +138,7 @@ ensure_packagefiles_available(struct pkginfo *pkg)
                pkg_name(pkg, pnaw_nonambig));
       *ptr = '\0';
 
-      namenode = findnamenode(thisline, 0);
+      namenode = fsys_hash_find_node(thisline, 0);
       lendp = pkg_files_add_file(pkg, namenode, lendp);
       thisline = nextline;
     }
@@ -252,13 +252,13 @@ void ensure_allinstfiles_available(void) {
 
   if (allpackagesdone) return;
   if (saidread < PKG_FILESDB_LOAD_DONE) {
-    int max = pkg_db_count_pkg();
+    int max = pkg_hash_count_pkg();
 
     saidread = PKG_FILESDB_LOAD_INPROGRESS;
     progress_init(&progress, _("(Reading database ... "), max);
   }
 
-  pkg_array_init_from_db(&array);
+  pkg_array_init_from_hash(&array);
 
   pkg_files_optimize_load(&array);
 
@@ -290,15 +290,15 @@ void ensure_allinstfiles_available_quiet(void) {
 }
 
 /*
- * If mask is nonzero, will not write any file whose filenamenode
+ * If mask is nonzero, will not write any file whose fsys_namenode
  * has any flag bits set in mask.
  */
 void
 write_filelist_except(struct pkginfo *pkg, struct pkgbin *pkgbin,
-                      struct fileinlist *list, enum filenamenode_flags mask)
+                      struct fsys_namenode_list *list, enum fsys_namenode_flags mask)
 {
   struct atomic_file *file;
-  struct fileinlist *node;
+  struct fsys_namenode_list *node;
   const char *listfile;
 
   listfile = pkg_infodb_get_file(pkg, pkgbin, LISTFILE);

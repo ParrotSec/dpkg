@@ -70,9 +70,10 @@ gevolgd worden door een \fIbroncode\-versie\fP tussen haakjes. Dit kan het geval
 zijn als de upload een uitsluitend binaire upload is die niet door de
 onderhouder uitgevoerd wordt.
 .TP 
-\fBBinary:\fP \fIlijst\-binaire\-pakketten\fP (verplicht)
+\fBBinary:\fP \fIlijst\-binaire\-pakketten\fP (vereist in de context)
 Dit gevouwen veld is een lijst, met spatie als scheidingsteken, van binaire
-pakketten die geüpload moeten worden.
+pakketten die geüpload moeten worden. Indien het een upload is van enkel
+broncode, dan wordt het veld weggelaten (sinds dpkg 1.19.3).
 .TP 
 \fBArchitecture:\fP \fIarch\-lijst\fP
 Somt de architecturen op van de bestanden die momenteel geüpload
@@ -113,9 +114,10 @@ release verantwoordelijk is voor de veranderingen aan het pakket.
 \fBDescription:\fP (aanbevolen)
 .TQ
  \fInaam\-binaire\-pakket\fP \fB\-\fP \fIsamenvatting\-binaire\-pakket\fP
-Dit multiregel\-veld bevat een lijst met de namen van de binaire pakketten,
+Dit multiregel\-veld bevat een lijst met de naam van de binaire pakketten,
 gevolgd door een spatie, een koppelteken (‘\fB\-\fP’) en hun eventueel afgekapte
-korte beschrijving.
+korte beschrijving. Indien het een upload is van enkel broncode, dan wordt
+het veld weggelaten (sinds dpkg 1.19.3).
 .TP 
 \fBCloses:\fP\fI bug\-nummer\-lijst\fP
 Een lijst van met komma's van elkaar gescheiden nummers van bugrapporten die

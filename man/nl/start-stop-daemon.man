@@ -5,7 +5,7 @@
 .\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
 .\" Copyright © 2002-2003 Adam Heath <doogie@debian.org>
 .\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
-.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2016, 2018 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -93,17 +93,20 @@ Ga na of een proces bestaat met het opgegeven moeder\-pid \fImoeder\-pid\fP
 (sinds versie 1.17.7). Het \fImoeder\-pid\fP moet een getal zijn groter dan 0.
 .TP 
 \fB\-p\fP, \fB\-\-pidfile\fP \fIpid\-bestand\fP
-Check whether a process has created the file \fIpid\-file\fP.
+Ga na of een proces het bestand \fIpid\-bestand\fP aangemaakt heeft.
 .IP
-Note: using this matching option alone might cause unintended processes to
-be acted on, if the old process terminated without being able to remove the
-\fIpid\-file\fP.
+Opmerking: deze vergelijkingsoptie alleen gebruiken, kan ertoe leiden dat
+geageerd wordt op niet\-bedoelde processen in het geval het oude proces
+eindigde zonder dat het in staat was het \fIpid\-bestand\fP te verwijderen.
 .IP
-\fBWarning:\fP Using this match option alone with a daemon that writes the
-pidfile as an unprivileged user is a security risk, because if the daemon
-gets compromised the contents of the pidfile cannot be trusted, and then a
+\fBWarning:\fP using this match option with a world\-writable pidfile or using
+it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
+user will be refused with an error (since version 1.19.3) as this is a
+security risk, because either any user can write to it, or if the daemon
+gets compromised, the contents of the pidfile cannot be trusted, and then a
 privileged runner (such as an init script executed as root) would end up
-acting on any system process.
+acting on any system process.  Using \fI/dev/null\fP is excempt from these
+checks.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIprogramma\fP
 Ga na of er processen bestaan die exemplaren zijn van dit \fIprogramma\fP. Het
@@ -210,6 +213,35 @@ mislukken. Dit is een laatste toevlucht en is enkel bedoeld voor programma's
 waarvoor het ofwel geen zin heeft om uit zichzelf een nieuw proces (fork) te
 beginnen, of waarvoor het ondoenbaar is om code toe te voegen waardoor ze
 dat uit zichzelf zouden doen.
+.TP 
+\fB\-\-notify\-await\fP
+Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is,
+vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit
+past elementen van het 'readiness procotol' van systemd toe, zoals dit in de
+man\-pagina \fBsd_notify\fP(3) gespecificeerd wordt. De volgende variabelen
+worden ondersteund:
+.RS
+.TP 
+\fBREADY=1\fP
+Het programma is gereed om zijn dienstverlening aan te bieden en dus kunnen
+we veilig afsluiten.
+.TP 
+\fBEXTEND_TIMEOUT_USEC=\fP\fIaantal\fP
+Het programma vraagt om de wachttijd uit te breiden met \fIaantal\fP
+microseconden. Dit stelt de huidige wachttijd opnieuw in op de opgegeven
+waarde.
+.TP 
+\fBERRNO=\fP\fInummer\fP
+Het programma sluit af met een foutmelding. Hetzelfde doen en van de
+\fBerrno\fP\-waarde de gebruikersvriendelijke tekenreeks tonen.
+.RE
+.
+.TP 
+\fB\-\-notify\-timeout\fP\fIwachttijd\fP
+Een wachttijd instellen voor de optie \fB\-\-notify\-await\fP (sinds versie
+1.19.3). Wanneer de wachttijd verlopen is, zal \fBstart\-stop\-daemon\fP
+afsluiten met een foutmelding en zal niet gewacht worden op de kennisgeving
+van gereedheid. Standaard is dit \fB60\fP seconden.
 .TP 
 \fB\-C\fP, \fB\-\-no\-close\fP
 Sluit een eventuele bestandsindicator niet bij het naar de achtergrond

@@ -30,7 +30,7 @@
 .TH update\-alternatives 1 %RELEASE_DATE% %VERSION% "suite dpkg"
 .nh
 .SH NOM
-update\-alternatives \- maintenance des liens symboliques déterminant les noms
+update\-alternatives \- Maintenance des liens symboliques déterminant les noms
 par défaut de certaines commandes
 .
 .SH SYNOPSIS
@@ -83,7 +83,7 @@ pouvoir les manipuler globalement\ ; par exemple, quand plusieurs versions de
 \fIprincipaux («\ master\ »)\fP et les liens \fIsecondaires («\ slave\ »)\fP. Quand le
 lien principal est changé, tous les liens secondaires associés sont
 changés. Un lien principal et ses liens secondaires associés composent un
-\fIgroupe\fP de \fIliens.\fP
+\fIgroupe\fP de \fIliens\fP.
 .PP
 À tout moment, un groupe de liens est dans l'un des deux modes suivants\ :
 automatique ou manuel. Quand un groupe est dans le mode automatique et que
@@ -103,16 +103,16 @@ groupe en mode manuel.
 est en mode automatique, l'alternative visée par les éléments du groupe est
 celle qui possède la priorité la plus élevée.
 .PP
-When using the \fB\-\-config\fP option, \fBupdate\-alternatives\fP will list all of
-the choices for the link group of which given \fIname\fP is the master
-alternative name.  The current choice is marked with a ‘*’.  You will then
-be prompted for your choice regarding this link group.  Depending on the
-choice made, the link group might no longer be in \fIauto\fP mode. You will
-need to use the \fB\-\-auto\fP option in order to return to the automatic mode
-(or you can rerun \fB\-\-config\fP and select the entry marked as automatic).
+Quand l'option \fB\-\-config\fP est utilisée, \fBupdate\-alternatives\fP affiche
+toutes les possibilités du groupe pour lequel \fInom\fP est le lien
+principal. Le choix actuel est noté par un «\ *\ ». Il sera alors demandé quel
+choix doit être fait pour ce groupe. Suivant le choix effectué, le groupe de
+liens peut ne plus être en mode \fIauto\fP. Il vous faudra utiliser l'option
+\fB\-\-auto\fP pour revenir au mode automatique (ou réutiliser \fB\-\-config\fP et
+choisir l'entrée marquée comme automatique).
 .PP
 Si vous voulez configurer de manière non interactive, vous pouvez utiliser
-l'option \fB\-\-set\fP (voyez ci\-dessous).
+l'option \fB\-\-set\fP (voir ci\-dessous).
 .PP
 Les différents paquets qui fournissent un même fichier doivent le faire en
 \fBcollaborant\fP. En d'autres termes, l'utilisation de \fBupdate\-alternatives\fP
@@ -138,11 +138,11 @@ accessible avec un nom générique grâce au système d'alternatives.
 .TP 
 répertoire des alternatives 
 C'est le répertoire qui contient les liens symboliques\ ; il s'agit par
-défaut de \fI%CONFDIR%/alternatives.\fP
+défaut de \fI%CONFDIR%/alternatives\fP.
 .TP 
 répertoire administratif
 C'est le répertoire qui contient des renseignements sur l'état de
-\fBupdate\-alternatives.\fP Il s'agit par défaut de \fI%ADMINDIR%/alternatives.\fP
+\fBupdate\-alternatives.\fP Il s'agit par défaut de \fI%ADMINDIR%/alternatives\fP.
 .TP 
 groupe de liens
 C'est un ensemble de liens symboliques corrélés, de manière qu'on puisse les
@@ -223,29 +223,31 @@ secondaires sont mis à jour et pointent vers les alternatives avec les
 priorités les plus élevées.
 .TP 
 \fB\-\-display\fP \fInom\fP
-Display information about the link group.  Information displayed includes
-the group's mode (auto or manual), the master and slave links, which
-alternative the master link currently points to, what other alternatives are
-available (and their corresponding slave alternatives), and the highest
-priority alternative currently installed.
+Affiche des renseignements sur le groupe de liens. L'information affichée
+comprend le mode du groupe (auto ou manuel), les liens principal et
+secondaires, vers quelle alternative le lien principal pointe actuellement,
+quelles autres alternatives sont disponibles (et les liens secondaires
+associés), et l'alternative actuellement installée qui possède la priorité
+la plus élevée.
 .TP 
 \fB\-\-get\-selections\fP
-List all master alternative names (those controlling a link group)  and
-their status (since version 1.15.0).  Each line contains up to 3 fields
-(separated by one or more spaces). The first field is the alternative name,
-the second one is the status (either \fBauto\fP or \fBmanual\fP), and the last one
-contains the current choice in the alternative (beware: it's a filename and
-thus might contain spaces).
+Affiche tous les noms principaux d'alternatives (ceux qui contrôlent un
+groupe de liens) ainsi que leur état (depuis la version\ 1.15.0). Chaque
+ligne comporte jusqu'à trois champs (séparés par une ou plusieurs
+espaces). Le premier est le nom de l'alternative, le second est son état
+(\fBauto\fP ou \fBmanual\fP) et le dernier montre le choix actuel pour
+l'alternative (il s'agit d'un nom de fichier et donc peut contenir des
+espaces).
 .TP 
 \fB\-\-set\-selections\fP
-Read configuration of alternatives on standard input in the format generated
-by \fB\-\-get\-selections\fP and reconfigure them accordingly (since version
-1.15.0).
+Lit la configuration des alternatives sur l'entrée standard, dans le format
+utilisé par \fB\-\-get\-selections\fP et les configure en conséquence (depuis la
+version\ 1.15.0).
 .TP 
 \fB\-\-query\fP \fInom\fP
-Display information about the link group like \fB\-\-display\fP does, but in a
-machine parseable way (since version 1.15.0, see section \fBQUERY FORMAT\fP
-below).
+Affiche des informations sur le groupe de liens de manière analogue à
+\fB\-\-display\fP, mais sous une forme qui peut être analysée automatiquement
+(depuis la version\ 1.15.0, voir la section \fBFORMAT DE REQUÊTE\fP ci\-dessous).
 .TP 
 \fB\-\-list\fP \fInom\fP
 Affiche toutes les cibles du groupe de liens.
@@ -272,23 +274,27 @@ Donne le répertoire administratif, quand il est différent de celui par
 défaut.
 .TP 
 \fB\-\-log\fP\fI fichier\fP
-Specifies the log file (since version 1.15.0), when this is to be different
-from the default (%LOGDIR%/alternatives.log).
+Indique le fichier journal (depuis la version\ 1.15.0), pour utiliser un
+fichier différent du fichier par défaut (%LOGDIR%/alternatives.log).
 .TP 
 \fB\-\-force\fP
-Allow replacing or dropping any real file that is installed where an
-alternative link has to be installed or removed.
+Autorise le remplacement ou la suppression de tout fichier installé à la
+place d'un lien d'alternative qui doit être créé ou supprimé.
 .TP 
 \fB\-\-skip\-auto\fP
 Passe l'invite de configuration pour les alternatives qui sont correctement
 configurées en mode automatique. Cette option n'est pertinente qu'avec
 \fB\-\-config\fP ou \fB\-\-all\fP.
 .TP 
-\fB\-\-verbose\fP
-Generate more comments about what is being done.
-.TP 
 \fB\-\-quiet\fP
-Ne crée pas de commentaire à moins qu'une erreur ne survienne.
+Do not generate any comments unless errors occur.
+.TP 
+\fB\-\-verbose\fP
+Produit plus de commentaires sur ce qui est fait.
+.TP 
+\fB\-\-debug\fP
+Generate even more comments, helpful for debugging, about what is being done
+(since version 1.19.3).
 .
 .SH "CODE DE SORTIE"
 .TP 
@@ -317,9 +323,10 @@ Le répertoire administratif par défaut. Peut être remplacé avec l'option
 \fB\-\-admindir\fP
 .
 .SH "FORMAT DE REQUÊTE"
-The \fB\-\-query\fP format is using an RFC822\-like flat format. It's made of \fIn\fP
-+ 1 blocks where \fIn\fP is the number of alternatives available in the queried
-link group. The first block contains the following fields:
+Le format de \fB\-\-query\fP est un format à plat de type RFC822. Il est
+constitué de \fIn\fP\ +\ 1 blocs où \fIn\fP est le nombre d'alternatives disponibles
+dans le groupe de liens interrogé. Le premier bloc contient les champs
+suivants\ :
 .TP 
 \fBName:\fP\fI nom\fP
 Nom de l'alternative dans le répertoire des alternatives.
@@ -361,7 +368,7 @@ raison d'une alternative secondaire par ligne. Chaque ligne comporte une
 espace, le nom de l'alternative secondaire, une espace et le chemin vers
 l'alternative secondaire.
 .
-.SS Example
+.SS Exemple
 .nf
 $ update\-alternatives \-\-query editor
 Name: editor
@@ -395,9 +402,9 @@ Slaves:
 Avec l'option \fB\-\-verbose\fP, \fBupdate\-alternatives\fP affiche de très
 nombreuses informations sur la sortie standard. Quand un problème survient,
 \fBupdate\-alternatives\fP envoie des messages d'erreur sur la sortie d'erreur
-standard et retourne un état de sortie égal à 2. Ces diagnostics devraient
-être simples à comprendre\ ; si ce n'est pas le cas, veuillez envoyer un
-rapport de bogue.
+standard et retourne un état de sortie égal à \fB2\fP. Ces diagnostics
+devraient être simples à comprendre\ ; si ce n'est pas le cas, veuillez
+envoyer un rapport de bogue.
 .
 .SH EXEMPLES
 Plusieurs paquets fournissent un éditeur de texte compatible avec \fBvi\fP, par

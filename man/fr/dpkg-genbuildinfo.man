@@ -1,0 +1,170 @@
+.\" dpkg manual page - dpkg-genbuildinfo(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ian@chiark.chu.cam.ac.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2008-2010 Raphaël Hertzog <hertzog@debian.org>
+.\" Copyright © 2006-2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2015 Jérémy Bobbio <lunar@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-genbuildinfo 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-genbuildinfo \- Créer des fichiers .buildinfo Debian.
+.
+.SH SYNOPSIS
+\fBdpkg\-genbuildinfo\fP [\fIoption\fP...]
+.br
+.
+.SH DESCRIPTION
+\fBdpkg\-genbuildinfo\fP lit les informations à la fois dans une arborescence
+debian dépaquetée et déjà construite et sur les fichiers qui ont été créés\ ;
+puis il crée un fichier de contrôle décrivant l'environnement et les objets
+de construction (c'est le fichier \fB.buildinfo\fP).
+.P
+Cette commande a été introduite dans dpkg\ 1.18.11.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-build=\fP\fItype\fP
+Indique un \fItype\fP de construction à partir d'une liste séparée par des
+virgules de composants.
+
+Les valeurs autorisées sont\ :
+.RS
+.TP 
+\fBany\fP
+Génère les informations de construction comprenant les dépendances de
+construction non qualifiées (\fBBuild\-Depends\fP) et les dépendances de
+construction spécifiques à l'architecture (\fBBuild\-Depends\-Arch\fP).
+.TP 
+\fBall\fP
+Génère les informations de construction comprenant les dépendances de
+construction non qualifiées (\fBBuild\-Depends\fP) et les dépendances de
+construction indépendantes de l'architecture (\fBBuild\-Depends\-Indep\fP).
+.TP 
+\fBsource\fP
+Effectivement ignoré\ : génère les informations de construction avec
+seulement les dépendances de construction non qualifiées (\fBBuild\-Depends\fP).
+.TP 
+\fBbinary\fP
+Génère les informations de construction avec les trois types de dépendances
+de construction. C'est un alias de \fBany,all\fP.
+.TP 
+\fBfull\fP
+Génère les informations de construction avec les trois types de dépendances
+de construction. C'est un alias de \fBany,all,source\fP. Identique au cas par
+défaut où aucune option de construction n'est indiquée.
+.RE
+.TP 
+\fB\-c\fP\fIfichier/control\fP
+Indique le principal fichier de contrôle des sources où trouver des
+renseignements. Par défaut, c'est le fichier \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIfichier\-des\-changements\fP
+Indique le fichier des changements où trouver des renseignements. Par
+défaut, c'est le fichier \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIfichier/liste\-des\-fichiers\fP
+Indique où est la liste des fichiers qui ont été produits par la
+construction, au lieu d'utiliser le fichier \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIformat\-du\-fichier\-des\-changements\fP
+Indique le format du fichier des changements. Voir \fBdpkg\-parsechangelog\fP(1)
+pour plus d'informations à propos des formats gérés.
+.TP 
+\fB\-O\fP[\fInom\-de\-fichier\fP]
+Affiche le fichier buildinfo sur la sortie standard (ou \fInom\-de\-fichier\fP si
+précisé) au lieu de
+\fIrépertoire\fP\fB/\fP\fInom\-source\fP\fB_\fP\fIversion\-binaire\fP\fB_\fP\fIarchitecture\fP\fB.buildinfo\fP
+(où \fIrépertoire\fP est \fB..\fP par défaut ou
+\fIrépertoire\-des\-fichiers\-à\-installer\fP si l'option \fB\-u\fP a été utilisée).
+.TP 
+\fB\-u\fP\fIrépertoire\-des\-fichiers\-à\-installer\fP
+Cherche les fichiers à installer dans \fIrépertoire\-des\-fichiers\-à\-installer\fP
+plutôt que dans \fB..\fP. (\fBdpkg\-genbuildinfo\fP doit trouver ces fichiers de
+manière à mettre leurs tailles et leurs sommes de contrôle dans le fichier
+\&\fB.buildinfo\fP).
+.TP 
+\fB\-\-always\-include\-kernel\fP
+Par défaut le champ \fBBuild\-Kernel\-Version\fP ne sera pas écrit.
+
+Il faut préciser cette option (depuis dpkg\ 1.19.0) pour toujours remplir un
+champ \fBBuild\-Kernel\-Version\fP lors de la création de \fB.buildinfo\fP.
+.TP 
+\fB\-\-always\-include\-path\fP
+Par défaut, le champ \fBBuild\-Path\fP ne sera rempli que si le répertoire
+courant débute par un motif inscrit en liste blanche.
+
+Dans Debian et ses dérivés, le motif correspond à \fB/build/\fP au début du nom
+de chemin.
+
+Il faut préciser cette option pour toujours remplir un champ \fBBuild\-Path\fP
+lors de la création de \fB.buildinfo\fP.
+.TP 
+\fB\-\-admindir\fP=\fIrépertoire\fP
+Change l'endroit où se trouve la base de données de \fBdpkg\fP. Par défaut,
+c'est \fI/var/lib/dpkg\fP.
+.TP 
+\fB\-q\fP
+\fBdpkg\-genbuildinfo\fP devrait afficher des messages d'information sur la
+sortie d'erreur standard. \fB\-q\fP supprime ces messages.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le numéro de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDEB_BUILD_OPTIONS\fP
+Cette variable peut être utilisée pour activer ou désactiver diverses
+fonctions qui affectent les informations comprises dans le fichier
+\&.buildinfo au moyen de l'option \fBbuildinfo\fP (depuis dpkg\ 1.18.19). Cette
+option fournit une liste, séparée par des virgules, de fonctionnalités,
+préfixées par les modificateurs «\ \fB+\fP\ » ou «\ \fB\-\fP\ » pour indiquer s'il faut
+les activer ou les désactiver. La fonction spéciale «\ \fBall\fP\ » peut être
+utilisée pour activer ou désactiver toutes les autres fonctions. La fonction
+«\ \fBpath\fP\ » contrôle l'inclusion sans condition du champ \fBBuild\-Path\fP.
+.TP 
+\fBDPKG_COLORS\fP
+Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est définie, elle sera utilisée pour décider l'activation
+de la prise en charge des langues (NLS –\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par défaut).
+.
+.SH FICHIERS
+.TP 
+\fBdebian/files\fP
+La liste des fichiers créés. \fBdpkg\-genbuildinfo\fP lit dans ce fichier les
+données nécessaires à la création du fichier \fB.buildinfo\fP.
+.
+.SH "VOIR AUSSI"
+\fBdeb\-buildinfo\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

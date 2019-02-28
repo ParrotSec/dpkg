@@ -121,11 +121,12 @@ De waarden die gebruikt mogen worden zijn:
 .RS
 .TP 
 \fBsource\fP
-Builds the source package.  Note: when using this value standalone and if
-what you want is simply to (re\-)build the source package from a clean source
-tree, using \fBdpkg\-source\fP directly is always a better option as it does not
-require any build dependencies to be installed which are otherwise needed to
-be able to call the \fBclean\fP target.
+Bouwt het broncodepakket. Opmerking: Indien u deze waarde op zichzelf staand
+gebruikt en indien uw enige bedoeling is om het bronpakket gewoon (opnieuw)
+te bouwen vanuit een zuivere broncodeboom, dan is het altijd beter om
+rechtstreeks \fBdpkg\-source\fP te gebruiken, aangezien dat niet vereist dat
+eventuele bouwvereisten geïnstalleerd worden, welke anders nodig zijn om in
+staat te zijn het doelwit \fBclean\fP te aanroepen.
 .TP 
 \fBany\fP
 Bouwt de architectuurspecifieke binaire pakketten.
@@ -278,26 +279,26 @@ gewoonlijk noodzakelijk zijn in een bouwomgeving, de zogenaamde set van
 pakketten van het type Build\-Essential.
 .TP 
 \fB\-\-rules\-requires\-root\fP
-Do not honor the \fBRules\-Requires\-Root\fP field, falling back to its legacy
-default value (since dpkg 1.19.1).
+Honoreer het veld \fBRules\-Requires\-Root\fP niet; er wordt teruggevallen op
+zijn verouderde standaardwaarde (since dpkg 1.19.1).
 .TP 
 \fB\-nc\fP, \fB\-\-no\-pre\-clean\fP
-Do not clean the source tree before building (long option since dpkg
-1.18.8).  Implies \fB\-b\fP if nothing else has been selected among \fB\-F\fP,
-\fB\-g\fP, \fB\-G\fP, \fB\-B\fP, \fB\-A\fP or \fB\-S\fP.  Implies \fB\-d\fP with \fB\-S\fP (since dpkg
-1.18.0).
+Schoon voor het bouwen de broncodeboom niet op (de lange optie sinds dpkg
+1.18.8). Impliceert \fB\-b\fP indien geen van de opties \fB\-F\fP, \fB\-g\fP, \fB\-G\fP,
+\fB\-B\fP, \fB\-A\fP of \fB\-S\fP gekozen werd. Gecombineerd met \fB\-S\fP impliceert dit
+\fB\-d\fP (sinds dpkg 1.18.0).
 .TP 
 \fB\-\-pre\-clean\fP
-Clean the source tree before building (since dpkg 1.18.8).  This is the
-default behavior.
+Schoon voor het bouwen de broncodeboom op (sinds dpkg 1.18.8). Dit is het
+standaardgedrag.
 .TP 
 \fB\-tc\fP, \fB\-\-post\-clean\fP
 Schoon de broncodeboom op (met \fIcommando\-om\-root\-te\-worden\fP \fBdebian/rules
 clean\fP) nadat het pakket gebouwd werd (de lange optie sinds dpkg 1.18.8).
 .TP 
 \fB\-\-no\-post\-clean\fP
-Do not clean the source tree after the package has been built (since dpkg
-1.19.1).  This is the default behavior.
+Schoon de broncodeboom niet op na het bouwen van het pakket (sinds dpkg
+1.19.1). Dit is het standaardgedrag.
 .TP 
 \fB\-r\fP, \fB\-\-root\-command=\fP\fIcommando\-om\-root\-te\-worden\fP
 Wanneer \fBdpkg\-buildpackage\fP een deel van het bouwproces in de hoedanigheid
@@ -498,9 +499,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
 
 .SS "Interne omgeving"
 Zelfs al exporteert \fBdpkg\-buildpackage\fP sommige variabelen, toch mag
@@ -521,10 +523,11 @@ en \fB\-t\fP. Eventuele variabelen die zijn optie \fB\-s\fP als uitvoer geeft,
 worden in de bouwomgeving geïntegreerd.
 .TP 
 \fBDEB_RULES_REQUIRES_ROOT\fP
-This variable is set to the value obtained from the \fBRules\-Requires\-Root\fP
-field or from the command\-line.  When set, it will be a valid value for the
-\fBRules\-Requires\-Root\fP field.  It is used to notify \fBdebian/rules\fP whether
-the \fBrootless\-builds.txt\fP specification is supported.
+Deze variabele wordt ingesteld op de waarde die verkregen wordt uit het veld
+\fBRules\-Requires\-Root\fP of vanuit de commandoregel. Indien ze ingesteld is,
+zal ze een geldige waarde zijn voor het veld \fBRules\-Requires\-Root\fP. Ze
+wordt gebruikt om \fBdebian/rules\fP te informeren of de specificatie
+\fBrootless\-builds.txt\fP ondersteund wordt.
 .TP 
 \fBDEB_GAIN_ROOT_CMD\fP
 Deze variabele wordt ingesteld op \fIgain\-root\-command\fP wanneer het veld

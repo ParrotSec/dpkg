@@ -1,0 +1,189 @@
+.\" dpkg manual page - deb-changelog(5)
+.\"
+.\" Copyright © 1996-1998 Ian Jackson and Christian Schwarz
+.\" Copyright © 1998, 2001 Manoj Srivastava <srivasta@debian.org>
+.\" Copyright © 2001 Julian Gilbey <jdg@debian.org>
+.\" Copyright © 2003 Josip Rodin <joy@debian.org>
+.\" Copyright © 2008, 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2010 Charles Plessy <plessy@debian.org>
+.\" Copyright © 2014 Bill Allombert <ballombe@debian.org>
+.\" Copyright © 2015-2017 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-changelog 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-changelog \- Format du fichier de journal des modifications
+(«\ changelog\ ») des paquets source dpkg
+.
+.SH SYNOPSIS
+changelog
+.
+.SH DESCRIPTION
+Les modifications de la version empaquetée d'un projet sont expliquées dans
+le fichier \fIdebian/changelog\fP. Cela comprend les modifications réalisées
+dans les sources par rapport au paquet amont ainsi que les autres
+modifications et mises à jour du paquet.
+.PP
+Le format de \fIdebian/changelog\fP permet aux outils de construction du paquet
+de découvrir la version du paquet en construction et de découvrir d'autres
+informations spécifiques à la version.
+.PP
+Ce format est une série d'entrées comme celles\-ci\ :
+
+.nf
+\fIpaquet\fP (\fIversion\fP) \fIdistributions\fP; \fImétadonnées\fP
+          [ligne(s) blanches(s) facultative(s), retirée(s)]
+  * \fIdétails\-de\-modification\fP
+    \fIplus\-de\-détails\-de\-modification\fP
+          [ligne(s) blanches(s), y compris dans la sortie de
+          \fBdpkg\-parsechangelog\fP(1)]
+  * \fIencore\-plus\-de\-détails\-de\-modification\fP
+          [ligne(s) blanches(s) facultative(s), retirée(s)]
+ \-\- \fInom\-responsable\fP <\fIadresse\-électronique\fP>  \fIdate\fP
+.fi
+
+.PP
+\fIpaquet\fP et (\fIversion\fP) sont le nom et le numéro de version du paquet
+source.
+.PP
+\fIdistributions\fP liste une ou plusieurs distributions, séparées par une
+espace, dans lesquelles cette version peut être installée après
+téléchargement\ ; l'entrée est copiée dans le champ \fBDistribution\fP dans le
+fichier \fI.changes\fP.
+.PP
+\fImetadata\fP est une liste séparée par des virgules de paires
+\fImot\-clé\fP=\fIvaleur\fP. Les seuls \fImots\-clés\fP gérés actuellement par \fBdpkg\fP
+sont \fBurgency\fP et \fBbinary\-only\fP. La valeur d'\fBurgency\fP est utilisée pour
+le champ \fBUrgency\fP dans le fichier \fI.changes\fP pour l'envoi. \fBbinary\-only\fP
+avec une valeur \fByes\fP est utilisé pour indiquer que cette entrée de
+changelog est liée à un envoi seulement binaire (binNMU) (une reconstruction
+automatique du binaire avec uniquement une modification de l'entrée du
+changelog).
+.PP
+Les détails de modification peuvent être en fait une série de lignes
+démarrant par au moins deux espaces, mais par convention, chaque
+modification débute par un astérisque et une espace de séparation et les
+lignes de continuation sont indentées de telle manière qu'elles s'alignent
+sur le début du texte au\-dessus. Des lignes blanches peuvent être utilisées
+pour séparer des groupes de modifications, si désiré.
+.PP
+Si cet envoi résout des bogues enregistrés dans le système de suivi de
+bogues de la distribution, ceux\-ci peuvent être automatiquement fermés lors
+de l'inclusion de ce paquet dans l'archive de la distribution en incluant la
+chaîne\ :
+.nf
+  \fBCloses: Bug#\fP\fInnnnn\fP
+.fi
+dans les détails de modification (l'expression rationnelle précise en Perl
+est
+\fB/closes:\es*(?:bug)?\e#?\es?\ed+(?:,\es*(?:bug)?\e#?\es?\ed+)*/i\fP). Cette
+information est transmise à travers le champs \fBCloses\fP dans le \fI.changes\fP.
+.PP
+Le nom du responsable et l'adresse électronique utilisés dans le changelog
+seront les détails sur la personne qui a préparé cette version du paquet. Ce
+ne sont \fBpas\fP nécessairement ceux de celui qui fait l'envoi ou du
+responsable habituel du paquet. Ces informations seront copiées dans le
+champ \fBChanged\-By\fP du fichier \fI.changes\fP, et pourront plus tard être
+utilisées pour envoyer une confirmation lorsque l'envoi a été installé dans
+l'archive de la distribution.
+.PP
+La \fIdate\fP est au format suivant (compatible et avec la même sémantique que
+RFC2822 et RFC5322, ou avec ce que crée «\ date\ \-R\ »)\ :
+.IP
+\fIjour\-de\-la\-semaine\fP\fB,\fP \fIjj\fP \fImois\fP \fIaaaa\fP \fIhh\fP\fB:\fP\fImm\fP\fB:\fP\fIss\fP
+\fB+\fP\fIzzzz\fP
+.PP
+où\ :
+.TP 
+\fIjour\-de\-la\-semaine\fP
+C'est au choix\ : \fBMon\fP, \fBTue\fP, \fBWed\fP, \fBThu\fP, \fBFri\fP, \fBSat\fP, \fBSun\fP.
+.TP 
+\fIjj\fP
+C'est le numéro, à un ou deux chiffres, du jour du mois (\fB01\fP\-\fB31\fP).
+.TP 
+\fImois\fP
+C'est au choix\ : \fBJan\fP, \fBFeb\fP, \fBMar\fP, \fBApr\fP, \fBMay\fP, \fBJun\fP, \fBJul\fP,
+\fBAug\fP, \fBSep\fP, \fBOct\fP, \fBNov\fP, \fBDec\fP.
+.TP 
+\fIaaaa\fP
+C'est l'année en chiffre (par exemple 2010).
+.TP 
+\fIhh\fP
+Il s'agit de l'heure en deux chiffres (\fB00\fP\-\fB23\fP).
+.TP 
+\fImm\fP
+Il s'agit des minutes en deux chiffres (\fB00\fP\-\fB59\fP).
+.TP 
+\fIss\fP
+Il s'agit des secondes en deux chiffres (\fB00\fP\-\fB59\fP).
+.TP 
+[\fB+\-\fP]\fIzzzz\fP
+Il s'agit du décalage horaire par rapport au temps universel coordonné
+(UTC). «\ \fB+\fP\ » indique que l'heure est en avance (c'est\-à\-dire à l'est) par
+rapport à l'UTC et «\ \fB\-\fP\ » indique que l'heure est en retard (c'est\-à\-dire
+à l'ouest) par rapport à l'UTC. Les deux premiers chiffres indiquent la
+différence d'heures par rapport à l'UTC et les deux derniers le nombre de
+minutes additionnelles par rapport à l'UTC. Ces deux derniers chiffres
+doivent être entre \fB00\fP et \fB59\fP.
+.PP
+La première ligne de «\ titre\ » avec le nom du paquet doit débuter à la marge
+gauche. La ligne terminale avec les détails sur le responsable et la date
+doit être précédée d'une espace précisément. Les détails sur le responsable
+et la date doivent être séparés par exactement deux espaces.
+.PP
+Any line that consists entirely (i.e., no leading whitespace) of \fB#\fP or
+\fB/* */\fP style comments or RCS keywords.
+.PP
+Vim modelines or Emacs local variables, and ancient changelog entries with
+other formats at the end of the file should be accepted and preserved on
+output, but their contents might be otherwise ignored and parsing stopped at
+that point.
+.PP
+La totalité du journal des modifications doit être encodé en UTF\-8.
+.SH FICHIERS
+.TP 
+\fIdebian/changelog\fP
+.SH EXEMPLES
+.nf
+dpkg (1.17.18) unstable; urgency=low
+
+  [ Guillem Jover ]
+  * Handle empty minimum versions when initializing dependency versions,
+    as the code is mapping the minimum version 0 to \*(rq to avoid outputting
+    useless versions. Regression introduced in dpkg 1.17.17. Closes: #764929
+
+  [ Updated programs translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated dselect translations ]
+  * Catalan (Guillem Jover).
+  * German (Sven Joachim).
+
+ \-\- Guillem Jover <guillem@debian.org>  Sun, 12 Oct 2014 15:47:44 +0200
+.fi
+.
+.SH "VOIR AUSSI"
+\fBdeb\-version\fP(7), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

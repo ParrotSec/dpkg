@@ -24,7 +24,7 @@
 .TH dpkg\-split 1 %RELEASE_DATE% %VERSION% "suite dpkg"
 .nh
 .SH NOM
-dpkg\-split \- outil de décomposition/recomposition des paquets Debian
+dpkg\-split \- Outil de décomposition/recomposition des paquets Debian
 .
 .SH SYNOPSIS
 \fBdpkg\-split\fP [\fIoption\fP...] \fIcommande\fP
@@ -76,8 +76,8 @@ signifie en fait qu'elles doivent avoir été créées par le même appel à
 Les parties des noms ne sont pas significatives pour le processus de
 recomposition.
 
-Par défaut, le fichier produit
-s'appelle\ \fIpaquet\fP\fB_\fP\fIversion\fP\fB_\fP\fIarch\fP\fB.deb\fP.
+Par défaut, le fichier produit s'appelle
+\fIpaquet\fP\fB_\fP\fIversion\fP\fB_\fP\fIarch\fP\fB.deb\fP.
 
 .TP 
 \fB\-I\fP, \fB\-\-info\fP \fIpartie\fP...
@@ -133,10 +133,10 @@ Affiche le numéro de version puis quitte.
 \fB\-\-depotdir\fP\fI répertoire\fP
 Indique un répertoire différent pour la file comprenant les parties en
 attente d'une recomposition automatique. Par défaut, c'est le répertoire
-\fB/var/lib/dpkg\fP.
+\fB%ADMINDIR%\fP.
 .TP 
-\fB\-S\fP, \fB\-\-partsize\fP \fIkibi\-octets\fP
-Indique, en kibi\-octets (1024 octets), la taille maximum d'une partie lors
+\fB\-S\fP, \fB\-\-partsize\fP \fIkibioctets\fP
+Indique, en kibioctet (1024 octets), la taille maximum d'une partie lors
 d'une décomposition. Par défaut, la taille maximum est de 450\ Kio.
 .TP 
 \fB\-o\fP, \fB\-\-output\fP \fIfichier\-complet\fP
@@ -155,12 +155,12 @@ quand il est confronté à des paquets décomposés et des paquets non
 décomposés.
 .TP 
 \fB\-\-msdos\fP
-Oblige le nom des fichiers produits par \fB\-\-split\fP à se conformer à msdos.
+Oblige le nom des fichiers produits par \fB\-\-split\fP à se conformer à MS\-DOS.
 
-Cela supprime le préfixe \- soit celui par défaut dérivé du fichier d'entrée,
-soit celui donné comme argument\ : les caractères alphanumériques sont en
-minuscules, les signes plus sont remplacés par des \fBx\fP et tous les autres
-caractères sont abandonnés.
+Cela supprime le préfixe, soit celui par défaut dérivé du nom du fichier
+d'entrée, soit celui donné comme argument\ : les caractères alphanumériques
+sont en minuscules, les signes plus sont remplacés par des \fBx\fP et tous les
+autres caractères sont abandonnés.
 
 Le résultat est alors tronqué autant que nécessaire et des fichiers de la
 forme\ : \fIprefixN\fP\fBof\fP\fIM\fP\fB.deb\fP sont créés.
@@ -177,19 +177,21 @@ Ne peut apparaître qu'avec l'action \fB\-\-auto\fP et signale que le fichier
 \fIpartie\fP n'est pas une partie d'un paquet binaire.
 .TP 
 \fB2\fP
-Fatal or unrecoverable error due to invalid command\-line usage, a file that
-looked like a package part file but was corrupted, or interactions with the
-system, such as accesses to the database, memory allocations, etc.
+Erreur fatale ou irrécupérable due à une utilisation non valable de la ligne
+de commande, à un fichier qui ressemble à fichier appartenant à un paquet
+mais qui est corrompu, ou à des interactions avec le système, telles que des
+accès à la base de données, des allocations mémoires,\ etc.
 .
 .SH ENVIRONNEMENT
 .TP 
 \fBDPKG_COLORS\fP
-Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
-\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
 .TP 
 \fBSOURCE_DATE_EPOCH\fP
-If set, it will be used as the timestamp (as seconds since the epoch) in the
-\fBdeb\-split\fP(5)'s \fBar\fP(5) container.
+Si cette option est utilisée, elle sera utilisée comme horodatage (en
+seconde à partir de «\ l'epoch\ ») dans le conteneur \fBar\fP(5) de
+\fBdeb\-split\fP(5).
 .
 .SH FICHIERS
 .TP 

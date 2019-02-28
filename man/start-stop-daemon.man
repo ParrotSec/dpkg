@@ -5,7 +5,7 @@
 .\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
 .\" Copyright © 2002-2003 Adam Heath <doogie@debian.org>
 .\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
-.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2016, 2018 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -122,11 +122,14 @@ Note: using this matching option alone might cause unintended processes to
 be acted on, if the old process terminated without being able to remove the
 \fIpid-file\fP.
 .IP
-\fBWarning:\fP Using this match option alone with a daemon that writes the
-pidfile as an unprivileged user is a security risk, because if the daemon
-gets compromised the contents of the pidfile cannot be trusted, and then
+\fBWarning:\fP using this match option with a world-writable pidfile or using
+it alone with a daemon that writes the pidfile as an unprivileged (non-root)
+user will be refused with an error (since version 1.19.3) as this is a
+security risk, because either any user can write to it, or if the daemon
+gets compromised, the contents of the pidfile cannot be trusted, and then
 a privileged runner (such as an init script executed as root) would end up
 acting on any system process.
+Using \fI/dev/null\fP is excempt from these checks.
 .TP
 .BR \-x ", " \-\-exec " \fIexecutable\fP"
 Check for processes that are instances of this \fIexecutable\fP. The
@@ -265,6 +268,33 @@ cannot check the exit status if the process fails to execute for
 reason. This is a last resort, and is only meant for programs that either
 make no sense forking on their own, or where it's not feasible to add the
 code for them to do this themselves.
+.TP
+.BR \-\-notify\-await
+Wait for the background process to send a readiness notification before
+considering the service started (since version 1.19.3).
+This implements parts of the systemd readiness procotol, as specified
+in the \fBsd_notify\fP(3) man page.
+The following variables are supported:
+.RS
+.TP
+.B READY=1
+The program is ready to give service, so we can exit safely.
+.TP
+.BI EXTEND_TIMEOUT_USEC= number
+The program requests to extend the timeout by \fInumber\fP microseconds.
+This will reset the current timeout to the specified value.
+.TP
+.BI ERRNO= number
+The program is exiting with an error.
+Do the same and print the user-friendly string for the \fBerrno\fP value.
+.RE
+.
+.TP
+.BI \-\-notify\-timeout timeout
+Set a timeout for the \fB\-\-notify\-await\fP option (since version 1.19.3).
+When the timeout is reached, \fBstart\-stop\-daemon\fP will exit with an
+error code, and no readiness notification will be awaited.
+The default is \fB60\fP seconds.
 .TP
 .BR \-C ", " \-\-no\-close
 Do not close any file descriptor when forcing the daemon into the background

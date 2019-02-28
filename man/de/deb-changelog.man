@@ -144,12 +144,13 @@ eingeleitet werden. Die Details zum Betreuer und das Datum müssen durch
 genau zwei Leerzeichen getrennt sein.
 .PP
 Jede Zeile, die komplett (d.h. ohne einführende Leerzeichen) aus Kommentaren
-im Stil \fB#\fP oder \fB/* */\fP, RCS\-Schlüsselwörtern, Modelines von Vim oder
-lokalen Emacs\-Variablen besteht, sollte ignoriert werden.
+im Stil \fB#\fP oder \fB/* */\fP oder RCS\-Schlüsselwörtern besteht, sollte
+ignoriert werden.
 .PP
-Uralte Changelog\-Einträge in anderen Formaten am Ende der Datei sollten
-akzeptiert und in der Ausgabe erhalten werden. Ihr Inhalt darf ansonsten
-aber ignoriert und die Auswertung an diesem Punkt beendet werden.
+Modelines von Vim oder lokale Emacs\-Variablen sowie uralte
+Changelog\-Einträge in anderen Formaten am Ende der Datei sollten akzeptiert
+und in der Ausgabe erhalten werden. Ihr Inhalt darf ansonsten aber ignoriert
+und die Auswertung an diesem Punkt beendet werden.
 .PP
 Der gesamte Changelog muss in UTF\-8 kodiert sein.
 .SH DATEIEN
@@ -177,7 +178,7 @@ dpkg (1.17.18) unstable; urgency=low
 .SH "SIEHE AUCH"
 \fBdeb\-version\fP(7), \fBdeb\-changes\fP(5), \fBdpkg\-parsechangelog\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

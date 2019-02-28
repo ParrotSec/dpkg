@@ -34,6 +34,7 @@ dpkg_SOURCES = \
 	errors.c \
 	file-match.c file-match.h \
 	filters.c filters.h \
+	force.c force.h \
 	help.c \
 	main.c main.h \
 	packages.c \
@@ -59,6 +60,7 @@ dpkg_query_SOURCES = \
 	querycmd.c
 
 dpkg_statoverride_SOURCES = \
+	force.c force.h \
 	selinux.c \
 	statcmd.c
 

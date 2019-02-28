@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if [ "$(id -u)" = '0' ]; then
+  # Skip, we cannot declare we do not want root.
+  exit 77
+fi
+
+t=test-not-root
+
+mkdir -p $t
+cd $t
+../configure --disable-nls --disable-dselect
+make installcheck

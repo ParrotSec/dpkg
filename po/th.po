@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.23\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-10-08 11:37+0200\n"
+"POT-Creation-Date: 2019-02-23 17:59+0100\n"
 "PO-Revision-Date: 2015-06-26 16:13+0200\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@debian.org>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -336,30 +336,37 @@ msgid "unable to seek to start of %.250s after padding"
 msgstr "ไม่สามารถเลื่อนไปยังต้นแฟ้ม %.250s หลังจากเติมอักขระเติมช่องว่าง"
 
 #: lib/dpkg/dbmodify.c
-#, c-format
-msgid "unable to open lock file %s for testing"
-msgstr "ไม่สามารถเปิดแฟ้มล็อค %s เพื่อทดสอบ"
+#, fuzzy, c-format
+#| msgid "unable to get file descriptor for directory '%s'"
+msgid "unable to check lock file for dpkg database directory %s"
+msgstr "ไม่สามารถนำ file descriptor ของไดเรกทอรี '%s' มาใช้ได้"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy
+#, fuzzy, c-format
 #| msgid "unable to open/create status database lockfile"
-msgid "unable to open/create frontend lockfile"
+msgid "unable to open/create dpkg frontend lock for directory %s"
 msgstr "ไม่สามารถเปิด/สร้างแฟ้มล็อคสำหรับฐานข้อมูลสถานะ"
 
 #: lib/dpkg/dbmodify.c
-msgid "unable to open/create status database lockfile"
+#, fuzzy, c-format
+#| msgid "unable to open/create status database lockfile"
+msgid "unable to open/create dpkg database lock file for directory %s"
 msgstr "ไม่สามารถเปิด/สร้างแฟ้มล็อคสำหรับฐานข้อมูลสถานะ"
 
 #: lib/dpkg/dbmodify.c
-msgid "you do not have permission to lock the dpkg status database"
+#, fuzzy, c-format
+#| msgid "you do not have permission to lock the dpkg status database"
+msgid "you do not have permission to lock the dpkg database directory %s"
 msgstr "คุณไม่มีสิทธิ์ล็อคฐานข้อมูลสถานะของ dpkg"
 
 #: lib/dpkg/dbmodify.c
-msgid "dpkg frontend"
+msgid "dpkg frontend lock"
 msgstr ""
 
 #: lib/dpkg/dbmodify.c
-msgid "dpkg status database"
+#, fuzzy
+#| msgid "dpkg status database"
+msgid "dpkg database lock"
 msgstr "ฐานข้อมูลสถานะของ dpkg"
 
 #: lib/dpkg/dbmodify.c
@@ -367,11 +374,15 @@ msgid "requested operation requires superuser privilege"
 msgstr "การดำเนินการที่สั่งต้องอาศัยสิทธิ์ผู้ดูแลระบบ"
 
 #: lib/dpkg/dbmodify.c
-msgid "unable to access dpkg status area"
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area"
+msgid "unable to access the dpkg database directory %s"
 msgstr "ไม่สามารถเข้าใช้พื้นที่สถานะของ dpkg"
 
 #: lib/dpkg/dbmodify.c
-msgid "operation requires read/write access to dpkg status area"
+#, fuzzy, c-format
+#| msgid "operation requires read/write access to dpkg status area"
+msgid "required read/write access to the dpkg database directory %s"
 msgstr "การดำเนินการที่สั่งต้องอาศัยสิทธิ์อ่าน/เขียนในพื้นที่สถานะของ dpkg"
 
 #: lib/dpkg/dbmodify.c
@@ -568,8 +579,11 @@ msgstr "พบรูปแบบผิดพลาดในแฟ้ม statover
 
 #: lib/dpkg/db-fsys-override.c
 #, c-format
-msgid "unknown user '%s' in statoverride file"
-msgstr "พบผู้ใช้ '%s' ที่ไม่รู้จักอยู่ในแฟ้ม statoverride"
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
 
 #: lib/dpkg/db-fsys-override.c
 msgid "unexpected end of line in statoverride file"
@@ -577,8 +591,12 @@ msgstr "พบจุดจบบรรทัดก่อนกำหนดใน
 
 #: lib/dpkg/db-fsys-override.c
 #, c-format
-msgid "unknown group '%s' in statoverride file"
-msgstr "พบกลุ่ม '%s' ที่ไม่รู้จักอยู่ในแฟ้ม statoverride"
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
 
 #: lib/dpkg/db-fsys-override.c
 #, c-format
@@ -720,64 +738,73 @@ msgid "internal error"
 msgstr "ข้อผิดพลาดภายใน (บั๊ก)"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "%s is missing"
-msgstr "%s ขาดหายไป"
+#, fuzzy
+#| msgid "missing package"
+msgid "is missing a value"
+msgstr "ขาด package"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "'%.50s' is not allowed for %s"
-msgstr "'%.50s' มีใน %s ไม่ได้"
+#, fuzzy, c-format
+#| msgid "Skip invalid line: %s"
+msgid "has invalid value '%.50s'"
+msgstr "ข้ามบรรทัดที่ไม่ถูกต้อง: %s"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "junk after %s"
-msgstr "มีขยะหลัง %s"
+msgid "has trailing junk"
+msgstr ""
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "invalid package name (%.250s)"
-msgstr "ชื่อแพกเกจใช้ไม่ได้ (%.250s)"
+#, fuzzy, c-format
+#| msgid "package '%s' is not installed"
+msgid "invalid package name in '%s' field: %s"
+msgstr "แพกเกจ '%s' ไม่ได้ติดตั้งไว้"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
 #| msgid "empty file details field '%s'"
-msgid "empty archive details field '%s'"
+msgid "empty archive details '%s' field"
 msgstr "เขตข้อมูลรายละเอียดแฟ้ม `%s' ว่างเปล่า"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
 #| msgid "file details field '%s' not allowed in status file"
-msgid "archive details field '%s' not allowed in status file"
+msgid "archive details '%s' field not allowed in status file"
 msgstr "มีเขตข้อมูลรายละเอียดแฟ้ม `%s' ในแฟ้มสถานะไม่ได้"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
 #| msgid "too many values in file details field '%s' (compared to others)"
-msgid "too many values in archive details field '%s' (compared to others)"
+msgid "too many values in archive details '%s' field (compared to others)"
 msgstr "มีข้อมูลจำนวนมากเกินไปในเขตข้อมูลรายละเอียดแฟ้ม `%s' (เมื่อเทียบกับข้อมูลอื่น)"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
 #| msgid "too few values in file details field '%s' (compared to others)"
-msgid "too few values in archive details field '%s' (compared to others)"
+msgid "too few values in archive details '%s' field (compared to others)"
 msgstr "มีข้อมูลจำนวนน้อยเกินไปในเขตข้อมูลรายละเอียดแฟ้ม `%s' (เมื่อเทียบกับข้อมูลอื่น)"
 
 #: lib/dpkg/fields.c
-msgid "yes/no in boolean field"
-msgstr "yes/no ในเขตข้อมูลบูลีน"
+#, fuzzy, c-format
+#| msgid "obsolete '%s' or '%s' field used"
+msgid "boolean (yes/no) '%s' field: %s"
+msgstr "มีการใช้เขตข้อมูล '%s' หรือ '%s' ซึ่งเลิกใช้แล้ว"
 
 #: lib/dpkg/fields.c
-msgid "foreign/allowed/same/no in quadstate field"
+#, fuzzy, c-format
+#| msgid "foreign/allowed/same/no in quadstate field"
+msgid "quadstate (foreign/allowed/same/no) '%s' field: %s"
 msgstr "foreign/allowed/same/no ในเขตข้อมูลสี่สถานะ"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "'%s' is not a valid architecture name: %s"
+#, fuzzy, c-format
+#| msgid "'%s' is not a valid architecture name: %s"
+msgid "'%s' is not a valid architecture name in '%s' field: %s"
 msgstr "'%s' ไม่ใช่ชื่อสถาปัตยกรรมที่สามารถใช้ได้: %s"
 
 #: lib/dpkg/fields.c
-msgid "word in 'Priority' field"
+#, fuzzy, c-format
+#| msgid "word in 'Priority' field"
+msgid "word in '%s' field: %s"
 msgstr "คำในเขตข้อมูล 'Priority'"
 
 #: lib/dpkg/fields.c
@@ -786,25 +813,33 @@ msgid "value for '%s' field not allowed in this context"
 msgstr "ใช้ค่าสำหรับเขตข้อมูล '%s' ไม่ได้ในบริบทนี้"
 
 #: lib/dpkg/fields.c
-msgid "first (want) word in 'Status' field"
+#, fuzzy, c-format
+#| msgid "first (want) word in 'Status' field"
+msgid "first (want) word in '%s' field: %s"
 msgstr "คำแรก (want) ในเขตข้อมูล 'Status'"
 
 #: lib/dpkg/fields.c
-msgid "second (error) word in 'Status' field"
+#, fuzzy, c-format
+#| msgid "second (error) word in 'Status' field"
+msgid "second (error) word in '%s' field: %s"
 msgstr "คำที่สอง (error) ในเขตข้อมูล 'Status'"
 
 #: lib/dpkg/fields.c
-msgid "third (status) word in 'Status' field"
+#, fuzzy, c-format
+#| msgid "third (status) word in 'Status' field"
+msgid "third (status) word in '%s' field: %s"
 msgstr "คำที่สาม (status) ในเขตข้อมูล 'Status'"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "error in '%s' field string '%.250s'"
+#, fuzzy, c-format
+#| msgid "error in '%s' field string '%.250s'"
+msgid "'%s' field value '%.250s'"
 msgstr "มีข้อผิดพลาดในเขตข้อมูล '%s' ข้อความ '%.250s'"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "obsolete '%s' or '%s' field used"
+#, fuzzy, c-format
+#| msgid "obsolete '%s' or '%s' field used"
+msgid "obsolete '%s' field used"
 msgstr "มีการใช้เขตข้อมูล '%s' หรือ '%s' ซึ่งเลิกใช้แล้ว"
 
 #: lib/dpkg/fields.c
@@ -813,12 +848,15 @@ msgid "value for '%s' field has malformed line '%.*s'"
 msgstr "ค่าของเขตข้อมูล '%s' มีบรรทัดที่ผิดรูปแบบ '%.*s'"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "value for '%s' has line starting with non-space '%c'"
+#, fuzzy, c-format
+#| msgid "value for '%s' has line starting with non-space '%c'"
+msgid "value for '%s' field has line starting with non-space '%c'"
 msgstr "ค่าของ '%s' มีบรรทัดที่ขึ้นต้นด้วยอักขระ '%c' ซึ่งไม่ใช่ช่องว่าง"
 
 #: lib/dpkg/fields.c
-msgid "root or null directory is listed as a conffile"
+#, fuzzy, c-format
+#| msgid "root or null directory is listed as a conffile"
+msgid "root or empty directory listed as a conffile in '%s' field"
 msgstr "มีการใช้ไดเรกทอรีรากหรือไดเรกทอรีไม่มีชื่อเป็น conffile"
 
 #: lib/dpkg/fields.c
@@ -897,9 +935,10 @@ msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "เขตข้อมูล `%s' อ้างอิงไปยัง `%.255s': เลขรุ่นยังไม่จบ"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "'%s' field, reference to '%.255s': error in version"
-msgstr "เขตข้อมูล '%s' อ้างอิงไปยัง '%.255s': มีข้อผิดพลาดในเลขรุ่น"
+#, fuzzy, c-format
+#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
+msgid "'%s' field, reference to '%.255s': version '%s'"
+msgstr "เขตข้อมูล `%s' อ้างอิงไปยัง `%.255s': เลขรุ่นมีอักขระ `%c'"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -907,8 +946,9 @@ msgid "'%s' field, syntax error after reference to package '%.255s'"
 msgstr "เขตข้อมูล `%s' มีรูปแบบผิดไวยากรณ์หลังจากการอ้างถึงแพกเกจ `%.255s'"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "alternatives ('|') not allowed in %s field"
+#, fuzzy, c-format
+#| msgid "alternatives ('|') not allowed in %s field"
+msgid "alternatives ('|') not allowed in '%s' field"
 msgstr "ใช้ทางเลือก (`|') ไม่ได้ในเขตข้อมูล %s"
 
 #: lib/dpkg/fields.c
@@ -1172,27 +1212,33 @@ msgid "duplicate value for user-defined field '%.*s'"
 msgstr "ค่าของเขตข้อมูลกำหนดเอง `%.*s' ซ้ำกัน"
 
 #: lib/dpkg/parse.c lib/dpkg/parsehelp.c
-#, c-format
-msgid "missing %s"
+#, fuzzy, c-format
+#| msgid "missing %s"
+msgid "missing '%s' field"
 msgstr "ขาด %s"
 
 #: lib/dpkg/parse.c lib/dpkg/parsehelp.c
-#, c-format
-msgid "empty value for %s"
-msgstr "%s เป็นค่าว่างเปล่า"
+#, fuzzy, c-format
+#| msgid "duplicate value for '%s' field"
+msgid "empty value for '%s' field"
+msgstr "ค่าของเขตข้อมูล `%s' ซ้ำกัน"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "package has field '%s' but is missing architecture"
+#, fuzzy, c-format
+#| msgid "package has field '%s' but is missing architecture"
+msgid "package has '%s' field but is missing architecture"
 msgstr "แพกเกจมีเขตข้อมูล '%s' แต่ขาดสถาปัตยกรรม"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "package has field '%s' but is architecture all"
+#, fuzzy, c-format
+#| msgid "package has field '%s' but is architecture all"
+msgid "package has '%s' field but is architecture '%s'"
 msgstr "แพกเกจมีเขตข้อมูล '%s' แต่เป็นสถาปัตยกรรม 'all'"
 
 #: lib/dpkg/parse.c
-msgid "Config-Version for package with inappropriate Status"
+#, fuzzy, c-format
+#| msgid "Config-Version for package with inappropriate Status"
+msgid "'%s' field present for package with inappropriate '%s' field"
 msgstr "มี Config-Version สำหรับแพกเกจที่มีค่า Status ไม่เหมาะสม"
 
 #: lib/dpkg/parse.c
@@ -1201,8 +1247,10 @@ msgid "package has status %s but triggers are awaited"
 msgstr "แพกเกจอยู่ในสถานะ %s แต่มีการสะกิดที่รอคอยอยู่"
 
 #: lib/dpkg/parse.c
-msgid "package has status triggers-awaited but no triggers awaited"
-msgstr "แพกเกจอยู่ในสถานะ triggers-awaited แต่ไม่มีการสะกิดที่รอคอยอยู่"
+#, fuzzy, c-format
+#| msgid "package has status %s but triggers are awaited"
+msgid "package has status %s but no triggers awaited"
+msgstr "แพกเกจอยู่ในสถานะ %s แต่มีการสะกิดที่รอคอยอยู่"
 
 #: lib/dpkg/parse.c
 #, c-format
@@ -1210,11 +1258,15 @@ msgid "package has status %s but triggers are pending"
 msgstr "แพกเกจอยู่ในสถานะ %s แต่มีการสะกิดที่คั่งค้างอยู่"
 
 #: lib/dpkg/parse.c
-msgid "package has status triggers-pending but no triggers pending"
-msgstr "แพกเกจอยู่ในสถานะ triggers-pending แต่ไม่มีการสะกิดที่คั่งค้างอยู่"
+#, fuzzy, c-format
+#| msgid "package has status %s but triggers are pending"
+msgid "package has status %s but no triggers pending"
+msgstr "แพกเกจอยู่ในสถานะ %s แต่มีการสะกิดที่คั่งค้างอยู่"
 
 #: lib/dpkg/parse.c
-msgid "Package which in state not-installed has conffiles, forgetting them"
+#, fuzzy, c-format
+#| msgid "Package which in state not-installed has conffiles, forgetting them"
+msgid "package has status %s and has conffiles, forgetting them"
 msgstr "แพกเกจสถานะ not-installed มี conffile ดังนั้นจะลบข้อมูลทิ้ง"
 
 #: lib/dpkg/parse.c
@@ -1234,10 +1286,13 @@ msgstr ""
 "โดยมากมาจากการปรับรุ่นจาก dpkg ที่ไม่เป็นทางการ"
 
 #: lib/dpkg/parse.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s %s (Multi-Arch: %s) is not co-installable with %s which has multiple "
+#| "installed instances"
 msgid ""
-"%s %s (Multi-Arch: %s) is not co-installable with %s which has multiple "
-"installed instances"
+"package %s (%s) with field '%s: %s' is not co-installable with %s which has "
+"multiple installed instances"
 msgstr "%s %s (Multi-Arch: %s) ไม่สามารถติดตั้งร่วมกับ %s ซึ่งมีการติดตั้งหลายชุด"
 
 #: lib/dpkg/parse.c
@@ -1436,6 +1491,11 @@ msgstr "ความกว้างเขตข้อมูลอยู่นอ
 msgid "missing closing brace"
 msgstr "ขาดปีกกาปิด"
 
+#: lib/dpkg/pkg-format.c
+#, c-format
+msgid "cannot get package %s filesystem last modification time"
+msgstr ""
+
 #: lib/dpkg/pkg-hash.c lib/dpkg/pkg-spec.c
 #, c-format
 msgid "ambiguous package name '%s' with more than one installed instance"
@@ -1528,6 +1588,70 @@ msgstr "โพรเซสย่อย %s ล้มเหลวด้วยร�
 msgid "wait for %s subprocess failed"
 msgstr "คอยโพรเซสย่อย %s ไม่สำเร็จ"
 
+#: lib/dpkg/tarfn.c
+#, fuzzy
+#| msgid "invalid character '%c' in field width"
+msgid "invalid tar header size field"
+msgstr "ใช้อักขระ '%c' ไม่ได้ในความกว้างเขตข้อมูล"
+
+#: lib/dpkg/tarfn.c
+#, fuzzy
+#| msgid "invalid character '%c' in field width"
+msgid "invalid tar header mtime field"
+msgstr "ใช้อักขระ '%c' ไม่ได้ในความกว้างเขตข้อมูล"
+
+#: lib/dpkg/tarfn.c
+#, fuzzy
+#| msgid "invalid status"
+msgid "invalid tar header uid field"
+msgstr "สถานะผิดพลาด"
+
+#: lib/dpkg/tarfn.c
+#, fuzzy
+#| msgid "reading statoverride file '%.250s'"
+msgid "invalid tar header gid field"
+msgstr "เกิดข้อผิดพลาดขณะอ่านแฟ้ม statoverride '%.250s'"
+
+#: lib/dpkg/tarfn.c
+#, fuzzy
+#| msgid "invalid character '%c' in field width"
+msgid "invalid tar header checksum field"
+msgstr "ใช้อักขระ '%c' ไม่ได้ในความกว้างเขตข้อมูล"
+
+#: lib/dpkg/tarfn.c
+msgid "invalid tar header checksum"
+msgstr ""
+
+#: lib/dpkg/tarfn.c
+msgid "partially read tar header"
+msgstr ""
+
+#: lib/dpkg/tarfn.c
+msgid "invalid tar header with empty name field"
+msgstr ""
+
+#: lib/dpkg/tarfn.c
+#, c-format
+msgid "unsupported GNU tar header type '%c'"
+msgstr ""
+
+#: lib/dpkg/tarfn.c
+#, fuzzy, c-format
+#| msgid "unsupported options in file header"
+msgid "unsupported Solaris tar header type '%c'"
+msgstr "พบตัวเลือกที่ไม่รองรับในส่วนหัวของแฟ้ม"
+
+#: lib/dpkg/tarfn.c
+#, c-format
+msgid "unsupported PAX tar header type '%c'"
+msgstr ""
+
+#: lib/dpkg/tarfn.c
+#, fuzzy, c-format
+#| msgid "unknown compression type '%s'!"
+msgid "unknown tar header type '%c'"
+msgstr "ไม่รู้จักชนิดของการบีบอัด `%s'!"
+
 #: lib/dpkg/treewalk.c
 #, fuzzy, c-format
 #| msgid "cannot stat file '%s'"
@@ -1547,12 +1671,15 @@ msgid "treewalk root %s is not a directory"
 msgstr "ไดเรกทอรีควบคุมไม่ได้เป็นไดเรกทอรี"
 
 #: lib/dpkg/trigdeferred.c
-#, c-format
-msgid "unable to open/create triggers lockfile '%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to open/create triggers lockfile '%.250s'"
+msgid "unable to open/create triggers lock file '%.250s'"
 msgstr "ไม่สามารถเปิดหรือสร้างแฟ้มล็อคการสะกิด `%.250s'"
 
 #: lib/dpkg/trigdeferred.c
-msgid "triggers area"
+#, fuzzy
+#| msgid "triggers area"
+msgid "triggers database lock"
 msgstr "พื้นที่การสะกิด"
 
 #: lib/dpkg/trigdeferred.c
@@ -2069,10 +2196,10 @@ msgstr "ไม่สามารถเข้าใช้แฟ้มแพกเ
 msgid "archive '%s' is not a regular file"
 msgstr "แฟ้มค่าตั้ง '%s' ไม่ใช่แฟ้มปกติ"
 
-#: src/archives.c src/divertcmd.c src/enquiry.c src/main.c src/packages.c
-#: src/querycmd.c src/select.c src/statcmd.c src/trigcmd.c src/verify.c
-#: dpkg-deb/build.c dpkg-deb/extract.c dpkg-deb/info.c dpkg-deb/main.c
-#: dpkg-split/info.c dpkg-split/main.c dpkg-split/queue.c
+#: src/archives.c src/divertcmd.c src/enquiry.c src/force.c src/main.c
+#: src/packages.c src/querycmd.c src/select.c src/statcmd.c src/trigcmd.c
+#: src/verify.c dpkg-deb/build.c dpkg-deb/extract.c dpkg-deb/info.c
+#: dpkg-deb/main.c dpkg-split/info.c dpkg-split/main.c dpkg-split/queue.c
 msgid "<standard output>"
 msgstr "<เอาต์พุตมาตรฐาน>"
 
@@ -3131,7 +3258,170 @@ msgstr ""
 "แพกเกจ %s ถูกกำหนดให้คงรุ่นไว้ จะไม่ทำอะไรกับแพกเกจดังกล่าว ใช้ตัวเลือก --force-hold "
 "ถ้าจะบังคับให้ทำ\n"
 
-#: src/errors.c
+#: src/force.c
+msgid "Set all force options"
+msgstr "บังคับทุกรายการ"
+
+#: src/force.c
+msgid "Use MAC based security if available"
+msgstr ""
+
+#: src/force.c
+msgid "Replace a package with a lower version"
+msgstr "แทนที่แพกเกจด้วยรุ่นที่เก่ากว่า"
+
+#: src/force.c
+msgid "Configure any package which may help this one"
+msgstr "ตั้งค่าแพกเกจใดก็ตามที่อาจช่วยให้ติดตั้งแพกเกจนี้ได้"
+
+#: src/force.c
+msgid "Process incidental packages even when on hold"
+msgstr "ดำเนินการกับแพกเกจที่ติดขัดอยู่แม้จะถูกกำหนดให้คงรุ่นไว้ก็ตาม"
+
+#: src/force.c
+msgid "Try to (de)install things even when not root"
+msgstr "พยายามติดตั้ง/ถอดถอนแม้จะไม่ใช่ root"
+
+#: src/force.c
+msgid "PATH is missing important programs, problems likely"
+msgstr "PATH ขาดโปรแกรมสำคัญ ซึ่งน่าจะเป็นปัญหา"
+
+#: src/force.c
+msgid "Install a package even if it fails authenticity check"
+msgstr "ติดตั้งแพกเกจแม้จะไม่ผ่านการตรวจสอบแหล่งต้นตอ"
+
+#: src/force.c
+msgid "Process even packages with wrong versions"
+msgstr "ดำเนินการแม้กับแพกเกจที่ผิดรุ่น"
+
+#: src/force.c
+msgid "Overwrite an existing stat override when adding it"
+msgstr ""
+
+#: src/force.c
+msgid "Ignore a missing stat override when removing it"
+msgstr ""
+
+#: src/force.c
+msgid "Overwrite a file from one package with another"
+msgstr "เขียนทับแฟ้มของแพกเกจอื่น"
+
+#: src/force.c
+msgid "Overwrite a diverted file with an undiverted version"
+msgstr "เขียนทับแฟ้มที่เบนอยู่ด้วยฉบับที่ไม่ได้เบน"
+
+#: src/force.c
+msgid "Overwrite one package's directory with another's file"
+msgstr "เขียนทับไดเรกทอรีของแพกเกจด้วยแฟ้มของแพกเกจอื่น"
+
+#: src/force.c
+msgid "Do not perform safe I/O operations when unpacking"
+msgstr "ไม่ต้องใช้การกระทำ I/O แบบปลอดภัยเมื่อแตกแพกเกจ"
+
+#: src/force.c
+msgid "Do not chroot into maintainer script environment"
+msgstr ""
+
+#: src/force.c
+msgid "Always use the new config files, don't prompt"
+msgstr "ใช้แฟ้มค่าตั้งใหม่เสมอโดยไม่ต้องถาม"
+
+#: src/force.c
+msgid "Always use the old config files, don't prompt"
+msgstr "ใช้แฟ้มค่าตั้งเดิมเสมอโดยไม่ต้องถาม"
+
+#: src/force.c
+msgid ""
+"Use the default option for new config files if one\n"
+"is available, don't prompt. If no default can be found,\n"
+"you will be prompted unless one of the confold or\n"
+"confnew options is also given"
+msgstr ""
+"ใช้คำตอบปริยายสำหรับคำถามเกี่ยวกับแฟ้มค่าตั้งใหม่ถ้ามี\n"
+"โดยไม่ต้องถาม ถ้าไม่มีค่าปริยายกำหนดไว้ ก็จะถามคำถาม\n"
+"ยกเว้นมีการกำหนดตัวเลือก confold หรือ confnew ด้วย"
+
+#: src/force.c
+msgid "Always install missing config files"
+msgstr "ติดตั้งแฟ้มค่าตั้งที่ขาดหายเสมอ"
+
+#: src/force.c
+msgid "Offer to replace config files with no new versions"
+msgstr "เสนอการแทนที่แฟ้มค่าตั้งที่ไม่มีรุ่นใหม่"
+
+#: src/force.c
+msgid "Process even packages with wrong or no architecture"
+msgstr "ดำเนินการแม้กับแพกเกจที่ผิดสถาปัตยกรรมหรือไม่ระบุสถาปัตยกรรม"
+
+#: src/force.c
+msgid "Install even if it would break another package"
+msgstr "ติดตั้งแพกเกจแม้จะทำให้แพกเกจอื่นพัง"
+
+#: src/force.c
+msgid "Allow installation of conflicting packages"
+msgstr "ยอมให้ติดตั้งแพกเกจที่ขัดแย้งกัน"
+
+#: src/force.c
+msgid "Turn all dependency problems into warnings"
+msgstr "เปลี่ยนปัญหาความขึ้นต่อกันทั้งหมดของแพกเกจให้เป็นแค่คำเตือน"
+
+#: src/force.c
+msgid "Turn dependency version problems into warnings"
+msgstr "เปลี่ยนปัญหาความขึ้นต่อรุ่นของแพกเกจให้เป็นแค่คำเตือน"
+
+#: src/force.c
+msgid "Remove packages which require installation"
+msgstr "ถอดถอนแพกเกจที่ต้องการการติดตั้งซ้ำ"
+
+#: src/force.c
+msgid "Remove an essential package"
+msgstr "ถอดถอนแพกเกจจำเป็น"
+
+#: src/force.c
+#, c-format
+msgid ""
+"%s forcing options - control behaviour when problems found:\n"
+"  warn but continue:  --force-<thing>,<thing>,...\n"
+"  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
+" Forcing things:\n"
+msgstr ""
+"ตัวเลือกสำหรับบังคับของ %s - ควบคุมพฤติกรรมเมื่อพบปัญหา:\n"
+"  เตือนแต่ทำต่อไป:       --force-<รายการ>,<รายการ>,...\n"
+"  หยุดเมื่อพบปัญหา:       --refuse-<รายการ>,<รายการ>,... | --no-force-"
+"<รายการ>,...\n"
+" รายการสำหรับการบังคับ:\n"
+
+#: src/force.c
+#, c-format
+msgid ""
+"\n"
+"WARNING - use of options marked [!] can seriously damage your installation.\n"
+"Forcing options marked [*] are enabled by default.\n"
+msgstr ""
+"\n"
+"*คำเตือน* - การใช้ตัวเลือกที่ทำเครื่องหมาย [!] ไว้ อาจทำให้ระบบเสียหายอย่างร้ายแรงได้\n"
+"รายการการบังคับที่ทำเครื่องหมาย [*] ไว้ จะถูกเปิดใช้โดยปริยายอยู่แล้ว\n"
+
+#: src/force.c
+#, c-format
+msgid ""
+"\n"
+"Currently enabled options:\n"
+" %s\n"
+msgstr ""
+
+#: src/force.c
+#, c-format
+msgid "unknown force/refuse option '%.*s'"
+msgstr "ไม่รู้จักตัวเลือก force/refuse `%.*s'"
+
+#: src/force.c
+#, fuzzy, c-format
+#| msgid "obsolete force/refuse option '%s'\n"
+msgid "obsolete force/refuse option '%s'"
+msgstr "ตัวเลือก force/refuse '%s' เลิกใช้แล้ว\n"
+
+#: src/force.c
 msgid "overriding problem because --force enabled:"
 msgstr "จะข้ามปัญหาไปเพราะมีการเปิดตัวเลือก --force:"
 
@@ -3238,27 +3528,27 @@ msgstr "โปรแกรมจัดการแพกเกจ `%s' ของ
 #| "\n"
 msgid ""
 "Commands:\n"
-"  -i|--install       <.deb file name> ... | -R|--recursive <directory> ...\n"
-"  --unpack           <.deb file name> ... | -R|--recursive <directory> ...\n"
-"  -A|--record-avail  <.deb file name> ... | -R|--recursive <directory> ...\n"
-"  --configure        <package> ... | -a|--pending\n"
-"  --triggers-only    <package> ... | -a|--pending\n"
-"  -r|--remove        <package> ... | -a|--pending\n"
-"  -P|--purge         <package> ... | -a|--pending\n"
-"  -V|--verify <package> ...        Verify the integrity of package(s).\n"
-"  --get-selections [<pattern> ...] Get list of selections to stdout.\n"
+"  -i|--install       <.deb file name>... | -R|--recursive <directory>...\n"
+"  --unpack           <.deb file name>... | -R|--recursive <directory>...\n"
+"  -A|--record-avail  <.deb file name>... | -R|--recursive <directory>...\n"
+"  --configure        <package>... | -a|--pending\n"
+"  --triggers-only    <package>... | -a|--pending\n"
+"  -r|--remove        <package>... | -a|--pending\n"
+"  -P|--purge         <package>... | -a|--pending\n"
+"  -V|--verify [<package>...]       Verify the integrity of package(s).\n"
+"  --get-selections [<pattern>...]  Get list of selections to stdout.\n"
 "  --set-selections                 Set package selections from stdin.\n"
 "  --clear-selections               Deselect every non-essential package.\n"
 "  --update-avail [<Packages-file>] Replace available packages info.\n"
 "  --merge-avail [<Packages-file>]  Merge with info from file.\n"
 "  --clear-avail                    Erase existing available info.\n"
 "  --forget-old-unavail             Forget uninstalled unavailable pkgs.\n"
-"  -s|--status <package> ...        Display package status details.\n"
-"  -p|--print-avail <package> ...   Display available version details.\n"
-"  -L|--listfiles <package> ...     List files 'owned' by package(s).\n"
-"  -l|--list [<pattern> ...]        List packages concisely.\n"
-"  -S|--search <pattern> ...        Find package(s) owning file(s).\n"
-"  -C|--audit [<package> ...]       Check for broken package(s).\n"
+"  -s|--status [<package>...]       Display package status details.\n"
+"  -p|--print-avail [<package>...]  Display available version details.\n"
+"  -L|--listfiles <package>...      List files 'owned' by package(s).\n"
+"  -l|--list [<pattern>...]         List packages concisely.\n"
+"  -S|--search <pattern>...         Find package(s) owning file(s).\n"
+"  -C|--audit [<package>...]        Check for broken package(s).\n"
 "  --yet-to-unpack                  Print packages selected for "
 "installation.\n"
 "  --predep-package                 Print pre-dependencies to unpack.\n"
@@ -3471,113 +3761,6 @@ msgstr ""
 "ตัวเลือกที่มีเครื่องหมาย [*] จะแสดงข้อมูลมากมาย - ควรไปป์ไปยังคำสั่ง `less' หรือ `more'"
 
 #: src/main.c
-msgid "Set all force options"
-msgstr "บังคับทุกรายการ"
-
-#: src/main.c
-msgid "Replace a package with a lower version"
-msgstr "แทนที่แพกเกจด้วยรุ่นที่เก่ากว่า"
-
-#: src/main.c
-msgid "Configure any package which may help this one"
-msgstr "ตั้งค่าแพกเกจใดก็ตามที่อาจช่วยให้ติดตั้งแพกเกจนี้ได้"
-
-#: src/main.c
-msgid "Process incidental packages even when on hold"
-msgstr "ดำเนินการกับแพกเกจที่ติดขัดอยู่แม้จะถูกกำหนดให้คงรุ่นไว้ก็ตาม"
-
-#: src/main.c
-msgid "Try to (de)install things even when not root"
-msgstr "พยายามติดตั้ง/ถอดถอนแม้จะไม่ใช่ root"
-
-#: src/main.c
-msgid "PATH is missing important programs, problems likely"
-msgstr "PATH ขาดโปรแกรมสำคัญ ซึ่งน่าจะเป็นปัญหา"
-
-#: src/main.c
-msgid "Install a package even if it fails authenticity check"
-msgstr "ติดตั้งแพกเกจแม้จะไม่ผ่านการตรวจสอบแหล่งต้นตอ"
-
-#: src/main.c
-msgid "Process even packages with wrong versions"
-msgstr "ดำเนินการแม้กับแพกเกจที่ผิดรุ่น"
-
-#: src/main.c
-msgid "Overwrite a file from one package with another"
-msgstr "เขียนทับแฟ้มของแพกเกจอื่น"
-
-#: src/main.c
-msgid "Overwrite a diverted file with an undiverted version"
-msgstr "เขียนทับแฟ้มที่เบนอยู่ด้วยฉบับที่ไม่ได้เบน"
-
-#: src/main.c
-msgid "Overwrite one package's directory with another's file"
-msgstr "เขียนทับไดเรกทอรีของแพกเกจด้วยแฟ้มของแพกเกจอื่น"
-
-#: src/main.c
-msgid "Do not perform safe I/O operations when unpacking"
-msgstr "ไม่ต้องใช้การกระทำ I/O แบบปลอดภัยเมื่อแตกแพกเกจ"
-
-#: src/main.c
-msgid "Do not chroot into maintainer script environment"
-msgstr ""
-
-#: src/main.c
-msgid "Always use the new config files, don't prompt"
-msgstr "ใช้แฟ้มค่าตั้งใหม่เสมอโดยไม่ต้องถาม"
-
-#: src/main.c
-msgid "Always use the old config files, don't prompt"
-msgstr "ใช้แฟ้มค่าตั้งเดิมเสมอโดยไม่ต้องถาม"
-
-#: src/main.c
-msgid ""
-"Use the default option for new config files if one\n"
-"is available, don't prompt. If no default can be found,\n"
-"you will be prompted unless one of the confold or\n"
-"confnew options is also given"
-msgstr ""
-"ใช้คำตอบปริยายสำหรับคำถามเกี่ยวกับแฟ้มค่าตั้งใหม่ถ้ามี\n"
-"โดยไม่ต้องถาม ถ้าไม่มีค่าปริยายกำหนดไว้ ก็จะถามคำถาม\n"
-"ยกเว้นมีการกำหนดตัวเลือก confold หรือ confnew ด้วย"
-
-#: src/main.c
-msgid "Always install missing config files"
-msgstr "ติดตั้งแฟ้มค่าตั้งที่ขาดหายเสมอ"
-
-#: src/main.c
-msgid "Offer to replace config files with no new versions"
-msgstr "เสนอการแทนที่แฟ้มค่าตั้งที่ไม่มีรุ่นใหม่"
-
-#: src/main.c
-msgid "Process even packages with wrong or no architecture"
-msgstr "ดำเนินการแม้กับแพกเกจที่ผิดสถาปัตยกรรมหรือไม่ระบุสถาปัตยกรรม"
-
-#: src/main.c
-msgid "Install even if it would break another package"
-msgstr "ติดตั้งแพกเกจแม้จะทำให้แพกเกจอื่นพัง"
-
-#: src/main.c
-msgid "Allow installation of conflicting packages"
-msgstr "ยอมให้ติดตั้งแพกเกจที่ขัดแย้งกัน"
-
-#: src/main.c
-msgid "Turn all dependency problems into warnings"
-msgstr "เปลี่ยนปัญหาความขึ้นต่อกันทั้งหมดของแพกเกจให้เป็นแค่คำเตือน"
-
-#: src/main.c
-msgid "Turn dependency version problems into warnings"
-msgstr "เปลี่ยนปัญหาความขึ้นต่อรุ่นของแพกเกจให้เป็นแค่คำเตือน"
-
-#: src/main.c
-msgid "Remove packages which require installation"
-msgstr "ถอดถอนแพกเกจที่ต้องการการติดตั้งซ้ำ"
-
-#: src/main.c
-msgid "Remove an essential package"
-msgstr "ถอดถอนแพกเกจจำเป็น"
-
-#: src/main.c
 msgid "Generally helpful progress information"
 msgstr "ข้อมูลความคืบหน้าทั่วไปที่เป็นประโยชน์"
 
@@ -3704,42 +3887,6 @@ msgstr "กำลังลบสถาปัตยกรรม '%s' ซึ่ง
 #, c-format
 msgid "cannot remove architecture '%s' currently in use by the database"
 msgstr "ไม่สามารถลบสถาปัตยกรรม '%s' ซึ่งกำลังใช้งานอยู่ในฐานข้อมูล"
-
-#: src/main.c
-#, c-format
-msgid ""
-"%s forcing options - control behaviour when problems found:\n"
-"  warn but continue:  --force-<thing>,<thing>,...\n"
-"  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
-" Forcing things:\n"
-msgstr ""
-"ตัวเลือกสำหรับบังคับของ %s - ควบคุมพฤติกรรมเมื่อพบปัญหา:\n"
-"  เตือนแต่ทำต่อไป:       --force-<รายการ>,<รายการ>,...\n"
-"  หยุดเมื่อพบปัญหา:       --refuse-<รายการ>,<รายการ>,... | --no-force-"
-"<รายการ>,...\n"
-" รายการสำหรับการบังคับ:\n"
-
-#: src/main.c
-#, c-format
-msgid ""
-"\n"
-"WARNING - use of options marked [!] can seriously damage your installation.\n"
-"Forcing options marked [*] are enabled by default.\n"
-msgstr ""
-"\n"
-"*คำเตือน* - การใช้ตัวเลือกที่ทำเครื่องหมาย [!] ไว้ อาจทำให้ระบบเสียหายอย่างร้ายแรงได้\n"
-"รายการการบังคับที่ทำเครื่องหมาย [*] ไว้ จะถูกเปิดใช้โดยปริยายอยู่แล้ว\n"
-
-#: src/main.c
-#, c-format
-msgid "unknown force/refuse option '%.*s'"
-msgstr "ไม่รู้จักตัวเลือก force/refuse `%.*s'"
-
-#: src/main.c
-#, fuzzy, c-format
-#| msgid "obsolete force/refuse option '%s'\n"
-msgid "obsolete force/refuse option '%s'"
-msgstr "ตัวเลือก force/refuse '%s' เลิกใช้แล้ว\n"
 
 #: src/main.c
 #, c-format
@@ -4421,7 +4568,10 @@ msgid ""
 "  --instdir <directory>    set the root directory, but not the admin dir.\n"
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
-"  --force                  force an action even if a sanity check fails.\n"
+"  --force                  deprecated alias for --force-all.\n"
+"  --force-...              override problems (see --force-help).\n"
+"  --no-force-...           stop when problems encountered.\n"
+"  --refuse-...             ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4485,6 +4635,12 @@ msgstr "ไม่มีรายการ override อยู่"
 #: src/statcmd.c
 msgid "--update is useless for --remove"
 msgstr "--update ไม่มีประโยชน์อะไรสำหรับ --remove"
+
+#: src/statcmd.c
+#, fuzzy, c-format
+#| msgid "obsolete option '--%s'; please use '--%s' instead"
+msgid "deprecated --%s option; use --%s instead"
+msgstr "ตัวเลือก '--%s' เลิกใช้แล้ว กรุณาใช้ '--%s' แทน"
 
 #: src/trigcmd.c
 msgid "Type dpkg-trigger --help for help about this utility."
@@ -4830,11 +4986,9 @@ msgid "package filesystem archive extraction"
 msgstr "การแตกส่วนระบบแฟ้มของแพกเกจ"
 
 #: src/unpack.c
-msgid "error reading dpkg-deb tar output"
-msgstr "เกิดข้อผิดพลาดขณะอ่านผลลัพธ์ของ tar จาก dpkg-deb"
-
-#: src/unpack.c
-msgid "corrupted filesystem tarfile - corrupted package archive"
+#, fuzzy
+#| msgid "corrupted filesystem tarfile - corrupted package archive"
+msgid "corrupted filesystem tarfile in package archive"
 msgstr "แฟ้ม tar สำหรับแฟ้มที่จะติดตั้งในระบบแฟ้มเสียหาย - แฟ้มแพกเกจเสียหาย"
 
 #: src/unpack.c
@@ -4848,12 +5002,18 @@ msgid "--%s takes at most one Packages-file argument"
 msgstr "--%s ต้องการอาร์กิวเมนต์เป็นชื่อแฟ้ม Packages ไม่เกินหนึ่งรายการ"
 
 #: src/update.c
-msgid "unable to access dpkg status area for bulk available update"
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area for bulk available update"
+msgid "unable to access dpkg database directory '%s' for bulk available update"
 msgstr "ไม่สามารถเข้าใช้บริเวณเก็บข้อมูลสถานะของ dpkg เพื่อปรับข้อมูลแพกเกจที่มีแบบทั้งชุด"
 
 #: src/update.c
-msgid "bulk available update requires write access to dpkg status area"
-msgstr "การปรับข้อมูลแพกเกจที่มีแบบทั้งชุดต้องอาศัยสิทธิ์การเขียนในบริเวณเก็บข้อมูลสถานะของ dpkg"
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area for bulk available update"
+msgid ""
+"required write access to dpkg database directory '%s' for bulk available "
+"update"
+msgstr "ไม่สามารถเข้าใช้บริเวณเก็บข้อมูลสถานะของ dpkg เพื่อปรับข้อมูลแพกเกจที่มีแบบทั้งชุด"
 
 #: src/update.c
 #, c-format
@@ -6029,7 +6189,21 @@ msgstr ""
 " \n"
 
 #: utils/update-alternatives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --altdir <directory>     change the alternatives directory.\n"
+#| "  --admindir <directory>   change the administrative directory.\n"
+#| "  --log <file>             change the log file.\n"
+#| "  --force                  allow replacing files with alternative links.\n"
+#| "  --skip-auto              skip prompt for alternatives correctly "
+#| "configured\n"
+#| "                           in automatic mode (relevant for --config "
+#| "only)\n"
+#| "  --verbose                verbose operation, more output.\n"
+#| "  --quiet                  quiet operation, minimal output.\n"
+#| "  --help                   show this help message.\n"
+#| "  --version                show the version.\n"
 msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
@@ -6039,8 +6213,9 @@ msgid ""
 "  --skip-auto              skip prompt for alternatives correctly "
 "configured\n"
 "                           in automatic mode (relevant for --config only)\n"
-"  --verbose                verbose operation, more output.\n"
 "  --quiet                  quiet operation, minimal output.\n"
+"  --verbose                verbose operation, more output.\n"
+"  --debug                  debug output, way more output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
 msgstr ""
@@ -6530,6 +6705,49 @@ msgstr ""
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
 
+#~ msgid "unable to open lock file %s for testing"
+#~ msgstr "ไม่สามารถเปิดแฟ้มล็อค %s เพื่อทดสอบ"
+
+#~ msgid "unknown user '%s' in statoverride file"
+#~ msgstr "พบผู้ใช้ '%s' ที่ไม่รู้จักอยู่ในแฟ้ม statoverride"
+
+#~ msgid "unknown group '%s' in statoverride file"
+#~ msgstr "พบกลุ่ม '%s' ที่ไม่รู้จักอยู่ในแฟ้ม statoverride"
+
+#~ msgid "%s is missing"
+#~ msgstr "%s ขาดหายไป"
+
+#~ msgid "'%.50s' is not allowed for %s"
+#~ msgstr "'%.50s' มีใน %s ไม่ได้"
+
+#~ msgid "junk after %s"
+#~ msgstr "มีขยะหลัง %s"
+
+#~ msgid "invalid package name (%.250s)"
+#~ msgstr "ชื่อแพกเกจใช้ไม่ได้ (%.250s)"
+
+#~ msgid "yes/no in boolean field"
+#~ msgstr "yes/no ในเขตข้อมูลบูลีน"
+
+#~ msgid "'%s' field, reference to '%.255s': error in version"
+#~ msgstr "เขตข้อมูล '%s' อ้างอิงไปยัง '%.255s': มีข้อผิดพลาดในเลขรุ่น"
+
+#~ msgid "empty value for %s"
+#~ msgstr "%s เป็นค่าว่างเปล่า"
+
+#~ msgid "package has status triggers-awaited but no triggers awaited"
+#~ msgstr "แพกเกจอยู่ในสถานะ triggers-awaited แต่ไม่มีการสะกิดที่รอคอยอยู่"
+
+#~ msgid "package has status triggers-pending but no triggers pending"
+#~ msgstr "แพกเกจอยู่ในสถานะ triggers-pending แต่ไม่มีการสะกิดที่คั่งค้างอยู่"
+
+#~ msgid "bulk available update requires write access to dpkg status area"
+#~ msgstr ""
+#~ "การปรับข้อมูลแพกเกจที่มีแบบทั้งชุดต้องอาศัยสิทธิ์การเขียนในบริเวณเก็บข้อมูลสถานะของ dpkg"
+
+#~ msgid "error reading dpkg-deb tar output"
+#~ msgstr "เกิดข้อผิดพลาดขณะอ่านผลลัพธ์ของ tar จาก dpkg-deb"
+
 #, fuzzy
 #~| msgid "cannot open '%s' control file for package '%s'"
 #~ msgid "cannot open control file '%s' for package '%s'"
@@ -6564,9 +6782,6 @@ msgstr ""
 
 #~ msgid "failed to chdir to directory after creating it"
 #~ msgstr "เปลี่ยนเข้าไดเรกทอรีหลังจากสร้างแล้วไม่สำเร็จ"
-
-#~ msgid "obsolete option '--%s'; please use '--%s' instead"
-#~ msgstr "ตัวเลือก '--%s' เลิกใช้แล้ว กรุณาใช้ '--%s' แทน"
 
 #~ msgid "control file '%s' missing value"
 #~ msgstr "แฟ้มควบคุม '%s' ขาดข้อมูล"
@@ -7019,9 +7234,6 @@ msgstr ""
 
 #~ msgid "cannot open diversions: %s"
 #~ msgstr "ไม่สามารถเปิดแฟ้ม diversions: %s"
-
-#~ msgid "missing package"
-#~ msgstr "ขาด package"
 
 #~ msgid "rename: rename `%s' to `%s': %s"
 #~ msgstr "rename: เปลี่ยนชื่อ `%s' ไปเป็น `%s': %s"

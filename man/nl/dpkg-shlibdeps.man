@@ -136,11 +136,11 @@ Voeg \fImap\fP vooraan toe aan de lijst van mappen waarin naar particuliere
 gedeelde bibliotheken gezocht moet worden (sinds dpkg 1.17.0). Deze optie
 kan meermaals gebruikt worden.
 
-Opmerking: gebruik deze optie in plaats van \fBLD_LIBRARY_PATH\fP in te
-stellen, aangezien die omgevingsvariabele gebruikt wordt om de linker
-tijdens de programma\-uitvoering aan te sturen. Daarvan misbruik maken om de
-paden van gedeelde bibliotheken in te stellen tijdens het bouwen van het
-programma, kan problematisch zijn, bijvoorbeeld bij het cross\-compileren.
+Opmerking: gebruik deze optie in de plaats van het instellen van
+\fBLD_LIBRARY_PATH\fP, aangezien die omgevingsvariabele gebruikt wordt om de
+runtime linker aan te sturen. Daarvan misbruik maken om de paden van
+gedeelde bibliotheken in te stellen tijdens het bouwen van het programma,
+kan problematisch zijn, bijvoorbeeld bij het cross\-compileren.
 .TP 
 \fB\-d\fP\fIafhankelijkheidsveld\fP
 Geef afhankelijkheidsinformatie op die toegevoegd moet worden aan het
@@ -251,9 +251,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
 .
 .SH DIAGNOSTIEK
 .SS Waarschuwingen

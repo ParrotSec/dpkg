@@ -1,0 +1,357 @@
+.\" dpkg manual page - deb-control(5)
+.\"
+.\" Copyright © 1995 Raul Miller, Ian Jackson, Ian Murdock
+.\" Copyright © 1999 Ben Collins <bcollins@debian.org>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2007-2011, 2013-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2012 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-control 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-control \- Format du fichier principal de contrôle dans les paquets
+binaires Debian
+.
+.SH SYNOPSIS
+contrôle
+.
+.SH DESCRIPTION
+Chaque paquet Debian possède un fichier \fIcontrol\fP principal qui contient un
+certain nombre de champs. Chaque champ commence par une étiquette, telle que
+\fBPackage\fP ou \fBVersion\fP (la casse n'importe pas), suivie d'un «\ :\ », et du
+contenu du champ. Les champs sont séparés seulement par des étiquettes de
+champ. En d'autres termes, le contenu d'un champ peut s'étendre sur
+plusieurs lignes, mais les outils d'installation joindront en général les
+lignes pendant le traitement du contenu du champ (sauf pour le champ
+\fBDescription\fP, voir ci\-dessous).
+.
+.SH "LES CHAMPS"
+.TP 
+\fBPackage:\fP \fInom\-du\-paquet\fP (requis)
+La valeur de ce champ donne le nom du paquet, et la plupart des outils
+d'installation s'en servent pour produire les noms des paquets.
+.TP 
+\fBPackage\-Type:\fP \fBdeb\fP|\fBudeb\fP|\fItype\fP
+Ce champ indique le type de paquet. La valeur \fBudeb\fP est à utiliser pour
+les paquets à taille contrôlée utilisés par l'installateur Debian. La valeur
+\fBdeb\fP est la valeur par défaut qui est utilisée si le champ n'est pas
+présent. De nouveaux types pourraient être ajoutés au fil du temps.
+.TP 
+\fBVersion:\fP \fIchaîne\-de\-la\-version\fP (requis)
+C'est classiquement le numéro de version du paquet d'origine dans la forme
+choisie par l'auteur du programme. Il peut y avoir aussi un numéro de
+révision Debian (pour les paquets non natifs). Le format exact et
+l'algorithme de tri sont décrits dans \fBdeb\-version\fP(7).
+.TP 
+\fBMaintainer:\fP \fInom\-complet\-et\-adresse\-électronique\fP (recommandé)
+Le format de ce champ sera «\ Jean Dupont <jdupont@foo.com>\ »\ ; et
+c'est bien sûr le créateur du paquet, par opposition à l'auteur du programme
+mis en paquet.
+.TP 
+\fBDescription:\fP \fIdescription\-courte\fP (recommandé)
+.TQ
+\fB \fP\fIdescription\-longue\fP
+.br
+Le format de la description du paquet est un résumé bref sur la première
+ligne (après le champ \fBDescription\fP). Les lignes suivantes peuvent servir à
+une description plus longue et plus détaillée. Chaque ligne de cette
+description longue doit être précédée d'une espace\ ; quand c'est une ligne
+blanche, elle doit contenir un seul «\ \fB.\fP\ » après cette espace.
+.TP 
+\fBSection:\fP \fIsection\fP
+Champ général qui indique la catégorie d'un paquet\ ; cette catégorie est
+fondée sur le programme que ce paquet installe. \fButils\fP, \fBnet\fP, \fBmail\fP,
+\fBtext\fP, \fBx11\fP,\ etc., représentent quelques catégories habituelles.
+.TP 
+\fBPriority:\fP\fI priorité\fP
+Définit l'importance du paquet à l'intérieur du système
+général. \fBrequired\fP, \fBstandard\fP, \fBoptional\fP, \fBextra\fP,\ etc., représentent
+des priorités habituelles.
+.LP
+Les champs \fBSection\fP et \fBPriority\fP possèdent un ensemble défini de valeurs
+acceptées, tiré de la Charte particulière de la distribution.
+.
+.TP 
+\fBInstalled\-Size:\fP \fItaille\fP
+La taille approximative totale des fichiers installés du paquet, en Kio⋅
+.
+.TP 
+\fBEssential:\fP \fByes\fP|\fBno\fP
+On se sert habituellement de ce champ uniquement si la réponse est
+\fByes\fP. Cela signifie que ce paquet est exigé pour un fonctionnement correct
+du système. Dpkg et les autres outils d'installation interdisent la
+suppression d'un paquet \fBEssential\fP (du moins tant qu'une des options de
+forçage n'est pas utilisée).
+.TP 
+\fBBuild\-Essential:\fP \fByes\fP|\fBno\fP
+Ce champ est habituellement nécessaire seulement si la réponse est \fByes\fP,
+et il est généralement injecté par le logiciel d'archive. Il désigne un
+paquet qui est requis lors de la construction d'autres paquets.
+.TP 
+\fBArchitecture:\fP \fIarch\fP|\fBall\fP (recommandé)
+L'architecture précise pour quel type de matériel le paquet a été
+compilé. Voici quelques architectures habituelles\ : \fBamd64\fP, \fBarmel\fP,
+\fBi386\fP, \fBpowerpc\fP,\ etc. Remarquez que l'option \fBall\fP signifie que le
+paquet est indépendant de toute architecture. C'est le cas, par exemple, des
+scripts d'interpréteur de commandes (shell) ou Perl, ainsi que de la
+documentation.
+.TP 
+\fBOrigin:\fP\fI nom\fP
+Nom de la distribution dont ce paquet provient.
+.TP 
+\fBBugs:\fP\fI URL\fP
+L'\fIURL\fP du système de suivi de bogues (BTS) de ce paquet. Le format utilisé
+est \fItype_de_bts\fP\fB://\fP\fIadresse\-du\-bts\fP, par exemple
+\fBdebbugs://bugs.debian.org\fP.
+.TP 
+\fBHomepage:\fP\fI URL\fP
+\fIURL\fP de la page d'accueil du projet amont.
+.TP 
+\fBTag:\fP\fI liste\-d'étiquettes\fP
+Liste d'étiquettes décrivant les qualités du paquet. La description et la
+liste des étiquettes («\ tags\ ») gérées peuvent être trouvées dans le paquet
+\fBdebtags\fP.
+.TP 
+\fBMulti\-Arch:\fP \fBno\fP|\fBsame\fP|\fBforeign\fP|\fBallowed\fP
+Ce champ est utilisé pour indiquer comment ce paquet se comportera sur les
+installations multi\-architectures.
+.RS
+.TP 
+\fBno\fP
+C'est la valeur par défaut quand le champ est omis\ ; dans ce cas, ajouter le
+champ avec une valeur \fBno\fP explicite est généralement inutile.
+.TP 
+\fBsame\fP
+Ce paquet est co\-installable avec lui\-même, mais il ne doit pas être utilisé
+pour satisfaire la dépendance d'un paquet d'une autre architecture que la
+sienne.
+.TP 
+\fBforeign\fP
+Ce paquet n'est pas co\-installable avec lui\-même, mais il pourra être
+autorisé pour permettre de satisfaire les dépendances sans qualification
+d'architecture d'un paquet d'une architecture différente de la sienne (si
+une dépendance a une qualification d'architecture explicite, alors la valeur
+\fBforeign\fP est ignorée).
+.TP 
+\fBallowed\fP
+Cela permet aux dépendances inverses d'indiquer dans leur champ
+\fBDepends\fPqu'elles acceptent ce paquet d'une autre architecture en
+qualifiant le nom du paquet avec \fB:any\fP, mais n'a pas d'autres effets.
+.RE
+.TP 
+\fBSource:\fP \fInom\-du\-paquet\-source\fP [\fB(\fP\fIversion\-source\fP\fB)\fP]
+Le nom du paquet source d'où est issu ce paquet binaire, s'il est différent
+du nom du paquet lui\-même. Si la version des sources diffère de la version
+du binaire, alors le \fInom\-du\-paquet\-source\fP sera suivi par la
+\fIversion\-source\fP entre parenthèses. Cela peut arriver par exemple sur un
+envoi seulement binaire NMU («\ non\-maintainer upload\ »), ou lorsqu'une
+version différente de binaire est fixée avec «\ \fBdpkg\-gencontrol \-v\fP\ ».
+.TP 
+\fBSubarchitecture:\fP\fI valeur\fP
+.TQ
+\fBKernel\-Version:\fP\fI valeur\fP
+.TQ
+\fBInstaller\-Menu\-Item:\fP\fI valeur\fP
+Ces champs sont utilisés par l'installateur et ne sont en général pas
+nécessaires. Veuillez consulter
+/usr/share/doc/debian\-installer/devel/modules.txt fourni avec le paquet
+\fBdebian\-installer\fP pour plus de détails.
+
+.TP 
+\fBDepends:\fP\fI liste\-de\-paquets\fP
+C'est la liste des paquets exigés pour que ce paquet procure un nombre
+important de fonctionnalités. Le programme de maintenance des paquets
+interdit l'installation d'un paquet quand les paquets répertoriés dans le
+champ \fBDepends\fP ne sont pas installés (du moins tant qu'une option de
+forçage n'est pas utilisée). Lors d'une installation, il lance les scripts
+«\ postinst\ » des paquets répertoriés dans les champs \fBDepends\fP avant les
+scripts «\ postinst\ » des paquets qui dépendent d'eux. À l'inverse, lors
+d'une suppression, le script «\ prerm\ » d'un paquet est lancé avant ceux des
+paquets listés dans son champ \fBDepends\fP.
+.TP 
+\fBPre\-Depends:\fP\fI liste\-de\-paquets\fP
+C'est la liste des paquets qui doivent être installés \fBet\fP configurés avant
+que ce paquet puisse être installé. Habituellement, on utilise ce champ
+quand un paquet a besoin d'un autre paquet pour lancer son script
+«\ preinst\ ».
+.TP 
+\fBRecommends:\fP\fI liste\-de\-paquets\fP
+C'est la liste des paquets qu'on trouverait avec ce paquet dans toute
+installation standard. Le programme de maintenance des paquets avertit
+l'utilisateur quand il installe un paquet sans installer les paquets
+répertoriés dans le champ \fBRecommends\fP.
+.TP 
+\fBSuggests:\fP\fI liste\-de\-paquets\fP
+C'est la liste des paquets qui, associés avec ce paquet, peuvent améliorer
+son utilité\ ; néanmoins, une installation sans ces paquets est parfaitement
+raisonnable.
+.LP
+La syntaxe des champs \fBDepends\fP, \fBPre\-Depends\fP, \fBRecommends\fP et
+\fBSuggests\fP est une liste d'ensembles de paquets alternatifs. Chaque
+ensemble est une liste de paquets séparés par des barres verticales (le
+symbole du tube) «\ \fB|\fP\ ». Les ensembles sont séparés par des virgules. Une
+virgule représente un «\ ET\ » logique et une barre verticale représente un
+«\ OU\ » logique\ ; le tube a la précédence dans l'évaluation de
+l'expression. Chaque nom de paquet est suivi éventuellement par un type
+d'architecture après deux\-points «\ \fB:\fP\ », et par une contrainte sur le
+numéro de version mise entre parenthèses.
+.LP
+Un nom de type d'architecture peut être un nom d'architecture réelle de
+Debian (depuis dpkg\ 1.16.5) ou \fBany\fP (depuis dpkg\ 1.16.2). S'il est omis,
+la valeur par défaut est l'architecture du paquet binaire actuel. Un nom
+d'architecture réelle de Debian correspondra exactement à l'architecture
+pour ce nom de paquet, \fBany\fP correspondra à toute architecture pour ce nom
+de paquet si le paquet a été marqué \fBMulti\-Arch: allowed\fP.
+.LP
+Une contrainte sur le numéro de version peut commencer par
+«\ \fB>>\fP\ », et dans ce cas toute version supérieure correspondra, et
+il peut indiquer (ou pas) le numéro de révision pour le paquet Debian (les
+deux numéros étant séparés par un trait d'union). Voici les relations
+acceptées pour les versions\ : «\ \fB>>\fP\ » pour supérieur à,
+«\ \fB<<\fP\ » pour inférieur à, «\ \fB>=\fP\ » pour supérieur ou égal,
+«\ \fB<=\fP\ » pour inférieur ou égal, et «\ \fB=\fP\ » pour égal à.
+.TP 
+\fBBreaks:\fP\fI liste\-de\-paquets\fP
+C'est une liste de paquets que ce paquet «\ casse\ », par exemple en révélant
+des bogues quand les paquets concernés dépendent de celui\-ci. Le programme
+de maintenance des paquets interdit la configuration de paquets cassés\ ; une
+méthode usuelle de résolution est la mise à niveau des paquets mentionnés
+dans le champ \fBBreaks\fP.
+.TP 
+\fBConflicts:\fP\fI liste\-de\-paquets\fP
+C'est une liste de paquets qui sont en conflit avec ce paquet\ ; ils
+contiennent par exemple des fichiers qui ont le même nom. Le programme de
+maintenance des paquets interdit l'installation simultanée de paquets en
+conflit. Deux paquets en conflit renseigneront une ligne \fBConflicts\fP avec
+le nom de l'autre paquet.
+.TP 
+\fBReplaces:\fP\fI liste\-de\-paquets\fP
+C'est une liste de paquets que ce paquet remplace. Il peut ainsi remplacer
+les fichiers de ces autres paquets\ ; on se sert pour cela du champ
+\fBConflicts\fP pour forcer la suppression des autres paquets, si celui\-là
+possède aussi les mêmes fichiers que le paquet en conflit.
+.LP
+La syntaxe des champs \fBBreaks\fP, \fBConflicts\fP et \fBReplaces\fP est une liste
+de noms de paquets, séparés par des virgules (et des espaces
+facultatives). Dans les champs \fBBreaks\fP et \fBConflicts\fP, la virgule sera
+lue comme un «\ OU\ ». Un type d'architecture optionnel peut être aussi ajouté
+au nom de paquet avec la même syntaxe que ci\-dessus, mais par défaut la
+valeur est \fBany\fP plutôt que l'architecture du paquet binaire. On peut
+donner une version optionnelle de la même façon que ci\-dessus dans les
+champs \fBBreaks\fP, \fBConflicts\fP et \fBReplaces\fP.
+.
+.TP 
+\fBEnhances:\fP\fI liste\-de\-paquets\fP
+C'est une liste de paquets que ce paquet améliore. C'est similaire à
+\fBSuggests\fP mais en sens inverse.
+.TP 
+\fBProvides:\fP\fI liste\-de\-paquets\fP
+C'est une liste de paquets virtuels que ce paquet procure. On s'en sert
+habituellement pour des paquets qui offrent le même service. Par exemple,
+sendmail et exim sont des serveurs de courrier, et donc ils procurent chacun
+un paquet commun («\ mail\-transport\-agent\ ») duquel d'autres paquets peuvent
+dépendre. Sendmail et exim peuvent ainsi servir d'option valable pour
+satisfaire la dépendance. Cela permet aux paquets qui dépendent d'un serveur
+de courrier de ne pas avoir à connaître les noms de paquet de tous les
+serveurs de courrier, en utilisant «\ \fB|\fP\ » comme séparateur de liste.
+.LP
+La syntaxe du champ \fBProvides\fP est une liste de noms de paquets, séparés
+par des virgules (et des espaces facultatives). Un type d'architecture
+facultatif peut également être ajouté au nom de paquet de la même façon que
+ci\-dessus. S'il est omis l'architecture par défaut est celle du paquet
+binaire actuel. Un numéro de version précis (égal à) optionnel peut être
+donné de la même façon que ci\-dessus (pris en compte depuis dpkg\ 1.17.11).
+.
+.TP 
+\fBBuilt\-Using:\fP\fI liste\-de\-paquets\fP
+Ce champ affiche les paquets source supplémentaires utilisés lors de la
+construction du paquet binaire. Il permet d'indiquer au logiciel de gestion
+de l'archive que des paquets source supplémentaires doivent être conservés
+tant que le paquet binaire est maintenu. Ce champ doit être une liste de
+paquets source avec des références strictes de version «\ \fB=\fP\ ». Veuillez
+noter que le logiciel de gestion de l'archive risque de ne pas accepter un
+envoi qui déclare une relation \fBBuilt\-Using\fP qui ne peut pas être
+satisfaite dans l'archive.
+.
+.TP 
+\fBBuilt\-For\-Profiles:\fP\fI liste\-de\-profils\fP (obsolète)
+Ce champ sert à spécifier une liste, séparée par des espaces, de profils de
+construction avec lesquels ce paquet binaire a été construit (depuis
+dpkg\ 1.17.2 et jusqu'à la version\ 1.18.18). Les informations précédemment
+trouvées dans ce champ sont maintenant dans le champ \fB.buildinfo\fP qui l'a
+remplacé.
+.
+.TP 
+\fBAuto\-Built\-Package:\fP\fI liste\-de\-raisons\fP
+Ce champ définit une liste, séparée par des espaces, des raisons pour
+lesquelles ce paquet a été généré automatiquement. Les paquets binaires
+marqués avec ce champ n'apparaîtront pas dans le fichier principal de
+contrôle des sources \fIdebian/control\fP. \fBdebug\-symbols\fP est la seule raison
+utilisée actuellement.
+.
+.TP 
+\fBBuild\-Ids:\fP\fI liste\-identifiants\-de\-construction\-elf\fP
+Ce champ définit une liste, séparée par des espaces, des identifiants de
+construction ELF. Il s'agit des identifiants uniques d'objets ELF
+sémantiquement identiques, pour chacun de ces objets présents dans le
+paquet.
+.
+Le format ou la manière de calculer chaque identifiant de construction n'est
+pas défini par nature.
+.
+.SH EXEMPLE
+.\" .RS
+.nf
+Package: grep
+Essential: yes
+Priority: required
+Section: base
+Maintainer: Wichert Akkerman <wakkerma@debian.org>
+Architecture: sparc
+Version: 2.4\-1
+Pre\-Depends: libc6 (>= 2.0.105)
+Provides: rgrep
+Conflicts: rgrep
+Description: GNU grep, egrep and fgrep.
+ The GNU family of grep utilities may be the "fastest grep in the west".
+ GNU grep is based on a fast lazy\-state deterministic matcher (about
+ twice as fast as stock Unix egrep) hybridized with a Boyer\-Moore\-Gosper
+ search for a fixed string that eliminates impossible text from being
+ considered by the full regexp matcher without necessarily having to
+ look at every character. The result is typically many times faster
+ than Unix grep or egrep. (Regular expressions containing backreferencing
+ will run more slowly, however).
+.fi
+.\" .RE
+.
+.SH BOGUES
+Le champ \fBBuild\-Ids\fP utilise un nom plutôt générique à partir de son
+contexte original dans l'objet ELF qui sert un objectif très spécifique et a
+un format exécutable.
+.
+.SH "VOIR AUSSI"
+\fBdeb\-src\-control\fP(5), \fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1),
+\fBdpkg\fP(1), \fBdpkg\-deb\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

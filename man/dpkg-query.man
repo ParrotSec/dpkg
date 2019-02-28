@@ -34,14 +34,16 @@ the \fBdpkg\fP database.
 .SH COMMANDS
 .TP
 .BR \-l ", " \-\-list " [\fIpackage-name-pattern\fP...]"
-List packages matching given pattern. If no \fIpackage-name-pattern\fP
-is given, list all packages in \fI%ADMINDIR%/status\fP, excluding
-the ones marked as not-installed (i.e. those which have been previously
-purged). Normal shell wildcard characters are allowed
-in \fIpackage-name-pattern\fP. Please note you will probably have to
-quote \fIpackage-name-pattern\fP to prevent the shell from performing
-filename expansion. For example this will list all package names starting
-with \*(lqlibc6\*(rq:
+List all known packages matching one or more patterns, regardless of their
+status, which includes any real or virtual package referenced in any
+dependency relationship field (such as \fBBreaks\fP, \fBEnhances\fP, etc.).
+If no \fIpackage-name-pattern\fP is given, list all packages in
+\fI%ADMINDIR%/status\fP, excluding the ones marked as not-installed (i.e.
+those which have been previously purged).
+Normal shell wildcard characters are allowed in \fIpackage-name-pattern\fP.
+Please note you will probably have to quote \fIpackage-name-pattern\fP to
+prevent the shell from performing filename expansion.
+For example this will list all package names starting with \*(lqlibc6\*(rq:
 
 .nf
   \fBdpkg\-query \-l 'libc6*'\fP
@@ -186,8 +188,8 @@ Disables the use of any pager when showing information (since dpkg 1.19.2).
 .TP
 .BR \-f ", " \-\-showformat=\fIformat\fR
 This option is used to specify the format of the output \fB\-\-show\fP
-will produce. The format is a string that will be output for each package
-listed.
+will produce (short option since dpkg 1.13.1).
+The format is a string that will be output for each package listed.
 
 In the format string, “\fB\e\fP” introduces escapes:
 
@@ -279,6 +281,14 @@ It contains the package status word, part of the Status field
 .B db:Status\-Eflag
 It contains the package status error flag, part of the Status field
 (since dpkg 1.17.11).
+.TP
+.B db-fsys:Files
+It contains the list of the package filesystem entries separated by newlines
+(since dpkg 1.19.3).
+.TP
+.B db-fsys:Last\-Modified
+It contains the timestamp in seconds of the last time the package filesystem
+entries were modified (since dpkg 1.19.3).
 .TP
 .B source:Package
 It contains the source package name for this binary package

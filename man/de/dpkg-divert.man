@@ -69,17 +69,18 @@ Zeige den echten Namen für eine umgeleitete Datei an.
 .SH OPTIONEN
 .TP 
 \fB\-\-admindir\fP\fI Verzeichnis\fP
-Set the administrative directory to \fIdirectory\fP.  Defaults to
-«\fI%ADMINDIR%\fP».
+Setze das adminitrative Verzeichnis auf \fIVerzeichnis\fP (Standard:
+\fI%ADMINDIR%\fP).
 .TP 
-\fB\-\-instdir\fP\fI directory\fP
-Set the installation directory, which refers to the directory where packages
-get installed (since dpkg 1.19.2). Defaults to «\fI/\fP».
+\fB\-\-instdir\fP\fI Verzeichnis\fP
+Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in
+dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig »\fI/\fP«.
 .TP 
-\fB\-\-root\fP\fI directory\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdirectory\fP» and the administrative directory to
-«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
+\fB\-\-root\fP\fI Verzeichnis\fP
+Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
+Installationsverzeichnis auf »\fIVerzeichnis\fP« und das administrative
+Verzeichnis auf »\fIVerzeichnis\fP\fB%ADMINDIR%\fP« gesetzt wird (seit Dpkg
+1.19.2).
 .TP 
 \fB\-\-divert\fP\fI Umleitziel\fP
 \fIUmleitziel\fP ist der Zielort, wo die Versionen der \fIDatei\fP, wie sie von
@@ -136,12 +137,12 @@ die Datenbank, Speicherzuweisungen usw.
 .SH UMGEBUNG
 .TP 
 \fBDPKG_ROOT\fP
-If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
-will be used as the filesystem root directory (since dpkg 1.19.2).
+Falls gesetzt und die Option \fB\-\-instdir\fP oder \fB\-\-root\fP nicht angegeben
+wurde, wird dies als Dateisystemwurzelverzeichnis verwandt.
 .TP 
 \fBDPKG_ADMINDIR\fP
-If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
-it will be used as the \fBdpkg\fP data directory.
+Falls gesetzt und die Option \fB\-\-admindir\fP oder \fB\-\-root\fP nicht verwandt
+wurde, wird dies als Datenverzeichnis von \fBdpkg\fP verwandt.
 .TP 
 \fBDPKG_MAINTSCRIPT_PACKAGE\fP
 Falls gesetzt und die Optionen \fB\-\-local\fP und \fB\-\-package\fP nicht verwandt
@@ -202,7 +203,7 @@ dpkg\-divert \-\-package wibble \-\-rename \-\-remove /usr/bin/example
 .SH "SIEHE AUCH"
 \fBdpkg\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

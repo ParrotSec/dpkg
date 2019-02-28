@@ -119,13 +119,13 @@ show_prompt(const char *cfgfile, const char *realold, const char *realnew,
 
 	/* No --force-confdef but a forcible situation. */
 	/* TODO: check if this condition can not be simplified to
-	 *       just !fc_conff_def */
-	if (!(fc_conff_def && (what & (CFOF_INSTALL | CFOF_KEEP)))) {
-		if (fc_conff_new) {
+	 *       just !in_force(FORCE_CONFF_DEF) */
+	if (!(in_force(FORCE_CONFF_DEF) && (what & (CFOF_INSTALL | CFOF_KEEP)))) {
+		if (in_force(FORCE_CONFF_NEW)) {
 			fprintf(stderr,
 			        _(" ==> Using new file as you requested.\n"));
 			return 'y';
-		} else if (fc_conff_old) {
+		} else if (in_force(FORCE_CONFF_OLD)) {
 			fprintf(stderr,
 			        _(" ==> Using current old file as you requested.\n"));
 			return 'n';
@@ -133,7 +133,7 @@ show_prompt(const char *cfgfile, const char *realold, const char *realnew,
 	}
 
 	/* Force the default action (if there is one. */
-	if (fc_conff_def) {
+	if (in_force(FORCE_CONFF_DEF)) {
 		if (what & CFOF_KEEP) {
 			fprintf(stderr,
 			        _(" ==> Keeping old config file as default.\n"));
@@ -374,7 +374,7 @@ deferred_configure_ghost_conffile(struct pkginfo *pkg, struct conffile *conff)
 static void
 deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 {
-	struct filenamenode *usenode;
+	struct fsys_namenode *usenode;
 	char currenthash[MD5HASHLEN + 1], newdisthash[MD5HASHLEN + 1];
 	int useredited, distedited;
 	enum conffopt what;
@@ -383,7 +383,7 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 	char *cdr2rest;
 	int rc;
 
-	usenode = namenodetouse(findnamenode(conff->name, fnn_nocopy),
+	usenode = namenodetouse(fsys_hash_find_node(conff->name, FHFF_NOCOPY),
                                 pkg, &pkg->installed);
 
 	rc = conffderef(pkg, &cdr, usenode->name);
@@ -430,7 +430,7 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 		useredited = -1;
 		distedited = -1;
 		what = CFO_IDENTICAL;
-	} else if (strcmp(currenthash, NONEXISTENTFLAG) == 0 && fc_conff_miss) {
+	} else if (strcmp(currenthash, NONEXISTENTFLAG) == 0 && in_force(FORCE_CONFF_MISS)) {
 		fprintf(stderr,
 		        _("\n"
 		          "Configuration file '%s', does not exist on system.\n"
@@ -454,7 +454,7 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 		useredited = strcmp(conff->hash, currenthash) != 0;
 		distedited = strcmp(conff->hash, newdisthash) != 0;
 
-		if (fc_conff_ask && useredited)
+		if (in_force(FORCE_CONFF_ASK) && useredited)
 			what = CFO_PROMPT_KEEP;
 		else
 			what = conffoptcells[useredited][distedited];
@@ -536,30 +536,6 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 /**
  * Process the deferred configure package.
  *
- * The algorithm for deciding what to configure first is as follows:
- * Loop through all packages doing a ‘try 1’ until we've been round
- * and nothing has been done, then do ‘try 2’ and ‘try 3’ likewise.
- * The incrementing of ‘dependtry’ is done by process_queue().
- *
- * Try 1:
- *   Are all dependencies of this package done? If so, do it.
- *   Are any of the dependencies missing or the wrong version?
- *     If so, abort (unless --force-depends, in which case defer).
- *   Will we need to configure a package we weren't given as an
- *     argument? If so, abort ─ except if --force-configure-any,
- *     in which case we add the package to the argument list.
- *   If none of the above, defer the package.
- *
- * Try 2:
- *   Find a cycle and break it (see above).
- *   Do as for try 1.
- *
- * Try 3 (only if --force-depends-version):
- *   Same as for try 2, but don't mind version number in dependencies.
- *
- * Try 4 (only if --force-depends):
- *   Do anyway.
- *
  * @param pkg The package to act on.
  */
 void
@@ -608,7 +584,7 @@ deferred_configure(struct pkginfo *pkg)
 			                       vdew_nonambig));
 	}
 
-	if (dependtry > 1)
+	if (dependtry >= DEPEND_TRY_CYCLES)
 		if (findbreakcycle(pkg))
 			sincenothing = 0;
 
@@ -648,7 +624,7 @@ deferred_configure(struct pkginfo *pkg)
 	sincenothing = 0;
 
 	if (pkg->eflag & PKG_EFLAG_REINSTREQ)
-		forcibleerr(fc_removereinstreq,
+		forcibleerr(FORCE_REMOVE_REINSTREQ,
 		            _("package is in a very bad inconsistent state; you should\n"
 		              " reinstall it before attempting configuration"));
 

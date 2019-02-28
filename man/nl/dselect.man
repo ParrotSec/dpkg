@@ -70,7 +70,7 @@ commandoregeloptie, maar zonder de verbindingsstreepjes aan het begin) of
 commentaar (als hij begint met een ‘\fB#\fP’).
 .br
 .TP 
-\fB\-\-admindir\fP \fImap\fP
+\fB\-\-admindir\fP\fI map\fP
 Wijzigt de map waarin de bestanden ‘\fIstatus\fP’ en ‘\fIavailable\fP’ van dpkg en
 gelijkaardige bestanden te vinden zijn. De standaard ervoor is \fI%ADMINDIR%\fP
 en normaal gezien zou het miet nodig moeten zijn om dit te wijzigen.

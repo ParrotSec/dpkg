@@ -40,10 +40,12 @@ durch.
 
 Eine Variablensubstitution hat die Form
 \fB${\fP\fIVariablenname\fP\fB}\fP. Variablennamen bestehen aus alphanumerischen
-Zeichen (womit sie auch beginnen), Gedankenstrichen und
-Doppelpunkten. Variablensubstitutionen werden wiederholt durchgeführt, bis
-keine übrig geblieben sind; der komplette Text des Feldes nach der
-Substitution wird erneut auf weitere Substitutionen geprüft.
+Zeichen (a\-zA\-Z0\-9, womit sie auch beginnen), Gedankenstrichen (\-) und
+Doppelpunkten (:). Bei Variablennamen ist die Klein\-/Großschreibung
+relevant, auch wenn sie sich auf Gebilde beziehen, die die
+Klein\-/Großschreibung erhalten. Variablensubstitutionen werden wiederholt
+durchgeführt, bis keine übrig geblieben sind; der komplette Text des Feldes
+nach der Substitution wird erneut auf weitere Substitutionen geprüft.
 
 Nachdem alle Substitutionen erfolgt sind, wird jedes Auftreten der
 Zeichenkette \fB${}\fP (die keine erlaubte Substitution ist) durch das
@@ -176,7 +178,7 @@ Liste von Substitutionsvariablen und \-werten.
 \fBdpkg\fP(1), \fBdpkg\-genchanges\fP(1), \fBdpkg\-gencontrol\fP(1),
 \fBdpkg\-shlibdeps\fP(1), \fBdpkg\-source\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

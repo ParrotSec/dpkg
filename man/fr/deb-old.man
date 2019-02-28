@@ -32,7 +32,7 @@ deb\-old \- Ancien format des paquets binaires Debian
 .
 .SH DESCRIPTION
 Le format de fichier \fB.deb\fP correspond aux paquets binaires Debian. Cette
-page de manuel décrit l'\fBancien\fP format, utilisé avant la version 0.93 de
+page de manuel décrit l'\fBancien\fP format, utilisé avant la version\ 0.93 de
 Debian. Veuillez consulter \fBdeb\fP(5) pour les informations sur le nouveau
 format.
 .
@@ -40,7 +40,7 @@ format.
 Le fichier consiste en deux lignes d'information au format texte ASCII,
 suivi par la concaténation de deux fichiers ustar compressés avec gzip.
 .PP
-La première ligne indique la version du format, remplie sur 8 chiffres,
+La première ligne indique la version du format, remplie sur 8\ chiffres,
 c'est\-à\-dire \fB0.939000\fP pour toutes les archives dans l'ancien format.
 .PP
 La deuxième ligne fournit un nombre décimal (sans zéros en tête), qui
@@ -52,16 +52,16 @@ La première archive tar contient les informations de contrôle, sous forme
 d'une série de fichiers ordinaires. Le fichier \fBcontrol\fP doit être présent,
 puisqu'il contient les informations principales de contrôle.
 .PP
-In some very old archives, the files in the control tarfile may optionally
-be in a \fBDEBIAN\fP subdirectory. In that case, the \fBDEBIAN\fP subdirectory
-will be in the control tarfile too, and the control tarfile will have only
-files in that directory. Optionally the control tarfile may contain an entry
-for ‘\fB.\fP’, that is, the current directory.
+Dans certaines archives vraiment anciennes, les fichiers de l'archive de
+contrôle peuvent se trouver dans un sous\-répertoire \fBDEBIAN\fP. Dans ce cas,
+le sous\-répertoire \fBDEBIAN\fP se trouve également dans l'archive de contrôle,
+qui ne contiendra que des fichiers de ce répertoire. En option, l'archive de
+contrôle peut contenir une entrée pour «\ \fB.\fP\ », le répertoire courant.
 .PP
-La seconde archive compressée avec gzip correspond à l'archive à placer dans
-le système de fichiers. Elle contient des chemins relatifs à la racine du
-système dans lequel se fera l'installation. Les noms de fichiers ne débutent
-pas par des barres obliques («\ /\ »).
+La seconde archive compressée avec gzip correspond à l'archive du système de
+fichiers. Elle contient des chemins relatifs à la racine du système dans
+lequel se fera l'installation. Les noms de fichiers ne débutent pas par des
+barres obliques («\ /\ »).
 .
 .SH "VOIR AUSSI"
 \fBdeb\fP(5), \fBdpkg\-deb\fP(1), \fBdeb\-control\fP(5).

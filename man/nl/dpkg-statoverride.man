@@ -39,24 +39,25 @@ die normaal setuid zijn, geïnstalleerd worden zonder een setuid\-vlag of dat
 ze enkel uitgevoerd kunnen worden door een bepaalde groep.
 .P
 \fBdpkg\-statoverride\fP is een hulpmiddel voor het beheren van de lijst met
-statusaanpassingen (stat overrides). Het heeft drie basisfuncties:
-toevoegen, verwijderen en opsommen van aanpassingen.
+statusmodificaties (stat overrides). Het heeft drie basisfuncties:
+toevoegen, verwijderen en opsommen van modificaties.
 .
 .SH COMMANDO'S
 .TP 
 \fB\-\-add\fP\fI gebruiker groep modus pad\fP
-Voeg een statusaanpassing toe voor \fIpad\fP. Het is niet nodig dat \fIpad\fP
-reeds bestaat op het ogenblik dat dit commando gebruikt wordt. De aanpassing
-zal opgeslagen worden en later gebruikt worden. Gebruikers en groepen kunnen
-bij hun naam opgegeven worden (bijvoorbeeld \fBroot\fP of \fBnobody\fP), of met
-hun nummer door voor dat nummer een ‘\fB#\fP’ te plaatsen (bijvoorbeeld \fB#0\fP
-of \fB#65534\fP). De \fImodus\fP moet als octaal getal opgegeven worden.
+Voeg een statusmodificatie toe voor \fIpad\fP. Het is niet nodig dat \fIpad\fP
+reeds bestaat op het ogenblik dat dit commando gebruikt wordt. De
+modificatie zal opgeslagen worden en later gebruikt worden. Gebruikers en
+groepen kunnen bij hun naam opgegeven worden (bijvoorbeeld \fBroot\fP of
+\fBnobody\fP), of met hun nummer door voor dat nummer een ‘\fB#\fP’ te plaatsen
+(bijvoorbeeld \fB#0\fP of \fB#65534\fP). De \fImodus\fP moet als octaal getal
+opgegeven worden.
 
 Indien \fB\-\-update\fP opgegeven wordt en \fIpad\fP bestaat, dan wordt dat
 onmiddellijk op de nieuwe eigenaar en modus ingesteld.
 .TP 
 \fB\-\-remove\fP\fI pad\fP
-Verwijder een statusaanpassing voor \fIpad\fP. De status zelf van \fIpad\fP wordt
+Verwijder een statusmodificatie voor \fIpad\fP. De status zelf van \fIpad\fP wordt
 door dit commando niet gewijzigd.
 .TP 
 \fB\-\-list\fP [\fIglob\-patroon\fP]
@@ -66,28 +67,56 @@ overeenkomen met het glob\-patroon, indien een glob\-patroon opgegeven werd.
 \fB\-\-help\fP
 Toon info over het gebruik en sluit af.
 .TP 
+\fB\-\-force\-help\fP
+Give help about the \fB\-\-force\-\fP\fIthing\fP options (since dpkg 1.19.5).
+.TP 
 \fB\-\-version\fP
 Toon de versie en sluit af.
 .
 .SH OPTIES
 .TP 
-\fB\-\-admindir\fP \fImap\fP
-Set the administrative directory to \fIdirectory\fP.  This is where the
-\fIstatoverride\fP file is stored.  Defaults to «\fI%ADMINDIR%\fP».
+\fB\-\-admindir\fP\fI map\fP
+Stel de administratieve map in op \fImap\fP. Dit is waar het
+\fIstatusmodificatie\fP\-bestand opgeslagen is. Standaard is dat
+«\fI%ADMINDIR%\fP».
 .TP 
-\fB\-\-instdir\fP\fI directory\fP
-Set the installation directory, which refers to the directory where packages
-get installed (since dpkg 1.19.2).  Defaults to «\fI/\fP».
+\fB\-\-instdir\fP\fI map\fP
+Stel de installatiemap in, welke verwijst naar de map waar pakketten
+geïnstalleerd worden (sinds dpkg 1.19.2). Standaard is dat «\fI/\fP».
 .TP 
-\fB\-\-root\fP\fI directory\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdirectory\fP» and the administrative directory to
-«\fIdirectory\fP\fB%ADMINDIR%\fP» (since dpkg 1.19.2).
+\fB\-\-root\fP\fI map\fP
+Stel de hoofdmap in op \fBmap\fP, hetgeen de installatiemap instelt op
+«\fImap\fP» en de administratieve map op «\fImap\fP\fB%ADMINDIR%\fP» (sinds dpkg
+1.19.2).
+.TP 
+\fB\-\-force\-\fP\fIdingen\fP
+.TQ
+\fB\-\-no\-force\-\fP\fIdingen\fP, \fB\-\-refuse\-\fP\fIdingen\fP
+Force or refuse (\fBno\-force\fP and \fBrefuse\fP mean the same thing)  to do some
+things (since dpkg 1.19.5).  \fIthings\fP is a comma separated list of things
+specified below.  \fB\-\-force\-help\fP displays a message describing them.
+Things marked with (*) are forced by default.
+
+\fIWarning: These options are mostly intended to be used by experts only.
+Using them without fully understanding their effects may break your whole
+system.\fP
+
+\fBall\fP: Schakelt alle forceer\-opties aan (of uit).
+
+\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
+(since dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
+(since dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
+based security when installing files into the filesystem (since dpkg
+1.19.5).  On Linux systems the implementation uses SELinux.
 .TP 
 \fB\-\-force\fP
-Verplicht een actie, zelfs als een redelijkheidstoets die anders zou
-verbieden. Dit is noodzakelijk om een bestaande aanpassing (override) te
-wijzigen.
+Force an action, even if a sanity check would otherwise prohibit it.  This
+is necessary to override an existing override.  This option is deprecated
+(since dpkg 1.19.5), it is replaced by \fB\-\-force\-all\fP.
 .TP 
 \fB\-\-update\fP
 Tracht onmiddellijk het \fIpad\fP, als dat bestaat, in te stellen op de nieuwe
@@ -113,12 +142,17 @@ database, het toewijzen van geheugen, enz.
 .SH OMGEVING
 .TP 
 \fBDPKG_ROOT\fP
-If set and the \fB\-\-instdir\fP or \fB\-\-root\fP options have not been specified, it
-will be used as the filesystem root directory (since dpkg 1.19.2).
+Indien dit ingesteld is en de opties \fB\-\-instdir\fP of \fB\-\-root\fP niet
+opgegeven werden, zal dit gebruikt worden als de hoofdmap voor het
+bestandssysteem (sinds dpkg 1.19.2).
 .TP 
 \fBDPKG_ADMINDIR\fP
-If set and the \fB\-\-admindir\fP or \fB\-\-root\fP options have not been specified,
-it will be used as the \fBdpkg\fP data directory.
+Indien dit ingesteld is en de opties \fB\-\-admindir\fP of \fB\-\-root\fP niet
+opgegeven werden, zal dit gebruikt worden als de datamap voor \fBdpkg\fP.
+.TP 
+\fBDPKG_FORCE\fP
+If set and none of the \fB\-\-force\-\fP\fI...\fP options have been specified, it
+will be used as the force options to use (since dpkg 1.19.5).
 .TP 
 \fBDPKG_COLORS\fP
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
@@ -127,9 +161,10 @@ mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .SH BESTANDEN
 .TP 
 \fI%ADMINDIR%/statoverride\fP
-Bestand dat de huidige lijst van statusaanpassingen van het systeem
-bevat. Het bevindt zich in de beheersmap van \fBdpkg\fP samen met andere
-bestanden die van belang zijn voor \fBdpkg\fP, zoals \fIstatus\fP en \fIavailable\fP.
+Bestand dat de huidige lijst van statusmodificaties van het systeem
+bevat. Het bevindt zich in de administratieve map van \fBdpkg\fP samen met
+andere bestanden die van belang zijn voor \fBdpkg\fP, zoals \fIstatus\fP en
+\fIavailable\fP.
 .br
 Opmerking: \fBdpkg\-statoverride\fP bewaart de oude kopie van dit bestand met de
 extensie “\-old” vooraleer het dit door het nieuwe bestand vervangt.

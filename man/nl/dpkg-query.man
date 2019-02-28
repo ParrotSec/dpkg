@@ -38,15 +38,17 @@ opgenomen zijn in de database van \fBdpkg\fP.
 .SH COMMANDO'S
 .TP 
 \fB\-l\fP, \fB\-\-list\fP [\fIpakketnaampatroon\fP...]
-Geef de pakketten weer die beantwoorden aan het opgegeven patroon. Indien
-geen \fIpakketnaampatroon\fP opgegeven werd, som dan alle pakketten uit
-\fI%ADMINDIR%/status\fP op, met uitzondering van diegene die als
-niet\-geïnstalleerd gemarkeerd staan (d.w.z. die welke eerder gewist
-werden). De normale shell\-jokertekens mogen in \fIpakketnaampatroon\fP gebruikt
-worden. Merk op dat u \fIpakketnaampatroon\fP wellicht tussen aanhalingstekens
-zult moeten plaatsen om te voorkomen dat de shell aan bestandsnaamexpansie
-zou doen. Het volgende zal bijvoorbeeld een opsomming geven van alle
-pakketnamen die beginnen met \*(lqlibc6\*(rq:
+Alle gekende pakketten opsommen die beantwoorden aan één of meer patronen,
+ongeacht hun toestand, met daarbij inbegrepen elk reëel of virtueel pakket
+dat in om het even welk veld over vereistenrelaties (zoals \fBBreaks\fP,
+\fBEnhances\fP, enz.) vermeld wordt. Indien geen \fIpakketnaampatroon\fP opgegeven
+werd, som dan alle pakketten uit \fI%ADMINDIR%/status\fP op, met uitzondering
+van die welke als niet\-geïnstalleerd gemarkeerd staan (d.w.z. die welke
+eerder gewist werden). De normale shell\-jokertekens mogen in
+\fIpakketnaampatroon\fP gebruikt worden. Merk op dat u \fIpakketnaampatroon\fP
+wellicht tussen aanhalingstekens zult moeten plaatsen om te voorkomen dat de
+shell aan bestandsnaamexpansie zou doen. Het volgende zal bijvoorbeeld een
+opsomming geven van alle pakketnamen die beginnen met \*(lqlibc6\*(rq:
 
 .nf
   \fBdpkg\-query \-l 'libc6*'\fP
@@ -103,12 +105,13 @@ gebruikt één regel per pakket dat gevonden werd, waarbij elke regel de naam
 onderling gescheiden door een tab.
 .TP 
 \fB\-s\fP, \fB\-\-status\fP [\fIpakketnaam\fP...]
-Report status of specified package. This just displays the entry in the
-installed package status database.  If no \fIpackage\-name\fP is specified it
-will display all package entries in the status database (since dpkg
-1.19.1).  When multiple \fIpackage\-name\fP entries are listed, the requested
-status entries are separated by an empty line, with the same order as
-specified on the argument list.
+Rapporteert over de status van het opgegeven pakket. Dit geeft gewoon het
+item weer uit de databank van de toestand van de geïnstalleerde
+bestanden. Indien geen \fIpakketnaam\fP vermeld werd, worden alle items uit de
+databank met toestandsinformatie weergegeven (sinds dpkg 1.19.1). Als
+meerdere \fIpakketnamen\fP vermeld werden, worden de opgevraagde items met
+toestandsinformatie van elkaar gescheiden door een lege regel en weergegeven
+in dezelfde volgorde als die van de argumentenlijst.
 .TP 
 \fB\-L\fP, \fB\-\-listfiles\fP \fIpakketnaam\fP...
 Som de bestanden op die uit \fIpakketnaam\fP op uw systeem geïnstalleerd
@@ -161,11 +164,12 @@ Dit commando geeft geen extra bestanden weer die door scripts van de
 pakketonderhouder aangemaakt werden en ook geen alternatieven.
 .TP 
 \fB\-p\fP, \fB\-\-print\-avail\fP [\fIpakketnaam\fP...]
-Display details about packages, as found in \fI%ADMINDIR%/available\fP.  If no
-\fIpackage\-name\fP is specified, it will display all package entries in the
-\fIavailable\fP database (since dpkg 1.19.1).  When multiple \fIpackage\-name\fP
-are listed, the requested \fIavailable\fP entries are separated by an empty
-line, with the same order as specified on the argument list.
+Toon detailinformatie over pakketten, zoals die in \fI%ADMINDIR%/available\fP
+te vinden is. Als geen \fIpakketnaam\fP opgegeven werd, worden alle items uit
+de databank \fIavailable\fP weergegeven (sinds dpkg 1.19.1). Als meerdere
+\fIpakketnamen\fP opgegeven worden, worden de gevraagde items uit \fIavailable\fP
+onderling gescheiden door een lege regel en weergegeven in dezelfde volgorde
+als die van de argumentenlijst.
 
 Gebruikers van frontends die op APT gebaseerd zijn moeten in de plaats
 daarvan \fBapt\-cache show\fP \fIpakketnaam\fP gebruiken, aangezien het bestand
@@ -189,12 +193,14 @@ en \fB\-\-list\fP. Standaard doorzoeken die nu enkel het bestand status (sinds
 dpkg 1.16.2).
 .TP 
 \fB\-\-no\-pager\fP
-Disables the use of any pager when showing information (since dpkg 1.19.2).
+Schakelt het gebruik van een pagineringsprogramma uit bij het weergeven van
+informatie (sinds dpkg 1.19.2).
 .TP 
 \fB\-f\fP, \fB\-\-showformat=\fP\fIindeling\fP
 Deze optie wordt gebruikt om op te geven in welke indeling \fB\-\-show\fP zijn
-uitvoer moet produceren. De indeling is een tekenreeks die vorm geeft aan de
-uitvoer die voor elk opgesomd pakket gegenereerd wordt.
+uitvoer moet produceren (de korte optie sinds dpkg 1.13.1). De indeling is
+een tekenreeks die vorm geeft aan de uitvoer die voor elk opgesomd pakket
+gegenereerd wordt.
 
 In de indelingstekenreeks markeert “\fB\e\fP” een stuurcode:
 
@@ -269,7 +275,7 @@ een vreemde architectuur.
 Het bevat de korte beschrijving van het pakket (sinds dpkg 1.19.1).
 .TP 
 \fBbinary:Summary\fP
-This is an alias for \fBbinary:Synopsis\fP (since dpkg 1.16.2).
+Dit is een alias voor \fBbinary:Synopsis\fP (sinds dpkg 1.16.2).
 .TP 
 \fBdb:Status\-Abbrev\fP
 Het bevat de verkorte pakketstatus (als drie tekens), zoals “ii ” of “iHR”
@@ -287,6 +293,15 @@ Status (sinds dpkg 1.17.11).
 \fBdb:Status\-Eflag\fP
 Het bevat de status\-foutvlag van het pakket, onderdeel van het veld Status
 (sinds dpkg 1.17.11).
+.TP 
+\fBdb\-fsys:Files\fP
+Het bevat de door regeleinden gescheiden lijst van de elementen van het
+pakketbestandssysteem (sinds dpkg 1.19.3).
+.TP 
+\fBdb\-fsys:Last\-Modified\fP
+Het bevat de tijdsaanduiding in seconden van het laatste moment waarop de
+elementen van het pakketbestandssysteem gewijzigd werden (sinds dpkg
+1.19.3).
 .TP 
 \fBsource:Package\fP
 Het bevat de naam van het broncodepakket van dit binaire pakket (sinds dpkg
@@ -333,16 +348,16 @@ database, het toewijzen van geheugen, enz.
 .SS "Externe omgeving"
 .TP 
 \fBSHELL\fP
-Sets the program to execute when spawning a command via a shell (since dpkg
-1.19.2).
+Stelt het uit te voeren programma in wanneer een commando via een shell
+voortgebracht wordt (sinds dpkg 1.19.2).
 .TP 
 \fBPAGER\fP
 .TQ
 \fBDPKG_PAGER\fP
-Sets the pager command to use (since dpkg 1.19.1), which will be executed
-with «\fB$SHELL \-c\fP».  If \fBSHELL\fP is not set, «\fBsh\fP» will be used instead.
-The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment variable (since dpkg
-1.19.2).
+Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk
+uitgevoerd zal worden met «\fB$SHELL \-c\fP». Indien \fBSHELL\fP niet ingesteld is,
+zal «\fBsh\fP» gebruikt worden. \fBDPKG_PAGER\fP overschrijft de
+omgevingsvariabele \fBPAGER\fP (sinds dpkg 1.19.2).
 .TP 
 \fBDPKG_ADMINDIR\fP
 Indien dit ingesteld werd en de optie \fB\-\-admindir\fP niet gebruikt werd, zal
@@ -354,11 +369,13 @@ mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .SS "Interne omgeving"
 .TP 
 \fBLESS\fP
-Defined by \fBdpkg\-query\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning
-a pager (since dpkg 1.19.2).  To change the default behavior, this variable
-can be preset to some other value including an empty string, or the \fBPAGER\fP
-or \fBDPKG_PAGER\fP variables can be set to disable specific options with
-«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
+Indien niet reeds ingesteld, wordt het als “\fB\-FRSXMQ\fP” gedefinieerd door
+\fBdpkg\-query\fP bij het voortbrengen van een pagineringsprogramma (sinds dpkg
+1.19.2). Om het standaardgedrag te wijzigen, kan deze variabele vooraf
+ingesteld worden op een andere waarde, inclusief op een lege tekenreeks,
+ofwel kunnen de variabelen \fBPAGER\fP of \fBDPKG_PAGER\fP ingesteld worden om
+specifieke opties uit te schakelen met «\fB\-+\fP», bijvoorbeeld
+\fBDPKG_PAGER="less \-+F"\fP.
 .
 .SH "ZIE OOK"
 \fBdpkg\fP(1).

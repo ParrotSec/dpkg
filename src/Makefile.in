@@ -130,10 +130,11 @@ PROGRAMS = $(bin_PROGRAMS)
 am_dpkg_OBJECTS = archives.$(OBJEXT) cleanup.$(OBJEXT) \
 	configure.$(OBJEXT) depcon.$(OBJEXT) enquiry.$(OBJEXT) \
 	errors.$(OBJEXT) file-match.$(OBJEXT) filters.$(OBJEXT) \
-	help.$(OBJEXT) main.$(OBJEXT) packages.$(OBJEXT) \
-	perpkgstate.$(OBJEXT) remove.$(OBJEXT) script.$(OBJEXT) \
-	select.$(OBJEXT) selinux.$(OBJEXT) trigproc.$(OBJEXT) \
-	unpack.$(OBJEXT) update.$(OBJEXT) verify.$(OBJEXT)
+	force.$(OBJEXT) help.$(OBJEXT) main.$(OBJEXT) \
+	packages.$(OBJEXT) perpkgstate.$(OBJEXT) remove.$(OBJEXT) \
+	script.$(OBJEXT) select.$(OBJEXT) selinux.$(OBJEXT) \
+	trigproc.$(OBJEXT) unpack.$(OBJEXT) update.$(OBJEXT) \
+	verify.$(OBJEXT)
 dpkg_OBJECTS = $(am_dpkg_OBJECTS)
 am__DEPENDENCIES_1 =
 am__DEPENDENCIES_2 = ../lib/dpkg/libdpkg.la $(am__DEPENDENCIES_1)
@@ -151,7 +152,8 @@ am_dpkg_query_OBJECTS = querycmd.$(OBJEXT)
 dpkg_query_OBJECTS = $(am_dpkg_query_OBJECTS)
 dpkg_query_LDADD = $(LDADD)
 dpkg_query_DEPENDENCIES = ../lib/dpkg/libdpkg.la $(am__DEPENDENCIES_1)
-am_dpkg_statoverride_OBJECTS = selinux.$(OBJEXT) statcmd.$(OBJEXT)
+am_dpkg_statoverride_OBJECTS = force.$(OBJEXT) selinux.$(OBJEXT) \
+	statcmd.$(OBJEXT)
 dpkg_statoverride_OBJECTS = $(am_dpkg_statoverride_OBJECTS)
 dpkg_statoverride_DEPENDENCIES = $(am__DEPENDENCIES_2) \
 	$(am__DEPENDENCIES_1)
@@ -179,7 +181,8 @@ am__depfiles_remade = ./$(DEPDIR)/archives.Po ./$(DEPDIR)/cleanup.Po \
 	./$(DEPDIR)/configure.Po ./$(DEPDIR)/depcon.Po \
 	./$(DEPDIR)/divertcmd.Po ./$(DEPDIR)/enquiry.Po \
 	./$(DEPDIR)/errors.Po ./$(DEPDIR)/file-match.Po \
-	./$(DEPDIR)/filters.Po ./$(DEPDIR)/help.Po ./$(DEPDIR)/main.Po \
+	./$(DEPDIR)/filters.Po ./$(DEPDIR)/force.Po \
+	./$(DEPDIR)/help.Po ./$(DEPDIR)/main.Po \
 	./$(DEPDIR)/packages.Po ./$(DEPDIR)/perpkgstate.Po \
 	./$(DEPDIR)/querycmd.Po ./$(DEPDIR)/remove.Po \
 	./$(DEPDIR)/script.Po ./$(DEPDIR)/select.Po \
@@ -442,6 +445,7 @@ dpkg_SOURCES = \
 	errors.c \
 	file-match.c file-match.h \
 	filters.c filters.h \
+	force.c force.h \
 	help.c \
 	main.c main.h \
 	packages.c \
@@ -467,6 +471,7 @@ dpkg_query_SOURCES = \
 	querycmd.c
 
 dpkg_statoverride_SOURCES = \
+	force.c force.h \
 	selinux.c \
 	statcmd.c
 
@@ -614,6 +619,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errors.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file-match.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filters.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/force.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/help.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/packages.Po@am__quote@ # am--include-marker
@@ -801,6 +807,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/errors.Po
 	-rm -f ./$(DEPDIR)/file-match.Po
 	-rm -f ./$(DEPDIR)/filters.Po
+	-rm -f ./$(DEPDIR)/force.Po
 	-rm -f ./$(DEPDIR)/help.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/packages.Po
@@ -870,6 +877,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/errors.Po
 	-rm -f ./$(DEPDIR)/file-match.Po
 	-rm -f ./$(DEPDIR)/filters.Po
+	-rm -f ./$(DEPDIR)/force.Po
 	-rm -f ./$(DEPDIR)/help.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/packages.Po

@@ -1,0 +1,66 @@
+.\" dpkg manual page - deb-postinst(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-postinst 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-postinst \- Script du responsable pour la fin d'installation du paquet
+.
+.SH SYNOPSIS
+postinst
+.
+.SH DESCRIPTION
+Un paquet peut réaliser plusieurs actions post\-installation à l'aide de
+scripts du responsable, en incluant un fichier \fIpostinst\fP exécutable dans
+son archive de contrôle (c'est\-à\-dire \fIDEBIAN/postinst\fP au moment de la
+création du paquet).
+.PP
+Le script peut être appelé de diverses manières\ :
+.TP 
+\fIpostinst\fP \fBconfigure\fP \fIversion\-ancienne\fP
+Après l'installation paquet
+.TP 
+\fIpostinst\fP \fBtriggered\fP \fInom\-action\-différée...\fP
+Après activation d'une action différée de ce paquet.
+.TP 
+\fIancien\-postinst\fP \fBabort\-upgrade\fP \fInouvelle\-version\fP
+Si \fIprerm\fP échoue durant la mise à niveau ou échoue après l'échec de la
+mise à niveau.
+.TP 
+\fIancien\-postinst\fP \fBabort\-remove\fP
+Si \fIprerm\fP échoue durant la suppression.
+.TP 
+\fIpostinst\fP \fBabort\-deconfigure in\-favour\fP \fInouveau\-paquet nouvelle\-version\fP
+.TQ
+       [ \fBremoving\fP \fIancien\-paquet ancienne\-version\fP ]
+Si \fIprerm\fP échoue durant la déconfiguration d'un paquet.
+.TP 
+\fIpostinst\fP \fBabort\-remove in\-favour\fP \fInouveau\-paquet nouvelle\-version\fP
+Si \fIprerm\fP échoue durant un remplacement à cause d'un conflit.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

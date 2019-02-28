@@ -48,10 +48,11 @@
  * we add it to that queue (unless --no-triggers).
  *
  *
- * We want to prefer configuring packages where possible to doing
- * trigger processing, but we want to prefer trigger processing to
- * cycle-breaking and dependency forcing. This is achieved as
- * follows:
+ * We want to prefer configuring packages where possible to doing trigger
+ * processing, although it would be better to prefer trigger processing
+ * to cycle-breaking we need to do the latter first or we might generate
+ * artificial trigger cycles, but we always want to prefer trigger
+ * processing to dependency forcing. This is achieved as follows:
  *
  * Each time during configure processing where a package D is blocked by
  * only (ie Depends unsatisfied but would be satisfied by) a t-awaiter W
@@ -59,10 +60,11 @@
  * (If --no-triggers and nonempty argument list and package isn't in
  * argument list then we don't do this.)
  *
- * Each time in packages.c where we increment dependtry, we instead see
- * if we have encountered such a t-pending T. If we do, we trigproc T
- * instead of incrementing dependtry and this counts as having done
- * something so we reset sincenothing.
+ * Each time in process_queue() where we increment dependtry, we instead
+ * see if we have encountered such a t-pending T. If we do and are in
+ * a trigger processing try, we trigproc T instead of incrementing
+ * dependtry and this counts as having done something so we reset
+ * sincenothing.
  *
  *
  * For --triggers-only and --configure, we go through each thing in the
@@ -120,11 +122,11 @@ trigproc_enqueue_deferred(struct pkginfo *pend)
 void
 trigproc_populate_deferred(void)
 {
-	struct pkgiterator *iter;
+	struct pkg_hash_iter *iter;
 	struct pkginfo *pkg;
 
-	iter = pkg_db_iter_new();
-	while ((pkg = pkg_db_iter_next_pkg(iter))) {
+	iter = pkg_hash_iter_new();
+	while ((pkg = pkg_hash_iter_next_pkg(iter))) {
 		if (!pkg->trigpend_head)
 			continue;
 
@@ -137,7 +139,7 @@ trigproc_populate_deferred(void)
 
 		trigproc_enqueue_deferred(pkg);
 	}
-	pkg_db_iter_free(iter);
+	pkg_hash_iter_free(iter);
 }
 
 void
@@ -162,7 +164,7 @@ trigproc_run_deferred(void)
 
 		ensure_package_clientdata(pkg);
 		pkg->clientdata->trigprocdeferred = NULL;
-		trigproc(pkg, TRIGPROC_TRY);
+		trigproc(pkg, TRIGPROC_TRY_DEFERRED);
 
 		pop_error_context(ehflag_normaltidy);
 	}
@@ -207,8 +209,8 @@ trigproc_reset_cycle(void)
 }
 
 static bool
-tortoise_not_in_hare(struct pkginfo *processing_now,
-                     struct trigcycleperpkg *tortoise_pkg)
+tortoise_in_hare(struct pkginfo *processing_now,
+                 struct trigcycleperpkg *tortoise_pkg)
 {
 	const char *processing_now_name, *tortoise_name;
 	struct trigpend *hare_trig, *tortoise_trig;
@@ -241,35 +243,28 @@ tortoise_not_in_hare(struct pkginfo *processing_now,
 			/* Not found in hare, yay! */
 			debug(dbg_triggersdetail, "%s pnow=%s tortoise=%s OK",
 			      __func__, processing_now_name, tortoise_name);
-			return true;
+			return false;
 		}
 	}
 
-	return false;
+	return true;
 }
 
-/*
- * Returns package we're to give up on.
- */
-static struct pkginfo *
-check_trigger_cycle(struct pkginfo *processing_now)
+static struct trigcyclenode *
+trigproc_new_cyclenode(struct pkginfo *processing_now)
 {
 	struct trigcyclenode *tcn;
-	struct trigcycleperpkg *tcpp, *tortoise_pkg;
-	struct trigpend *tortoise_trig;
-	struct pkgiterator *iter;
-	struct pkginfo *pkg, *giveup;
-	const char *sep;
-
-	debug(dbg_triggers, "check_triggers_cycle pnow=%s",
-	      pkg_name(processing_now, pnaw_always));
+	struct trigcycleperpkg *tcpp;
+	struct pkginfo *pkg;
+	struct pkg_hash_iter *iter;
 
 	tcn = nfmalloc(sizeof(*tcn));
 	tcn->pkgs = NULL;
+	tcn->next = NULL;
 	tcn->then_processed = processing_now;
 
-	iter = pkg_db_iter_new();
-	while ((pkg = pkg_db_iter_next_pkg(iter))) {
+	iter = pkg_hash_iter_new();
+	while ((pkg = pkg_hash_iter_next_pkg(iter))) {
 		if (!pkg->trigpend_head)
 			continue;
 		tcpp = nfmalloc(sizeof(*tcpp));
@@ -278,18 +273,37 @@ check_trigger_cycle(struct pkginfo *processing_now)
 		tcpp->next = tcn->pkgs;
 		tcn->pkgs = tcpp;
 	}
-	pkg_db_iter_free(iter);
+	pkg_hash_iter_free(iter);
+
+	return tcn;
+}
+
+/*
+ * Returns package we are to give up on.
+ */
+static struct pkginfo *
+check_trigger_cycle(struct pkginfo *processing_now)
+{
+	struct trigcyclenode *tcn;
+	struct trigcycleperpkg *tortoise_pkg;
+	struct trigpend *tortoise_trig;
+	struct pkginfo *giveup;
+	const char *sep;
+
+	debug(dbg_triggers, "check_triggers_cycle pnow=%s",
+	      pkg_name(processing_now, pnaw_always));
+
+	tcn = trigproc_new_cyclenode(processing_now);
+
 	if (!hare) {
 		debug(dbg_triggersdetail, "check_triggers_cycle pnow=%s first",
 		      pkg_name(processing_now, pnaw_always));
-		tcn->next = NULL;
 		hare = tortoise = tcn;
 		return NULL;
 	}
 
-	tcn->next = NULL;
 	hare->next = tcn;
-	hare = tcn;
+	hare = hare->next;
 	if (tortoise_advance)
 		tortoise = tortoise->next;
 	tortoise_advance = !tortoise_advance;
@@ -301,7 +315,7 @@ check_trigger_cycle(struct pkginfo *processing_now)
 	for (tortoise_pkg = tortoise->pkgs;
 	     tortoise_pkg;
 	     tortoise_pkg = tortoise_pkg->next) {
-		if (tortoise_not_in_hare(processing_now, tortoise_pkg))
+		if (!tortoise_in_hare(processing_now, tortoise_pkg))
 			return NULL;
 	}
 	/* Oh dear. hare is a superset of tortoise. We are making no
@@ -340,6 +354,7 @@ check_trigger_cycle(struct pkginfo *processing_now)
 		internerr("package %s in non-trigger state %s",
 		          pkg_name(giveup, pnaw_always),
 		          pkg_status_name(giveup));
+	giveup->clientdata->istobe = PKG_ISTOBE_NORMAL;
 	pkg_set_status(giveup, PKG_STAT_HALFCONFIGURED);
 	modstatdb_note(giveup);
 	print_error_perpackage(_("triggers looping, abandoned"),
@@ -377,33 +392,40 @@ trigproc(struct pkginfo *pkg, enum trigproc_type type)
 			          pkg_name(pkg, pnaw_always),
 			          pkg_status_name(pkg));
 
-		if (dependtry > 1) {
-			gaveup = check_trigger_cycle(pkg);
-			if (gaveup == pkg)
-				return;
+		if (dependtry < DEPEND_TRY_TRIGGERS &&
+		    type == TRIGPROC_TRY_QUEUED) {
+			/* We are not yet in a triggers run, so postpone this
+			 * package completely. */
+			enqueue_package(pkg);
+			return;
+		}
 
+		if (dependtry >= DEPEND_TRY_CYCLES) {
 			if (findbreakcycle(pkg))
 				sincenothing = 0;
 		}
 
 		ok = dependencies_ok(pkg, NULL, &depwhynot);
 		if (ok == DEP_CHECK_DEFER) {
+			gaveup = check_trigger_cycle(pkg);
+			if (gaveup == pkg)
+				return;
+
 			varbuf_destroy(&depwhynot);
 			enqueue_package(pkg);
 			return;
 		} else if (ok == DEP_CHECK_HALT) {
-			/* We cannot process this package on this dpkg run,
-			 * and we can get here repeatedly if this package is
-			 * required to make progress for other packages. So
-			 * reset the trigger cycles tracking to avoid bogus
-			 * cycle detections. */
-			trigproc_reset_cycle();
+			/* When doing opportunistic deferred trigger processing,
+			 * nothing requires us to be able to make progress;
+			 * skip the package and silently ignore the error due
+			 * to unsatisfiable dependencies. And because we can
+			 * end up here repeatedly, if this package is required
+			 * to make progress for other packages, we need to
+			 * reset the trigger cycle tracking to avoid detecting
+			 * bogus cycles*/
+			if (type == TRIGPROC_TRY_DEFERRED) {
+				trigproc_reset_cycle();
 
-			/* When doing opportunistic trigger processing, nothing
-			 * requires us to be able to make progress; skip the
-			 * package and silently ignore the error due to
-			 * unsatisfiable dependencies. */
-			if (type == TRIGPROC_TRY) {
 				varbuf_destroy(&depwhynot);
 				return;
 			}
@@ -423,11 +445,9 @@ trigproc(struct pkginfo *pkg, enum trigproc_type type)
 			varbuf_destroy(&depwhynot);
 		}
 
-		if (dependtry <= 1) {
-			gaveup = check_trigger_cycle(pkg);
-			if (gaveup == pkg)
-				return;
-		}
+		gaveup = check_trigger_cycle(pkg);
+		if (gaveup == pkg)
+			return;
 
 		printf(_("Processing triggers for %s (%s) ...\n"),
 		       pkg_name(pkg, pnaw_nonambig),
@@ -495,11 +515,11 @@ transitional_interest_callback(const char *trig, struct pkginfo *pkg,
 static void
 trig_transitional_activate(enum modstatdb_rw cstatus)
 {
-	struct pkgiterator *iter;
+	struct pkg_hash_iter *iter;
 	struct pkginfo *pkg;
 
-	iter = pkg_db_iter_new();
-	while ((pkg = pkg_db_iter_next_pkg(iter))) {
+	iter = pkg_hash_iter_new();
+	while ((pkg = pkg_hash_iter_next_pkg(iter))) {
 		if (pkg->status <= PKG_STAT_HALFINSTALLED)
 			continue;
 		debug(dbg_triggersdetail, "trig_transitional_activate %s %s",
@@ -526,7 +546,7 @@ trig_transitional_activate(enum modstatdb_rw cstatus)
 		else
 			pkg_set_status(pkg, PKG_STAT_INSTALLED);
 	}
-	pkg_db_iter_free(iter);
+	pkg_hash_iter_free(iter);
 
 	if (cstatus >= msdbrw_write) {
 		modstatdb_checkpoint();

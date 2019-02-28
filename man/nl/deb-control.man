@@ -325,28 +325,28 @@ hoofdcontrolebestand \fIdebian/control\fP van de broncode. De enige reden die
 momenteel gebruikt wordt, is \fBdebug\-symbols\fP.
 .
 .TP 
-\fBBuild\-Ids:\fP\fI elf\-build\-id\-list\fP
-This field specifies a whitespace separated list of ELF build\-ids. These are
-unique identifiers for semantically identical ELF objects, for each of these
-within the package.
+\fBBuild\-Ids:\fP\fI lijst met elf\-bouw\-id's\fP
+Dit veld geeft een lijst op van door witruimte van elkaar gescheiden
+ELF\-bouw\-id's. Dit zijn unieke identificatiesymbolen voor semantisch
+identieke ELF\-objecten, voor elk ervan in het pakket.
 .
-The format or the way to compute each build\-id is not defined by design.
+De indeling of de berekeningswijze voor elke bouw\-id ligt niet vast bij
+ontwerp.
 .
 .SH VOORBEELD
 .\" .RS
 .nf
-# Commentaar
-Package: grep
-Essential: yes
-Priority: required
-Section: base
-Maintainer: Wichert Akkerman <wakkerma@debian.org>
-Architecture: sparc
-Version: 2.4\-1
-Pre\-Depends: libc6 (>= 2.0.105)
-Provides: rgrep
-Conflicts: rgrep
-Description: GNU grep, egrep en fgrep.
+Pakket: grep
+Essentieel: ja
+Prioriteit: vereist
+Sectie: base
+Onderhouder: Wichert Akkerman <wakkerma@debian.org>
+Architectuur: sparc
+Versie: 2.4\-1
+Voorvereiste: libc6 (>= 2.0.105)
+Voorziet in: rgrep
+Conflicteert met: rgrep
+Beschrijving: GNU grep, egrep en fgrep.
  De GNU familie van grep\-hulpprogramma's is misschien wel de "fastest grep in
  the west". GNU grep is gebaseerd op een snel `lazy\-state deterministic
  matcher' (ongeveer twee keer zo snel als een gewone Unix grep), gekruist met
@@ -359,9 +359,10 @@ Description: GNU grep, egrep en fgrep.
 .\" .RE
 .
 .SH BUGS
-The \fBBuild\-Ids\fP field uses a rather generic name out of its original
-context within an ELF object, which serves a very specific purpose and
-executable format.
+Voor het veld \fBBuild\-Ids\fP wordt een eerder generieke naam gebruikt vanuit
+zijn originele context binnen een ELF\-object, welke een zeer specifieke
+functie en uitvoerbaar formaat heeft.
 .
 .SH "ZIE OOK"
-\fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).
+\fBdeb\-src\-control\fP(5), \fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1),
+\fBdpkg\fP(1), \fBdpkg\-deb\fP(1).

@@ -1,0 +1,111 @@
+.\" dpkg manual page - dpkg-checkbuilddeps(1)
+.\"
+.\" Copyright © 2001 Joey Hess <joeyh@debian.org>
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2011 Raphaël Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-checkbuilddeps 1 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+dpkg\-checkbuilddeps \- Vérifier les dépendances et les conflits de
+construction
+.
+.SH SYNOPSIS
+\fBdpkg\-checkbuilddeps\fP [\fIoption\fP...] [\fIfichier\-control\fP]
+.
+.SH DESCRIPTION
+Ce programme vérifie si les dépendances et les conflits de construction
+listés dans le fichier control existent dans les paquets installés sur le
+système. S'il en existe, il les affiche et se termine avec un code de retour
+différent de \fB0\fP.
+.P
+Par défaut, le fichier \fIdebian/control\fP est lu, mais un autre nom de
+fichier peut être indiqué sur la ligne de commande.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-admindir\fP=\fIrépertoire\fP
+Changer l'endroit où se trouve la base de données de \fBdpkg\fP (depuis
+dpkg\ 1.14.0). Par défaut, c'est \fI%ADMINDIR%\fP.
+.TP 
+\fB\-A\fP
+Ignore les lignes \fBBuild\-Depends\-Arch\fP et \fBBuild\-Conflicts\-Arch\fP (depuis
+dpkg\ 1.16.4). À utiliser lorsque seuls des paquets indépendants d'une
+architecture seront construits ou à combiner avec \fB\-B\fP si seul un paquet
+source est construit.
+.TP 
+\fB\-B\fP
+Ignore les lignes \fBBuild\-Depends\-Indep\fP et \fBBuild\-Conflicts\-Indep\fP. À
+utiliser lorsque seuls des paquets dépendants de l'architecture sont
+construits ou à combiner avec \fB\-A\fP si seul un paquet source est construit.
+.TP 
+\fB\-I\fP
+Ignore les dépendances et les conflits de construction internes (depuis
+dpkg\ 1.18.2). Ce sont les dépendances implicites qui sont habituellement
+demandées sur une distribution particulière, c'est l'ensemble de paquets
+appelé Build\-Essentiel.
+.TP 
+\fB\-d \fP\fIchaine\-des\-dépendances\-pour\-la\-construction\fP
+.TP 
+\fB\-c \fP\fIchaîne\-des\-conflits\-de\-construction\fP
+Utilise les dépendances et conflits de construction donnés au lieu de ceux
+indiqués dans le fichier \fIdebian/control\fP (depuis dpkg\ 1.14.17).
+.TP 
+\fB\-a \fP\fIarch\fP
+Vérifie les dépendances et conflits de construction en supposant que le
+paquet décrit dans le fichier de contrôle doit être construit pour
+l'architecture hôte indiquée au lieu de celle du système (depuis
+dpkg\ 1.16.2).
+.TP 
+\fB\-P \fP\fIprofil\fP[\fB,\fP...]
+Vérifie les dépendances et conflits de construction en supposant que le
+paquet décrit dans le fichier de contrôle doit être construit pour le ou les
+profils donnés (depuis dpkg\ 1.17.2). L'argument est une liste séparée par
+des virgules des noms de profil.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le numéro de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDEB_BUILD_PROFILES\fP
+Si cette option est utilisée, elle sera utilisée comme profil(s) de
+construction actif(s) pour le paquet à construire. C'est une liste séparée
+par des espaces de noms de profil. Cette option est outrepassée par l'option
+\fB\-P\fP.
+.TP 
+\fBDPKG_COLORS\fP
+Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est définie, elle sera utilisée pour décider l'activation
+de la prise en charge des langues (NLS –\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par défaut).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

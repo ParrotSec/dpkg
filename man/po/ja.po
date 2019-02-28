@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-man 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-10-08 11:37+0200\n"
+"POT-Creation-Date: 2019-02-23 18:00+0100\n"
 "PO-Revision-Date: 2016-12-17 16:42+0100\n"
 "Last-Translator: TAKAHASHI Motonobu <monyo@monyo.com>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -704,7 +704,7 @@ msgid ""
 msgstr ""
 
 #. type: TP
-#: deb-buildinfo.man deb-changes.man
+#: deb-buildinfo.man
 #, fuzzy, no-wrap
 #| msgid "B<Package:> I<binary-package-name> (required)"
 msgid "B<Binary:> I<binary-package-list> (required)"
@@ -927,6 +927,99 @@ msgstr ""
 msgid ""
 "On Debian and derivatives only build paths starting with I</build/> will "
 "emit this field."
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, fuzzy, no-wrap
+#| msgid "B<Building>"
+msgid "B<Build-Tainted-By:>"
+msgstr "B<ビルド>"
+
+#. type: TQ
+#: deb-buildinfo.man
+#, no-wrap
+msgid "I<taint-reason-list>"
+msgstr ""
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid ""
+"This folded field contains a space-separated list of non-exhausitve reason "
+"tags (formed by alphanumeric and dash characters) which identify why the "
+"current build has been tainted (since dpkg 1.19.5)."
+msgstr ""
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid "On Debian and derivatives the following reason tags can be emitted:"
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, no-wrap
+msgid "B<merged-usr-via-symlinks>"
+msgstr ""
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid ""
+"The system has a merged I</usr> via symlinks.  This will confuse B<dpkg-"
+"query>, B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> and "
+"any other tool using pathnames as keys into their databases, as it creates "
+"filesystem aliasing problems, and messes with the understanding of the "
+"filesystem that B<dpkg> has recorded in its database.  For build systems "
+"that hardcode pathnames to specific binaries or libraries on the resulting "
+"artifacts, it can also produce packages that will be incompatible with non-/"
+"usr-merged filesystems."
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, fuzzy, no-wrap
+#| msgid "B<-L>I<local-shlibs-file>"
+msgid "B<usr-local-has-configs>"
+msgstr "B<-L>I<local-shlibs-file>"
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid "The system has configuration files under I</usr/local/etc>."
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, fuzzy, no-wrap
+#| msgid "B<--single-debian-patch>"
+msgid "B<usr-local-has-includes>"
+msgstr "B<--single-debian-patch>"
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid "The system has header files under I</usr/local/include>."
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, no-wrap
+msgid "B<usr-local-has-programs>"
+msgstr ""
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid "The system has programs under I</usr/local/bin> or I</usr/local/sbin>."
+msgstr ""
+
+#. type: TP
+#: deb-buildinfo.man
+#, fuzzy, no-wrap
+#| msgid "B<-L>I<local-shlibs-file>"
+msgid "B<usr-local-has-libraries>"
+msgstr "B<-L>I<local-shlibs-file>"
+
+#. type: Plain text
+#: deb-buildinfo.man
+msgid ""
+"The system has libraries, either static or shared under I</usr/local/lib>."
 msgstr ""
 
 #. type: TP
@@ -1258,16 +1351,16 @@ msgstr ""
 #: deb-changelog.man
 msgid ""
 "Any line that consists entirely (i.e., no leading whitespace) of B<#> or B</"
-"* */> style comments, RCS keywords, Vim modelines or Emacs local variables "
-"should be ignored."
+"* */> style comments or RCS keywords."
 msgstr ""
 
 #. type: Plain text
 #: deb-changelog.man
 msgid ""
-"Ancient changelog entries with other formats at the end of the file should "
-"be accepted and preserved on output, but their contents might be otherwise "
-"ignored and parsing stopped at that point."
+"Vim modelines or Emacs local variables, and ancient changelog entries with "
+"other formats at the end of the file should be accepted and preserved on "
+"output, but their contents might be otherwise ignored and parsing stopped at "
+"that point."
 msgstr ""
 
 #. type: Plain text
@@ -1441,10 +1534,18 @@ msgid ""
 "non-maintainer upload."
 msgstr ""
 
+#. type: TP
+#: deb-changes.man
+#, fuzzy, no-wrap
+#| msgid "B<Package:> I<binary-package-name> (required)"
+msgid "B<Binary:> I<binary-package-list> (required in context)"
+msgstr "B<Package:> I<バイナリパッケージ名> (必須)"
+
 #. type: Plain text
 #: deb-changes.man
 msgid ""
-"This folded field is a space-separated list of binary packages to upload."
+"This folded field is a space-separated list of binary packages to upload.  "
+"If the upload is source-only, then the field is omitted (since dpkg 1.19.3)."
 msgstr ""
 
 #. type: TP
@@ -1562,7 +1663,8 @@ msgstr ""
 #: deb-changes.man
 msgid ""
 "This multiline field contains a list of binary package names followed by a "
-"space, a dash (‘B<->’) and their possibly truncated short descriptions."
+"space, a dash (‘B<->’) and their possibly truncated short descriptions.  If "
+"the upload is source-only, then the field is omitted (since dpkg 1.19.3)."
 msgstr ""
 
 #. type: TP
@@ -2584,9 +2686,29 @@ msgstr "例"
 
 #. type: Plain text
 #: deb-control.man
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| "# Comment\n"
+#| "Package: grep\n"
+#| "Essential: yes\n"
+#| "Priority: required\n"
+#| "Section: base\n"
+#| "Maintainer: Wichert Akkerman E<lt>wakkerma@debian.orgE<gt>\n"
+#| "Architecture: sparc\n"
+#| "Version: 2.4-1\n"
+#| "Pre-Depends: libc6 (E<gt>= 2.0.105)\n"
+#| "Provides: rgrep\n"
+#| "Conflicts: rgrep\n"
+#| "Description: GNU grep, egrep and fgrep.\n"
+#| " The GNU family of grep utilities may be the \"fastest grep in the west\".\n"
+#| " GNU grep is based on a fast lazy-state deterministic matcher (about\n"
+#| " twice as fast as stock Unix egrep) hybridized with a Boyer-Moore-Gosper\n"
+#| " search for a fixed string that eliminates impossible text from being\n"
+#| " considered by the full regexp matcher without necessarily having to\n"
+#| " look at every character. The result is typically many times faster\n"
+#| " than Unix grep or egrep. (Regular expressions containing backreferencing\n"
+#| " will run more slowly, however).\n"
 msgid ""
-"# Comment\n"
 "Package: grep\n"
 "Essential: yes\n"
 "Priority: required\n"
@@ -2642,7 +2764,8 @@ msgstr ""
 #| msgid ""
 #| "B<deb>(5), B<deb-version>(5), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1)."
 msgid ""
-"B<deb>(5), B<deb-version>(7), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1)."
+"B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1), "
+"B<dpkg>(1), B<dpkg-deb>(1)."
 msgstr ""
 "B<deb>(5), B<deb-version>(5), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1)."
 
@@ -2785,12 +2908,20 @@ msgstr "B<Source:> I<ソースパッケージ名> (必須)"
 
 #. type: Plain text
 #: deb-src-control.man
+#, fuzzy
+#| msgid ""
+#| "The value of this field is the name of the source package, and should "
+#| "match the name of the source package in the debian/changelog file. A "
+#| "package name must consist only of lower case letters (a-z), digits (0-9), "
+#| "plus (+) and minus (-) signs, and periods (.). Package names must be at "
+#| "least two characters long and must start with an alphanumeric character."
 msgid ""
 "The value of this field is the name of the source package, and should match "
 "the name of the source package in the debian/changelog file. A package name "
-"must consist only of lower case letters (a-z), digits (0-9), plus (+) and "
+"must consist only of lowercase letters (a-z), digits (0-9), plus (+) and "
 "minus (-) signs, and periods (.). Package names must be at least two "
-"characters long and must start with an alphanumeric character."
+"characters long and must start with a lowercase alphanumeric character (a-"
+"z0-9)."
 msgstr ""
 "このフィールドの値がソースパッケージ名となる。これは debian/changelog ファイ"
 "ル内のソースパッケージ名と合致させるべきである。パッケージ名には、小文字(a-"
@@ -4873,12 +5004,20 @@ msgstr ""
 
 #. type: Plain text
 #: deb-substvars.man
+#, fuzzy
+#| msgid ""
+#| "A variable substitution has the form B<${>I<variable-name>B<}>.  Variable "
+#| "names consist of alphanumerics, hyphens and colons and start with an "
+#| "alphanumeric. Variable substitutions are performed repeatedly until none "
+#| "are left; the full text of the field after the substitution is rescanned "
+#| "to look for more substitutions."
 msgid ""
 "A variable substitution has the form B<${>I<variable-name>B<}>.  Variable "
-"names consist of alphanumerics, hyphens and colons and start with an "
-"alphanumeric. Variable substitutions are performed repeatedly until none are "
-"left; the full text of the field after the substitution is rescanned to look "
-"for more substitutions."
+"names consist of alphanumerics (a-zA-Z0-9), hyphens (-) and colons (:) and "
+"start with an alphanumeric, and are case-sensitive, even though they might "
+"refer to other entities which are case-preserving.  Variable substitutions "
+"are performed repeatedly until none are left; the full text of the field "
+"after the substitution is rescanned to look for more substitutions."
 msgstr ""
 "変数が置換される箇所は B<${>I<変数名>B<}> という形式になっている。変数名には"
 "英数字、ハイフン、コロンを使用できるが、先頭文字は英数字である必要がある。変"
@@ -6253,10 +6392,11 @@ msgid ""
 "The value of this field declares the format version of the source package.  "
 "The field value is used by programs acting on a source package to interpret "
 "the list of files in the source package and determine how to unpack it.  The "
-"syntax of the field value is a numeric major revision, a period, a numeric "
-"minor revision, and then an optional subtype after whitespace, which if "
-"specified is an alphanumeric word in parentheses.  The subtype is optional "
-"in the syntax but may be mandatory for particular source format revisions."
+"syntax of the field value is a numeric major revision (“0-9”), a period "
+"(“.”), a numeric minor revision (“0-9”), and then an optional subtype after "
+"whitespace (“\\ \\et”), which if specified is a lowercase alphanumeric (“a-"
+"z0-9”) word in parentheses (“()”).  The subtype is optional in the syntax "
+"but may be mandatory for particular source format revisions."
 msgstr ""
 
 #. type: Plain text
@@ -6379,8 +6519,8 @@ msgid ""
 "This field declares the comma-separated union of all test dependencies "
 "(B<Depends> fields in I<debian/tests/control> file), with all restrictions "
 "removed, and OR dependencies flattened (that is, converted to separate AND "
-"relationships), except for binaries generated by this source package and "
-"meta-dependencies such as B<@> or B<@builddeps@>."
+"relationships), except for binaries generated by this source package and its "
+"meta-dependency equivalent B<@>."
 msgstr ""
 
 #. type: Plain text
@@ -6793,6 +6933,20 @@ msgstr ""
 "パッケージは完全削除 (設定ファイルも含めたすべてのファイルを削除) するように"
 "選択されている。"
 
+#. type: TP
+#: dpkg.man
+#, no-wrap
+msgid "B<unknown>"
+msgstr ""
+
+#. type: Plain text
+#: dpkg.man
+msgid ""
+"The package selection is unknown.  A package that is also in a B<not-"
+"installed> state, and with an B<ok> flag will be forgotten in the next "
+"database store."
+msgstr ""
+
 #. type: SS
 #: dpkg.man
 #, fuzzy, no-wrap
@@ -7013,12 +7167,14 @@ msgstr "B<-r>, B<--remove>, B<-P>, B<--purge >I<package>...|B<-a>|B<--pending>"
 #. type: Plain text
 #: dpkg.man
 msgid ""
-"Remove an installed package. This removes everything except conffiles, which "
-"may avoid having to reconfigure the package if it is reinstalled later "
-"(conffiles are configuration files that are listed in the I<DEBIAN/"
-"conffiles> control file).  If B<-a> or B<--pending> is given instead of a "
-"package name, then all packages unpacked, but marked to be removed in file I<"
-"%ADMINDIR%/status>, are removed."
+"Remove an installed package.  This removes everything except conffiles and "
+"other data cleaned up by the I<postrm> script, which may avoid having to "
+"reconfigure the package if it is reinstalled later (conffiles are "
+"configuration files that are listed in the I<DEBIAN/conffiles> control "
+"file).  If there is no I<DEBIAN/conffiles> control file nor I<DEBIAN/postrm> "
+"script, this command is equivalent to calling B<--purge>.  If B<-a> or B<--"
+"pending> is given instead of a package name, then all packages unpacked, but "
+"marked to be removed in file I<%ADMINDIR%/status>, are removed."
 msgstr ""
 
 #. type: Plain text
@@ -7052,9 +7208,10 @@ msgstr "B<--configure >I<package>...|B<-a>|B<--pending>"
 #: dpkg.man
 msgid ""
 "Purge an installed or already removed package. This removes everything, "
-"including conffiles.  If B<-a> or B<--pending> is given instead of a package "
-"name, then all packages unpacked or removed, but marked to be purged in file "
-"I<%ADMINDIR%/status>, are purged."
+"including conffiles, and anything else cleaned up from I<postrm>.  If B<-a> "
+"or B<--pending> is given instead of a package name, then all packages "
+"unpacked or removed, but marked to be purged in file I<%ADMINDIR%/status>, "
+"are purged."
 msgstr ""
 
 #. type: Plain text
@@ -7372,6 +7529,13 @@ msgid ""
 msgstr ""
 "インストールするために選択されたが、何らかの理由でまだインストールされていな"
 "いパッケージを検索する。"
+
+#. type: Plain text
+#: dpkg.man
+msgid ""
+"Note: This command makes use of both the available file and the package "
+"selections."
+msgstr ""
 
 #. type: TP
 #: dpkg.man
@@ -7711,7 +7875,7 @@ msgid "Display a brief help message."
 msgstr "オプションに関する簡単なヘルプを表示する。"
 
 #. type: TP
-#: dpkg.man
+#: dpkg.man dpkg-statoverride.man
 #, no-wrap
 msgid "B<--force-help>"
 msgstr "B<--force-help>"
@@ -7980,14 +8144,14 @@ msgstr ""
 "      2000   信じられないほど大量のあまり意味のない情報\n"
 
 #. type: TP
-#: dpkg.man
+#: dpkg.man dpkg-statoverride.man
 #, fuzzy, no-wrap
 #| msgid "B<--force>"
 msgid "B<--force->I<things>"
 msgstr "B<--force>"
 
 #. type: TQ
-#: dpkg.man
+#: dpkg.man dpkg-statoverride.man
 #, fuzzy, no-wrap
 #| msgid "B<--force->I<things>, B<--no-force->I<things>, B<--refuse->I<things>"
 msgid "B<--no-force->I<things>, B<--refuse->I<things>"
@@ -8018,7 +8182,7 @@ msgstr ""
 "能性がある。>"
 
 #. type: Plain text
-#: dpkg.man
+#: dpkg.man dpkg-statoverride.man
 msgid "B<all>: Turns on (or off) all force options."
 msgstr "B<all>: 全ての強制オプションを指定する(または指定しない)。"
 
@@ -8239,6 +8403,28 @@ msgid ""
 msgstr ""
 "B<overwrite-diverted>: 退避 (divert) した古いファイルを現在のファイルで上書き"
 "する。"
+
+#. type: Plain text
+#: dpkg.man dpkg-statoverride.man
+msgid ""
+"B<statoverride-add>: Overwrite an existing stat override when adding it "
+"(since dpkg 1.19.5)."
+msgstr ""
+
+#. type: Plain text
+#: dpkg.man dpkg-statoverride.man
+msgid ""
+"B<statoverride-remove>: Ignore a missing stat override when removing it "
+"(since dpkg 1.19.5)."
+msgstr ""
+
+#. type: Plain text
+#: dpkg.man dpkg-statoverride.man
+msgid ""
+"B<security-mac>(*): Use platform-specific Mandatory Access Controls (MAC) "
+"based security when installing files into the filesystem (since dpkg "
+"1.19.5).  On Linux systems the implementation uses SELinux."
+msgstr ""
 
 #. type: Plain text
 #: dpkg.man
@@ -9142,6 +9328,21 @@ msgid ""
 msgstr ""
 
 #. type: TP
+#: dpkg.man dpkg-statoverride.man
+#, fuzzy, no-wrap
+#| msgid "B<DPKG_CONFFILE_OLD>"
+msgid "B<DPKG_FORCE>"
+msgstr "B<DPKG_CONFFILE_OLD>"
+
+#. type: Plain text
+#: dpkg.man
+msgid ""
+"Sets the force flags (since dpkg 1.19.5).  When this variable is present, no "
+"built-in force defaults will be applied.  If the variable is present but "
+"empty, all force flags will be disabled."
+msgstr ""
+
+#. type: TP
 #: dpkg.man
 #, fuzzy, no-wrap
 #| msgid "B<DPKG_CONFFILE_OLD>"
@@ -9214,6 +9415,19 @@ msgid ""
 "Defined by B<dpkg> on the maintainer script environment to indicate the "
 "B<dpkg> administrative directory to use (since dpkg 1.16.0).  This variable "
 "is always set to the current B<--admindir> value."
+msgstr ""
+"メンテナスクリプトの環境に対して、B<dpkg> によりパッケージのビルド対象となっ"
+"たアーキテクチャの情報が設定される。"
+
+#. type: Plain text
+#: dpkg.man
+#, fuzzy
+#| msgid ""
+#| "Defined by B<dpkg> on the maintainer script environment to the "
+#| "architecture the package got built for."
+msgid ""
+"Defined by B<dpkg> on the subprocesses environment to all the currently "
+"enabled force option names separated by commas (since dpkg 1.19.5)."
 msgstr ""
 "メンテナスクリプトの環境に対して、B<dpkg> によりパッケージのビルド対象となっ"
 "たアーキテクチャの情報が設定される。"
@@ -10242,7 +10456,11 @@ msgstr "変数"
 
 #. type: Plain text
 #: dpkg-architecture.man
-msgid "The following variables are set by B<dpkg-architecture>:"
+#, fuzzy
+#| msgid "The following variables are set by B<dpkg-architecture>:"
+msgid ""
+"The following variables are set by B<dpkg-architecture> (see the B<TERMS> "
+"section for a description of the naming scheme):"
 msgstr "B<dpkg-architecture> により設定される変数を以下に示す。"
 
 #. type: IP
@@ -15432,7 +15650,7 @@ msgid "B<--showformat=>I<format>"
 msgstr "B<--showformat=>I<format>"
 
 #. type: Plain text
-#: dpkg-deb.man dpkg-query.man
+#: dpkg-deb.man
 msgid ""
 "This option is used to specify the format of the output B<--show> will "
 "produce. The format is a string that will be output for each package listed."
@@ -18881,8 +19099,8 @@ msgstr "制限事項"
 #| "supposed to be there, etc."
 msgid ""
 "Anything that is not parsed by Dpkg::Changelog is lost during the merge.  "
-"This might include stuff like Vim modelines, Emacs variables, comments which "
-"were not supposed to be there, etc."
+"This might include stuff like comments which were not supposed to be there, "
+"etc."
 msgstr ""
 "Dpkg::Changelog で解析できない内容は、マージの際に消失する。これには vim の"
 "モードライン、存在しているとは見なされないコメントなどが挙げられる。"
@@ -19622,7 +19840,11 @@ msgstr "       @@@ changelog-format: I<otherformat> @@@\n"
 
 #. type: Plain text
 #: dpkg-parsechangelog.man
-msgid "Changelog format names are non-empty strings of alphanumerics."
+#, fuzzy
+#| msgid "Changelog format names are non-empty strings of alphanumerics."
+msgid ""
+"Changelog format names are non-empty strings of lowercase alphanumerics (“a-"
+"z0-9”)."
 msgstr "changelog のフォーマット名は、英数字の文字列である必要がある。"
 
 #. type: Plain text
@@ -19786,13 +20008,16 @@ msgstr "B<-l>, B<--list> [I<package-name-pattern>...]"
 #| "the shell from performing filename expansion. For example this will list "
 #| "all package names starting with ``libc6'':"
 msgid ""
-"List packages matching given pattern. If no I<package-name-pattern> is "
-"given, list all packages in I<%ADMINDIR%/status>, excluding the ones marked "
-"as not-installed (i.e. those which have been previously purged). Normal "
-"shell wildcard characters are allowed in I<package-name-pattern>. Please "
-"note you will probably have to quote I<package-name-pattern> to prevent the "
-"shell from performing filename expansion. For example this will list all "
-"package names starting with ``libc6'':"
+"List all known packages matching one or more patterns, regardless of their "
+"status, which includes any real or virtual package referenced in any "
+"dependency relationship field (such as B<Breaks>, B<Enhances>, etc.).  If no "
+"I<package-name-pattern> is given, list all packages in I<%ADMINDIR%/status>, "
+"excluding the ones marked as not-installed (i.e.  those which have been "
+"previously purged).  Normal shell wildcard characters are allowed in "
+"I<package-name-pattern>.  Please note you will probably have to quote "
+"I<package-name-pattern> to prevent the shell from performing filename "
+"expansion.  For example this will list all package names starting with "
+"``libc6'':"
 msgstr ""
 "指定したパターンにマッチする名前のパッケージを表示する。 I<package-name-"
 "pattern> が指定されなかった場合は、not-installed とマークされているもの (完全"
@@ -20186,6 +20411,21 @@ msgstr "B<-f>, B<--showformat=>I<format>"
 
 #. type: Plain text
 #: dpkg-query.man
+#, fuzzy
+#| msgid ""
+#| "This option is used to specify the format of the output B<--show> will "
+#| "produce. The format is a string that will be output for each package "
+#| "listed."
+msgid ""
+"This option is used to specify the format of the output B<--show> will "
+"produce (short option since dpkg 1.13.1).  The format is a string that will "
+"be output for each package listed."
+msgstr ""
+"このオプションは、B<--show> の出力の書式を指定するものである。書式は、一覧表"
+"示される各パッケージの出力を制御する文字列である。"
+
+#. type: Plain text
+#: dpkg-query.man
 msgid "In the format string, “B<\\e>” introduces escapes:"
 msgstr "フォーマット文字列中の “B<\\e>” はエスケープ文字である:"
 
@@ -20404,6 +20644,35 @@ msgstr ""
 msgid ""
 "It contains the package status error flag, part of the Status field (since "
 "dpkg 1.17.11)."
+msgstr ""
+
+#. type: TP
+#: dpkg-query.man
+#, fuzzy, no-wrap
+#| msgid "B<debian/files>"
+msgid "B<db-fsys:Files>"
+msgstr "B<debian/files>"
+
+#. type: Plain text
+#: dpkg-query.man
+#, fuzzy
+#| msgid "The package architecture (since dpkg 1.16.1)."
+msgid ""
+"It contains the list of the package filesystem entries separated by newlines "
+"(since dpkg 1.19.3)."
+msgstr "パッケージのアーキテクチャ (dpkg 1.16.1 以降)"
+
+#. type: TP
+#: dpkg-query.man
+#, no-wrap
+msgid "B<db-fsys:Last-Modified>"
+msgstr ""
+
+#. type: Plain text
+#: dpkg-query.man
+msgid ""
+"It contains the timestamp in seconds of the last time the package filesystem "
+"entries were modified (since dpkg 1.19.3)."
 msgstr ""
 
 #. type: TP
@@ -20923,8 +21192,8 @@ msgstr ""
 "無視される。あるパッケージが両方のファイルに現れた場合、セクションの設定にお"
 "いては、ソース override ファイルが優先される。"
 
-#. type: IP
-#: dpkg-scansources.man
+#. type: TP
+#: dpkg-scansources.man update-alternatives.man
 #, no-wrap
 msgid "B<--debug>"
 msgstr "B<--debug>"
@@ -22979,11 +23248,11 @@ msgid ""
 "least an original tarball (B<.orig.tar.>I<ext> where I<ext> can be B<gz>, "
 "B<bz2>, B<lzma> and B<xz>) and a debian tarball (B<.debian.tar.>I<ext>). It "
 "can also contain additional original tarballs (B<.orig->I<component>B<.tar."
-">I<ext>).  I<component> can only contain alphanumeric characters and hyphens "
-"(‘-’).  Optionally each original tarball can be accompanied by a detached "
-"upstream signature (B<.orig.tar.>I<ext>B<.asc> and B<.orig->I<component>B<."
-"tar.>I<ext>B<.asc>), extraction supported since dpkg 1.17.20, building "
-"supported since dpkg 1.18.5."
+">I<ext>).  I<component> can only contain alphanumeric (‘a-zA-Z0-9’) "
+"characters and hyphens (‘-’).  Optionally each original tarball can be "
+"accompanied by a detached upstream signature (B<.orig.tar.>I<ext>B<.asc> and "
+"B<.orig->I<component>B<.tar.>I<ext>B<.asc>), extraction supported since dpkg "
+"1.17.20, building supported since dpkg 1.18.5."
 msgstr ""
 "この形式のソースパッケージには、オリジナルの tar アーカイブ (B<.orig.tar."
 ">I<ext>。I<ext> は B<gz>, B<bz2>, B<lzma>, B<xz> のいずれか)  および debian "
@@ -24762,6 +25031,13 @@ msgstr ""
 #. type: Plain text
 #: dpkg-statoverride.man
 #, fuzzy
+#| msgid "Give help about the B<--force->I<thing> options."
+msgid "Give help about the B<--force->I<thing> options (since dpkg 1.19.5)."
+msgstr "B<--force->I<thing> オプションに関するヘルプを表示する。"
+
+#. type: Plain text
+#: dpkg-statoverride.man
+#, fuzzy
 #| msgid ""
 #| "Change the I<directory> of the dpkg database where the statoverride file "
 #| "is also stored. Defaults to I<%ADMINDIR%>."
@@ -24779,6 +25055,41 @@ msgid ""
 "get installed (since dpkg 1.19.2).  Defaults to «I</>»."
 msgstr ""
 
+#. type: Plain text
+#: dpkg-statoverride.man
+#, fuzzy
+#| msgid ""
+#| "Force or refuse (B<no-force> and B<refuse> mean the same thing)  to do "
+#| "some things. I<things> is a comma separated list of things specified "
+#| "below. B<--force-help> displays a message describing them.  Things marked "
+#| "with (*) are forced by default."
+msgid ""
+"Force or refuse (B<no-force> and B<refuse> mean the same thing)  to do some "
+"things (since dpkg 1.19.5).  I<things> is a comma separated list of things "
+"specified below.  B<--force-help> displays a message describing them.  "
+"Things marked with (*) are forced by default."
+msgstr ""
+"指定した I<things> を強制実行 (force) もしくは拒否 (refuse) する (B<no-force>"
+"と B<refuse> は同じ意味) 。I<things> には、以下の項目をコンマで区切って列挙す"
+"る。これらの項目は B<--force-help> オプションで表示される。(*) マークのあるも"
+"のは、デフォルトで強制実行される。"
+
+#. type: Plain text
+#: dpkg-statoverride.man
+#, fuzzy
+#| msgid ""
+#| "I<Warning: These options are mostly intended to be used by experts only. "
+#| "Using them without fully understanding their effects may break your whole "
+#| "system.>"
+msgid ""
+"I<Warning: These options are mostly intended to be used by experts only.  "
+"Using them without fully understanding their effects may break your whole "
+"system.>"
+msgstr ""
+"I<警告: 以下のオプションは、熟練ユーザ以外による使用を基本的に想定していな"
+"い。影響を完全に理解しないままに使用した場合、システム全体が機能不全に陥る可"
+"能性がある。>"
+
 #. type: TP
 #: dpkg-statoverride.man update-alternatives.man
 #, no-wrap
@@ -24787,9 +25098,14 @@ msgstr "B<--force>"
 
 #. type: Plain text
 #: dpkg-statoverride.man
+#, fuzzy
+#| msgid ""
+#| "Force an action, even if a sanity check would otherwise prohibit it.  "
+#| "This is necessary to override an existing override."
 msgid ""
 "Force an action, even if a sanity check would otherwise prohibit it.  This "
-"is necessary to override an existing override."
+"is necessary to override an existing override.  This option is deprecated "
+"(since dpkg 1.19.5), it is replaced by B<--force-all>."
 msgstr ""
 "sanity チェック (正気度チェック) が禁止するような場合でも、強制的に処理を行"
 "う。既存の override を変更する場合には、これを指定する必要がある。"
@@ -24821,6 +25137,19 @@ msgstr "動作に関して多くの出力を行わない。"
 msgid ""
 "For B<--list>, if there are no overrides or none match the supplied glob."
 msgstr ""
+
+#. type: Plain text
+#: dpkg-statoverride.man
+#, fuzzy
+#| msgid ""
+#| "If set and the B<--admindir> option has not been specified, it will be "
+#| "used as the base administrative directory."
+msgid ""
+"If set and none of the B<--force->I<...> options have been specified, it "
+"will be used as the force options to use (since dpkg 1.19.5)."
+msgstr ""
+"B<--admindir> オプションが指定されていない場合に、この変数が設定されている"
+"と、この値が administrative ディレクトリの起点として使用される。"
 
 #. type: TP
 #: dpkg-statoverride.man
@@ -26618,11 +26947,14 @@ msgstr ""
 #. type: Plain text
 #: start-stop-daemon.man
 msgid ""
-"B<Warning:> Using this match option alone with a daemon that writes the "
-"pidfile as an unprivileged user is a security risk, because if the daemon "
-"gets compromised the contents of the pidfile cannot be trusted, and then a "
+"B<Warning:> using this match option with a world-writable pidfile or using "
+"it alone with a daemon that writes the pidfile as an unprivileged (non-"
+"root)  user will be refused with an error (since version 1.19.3) as this is "
+"a security risk, because either any user can write to it, or if the daemon "
+"gets compromised, the contents of the pidfile cannot be trusted, and then a "
 "privileged runner (such as an init script executed as root) would end up "
-"acting on any system process."
+"acting on any system process.  Using I</dev/null> is excempt from these "
+"checks."
 msgstr ""
 
 #. type: TP
@@ -26937,6 +27269,74 @@ msgstr ""
 "きなくなる。このオプションは最終手段であり、自身の fork に意味のないプログラ"
 "ムや、fork を自身で行うためのコード追加が現実的でないプログラム以外での使用を"
 "意図していない。"
+
+#. type: TP
+#: start-stop-daemon.man
+#, fuzzy, no-wrap
+#| msgid "B<--no-await>"
+msgid "B<--notify-await>"
+msgstr "B<--no-await>"
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid ""
+"Wait for the background process to send a readiness notification before "
+"considering the service started (since version 1.19.3).  This implements "
+"parts of the systemd readiness procotol, as specified in the B<sd_notify>(3) "
+"man page.  The following variables are supported:"
+msgstr ""
+
+#. type: TP
+#: start-stop-daemon.man
+#, no-wrap
+msgid "B<READY=1>"
+msgstr ""
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid "The program is ready to give service, so we can exit safely."
+msgstr ""
+
+#. type: TP
+#: start-stop-daemon.man
+#, no-wrap
+msgid "B<EXTEND_TIMEOUT_USEC=>I<number>"
+msgstr ""
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid ""
+"The program requests to extend the timeout by I<number> microseconds.  This "
+"will reset the current timeout to the specified value."
+msgstr ""
+
+#. type: TP
+#: start-stop-daemon.man
+#, fuzzy, no-wrap
+#| msgid "B<-n>I<filename>"
+msgid "B<ERRNO=>I<number>"
+msgstr "B<-n>I<filename>"
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid ""
+"The program is exiting with an error.  Do the same and print the user-"
+"friendly string for the B<errno> value."
+msgstr ""
+
+#. type: TP
+#: start-stop-daemon.man
+#, no-wrap
+msgid "B<--notify-timeout>I<timeout>"
+msgstr ""
+
+#. type: Plain text
+#: start-stop-daemon.man
+msgid ""
+"Set a timeout for the B<--notify-await> option (since version 1.19.3).  When "
+"the timeout is reached, B<start-stop-daemon> will exit with an error code, "
+"and no readiness notification will be awaited.  The default is B<60> seconds."
+msgstr ""
 
 #. type: TP
 #: start-stop-daemon.man
@@ -27923,6 +28323,13 @@ msgstr ""
 "このオプションは B<--config> および B<--all> とともに指定した場合のみ有効であ"
 "る。"
 
+#. type: Plain text
+#: update-alternatives.man
+#, fuzzy
+#| msgid "Don't generate any comments unless errors occur."
+msgid "Do not generate any comments unless errors occur."
+msgstr "エラー以外のコメントを出力しない。"
+
 #. type: TP
 #: update-alternatives.man
 #, no-wrap
@@ -27939,8 +28346,13 @@ msgstr ""
 
 #. type: Plain text
 #: update-alternatives.man
-msgid "Don't generate any comments unless errors occur."
-msgstr "エラー以外のコメントを出力しない。"
+#, fuzzy
+#| msgid "Generate more comments about what B<update-alternatives> is doing."
+msgid ""
+"Generate even more comments, helpful for debugging, about what is being done "
+"(since version 1.19.3)."
+msgstr ""
+"B<update-alternatives> の実行内容に付いて、より詳細なコメントを生成する。"
 
 #. type: Plain text
 #: update-alternatives.man

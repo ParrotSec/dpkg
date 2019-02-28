@@ -36,8 +36,8 @@ responsables de la distribution plutôt que par le responsable du paquet afin
 de garantir une cohérence globale. Ces informations se trouvent dans le
 fichier «\ override\ ».
 .PP
-Les éléments du fichier «\ override\ » sont séparés simplement par une
-espace. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
+Les éléments du fichier «\ override\ » sont séparés simplement par des
+espaces. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
 .PP
 .in +5
 \fIpaquet\fP \fIpriorité\fP \fIsection\fP [\fIresponsable\fP]
@@ -47,9 +47,9 @@ espace. Les commentaires commencent par un caractère \fB«\ #\ »\fP.
 concernant des paquets qui ne sont pas dans l'arborescence des paquets
 binaires sont ignorées.
 .PP
-\fIpriority\fP and \fIsection\fP correspond to the respective control fields
-available in the .deb. The allowed values are specific to each distribution
-archive.
+\fIpriority\fP et \fIsection\fP correspondent respectivement aux champs de
+contrôle présents dans le fichier .deb. Les valeurs autorisées sont
+distinctes pour l'archive de chaque distribution.
 .PP
 L'élément \fIresponsable\fP, quand il existe, peut représenter soit le nom du
 responsable quand il s'agit d'un remplacement sans condition, soit la chaîne

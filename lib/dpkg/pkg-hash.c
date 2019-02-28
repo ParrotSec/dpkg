@@ -34,11 +34,16 @@
 #include <dpkg/string.h>
 #include <dpkg/arch.h>
 
-/* This must always be a prime for optimal performance.
- * With 4093 buckets, we glean a 20% speedup, for 8191 buckets
- * we get 23%. The nominal increase in memory usage is a mere
- * sizeof(void *) * 8191 (i.e. less than 32 KiB on 32bit systems). */
-#define BINS 8191
+/*
+ * This must always be a prime for optimal performance.
+ *
+ * We use a number that is close to the amount of packages currently present
+ * in a Debian suite, so that installed and available packages do not add
+ * tons of collisions.
+ *
+ * The memory usage is «BINS * sizeof(void *)».
+ */
+#define BINS 65521
 
 static struct pkgset *bins[BINS];
 static int npkg, nset;
@@ -60,7 +65,7 @@ static int npkg, nset;
  * @return The package set.
  */
 struct pkgset *
-pkg_db_find_set(const char *inname)
+pkg_hash_find_set(const char *inname)
 {
   struct pkgset **setp, *new_set;
   char *name = m_strdup(inname), *p;
@@ -79,7 +84,7 @@ pkg_db_find_set(const char *inname)
     return *setp;
   }
 
-  new_set = nfmalloc(sizeof(struct pkgset));
+  new_set = nfmalloc(sizeof(*new_set));
   pkgset_blank(new_set);
   new_set->name = nfstrsave(name);
   new_set->next = NULL;
@@ -104,7 +109,7 @@ pkg_db_find_set(const char *inname)
  * @return The singleton package instance.
  */
 struct pkginfo *
-pkg_db_get_singleton(struct pkgset *set)
+pkg_hash_get_singleton(struct pkgset *set)
 {
   struct pkginfo *pkg;
 
@@ -138,13 +143,13 @@ pkg_db_get_singleton(struct pkgset *set)
  * @return The package instance.
  */
 struct pkginfo *
-pkg_db_find_singleton(const char *name)
+pkg_hash_find_singleton(const char *name)
 {
   struct pkgset *set;
   struct pkginfo *pkg;
 
-  set = pkg_db_find_set(name);
-  pkg = pkg_db_get_singleton(set);
+  set = pkg_hash_find_set(name);
+  pkg = pkg_hash_get_singleton(set);
   if (pkg == NULL)
     ohshit(_("ambiguous package name '%s' with more "
              "than one installed instance"), set->name);
@@ -166,7 +171,7 @@ pkg_db_find_singleton(const char *name)
  * @return The package instance.
  */
 struct pkginfo *
-pkg_db_get_pkg(struct pkgset *set, const struct dpkg_arch *arch)
+pkg_hash_get_pkg(struct pkgset *set, const struct dpkg_arch *arch)
 {
   struct pkginfo *pkg, **pkgp;
 
@@ -195,7 +200,7 @@ pkg_db_get_pkg(struct pkgset *set, const struct dpkg_arch *arch)
   }
 
   /* Need to create a new instance for the wanted architecture. */
-  pkg = nfmalloc(sizeof(struct pkginfo));
+  pkg = nfmalloc(sizeof(*pkg));
   pkg_blank(pkg);
   pkg->set = set;
   pkg->arch_next = NULL;
@@ -218,13 +223,13 @@ pkg_db_get_pkg(struct pkgset *set, const struct dpkg_arch *arch)
  * @return The package instance.
  */
 struct pkginfo *
-pkg_db_find_pkg(const char *name, const struct dpkg_arch *arch)
+pkg_hash_find_pkg(const char *name, const struct dpkg_arch *arch)
 {
   struct pkgset *set;
   struct pkginfo *pkg;
 
-  set = pkg_db_find_set(name);
-  pkg = pkg_db_get_pkg(set, arch);
+  set = pkg_hash_find_set(name);
+  pkg = pkg_hash_get_pkg(set, arch);
 
   return pkg;
 }
@@ -235,7 +240,7 @@ pkg_db_find_pkg(const char *name, const struct dpkg_arch *arch)
  * @return The number of package sets.
  */
 int
-pkg_db_count_set(void)
+pkg_hash_count_set(void)
 {
   return nset;
 }
@@ -246,12 +251,12 @@ pkg_db_count_set(void)
  * @return The number of package instances.
  */
 int
-pkg_db_count_pkg(void)
+pkg_hash_count_pkg(void)
 {
   return npkg;
 }
 
-struct pkgiterator {
+struct pkg_hash_iter {
   struct pkginfo *pkg;
   int nbinn;
 };
@@ -263,12 +268,12 @@ struct pkgiterator {
  *
  * @return The iterator.
  */
-struct pkgiterator *
-pkg_db_iter_new(void)
+struct pkg_hash_iter *
+pkg_hash_iter_new(void)
 {
-  struct pkgiterator *iter;
+  struct pkg_hash_iter *iter;
 
-  iter = m_malloc(sizeof(struct pkgiterator));
+  iter = m_malloc(sizeof(*iter));
   iter->pkg = NULL;
   iter->nbinn = 0;
 
@@ -285,7 +290,7 @@ pkg_db_iter_new(void)
  * @return A package set.
  */
 struct pkgset *
-pkg_db_iter_next_set(struct pkgiterator *iter)
+pkg_hash_iter_next_set(struct pkg_hash_iter *iter)
 {
   struct pkgset *set;
 
@@ -320,7 +325,7 @@ pkg_db_iter_next_set(struct pkgiterator *iter)
  * @return A package instance.
  */
 struct pkginfo *
-pkg_db_iter_next_pkg(struct pkgiterator *iter)
+pkg_hash_iter_next_pkg(struct pkg_hash_iter *iter)
 {
   struct pkginfo *pkg;
 
@@ -349,13 +354,13 @@ pkg_db_iter_next_pkg(struct pkgiterator *iter)
  * @name iter The iterator.
  */
 void
-pkg_db_iter_free(struct pkgiterator *iter)
+pkg_hash_iter_free(struct pkg_hash_iter *iter)
 {
   free(iter);
 }
 
 void
-pkg_db_reset(void)
+pkg_hash_reset(void)
 {
   int i;
 
@@ -367,25 +372,36 @@ pkg_db_reset(void)
 }
 
 void
-pkg_db_report(FILE *file)
+pkg_hash_report(FILE *file)
 {
   int i, c;
   struct pkgset *pkg;
   int *freq;
+  int empty = 0, used = 0, collided = 0;
 
   freq = m_malloc(sizeof(int) * nset + 1);
   for (i = 0; i <= nset; i++)
     freq[i] = 0;
   for (i=0; i<BINS; i++) {
     for (c=0, pkg= bins[i]; pkg; c++, pkg= pkg->next);
-    fprintf(file,"bin %5d has %7d\n",i,c);
+    fprintf(file, "pkg-hash: bin %5d has %7d\n", i, c);
+    if (c == 0)
+      empty++;
+    else if (c == 1)
+      used++;
+    else {
+      used++;
+      collided++;
+    }
     freq[c]++;
   }
   for (i = nset; i > 0 && freq[i] == 0; i--);
   while (i >= 0) {
-    fprintf(file, "size %7d occurs %5d times\n", i, freq[i]);
+    fprintf(file, "pkg-hash: size %7d occurs %5d times\n", i, freq[i]);
     i--;
   }
+  fprintf(file, "pkg-hash: bins empty %d\n", empty);
+  fprintf(file, "pkg-hash: bins used %d (collided %d)\n", used, collided);
 
   m_output(file, "<hash report>");
 

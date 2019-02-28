@@ -70,12 +70,13 @@ changelog\-ontleder te beïnvloeden, zoals bijvoorbeeld het assortiment items
 of de indeling van de uitvoer.
 .TP 
 \fB\-\-format\fP\fI uitvoerindeling\fP
-Set the output format. Currently supported values are \fBdpkg\fP and
-\fBrfc822\fP.  \fBdpkg\fP is the classic output format (from before this option
-existed) and the default. It consists of one paragraph in Debian control
-format (see \fBdeb\-control\fP(5)). If more than one entry is requested, then
-most fields are taken from the first entry (usually the most recent entry),
-except otherwise stated:
+Stel de indeling van de uitvoer in. Momenteel ondersteunde waarden zijn
+\fBdpkg\fP en \fBrfc822\fP. \fBdpkg\fP is de klassieke indeling van de uitvoer (van
+voor het bestaan van deze optie) en ook de standaard. Het bestaat uit één
+paragraaf volgens het indelingssysteem van Debian control (zie
+\fBdeb\-control\fP(5)). Indien meer dan één item opgevraagd wordt, dan worden de
+meeste velden genomen uit het eerste item (gewoonlijk het meest recente
+item), tenzij anders vermeld:
 .RS
 .TP 
 \fBSource:\fP\fI pakketnaam\fP
@@ -127,8 +128,9 @@ gebruikt in de uitvoer een aparte paragraaf voor elk changelog\-item, zodat
 alle metadata van elk item behouden blijven.
 .TP 
 \fB\-\-reverse\fP
-Include all changes in reverse order (since dpkg 1.19.1).  Note: for the
-\fBdpkg\fP format the first entry will be the most ancient entry.
+Voeg alle wijzigingen in omgekeerde volgorde in (sinds dpkg
+1.19.1). Opmerking: voor de indeling \fBdpkg\fP zal het eerste item het oudste
+item zijn.
 .TP 
 \fB\-\-all\fP
 Neem alle wijzigingen op. Merk op dat andere opties geen effect hebben als
@@ -170,8 +172,8 @@ naam van de indeling zijn. Bijvoorbeeld:
 
        @@@ changelog\-format: \fIandere\-indeling\fP @@@
 
-Namen voor changelog\-indelingen moeten niet\-lege alfanumerieke tekenreeksen
-zijn.
+Een naam voor een changelog\-indelingen moet een niet\-lege alfanumerieke
+tekenreeks (“a\-z0\-9”) zijn.
 
 Indien een dergelijke regel bestaat, zal \fBdpkg\-parsechangelog\fP naar het
 ontleedprogramma zoeken als een \fBDpkg::Changelog::\fP\fIandere\-indeling\fP perl
@@ -214,9 +216,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_NLS\fP
-If set, it will be used to decide whether to activate Native Language
-Support, also known as internationalization (or i18n) support (since dpkg
-1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
 .
 .SH BESTANDEN
 .TP 

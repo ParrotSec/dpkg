@@ -1,0 +1,146 @@
+.\" dpkg manual page - deb822(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb822 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb822 \- Format des données de contrôle RFC822 Debian
+.
+.SH DESCRIPTION
+Le système de gestion de paquets manipule des données représentées dans un
+format commun, connues comme \fIdonnées de contrôle\fP, stockées dans les
+\fIfichiers de contrôle\fP. Les fichiers de contrôle sont utilisés pour les
+paquets source, les paquets binaires et les fichiers \fB.changes\fP qui
+contrôlent l'installation des fichiers téléversés (les bases de données
+internes de \fBdpkg\fP sont dans un format similaire).
+.
+.SH SYNTAXE
+Un fichier de contrôle consiste en un ou plusieurs paragraphes de champs
+(les paragraphes sont aussi parfois appelés strophes, «\ stanzas\ »). Les
+paragraphes sont séparés par des lignes vides. Les analyseurs peuvent
+accepter des lignes qui ne contiennent que des caractères U+0020 \fBESPACE\fP
+et U+0009 \fBTABULATION\fP comme séparateurs de paragraphes, mais les fichiers
+de contrôle utiliseront des lignes vides. Certains fichiers de contrôle
+acceptent seulement un paragraphe unique, d'autres plusieurs, dans ce cas,
+chaque paragraphe fait référence habituellement à un paquet différent. (Par
+exemple, dans les paquets source, le premier paragraphe fait référence au
+paquet source, et les paragraphes suivants font références aux paquets
+binaires créés à partir du source.) L'ordre des paragraphes dans les
+fichiers de contrôles est important.
+
+Chaque paragraphe consiste en une série de champs de données. Chaque champ
+est constitué d'un nom de champ suivi de deux\-points (U+003A «\ \fB:\fP\ »), puis
+les données ou valeur associées à ce champ. Le nom du champ est composé de
+caractères US\-ASCII à l'exception des caractères de contrôle, de l'espace et
+des deux\-points (c'est\-à dire des caractères entre U+0021 «\ \fB!\fP\ » et U+0039
+«\ \fB9\fP\ », et entre U+003B «\ \fB;\fP\ » et U+007E «\ \fB~\fP\ » compris). Les noms de
+champ ne doivent pas commencer par le caractère de commentaire «\ (U+0023
+\fB#\fP\ », ni par le caractère trait d'union (U+002D «\ \fB\-\fP\ ».
+
+Les champs se terminent à la fin de la ligne ou à la fin de la dernière
+ligne de continuation (voir ci\-dessous). Une espace horizontale (U+0020
+\fBESPACE\fP et U+0009 \fBTABULATION\fP) peut apparaître immédiatement avant ou
+après la valeur et est ignorée dans ce cas\ ; par convention, il y une espace
+unique après les deux\-points. Par exemple, un champ pourrait être\ :
+.RS
+.nf
+Package: dpkg
+.fi
+.RE
+le nom du champ est \fBPackage\fP et la valeur du champ \fBdpkg\fP.
+
+Des valeurs de champ vides ne sont permises que dans les fichiers de
+contrôle des paquets source (\fIdebian/control\fP). Ces champs sont ignorés.
+
+Un paragraphe ne doit pas contenir plus d'une instance d'un nom de champ
+particulier.
+
+Il y a trois types de champ\ :
+
+.RS 0
+.TP 
+\fBsimple\fP
+Ce champ, y compris sa valeur, doit être une ligne unique. La coupure du
+champ est interdite. Il s'agit du type de champ par défaut lorsque la
+définition du champ ne précise pas un type différent.
+.TP 
+\fBcoupé\fP
+La valeur d'un champ coupé («\ folded\ ») est une ligne logique qui peut
+s'étendre sur plusieurs lignes. Les lignes qui suivent la première sont
+appelées ligne de continuation et doivent commencer par un caractère U+0020
+\fBESPACE\fP ou U+0009 \fBTABULTAION\fP. Une espace, y compris les caractères saut
+de ligne, n'est pas importante dans les valeurs de champ des champs coupés.
+
+La méthode de coupure est similaire à RFC5322, permettant des fichiers de
+contrôle, qui contiennent seulement un paragraphe et pas des champs à
+plusieurs lignes, d'être lus par les analyseurs écrits pour RFC5322.
+.TP 
+\fBà lignes multiples\fP
+La valeur d'un champ à lignes multiples peut comprendre de multiples lignes
+de continuation. La première ligne de la valeur, la partie sur la même ligne
+que le nom du champ, a souvent une signification particulière ou peut devoir
+être vide. Les autres lignes sont ajoutées avec la même syntaxe que les
+lignes de continuation des champs coupés. Une espace, y compris les
+caractères saut de ligne, est importante dans les valeurs des champs à
+lignes multiples.
+.RE
+
+Aucune espace ne doit apparaître dans les noms (de paquet, d'architecture,
+de fichier ou n'importe quoi d'autre) ou les numéros de version, ou entre
+les caractères des relations des versions multi\-caractères.
+
+La présence et le but d'un champ, ainsi que la syntaxe de sa valeur peuvent
+différer selon les types de fichiers de contrôle.
+
+Les noms de champ ne sont pas sensibles à la casse, mais il est habituel de
+mettre en capitale l'initiale des noms de champ utilisant une casse mixte
+comme indiqué plus bas. Les valeurs de champ sont sensibles à la casse à
+moins que la description du champ ne dise le contraire.
+
+Les séparateurs de paragraphes (lignes vides) et les lignes constituées
+uniquement de U+0020 \fBESPACE\fP et U+0009 \fBTABULATION\fP, ne sont pas permis
+dans les valeurs de champ ou entre les champs. Les lignes vides dans les
+valeurs de champ sont habituellement protégées par une U+0020 \fBESPACE\fP
+suivie par un point (U+002E «\ \fB.\fP\ »).
+
+Les lignes débutant par un U+0023 «\ \fB#\fP\ », sans être précédée d'une espace
+sont des lignes de commentaires qui ne sont permises que dans les fichiers
+de contrôle de paquet source et dans les fichiers \fBdeb\-origin\fP(5). Ces
+lignes de commentaires sont ignorées, même entre deux lignes de
+continuation. Elles ne peuvent terminer les lignes logiques.
+
+Tous les fichiers de contrôle doivent être encodés en UTF\-8.
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\" .fi
+.\" .RE
+.
+.SH "VOIR AUSSI"
+\fBRFC822\fP, \fBRFC5322\fP.
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

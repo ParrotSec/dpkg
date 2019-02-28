@@ -25,9 +25,11 @@
 #include <dpkg/debug.h>
 #include <dpkg/pkg-list.h>
 
+#include "force.h"
+
 /* These two are defined in <dpkg/fsys.h>. */
-struct fileinlist;
-struct filenamenode;
+struct fsys_namenode_list;
+struct fsys_namenode;
 
 enum pkg_istobe {
 	/** Package is to be left in a normal state. */
@@ -123,16 +125,6 @@ extern const char *const statusstrings[];
 extern int f_pending, f_recursive, f_alsoselect, f_skipsame, f_noact;
 extern int f_autodeconf, f_nodebsig;
 extern int f_triggers;
-extern int fc_downgrade, fc_configureany, fc_hold, fc_removereinstreq, fc_overwrite;
-extern int fc_removeessential, fc_conflicts, fc_depends, fc_dependsversion;
-extern int fc_breaks, fc_badpath, fc_overwritediverted, fc_architecture;
-extern int fc_nonroot, fc_overwritedir, fc_conff_new, fc_conff_miss;
-extern int fc_conff_old, fc_conff_def;
-extern int fc_conff_ask;
-extern int fc_badverify;
-extern int fc_badversion;
-extern int fc_unsafe_io;
-extern int fc_script_chrootless;
 
 extern bool abort_processing;
 extern int errabort;
@@ -217,7 +209,48 @@ enum dep_check breakses_ok(struct pkginfo *pkg, struct varbuf *aemsgs);
 void deferred_remove(struct pkginfo *pkg);
 void deferred_configure(struct pkginfo *pkg);
 
-extern int sincenothing, dependtry;
+/*
+ * During the packages queue processing, the algorithm for deciding what to
+ * configure first is as follows:
+ *
+ * Loop through all packages doing a ‘try 1’ until we've been round and
+ * nothing has been done, then do ‘try 2’, and subsequent ones likewise.
+ * The incrementing of ‘dependtry’ is done by process_queue().
+ *
+ * Try 1:
+ *   Are all dependencies of this package done? If so, do it.
+ *   Are any of the dependencies missing or the wrong version?
+ *     If so, abort (unless --force-depends, in which case defer).
+ *   Will we need to configure a package we weren't given as an
+ *     argument? If so, abort ─ except if --force-configure-any,
+ *     in which case we add the package to the argument list.
+ *   If none of the above, defer the package.
+ *
+ * Try 2:
+ *   Find a cycle and break it (see above).
+ *   Do as for try 1.
+ *
+ * Try 3:
+ *   Start processing triggers if necessary.
+ *   Do as for try 2.
+ *
+ * Try 4 (only if --force-depends-version):
+ *   Same as for try 2, but don't mind version number in dependencies.
+ *
+ * Try 5 (only if --force-depends):
+ *   Do anyway.
+ */
+enum dependtry {
+	DEPEND_TRY_NORMAL = 1,
+	DEPEND_TRY_CYCLES = 2,
+	DEPEND_TRY_TRIGGERS = 3,
+	DEPEND_TRY_FORCE_DEPENDS_VERSION = 4,
+	DEPEND_TRY_FORCE_DEPENDS = 5,
+	DEPEND_TRY_LAST,
+};
+
+extern enum dependtry dependtry;
+extern int sincenothing;
 
 /* from cleanup.c (most of these are declared in archives.h) */
 
@@ -227,8 +260,6 @@ void cu_prermremove(int argc, void **argv);
 
 void print_error_perpackage(const char *emsg, const void *data);
 void print_error_perarchive(const char *emsg, const void *data);
-void forcibleerr(int forceflag, const char *format, ...) DPKG_ATTR_PRINTF(2);
-int forcible_nonroot_error(int rc);
 int reportbroken_retexitstatus(int ret);
 bool skip_due_to_hold(struct pkginfo *pkg);
 
@@ -240,13 +271,15 @@ bool ignore_depends(struct pkginfo *pkg);
 bool force_breaks(struct deppossi *possi);
 bool force_depends(struct deppossi *possi);
 bool force_conflicts(struct deppossi *possi);
-void conffile_mark_obsolete(struct pkginfo *pkg, struct filenamenode *namenode);
+void
+conffile_mark_obsolete(struct pkginfo *pkg, struct fsys_namenode *namenode);
 void pkg_conffiles_mark_old(struct pkginfo *pkg);
 bool find_command(const char *prog);
 void checkpath(void);
 
-struct filenamenode *namenodetouse(struct filenamenode *namenode,
-                                   struct pkginfo *pkg, struct pkgbin *pkgbin);
+struct fsys_namenode *
+namenodetouse(struct fsys_namenode *namenode,
+              struct pkginfo *pkg, struct pkgbin *pkgbin);
 
 int maintscript_installed(struct pkginfo *pkg, const char *scriptname,
                           const char *desc, ...) DPKG_ATTR_SENTINEL;
@@ -266,10 +299,13 @@ int maintscript_postinst(struct pkginfo *pkg, ...) DPKG_ATTR_SENTINEL;
 void post_postinst_tasks(struct pkginfo *pkg, enum pkgstatus new_status);
 
 void clear_istobes(void);
-bool dir_is_used_by_others(struct filenamenode *namenode, struct pkginfo *pkg);
-bool dir_is_used_by_pkg(struct filenamenode *namenode, struct pkginfo *pkg,
-                        struct fileinlist *list);
-bool dir_has_conffiles(struct filenamenode *namenode, struct pkginfo *pkg);
+bool
+dir_is_used_by_others(struct fsys_namenode *namenode, struct pkginfo *pkg);
+bool
+dir_is_used_by_pkg(struct fsys_namenode *namenode, struct pkginfo *pkg,
+                   struct fsys_namenode_list *list);
+bool
+dir_has_conffiles(struct fsys_namenode *namenode, struct pkginfo *pkg);
 
 void log_action(const char *action, struct pkginfo *pkg, struct pkgbin *pkgbin);
 
@@ -282,8 +318,10 @@ void dpkg_selabel_close(void);
 /* from trigproc.c */
 
 enum trigproc_type {
-	/** Opportunistic trigger processing. */
-	TRIGPROC_TRY,
+	/** Opportunistic deferred trigger processing. */
+	TRIGPROC_TRY_DEFERRED,
+	/** Opportunistic queued trigger processing. */
+	TRIGPROC_TRY_QUEUED,
 	/** Required trigger processing. */
 	TRIGPROC_REQUIRED,
 };

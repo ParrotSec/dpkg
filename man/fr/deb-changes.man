@@ -1,0 +1,194 @@
+.\" dpkg manual page - deb-changes(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-changes 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-changes \- Format des fichiers «\ .changes\ » Debian
+.
+.SH SYNOPSIS
+\fInom\-du\-fichier\fP\fB.changes\fP
+.
+.SH DESCRIPTION
+Chaque envoi dans Debian est composé d'un fichier de contrôle .changes qui
+contient un certain nombre de champs. Chaque champ commence par une
+étiquette, telle que \fBSource\fP ou \fBBinary\fP (la casse n'importe pas), suivie
+d'un «\ :\ », et du contenu du champ. Les champs sont séparés seulement par
+des étiquettes de champ. En d'autres termes, le contenu d'un champ peut
+s'étendre sur plusieurs lignes, mais les outils d'installation joindront en
+général les lignes pendant le traitement du contenu du champ (sauf pour les
+champs à lignes multiples \fBDescription\fP, \fBChanges\fP, \fBFiles\fP,
+\fBChecksums\-Sha1\fP et \fBChecksums\-Sha256\fP, voir ci\-dessous).
+.PP
+Les données de contrôle pourraient être incluses dans une signature OpenPGP
+«\ ASCII Armored\ », comme spécifié dans RFC4880.
+.
+.SH "LES CHAMPS"
+.TP 
+\fBFormat:\fP \fIversion\-format\fP (requis)
+La valeur de ce champ déclare la version du format du fichier. La syntaxe de
+la valeur du champ est un numéro de version avec un composant majeur et
+mineur. Les modifications incompatibles avec les versions précédentes du
+format incrémenteront la version majeure, tandis que les modifications
+compatibles (telles que les ajouts de champ) incrémenteront la version
+mineure. La version de format actuelle est \fB1.8\fP.
+.TP 
+\fBDate:\fP \fIdate\-publication\fP (requis)
+La date à laquelle le paquet a été construit ou modifié pour la dernière
+fois. Elle doit avoir le même format que la date dans l'entrée
+de\fBdeb\-changelog\fP(5).
+
+La valeur de ce champ est habituellement extraite du fichier
+\fIdebian/changelog\fP.
+.TP 
+\fBSource:\fP \fInom\-source\fP [\fB(\fP\fIversion\-source\fP\fB)\fP] (requis)
+Le nom du paquet source. Si la version du source diffère de la version
+binaire, alors le \fInom\-source\fP sera suivi par une \fIversion\-source\fP entre
+parenthèses. Cela peut arriver quand il s'agit d'un envoi seulement binaire
+NMU («\ non\-maintainer upload\ »).
+.TP 
+\fBBinary:\fP \fIbinary\-package\-list\fP (required in context)
+This folded field is a space\-separated list of binary packages to upload.
+If the upload is source\-only, then the field is omitted (since dpkg 1.19.3).
+.TP 
+\fBArchitecture:\fP \fIliste\-architectures\fP
+Liste des architectures des fichiers actuellement envoyés. Voici quelques
+architectures habituelles\ : \fBamd64\fP, \fBarmel\fP, \fBi386\fP,\ etc. Remarquez que
+l'option \fBall\fP signifie que le paquet est indépendant de toute
+architecture. Si les sources du paquet sont également envoyées, l'entrée
+spéciale \fBsource\fP est aussi présente. Les architectures joker ne doivent
+jamais être présentes dans la liste.
+.TP 
+\fBVersion:\fP \fIchaîne\-de\-la\-version\fP (requis)
+C'est classiquement le numéro de version du paquet d'origine dans la forme
+choisie par l'auteur du programme. Il peut y avoir aussi un numéro de
+révision Debian (pour les paquets non natifs). Le format exact et
+l'algorithme de tri sont décrits dans \fBdeb\-version\fP(7).
+.TP 
+\fBDistribution:\fP \fIdistribution\fPs (requis)
+Liste une ou plusieurs distributions, séparées par des espaces, dans
+lesquelles cette version peut être installée après envoi dans l'archive.
+.TP 
+\fBUrgency:\fP \fIurgence\fP (recommandé)
+L'urgence de l'envoi. Les valeurs actuelles reconnues sont, par ordre
+croissant d'urgence\ : \fBlow\fP, \fBmedium\fP, \fBhigh\fP, \fBcritical\fP et
+\fBemergency\fP.
+.TP 
+\fBMaintainer:\fP \fInom\-complet\-et\-adresse\-électronique\fP (requis)
+Le format de ce champ sera «\ Jean Dupont <jdupont@example.org>\ »\ ;
+et c'est bien sûr le créateur du paquet, par opposition à l'auteur du
+programme mis en paquet.
+.TP 
+\fBChanged\-By:\fP\fI nom\-complet\-et\-adresse\-électronique\fP
+Le format de ce champ sera «\ Jean Dupont <jdupont@example.org>\ »\ ;
+et c'est bien sûr celui qui a préparé les modifications du paquet pour cette
+version.
+.TP 
+\fBDescription:\fP (recommandé)
+.TQ
+ \fInom\-du\-paquet\-binaire\fP \fB\-\fP \fIrésumé\-du\-paquet\-binaire\fP
+This multiline field contains a list of binary package names followed by a
+space, a dash (‘\fB\-\fP’) and their possibly truncated short descriptions.  If
+the upload is source\-only, then the field is omitted (since dpkg 1.19.3).
+.TP 
+\fBCloses:\fP\fI liste\-numéros\-bogue\fP
+Une liste, séparée par des espaces, de numéros de rapports de bogue qui ont
+été résolus par cet envoi. Le logiciel d'archive de la distribution pourrait
+utiliser ce champ pour fermer automatiquement les bogues dont les numéros
+sont référencés dans le système de suivi de bogues (BTS) de la distribution.
+.TP 
+\fBBinary\-Only: yes\fP
+Ce champ indique que l'envoi est une construction seulement binaire
+indépendante (NMU). Il est issu de la paire clé/valeur \fBbinary\-only=yes\fP de
+l'entrée metadata du changelog.
+.TP 
+\fBBuilt\-For\-Profiles:\fP\fI liste\-de\-profils\fP
+Ce champ définit une liste, séparée par des espaces, de profils de
+construction avec lesquels cet envoi a été construit.
+.TP 
+\fBChanges:\fP (requis)
+.TQ
+\fIentrées\-du\-journal\-des\-modifications\fP
+Ce champ à lignes multiples fournit le texte concaténé de toutes les entrées
+de changelog faisant partie de cet envoi. Pour faire de ce champ à lignes
+multiples valable, les lignes vides sont remplacées par un point «\ \fB.\fP\ » et
+toutes les lignes sont indentées par une seule espace. Le contenu exact
+dépend du format du changelog.
+.TP 
+\fBFiles:\fP (requis)
+.TQ
+\fImd5sum\fP \fItaille\fP \fIsection\fP \fIpriorité\fP \fInom\-de\-fichier\fP
+Ce champ à lignes multiples fournit une liste de fichiers avec la md5sum, la
+taille, la section et la priorité de chacun.
+
+La première ligne de la valeur du champ (la partie sur la même ligne que le
+nom du champ suivi par deux\-points) est toujours vide. Le contenu du champ
+est exprimé sous la forme de lignes de continuation, un ligne par
+fichier. Chaque ligne consiste en des entrées, séparées par des espaces,
+décrivant le fichier\ : la md5sum, la taille du fichier, sa section, sa
+priorité et son nom.
+
+Ce champ liste tous les fichiers qui composent l'envoi. La liste de fichiers
+de ce champ doit correspondre à celle présente dans les autres champs
+relatifs aux \fBChecksums\fP.
+.TP 
+\fBChecksums\-Sha1:\fP (requis)
+.TQ
+\fBChecksums\-Sha256:\fP (requis)
+.TQ
+\fIsomme\-de\-contrôle\fP \fItaille\fP \fInom\-du\-fichier\fP
+Ces champs à lignes multiples fournissent une liste de fichiers avec la
+somme de contrôle et la taille de chacun. Ces champs ont la même syntaxe et
+ne diffèrent que par l'algorithme de somme de contrôle utilisé\ : SHA\-1 pour
+\fBChecksums\-Sha1\fP et SHA\-256 pour \fBChecksums\-Sha256\fP.
+
+La première ligne de la valeur du champ (la partie sur la même ligne que le
+nom du champ suivi par deux\-points) est toujours vide. Le contenu du champ
+est exprimé par des lignes de continuation, une ligne par fichier. Chaque
+ligne consiste en des entrées séparées par des espaces décrivant le
+fichier\ :la somme de contrôle, la taille du fichier et le nom du fichier.
+
+Ces champs listent tous les fichiers qui composent l'envoi. La liste de
+fichiers de ce champ doit correspondre à celle présente dans le champ
+\fBFiles\fP et les autres champs relatifs aux \fBChecksums\fP.
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\"
+.\" .fi
+.\" .RE
+.
+.SH BOGUES
+Le champ \fBFiles\fP n'est pas cohérent avec des autres fichiers
+\fBChecksums\fP. Les champs \fBChanged\-By\fP et \fBMaintainer\fP ont des noms qui
+provoquent la confusion. Le champ \fBDistribution\fP fournit des informations
+sur ce à quoi une suite fait référence habituellement.
+.SH "VOIR AUSSI"
+\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

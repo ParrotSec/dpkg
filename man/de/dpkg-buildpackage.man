@@ -115,11 +115,11 @@ Die erlaubten Werte sind:
 .RS
 .TP 
 \fBsource\fP
-Builds the source package.  Note: when using this value standalone and if
-what you want is simply to (re\-)build the source package from a clean source
-tree, using \fBdpkg\-source\fP directly is always a better option as it does not
-require any build dependencies to be installed which are otherwise needed to
-be able to call the \fBclean\fP target.
+Baut das Quellpaket: Hinweis: Falls Sie diesen Wert alleine verwenden und
+falls Sie einfach das Quellpaket aus einem sauberen Quellbaum (neu) bauen
+möchten, ist die Verwendung von \fBdpkg\-source\fP immer die bessere Option, da
+dafür keine Bauabhängigkeiten installiert sein müssen, die ansonsten
+benötigt werden, um das Ziel \fBclean\fP aufzurufen.
 .TP 
 \fBany\fP
 Baut das architekturspezifische Binärpaket.
@@ -555,7 +555,7 @@ anzugeben.
 \fBdpkg\-genbuildinfo\fP(1), \fBdpkg\-genchanges\fP(1), \fBfakeroot\fP(1),
 \fBlintian\fP(1), \fBgpg2\fP(1), \fBgpg\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

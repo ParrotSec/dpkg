@@ -1,13 +1,13 @@
 # German translation of the scripts in the dpkg package
 # This file is distributed under the same license as the dpkg package.
-# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2018.
+# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg-dev 1.19.1\n"
+"Project-Id-Version: dpkg-dev 1.19.5\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2018-10-08 11:37+0200\n"
-"PO-Revision-Date: 2018-09-19 20:30+0200\n"
+"POT-Creation-Date: 2019-02-23 18:00+0100\n"
+"PO-Revision-Date: 2019-01-23 18:40+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -591,15 +591,24 @@ msgid "unknown %% substitution in hook: %%%s"
 msgstr "unbekannte %% Substitution in Hook: %%%s"
 
 #: scripts/dpkg-buildpackage.pl
-msgid "short OpenPGP key IDs are broken; please use key fingerprints instead"
+#, fuzzy, perl-format
+#| msgid ""
+#| "short OpenPGP key IDs are broken; please use key fingerprints instead"
+msgid ""
+"short OpenPGP key IDs are broken; please use key fingerprints in %s or %s "
+"instead"
 msgstr ""
 "kurze OpenGPG-Schlüsselkennungen sind defekt; bitte verwenden Sie "
 "stattdessen Fingerabdrücke"
 
 #: scripts/dpkg-buildpackage.pl
+#, fuzzy, perl-format
+#| msgid ""
+#| "long OpenPGP key IDs are strongly discouraged; please use key "
+#| "fingerprints instead"
 msgid ""
 "long OpenPGP key IDs are strongly discouraged; please use key fingerprints "
-"instead"
+"in %s or %s instead"
 msgstr ""
 "von langen OpenPGP-Schlüsselkennungen wird klar abgeraten; bitte verwenden "
 "Sie stattdessen Fingerabdrücke"
@@ -885,7 +894,7 @@ msgstr "fehlende Sektion für Quelldateien"
 msgid "missing Priority for source files"
 msgstr "fehlende Priorität für Quelldateien"
 
-#: scripts/dpkg-genchanges.pl scripts/dpkg-source.pl scripts/Dpkg/Vendor.pm
+#: scripts/dpkg-genchanges.pl scripts/Dpkg/Vendor.pm
 #, perl-format
 msgid "%s is empty"
 msgstr "%s ist leer"
@@ -930,14 +939,6 @@ msgstr "binärer Bau ohne binäre Produkte gefunden; kann nicht verteilt werden"
 #, perl-format
 msgid "package %s in control file but not in files list"
 msgstr "Paket %s in Steuerdatei, aber nicht in Dateiliste"
-
-#: scripts/dpkg-genchanges.pl scripts/dpkg-source.pl scripts/Dpkg/BuildFlags.pm
-#: scripts/Dpkg/Compression/FileHandle.pm scripts/Dpkg/Interface/Storable.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
-#: scripts/Dpkg/Source/Package/V2.pm scripts/Dpkg/Source/Quilt.pm
-#, perl-format
-msgid "cannot read %s"
-msgstr "%s kann nicht gelesen werden"
 
 #: scripts/dpkg-genchanges.pl
 #, perl-format
@@ -1546,6 +1547,10 @@ msgid "couldn't close stdout"
 msgstr "Stdout konnte nicht geschlossen werden"
 
 #: scripts/dpkg-scanpackages.pl
+msgid "Packages with multiple instances but no --multiversion specified:"
+msgstr "Pakete mit mehreren Instanzen aber kein --multiversion angegeben:"
+
+#: scripts/dpkg-scanpackages.pl
 msgid "Packages in override file with incorrect old maintainer value:"
 msgstr "Pakete in Override-Datei mit ungültigem alten Betreuer-Wert:"
 
@@ -1928,6 +1933,11 @@ msgstr "eine Aktions-Option wird benötigt"
 
 #: scripts/dpkg-source.pl
 #, perl-format
+msgid "no source format specified in %s, see dpkg-source(1)"
+msgstr "kein Quellformat in %s angegeben, lesen Sie dpkg-source(1)"
+
+#: scripts/dpkg-source.pl
+#, perl-format
 msgid "%s doesn't contain any information about the source package"
 msgstr "%s enthält keine Informationen über das Quellpaket"
 
@@ -1957,11 +1967,6 @@ msgstr "%s listet kein binäres Paket auf"
 #: scripts/dpkg-source.pl
 msgid "building source for a binary-only release"
 msgstr "Quelle für eine rein-binäre Veröffentlichung wird gebaut"
-
-#: scripts/dpkg-source.pl
-#, perl-format
-msgid "no source format specified in %s, see dpkg-source(1)"
-msgstr "kein Quellformat in %s angegeben, lesen Sie dpkg-source(1)"
 
 #: scripts/dpkg-source.pl
 #, perl-format
@@ -2224,6 +2229,14 @@ msgstr ""
 #, perl-format
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr "»%s« ist keine gültige Architektur in der Liste »%s«"
+
+#: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
+#: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
+#: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
+#: scripts/Dpkg/Source/Package/V2.pm scripts/Dpkg/Source/Quilt.pm
+#, perl-format
+msgid "cannot read %s"
+msgstr "%s kann nicht gelesen werden"
 
 #: scripts/Dpkg/BuildFlags.pm
 #, perl-format
@@ -2902,10 +2915,9 @@ msgid "cannot read timestamp from %s"
 msgstr "Zeitstempel für %s kann nicht gelesen werden"
 
 #: scripts/Dpkg/Source/Functions.pm
-#, fuzzy, perl-format
-#| msgid "cannot open upload file %s for reading"
+#, perl-format
 msgid "cannot open file %s for binary detection"
-msgstr "kann hochzuladene Datei %s nicht zum Lesen öffnen"
+msgstr "kann Datei %s nicht zur Binärerkennung öffnen"
 
 #: scripts/Dpkg/Source/BinaryFiles.pm
 #, perl-format
@@ -2946,15 +2958,6 @@ msgstr "kritisches Quellsteuerfeld %s fehlt"
 #, perl-format
 msgid "source package format '%s' is not supported: %s"
 msgstr "Quellpaketformat »%s« wird nicht unterstützt: %s"
-
-#: scripts/Dpkg/Source/Package.pm
-msgid "format variant must be in lowercase"
-msgstr "Formatvariante muss Kleinbuchstaben verwenden"
-
-#: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "invalid Format field '%s'"
-msgstr "ungültiges Formatfeld »%s«"
 
 #: scripts/Dpkg/Source/Package.pm
 msgid "source package uses only weak checksums"
@@ -3492,8 +3495,8 @@ msgstr ""
 "noch nicht übergebene, nicht ignorierte Änderungen im Arbeitsverzeichnis: %s"
 
 #: scripts/Dpkg/Source/Package/V3/Bzr.pm
-msgid "format v3.0 uses only one source file"
-msgstr "Format v3.0 verwendet nur eine Quelldatei"
+msgid "format v3.0 (bzr) uses only one source file"
+msgstr "Format v3.0 (bzr) verwendet nur eine Quelldatei"
 
 #: scripts/Dpkg/Source/Package/V3/Bzr.pm
 #, perl-format
@@ -3664,6 +3667,11 @@ msgstr "Gerät oder Socket ist nicht erlaubt"
 #: scripts/Dpkg/Source/Patch.pm
 msgid "unknown file type"
 msgstr "unbekannter Dateityp"
+
+#: scripts/Dpkg/Source/Patch.pm
+#, perl-format
+msgid "ignoring deletion of file %s"
+msgstr "Löschen der Datei %s wird ignoriert"
 
 #: scripts/Dpkg/Source/Patch.pm
 #, perl-format
@@ -3980,6 +3988,12 @@ msgstr "Versionsnummer enthält ungültiges Zeichen »%s«"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
+
+#~ msgid "format variant must be in lowercase"
+#~ msgstr "Formatvariante muss Kleinbuchstaben verwenden"
+
+#~ msgid "invalid Format field '%s'"
+#~ msgstr "ungültiges Formatfeld »%s«"
 
 #~ msgid "unknown substitution variable ${%s}"
 #~ msgstr "unbekannte Substitutionsvariable ${%s}"

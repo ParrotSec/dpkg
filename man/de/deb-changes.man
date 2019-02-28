@@ -66,9 +66,10 @@ Der Name des Quellpakets. Falls sich die Quellversion von der Binärversion
 unterscheidet folgt dem \fIQuellname\fPn in Klammern eine \fIQuellversion\fP. Dies
 kann passieren, falls dies ein rein\-binärer\-nicht\-Betreuer\-Upload ist.
 .TP 
-\fBBinary:\fP \fIBinärpaketliste\fP (verpflichtend)
+\fBBinary:\fP \fIBinärpaketliste\fP (verpflichtend im Kontext)
 Dieses gefaltete Feld ist eine durch Leerzeichen getrennte Liste von
-hochzuladenen binären Paketen.
+hochzuladenen binären Paketen. Falls es sich um einen reinen Quell\-Upload
+handelt, wird dieses Feld ausgelassen (seit Dpkg 1.19.3).
 .TP 
 \fBArchitecture:\fP \fIArchitekturliste\fP
 Listet die Architekturen der derzeit hochgeladenen Dateien auf. Geläufige
@@ -109,7 +110,8 @@ Paket vorgenommen hat.
  \fIBinärpaketname\fP \fB\-\fP \fIBinärpaketzusammenfassung\fP
 Dieses mehrzeilige Feld enthält eine Liste von Binärpaketnamen, gefolgt von
 einem Leerzeichen, einem Gedankenstrich (‚\fB\-\fP’) und ihren, möglicherweise
-abgeschnittenen, Kurzbeschreibungen.
+abgeschnittenen, Kurzbeschreibungen. Falls es sich um einen reinen
+Quell\-Upload handelt, wird dieses Feld ausgelassen (seit Dpkg 1.19.3).
 .TP 
 \fBCloses:\fP\fI Fehlernummernliste\fP
 Eine durch Leerzeichen getrennte Liste von Fehlerberichtsnummern, die mit
@@ -187,7 +189,7 @@ was normalerweise als Suite bezeichnet wird.
 .SH "SIEHE AUCH"
 \fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

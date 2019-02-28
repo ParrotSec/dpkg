@@ -111,6 +111,11 @@ alle bestanden wensen te verwijderen, op de configuratiebestanden na)
 \fBpurge\fP (wissen)
 Het pakket werd geselecteerd om gewist te worden (d.w.z. dat we alles uit de
 systeemmappen wensen te verwijderen, zelfs de configuratiebestanden).
+.TP 
+\fBunknown\fP
+The package selection is unknown.  A package that is also in a
+\fBnot\-installed\fP state, and with an \fBok\fP flag will be forgotten in the next
+database store.
 .SS Pakketvlaggen
 .TP 
 \fBok\fP
@@ -191,14 +196,17 @@ of \fBtriggers\-pending\fP (aanhangige triggers). Dit kan later gerepareerd
 worden door het uitvoeren van \fBdpkg \-\-configure \-\-pending\fP.
 .TP 
 \fB\-r\fP, \fB\-\-remove\fP \fIpakket\fP...|\fB\-a\fP|\fB\-\-pending\fP
-Verwijder een geïnstalleerd pakket. Dit verwijdert alles behalve de
-conffiles (configuratiebestanden), waardoor vermeden kan worden dat het
-pakket opnieuw geconfigureerd moet worden als het opnieuw geïnstalleerd
-wordt (conffiles zijn configuratiebestanden die vermeld worden in het
-controlebestand \fIDEBIAN/conffiles\fP). Indien \fB\-a\fP of \fB\-\-pending\fP opgegeven
-werd in plaats van een pakketnaam, zullen alle pakketten die uitgepakt zijn
-maar in het bestand \fI%ADMINDIR%/status\fP gemarkeerd staan om verwijderd te
-worden, verwijderd worden.
+Een geïnstalleerd pakket verwijderen. Dit verwijdert alles behalve de
+conffiles (configuratiebestanden) en andere gegevens die opgeruimd worden
+door het script \fIpostrm\fP, waardoor vermeden kan worden dat het pakket
+opnieuw geconfigureerd moet worden als het opnieuw geïnstalleerd wordt
+(conffiles zijn configuratiebestanden die vermeld worden in het
+controlebestand \fIDEBIAN/conffiles\fP). Indien er geen controlebestand
+\fIDEBIAN/conffiles\fP en geen script \fIDEBIAN/postrm\fP bestaat, is dit commando
+equivalent met het aanroepen van \fB\-\-purge\fP. Indien \fB\-a\fP of \fB\-\-pending\fP
+opgegeven werd in plaats van een pakketnaam, zullen alle pakketten die
+uitgepakt zijn maar in het bestand \fI%ADMINDIR%/status\fP gemarkeerd staan om
+verwijderd te worden, verwijderd worden.
 
 Het verwijderen van een pakket bestaat uit de volgende stappen:
 .br
@@ -214,11 +222,12 @@ Het verwijderen van een pakket bestaat uit de volgende stappen:
 
 .TP 
 \fB\-P\fP, \fB\-\-purge\fP \fIpakket\fP...|\fB\-a\fP|\fB\-\-pending\fP
-Wis een geïnstalleerd of een reeds verwijderd pakket. Dit verwijdert alles,
-inclusief conffiles (configuratiebestanden). Indien \fB\-a\fP of \fB\-\-pending\fP
-opgegeven werd in plaats van een pakketnaam, dan zullen alle uitgepakte of
-verwijderde pakketten die echter in het bestand \fI%ADMINDIR%/status\fP
-gemarkeerd zijn om gewist te worden, gewist worden.
+Een geïnstalleerd of een reeds verwijderd pakket wissen. Dit verwijdert
+alles, inclusief conffiles (configuratiebestanden) en alles wat anders
+opgeruimd wordt vanuit \fIpostrm\fP. Indien \fB\-a\fP of \fB\-\-pending\fP opgegeven
+werd in plaats van een pakketnaam, dan zullen alle uitgepakte of verwijderde
+pakketten die echter in het bestand \fI%ADMINDIR%/status\fP gemarkeerd zijn om
+gewist te worden, gewist worden.
 
 Merk op: sommige configuratiebestanden kunnen niet gekend zijn door \fBdpkg\fP
 omdat ze via de configuratiescripts gecreëerd en afzonderlijk afgehandeld
@@ -334,6 +343,9 @@ de\-installeren die niet in de lijst staan die doorgegeven wordt aan
 \fB\-\-yet\-to\-unpack\fP
 Zoekt pakketten op die geselecteerd werden om geïnstalleerd te worden, maar
 die om één of andere reden nog niet geïnstalleerd werden.
+.IP
+Merk op: dit commando maakt zowel gebruik van het bestand available als van
+de pakketselectie.
 .TP 
 \fB\-\-predep\-package\fP
 Toon één enkel pakket dat het doel is van een of meer relevante voorafgaande
@@ -341,6 +353,9 @@ vereisten en dat zelf geen niet\-voldane voorafgaande vereisten heeft.
 .IP
 Indien er een dergelijk pakket is, geef het dan weer in de vorm van een item
 voor het bestand Packages dat passend verder bewerkt kan worden.
+.IP
+Merk op: dit commando maakt zowel gebruik van het bestand available als van
+de pakketselectie.
 .IP
 Geeft 0 terug als een pakket weergegeven werd, 1 als geen geschikt pakket te
 vinden is en 2 in geval van een fout.
@@ -586,18 +601,19 @@ beschouwd. Essentiële pakketten bevatten meestal hele basale Unix
 commando's. Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt
 met werken. Gebruik dit dus met voorzichtigheid.
 
-\fBdepends\fP: Turn all dependency problems into warnings.  This affects the
-\fBPre\-Depends\fP and \fBDepends\fP fields.
+\fBdepends\fP: Zet alle vereistenproblemen in waarschuwingen. Dit heeft invloed
+op de velden \fBPre\-Depends\fP en \fBDepends\fP.
 
-\fBdepends\-version\fP: Don't care about versions when checking dependencies.
-This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
+\fBdepends\-version\fP: Bekommer u niet om versies bij het toetsen van
+vereisten. Dit heeft invloed op de velden \fBPre\-Depends\fP en \fBDepends\fP.
 
-\fBbreaks\fP: Install, even if this would break another package (since dpkg
-1.14.6).  This affects the \fBBreaks\fP field.
+\fBbreaks\fP: Installeer, zelfs als dit een ander pakket defect zou maken
+(sinds dpkg 1.14.6). Dit heeft invloed op het veld \fBBreaks\fP.
 
-\fBconflicts\fP: Install, even if it conflicts with another package. This is
-dangerous, for it will usually cause overwriting of some files.  This
-affects the \fBConflicts\fP field.
+\fBconflicts\fP: Installeer, zelfs als er een tegenstelling is met een ander
+pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van
+bepaalde bestanden tot gevolg hebben. Dit heeft invloed op het veld
+\fBConflicts\fP.
 
 \fBconfmiss\fP: Installeer zonder vragen steeds de ontbrekende conffile
 (configuratiebestand). Dit is gevaarlijk, aangezien het betekent dat een
@@ -636,6 +652,16 @@ ander pakket.
 
 \fBoverwrite\-diverted\fP: Overschrijf een omgeleid bestand met een
 niet\-omgeleide versie.
+
+\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
+(since dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
+(since dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
+based security when installing files into the filesystem (since dpkg
+1.19.5).  On Linux systems the implementation uses SELinux.
 
 \fBunsafe\-io\fP: Voer bij het uitpakken geen veilige I/O\-operaties uit (sinds
 dpkg 1.15.8.6). Momenteel houdt dit in dat geen
@@ -681,9 +707,11 @@ mislukt.
 
 .TP 
 \fB\-\-ignore\-depends\fP=\fIpakket\fP,...
-Ignore dependency\-checking for specified packages (actually, checking is
-performed, but only warnings about conflicts are given, nothing else).  This
-affects the \fBPre\-Depends\fP, \fBDepends\fP and \fBBreaks\fP fields.
+Negeer het toetsen van afhankelijkheden voor de opgegeven pakketten
+(eigenlijk wordt de controle wel uitgevoerd, maar er worden enkel
+waarschuwingen in verband met tegenstrijdigheden gegeven en verder
+niets). Dit heeft invloed op de velden \fBPre\-Depends\fP, \fBDepends\fP en
+\fBBreaks\fP.
 .TP 
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
 Voer alles wat gedaan moet worden, uit, maar schrijf geen veranderingen
@@ -706,20 +734,20 @@ Installeer een pakket niet als reeds een nieuwere versie van dat pakket
 geïnstalleerd is. Dit is een alias voor \fB\-\-refuse\-downgrade\fP.
 .TP 
 \fB\-\-admindir=\fP\fImap\fP
-Set the administrative directory to \fIdirectory\fP.  This directory contains
-many files that give information about status of installed or uninstalled
-packages, etc.  Defaults to «\fI%ADMINDIR%\fP».
+Stel de administratieve map in op \fIdirectory\fP. In deze map zitten veel
+bestanden met informatie over de status van geïnstalleerde of
+gede\-installeerde pakketten, enz. Standaard is dat «\fI%ADMINDIR%\fP»
 .TP 
 \fB\-\-instdir=\fP\fImap\fP
-Set the installation directory, which refers to the directory where packages
-are to be installed. \fBinstdir\fP is also the directory passed to \fBchroot\fP(2)
-before running package's installation scripts, which means that the scripts
-see \fBinstdir\fP as a root directory.  Defaults to «\fI/\fP».
+Stel de installatiemap in, welke de map aangeeft waarin pakketten
+geïnstalleerd zullen worden. \fBinstdir\fP is ook de map die aan \fBchroot\fP(2)
+doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd
+worden, waardoor de scripts \fBinstdir\fP als de hoofdmap beschouwen. Standaard
+is dat «\fI/\fP»
 .TP 
 \fB\-\-root=\fP\fImap\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdir\fP» and the administrative directory to
-«\fIdir\fP\fB%ADMINDIR%\fP».
+Stel de hoofdmap in op \fBdirectory\fP, hetgeen de installatiemap instelt op
+«\fImap\fP» en de administratieve map op «\fImap\fP\fB%ADMINDIR%\fP».
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Verwerk enkel de pakketten die geselecteerd werden om geïnstalleerd te
@@ -872,7 +900,8 @@ Voor conffile\-wijzigingen (wijzigingen aan een configuratiebestand) waarbij
 .RE
 .TP 
 \fB\-\-no\-pager\fP
-Disables the use of any pager when showing information (since dpkg 1.19.2).
+Schakelt het gebruik van een pagineringsprogramma uit bij het weergeven van
+informatie (sinds dpkg 1.19.2).
 .TP 
 \fB\-\-no\-debsig\fP
 Tracht pakket\-ondertekeningen niet te verifiëren.
@@ -923,32 +952,40 @@ Indien de variabele ingesteld is, zal \fBdpkg\fP hem gebruiken als de map
 waarin tijdelijke bestanden en mappen kunnen aangemaakt worden.
 .TP 
 \fBSHELL\fP
-The program \fBdpkg\fP will execute when starting a new interactive shell, or
-when spawning a command via a shell.
+Het programma dat \fBdpkg\fP zal uitvoeren bij het starten van een nieuwe
+interactieve shell of bij het voortbrengen van een commando via een shell.
 .TP 
 \fBPAGER\fP
 .TQ
 \fBDPKG_PAGER\fP
-The program \fBdpkg\fP will execute when running a pager, for example when
-displaying the conffile differences.  If \fBSHELL\fP is not set, «\fBsh\fP» will
-be used instead.  The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment
-variable (since dpkg 1.19.2).
+Het programma dat \fBdpkg\fP zal uitvoeren als het een pagineringsprogramma
+gebruikt, bijvoorbeeld voor het tonen van de verschillen tussen de
+configuratiebestanden. Indien \fBSHELL\fP niet ingesteld is, dan zal «\fBsh\fP»
+gebruikt worden. \fBDPKG_PAGER\fP overschrijft de omgevingsvariabele \fBPAGER\fP
+(sinds dpkg 1.19.2).
 .TP 
 \fBDPKG_COLORS\fP
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
+\fBDPKG_FORCE\fP
+Sets the force flags (since dpkg 1.19.5).  When this variable is present, no
+built\-in force defaults will be applied.  If the variable is present but
+empty, all force flags will be disabled.
+.TP 
 \fBDPKG_FRONTEND_LOCKED\fP
-Set by a package manager frontend to notify dpkg that it should not acquire
-the frontend lock (since dpkg 1.19.1).
+Ingesteld door een frontend voor pakketbeheer om dpkg te informeren dat het
+de frontendgrendel niet mag bemachtigen (since dpkg 1.19.1).
 .SS "Interne omgeving"
 .TP 
 \fBLESS\fP
-Defined by \fBdpkg\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning a
-pager (since dpkg 1.19.2).  To change the default behavior, this variable
-can be preset to some other value including an empty string, or the \fBPAGER\fP
-or \fBDPKG_PAGER\fP variables can be set to disable specific options with
-«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
+Ingeval dit niet reeds ingesteld is, wordt dit door \fBdpkg\fP als “\fB\-FRSXMQ\fP”
+gedefinieerd bij het voortbrengen van een pagineringsprogramma (sinds dpkg
+1.19.2). Om dit standaardgedrag aan te passen kan deze variabele vooraf
+ingesteld worden op een andere waarde, met inbegrip van een lege tekenreeks,
+of kunnen de variabelen \fBPAGER\fP of \fBDPKG_PAGER\fP ingesteld worden om
+specifieke opties uit te schakelen met «\fB\-+\fP», bijvoorbeeld
+\fBDPKG_PAGER="less \-+F"\fP.
 .TP 
 \fBDPKG_ROOT\fP
 Gedefinieerd door \fBdpkg\fP in de omgeving van het pakketonderhouderscript om
@@ -967,6 +1004,10 @@ Gedefinieerd door \fBdpkg\fP binnen de omgeving van het script van de
 pakketonderhouder om aan te geven welke map gebruikt moet worden om \fBdpkg\fP
 te beheren (sinds dpkg 1.16.0). Deze variabele wordt steeds ingesteld op de
 huidige waarde van \fB\-\-admindir\fP.
+.TP 
+\fBDPKG_FORCE\fP
+Defined by \fBdpkg\fP on the subprocesses environment to all the currently
+enabled force option names separated by commas (since dpkg 1.19.5).
 .TP 
 \fBDPKG_SHELL_REASON\fP
 Gedefinieerd door \fBdpkg\fP in de shell die door de conffile\-prompt (een vraag

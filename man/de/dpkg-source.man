@@ -436,11 +436,11 @@ mindestens einen Original\-Tarball (\fB.orig.tar.\fP\fIErw\fP, wobei \fIErw\fP \
 \fBbz2\fP, \fBlzma\fP und \fBxz\fP sein kann) und einen Debian\-Tarball
 (\fB.debian.tar.\fP\fIErw\fP). Es kann auch zusätzliche Original\-Tarbälle
 (\fB.orig\-\fP\fIKomponente\fP\fB.tar.\fP\fIErw\fP) enthalten. \fIKomponente\fP kann nur
-alphanumerische Zeichen und Bindestriche (‚\-’) enthalten. Optional kann
-jeder Original\-Tarball von einer separaten Signatur der Originalautoren
-(\fB.orig.tar.\fP\fIErw\fP\fB.asc\fP und \fB.orig\-\fP\fIKomponente\fP\fB.tar.\fP\fIErw\fP\fB.asc\fP)
-begleitet werden. Das Entpacken wird seit Dpkg 1.17.20, das Bauen seit Dpkg
-1.18.5 unterstützt.
+alphanumerische Zeichen (‚a\-zA\-Z0\-9’) und Bindestriche (‚\-’)
+enthalten. Optional kann jeder Original\-Tarball von einer separaten Signatur
+der Originalautoren (\fB.orig.tar.\fP\fIErw\fP\fB.asc\fP und
+\&\fB.orig\-\fP\fIKomponente\fP\fB.tar.\fP\fIErw\fP\fB.asc\fP) begleitet werden. Das Entpacken
+wird seit Dpkg 1.17.20, das Bauen seit Dpkg 1.18.5 unterstützt.
 
 .PP
 \fBExtrahieren\fP
@@ -455,23 +455,27 @@ ein \fBdebian\fP\-Unterverzeichnis enthalten muss, er aber auch Binärdateien
 außerhalb dieses Verzeichnisses enthalten darf (sehen Sie hierzu die Option
 \fB\-\-include\-binaries\fP).
 .PP
-All patches listed in \fBdebian/patches/\fP\fIvendor\fP\fB.series\fP or
-\fBdebian/patches/series\fP are then applied, where \fIvendor\fP will be the
-lowercase name of the current vendor, or \fBdebian\fP if there is no vendor
-defined.  If the former file is used and the latter one doesn't exist (or is
-a symlink), then the latter is replaced with a symlink to the former.  This
-is meant to simplify usage of \fBquilt\fP to manage the set of patches.
-Vendor\-specific series files are intended to make it possible to serialize
-multiple development branches based on the vendor, in a declarative way, in
-preference to open\-coding this handling in \fBdebian/rules\fP.  This is
-particularly useful when the source would need to be patched conditionally
-because the affected files do not have built\-in conditional occlusion
-support.  Note however that while \fBdpkg\-source\fP parses correctly series
-files with explicit options used for patch application (stored on each line
-after the patch filename and one or more spaces), it does ignore those
-options and always expect patches that can be applied with the \fB\-p1\fP option
-of \fBpatch\fP. It will thus emit a warning when it encounters such options,
-and the build is likely to fail.
+Dann werden alle in \fBdebian/patches/\fP\fILieferant\fP\fB.series\fP oder
+\fBdebian/patches/series\fP aufgeführten Patches angewandt, wobei \fILieferant\fP
+der Name des aktuellen Lieferanten in Kleinbuchstaben ist oder \fBdebian\fP,
+falls kein Lieferant definiert ist. Falls die erstere Datei verwandt wird
+und die letztere nicht existiert (oder ein Symlink ist), dann wird die
+letztere mit einem Symlink zu ersterer ersetzt. Dies ist zur Vereinfachung
+der Verwendung von \fBquilt\fP gedacht, um die Gruppe von Patches zu
+verwalten. Lieferantenspezifische Seriendateien sind dazu gedacht, es zu
+ermöglichen, mehrere Entwicklungszweige basierend auf dem Lieferanten auf
+eine deklarative Art zu serialisieren, und diese gegenüber der offenen
+Codierung dieser Handhabung in \fBdebian/rules\fP zu bevorzugen. Dies ist
+insbesondere nützlich, wenn die Quellen mit Bedingungen gepacht werden
+müssten, da die betroffenen Dateien keine eingebaute abhängige
+Okklusionsunterstützung haben. Beachten Sie allerdings, dass \fBdpkg\-source\fP
+zwar Seriendateien auswertet, in denen explizite Optionen für die Anwendung
+der Patches verwandt werden (diese werden auf jede Zeile nach dem
+Patch\-Dateinamen und einem oder mehreren Leerzeichen gespeichert), diese
+Optionen dann aber ignoriert und immer erwartet, dass die Patches mit der
+Option \fB\-p1\fP von \fBpatch\fP angewandt werden können. Es wird daher eine
+Warnung ausgeben, wenn es auf solche Optionen trifft, und der Bau wird
+wahrscheinlich fehlschlagen.
 .PP
 Der Zeitstempel aller gepatchten Dateien wird auf die Entpackzeit des
 Quellpakets zurückgesetzt. Damit werden Zeitstempelversätze vermieden, die
@@ -828,19 +832,21 @@ Formloser Text, der an den Anfang des in den Formaten „2.0“ und „3.0
 (quilt)“ generierten automatischen Patches gestellt
 wird. \fBlocal\-patch\-header\fP wird dem erstellen Quellpaket nicht hinzugefügt,
 \fBpatch\-header\fP dagegen schon.
-.SS debian/patches/\fIvendor\fP.series
+.SS debian/patches/\fILieferant\fP.series
 .SS debian/patches/series
-This file lists all patches that have to be applied (in the given order)  on
-top of the upstream source package. Leading and trailing spaces are
-stripped.  The \fIvendor\fP will be the lowercase name of the current vendor,
-or \fBdebian\fP if there is no vendor defined.  If the vendor\-specific series
-file does not exist, the vendor\-less series file will be used.  Lines
-starting with ‘\fB#\fP’ are comments and are skipped.  Empty lines are
-ignored.  Remaining lines start with a patch filename (relative to the
-\fBdebian/patches/\fP directory) up to the first space character or the end of
-line. Optional \fBquilt\fP options can follow up to the end of line or the
-first ‘\fB#\fP’ preceded by one or more spaces (which marks the start of a
-comment up to the end of line).
+Diese Datei führt alle Patches auf, die (in der angegebenen Reihenfolge) auf
+das Quellpaket der Originalautoren angewandt werden müssen. Leerzeichen am
+Anfang und Ende werden entfernt. \fILieferant\fP ist der Name des aktuellen
+Lieferanten in Kleinschreibung oder \fBdebian\fP, falls kein Lieferant
+definiert ist. Falls die lieferantenspezifische Seriendatei nicht existiert,
+wird eine lieferantenfreie Seriendatei verwandt. Zeilen, die mit ‚\fB#\fP’
+anfangen, sind Kommentare und werden übersprungen. Leere Zeilen werden
+ignoriert. Die verbleibenen Zeilen beginnen mit dem Dateinamen eines Patches
+(relativ zum Verzeichnis \fBdebian/patches/\fP) bis zum ersten Leerzeichen oder
+bis zum Zeilenende. Bis zum Ende der Zeile oder bis zum ersten ‚\fB#\fP’
+gefolgt von einem oder mehreren Leerzeichen (dies markiert den Beginn eines
+Kommentars, der bis zum Zeilenende geht) können optionale \fBquilt\fP\-Befehle
+folgen.
 .SH FEHLER
 Die Stelle, an der das Überschreiben von Feldern passiert, verglichen mit
 bestimmten Standard\-Ausgabe\-Feldeinstellungen, ist eher konfus.
@@ -848,7 +854,7 @@ bestimmten Standard\-Ausgabe\-Feldeinstellungen, ist eher konfus.
 .ad l
 \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5), \fBdsc\fP(5).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

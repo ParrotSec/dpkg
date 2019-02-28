@@ -23,7 +23,7 @@
 .TH deb\-split 5 %RELEASE_DATE% %VERSION% "suite dpkg"
 .nh
 .SH NOM
-deb\-split \- formatage de paquets binaires Debian en plusieurs parties
+deb\-split \- Formatage de paquets binaires Debian en plusieurs parties
 .SH SYNOPSIS
 \fInom\-du\-fichier\fP\fB.deb\fP
 .SH DESCRIPTION
@@ -33,9 +33,9 @@ supports de faible capacité.
 .SH FORMAT
 Le fichier est une archive \fBar\fP avec un numéro magique de
 \fB!<arch>.\fP. Les noms de fichiers peuvent comporter un caractère
-«\ /\ » final (depuis dpkg 1.15.6).
+«\ /\ » final (depuis dpkg\ 1.15.6).
 .PP
-Le premier membre est appelé \fBdebians\-split\fP et contient un ensemble de
+Le premier membre est appelé \fBdebian\-split\fP et contient un ensemble de
 lignes, séparées par des retours à la ligne. Actuellement, huit lignes sont
 présentes\ :
 .IP • 4
@@ -55,7 +55,7 @@ Taille maximale d'un membre
 Numéro du membre courant, suivi d'une barre oblique (/) et du nombre total
 de membres (par exemple ‘1/10’).
 .IP •
-Architecture du paquet (depuis dpkg 1.16.1)
+Architecture du paquet (depuis dpkg\ 1.16.1)
 .PP
 Les programmes qui lisent des archives en parties multiples doivent pouvoir
 gérer l'augmentation du numéro de version mineure et autoriser la présence

@@ -45,6 +45,7 @@ EXTRA_DIST = \
 	doc/lcov-inject.pl \
 	doc/rootless-builds.txt \
 	doc/triggers.txt \
+	debian/bug-script \
 	debian/changelog \
 	debian/compat \
 	debian/control \
@@ -52,7 +53,6 @@ EXTRA_DIST = \
 	debian/dpkg-dev.docs \
 	debian/dpkg-dev.install \
 	debian/dpkg-dev.manpages \
-	debian/dpkg-dev.lintian-overrides \
 	debian/dpkg.alternatives.logrotate \
 	debian/dpkg.cfg \
 	debian/dpkg.cron.daily \
@@ -67,19 +67,18 @@ EXTRA_DIST = \
 	debian/dselect.docs \
 	debian/dselect.install \
 	debian/dselect.manpages \
-	debian/dselect.lintian-overrides \
 	debian/libdpkg-dev.docs \
 	debian/libdpkg-dev.install \
-	debian/libdpkg-dev.lintian-overrides \
 	debian/libdpkg-perl.docs \
 	debian/libdpkg-perl.install \
-	debian/libdpkg-perl.lintian-overrides \
-	debian/source/lintian-overrides \
 	debian/source/format \
 	debian/usertags \
 	debian/rules \
 	debian/shlibs.default \
 	debian/shlibs.override \
+	debian/tests/control \
+	debian/tests/test-not-root \
+	debian/tests/test-root \
 	po/its/polkit.its \
 	po/its/polkit.loc \
 	$(test_scripts) \
@@ -161,6 +160,7 @@ test_scripts = \
 	t/strict.t \
 	t/critic.t \
 	t/codespell.t \
+	t/shellcheck.t \
 	t/cppcheck.t \
 	$(nil)
 

@@ -5,7 +5,7 @@
 .\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
 .\" Copyright © 2002-2003 Adam Heath <doogie@debian.org>
 .\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
-.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2016, 2018 Guillem Jover <guillem@debian.org>
 .\"
 .\" This is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -98,12 +98,14 @@ Hinweis: Wird diese Abgleichoption alleine verwandt, könnte auf nicht
 geplante Prozesse eingewirkt werden, falls der alte Prozess beendet wurde,
 ohne dass er \fIpid\-Datei\fP entfernen konnte.
 .IP
-\fBWarnung\fP: Es ist ein Sicherheitsrisiko, diese Abgleichoption alleine mit
-einem Daemon, der die PID\-Datei als ein nicht privilegierte Benutzer
-schreibt, zu verwenden, da bei einer Kompromittierung des Daemons, dem
-Inhalt der PID\-Datei nicht vertraut werden kann und dann ein privilegiertes
-laufendes Programm (wie ein Init\-Skript, das als root ausgeführt wird)
-schlussendlich auf einem Systemprozess agieren würde.
+\fBWarning:\fP using this match option with a world\-writable pidfile or using
+it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
+user will be refused with an error (since version 1.19.3) as this is a
+security risk, because either any user can write to it, or if the daemon
+gets compromised, the contents of the pidfile cannot be trusted, and then a
+privileged runner (such as an init script executed as root) would end up
+acting on any system process.  Using \fI/dev/null\fP is excempt from these
+checks.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIProgramm\fP
 Überprüfe auf Prozesse, die Instanzen von diesem Programm sind. Das Argument
@@ -207,6 +209,35 @@ Hintergrund. \fBWarnung: start\-stop\-daemon\fP kann nicht den Rückgabewert
 ist ein letztes Mittel und ist nur für Programme gedacht, bei denen das
 selbstständige Forken keinen Sinn ergibt oder wo es nicht sinnvoll ist, den
 Code hierfür hinzuzufügen.
+.TP 
+\fB\-\-notify\-await\fP
+Wartet, dass der Hintergrundprozess eine Bereitschaftsbenachrichtigung
+sendet, bevor der Dienst als gestartet betrachtet wird (seit Version
+1.19.3). Dies implementiert Teil des Bereitschaftsprotokolls von Systemd,
+wie es in der Handbuchseite \fBsd_notify\fP(3) festgelegt ist. Die folgenden
+Variablen werden unterstützt:
+.RS
+.TP 
+\fBREADY=1\fP
+Das Programm ist bereit, den Dienst zu leisten, daher kann sicher beendet
+werden.
+.TP 
+\fBEXTEND_TIMEOUT_USEC=\fP\fIAnzahl\fP
+Das Programm erbittet die Verlängerung der Zeitüberschreitung um \fIAnzahl\fP
+Mikrosekunden. Dies wird die aktuelle Zeitüberschreitung auf den
+festgelegten Wert zurücksetzen.
+.TP 
+\fBERRNO=\fP\fINummer\fP
+Das Programm beendete sich mit einem Fehler. Macht das gleiche und gibt die
+benutzerfreundliche Zeichenkette für den Wert von \fBerrno\fP aus.
+.RE
+.
+.TP 
+\fB\-\-notify\-timeout\fP\fIZeitüberschreitung\fP
+Setzt eine Zeitüberschreitung für die Option \fB\-\-notify\-await\fP (seit Version
+1.19.3). Wenn die Zeitüberschreitung erreicht wird, wird sich
+\fBstart\-stop\-daemon\fP mit einem Fehler\-Code beenden und es wird auf keine
+Bereitschaftsbenachrichtigung gewartet. Die Vorgabe ist \fB60\fP Sekunden.
 .TP 
 \fB\-C\fP, \fB\-\-no\-close\fP
 Keinen Dateideskriptor schließen, wenn ein Daemon in den Hintergrund
@@ -315,7 +346,7 @@ start\-stop\-daemon \-\-stop \-\-oknodo \-\-user food \-\-name food \e
 	\-\-pidfile /run/food.pid \-\-retry=TERM/30/KILL/5
 .fi
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

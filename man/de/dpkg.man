@@ -111,6 +111,11 @@ außer den Konfigurationsdateien entfernen).
 Das Paket ist zum vollständigen Löschen (»purge«) ausgewählt (d.h. wir
 wollen alle Dateien aus den Systemverzeichnissen inklusive der
 Konfigurationsdateien entfernen).
+.TP 
+\fBunknown\fP
+The package selection is unknown.  A package that is also in a
+\fBnot\-installed\fP state, and with an \fBok\fP flag will be forgotten in the next
+database store.
 .SS Paketschalter
 .TP 
 \fBok\fP
@@ -189,10 +194,13 @@ dieser Option kann Pakete in die unzulässigen Stati \fBtriggers\-awaited\fP und
 \-\-pending\fP« kann dies später behoben werden.
 .TP 
 \fB\-r\fP, \fB\-\-remove\fP \fIPaket\fP…|\fB\-a\fP|\fB\-\-pending\fP
-Entfernt ein installiertes Paket. Dies entfernt alles außer Conffiles, da
-damit eine erneute Konfiguration des Paketes vermieden wird, falls es später
-nochmals installiert wird. Conffiles sind Konfigurationsdateien, die in der
-Steuerdatei \fIDEBIAN/conffiles\fP aufgeführt sind. Falls statt des Paketnamens
+Entfernt ein installiertes Paket. Dies entfernt alles außer Conffiles und
+anderen Daten, die vom Skript \fIpostrm\fP bereinigt werden, da damit eine
+erneute Konfiguration des Paketes vermieden wird, falls es später nochmals
+installiert wird. Conffiles sind Konfigurationsdateien, die in der
+Steuerdatei \fIDEBIAN/conffiles\fP aufgeführt sind. Falls es keine Steuerdatei
+\fIDEBIAN/conffiles\fP oder kein Skript \fIDEBIAN/postrm\fP gibt, ist dieser
+Befehl äquivalent zum Aufruf von \fB\-\-purge\fP. Falls statt des Paketnamens
 \fB\-a\fP oder \fB\-\-pending\fP angegeben wird, werden alle Pakete, die entpackt,
 aber in der Datei \fI%ADMINDIR%/status\fP zur Entfernung vorgemerkt sind,
 entfernt.
@@ -212,10 +220,11 @@ Entfernung eines Paketes besteht aus den folgenden Schritten:
 .TP 
 \fB\-P\fP, \fB\-\-purge\fP \fIPaket\fP…|\fB\-a\fP|\fB\-\-pending\fP
 Löscht ein installiertes oder bereits entferntes Paket vollständig. Damit
-wird alles entfernt, auch Conffiles. Falls statt des Paketnamens \fB\-a\fP oder
-\fB\-\-pending\fP angegeben wird, werden alle Pakete, die entpackt oder entfernt,
-aber in der Datei \fI%ADMINDIR%/status\fP zum vollständigen Löschen vorgemerkt
-sind, vollständig gelöscht.
+wird alles entfernt, auch Conffiles und alles, was im Skript \fIpostrm\fP
+bereinigt wird. Falls statt des Paketnamens \fB\-a\fP oder \fB\-\-pending\fP
+angegeben wird, werden alle Pakete, die entpackt oder entfernt, aber in der
+Datei \fI%ADMINDIR%/status\fP zum vollständigen Löschen vorgemerkt sind,
+vollständig gelöscht.
 
 Hinweis: Einige Konfigurationsdateien können \fBdpkg\fP nicht bekannt sein, da
 sie separat durch die Konfigurationsskripte angelegt und verwaltet
@@ -324,6 +333,9 @@ Liste von \fB\-\-set\-selections\fP vorkommt, zu deinstallieren.
 \fB\-\-yet\-to\-unpack\fP
 Sucht nach Paketen, die zur Installation ausgewählt wurden, die aber aus
 irgendeinem Grund noch nicht installiert wurden.
+.IP
+Beachten Sie: Dieser Befehl verwendet sowohl die Datei available als auch
+die Paketauswahlen.
 .TP 
 \fB\-\-predep\-package\fP
 Gibt ein einzelnes Paket aus, das das Ziel einer oder mehrere relevanter
@@ -331,6 +343,9 @@ Vorabhängigkeiten ist und selbst keine unerfüllten Vorabhängigkeiten hat.
 .IP
 Falls ein solches Paket vorhanden ist, wird es als Dateieintrag für
 »Packages« ausgegeben, der passend weiterverarbeitet werden kann.
+.IP
+Beachten Sie: Dieser Befehl verwendet sowohl die Datei available als auch
+die Paketauswahlen.
 .IP
 Liefert 0 zurück, wenn ein Paket ausgegeben wird und 1, wenn kein passendes
 Paket verfügbar ist und 2 im Fehlerfall.
@@ -562,18 +577,18 @@ grundlegende Unix\-Befehle. Diese zu entfernen kann dazu führen, dass das
 gesamte System nicht mehr arbeitet \- verwenden Sie diese Option daher mit
 Vorsicht.
 
-\fBdepends\fP: Turn all dependency problems into warnings.  This affects the
-\fBPre\-Depends\fP and \fBDepends\fP fields.
+\fBdepends\fP: Verwandle alle Abhängigkeitsprobleme in Warnungen. Dies betrifft
+die Felder \fBPre\-Depends\fP und \fBDepends\fP.
 
-\fBdepends\-version\fP: Don't care about versions when checking dependencies.
-This affects the \fBPre\-Depends\fP and \fBDepends\fP fields.
+\fBdepends\-version\fP: Ignoriere Versionen bei der Prüfung von
+Abhängigkeiten. Dies betrifft die Felder \fBPre\-Depends\fP und \fBDepends\fP.
 
-\fBbreaks\fP: Install, even if this would break another package (since dpkg
-1.14.6).  This affects the \fBBreaks\fP field.
+\fBbreaks\fP: Installiere, selbst falls dies ein anderes Paket beschädigt (seit
+Dpkg 1.14.6). Dies betrifft das Feld \fBBreaks\fP.
 
-\fBconflicts\fP: Install, even if it conflicts with another package. This is
-dangerous, for it will usually cause overwriting of some files.  This
-affects the \fBConflicts\fP field.
+\fBconflicts\fP: Installiere, selbst wenn es mit einem anderen Paket in
+Konflikt steht. Dies ist gefährlich, da dies gewöhnlich dazu führt, dass
+einige Dateien überschrieben werden. Dies betrifft das Feld \fBConflicts\fP.
 
 \fBconfmiss\fP: Installiere das fehlende Conffile immer ohne Rückfrage. Dies
 ist gefährlich, da es bedeutet, dass eine Änderung (die Entfernung) an der
@@ -609,6 +624,16 @@ Datei aus einem anderen Paket.
 
 \fBoverwrite\-diverted\fP: Überschreibe eine umgeleitete (»diverted«) Datei mit
 einer nicht umgeleiteten.
+
+\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
+(since dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
+(since dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
+based security when installing files into the filesystem (since dpkg
+1.19.5).  On Linux systems the implementation uses SELinux.
 
 \fBunsafe\-io\fP: Beim Entpacken keine sicheren E/A\-Operationen durchführen
 (seit Dpkg 1.15.8.6). Derzeit impliziert dies, dass vor Dateiumbenennungen
@@ -651,9 +676,10 @@ fehlschlägt.
 
 .TP 
 \fB\-\-ignore\-depends\fP=\fIPaket\fP, …
-Ignore dependency\-checking for specified packages (actually, checking is
-performed, but only warnings about conflicts are given, nothing else).  This
-affects the \fBPre\-Depends\fP, \fBDepends\fP and \fBBreaks\fP fields.
+Ignoriere Abhängigkeitsüberprüfungen für bestimmte Pakete (tatsächlich wird
+die Überprüfung durchgeführt, aber nur Warnungen über Konflikte werden
+angezeigt, sonst nichts). Dies betrifft die Felder \fBPre\-Depends\fP,
+\fBDepends\fP und \fBBreaks\fP.
 .TP 
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
 Erledige alles, was gemacht werden soll, aber schreibe keine
@@ -677,20 +703,22 @@ Installiere ein Paket nicht, falls bereits eine neuere Version des gleichen
 Paketes installiert ist. Dies ist ein Alias für \fB\-\-refuse\-downgrade\fP.
 .TP 
 \fB\-\-admindir=\fP\fIVerz\fP
-Set the administrative directory to \fIdirectory\fP.  This directory contains
-many files that give information about status of installed or uninstalled
-packages, etc.  Defaults to «\fI%ADMINDIR%\fP».
+Setzt das Standardadministrationsverzeichnis auf \fIVerzeichnis\fP. Diess
+Verzeichnis enthält viele Dateien, die Informationen über den Status von
+installierten und deinstallierten Paketen usw. enthalten. Standardmäßig
+»\fI%ADMINDIR%\fP«.
 .TP 
 \fB\-\-instdir=\fP\fIVerz\fP
-Set the installation directory, which refers to the directory where packages
-are to be installed. \fBinstdir\fP is also the directory passed to \fBchroot\fP(2)
-before running package's installation scripts, which means that the scripts
-see \fBinstdir\fP as a root directory.  Defaults to «\fI/\fP».
+Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt
+an, wo Pakete installiert werden. \fBinstdir\fP ist auch das Verzeichnis, das
+an \fBchroot\fP(2) vor dem Aufruf der Installationsskripte des Paketes
+übergeben wird, was bedeutet, dass die Skripte \fBinstdir\fP als ein
+Wurzelverzeichnis sehen. Standardmäßig »\fI/\fP«.
 .TP 
 \fB\-root=\fP\fIVerz\fP
-Set the root directory to \fBdirectory\fP, which sets the installation
-directory to «\fIdir\fP» and the administrative directory to
-«\fIdir\fP\fB%ADMINDIR%\fP».
+Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
+Installationsverzeichnis auf »\fIVerz\fP« und das administrative Verzeichnis
+auf »\fIVerz\fP\fB%ADMINDIR%\fP« gesetzt wird.
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Bearbeite nur die Pakete, die zur Installation ausgewählt sind. Die
@@ -838,7 +866,8 @@ Für Conffile\-Änderungen, wobei \fIEntscheidung\fP entweder \fBinstall\fP oder
 .RE
 .TP 
 \fB\-\-no\-pager\fP
-Disables the use of any pager when showing information (since dpkg 1.19.2).
+Deaktiviert die Verwendung jeglichen Pagers bei der Anzeige von
+Informationen (seit Dpkg 1.19.2).
 .TP 
 \fB\-\-no\-debsig\fP
 Versuche nicht, Paketsignaturen zu überprüfen.
@@ -888,20 +917,25 @@ Falls gesetzt, wird \fBdpkg\fP es als das Verzeichnis verwenden, in dem
 temporäre Dateien und Verzeichnisse erstellt werden.
 .TP 
 \fBSHELL\fP
-The program \fBdpkg\fP will execute when starting a new interactive shell, or
-when spawning a command via a shell.
+Das Programm, das \fBdpkg\fP ausführen wird, wenn es eine neue interaktive
+Shell startet oder einen Befehl über eine Shell ausführt.
 .TP 
 \fBPAGER\fP
 .TQ
 \fBDPKG_PAGER\fP
-The program \fBdpkg\fP will execute when running a pager, for example when
-displaying the conffile differences.  If \fBSHELL\fP is not set, «\fBsh\fP» will
-be used instead.  The \fBDPKG_PAGER\fP overrides the \fBPAGER\fP environment
-variable (since dpkg 1.19.2).
+Das Programm, das \fBdpkg\fP ausführen wird, wenn es einen Pager ausführt,
+beispielsweise zur Anzeige von Conffile\-Dateiunterschieden. Falls \fBSHELL\fP
+nicht gesetzt ist, wird stattdessen »\fBsh\fP« verwandt. \fBDPKG_PAGER\fP setzt
+die Umgebungsvariable \fBPAGER\fP außer Kraft (seit Dpkg 1.19.2).
 .TP 
 \fBDPKG_COLORS\fP
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
 sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_FORCE\fP
+Sets the force flags (since dpkg 1.19.5).  When this variable is present, no
+built\-in force defaults will be applied.  If the variable is present but
+empty, all force flags will be disabled.
 .TP 
 \fBDPKG_FRONTEND_LOCKED\fP
 Wird von einer Paketverwalterprogrammoberfläche gesetzt, um Dpkg zu
@@ -910,11 +944,13 @@ Dpkg 1.19.1).
 .SS "Interne Umgebung"
 .TP 
 \fBLESS\fP
-Defined by \fBdpkg\fP to “\fB\-FRSXMQ\fP”, if not already set, when spawning a
-pager (since dpkg 1.19.2).  To change the default behavior, this variable
-can be preset to some other value including an empty string, or the \fBPAGER\fP
-or \fBDPKG_PAGER\fP variables can be set to disable specific options with
-«\fB\-+\fP», for example \fBDPKG_PAGER="less \-+F"\fP.
+Von \fBdpkg\fP auf »\fB\-FRSXMQ\fP« definiert, falls es nicht bereits gesetzt ist
+oder wenn ein Pager gestartet wird (seit Dpkg 1.19.2). Um das
+Vorgabeverhalten zu verändern, kann diese Variable auf einen anderen Wert
+einschließlich der leeren Zeichenkette voreingestellt werden oder die
+Variablen \fBPAGER\fP oder \fBDPKG_PAGER\fP können gesetzt werden, um bestimmte
+Optionen mit »\fB\-+\fP« zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
+\-+F"\fP.
 .TP 
 \fBDPKG_ROOT\fP
 Durch \fBdpkg\fP in der Betreuerskriptumgebung definiert, um anzuzeigen, auf
@@ -931,6 +967,10 @@ Wird von \fBdpkg\fP für die Betreuer\-Skript\-Umgebung gesetzt, um das zu
 verwendende administrative Verzeichnis von \fBdpkg\fP anzuzeigen (seit Dpkg
 1.16.0). Diese Variable wird immer auf den aktuellen Wert von \fB\-\-admindir\fP
 gesetzt.
+.TP 
+\fBDPKG_FORCE\fP
+Defined by \fBdpkg\fP on the subprocesses environment to all the currently
+enabled force option names separated by commas (since dpkg 1.19.5).
 .TP 
 \fBDPKG_SHELL_REASON\fP
 Wird von \fBdpkg\fP auf der Shell, die von der Conffile\-Eingabeaufforderung
@@ -1095,7 +1135,7 @@ Pakete erhalten werden: \fBapt\fP, \fBaptitude\fP und \fBdebsums\fP.
 Lesen Sie \fI%PKGDOCDIR%/THANKS\fP für die Liste der Leute, die zu \fBdpkg\fP
 beigetragen haben.
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2017 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die
