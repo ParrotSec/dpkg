@@ -1,0 +1,71 @@
+.\" dpkg manual page - deb-postrm(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-postrm 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-postrm \- Nachentfernungsbetreuerskript eines Pakets
+.
+.SH \(:UBERSICHT
+postrm
+.
+.SH BESCHREIBUNG
+Ein Paket kann eine Reihe von Aktionen mittels Betreuerskripten nach dem
+Entfernen ausf\(:uhren, indem es eine ausf\(:uhrbare Datei \fIpostrm\fP in seinem
+Steuerarchiv (d.h. \fIDEBIAN/triggers\fP w\(:ahrend der Paketerstellung)
+hinzunimmt.
+.PP
+Das Skript kann in den folgenden Weisen aufgerufen werden:
+.TP 
+\fIpostrm\fP \fBremove\fP
+Nachdem das Paket entfernt wurde.
+.TP 
+\fIpostrm\fP \fBpurge\fP
+Nachdem das Paket endg\(:ultig gel\(:oscht wurde.
+.TP 
+\fIold\-postrm\fP \fBupgrade\fP \fIneue_Version\fP
+Nachdem das Upgrade des Pakets durchgef\(:uhrt wurde.
+.TP 
+\fInew\-postrm \fP\fBfailed\-upgrade\fP\fI alte_Version neue_Version\fP
+Falls der obige \fBupgrade\fP\-Aufruf fehlschl\(:agt.
+.TP 
+\fIpostrm\fP \fBdisappear\fP \fI\(:uberschreibendes_Paket\fP \fI\(:uberschreibende_Version\fP
+Nachdem alle Paketdateien ersetzt wurden.
+.TP 
+\fInew\-postrm\fP \fBabort\-install\fP
+Falls \fIpreinst\fP w\(:ahrend der Installation fehlschl\(:agt.
+.TP 
+\fInew\-postrm\fP \fBabort\-install\fP \fIalte_Version neue_Version\fP
+Falls \fIpreinst\fP w\(:ahrend des Upgrades eines entfernten Paketes fehlschl\(:agt.
+.TP 
+\fInew\-postrm\fP \fBabort\-upgrade\fP \fIalte_Version neue_Version\fP
+Falls \fIpreinst\fP w\(:ahrend des Upgrades fehlschl\(:agt.
+.
+.SH "SIEHE AUCH"
+\fBdpkg\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

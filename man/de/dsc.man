@@ -50,10 +50,10 @@ Der Wert des Feldes gibt die Formatversion des Quellpaketes an. Der Feldwert
 wird von Programmen, die mit Quellpaketen arbeiten, verwandt, um die Liste
 der Dateien in dem Quellpaket zu interpretieren und zu bestimmen, wie es
 entpackt wird. Die Syntax des Feldwertes ist eine numerische Hauptrevision
-(»0\-9«), ein Satzpunkt (».«), eine numerische Unterrevision (»0\-9«) und dann
+(„0\-9“), ein Satzpunkt („.“), eine numerische Unterrevision („0\-9“) und dann
 ein optionaler Untertyp nach Leerraum (»\ \et«). Falls dieser spezifiziert
-wird, ist er ein klein geschriebenes alphanumerisches (»a\-z0\-9«) Wort in
-Klammern (»()«). Der Untertyp ist in der Syntax optional, kann aber für eine
+wird, ist er ein klein geschriebenes alphanumerisches („a\-z0\-9“) Wort in
+Klammern („()“). Der Untertyp ist in der Syntax optional, kann aber für eine
 bestimmte Quellformatrevision verpflichtend sein.
 
 Die von \fBdpkg\fP derzeit unterstützten Quellformate sind \fB1.0\fP, \fB2.0\fP,
@@ -249,7 +249,7 @@ entpackten Quellpakets zusammen.
 .SH "SIEHE AUCH"
 \fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

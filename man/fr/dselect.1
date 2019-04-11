@@ -1,0 +1,483 @@
+.\" dselect manual page - dselect(1)
+.\"
+.\" Copyright © 1995 Juho Vuori <javuori@cc.helsinki.fi>
+.\" Copyright © 2000 Josip Rodin
+.\" Copyright © 2001 Joost Kooij
+.\" Copyright © 2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2010-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dselect 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dselect \- Interface de gestion de paquets Debian.
+.
+.SH SYNOPSIS
+\fBdselect\fP [\fIoption\fP...] [\fIcommande\fP...]
+.
+.SH DESCRIPTION
+\fBdselect\fP est une des principales interfaces de gestion des paquets sur un syst\(`eme Debian. \(`A partir du menu principal de \fBdselect\fP, l'administrateur syst\(`eme peut\ :
+ \- Mettre \(`a jour la liste des versions des paquets disponibles,
+ \- Voir l'\('etat des paquets install\('es ou disponibles,
+ \- Modifier les s\('elections de paquets et g\('erer les d\('ependances,
+ \- Installer de nouveaux paquets ou mettre \(`a niveau vers de nouvelles versions.
+.PP
+\fBdselect\fP est une interface au dessus de \fBdpkg\fP(1), l'outil bas niveau de
+gestion des paquets Debian. Il propose \(`a l'\('ecran un gestionnaire de
+s\('elections de paquets avec la possibilit\('e de r\('esoudre les conflits et
+d\('ependances. Ex\('ecut\('e avec les droits administrateur, il permet d'installer
+des paquets, les mettre \(`a jour ou les retirer. Plusieurs m\('ethodes d'acc\(`es
+peuvent \(^etre configur\('ees pour r\('ecup\('erer les informations sur les versions
+des paquets disponibles et les paquets eux\-m\(^emes dans les d\('ep\(^ots de
+paquets. Suivant la m\('ethode d'acc\(`es utilis\('ee, ces d\('ep\(^ots peuvent \(^etre des
+serveurs d'archives publics sur Internet, des serveurs locaux ou des
+CDROM. La m\('ethode d'acc\(`es recommand\('ee est \fIapt\fP, qui est fournie par le
+paquet \fBapt\fP.
+.PP
+Normalement, \fBdselect\fP est appel\('e sans param\(`etre. Un menu interactif est
+pr\('esent\('e, offrant \(`a l'utilisateur une liste de commandes. Si une commande
+est donn\('ee en param\(`etre, alors cette commande est d\('emarr\('ee
+imm\('ediatement. Plusieurs param\(`etres en ligne de commande sont disponibles
+pour modifier le comportement de \fBdselect\fP ou pour montrer des informations
+suppl\('ementaires sur le programme.
+.
+.SH OPTIONS
+On peut sp\('ecifier une option \(`a la fois sur la ligne de commande et dans le
+fichier de configuration de \fBdselect\fP, \fI/etc/dpkg/dselect.cfg\fP ou dans
+les fichiers du r\('epertoire de configuration
+\fI/etc/dpkg/dselect.cfg.d/\fP. Chaque ligne de ce fichier est soit une
+option (identique \(`a une option en ligne de commande mais sans tiret), soit
+un commentaire (si il commence par \(Fo\ \fB#\fP\ \(Fc).
+.br
+.TP 
+\fB\-\-admindir\fP\fI r\('epertoire\fP
+Change le r\('epertoire o\(`u les fichiers \(Fo\ \fIstatus\fP\ \(Fc, \(Fo\ \fIavailable\fP\ \(Fc et
+autres sont situ\('es. Le r\('epertoire par d\('efaut est \fI/var/lib/dpkg\fP et il ne
+devrait pas y avoir besoin de le modifier.
+.TP 
+\fB\-D\fP\fIfichier\fP, \fB\-\-debug\fP \fIfichier\fP
+Activer le d\('ebogage. Les informations de d\('ebogage sont envoy\('ees dans
+\fIfichier\fP.
+.TP 
+\fB\-\-expert\fP
+Activer le mode expert, c'est\-\(`a\-dire ne pas afficher les messages d'aide
+ennuyeux.
+.TP 
+\fB\-\-colour\fP|\fB\-\-color\fP \fIpartie_\('ecran:\fP[\fIpremier_plan\fP],[\fIarri\(`ere_plan\fP][\fI:attr\fP[\fI+attr\fP]...]
+Configure les couleurs des \('ecrans. Cela ne fonctionne que si votre terminal
+g\(`ere les couleurs. Cette option peut\-\(^etre utilis\('ee plusieurs fois (et il est
+pr\('ef\('erable de l'utiliser dans \fIdselect.cfg\fP). Chaque utilisation change la
+couleur (et, en option, d'autres attributs) d'une partie de l'\('ecran. Les
+parties de l'\('ecran (de haut en bas) sont\ :
+.RS
+.TP 
+\fBtitle\fP
+Le titre de l'\('ecran.
+.TP 
+\fBlisthead\fP
+La ligne d'en\-t\(^ete au dessus de la liste de paquets.
+.TP 
+\fBlist\fP
+La liste d\('eroulante de paquets (et de textes explicatifs).
+.TP 
+\fBlistsel\fP
+L'\('el\('ement s\('electionn\('e dans la liste.
+.TP 
+\fBpkgstate\fP
+Dans la liste des paquets, le texte qui indique l'\('etat actuel de chaque
+paquet.
+.TP 
+\fBpkgstatesel\fP
+Dans la liste des paquets, le texte qui indique l'\('etat actuel du paquet
+s\('electionn\('e.
+.TP 
+\fBinfohead\fP
+La ligne d'en\-t\(^ete qui affiche l'\('etat du paquet s\('electionn\('e.
+.TP 
+\fBinfodesc\fP
+La description courte du paquet.
+.TP 
+\fBinfo\fP
+Utilis\('e pour afficher les informations sur le paquet, comme par exemple la
+description du paquet.
+.TP 
+\fBinfofoot\fP
+La derni\(`ere ligne de l'\('ecran lors de la s\('election des paquets.
+.TP 
+\fBquery\fP
+Utilis\('e pour les lignes des recherches.
+.TP 
+\fBhelpscreen\fP
+La couleur des \('ecrans d'aide.
+.RE
+.IP
+Apr\(`es la partie de l'\('ecran concern\('ee, vient un signe deux\-points et la
+sp\('ecification des couleurs. Pour surcharger les valeurs des couleurs
+compil\('ees, vous pouvez indiquer la couleur du premier plan, de
+l'arri\(`ere\-plan, ou les deux. Utilisez les noms standard de couleurs curses.
+.IP
+En option, les sp\('ecifications des couleurs peuvent \(^etre suivies d'un signe
+deux\-points et de la sp\('ecification d'un attribut. Il s'agit d'une liste
+d'attributs, s\('epar\('es par des caract\(`eres plus (\(Fo\ +\ \(Fc). Parmi les attributs
+disponibles, on trouve (tous ne fonctionnent pas sur tous les terminaux)\ :
+\fBnormal\fP, \fBstandout\fP, \fBunderline\fP, \fBreverse\fP, \fBblink\fP, \fBbright\fP,
+\fBdim\fP, \fBbold\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche une aide rapide et se termine normalement.
+.TP 
+\fB\-\-version\fP
+Affiche la version et se termine normalement.
+.
+.SH COMMANDES
+Quand \fBdselect\fP est d\('emarr\('e, il peut effectuer les actions suivantes, soit
+directement si elles sont indiqu\('ees dans la ligne de commande, soit
+interactivement avec un menu de commandes possibles\ :
+.SS "Acc\('eder (access)"
+Choisir et configurer une m\('ethode d'acc\(`es aux d\('ep\(^ots de paquets.
+.sp
+Par d\('efaut, \fBdselect\fP fournit plusieurs m\('ethodes telles que \fIcdrom\fP,
+\fImulti_cd\fP, \fInfs\fP, \fImulti_nfs\fP, \fIharddisk\fP, \fImounted\fP, \fImulti_mount\fP
+ou \fIftp\fP, mais d'autres paquets peuvent fournir des m\('ethodes
+suppl\('ementaires, comme la m\('ethode d'acc\(`es \fIapt\fP fournie par le paquet
+\fBapt\fP.
+.sp
+L'utilisation de la m\('ethode d'acc\(`es \fIapt\fP est fortement conseill\('ee.
+.sp
+.SS "Mise \(`a jour (update)"
+Rafra\(^ichir la liste des paquets disponibles.
+.sp
+R\('ecup\(`ere une liste de versions de paquets disponibles depuis un d\('ep\(^ot de
+paquets, qui a \('et\('e configur\('e pour la m\('ethode d'acc\(`es actuelle, puis met \(`a
+jour la base de donn\('ees de dpkg. Les listes de paquets sont d'habitude
+fournies par les d\('ep\(^ots sous la forme de fichiers \fIPackages\fP ou
+\fIPackages.gz\fP. Ces fichiers peuvent \(^etre g\('en\('er\('es par les responsables des
+d\('ep\(^ots gr\(^ace au programme \fBdpkg\-scanpackages\fP(1).
+.sp
+Le fonctionnement d\('etaill\('e de la commande de mise \(`a jour d\('epend de
+l'impl\('ementation de la m\('ethode d'acc\(`es. Normalement le processus se passe
+tout seul, sans intervention de l'utilisateur.
+.sp
+.SS "S\('electionner (select)"
+Voir ou g\('erer les paquets s\('electionn\('es et les d\('ependances.
+.sp
+Il s'agit de la fonction principale de \fBdselect\fP. Dans l'\('ecran de
+s\('election, l'utilisateur peut consulter la liste de tous les paquets
+disponibles ou install\('es. Ex\('ecut\('e avec les privil\(`eges administrateur, il
+permet \('egalement de changer de fa\(,con interactive l'\('etat de paquets
+s\('electionn\('es. \fBdselect\fP v\('erifie les implications de ces changements
+vis\-\(`a\-vis des d\('ependances et des conflits entre paquets.
+.sp
+Lorsqu'un conflit ou une d\('ependance manquante est d\('etect\('e, un sous\-\('ecran de
+r\('esolution des d\('ependances est propos\('e \(`a l'utilisateur. Dans cet \('ecran, une
+liste de paquets avec des conflits ou avec des d\('ependances manquantes est
+affich\('ee et pour chaque paquet list\('e, la raison de sa pr\('esence dans cette
+liste est indiqu\('ee. L'utilisateur peut ensuite appliquer les suggestion de
+\fBdselect\fP, les modifier ou supprimer toutes les modifications, dont celles
+qui ont cr\('e\('e les conflits ou d\('ependances non r\('esolues.
+.sp
+L'utilisation de l'\('ecran interactif des s\('elections de paquets est expliqu\('ee
+de fa\(,con plus d\('etaill\('ee ci\-dessous.
+.sp
+.SS "Installer (install)"
+Installer les paquets s\('electionn\('es.
+.sp
+La m\('ethode d'acc\(`es r\('ecup\('erera dans les d\('ep\(^ots les paquets qui peuvent \(^etre
+install\('es ou mis \(`a jour, puis les installe avec \fBdpkg\fP. En fonction de la
+m\('ethode d'acc\(`es, les paquets peuvent \(^etre tous r\('ecup\('er\('es avant installation,
+ou r\('ecup\('er\('es \(`a la demande. Certaines m\('ethodes d'acc\(`es retirent \('egalement les
+paquets qui ont \('et\('e marqu\('es pour \(^etre retir\('es.
+.sp
+Si une erreur appara\(^it lors de l'installation, il est recommand\('e de
+red\('emarrer une installation. La plupart des fois, les probl\(`emes
+disparaissent ou sont r\('esolus. Si les probl\(`emes persistent ou si
+l'installation n'est pas correcte, veuillez examiner les causes et
+circonstances puis soumettez un rapport de bogue au syst\(`eme de suivi des
+bogues Debian. Les instructions pour soumettre ces rapports de bogues se
+trouvent sur https://bugs.debian.org/ ou dans la page de manuel de \fBbug\fP(1)
+ou de \fBreportbug\fP(1), si ce paquet est install\('e.
+.sp
+Les d\('etails de la commande d'installation d\('ependent de l'impl\('ementation de
+la m\('ethode d'acc\(`es. L'attention et la contribution de l'utilisateur peuvent
+\(^etre n\('ecessaires lors de l'installation, de la configuration ou du retrait
+des paquets. Cela d\('epend des scripts des responsables des paquets. Certains
+paquets utilisent la biblioth\(`eque \fBdebconf\fP(1), ce qui permet la mise en
+place d'installations plus flexibles ou m\(^eme automatis\('ees.
+.sp
+.SS "Configurer (config)"
+Configure les paquets d\('ej\(`a install\('es mais n'\('etant pas compl\(`etement
+install\('es.
+.sp
+.SS "Retirer (remove)"
+Retirer ou purger les paquets install\('es qui sont marqu\('es comme \('etant \(`a
+retirer.
+.sp
+.SS "Quitter (quit)"
+Quitter \fBdselect\fP.
+.sp
+Quitte le programme avec un code d'erreur de \fB0\fP (succ\(`es).
+.sp
+.
+.SH "GESTION DE LA S\('ELECTION DES PAQUETS"
+.sp
+.SS Introduction
+.sp
+\fBdselect\fP expose directement l'administrateur \(`a une partie de la complexit\('e
+li\('ee \(`a la gestion d'un grand nombre de paquets ayant beaucoup de liens entre
+eux. Pour un utilisateur qui n'est pas habitu\('e aux concepts et au syst\(`eme de
+gestion des paquets Debian, cela peut \(^etre perturbant. Mais \fBdselect\fP est
+con\(,cu pour aider la gestion et l'administration des paquets. Ce n'est qu'un
+outil, et ne doit pas remplacer la compr\('ehension et les aptitudes d'un
+administrateur. L'utilisateur doit \(^etre familier des concepts sous\-jacents
+au syst\(`eme de gestion des paquets Debian. En cas de doute, consultez la page
+de manuel \fBdpkg\fP(1) et la Charte Debian.
+.sp
+\(`A moins que \fBdselect\fP ne soit lanc\('e en mode expert ou interm\('ediaire, un
+message d'aide est d'abord affich\('e lorsque cette action est choisie dans le
+menu. Il est \fBfortement\fP conseill\('e \(`a l'utilisateur d'\('etudier toutes les
+informations dans ces \('ecrans d'aide lorsqu'ils apparaissent. Les \('ecrans
+d'aide peuvent \(^etre affich\('es \(`a tout moment \(`a l'aide de la touche \(Fo\ \fB?\fP\ \(Fc.
+.sp
+.SS "Disposition de l'\('ecran"
+.sp
+L'\('ecran de s\('election est d\('ecoup\('e par d\('efaut en une moiti\('e sup\('erieure et une
+moiti\('e inf\('erieure. La moiti\('e sup\('erieure affiche une liste de paquets. Un
+curseur permet de s\('electionner un paquet, ou un groupe de paquets en
+s\('electionnant le titre du groupe, si \(,ca s'applique. La moiti\('e inf\('erieure de
+l'\('ecran affiche les d\('etails du paquet s\('electionn\('e dans la moiti\('e
+sup\('erieure. Le type de d\('etail affich\('e peut varier.
+.sp
+Appuyez sur la touche \(Fo\ \fBI\fP\ \(Fc pour passer d'un affichage de la liste des
+paquets en mode plein\-\('ecran, \(`a un affichage plus important des d\('etails des
+paquets ou \(`a un mode partag\('e \('equitablement.
+.sp
+.SS "Vue des d\('etails d'un paquet"
+.sp
+La vue des d\('etails d'un paquet affiche par d\('efaut la description longue du paquet s\('electionn\('e dans la liste des paquets. Le type de d\('etail peut \(^etre modifi\('e en pressant la touche \(Fo\ \fBi\fP\ \(Fc. Cela permet d'alterner entre\ :
+ \- la description longue
+ \- les informations de contr\(^ole de la version install\('ee
+ \- les informations de contr\(^ole de la version disponible
+.sp
+Dans un \('ecran de r\('esolution des d\('ependances, on peut \('egalement voir les
+d\('ependances et conflits sp\('ecifiques au paquet qui expliquent la pr\('esence du
+paquet dans la liste.
+.sp
+.SS "Liste des \('etats des paquets"
+.sp
+L'\('ecran principal de s\('election affiche une liste de tous les paquets connus
+par le syst\(`eme de gestion des paquets Debian. Cela inclut les paquets
+install\('es sur le syst\(`eme et les paquets connus par la base de donn\('ees des
+paquets disponibles.
+.sp
+Pour tous les paquets, la liste affiche sur une ligne l'\('etat du paquet, sa
+priorit\('e, sa section, les architectures install\('ee et disponible, les
+versions install\('ee et disponible, le nom du paquet et sa description
+courte. En appuyant sur la touche \(Fo\ \fBA\fP\ \(Fc, on peut activer ou d\('esactiver
+l'affichage des architectures install\('ee et disponible. En appuyant sur la
+touche \(Fo\ \fBV\fP\ \(Fc, on peut activer ou d\('esactiver l'affichage des versions
+install\('ee et disponible. En appuyant sur la touche \(Fo\ \fBv\fP\ \(Fc, l'affichage de
+l'\('etat passe d'un mode bavard \(`a un mode raccourci. Par d\('efaut, l'\('etat
+raccourci est utilis\('e.
+.sp
+L'\('etat raccourci consiste en 4 parties\ : un drapeau d'erreur, qui est
+habituellement vide, l'\('etat courant, l'\('etat de s\('election pr\('ec\('edent et l'\('etat
+de s\('election actuel. Les deux premiers donnent des indications sur l'\('etat
+courant du paquet, les deux suivants concernent les s\('elections d\('efinies par
+l'utilisateur.
+.sp
+Voici la signification des codes d'indication des \('etats\ :
+ Drapeau d'erreur\ :
+  \fIvide\fP    aucune erreur\ ;
+  \fBR\fP       erreur s\('erieuse, r\('einstallation n\('ecessaire.
+ \('Etat d'installation\ :
+  \fIvide\fP    pas install\('e\ ;
+  \fB*\fP       compl\(`etement install\('e et configur\('e\ ;
+  \fB\-\fP       pas install\('e, mais des fichiers de configuration existent toujours\ ;
+  \fBU\fP       d\('epaquet\('e, mais toujours pas configur\('e\ ;
+  \fBC\fP       \(`a moiti\('e configur\('e (il y a eu une erreur)\ ;
+  \fBI\fP       \(`a moiti\('e install\('e (il y a eu une erreur).
+ S\('election actuelle et demand\('ee\ :
+  \fB*\fP       marqu\('e comme \('etant \(`a installer ou \(`a mettre \(`a jour\ ;
+  \fB\-\fP       marqu\('e comme \('etant \(`a retirer, en conservant la configuration\ ;
+  \fB=\fP       marqu\('e comme \('etant \(`a conserver\ : le paquet ne sera pas trait\('e\ ;
+  \fB_\fP       marqu\('e comme \('etant \(`a nettoyer, la configuration sera retir\('ee \('egalement\ ;
+  \fBn\fP       nouveau paquet, n'a toujours pas \('et\('e marqu\('e.
+.sp
+.SS "D\('eplacement du curseur et de l'\('ecran"
+.sp
+Vous pouvez naviguer dans la liste de s\('election des paquets et dans l'\('ecran
+de r\('esolution des d\('ependances et des conflits \(`a l'aide des touches
+suivantes\ :
+.br
+  \fBp, Haut, k\fP             d\('eplace le curseur vers le haut
+  \fBn, Bas, j\fP              d\('eplace le curseur vers le bas
+  \fBP, Page\-pr\('ec., Effacer\fP fait d\('efiler la liste d'une page vers le haut
+  \fBN, Page\-suiv., Espace\fP  fait d\('efiler la liste d'une page vers le bas
+  \fB^p\fP                     fait d\('efiler la liste d'une ligne vers le haut
+  \fB^n\fP                     fait d\('efiler la liste d'une ligne vers le bas
+  \fBt, Home\fP                saute au d\('ebut de la liste
+  \fBe, Fin\fP                 saute \(`a la fin de la liste
+  \fBu\fP                      fait d\('efiler les informations d'une page vers le haut
+  \fBd\fP                      fait d\('efiler les informations d'une page vers le bas
+  \fB^u\fP                     fait d\('efiler les informations d'une ligne vers le haut
+  \fB^d\fP                     fait d\('efiler les informations d'une ligne vers le bas
+  \fBB, gauche\fP              d\('eplace l'affichage de 1/3 vers la gauche
+  \fBF, droite\fP              d\('eplace l'affichage de 1/3 vers la droite
+  \fB^b\fP                     d\('eplace l'affichage d'un caract\(`ere vers la gauche
+  \fB^f\fP                     d\('eplace l'affichage d'un caract\(`ere vers la droite
+.sp
+.SS "Recherches et tris"
+.sp
+On peut rechercher un paquet par son nom dans la liste des paquets. Pour
+cela, il faut presser la touche \(Fo\ \fB/\fP\ \(Fc, puis taper le texte \(`a
+rechercher. Ce texte est interpr\('et\('e comme une expression rationnelle (voir
+\fBregex\fP(7)). Si vous ajoutez \(Fo\ \fB/d\fP\ \(Fc \(`a la recherche, dselect recherchera
+\('egalement dans les descriptions. Si vous ajoutez \(Fo\ \fB/i\fP\ \(Fc, la recherche ne
+prend pas en compte la casse. Les deux suffixes peuvent \(^etre combin\('es comme
+ceci\ : \(Fo\ \fB/id\fP\ \(Fc. La recherche peut \(^etre r\('ep\('et\('ee en appuyant sur la touche
+\(Fo\ \fBn\fP\ \(Fc ou \(Fo\ \fB\e\fP\ \(Fc, jusqu'\(`a ce que le paquet soit trouv\('e. Lorsque la
+recherche atteint la fin de la liste, elle recommence au d\('ebut.
+.sp
+On peut changer l'ordre du tri en appuyant sur la touche \(Fo\ \fBo\fP\ \(Fc ou \(Fo\ \fBO\fP\ \(Fc. Les neuf syst\(`emes de tris suivants existent\ :
+ alphab\('etique      disponible           \('etat
+ priorit\('e+section  disponible+priorit\('e  \('etat+priorit\('e
+ section+priorit\('e  disponible+section   \('etat+section
+.br
+Lorsqu'il n'est pas indiqu\('e, l'ordre alphab\('etique est utilis\('e comme dernier
+crit\(`ere de tri.
+.sp
+.SS "Modifier les s\('elections"
+.sp
+Le type de s\('election demand\('e d'un paquet peut \(^etre chang\('e \(`a l'aide des commandes suivantes\ :
+  \fB+, Inser\fP     installer ou mettre \(`a jour
+  \fB=, H\fP         \(`a garder dans l'\('etat et la version actuels
+  \fB:, G\fP         ne plus garder\ : mettre \(`a niveau ou laisser non install\('e
+  \fB\-, Suppr\fP     retirer, en gardant la configuration
+  \fB_\fP            retirer et supprimer la configuration
+.sp
+Lorsque la demande de modification entra\(^ine des d\('ependances non satisfaites
+ou des conflits, \fBdselect\fP fournit \(`a l'utilisateur un \('ecran de r\('esolution
+des d\('ependances. Cela sera d\('ecrit plus tard.
+.sp
+Il est \('egalement possible d'appliquer ces commandes \(`a des groupes de
+s\('elections de paquets en pla\(,cant le curseur sur le titre d'un groupe. Le
+regroupement des paquets d\('epend de la fa\(,con dont les paquets sont tri\('es dans
+la liste.
+.sp
+Une attention particuli\(`ere doit \(^etre prise lors de la modification de grands
+groupes de s\('elections, parce qu'ils peuvent cr\('eer rapidement un nombre
+important de d\('ependances non r\('esolues ou de conflits, qui seraient tous
+list\('es dans un \('ecran de r\('esolution de d\('ependances, le rendant difficile \(`a
+utiliser. En pratique, seules les op\('erations \(Fo\ \(`a garder\ \(Fc et \(Fo\ ne plus
+garder\ \(Fc sont utiles pour les groupes.
+.sp
+.SS "R\('esoudre les d\('ependances et les conflits"
+.sp
+Lorsque la demande de modification entra\(^ine des d\('ependances non satisfaites
+ou des conflits, \fBdselect\fP fournit \(`a l'utilisateur un \('ecran de r\('esolution
+des d\('ependances. Mais un \('ecran d'information est affich\('e dans un premier
+temps.
+.sp
+La moiti\('e sup\('erieure de cet \('ecran liste tous les paquets ayant des
+d\('ependances non r\('esolues ou des conflits dus aux modifications demand\('ees,
+ainsi que les paquets dont l'installation permettrait de r\('esoudre une
+d\('ependance ou dont le retrait permettrait de r\('esoudre un conflit. La moiti\('e
+inf\('erieure affiche par d\('efaut les d\('ependances ou conflits pour lesquels le
+paquet s\('electionn\('e se trouve pr\('esent dans la liste.
+.sp
+Quand la sous\-liste de paquets est affich\('ee pour la premi\(`ere fois,
+\fBdselect\fP peut avoir d\('ej\(`a fix\('e les \('etats demand\('es pour certains des paquets
+list\('es, cela afin de r\('esoudre les d\('ependances ou les conflits qui ont caus\('e
+l'apparition de l'\('ecran de r\('esolution des d\('ependances. Il est habituellement
+recommand\('e de suivre les suggestions de \fBdselect\fP.
+.sp
+L'\('etat de s\('election des paquets list\('es peut \(^etre remis dans son \('etat
+pr\('ec\('edent, avant que le probl\(`eme de d\('ependance ou le conflit ne soit cr\('e\('e,
+en appuyant sur la touche \(Fo\ \fBR\fP\ \(Fc. La touche \(Fo\ \fBD\fP\ \(Fc permet de remettre \(`a
+z\('ero les suggestions automatiques, tout en conservant les modifications qui
+ont caus\('e l'apparition de l'\('ecran de r\('esolution des d\('ependances. Enfin, la
+touche \(Fo\ \fBU\fP\ \(Fc permet de r\('etablir les suggestions automatiques.
+.sp
+.SS "\('Etablir les s\('elections demand\('ees"
+.sp
+En appuyant sur \fBEntr\('ee\fP, les s\('elections affich\('ees sont accept\('ees. Si
+\fBdselect\fP ne d\('etecte pas de d\('ependances non r\('esolues du fait de ces
+s\('elections, les nouvelles s\('elections sont \('etablies. Cependant, si des
+d\('ependances non r\('esolues sont trouv\('ees, \fBdselect\fP affichera de nouveau un
+\('ecran de r\('esolution des d\('ependances.
+.sp
+Pour modifier un jeu de s\('elections qui causent des d\('ependances non r\('esolues
+ou des conflits, et forcer \fBdselect\fP \(`a l'accepter, appuyez sur la touche
+\(Fo\ \fBQ\fP\ \(Fc. Cela fixe les s\('elections telles qu'elles sont d\('efinies par
+l'utilisateur, sans condition. En g\('en\('eral, ne faites pas cela, sauf si vous
+avez bien lu ce qu'il y a d'\('ecrit.
+.sp
+L'effet inverse, qui consiste \(`a oublier les demandes de modification des
+s\('elections et revenir \(`a la liste pr\('ec\('edente de s\('elections, peut \(^etre obtenu
+en appuyant sur la touche \(Fo\ \fBX\fP\ \(Fc ou \(Fo\ \fBEchap\fP\ \(Fc. En r\('ep\('etant l'op\('eration,
+on peut compl\(`etement revenir \(`a la derni\(`ere configuration \('etablie.
+.sp
+Si vous avez fix\('e certains param\(`etres de fa\(,con erron\('ee et que vous souhaitez
+revenir en arri\(`ere sur ce qui est actuellement install\('e sur le syst\(`eme,
+appuyez sur la touche \(Fo\ \fBC\fP\ \(Fc. C'est un peu comme utiliser la commande de
+d\('eblocage sur tous les paquets, mais cela offre un bouton panique plus
+\('evident pour les cas o\(`u l'utilisateur a appuy\('e sur \fBentr\('ee\fP
+accidentellement.
+.sp
+.
+.SH "CODE DE SORTIE"
+.TP 
+\fB0\fP
+La commande demand\('ee s'est correctement d\('eroul\('ee.
+.TP 
+\fB2\fP
+Erreur fatale ou irr\('ecup\('erable due \(`a l'utilisation d'une ligne de commande
+non valable, ou interactions avec le syst\(`eme, telles que des acc\(`es \(`a la base
+de donn\('ees, des allocations de m\('emoire,\ etc.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBHOME\fP
+Si positionn\('e, sera utilis\('e par \fBdselect\fP comme le r\('epertoire d'o\(`u sera lu
+le fichier de configuration propre \(`a l'utilisateur.
+.
+.SH BOGUES
+L'interface \fBdselect\fP de s\('election de paquets est d\('eroutante pour les
+nouveaux utilisateurs. On rapporte m\(^eme qu'elle fait pleurer certains
+d\('eveloppeurs chevronn\('es du noyau.
+.sp
+La documentation manque.
+.sp
+Il n'existe pas d'option d'aide dans le menu.
+.sp
+La liste visible des paquets disponibles ne peut pas \(^etre r\('eduite.
+.sp
+La m\('ethode d'acc\(`es int\('egr\('ee ne satisfait pas les normes de qualit\('e
+actuelles. Utilisez plut\(^ot la m\('ethode fournie par APT. Non seulement elle
+n'est pas cass\('ee, mais en plus elle est plus souple que la m\('ethode d'acc\(`es
+int\('egr\('ee.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1), \fBapt\-get\fP(8), \fBsources.list\fP(5), \fBdeb\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

@@ -1,0 +1,170 @@
+.\" dpkg manual page - dpkg-genbuildinfo(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ian@chiark.chu.cam.ac.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2008-2010 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2006-2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2015 J\('er\('emy Bobbio <lunar@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-genbuildinfo 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-genbuildinfo \- Cr\('eer des fichiers .buildinfo Debian.
+.
+.SH SYNOPSIS
+\fBdpkg\-genbuildinfo\fP [\fIoption\fP...]
+.br
+.
+.SH DESCRIPTION
+\fBdpkg\-genbuildinfo\fP lit les informations \(`a la fois dans une arborescence
+debian d\('epaquet\('ee et d\('ej\(`a construite et sur les fichiers qui ont \('et\('e cr\('e\('es\ ;
+puis il cr\('ee un fichier de contr\(^ole d\('ecrivant l'environnement et les objets
+de construction (c'est le fichier \fB.buildinfo\fP).
+.P
+Cette commande a \('et\('e introduite dans dpkg\ 1.18.11.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-build=\fP\fItype\fP
+Indique un \fItype\fP de construction \(`a partir d'une liste s\('epar\('ee par des
+virgules de composants.
+
+Les valeurs autoris\('ees sont\ :
+.RS
+.TP 
+\fBany\fP
+G\('en\(`ere les informations de construction comprenant les d\('ependances de
+construction non qualifi\('ees (\fBBuild\-Depends\fP) et les d\('ependances de
+construction sp\('ecifiques \(`a l'architecture (\fBBuild\-Depends\-Arch\fP).
+.TP 
+\fBall\fP
+G\('en\(`ere les informations de construction comprenant les d\('ependances de
+construction non qualifi\('ees (\fBBuild\-Depends\fP) et les d\('ependances de
+construction ind\('ependantes de l'architecture (\fBBuild\-Depends\-Indep\fP).
+.TP 
+\fBsource\fP
+Effectivement ignor\('e\ : g\('en\(`ere les informations de construction avec
+seulement les d\('ependances de construction non qualifi\('ees (\fBBuild\-Depends\fP).
+.TP 
+\fBbinary\fP
+G\('en\(`ere les informations de construction avec les trois types de d\('ependances
+de construction. C'est un alias de \fBany,all\fP.
+.TP 
+\fBfull\fP
+G\('en\(`ere les informations de construction avec les trois types de d\('ependances
+de construction. C'est un alias de \fBany,all,source\fP. Identique au cas par
+d\('efaut o\(`u aucune option de construction n'est indiqu\('ee.
+.RE
+.TP 
+\fB\-c\fP\fIfichier/control\fP
+Indique le principal fichier de contr\(^ole des sources o\(`u trouver des
+renseignements. Par d\('efaut, c'est le fichier \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIfichier\-des\-changements\fP
+Indique le fichier des changements o\(`u trouver des renseignements. Par
+d\('efaut, c'est le fichier \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIfichier/liste\-des\-fichiers\fP
+Indique o\(`u est la liste des fichiers qui ont \('et\('e produits par la
+construction, au lieu d'utiliser le fichier \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIformat\-du\-fichier\-des\-changements\fP
+Indique le format du fichier des changements. Voir \fBdpkg\-parsechangelog\fP(1)
+pour plus d'informations \(`a propos des formats g\('er\('es.
+.TP 
+\fB\-O\fP[\fInom\-de\-fichier\fP]
+Affiche le fichier buildinfo sur la sortie standard (ou \fInom\-de\-fichier\fP si
+pr\('ecis\('e) au lieu de
+\fIr\('epertoire\fP\fB/\fP\fInom\-source\fP\fB_\fP\fIversion\-binaire\fP\fB_\fP\fIarchitecture\fP\fB.buildinfo\fP
+(o\(`u \fIr\('epertoire\fP est \fB..\fP par d\('efaut ou
+\fIr\('epertoire\-des\-fichiers\-\(`a\-installer\fP si l'option \fB\-u\fP a \('et\('e utilis\('ee).
+.TP 
+\fB\-u\fP\fIr\('epertoire\-des\-fichiers\-\(`a\-installer\fP
+Cherche les fichiers \(`a installer dans \fIr\('epertoire\-des\-fichiers\-\(`a\-installer\fP
+plut\(^ot que dans \fB..\fP. (\fBdpkg\-genbuildinfo\fP doit trouver ces fichiers de
+mani\(`ere \(`a mettre leurs tailles et leurs sommes de contr\(^ole dans le fichier
+\&\fB.buildinfo\fP).
+.TP 
+\fB\-\-always\-include\-kernel\fP
+Par d\('efaut le champ \fBBuild\-Kernel\-Version\fP ne sera pas \('ecrit.
+
+Il faut pr\('eciser cette option (depuis dpkg\ 1.19.0) pour toujours remplir un
+champ \fBBuild\-Kernel\-Version\fP lors de la cr\('eation de \fB.buildinfo\fP.
+.TP 
+\fB\-\-always\-include\-path\fP
+Par d\('efaut, le champ \fBBuild\-Path\fP ne sera rempli que si le r\('epertoire
+courant d\('ebute par un motif inscrit en liste blanche.
+
+Dans Debian et ses d\('eriv\('es, le motif correspond \(`a \fB/build/\fP au d\('ebut du nom
+de chemin.
+
+Il faut pr\('eciser cette option pour toujours remplir un champ \fBBuild\-Path\fP
+lors de la cr\('eation de \fB.buildinfo\fP.
+.TP 
+\fB\-\-admindir\fP=\fIr\('epertoire\fP
+Change l'endroit o\(`u se trouve la base de donn\('ees de \fBdpkg\fP. Par d\('efaut,
+c'est \fI/var/lib/dpkg\fP.
+.TP 
+\fB\-q\fP
+\fBdpkg\-genbuildinfo\fP devrait afficher des messages d'information sur la
+sortie d'erreur standard. \fB\-q\fP supprime ces messages.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDEB_BUILD_OPTIONS\fP
+Cette variable peut \(^etre utilis\('ee pour activer ou d\('esactiver diverses
+fonctions qui affectent les informations comprises dans le fichier
+\&.buildinfo au moyen de l'option \fBbuildinfo\fP (depuis dpkg\ 1.18.19). Cette
+option fournit une liste, s\('epar\('ee par des virgules, de fonctionnalit\('es,
+pr\('efix\('ees par les modificateurs \(Fo\ \fB+\fP\ \(Fc ou \(Fo\ \fB\-\fP\ \(Fc pour indiquer s'il faut
+les activer ou les d\('esactiver. La fonction sp\('eciale \(Fo\ \fBall\fP\ \(Fc peut \(^etre
+utilis\('ee pour activer ou d\('esactiver toutes les autres fonctions. La fonction
+\(Fo\ \fBpath\fP\ \(Fc contr\(^ole l'inclusion sans condition du champ \fBBuild\-Path\fP.
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH FICHIERS
+.TP 
+\fBdebian/files\fP
+La liste des fichiers cr\('e\('es. \fBdpkg\-genbuildinfo\fP lit dans ce fichier les
+donn\('ees n\('ecessaires \(`a la cr\('eation du fichier \fB.buildinfo\fP.
+.
+.SH "VOIR AUSSI"
+\fBdeb\-buildinfo\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

@@ -1,0 +1,211 @@
+.\" dpkg manual page - dpkg-divert(1)
+.\"
+.\" Copyright © 1995 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 1999 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
+.\" Copyright © 2007-2013, 2015-2018 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-divert 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-divert \- Hinwegsetzen \(:uber die Paketversion einer Datei
+.
+.SH \(:UBERSICHT
+\fBdpkg\-divert\fP [\fIOption\fP …] \fIBefehl\fP
+.
+.SH BESCHREIBUNG
+\fBdpkg\-divert\fP ist ein Hilfswerkzeug, um die Liste der Umleitungen
+einzurichten und zu aktualisieren.
+.PP
+Datei\-\fIDiversionen\fP (Umleitungen) sind eine M\(:oglichkeit, \fBdpkg\fP(1) dazu zu
+zwingen, eine Datei nicht an ihren Standardplatz, sondern an einem
+\fIumgeleiteten\fP Ort zu installieren. Umleitungen k\(:onnen innerhalb der
+Debian\-Paketskripte verwendet werden, um eine Datei beiseitezuschieben, wenn
+sie einen Konflikt ausl\(:ost. Systemadministratoren k\(:onnen sie auch verwenden,
+um sich \(:uber die Konfigurationsdateien einiger Pakete hinwegzusetzen, oder
+wann immer einige Dateien (die nicht als \(BqConffiles\(lq markiert sind) von
+\fBdpkg\fP erhalten werden m\(:ussen, wenn eine neuere Version eines Paketes, die
+diese Dateien enth\(:alt, installiert wird.
+.sp
+.SH BEFEHLE
+.TP 
+[\fB\-\-add\fP] \fIDatei\fP
+F\(:ugt eine Umleitung f\(:ur \fIDatei\fP hinzu. Die Datei wird derzeit nicht
+umbenannt, siehe \fB\-\-rename\fP.
+.TP 
+\fB\-\-remove\fP\fI Datei\fP
+Entfernt eine Umleitung f\(:ur \fIDatei\fP. Die Datei wird derzeit nicht
+umbenannt, siehe \fB\-\-rename\fP.
+.TP 
+\fB\-\-list\fP\fI Glob\-Muster\fP
+Liste Umleitungen auf, die auf \fIGlob\-Muster\fP passen.
+.TP 
+\fB\-\-listpackage\fP\fI Datei\fP
+Gibt den Namen des Pakets aus, die \fIDatei\fP umleitet (seit Dpkg
+1.15.0). Gibt LOCAL aus, falls die Datei lokal umgeleitet wurde und nichts,
+falls \fIDatei\fP nicht umgeleitet wurde.
+.TP 
+\fB\-\-truename\fP\fI Datei\fP
+Zeige den echten Namen f\(:ur eine umgeleitete Datei an.
+.
+.SH OPTIONEN
+.TP 
+\fB\-\-admindir\fP\fI Verzeichnis\fP
+Setze das adminitrative Verzeichnis auf \fIVerzeichnis\fP (Standard:
+\(Bq\fI/var/lib/dpkg\fP\(lq).
+.TP 
+\fB\-\-instdir\fP\fI Verzeichnis\fP
+Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in
+dem Pakete installiert werden (seit Dpkg 1.19.2). Standardm\(:a\(ssig \(Bq\fI/\fP\(lq.
+.TP 
+\fB\-\-root\fP\fI Verzeichnis\fP
+Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
+Installationsverzeichnis auf \(Bq\fIVerzeichnis\fP\(lq und das administrative
+Verzeichnis auf \(Bq\fIVerzeichnis\fP\fB/var/lib/dpkg\fP\(lq gesetzt wird (seit Dpkg
+1.19.2).
+.TP 
+\fB\-\-divert\fP\fI Umleitziel\fP
+\fIUmleitziel\fP ist der Zielort, wo die Versionen der \fIDatei\fP, wie sie von
+anderen Paketen bereitgestellt wird, hin umgeleitet werden.
+.TP 
+\fB\-\-local\fP
+Gibt an, dass alle Versionen dieser Datei umgeleitet sind. Dies bedeutet,
+dass es keine Ausnahmen gibt, und egal was f\(:ur ein Paket auch installiert
+ist, die Datei ist umgeleitet. Dies kann vom Administrator verwendet werden,
+um eine lokal ge\(:anderte Version zu installieren.
+.TP 
+\fB\-\-package\fP\fI Paket\fP
+\fIPaket\fP ist der Name des Pakets, dessen Kopie von \fIDatei\fP nicht umgeleitet
+wird, d.h. \fIDatei\fP wird f\(:ur alle Pakete au\(sser \fIPaket\fP umgeleitet.
+.TP 
+\fB\-\-quiet\fP
+Ruhiger Modus, d.h. keine langatmige Ausgabe.
+.TP 
+\fB\-\-rename\fP
+Schiebe die Dateien tats\(:achlich beiseite (oder zur\(:uck). \fBdpkg\-divert\fP wird
+den Arbeitsvorgang abbrechen, falls die Zieldatei bereits existiert. Dies
+ist das typische Verhalten, das f\(:ur Umleitungen von Dateien aus der Gruppe
+der non\-\fBEssential\fP\-Pakete verwandt wird (siehe \fB\-\-no\-rename\fP f\(:ur weitere
+Details).
+.TP 
+\fB\-\-no\-rename\fP
+Legt fest, dass die Datei beim Hinzuf\(:ugen oder Entfernen der Umleitung in
+die Datenbank nicht umbenannt werden soll (seit Dpkg 1.19.1). Dies ist f\(:ur
+Umleitungen von Dateien aus der Paketgruppe \fBEssential\fP gedacht, bei der
+das vor\(:ubergehende Verschwinden der urspr\(:unglichen Datei nicht akzeptiert
+werden kann, da es zu einem nicht funktionalen System f\(:uhren kann. Dies ist
+das Standardverhalten, was sich allerdings im Dpkg 1.20.x\-Zyklus \(:andern
+wird.
+.TP 
+\fB\-\-test\fP
+Testmodus, d.h. f\(:uhre keine \(:Anderungen durch, sondern zeige sie lediglich.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH R\(:UCKGABEWERT
+.TP 
+\fB0\fP
+Die angeforderte Aktion wurde erfolgreich ausgef\(:uhrt.
+.TP 
+\fB2\fP
+Fataler oder nicht behebbarer Fehler aufgrund ung\(:ultiger
+Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
+die Datenbank, Speicherzuweisungen usw.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_ROOT\fP
+Falls gesetzt und die Option \fB\-\-instdir\fP oder \fB\-\-root\fP nicht angegeben
+wurde, wird dies als Dateisystemwurzelverzeichnis verwandt.
+.TP 
+\fBDPKG_ADMINDIR\fP
+Falls gesetzt und die Option \fB\-\-admindir\fP oder \fB\-\-root\fP nicht verwandt
+wurde, wird dies als Datenverzeichnis von \fBdpkg\fP verwandt.
+.TP 
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP
+Falls gesetzt und die Optionen \fB\-\-local\fP und \fB\-\-package\fP nicht verwandt
+wurden, wird \fBdpkg\-divert\fP dies als Paketnamen verwenden.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.
+.SH DATEIEN
+.TP 
+\fI/var/lib/dpkg/diversions\fP
+Datei, die die aktuelle Liste von Umleitungen des Systems enth\(:alt. Sie
+befindet sich im \fBdpkg\fP\-Administrationsverzeichnis, zusammen mit anderen
+f\(:ur \fBdpkg\fP wichtigen Dateien, wie \fIstatus\fP oder \fIavailable\fP.
+.br
+Hinweis: \fBdpkg\-divert\fP erh\(:alt die alte Kopie dieser Datei, mit der Endung
+\fI\-old\fP, bevor es sie mit der neuen ersetzt.
+.
+.SH BEMERKUNGEN
+Beim Hinzuf\(:ugen ist die Standardeinstellung \fB\-\-local\fP und \fB\-\-divert\fP
+\fIOriginalname\fP.\fBdistrib\fP. Beim Entfernen m\(:ussen, falls angegeben,
+\fB\-\-package\fP oder \fB\-\-local\fP und \fB\-\-divert\fP \(:ubereinstimmen.
+
+Verzeichnisse k\(:onnen mit \fBdpkg\-divert\fP nicht umgeleitet werden.
+
+Vorsicht sollte beim Umleiten von Laufzeit\-Bibliotheken walten gelassen
+werden, da \fBldconfig\fP(8) einen symbolischen Link, basierend auf dem in der
+Bibliothek eingebetteten DT_SONAME\-Feld, anlegt. Da \fBldconfig\fP keine
+Umleitungen anerkennt (nur \fBdpkg\fP tut dies), kann der Symlink am Ende auf
+die umgeleitete Bibliothek zeigen, falls die umgeleitete Bibliothek den
+gleichen SONAME wie die nicht umgeleitete hat.
+.
+.SH BEISPIELE
+Um alle Kopien von \fI/usr/bin/example\fP auf \fI/usr/bin/example.foo\fP
+umzuleiten, d.h. alle Pakete, die \fI/usr/bin/example\fP zur Verf\(:ugung stellen,
+dazu anzuleiten, diese Datei stattdessen als \fI/usr/bin/example.foo\fP zu
+installieren und die Umbenennung, falls notwendig, durchzuf\(:uhren:
+.HP
+dpkg\-divert \-\-divert /usr/bin/example.foo \-\-rename /usr/bin/example
+.PP
+Um diese Umleitung zu entfernen:
+.HP
+dpkg\-divert \-\-rename \-\-remove /usr/bin/example
+
+.PP
+Um f\(:ur jedes Paket \- au\(sser Ihrem eigenen \fIwibble\fP\-Paket \-, das versucht,
+\fI/usr/bin/example\fP zu installieren, dieses auf \fI/usr/bin/example.foo\fP
+umzuleiten:
+.HP
+dpkg\-divert \-\-package wibble \-\-divert /usr/bin/example.foo \-\-rename
+/usr/bin/example
+.PP
+Um diese Umleitung zu entfernen:
+.HP
+dpkg\-divert \-\-package wibble \-\-rename \-\-remove /usr/bin/example
+.
+.SH "SIEHE AUCH"
+\fBdpkg\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

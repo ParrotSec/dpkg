@@ -1,0 +1,351 @@
+.\" dpkg manual page - start-stop-daemon(8)
+.\"
+.\" Copyright © 1999 Klee Dienes <klee@mit.edu>
+.\" Copyright © 1999 Ben Collins <bcollins@debian.org>
+.\" Copyright © 2000-2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2002-2003 Adam Heath <doogie@debian.org>
+.\" Copyright © 2004 Scott James Remnant <keybuk@debian.org>
+.\" Copyright © 2008-2016, 2018 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH start\-stop\-daemon 8 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+start\-stop\-daemon \- start en stopt systeemachtergronddiensten
+.
+.SH OVERZICHT
+\fBstart\-stop\-daemon\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+\fBstart\-stop\-daemon\fP wordt gebruikt om het cre\(:eren en afsluiten van
+processen op systeemniveau te regelen. Door een van de overeenkomstige
+opties te gebruiken kan \fBstart\-stop\-daemon\fP geconfigureerd worden om
+bestaande exemplaren te vinden van actieve processen.
+.PP
+Opmerking: tenzij \fB\-\-pid\fP of \fB\-\-pidfile\fP opgegeven werden, gedraagt
+\fBstart\-stop\-daemon\fP zich gelijk \fBkillall\fP(1).  \fBstart\-stop\-daemon\fP zal de
+procestabel overlopen op zoek naar processen die overeenkomen met de
+procesnaam, het moeder\-pid, uid en/of gid (als ze opgegeven werden). Voor
+elk proces dat een overeenkomst oplevert, zal verhinderd worden dat
+\fB\-\-start\fP het proces opstart. Aan alle overeenkomende processen zal het
+TERM\-signaal (of het signaal dat met \fB\-\-signal\fP of \fB\-\-retry\fP opgegeven
+werd) gegeven worden, indien \fB\-\-stop\fP opgegeven werd. Voor
+achtergronddiensten met langlevende dochterprocessen die bij een \fB\-\-stop\fP
+moeten blijven bestaan, moet u een pid\-bestand opgeven.
+.
+.SH COMMANDO'S
+.TP 
+\fB\-S\fP, \fB\-\-start\fP [\fB\-\-\fP] \fIargumenten\fP
+Ga na of het opgegeven proces bestaat. Indien een dergelijk proces bestaat,
+doet \fBstart\-stop\-daemon\fP niets en sluit het af met foutstatus 1 (0 indien
+\fB\-\-oknodo\fP opgegeven werd). Indien een dergelijk proces niet bestaat, start
+het een exemplaar ervan, door het programma te gebruiken dat ofwel met
+\fB\-\-exec\fP opgegeven werd, ofwel met \fB\-\-startas\fP als dat gebruikt
+werd. Eventuele argumenten die na \fB\-\-\fP opgegeven werden aan de
+commandoregel, worden ongewijzigd doorgegeven aan het programma dat
+opgestart wordt.
+.TP 
+\fB\-K\fP, \fB\-\-stop\fP
+Gaat na of het opgegeven proces bestaat. Indien een dergelijk proces
+bestaat, geeft \fBstart\-stop\-daemon\fP het het signaal dat met \fB\-\-signal\fP
+opgegeven werd en sluit dan af met foutstatus 0. Indien een dergelijk proces
+niet bestaat, sluit \fBstart\-stop\-daemon\fP af met foutstatus 1 (0 indien
+\fB\-\-oknodo\fP opgegeven werd). Indien \fB\-\-retry\fP opgegeven werd, zal
+\fBstart\-stop\-daemon\fP controleren of het/de proces(sen) be\(:eindigd werden.
+.TP 
+\fB\-T\fP, \fB\-\-status\fP
+Gaat het bestaan van een opgegeven proces na en geeft een afsluitstatuscode
+terug die in overeenstemming is met de LSB\-acties voor initialisatiescripts
+(LSB Init Script Actions) (sinds versie 1.16.1).
+.TP 
+\fB\-H\fP, \fB\-\-help\fP
+Toon informatie over het gebruik en sluit af.
+.TP 
+\fB\-V\fP, \fB\-\-version\fP
+Toon de programmaversie en sluit af.
+.
+.SH OPTIES
+.SS Vergelijkingsopties
+.TP 
+\fB\-\-pid\fP \fIpid\fP
+Ga na of een proces bestaat met het opgegeven \fIpid\fP (sinds versie
+1.17.6). Het \fIpid\fP moet een getal zijn groter dan 0.
+.TP 
+\fB\-\-ppid\fP \fImoeder\-pid\fP
+Ga na of een proces bestaat met het opgegeven moeder\-pid \fImoeder\-pid\fP
+(sinds versie 1.17.7). Het \fImoeder\-pid\fP moet een getal zijn groter dan 0.
+.TP 
+\fB\-p\fP, \fB\-\-pidfile\fP \fIpid\-bestand\fP
+Ga na of een proces het bestand \fIpid\-bestand\fP aangemaakt heeft.
+.IP
+Opmerking: deze vergelijkingsoptie alleen gebruiken, kan ertoe leiden dat
+geageerd wordt op niet\-bedoelde processen in het geval het oude proces
+eindigde zonder dat het in staat was het \fIpid\-bestand\fP te verwijderen.
+.IP
+\fBWarning:\fP using this match option with a world\-writable pidfile or using
+it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
+user will be refused with an error (since version 1.19.3) as this is a
+security risk, because either any user can write to it, or if the daemon
+gets compromised, the contents of the pidfile cannot be trusted, and then a
+privileged runner (such as an init script executed as root) would end up
+acting on any system process.  Using \fI/dev/null\fP is exempt from these
+checks.
+.TP 
+\fB\-x\fP, \fB\-\-exec\fP \fIprogramma\fP
+Ga na of er processen bestaan die exemplaren zijn van dit \fIprogramma\fP. Het
+argument \fIprogramma\fP moet een absolute padnaam zijn. Opmerking: met
+ge\(:interpreteerde scripts kan dit anders dan bedoeld werken, aangezien de
+interpreter aangewezen zal worden als het bedoelde programma. Houd er
+rekening mee dat ook processen die in een chroot uitgevoerd worden een
+overeenkomst zullen opleveren. Het kan dus nodig zijn om bijkomende
+vergelijkingsrestricties op te geven.
+.TP 
+\fB\-n\fP, \fB\-\-name\fP \fIprocesnaam\fP
+Ga na of er processen bestaan die de naam \fIprocesnaam\fP hebben. De
+\fIprocesnaam\fP is meestal de bestandsnaam van het proces, maar dat kan door
+het proces zelf gewijzigd zijn. Opmerking: op de meeste systemen wordt deze
+informatie gehaald uit de kernel uit de comm\-naam van het proces. De limiet
+voor de lengte ervan heeft de tendens relatief klein te zijn (uitgaan van
+meer dan 15 tekens is niet\-overdraagbaar).
+.TP 
+\fB\-u\fP, \fB\-\-user\fP \fIgebruikersnaam\fP|\fIuid\fP
+Ga na of er processen zijn die eigendom zijn van de gebruiker die met
+\fIgebruikersnaam\fP of \fIuid\fP opgegeven werd. Opmerking: enkel deze
+vergelijkingsoptie gebruiken zal ertoe leiden dat geageerd wordt op alle
+processen die met de gebruiker overeenkomen.
+.
+.SS "Algemene opties"
+.TP 
+\fB\-g\fP, \fB\-\-group\fP \fIgroep\fP|\fIgid\fP
+Verander naar \fIgroep\fP of \fIgid\fP bij het starten van het proces.
+.TP 
+\fB\-s\fP, \fB\-\-signal\fP \fIsignaal\fP
+Samen met \fB\-\-stop\fP gebruikt, geeft het op welk signaal moet gestuurd worden
+naar de processen die gestopt worden (standaard is dat TERM).
+.TP 
+\fB\-R\fP, \fB\-\-retry\fP \fIverlooptijd\fP|\fIschema\fP
+Samen met \fB\-\-stop\fP gebruikt, geeft het aan dat \fBstart\-stop\-daemon\fP moet
+nagaan of het/de proces(sen) stoppen. Het zal bij herhaling controleren of
+er eventueel processen actief zijn die een overeenkomst opleveren, totdat
+dit voor geen enkel proces nog het geval is. Indien de processen niet
+afsluiten, dan zal het verdere actie ondernemen, zoals aangegeven door het
+schema.
+
+Indien \fIverlooptijd\fP opgegeven werd in plaats van \fIschema\fP, dan wordt het
+schema \fIsignaal\fP\fB/\fP\fIverlooptijd\fP\fB/KILL/\fP\fIverlooptijd\fP gebruikt, waarbij
+\fIsignaal\fP het signaal is dat opgegeven werd met \fB\-\-signal\fP.
+
+\fIschema\fP is een lijst van minstens twee items, van elkaar gescheiden door
+slashes (\fB/\fP). Elk item kan \fB\-\fP\fIsignaalnummer\fP of [\fB\-\fP]\fIsignaalnaam\fP
+zijn, hetgeen betekent dat dit signaal gegeven moet worden, of
+\fIverlooptijd\fP, hetgeen betekent dat dit aantal seconden gewacht moet worden
+op het afsluiten van de processen, of \fBforever\fP, hetgeen betekent dat de
+rest van het schema zo nodig permanent herhaald moet worden.
+
+Indien het einde van het schema bereikt wordt en \fBforever\fP niet opgegeven
+werd, dan zal \fBstart\-stop\-daemon\fP afsluiten met de foutstatus 2. Indien een
+schema opgegeven werd, dan wordt elk signaal dat met \fB\-\-signal\fP opgegeven
+werd, genegeerd.
+.TP 
+\fB\-a\fP, \fB\-\-startas\fP \fIpadnaam\fP
+Samen met \fB\-\-start\fP gebruikt, start dit het proces dat met \fIpadnaam\fP
+opgegeven werd. Indien dit niet opgegeven werd, wordt als standaard het
+argument gebruikt dat bij \fB\-\-exec\fP opgegeven werd.
+.TP 
+\fB\-t\fP, \fB\-\-test\fP
+Toon de acties die ondernomen zouden worden en geef de passende
+terugkeerwaarde, maar onderneem geen actie.
+.TP 
+\fB\-o\fP, \fB\-\-oknodo\fP
+Geef afsluitstatus 0 terug in plaats van 1 indien er geen acties ondernomen
+werden (zouden worden).
+.TP 
+\fB\-q\fP, \fB\-\-quiet\fP
+Geef geen informatieve berichten weer. Toon enkel foutmeldingen.
+.TP 
+\fB\-c\fP, \fB\-\-chuid\fP \fIgebruikersnaam\fP|\fIuid\fP[\fB:\fP\fIgroep\fP|\fIgid\fP]
+Verander naar deze gebruikersnaam/uid vooraleer het proces te starten. U
+kunt ook een groep opgeven door een \fB:\fP toe te voegen en dan de groep of
+gid op te geven op dezelfde manier als voor het commando \fBchown\fP(1)
+(\fIgebruiker\fP\fB:\fP\fIgroep\fP). Indien een gebruiker opgegeven wordt zonder een
+groep, dan wordt voor die gebruiker zijn primaire GID gebruikt. Bij het
+gebruik van deze optie moet u er zich van bewust zijn dat ook de primaire en
+bijkomende groepen ingesteld worden, ook als de optie \fB\-\-group\fP niet
+opgegeven werd. De optie \fB\-\-group\fP dient enkel voor groepen waartoe de
+gebruiker normaal niet behoort (zoals het voor een specifiek proces
+instellen van een groepslidmaatschap voor algemene gebruikers zoals
+\fBnobody\fP).
+.TP 
+\fB\-r\fP, \fB\-\-chroot\fP \fIhoofdmap\fP
+Chdir en chroot naar \fIhoofdmap\fP vooraleer het proces te starten. Merk op
+dat het pid\-bestand ook na het chrooten gemaakt wordt.
+.TP 
+\fB\-d\fP, \fB\-\-chdir\fP \fIpad\fP
+Chdir naar \fIpad\fP vooraleer het proces te starten. Dit gebeurt na het
+chrooten als de optie \fB\-r\fP|\fB\-\-chroot\fP ingesteld werd. Indien dit niet
+opgegeven wordt, dan zal \fBstart\-stop\-daemon\fP een chdir naar de hoofdmap
+uitvoeren voor de start van het programma.
+.TP 
+\fB\-b\fP, \fB\-\-background\fP
+Wordt meestal gebruikt bij programma's die zich niet uit zichzelf
+afsplitsen. Deze optie zal \fBstart\-stop\-daemon\fP dwingen om een nieuw proces
+(fork) te beginnen vooraleer het proces te starten en dat op de achtergrond
+te plaatsen. \fBWaarschuwing: start\-stop\-daemon\fP kan de afsluitstatus van het
+proces niet opvolgen mocht de uitvoering ervan om \fBeen of andere\fP reden
+mislukken. Dit is een laatste toevlucht en is enkel bedoeld voor programma's
+waarvoor het ofwel geen zin heeft om uit zichzelf een nieuw proces (fork) te
+beginnen, of waarvoor het ondoenbaar is om code toe te voegen waardoor ze
+dat uit zichzelf zouden doen.
+.TP 
+\fB\-\-notify\-await\fP
+Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is,
+vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit
+past elementen van het 'readiness procotol' van systemd toe, zoals dit in de
+man\-pagina \fBsd_notify\fP(3) gespecificeerd wordt. De volgende variabelen
+worden ondersteund:
+.RS
+.TP 
+\fBREADY=1\fP
+Het programma is gereed om zijn dienstverlening aan te bieden en dus kunnen
+we veilig afsluiten.
+.TP 
+\fBEXTEND_TIMEOUT_USEC=\fP\fIaantal\fP
+Het programma vraagt om de wachttijd uit te breiden met \fIaantal\fP
+microseconden. Dit stelt de huidige wachttijd opnieuw in op de opgegeven
+waarde.
+.TP 
+\fBERRNO=\fP\fInummer\fP
+Het programma sluit af met een foutmelding. Hetzelfde doen en van de
+\fBerrno\fP\-waarde de gebruikersvriendelijke tekenreeks tonen.
+.RE
+.
+.TP 
+\fB\-\-notify\-timeout\fP\fIwachttijd\fP
+Een wachttijd instellen voor de optie \fB\-\-notify\-await\fP (sinds versie
+1.19.3). Wanneer de wachttijd verlopen is, zal \fBstart\-stop\-daemon\fP
+afsluiten met een foutmelding en zal niet gewacht worden op de kennisgeving
+van gereedheid. Standaard is dit \fB60\fP seconden.
+.TP 
+\fB\-C\fP, \fB\-\-no\-close\fP
+Sluit een eventuele bestandsindicator niet bij het naar de achtergrond
+dwingen van de achtergronddienst (sinds version 1.16.5). Gebruikt met het
+oog op debuggen om de uitvoer van het proces te zien of om
+bestandsindicatoren om te leiden om de procesuitvoer te loggen. Enkel
+relevant als \fB\-\-background\fP gebruikt wordt.
+.TP 
+\fB\-N\fP, \fB\-\-nicelevel\fP \fIgeheel\-getal\fP
+Dit wijzigt de prioriteit van het proces voor het gestart wordt.
+.TP 
+\fB\-P\fP, \fB\-\-procsched\fP \fIbeleid\fP\fB:\fP\fIprioriteit\fP
+Dit wijzigt het procesplannerbeleid en de procesplannerprioriteit van het
+proces voor het gestart wordt (sinds versie 1.15.0). Facultatief kan de
+prioriteit opgegeven worden door een \fB:\fP, gevolgd door de waarde, toe te
+voegen. De standaard\fIprioriteit\fP is 0. De momenteel ondersteunde waarden
+voor beleid zijn \fBother\fP, \fBfifo\fP en \fBrr\fP.
+.TP 
+\fB\-I\fP, \fB\-\-iosched\fP \fIklasse\fP\fB:\fP\fIprioriteit\fP
+Dit wijzigt de IO\-plannerklasse en IO\-plannerprioriteit van het proces voor
+het gestart wordt (sinds versie 1.15.0). Facultatief kan de prioriteit
+opgegeven worden door een \fB:\fP, gevolgd door de waarde, toe te voegen. De
+standaard\fIprioriteit\fP is 4, tenzij \fIklasse\fP \fBidle\fP is. In dat geval zal
+\fIprioriteit\fP steeds 7 zijn. De momenteel ondersteunde waarden voor
+\fIklasse\fP zijn \fBidle\fP, \fBbest\-effort\fP en \fBreal\-time\fP.
+.TP 
+\fB\-k\fP, \fB\-\-umask\fP \fImasker\fP
+Dit stelt het umask van het proces in voor het gestart wordt (sinds versie
+1.13.22).
+.TP 
+\fB\-m\fP, \fB\-\-make\-pidfile\fP
+Wordt gebruikt bij het starten van een programma dat zijn eigen pid\-bestand
+niet cre\(:eert. Deze optie zal \fBstart\-stop\-daemon\fP het bestand waarnaar met
+\fB\-\-pidfile\fP verwezen wordt, doen aanmaken en er het pid in doen plaatsen
+juist voor het uitvoeren van het proces. Merk op dat het bestand bij het
+stoppen van het programma enkel verwijderd zal worden als
+\fB\-\-remove\-pidfile\fP gebruikt wordt. \fBOpmerking:\fP het is mogelijk dat deze
+functionaliteit niet in alle gevallen werkt. Dit is in het bijzonder zo als
+het programma dat uitgevoerd wordt, een nieuw proces (fork) begint vanuit
+zijn hoofdproces. Daarom is dit gewoonlijk enkel nuttig in combinatie met de
+optie \fB\-\-background\fP.
+.TP 
+\fB\-\-remove\-pidfile\fP
+Wordt gebruikt bij het stoppen van een programma dat zijn eigen pid\-bestand
+niet verwijdert (sinds versie 1.17.19). Deze optie zal \fBstart\-stop\-daemon\fP
+het bestand waarnaar met \fB\-\-pidfile\fP verwezen wordt, doen verwijderen na
+het be\(:eindigen van het proces.
+.TP 
+\fB\-v\fP, \fB\-\-verbose\fP
+Geef uitvoerige informatieve mededelingen weer.
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde actie werd uitgevoerd. Indien \fB\-\-oknodo\fP opgegeven werd, is
+het ook mogelijk dat er niets gedaan moest worden. Dit kan het geval zijn
+als \fB\-\-start\fP opgegeven werd en er al een overeenkomstig proces actief was,
+of als \fB\-\-stop\fP opgegeven werd en er geen overeenkomstige processen waren.
+.TP 
+\fB1\fP
+Indien \fB\-\-oknodo\fP niet opgegeven werd en niets gedaan werd.
+.TP 
+\fB2\fP
+Indien \fB\-\-stop\fP en \fB\-\-retry\fP opgegeven werden, maar het einde van het
+schema bereikt werd en de processen nog steeds actief waren.
+.TP 
+\fB3\fP
+Elke andere fout.
+.PP
+Bij het gebruik van het commando \fB\-\-status\fP, worden de volgende statuscodes
+teruggegeven:
+.TP 
+\fB0\fP
+Het programma is actief.
+.TP 
+\fB1\fP
+Het programma is niet actief en het pid\-bestand bestaat.
+.TP 
+\fB3\fP
+Het programma is niet actief.
+.TP 
+\fB4\fP
+Niet in staat om de status van het programma te bepalen.
+.
+.SH VOORBEELD
+Start de achtergronddienst \fBfood\fP tenzij er al een actief is (een proces
+met als naam food, dat actief is als gebruiker food met de pid in food.pid):
+.IP
+.nf
+start\-stop\-daemon \-\-start \-\-oknodo \-\-user food \-\-name food \e
+	\-\-pidfile /run/food.pid \-\-startas /usr/sbin/food \e
+	\-\-chuid food \-\- \-\-daemon
+.fi
+.PP
+Stuur \fBSIGTERM\fP naar \fBfood\fP en wacht tot 5 seconden op zijn be\(:eindiging:
+.IP
+.nf
+start\-stop\-daemon \-\-stop \-\-oknodo \-\-user food \-\-name food \e
+	\-\-pidfile /run/food.pid \-\-retry 5
+.fi
+.PP
+Demonstratie van een aangepast schema om \fBfood\fP te stoppen:
+.IP
+.nf
+start\-stop\-daemon \-\-stop \-\-oknodo \-\-user food \-\-name food \e
+	\-\-pidfile /run/food.pid \-\-retry=TERM/30/KILL/5
+.fi

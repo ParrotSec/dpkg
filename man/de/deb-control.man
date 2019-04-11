@@ -161,7 +161,7 @@ Der Name des Quellpakets, aus dem dieses Binärpaket stammt, falls es sich
 vom Namen des Pakets selbst unterscheidet. Falls die Quellversion sich von
 der Binärversion unterscheidet, folgt dem \fIQuellnamen\fP in Klammern eine
 \fIQuellversion\fP. Dies kann zum Beispiel bei einem rein\-binären, nicht
-Betreuer\-Upload passieren, oder wenn mittels »\fBdpkg\-gencontrol \-v\fP« eine
+Betreuer\-Upload passieren, oder wenn mittels „\fBdpkg\-gencontrol \-v\fP“ eine
 andere Binärversion gesetzt wird.
 .TP 
 \fBSubarchitecture:\fP \fI Wert\fP
@@ -352,7 +352,7 @@ speziellen Zweck und ausführbaren Format dient.
 \fBdeb\-src\-control\fP(5), \fBdeb\fP(5), \fBdeb\-version\fP(7), \fBdebtags\fP(1),
 \fBdpkg\fP(1), \fBdpkg\-deb\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

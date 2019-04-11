@@ -1,0 +1,111 @@
+.\" dpkg manual page - dpkg-checkbuilddeps(1)
+.\"
+.\" Copyright © 2001 Joey Hess <joeyh@debian.org>
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-checkbuilddeps 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-checkbuilddeps \- V\('erifier les d\('ependances et les conflits de
+construction
+.
+.SH SYNOPSIS
+\fBdpkg\-checkbuilddeps\fP [\fIoption\fP...] [\fIfichier\-control\fP]
+.
+.SH DESCRIPTION
+Ce programme v\('erifie si les d\('ependances et les conflits de construction
+list\('es dans le fichier control existent dans les paquets install\('es sur le
+syst\(`eme. S'il en existe, il les affiche et se termine avec un code de retour
+diff\('erent de \fB0\fP.
+.P
+Par d\('efaut, le fichier \fIdebian/control\fP est lu, mais un autre nom de
+fichier peut \(^etre indiqu\('e sur la ligne de commande.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-admindir\fP=\fIr\('epertoire\fP
+Changer l'endroit o\(`u se trouve la base de donn\('ees de \fBdpkg\fP (depuis
+dpkg\ 1.14.0). Par d\('efaut, c'est \fI/var/lib/dpkg\fP.
+.TP 
+\fB\-A\fP
+Ignore les lignes \fBBuild\-Depends\-Arch\fP et \fBBuild\-Conflicts\-Arch\fP (depuis
+dpkg\ 1.16.4). \(`A utiliser lorsque seuls des paquets ind\('ependants d'une
+architecture seront construits ou \(`a combiner avec \fB\-B\fP si seul un paquet
+source est construit.
+.TP 
+\fB\-B\fP
+Ignore les lignes \fBBuild\-Depends\-Indep\fP et \fBBuild\-Conflicts\-Indep\fP. \(`A
+utiliser lorsque seuls des paquets d\('ependants de l'architecture sont
+construits ou \(`a combiner avec \fB\-A\fP si seul un paquet source est construit.
+.TP 
+\fB\-I\fP
+Ignore les d\('ependances et les conflits de construction internes (depuis
+dpkg\ 1.18.2). Ce sont les d\('ependances implicites qui sont habituellement
+demand\('ees sur une distribution particuli\(`ere, c'est l'ensemble de paquets
+appel\('e Build\-Essentiel.
+.TP 
+\fB\-d \fP\fIchaine\-des\-d\('ependances\-pour\-la\-construction\fP
+.TP 
+\fB\-c \fP\fIcha\(^ine\-des\-conflits\-de\-construction\fP
+Utilise les d\('ependances et conflits de construction donn\('es au lieu de ceux
+indiqu\('es dans le fichier \fIdebian/control\fP (depuis dpkg\ 1.14.17).
+.TP 
+\fB\-a \fP\fIarch\fP
+V\('erifie les d\('ependances et conflits de construction en supposant que le
+paquet d\('ecrit dans le fichier de contr\(^ole doit \(^etre construit pour
+l'architecture h\(^ote indiqu\('ee au lieu de celle du syst\(`eme (depuis
+dpkg\ 1.16.2).
+.TP 
+\fB\-P \fP\fIprofil\fP[\fB,\fP...]
+V\('erifie les d\('ependances et conflits de construction en supposant que le
+paquet d\('ecrit dans le fichier de contr\(^ole doit \(^etre construit pour le ou les
+profils donn\('es (depuis dpkg\ 1.17.2). L'argument est une liste s\('epar\('ee par
+des virgules des noms de profil.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDEB_BUILD_PROFILES\fP
+Si cette option est utilis\('ee, elle sera utilis\('ee comme profil(s) de
+construction actif(s) pour le paquet \(`a construire. C'est une liste s\('epar\('ee
+par des espaces de noms de profil. Cette option est outrepass\('ee par l'option
+\fB\-P\fP.
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

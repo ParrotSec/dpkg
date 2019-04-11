@@ -1,0 +1,123 @@
+.\" dpkg manual page - dpkg-trigger(1)
+.\"
+.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-trigger 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-trigger \- ein Paket\-Trigger\-Hilfswerkzeug
+.
+.SH \(:UBERSICHT
+\fBdpkg\-trigger\fP [\fIOption\fP...] \fITrigger\-Name\fP
+.br
+\fBdpkg\-trigger\fP [\fIOption\fP …] \fIBefehl\fP
+.
+.SH BESCHREIBUNG
+\fBdpkg\-trigger\fP ist ein Werkzeug, um Trigger (deutsch: Ausl\(:oser) explizit zu
+aktivieren und den laufenden \fBdpkg\fP auf deren Unterst\(:utzung hin zu
+\(:uberpr\(:ufen.
+.PP
+Dies kann von Betreuerskripten in komplexen und if\-then\-else\-Situationen
+verwandt werden, wo die Datei\-Trigger oder die Steuerung von Dateidirektiven
+durch explizite \fBactivate\fP\-Trigger nicht ausreichen. Es kann auch zum
+Testen und von Systemadministratoren verwandt werden (beachten Sie aber,
+dass Trigger nicht tats\(:achlich durch \fBdpkg\-trigger\fP ausgef\(:uhrt werden).
+.PP
+Nicht erkannte Triggernamen\-Syntaxen sind f\(:ur \fBdpkg\-trigger\fP ein Fehler.
+.
+.SH BEFEHLE
+.TP 
+\fB\-\-check\-supported\fP
+\(:Uberpr\(:ufe, ob der laufende \fBdpkg\fP Trigger unterst\(:utzt (normalerweise vom
+Postinst aufgerufen). Endet mit \fB0\fP, falls ein Trigger\-f\(:ahiger \fBdpkg\fP
+ausgef\(:uhrt wurde, oder mit \fB1\fP und einer Fehlermeldung nach Stderr, falls
+nicht. Normalerweise ist es allerdings besser, einfach den gew\(:unschten
+Trigger mit \fBdpkg\-trigger\fP zu aktivieren.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH OPTIONEN
+.TP 
+\fB\-\-admindir=\fP\fIVerz\fP
+\(:Andert den Ablageort der \fBdpkg\fP\-Datenbank. Der Standardort ist
+\fI/var/lib/dpkg\fP.
+.TP 
+\fB\-\-by\-package=\fP\fIPaket\fP
+\(:Uberschreibe den Trigger\-Erwartenden (normalerweise wird dies von \fBdpkg\fP
+durch die Umgebungsvariable \fBDPKG_MAINTSCRIPT_PACKAGE\fP der Betreuerskripte
+gesetzt, wobei das Paket benannt wird, zu dem das Skript geh\(:ort und dies
+wird standardm\(:a\(ssig verwandt).
+.TP 
+\fB\-\-no\-await\fP
+Diese Option arrangiert, dass das aufrufende Paket T (falls zutreffend)
+nicht auf die Abarbeitung des Triggers warten muss, das bzw. die
+interessierte(n) Paket(e) I werden nicht zu der Liste der auf Bearbeitung
+wartenden Trigger von T hinzugef\(:ugt und der Status von T bleibt
+unver\(:andert. T kann als installiert betrachtet werden, obwohl I den Trigger
+noch nicht verarbeitet haben k\(:onnte.
+.TP 
+\fB\-\-await\fP
+Dies Option f\(:uhrt das inverse von \fB\-\-no\-await\fP aus (seit Dpkg
+1.17.21). Falls das interessierte Paket eine Direktive \(Bqnoawait\(lq erkl\(:art
+hat, dann wird diese Option nicht wirksam sein. Derzeit ist sie die
+Voreinstellung.
+.TP 
+\fB\-\-no\-act\fP
+Nur testen, nichts tats\(:achlich \(:andern.
+.
+.SH R\(:UCKGABEWERT
+.TP 
+\fB0\fP
+Die angeforderte Aktion wurde erfolgreich ausgef\(:uhrt. Oder ein Pr\(:ufausdruck
+oder eine Zusicherung (Assertion) lieferte Wahr zur\(:uck.
+.TP 
+\fB1\fP
+Ein Pr\(:ufausdruck oder eine Zusicherung lieferte Falsch zur\(:uck.
+.TP 
+\fB2\fP
+Fataler oder nicht behebbarer Fehler aufgrund ung\(:ultiger
+Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
+die Datenbank, Speicherzuweisungen usw.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_ADMINDIR\fP
+Falls gesetzt und die Option \fB\-\-admindir\fP nicht verwandt wurde, wird dies
+als Datenverzeichnis von \fBdpkg\fP verwandt.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.
+.SH "SIEHE AUCH"
+.\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.
+\fBdpkg\fP(1), \fBdeb\-triggers\fP(5), \fB/usr/share/doc/dpkg\-dev/triggers.txt.gz\fP.
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

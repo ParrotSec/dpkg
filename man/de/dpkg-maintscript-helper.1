@@ -1,0 +1,289 @@
+.\" dpkg manual page - dpkg-maintscript-helper(1)
+.\"
+.\" Copyright © 2010-2012 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-maintscript\-helper 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-maintscript\-helper \- Bekannte Einschr\(:ankungen in Dpkg in
+Betreuerskripten umgehen
+.
+.SH \(:UBERSICHT
+\fBdpkg\-maintscript\-helper\fP \fIBefehl\fP [\fIParameter\fP …] \fB\-\-\fP
+\fIBetr\-Skript\-Parameter\fP …
+.
+.SH "BEFEHLE UND PARAMETER"
+.P
+\fBsupports\fP \fIBefehl\fP
+.P
+\fBrm_conffile\fP \fIConffile\fP [\fIvorhergehende_Version\fP [\fIPaket\fP]]
+.P
+\fBmv_conffile\fP \fIalte_Conffile\fP \fIneue_Conffile\fP [\fIvorhergehende_Version\fP
+[\fIPaket\fP]]
+.P
+\fBsymlink_to_dir\fP \fIPfadname\fP \fIaltes_Ziel\fP [\fIvorhergehende_Version\fP
+[\fIPaket\fP]]
+.P
+\fBdir_to_symlink\fP \fIPfadname\fP \fIneues_Ziel\fP [\fIvorhergehende_Version\fP
+[\fIPaket\fP]]
+.
+.SH BESCHREIBUNG
+.P
+Dieses Programm wurde so entworfen, dass es in Betreuerskripten ausgef\(:uhrt
+werden kann, um einige Aufgaben zu erledigen, die \fBdpkg\fP (noch) nicht
+selbst erledigen kann, entweder aufgrund von Design\-Entscheidungen oder
+aufgrund aktueller Einschr\(:ankungen.
+.P
+Viele dieser Aufgaben ben\(:otigen koordinierte Aktionen aus mehreren
+Betreuerskripten (\fBpreinst\fP, \fBpostinst\fP, \fBprerm\fP, \fBpostrm\fP). Um Fehler
+zu vermeiden, wird der gleiche Aufruf einfach in alle Skripte eingef\(:ugt und
+das Programm wird sein Verhalten automatisch abh\(:angig von der Variable
+\fBDPKG_MAINTSCRIPT_NAME\fP und den Argumenten im Betreuerskript, die Sie nach
+einem doppelten Bindestrich \(:ubergeben m\(:ussen, anpassen.
+.
+.SH "GEMEINSAME PARAMETER"
+.TP 
+\fIvorhergehende_Version\fP
+Definiert die letzte Version des Pakets, dessen Upgrade die Operation
+ausl\(:osen soll. Es ist wichtig, \fIvorhergehende_Version\fP korrekt zu
+berechnen, so dass die Operationen korrekt ausgef\(:uhrt werden, selbst falls
+der Benutzer das Paket mit einer lokalen Version neugebaut hat. Falls
+\fIvorhergehende_Version\fP leer ist oder weggelassen wurde wird die Operation
+bei jedem Upgrade versucht (Hinweis: Es ist sicherer, die Version anzugeben
+und damit die Operation nur einmal versuchen zu lassen).
+
+Falls das Conffile in mehreren Versionen nicht ausgeliefert wurde und Sie
+jetzt die Betreuerskripte anpassen, um die \(:uberfl\(:ussige Datei zu entfernen,
+sollte \fIvorhergehende_Version\fP auf die Version des Pakets gesetzt werden,
+die Sie jetzt zusammenstellen, nicht auf die erste Version des Pakets, bei
+dem das Conffile fehlte. Dies trifft genauso auch auf alle anderen Aktionen
+zu.
+
+Wird beispielsweise eine Conffile in Version \fB2.0\-1\fP eines Pakets entfernt,
+sollte \fIvorhergehende_Version\fP auf \fB2.0\-1~\fP gesetzt werden. Dies f\(:uhrt
+dazu, dass das Conffile entfernt wird, selbst falls der Benutzer die
+vorhergehende Version \fB1.0\-1\fP als \fB1.0\-1local1\fP neu gebaut hat. Oder ein
+Paket, das einen Pfad von einem Symlink (das in Version \fB1.0\-1\fP
+ausgeliefert wurde) zu einem Verzeichnis (ausgeliefert in Version \fB2.0\-1\fP)
+wechselt, aber die eigentliche Umstellung in den Betreuerskripten in Version
+\fB3.0\-1\fP durchf\(:uhrt, sollte \fIvorhergehende_Version\fP auf \fB3.0\-1~\fP setzen.
+.TP 
+\fIPaket\fP
+Der Paketname, dem der Pfadname geh\(:ort. Wenn das Paket \(BqMulti\-Arch: same\(lq
+ist, muss dieser Parameter die Architektur\-Spezifikation enthalten,
+andernfalls sollte er normalerweise die Architektur\-Spezifikation \fBnicht\fP
+enthalten (da dies Cross\-Grades verhindern oder die Umstellung von
+architekturspezifisch auf die Architektur \fBall\fP oder umgekehrt verhindern
+w\(:urde). Falls dieser Parameter leer oder nicht angegeben ist, werden die
+(von \fBdpkg\fP bei der Ausf\(:uhrung der Betreuerskripte gesetzten)
+Umgebungsvariablen \fBDPKG_MAINTSCRIPT_PACKAGE\fP und \fBDPKG_MAINTSCRIPT_ARCH\fP
+verwandt, um den Architektur\-spezifizierten Paketnamen zu erstellen.
+.TP 
+\fB\-\-\fP
+Alle Parameter der Betreuerskripte m\(:ussen nach \fB\-\-\fP an das Programm
+weitergeleitet werden.
+.SH "CONFFILE\-BEZOGENE AUFGABEN"
+.P
+Beim Upgrade eines Pakets wird \fBdpkg\fP ein Conffile (eine
+Konfigurationsdatei, bei der \fBdpkg\fP die \(:Anderungen des Benutzers erhalten
+soll) nicht automatischen entfernen, falls sie nicht in der neueren Version
+enthalten ist. Es gibt zwei Hauptgr\(:unde daf\(:ur; der erste ist, dass die
+Conffile versehentlich entfallen sein und die n\(:achste Version sie wieder
+herstellen k\(:onnte und die Benutzer die \(:Anderung nicht weggeworfen sehen
+wollen. Der zweite besteht darin, dass Paketen erlaubt werden soll, von
+einer Dpkg\-betreuten Conffile auf eine Datei, die von den Betreuerskripten
+des Pakets, normalerweise mit einem Werkzeug wie Debconf oder Ucf, verwaltet
+wird, umzustellen.
+.P
+Das bedeutet, falls ein Paket eine Conffile umbenennen oder entfernen soll,
+muss es dies explizit durchf\(:uhren und \fBdpkg\-maintscript\-helper\fP kann dazu
+verwandt werden, eine sanfte L\(:oschung und Verschiebung von Conffiles
+innerhalb von Betreuerskripten durchzuf\(:uhren.
+.
+.SS "Eine Conffile entfernen"
+.P
+Falls eine Conffile komplett entfernt wird, sollte sie von der Platte
+entfernt werden, falls der Benutzer sie nicht ver\(:andert hat. Falls es lokale
+Anpassungen gibt, sollten diese erhalten werden. Falls das Upgrade des
+Pakets abgebrochen wird, sollte die neuerdings veraltete Conffile nicht
+verschwinden.
+.P
+All dies wird durch Einsetzen der folgenden Shell\-Schnipsel in die
+Betreuerskripte \fBpreinst\fP, \fBpostinst\fP und \fBpostrm\fP implementiert:
+.P
+    dpkg\-maintscript\-helper rm_conffile \e
+        \fIConffile\fP \fIvorhergehende_Version\fP \fIPaket\fP \-\- "$@"
+.P
+\fIConffile\fP ist der Dateiname der zu entfernenden Conffile.
+.P
+Aktuelle Implementierung: im \fBpreinst\fP wird gepr\(:uft, ob die Conffile
+ge\(:andert wurde. Dann wird sie entweder in \fIConffile\fP\fB.dpkg\-remove\fP (falls
+sie nicht ge\(:andert wurde) oder in \fIConffile\fP\fB.dpkg\-backup\fP (falls sie
+ge\(:andert wurde) umbenannt. Im \fBpostinst\fP wird letztere in
+\fIConffile\fP\fB.dpkg\-bak\fP umbenannt und als Referenz behalten, da sie
+Benutzer\(:anderungen enth\(:alt, w\(:ahrend erstere entfernt wird. Falls das Upgrade
+des Pakets abgebrochen wird, reinstalliert \fBpostrm\fP die urspr\(:ungliche
+Conffile. W\(:ahrend des vollst\(:andigen L\(:oschens wird \fBpostrm\fP auch die bisher
+behaltene Datei \fB.dpkg\-bak\fP entfernen.
+.
+.SS "Eine Conffile umbenennen"
+.P
+Falls eine Conffile von einem Ort zu einem anderen verschoben wird, m\(:ussen
+Sie sicherstellen, dass Sie auch alle \(:Anderungen des Benutzers mit
+\(:ubernehmen. Anf\(:anglich erscheint dies als einfache \(:Anderung am Skript
+\fBpreinst\fP, allerdings wird dies dazu f\(:uhren, dass der Benutzer von \fBdpkg\fP
+aufgefordert wird, die Bearbeitung der Conffile zu best\(:atigen, obwohl sie
+f\(:ur diese gar nicht verantwortlich sind.
+.P
+Sanfte Umbenennung kann durch Einsetzen der folgenden Shell\-Schnipsel in die
+Betreuerskripte \fBpreinst\fP, \fBpostinst\fP und \fBpostrm\fP implementiert werden:
+.P
+    dpkg\-maintscript\-helper mv_conffile \e
+        \fIalte_Conffile\fP \fIneue_Conffile\fP \fIvorhergehende_Version\fP \fIPaket\fP \-\- "$@"
+.P
+\fIalte_Conffile\fP und \fIneue_Conffile\fP sind der alte und der neue Name der
+umzubenennenden Conffile.
+.P
+Aktuelle Implementierung: das \fBpreinst\fP \(:uberpr\(:uft, ob die Conffile
+ver\(:andert wurde, falls ja, verbleibt sie am Platz, andernfalls wird sie in
+\fIalte_Conffile\fP\fB.dpkg\-remove\fP umbenannt. Bei der Konfiguration entfernt
+das \fBpostinst\fP \fIalte_Conffile\fP\fB.dpkg\-remove\fP und bennent \fIalte_Conffile\fP
+in \fIneue_Conffile\fP um, falls \fIalte_Conffile\fP noch existiert. Falls
+abort\-upgrade/abort\-install eintritt, benennt das \fBpostrm\fP wieder
+\fIalte_Conffile\fP\fB.dpkg\-remove\fP in \fIalte_Conffile\fP zur\(:uck, falls notwendig.
+.
+.SH "SYMLINK\- UND VERZEICHNISUMWANDLUNGEN"
+.
+Beim Upgrade eines Pakets wird \fBdpkg\fP einen Symlink nicht automatisch in
+ein Verzeichnis und umgekehrt umwandeln. Installationen \(:alterer Versionen
+(\(Fcdowngrades\(Fo) werden nicht unterst\(:utzt und der Pfad verbleibt wie er ist.
+.
+.SS "Einen Symlink in ein Verzeichnis umwandeln"
+.
+Falls ein Symlink in ein echtes Verzeichnis umgewandelt wird, m\(:ussen Sie vor
+dem Entpacken sicherstellen, dass der Symlink entfernt wird. Anf\(:anglich
+erscheint dies als einfache \(:Anderung am Skript \fBpreinst\fP, allerdings wird
+dies zu einigen Problemen f\(:uhren, falls der Administrator lokale Anpassungen
+des Symlinks durchgef\(:uhrt hat oder falls ein Downgrade des Pakets auf eine
+alte Version durchgef\(:uhrt wird.
+.P
+Sanfte Umbenennung kann durch Einsetzen der folgenden Shell\-Schnipsel in die
+Betreuerskripte \fBpreinst\fP, \fBpostinst\fP und \fBpostrm\fP implementiert werden:
+.P
+    dpkg\-maintscript\-helper symlink_to_dir \e
+        \fIPfadname\fP \fIaltes_Ziel\fP \fIvorhergehende_Version\fP \fIPaket\fP \-\- "$@"
+.P
+\fIPfadname\fP ist der absolute Name des alten Symlinks (der Pfad wird am Ende
+der Installation ein Verzeichnis sein) und \fIaltes_Ziel\fP ist der Name des
+Ziels des vorherigen Symlinks unter \fIPfadname\fP. Es kann entweder absolut
+oder relativ zum Verzeichnis, das \fIPfadname\fP enth\(:alt, sein.
+.P
+Aktuelle Implementierung: das \fBpreinst\fP \(:uberpr\(:uft, ob der Symlink existiert
+und auf \fIaltes_Ziel\fP zeigt. Falls dies nicht der Fall ist, bleibt der
+Symlink existent, andernfalls wird er in \fIPfadname\fP\fB.dpkg\-backup\fP
+umbenannt. Bei der Konfiguration entfernt das \fBpostinst\fP
+\fIPfadname\fP\fB.dpkg\-backup\fP, falls \fIPfadname\fP\fB.dpkg\-backup\fP noch ein
+Symlink ist. Falls abort\-upgrade/abort\-install eintritt, benennt das
+\fBpostrm\fP wieder \fIPfadname\fP\fB.dpkg\-backup\fP in \fIPfadname\fP zur\(:uck, falls
+notwendig.
+.
+.SS "Ein Verzeichnis in einen Symlink umwandeln"
+.
+Falls ein echtes Verzeichnis in einen Symlink umgewandelt wird, m\(:ussen Sie
+vor dem Entpacken sicherstellen, dass das Verzeichnis entfernt
+wird. Anf\(:anglich erscheint dies als einfache \(:Anderung am Skript \fBpreinst\fP,
+allerdings wird dies zu einigen Problemen f\(:uhren, falls das Verzeichnis
+Conffiles, Pfadnamen anderer Pakete oder lokal erstellte Pfadnamen enth\(:alt
+oder wenn ein Downgrade des Pakets durchgef\(:uhrt wird.
+.P
+Sanfte Umwandlung kann durch Einsetzen der folgenden Shell\-Schnipsel in die
+Betreuerskripte \fBpreinst\fP, \fBpostinst\fP und \fBpostrm\fP implementiert werden:
+.P
+    dpkg\-maintscript\-helper dir_to_symlink \e
+        \fIPfadname\fP \fIneues_Ziel\fP \fIvorhergehende_Version\fP \fIPaket\fP \-\- "$@"
+.P
+\fIPfadname\fP ist der absolute Name des alten Verzeichnisses (der Pfad wird am
+Ende der Installation ein Symlink sein) und \fIneues_Ziel\fP ist das Ziel des
+neuen Symlinks unter \fIPfadname\fP. Es kann entweder absolut oder relativ zum
+Verzeichnis, das \fIPfadname\fP enth\(:alt, sein.
+.P
+Aktuelle Implementierung: das \fBpreinst\fP \(:uberpr\(:uft, ob das Verzeichnis
+existiert, keine Conffiles, Pfadnamen anderer Pakete oder lokal erstellte
+Pfadnamen enth\(:alt. Falls nicht, bleibt es an Ort und Stelle, andernfalls
+wird es in \fIPfadname\fP\fB.dpkg\-backup\fP umbenannt und ein leeres
+Vorbereitungsverzeichnis mit Namen \fIPfadname\fP erstellt und durch eine Datei
+markiert, so dass Dpkg es nachverfolgen kann. Bei der Konfiguration beendet
+\fBpostinst\fP die Umstellung, falls \fIPfadname\fP.\fB.dpkg\-backup\fP noch ein
+Verzeichnis und \fIPfadname\fP noch das Vorbereitungsverzeichnis ist. Es
+entfernt die Markierungsdatei im Vorbereitungsverzeichnis, verschiebt die
+neu erstellten Dateien im Vorbereitungsverzeichnis in das Symlink\-Ziel
+\fIneues_Ziel\fP/, ersetzt das jetzt leere Vorbereitungsverzeichnis
+\fIPfadnbame\fP durch einen Symlink auf \fIneues_Ziel\fP und entfernt
+\fIPfadname\fP.\fB.dpkg\-backup\fP. Falls abort\-upgrade/abort\-install eintritt,
+benennt das \fBpostrm\fP wieder \fIPfadname\fP\fB.dpkg\-backup\fP in \fIPfadname\fP
+zur\(:uck, falls notwendig.
+.
+.SH "INTEGRATION IN PAKETE"
+.P
+Bei der Benutzung der Paketierungshelfer pr\(:ufen Sie bitte, ob eine native
+\fBdpkg\-maintscript\-helper\fP\-Integration existiert. Hierdurch k\(:onnte Ihr
+Aufwand verringert werden. Lesen Sie beispielsweise \fBdh_installdeb\fP(1).
+.P
+Da \fBdpkg\-maintscript\-helper\fP im \fBpreinst\fP verwandt wird, ben\(:otigt der
+bedingungslose Einsatz eine pre\-Abh\(:angigkeit (\fIpre\-dependency\fP), um
+sicherzustellen, dass die Mindestversion von \fBdpkg\fP breits entpackt
+wurde. Die ben\(:otigte Version h\(:angt vom verwandten Befehl ab, f\(:ur
+\fBrm_conffile\fP und \fBmv_conffile\fP lautet sie 1.15.7.2, f\(:ur \fBsymlink_to_dir\fP
+und \fBdir_to_symlink\fP lautet sie 1.17.14:
+.P
+    \fBPre\-Depends:\fP dpkg (>= 1.17.14)
+.P
+In vielen F\(:allen sind aber die Ausf\(:uhrungen des Programms f\(:ur das Paket
+nicht kritisch und statt einer pre\-Abh\(:angigkeit soll das Programm nur
+aufgerufen werden, falls bekannt ist, dass der ben\(:otigte Befehl vom derzeit
+installierten \fBdpkg\fP unterst\(:utzt wird:
+.P
+    if dpkg\-maintscript\-helper supports \fIcommand\fP; then
+        dpkg\-maintscript\-helper \fIcommand\fP …
+    fi
+.P
+Der Befehl \fBsupports\fP liefert im Erfolgsfall 0, ansonsten 1 zur\(:uck. Der
+Befehl \fBsupports\fP \(:uberpr\(:uft, ob die durch Dpkg gesetzten und vom Skript
+ben\(:otigten Umgebungsvariablen vorhanden sind und betrachtet es als
+Fehlschlag, falls die Umgebung nicht ausreichend ist.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.19.1). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.
+.SH "SIEHE AUCH"
+.ad l
+\fBdh_installdeb\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

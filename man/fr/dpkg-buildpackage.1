@@ -1,0 +1,575 @@
+.\" dpkg manual page - dpkg-buildpackage(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2007-2008 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008-2012 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-buildpackage 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-buildpackage \- Construire depuis les sources des paquets binaires ou
+sources
+.
+.SH SYNOPSIS
+\fBdpkg\-buildpackage\fP [\fIoption\fP...]
+.
+.SH DESCRIPTION
+\fBdpkg\-buildpackage\fP est un programme qui permet d'automatiser la
+construction d'un paquet Debian. Il comporte les \('etapes suivantes\ :
+.IP \fB1.\fP 3
+Pr\('eparation de l'environnement de compilation par positionnement de diverses
+variables d'environnement (voir \fBVARIABLES D'ENVIRONNEMENT\fP), ex\('ecution du
+point d'entr\('ee \fBinit\fP et appel de \fBdpkg\-source \-\-before\-build\fP (sauf si
+\fB\-T\fP ou \fB\-\-target\fP ont \('et\('e utilis\('es).
+.IP \fB2.\fP 3
+Contr\(^ole des d\('ependances de construction et des conflits de construction
+(non effectu\('e si \fB\-d\fP ou \fB\-\-no\-check\-builddeps\fP sont utilis\('es).
+.IP \fB3.\fP 3
+Si une ou plusieurs cibles particuli\(`eres ont \('et\('e indiqu\('ees avec les options
+\fB\-T\fP ou \fB\-\-target\fP, appel de ces cibles et arr\(^et. Dans le cas contraire,
+ex\('ecution du point d'entr\('ee \fBpreclean\fP et appel de \fBfakeroot debian/rules
+clean\fP pour nettoyage de l'arborescence source (sauf si \fB\-nc\fP ou
+\fB\-\-no\-pre\-clean\fP ont \('et\('e utilis\('es).
+.IP \fB4.\fP 3
+Ex\('ecution du point d'entr\('ee \fBsource\fP et appel de \fBdpkg\-source \-b\fP pour
+cr\('eer le paquet source (si une construction \fBsource\fP a \('et\('e demand\('ee avec
+\fB\-\-build\fP ou des options \('equivalentes).
+.IP \fB5.\fP 3
+Ex\('ecution du point d'entr\('ee \fBbuild\fP et appel de \fBdebian/rules\fP
+\fIbuild\-target\fP, puis ex\('ecution du point d'entr\('ee \fBbinary\fP suivie de
+\fBfakeroot debian/rules\fP \fIbinary\-target\fP (sauf si une construction source
+seule a \('et\('e demand\('ee avec \fB\-\-build=source\fP ou des options
+\('equivalentes). Noter que \fIbuild\-target\fP et \fIbinary\-target\fP sont soit
+\fBbuild\fP et \fBbinary\fP (cas par d\('efaut, ou si une construction \fBany\fP et
+\fBall\fP a \('et\('e demand\('ee avec \fB\-\-build\fP ou des options \('equivalentes), soit
+\fBbuild\-arch\fP et \fBbinary\-arch\fP (si une construction \fBany\fP et pas \fBall\fP a
+\('et\('e demand\('ee avec \fB\-\-build\fP ou des options \('equivalentes), soit
+\fBbuild\-indep\fP et \fBbinary\-indep\fP (si une construction \fBall\fP et pas \fBany\fP
+a \('et\('e demand\('ee avec \fB\-\-build\fP ou des options \('equivalentes).
+.IP \fB6.\fP 3
+Ex\('ecution du point d'entr\('ee \fBbuildinfo\fP et appel de \fBdpkg\-genbuildinfo\fP
+pour cr\('eer un fichier \fB.buildinfo\fP. De nombreuses options de
+\fBdpkg\-buildpackage\fP sont pass\('ees \(`a \fBdpkg\-genbuildinfo\fP.
+.IP \fB7.\fP 3
+Ex\('ecution du point d'entr\('ee \fBchanges\fP et appel de \fBdpkg\-genchanges\fP pour
+cr\('eer un fichier \fB.changes\fP. Le nom du fichier \fB.changes\fP d\('ependra du type
+de construction et sera aussi sp\('ecifique que n\('ecessaire mais pas plus\ ; pour
+une construction qui inclut \fBany\fP, le nom sera
+\fInom\-de\-source\fP\fB_\fP\fIversion\-binaire\fP\fB_\fP\fIarchitecture\fP\fB.changes\fP, ou
+pour une construction qui inclut \fBall\fP, le nom sera
+\fInom\-de\-source\fP\fB_\fP\fIversion\-binaire\fP\fB_\fP\fBall.changes\fP, ou pour une
+construction qui inclut \fBsource\fP, le nom sera
+\fInom\-de\-source\fP\fB_\fP\fIversion\-source\fP\fB_\fP\fBsources.changes\fP. De nombreuses
+options de \fBdpkg\-buildpackage\fP sont pass\('ees \(`a \fBdpkg\-genchanges\fP.
+.IP \fB8.\fP 3
+Ex\('ecution du point d'entr\('ee \fBpostclean\fP et si \fB\-tc\fP ou \fB\-\-post\-clean\fP
+sont utilis\('es, appel de \fBfakeroot debian/rules clean\fP \(`a nouveau.
+.IP \fB9.\fP 3
+Appel de \fBdpkg\-source \-\-after\-build\fP.
+.IP \fB10.\fP 3
+Ex\('ecution du point d'entr\('ee \fBcheck\fP et appel d'un contr\(^oleur de paquet pour
+le fichier \fB.changes\fP (dans le cas o\(`u une commande est sp\('ecifi\('ee dans
+\fBDEB_CHECK_COMMAND\fP ou avec \fB\-\-check\-command\fP).
+.IP \fB11.\fP 3
+Ex\('ecution du point d'entr\('ee \fBsign\fP et appel de \fBgpg2\fP ou de \fBgpg\fP (\(`a
+condition que ce ne soit pas une construction pour UNRELEASED, ou si
+\fB\-\-no\-sign\fP est sp\('ecifi\('e), pour signature des fichiers \fB.dsc\fP (sauf si
+\fB\-us\fP ou si \fB\-\-unsigned\-source\fP sont sp\('ecifi\('es), \fB.buildinfo\fP (sauf si
+\fB\-ui\fP, \fB\-\-unsigned\-buildinfo\fP, \fB\-uc\fP ou \fB\-\-unsigned\-changes\fP sont
+sp\('ecifi\('es) et \fB.changes\fP (sauf si \fB\-uc\fP ou \fB\-\-unsigned\-changes\fP sont
+sp\('ecifi\('es).
+.IP \fB12.\fP 3
+Ex\('ecution du point d'entr\('ee \fBdone\fP.
+.
+.SH OPTIONS
+Toutes les options longues peuvent \(^etre sp\('ecifi\('ees  \(`a la fois sur la ligne
+de commande et dans les fichiers de configuration utilisateur et de syst\(`eme
+\fBdpkg\-buildpackage\fP. Chaque ligne du fichier de configuration est soit une
+option (identique \(`a une option en ligne de commande mais sans tiret), soit
+un commentaire (si elle commence par \(Fo\ \fB#\fP\ \(Fc).
+
+.TP 
+\fB\-\-build=\fP\fItype\fP
+Indique le \fItype\fP de construction \(`a partir d'une liste de composants
+s\('epar\('es par des virgules (depuis dpkg\ 1.18.5). Pass\('e \(`a \fBdpkg\-genchanges\fP.
+
+Les valeurs autoris\('ees sont\ :
+.RS
+.TP 
+\fBsource\fP
+Construit le paquet source. Note\ : quand cette valeur est utilis\('ee toute
+seule et si ce que vous voulez est seulement (re)construire le paquet source
+\(`a partir d'une arborescence des sources propre, l'utilisation directe de
+\fBdpkg\-source\fP est toujours une meilleure option dans la mesure o\(`u cela ne
+demande pas l'installation de d\('ependances de construction qui sont sinon
+n\('ecessaires pour pouvoir appeler la cible \fBclean\fP.
+.TP 
+\fBany\fP
+Construit les paquets binaires sp\('ecifiques \(`a l'architecture.
+.TP 
+\fBall\fP
+Construit les paquets binaires ind\('ependants de l'architecture.
+.TP 
+\fBbinary\fP
+Construit les paquets binaires particuliers et ind\('ependants de
+l'architecture. C'est un alias de \fBany,all\fP.
+.TP 
+\fBfull\fP
+Construction compl\(`ete. C'est un alias de \fBsource,any,all\fP, et il est
+identique au cas par d\('efaut o\(`u aucune option de construction n'est indiqu\('ee.
+.RE
+.TP 
+\fB\-g\fP
+\('Equivalent de \fB\-\-build=source,all\fP (depuis dpkg\ 1.17.11).
+.TP 
+\fB\-G\fP
+\('Equivalent de \fB\-\-build=source,any\fP (depuis dpkg\ 1.17.11).
+.TP 
+\fB\-b\fP
+\('Equivalent de \fB\-\-build=binary\fP ou \fB\-\-build=any,all\fP.
+.TP 
+\fB\-B\fP
+\('Equivalent de \fB\-\-build=any\fP
+.TP 
+\fB\-A\fP
+\('Equivalent de \fB\-\-build=all\fP.
+.TP 
+\fB\-S\fP
+\('Equivalent \(`a \fB\-\-build=source\fP.
+.TP 
+\fB\-F\fP
+\('Equivalent de \fB\-\-build=full\fP, \fB\-\-build=source,binary\fP ou
+\fB\-\-build=source,any,all\fP (depuis dpkg\ 1.15.8).
+.TP 
+\fB\-\-target=\fP\fIcible\fP[,...]
+.TQ
+\fB\-\-target \fP\fIcible\fP[,...]
+.TQ
+\fB\-T\fP, \fB\-\-rules\-target=\fP\fIcible\fP
+Appelle \fBdebian/rules\fP \fIcible\fP une fois par cible sp\('ecifi\('ee, apr\(`es avoir
+mis en place l'environnement de construction (sauf pour appeler
+\fBdpkg\-source \-\-before\-build\fP), puis interrompt le processus de construction
+(depuis dpkg\ 1.15.0, option longue depuis dpkg\ 1.18.8, pris en charge de
+multiples cibles depuis dpkg\ 1.18.16). Si \fB\-\-as\-root\fP est \('egalement
+utilis\('e, la commande sera ex\('ecut\('ee avec les privil\(`eges du superutilisateur
+(voir \fB\-\-root\-command\fP). Noter que les cibles connues dont l'ex\('ecution par
+root est impos\('ee n'ont pas besoin de cette option (c'est\-\(`a\-dire les cibles
+\fBclean\fP, \fBbinary\fP, \fBbinary\-arch\fP et \fBbinary\-indep\fP).
+.TP 
+\fB\-\-as\-root\fP
+N'est utile qu'avec \fB\-\-target\fP (depuis dpkg\ 1.15.0). Impose d'ex\('ecuter la
+cible avec les privil\(`eges du superutilisateur.
+.TP 
+\fB\-si\fP
+.TQ
+\fB\-sa\fP
+.TQ
+\fB\-sd\fP
+.TQ
+\fB\-v\fP\fIversion\fP
+.TQ
+\fB\-C\fP\fIdescription\-des\-changements\fP
+.TQ
+\fB\-m\fP, \fB\-\-release\-by=\fP\fIadresse\-du\-responsable\fP
+.TQ
+\fB\-e\fP, \fB\-\-build\-by=\fP\fIadresse\-du\-responsable\fP
+Pass\('e tel quel \(`a \fBdpkg\-genchanges\fP. Voir sa page de manuel.
+.TP 
+\fB\-a\fP, \fB\-\-host\-arch\fP \fIarchitecture\fP
+Pr\('ecise l'architecture Debian pour laquelle on construit (option longue
+depuis dpkg\ 1.17.17). L'architecture de la machine sur laquelle on construit
+est automatiquement d\('etermin\('ee\ ; c'est aussi l'architecture par d\('efaut de la
+machine h\(^ote.
+.TP 
+\fB\-t\fP, \fB\-\-host\-type\fP \fItype\-de\-syst\(`eme\-gnu\fP
+Pr\('ecise le type de syst\(`eme GNU pour lequel construire (option longue depuis
+dpkg\ 1.17.17). Il peut \(^etre utilis\('e \(`a la place de \fB\-\-host\-arch\fP ou en tant
+que compl\('ement afin de remplacer le type de syst\(`eme GNU par d\('efaut de
+l'architecture Debian h\(^ote.
+.TP 
+\fB\-\-target\-arch\fP \fIarchitecture\fP
+Pr\('ecise l'architecture Debian pour laquelle les binaires compil\('es vont
+construire (depuis dpkg\ 1.17.17). La valeur par d\('efaut est l'architecture de
+la machine h\(^ote.
+.TP 
+\fB\-\-target\-type\fP \fItype\-de\-syst\(`eme\-gnu\fP
+Pr\('ecise le type de syst\(`eme GNU pour lequel les binaires compil\('es vont
+construire (depuis dpkg\ 1.17.17). Il peut \(^etre utilis\('e \(`a la place de
+\fB\-\-target\-arch\fP ou en tant que compl\('ement afin de remplacer le type de
+syst\(`eme GNU par d\('efaut de l'architecture Debian cible.
+.TP 
+\fB\-P\fP, \fB\-\-build\-profiles=\fP\fIprofil\fP[\fB,\fP...]
+Pr\('ecise le ou les profils que l'on construit, sous forme d'une liste s\('epar\('ee
+par des virgules (depuis dpkg\ 1.17.2, option longue depuis dpkg\ 1.18.8). Le
+comportement par d\('efaut est de construire pour un profil non
+sp\('ecifique. Cela les d\('efinit \('egalement (sous la forme d'une liste s\('epar\('ee
+par des espaces) en tant que variable d'environnement \fBDEB_BUILD_PROFILES\fP,
+ce qui permet, par exemple, au fichiers \fBdebian/rules\fP d'utiliser cette
+information pour des constructions conditionnelles.
+.TP 
+\fB\-j\fP, \fB\-\-jobs\fP[\fIjobs\fP|\fBauto\fP]
+Nombre de processus simultan\('es qui peuvent \(^etre ex\('ecut\('es, nombre de
+processus correspondant au nombre de processeurs en ligne si \fBauto\fP est
+indiqu\('ee (depuis dpkg\ 1.17.10), ou un nombre illimit\('e si \fIjobs\fP n'est pas
+indiqu\('e, \('equivalent \(`a l'option \fBmake\fP(1) du m\(^eme nom (depuis dpkg\ 1.14.7,
+option longue depuis dpkg\ 1.18.8). S'ajoutera tout seul \(`a la variable
+d'environnement MAKEFLAGS, afin que les appels suivants de make en h\('eritent,
+for\(,cant donc le param\(`etre parall\(`ele sur l'empaquetage (et \('eventuellement le
+syst\(`eme de construction amont s'il utilise make) ind\('ependamment de leur
+prise en charge des constructions parall\(`ele, ce qui pourrait provoquer des
+\('echecs de construction. Ajoute aussi \fBparallel=\fP\fIjobs\fP ou \fBparallel\fP \(`a la
+variable d'environnement \fBDEB_BUILD_OPTIONS\fP ce qui permet aux fichiers
+debian/rules d'utiliser cette information pour leurs propres besoins. La
+valeur de \fBj\fP remplacera les options \fBparallel=\fP\fIjobs\fP ou \fBparallel\fP
+dans la variable d'environnement \fBDEB_BUILD_OPTIONS\fP. Notez que la valeur
+\fBauto\fP sera remplac\('ee par le nombre r\('eel de processeurs actuellement
+actifs, et par cons\('equent ne sera pas transmise \(`a aucun processus fils. Si
+le nombre de processeurs en ligne ne peut pas \(^etre d\('eduit, alors le code
+utilisera par d\('efaut une ex\('ecution s\('erielle (depuis dpkg\ 1.18.15), m\(^eme si
+cela ne devrait arriver que sur des syst\(`emes exotiques et non pris en
+charge.
+.TP 
+\fB\-J\fP, \fB\-\-jobs\-try\fP[=\fIt\(^aches\fP|\fBauto\fP]
+Cette option (depuis dpkg\ 1.18.2, option longue depuis dpkg\ 1.18.8) est
+\('equivalente \(`a l'option \fB\-j\fP sauf qu'elle ne configure pas la variable
+d'environnement \fBMAKEFLAGS\fP et, \(`a ce titre, il est plus s\(^ur de l'utiliser
+avec tous les paquets y compris ceux qui ne sont pas s\('ecuris\('es pour une
+construction parall\(`ele.
+
+Le comportement par d\('efaut est \fBauto\fP (depuis dpkg\ 1.18.11). Fixer le
+nombre de t\(^aches \(`a\ 1 r\('etablira un comportement s\('eriel.
+.TP 
+\fB\-D\fP, \fB\-\-check\-builddeps\fP
+V\('erification des d\('ependances de constructions et des conflits\ ; se termine
+en cas de probl\(`emes (option longue depuis dpkg\ 1.18.8). C'est le
+comportement par d\('efaut.
+.TP 
+\fB\-d\fP, \fB\-\-no\-check\-builddeps\fP
+Pas de v\('erification des d\('ependances de constructions et des conflits (option
+longue depuis dpkg\ 1.18.8).
+.TP 
+\fB\-\-ignore\-builtin\-builddeps\fP
+Pas de v\('erification des d\('ependances de constructions internes et des
+conflits (depuis dpkg\ 1.18.2). Il s'agit des d\('ependances de construction
+implicites sp\('ecifiques \(`a la distribution habituellement requises dans un
+environnement de construction, c'est l'ensemble de paquets appel\('e
+Build\-Essentiel.
+.TP 
+\fB\-\-rules\-requires\-root\fP
+Pas de prise en compte du champ \fBRules\-Requires\-Root\fP, retour \(`a l'ancienne
+valeur par d\('efaut (depuis dpkg\ 1.19.1).
+.TP 
+\fB\-nc\fP, \fB\-\-no\-pre\-clean\fP
+Pas de nettoyage de l'arborescence des sources avant la construction (option
+longue depuis dpkg\ 1.18.8). Implique \fB\-b\fP si aucune des options \fB\-F\fP,
+\fB\-g\fP, \fB\-G\fP, \fB\-B\fP, \fB\-A\fP ou \fB\-S\fP n'est utilis\('ee). Implique \fB\-d\fP avec
+\fB\-S\fP (depuis dpkg\ 1.18.0).
+.TP 
+\fB\-\-pre\-clean\fP
+Nettoyage de l'arborescence des sources avant la construction (depuis
+dpkg\ 1.18.8). C'est le comportement par d\('efaut.
+.TP 
+\fB\-tc\fP, \fB\-\-post\-clean\fP
+Nettoyage de l'arborescence des sources (en utilisant
+\fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP \fBdebian/rules clean\fP) apr\(`es la
+construction du paquet (option longue depuis dpkg\ 1.18.8).
+.TP 
+\fB\-\-no\-post\-clean\fP
+Pas de nettoyage de l'arborescence des sources apr\(`es la construction du
+paquet (depuis dpkg\ 1.19.1). C'est le comportement par d\('efaut.
+.TP 
+\fB\-r\fP, \fB\-\-root\-command=\fP\fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP
+Quand \fBdpkg\-buildpackage\fP doit ex\('ecuter une partie du processus de
+construction en tant que root, il pr\('efixe la commande ex\('ecut\('ee par
+\fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP, si une a \('et\('e sp\('ecifi\('ee (option
+longue depuis dpkg\ 1.18.8). Si ce n'est pas le cas alors \fBfakeroot\fP est
+utilis\('e par d\('efaut. \fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP doit d\('ebuter
+par le nom d'un programme accessible depuis \fBPATH\fP et avoir comme arguments
+le nom de la commande r\('eelle avec les arguments qu'elle doit
+prendre. \fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP peut recevoir des
+param\(`etres (ils doivent \(^etre s\('epar\('es par des espaces) mais aucun
+m\('etacaract\(`ere de l'interpr\('eteur de commandes. Classiquement
+\fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP devrait \(^etre \fBfakeroot\fP,
+\fBsudo\fP, \fBsuper\fP ou \fBreally\fP. \fBsu\fP ne va pas, puisque ce programme peut
+uniquement utiliser l'interpr\('eteur de commandes de l'utilisateur avec
+l'option \fB\-c\fP au lieu de passer directement les arguments \(`a la commande qui
+doit \(^etre ex\('ecut\('ee.
+.TP 
+\fB\-R\fP, \fB\-\-rules\-file=\fP\fIfichier\-rules\fP
+Construire un paquet Debian implique g\('en\('eralement l'invocation de
+\fBdebian/rules\fP comme une commande avec de nombreux param\(`etres standard
+(depuis dpkg\ 1.14.17, option longue depuis dpkg\ 1.18.8). Avec cette option,
+il est possible d'utiliser un autre programme \(`a utiliser pour la
+construction de paquet (ainsi que ses param\(`etres s\('epar\('es par des
+espaces). Une autre utilisation possible est d'ex\('ecuter le fichier rules
+standard avec un autre programme make (par exemple en utilisant
+\fB/usr/local/bin/make \-f debian/rules\fP comme \fIfichier\-rules\fP).
+.TP 
+\fB\-\-check\-command=\fP\fIcommande\-contr\(^oleur\fP
+Commande utilis\('ee pour v\('erifier le fichier \fB.changes\fP lui\-m\(^eme et tout
+objet construit r\('ef\('erenc\('e dans le fichier (depuis dpkg\ 1.17.6). La commande
+peut recevoir comme argument le nom de chemin de \fB.changes\fP. Cette commande
+est en g\('en\('eral \fBlintian\fP.
+.TP 
+\fB\-\-check\-option=\fP\fIopt\fP
+Passer l'option \fIopt\fP \(`a \fIcommande\-contr\(^oleur\fP indiqu\('ee par
+\fBDEB_CHECK_COMMAND\fP ou \fB\-\-check\-command\fP (depuis dpkg\ 1.17.6). Peut \(^etre
+utilis\('e plusieurs fois.
+.TP 
+\fB\-\-hook\-\fP\fInom\-de\-point\-d'entr\('ee\fP\fB=\fP\fIcommande\-de\-point\-d'entr\('ee\fP
+D\('efinir le code sp\('ecifi\('e de l'interpr\('eteur de commandes
+\fIcommande\-de\-point\-d'entr\('ee\fP comme point d'entr\('ee \fInom\-de\-point\-d'entr\('e\fP
+qui sera ex\('ecut\('e aux moments sp\('ecifi\('es par les \('etapes d'ex\('ecution (depuis
+dpkg\ 1.17.6). Les points d'entr\('ee seront toujours ex\('ecut\('es m\(^eme si l'action
+suivante n'est pas effectu\('ee (sauf pour le point d'entr\('ee \fBbinary\fP). Tous
+les points d'entr\('ee seront ex\('ecut\('es dans le r\('epertoire source d\('epaquet\('e.
+
+Note\ : Les points d'entr\('ee sont susceptibles d'affecter le processus de
+construction et provoquer des \('echecs de construction si leurs commandes
+\('echouent, donc attention aux cons\('equences inattendues.
+
+Les \fInom\-de\-point\-d'entr\('ee\fP actuellement pris en charge sont\ :
+
+\fBinit preclean source build binary buildinfo changes postclean check sign
+done\fP
+
+La \fIcommande\-point\-d'entr\('ee\fP g\(`ere les cha\(^ines de formatage de substitution
+suivantes, qui lui sont appliqu\('ees avant ex\('ecution\ :
+
+.RS
+.TP 
+\fB%%\fP
+Un caract\(`ere % seul.
+.TP 
+\fB%a\fP
+Une valeur bool\('eenne (0\ ou\ 1) qui indique si l'action suivante est
+effectu\('ee.
+.TP 
+\fB%p\fP
+Nom du paquet source.
+.TP 
+\fB%v\fP
+La version du paquet source.
+.TP 
+\fB%s\fP
+La version du paquet source (sans l'\(Fo\ epoch\ \(Fc).
+.TP 
+\fB%u\fP
+La version amont.
+.RE
+.TP 
+\fB\-\-buildinfo\-option=\fP\fIopt\fP
+Passer l'option \fIopt\fP \(`a \fBdpkg\-genbuildinfo\fP (depuis dpkg\ 1.18.11). Peut
+\(^etre utilis\('e plusieurs fois.
+.TP 
+\fB\-p\fP, \fB\-\-sign\-command=\fP\fIcommande\-de\-signature\fP
+Quand \fBdpkg\-buildpackage\fP doit ex\('ecuter GPG pour signer un fichier source
+de contr\(^ole (\fB.dsc\fP) ou un fichier \fB.changes\fP, il ex\('ecute
+\fIcommande\-de\-signature\fP (recherch\('ee dans \fBPATH\fP si n\('ecessaire) au lieu de
+\fBgpg2\fP ou \fBgpg\fP (option longue depuis
+dpkg\ 1.18.1). \fIcommande\-de\-signature\fP re\(,coit tous les param\(`etres
+qu'auraient re\(,cu \fBgpg2\fP ou \fBgpg\fP. \fIcommande\-de\-signature\fP ne devra pas
+contenir d'espace ni aucun m\('etacaract\(`ere de l'interpr\('eteur de commandes.
+.TP 
+\fB\-k\fP, \fB\-\-sign\-key=\fP\fIidentifiant\-cl\('e\fP
+Pr\('eciser une cl\('e pour la signature des paquets (option longue depuis
+dpkg\ 1.18.8).
+.TP 
+\fB\-us\fP, \fB\-\-unsigned\-source\fP
+Ne pas signer le paquet source (option longue depuis dpkg\ 1.18.8).
+.TP 
+\fB\-ui\fP, \fB\-\-unsigned\-buildinfo\fP
+Ne pas signer le fichier \fB.buildinfo\fP (depuis dpkg\ 1.18.19).
+.TP 
+\fB\-uc\fP, \fB\-\-unsigned\-changes\fP
+Ne signer ni le fichier \fB.buildinfo\fP, ni le fichier \fB.changes\fP (option
+longue depuis dpkg\ 1.18.8).
+.TP 
+\fB\-\-no\-sign\fP
+Aucune signature de fichier, y compris du paquet source, du fichier
+\&\fB.buildinfo\fP et du fichier \fB.changes\fP (depuis dpkg\ 1.18.20).
+.TP 
+\fB\-\-force\-sign\fP
+Forcer la signature des fichiers produits (depuis dpkg\ 1.17.0)
+ind\('ependamment de \fB\-us\fP, \fB\-\-unsigned\-source\fP, \fB\-ui\fP,
+\fB\-\-unsigned\-buildinfo\fP, \fB\-uc\fP, \fB\-\-unsigned\-changes\fP ou d'autres
+heuristiques internes.
+.TP 
+\fB\-sn\fP
+.TQ
+\fB\-ss\fP
+.TQ
+\fB\-sA\fP
+.TQ
+\fB\-sk\fP
+.TQ
+\fB\-su\fP
+.TQ
+\fB\-sr\fP
+.TQ
+\fB\-sK\fP
+.TQ
+\fB\-sU\fP
+.TQ
+\fB\-sR\fP
+.TQ
+\fB\-i\fP, \fB\-\-diff\-ignore\fP[=\fIexpression\-rationnelle\fP]
+.TQ
+\fB\-I\fP, \fB\-\-tar\-ignore\fP[=\fImotif\fP]
+.TQ
+\fB\-z\fP, \fB\-\-compression\-level\fP=\fIniveau\fP
+.TQ
+\fB\-Z\fP, \fB\-\-compression\fP=\fIcompression\fP
+Cha\(^ine pass\('ee telle quelle \(`a \fBdpkg\-source\fP. Voir la page de manuel
+correspondante.
+.TP 
+\fB\-\-source\-option=\fP\fIopt\fP
+Passer l'option \fIopt\fP \(`a \fBdpkg\-source\fP (depuis dpkg\ 1.15.6). Peut \(^etre
+utilis\('e plusieurs fois.
+.TP 
+\fB\-\-changes\-option=\fP\fIopt\fP
+Passer l'option \fIopt\fP \(`a \fBdpkg\-genchanges\fP (depuis dpkg\ 1.15.6). Peut \(^etre
+utilis\('e plusieurs fois.
+.TP 
+\fB\-\-admindir\fP=\fIr\('epertoire\fP
+.TQ
+\fB\-\-admindir \fP\fIr\('ep\fP
+Changer l'endroit o\(`u se trouve la base de donn\('ees de \fBdpkg\fP (depuis
+dpkg\ 1.14.0). Par d\('efaut, c'est \fI/var/lib/dpkg\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.SS "Environnement externe"
+.TP 
+\fBDEB_CHECK_COMMAND\fP
+Si cette option est utilis\('ee, elle le sera comme commande pour contr\(^oler le
+fichier \fB.changes\fP (depuis dpkg\ 1.17.6). Remplac\('ee par l'option
+\fB\-\-check\-command\fP.
+.TP 
+\fBDEB_SIGN_KEYID\fP
+Si cette option est utilis\('ee, elle le sera pour la signature des fichiers
+\&\fB.changes\fP et \fB.dsc\fP (depuis dpkg\ 1.17.2). Remplac\('ee par l'option
+\fB\-\-sign\-key\fP.
+.TP 
+\fBDEB_BUILD_OPTIONS\fP
+Si cette option est utilis\('ee, elle contiendra une liste s\('epar\('ee par des
+espaces d'options qui pourraient affecter le processus de construction dans
+\fIdebian/rules\fP et le comportement de certaines commandes de dpkg.
+
+La variable \fBDEB_CHECK_COMMAND\fP sera ignor\('ee avec \fBnocheck\fP. Avec
+\fBparallel=\fP\fIN\fP les t\(^aches parall\(`eles seront fix\('ees \(`a \fIN\fP, remplac\('ee par
+l'option \fB\-\-jobs\-try\fP.
+.TP 
+\fBDEB_BUILD_PROFILES\fP
+Si cette option est utilis\('ee, elle sera utilis\('ee comme profil(s) de
+construction actif(s) pour le paquet \(`a construire (depuis
+dpkg\ 1.17.2). C'est une liste s\('epar\('ee par des espaces de noms de
+profil. Cette option est outrepass\('ee par l'option \fB\-P\fP.
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+
+.SS "Environnement interne"
+M\(^eme si \fBdpkg\-buildpackage\fP exporte certaines variables, \fBdebian/rules\fP ne
+doit pas d\('ependre de leur pr\('esence, mais doit pr\('ef\('erablement utiliser
+l'interface correspondante pour retrouver les valeurs n\('ecessaires, parce que
+ce fichier est le point d'entr\('ee principal pour la construction des paquets
+et son ex\('ecution autonome devrait \(^etre prise en charge.
+
+.TP 
+\fBDEB_BUILD_*\fP
+.TQ
+\fBDEB_HOST_*\fP
+.TQ
+\fBDEB_TARGET_*\fP
+\fBdpkg\-architecture\fP est lanc\('e avec les param\(`etres de \fB\-a\fP et \fB\-t\fP. Toute
+variable retourn\('ee par l'option \fB\-s\fP est int\('egr\('ee dans l'environnement de
+construction.
+.TP 
+\fBDEB_RULES_REQUIRES_ROOT\fP
+Cette variable est fix\('ee \(`a la valeur obtenue du champ \fBRules\-Requires\-Root\fP
+ou de la ligne de commande. Lorsqu'elle est configur\('ee, ce sera une valeur
+valable pour le champ \fBRules\-Requires\-Root\fP. Elle est utilis\('ee pour
+indiquer \(`a \fBdebian/rules\fP si la sp\('ecification \fBrootless\-builds.txt\fP est
+prise en charge.
+.TP 
+\fBDEB_GAIN_ROOT_CMD\fP
+Cette valeur est fix\('ee \(`a \fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP si le
+champ \fBRules\-Requires\-Root\fP est fix\('e \(`a une valeur diff\('erente de \fBno\fP ou
+\fBbinary\-targets\fP.
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+Cette valeur est fix\('ee \(`a l'horodatage d'Unix depuis \(Fo\ l'epoch\ \(Fc de la
+derni\(`ere entr\('ee de \fIdebian/changelog\fP, si elle n'a pas d\('ej\(`a \('et\('e d\('efinie.
+.
+.SH FICHIERS
+.TP 
+\fI/etc/dpkg/buildpackage.conf\fP
+Fichier de configuration pour l'ensemble du syst\(`eme
+.TP 
+\fI$XDG_CONFIG_HOME/dpkg/buildpackage.conf\fP ou
+.TQ
+\fI$HOME/.config/dpkg/buildpackage.conf\fP
+Fichier de configuration propre \(`a l'utilisateur
+.
+.SH NOTES
+.SS "Les drapeaux de compilation ne sont plus export\('es."
+Entre les versions\ 1.14.17 et\ 1.16.1, \fBdpkg\-buildpackage\fP exportait les
+drapeaux de compilation (\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBFFLAGS\fP, \fBCPPFLAGS\fP et
+\fBLDFLAGS\fP) avec les valeurs que renvoyait \fBdpkg\-buildflags\fP. Cela n'est
+plus le cas.
+.SS "Cibles construites par d\('efaut"
+\fBdpkg\-buildpackage\fP utilise les cibles \fBbuild\-arch\fP et \fBbuild\-indep\fP
+depuis dpkg\ 1.16.2. Ces cibles sont donc obligatoires. Cependant, pour
+\('eviter de casser les paquets existants et faciliter la transition, si le
+paquet source ne construit pas \(`a la fois les paquets binaires ind\('ependants
+et d\('ependants de l'architecture (depuis dpkg\ 1.18.8), la cible \fBbuild\fP sera
+utilis\('ee par d\('efaut si \fBmake \-f debian/rules \-qn\fP \fIbuild\-target\fP renvoie
+\fB2\fP comme code de retour.
+.SH BOGUES
+On devrait pouvoir mettre des espaces et des m\('etacaract\(`eres du shell et les
+arguments initiaux de \fIcommande\-pour\-obtenir\-privil\(`eges\-de\-root\fP et
+\fIcommande\-de\-signature\fP.
+.
+.SH "VOIR AUSSI"
+.ad l
+\fBdpkg\-source\fP(1), \fBdpkg\-architecture\fP(1), \fBdpkg\-buildflags\fP(1),
+\fBdpkg\-genbuildinfo\fP(1), \fBdpkg\-genchanges\fP(1), \fBfakeroot\fP(1),
+\fBlintian\fP(1), \fBgpg2\fP(1), \fBgpg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

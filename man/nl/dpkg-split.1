@@ -1,0 +1,221 @@
+.\" dpkg manual page - dpkg-split(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-split 1 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-split \- gereedschap voor het splitsen/samenvoegen van Debian
+pakketarchieven
+.
+.SH OVERZICHT
+\fBdpkg\-split\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+\fBdpkg\-split\fP splitst Debian binaire pakketbestanden op in kleinere stukken
+en stelt ze opnieuw samen met het oog op het opslaan van grote
+pakketbestanden op kleine media zoals diskettes.
+
+De bewerking kan manueel uitgevoerd worden met de opties \fB\-\-split\fP,
+\fB\-\-join\fP en \fB\-\-info\fP.
+
+Er bestaat ook een automatische modus van, die met de optie \fB\-\-auto\fP
+geactiveerd wordt. Daarbij houdt het een wachtlijst bij van geziene maar nog
+niet terug samengevoegde onderdelen en stelt het een pakketbestand opnieuw
+samen nadat het alle onderdelen ervan gezien heeft. De opties \fB\-\-listq\fP en
+\fB\-\-discard\fP laten toe de wachtrij te beheren.
+
+Alle splitsings\-, samenvoegings\- en wachtrijoperaties produceren op de
+standaarduitvoer informatieve mededelingen. Zij kunnen probleemloos
+genegeerd worden.
+.
+.SH COMMANDO'S
+.TP 
+\fB\-s\fP, \fB\-\-split\fP \fIcompleet\-archief\fP [\fIprefix\fP]
+Splitst \('e\('en enkel Debian binair pakket op in verschillende onderdelen.
+
+De onderdelen worden \fIprefix\fP\fB.\fP\fIN\fP\fBof\fP\fIM\fP\fB.deb\fP genoemd, waarbij \fIN\fP
+het volgnummer van het onderdeel is, te beginnen bij 1, en \fIM\fP het totaal
+aantal onderdelen (beide in decimale vorm).
+
+Indien geen \fIprefix\fP opgegeven werd, dan wordt als bestandsnaam de naam van
+\fIcompleet\-archief\fP genomen, de map inbegrepen, en met eventuele weglating
+van het achtervoegsel \fB.deb\fP.
+.TP 
+\fB\-j\fP, \fB\-\-join\fP \fIonderdeel\fP...
+Voegt de onderdelen van een pakketbestand samen, waarbij het originele
+bestand terug samengesteld wordt zoals het er voor de splitsing uitzag.
+
+De bestanden van de onderdelen die als argumenten opgegeven worden moeten
+alle onderdelen zijn van exact hetzelfde originele binaire bestand. Elk
+onderdeel moet exact eenmaal voorkomen in de lijst van argumenten, maar de
+onderdelen moeten niet in de goede volgorde opgesomd zijn.
+
+De onderdelen moeten uiteraard allemaal aangemaakt zijn met eenzelfde
+grootte die op het moment van opsplitsen opgegeven werd, hetgeen betekent
+dat zij gewoonlijk aangemaakt moeten zijn tijdens eenzelfde uitvoering van
+het commando \fBdpkg\-split \-\-split\fP.
+
+De bestandsnamen van de onderdelen zijn niet significant voor het proces van
+opnieuw samenstellen.
+
+Standaard wordt het uitvoerbestand \fIpakket\fP\fB_\fP\fIversie\fP\fB_\fP\fIarch\fP\fB.deb\fP
+genoemd.
+
+.TP 
+\fB\-I\fP, \fB\-\-info\fP \fIonderdeel\fP...
+Geeft in een voor mensen leesbare vorm informatie weer over de/het opgegeven
+deelbestand(en). Argumenten die niet een stuk van een binair pakket zijn,
+lokken een mededeling uit die dat stelt (maar wel nog steeds op de
+standaarduitvoer).
+.TP 
+\fB\-a\fP, \fB\-\-auto \-o\fP \fIafgewerkte\-uitvoer onderdeel\fP
+Plaats onderdelen automatisch in de wachtrij en stel het pakket indien
+mogelijk opnieuw samen.
+
+Het opgegeven \fIonderdeel\fP wordt onderzocht en (eventueel) vergeleken met
+andere onderdelen van hetzelfde pakket uit de wachtrij met onderdelen van
+pakketbestanden.
+
+Indien alle onderdelen van het pakketbestand waarvan \fIonderdeel\fP deel
+uitmaakt, beschikbaar zijn, wordt het pakket opnieuw samengesteld en
+geschreven naar \fIafgewerkte\-uitvoer\fP (dat gewoonlijk niet reeds zou mogen
+bestaan, hoewel dat geen fout is).
+
+Indien dat niet het geval is, wordt \fIonderdeel\fP naar de wachtrij gekopieerd
+en wordt \fIafgewerkte\-uitvoer\fP niet aangemaakt.
+
+Indien \fIonderdeel\fP geen deel is van een opgesplitst binair pakket, zal
+\fBdpkg\-split\fP afsluiten met status \fB1\fP. Indien er zich een ander probleem
+voordoet, zal het afsluiten met status \fB2\fP.
+
+De optie \fB\-\-output\fP of \fB\-o\fP moet opgegeven worden als \fB\-\-auto\fP gebruikt
+wordt. (Mocht dit niet verplicht zijn, dan zou het aanroepende programma
+niet weten welk uitvoerbestand het moet verwachten.)
+.TP 
+\fB\-l\fP, \fB\-\-listq\fP
+Somt de inhoud op van de wachtrij met pakketten die opnieuw samengesteld
+moeten worden.
+
+Voor elk pakketbestand waarvan er zich onderdelen in de wachtrij bevinden,
+geeft de uitvoer de naam van het pakket weer, de onderdelen die zich in de
+wachtrij bevinden en het totaal aantal in de wachtrij opgeslagen bytes.
+.TP 
+\fB\-d\fP, \fB\-\-discard\fP [\fIpakket\fP...]
+Dit verwijdert onderdelen uit de wachtrij met onderdelen die wachten op de
+resterende onderdelen van hun pakket.
+
+Indien geen enkel \fIpakket\fP opgegeven werd, wordt de wachtrij volledig
+leeggemaakt. Indien er wel opgegeven werden, dan worden enkel onderdelen van
+het/de relevante pakket(ten) verwijderd.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OPTIES
+.TP 
+\fB\-\-depotdir\fP\fI map\fP
+Geeft een alternatieve map op voor de wachtrij van onderdelen die wachten op
+de automatische hersamenstelling. Standaard is dat \fB/var/lib/dpkg\fP.
+.TP 
+\fB\-S\fP, \fB\-\-partsize\fP \fIkibibytes\fP
+Geeft aan wat de maximale grootte mag zijn van een onderdeel bij het
+opsplitsen, uitgedrukt in kibibytes (1024 bytes). Standaard is dat 450 KiB.
+.TP 
+\fB\-o\fP, \fB\-\-output\fP \fIafgewerkte\-uitvoer\fP
+Geeft de bestandsnaam op voor het hersamengestelde bestand.
+
+Bij een handmatige hersamenstelling (\fB\-\-join\fP) vervangt dit de
+standaardnaam en het is verplicht bij een automatische hersamenstelling of
+in\-de\-wachtrij\-plaatsing (\fB\-\-auto\fP).
+.TP 
+\fB\-Q\fP, \fB\-\-npquiet\fP
+Bij het uitvoeren van een automatische hersamenstelling of
+in\-de\-wachtrij\-plaatsing, zal \fBdpkg\-split\fP gewoonlijk een melding tonen als
+het een \fIonderdeel\fP aangereikt krijgt dat geen deel uitmaakt van een binair
+pakket. Deze optie onderdrukt deze melding om het voor programma's zoals
+\fBdpkg\fP mogelijk te maken om te gaan met zowel opgesplitste als
+niet\-opgesplitste pakketten zonder ongepaste meldingen te produceren.
+.TP 
+\fB\-\-msdos\fP
+Dwingt \fB\-\-split\fP ertoe om de bestandsnamen van de uitvoer die het genereert
+msdos\-compatibel te maken.
+
+Dit verhaspelt het prefix \- ofwel het standaardprefix dat afgeleid wordt van
+de bestandsnaam van de invoer of het prefix dat als argument opgegeven werd:
+alfanumerieke tekens worden naar kleine letters omgezet, een plus\-teken
+wordt vervangen door een \fBx\fP en alle andere tekens worden verwijderd.
+
+Het resultaat wordt dan zoveel als nodig afgekapt en er worden bestandsnamen
+gegenereerd in de vorm van \fIprefixN\fP\fBof\fP\fIM\fP\fB.deb\fP.
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde opsplitsing, samenvoeging of een ander commando werd met succes
+uitgevoerd. \fB\-\-info\fP commando's worden als geslaagd beschouwd, ook als de
+bestanden geen onderdeel zijn van een binair pakket.
+.TP 
+\fB1\fP
+Komt enkel voor bij \fB\-\-auto\fP en geeft aan dat het \fIonderdeel\fP\-bestand geen
+deel van een binair pakket was.
+.TP 
+\fB2\fP
+Fatale of onherstelbare fout die te wijten is aan een ongeldig gebruik van
+de commandoregel, aan een bestand dat er uitzag als een bestand van een
+pakketonderdeel maar defect was of aan interacties met het systeem, zoals
+het benaderen van de database, geheugentoewijzing, enz.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding
+(timestamp) (in seconden sinds de epoch) in de \fBar\fP(5)\-container van
+\fBdeb\-split\fP(5).
+.
+.SH BESTANDEN
+.TP 
+\fI/var/lib/dpkg/parts\fP
+De standaardmap voor de wachtrij met bestandsonderdelen die wachten op de
+automatische hersamenstelling.
+
+De bestandsnamen die in deze map gebruikt worden, gebruiken een indeling die
+eigen is aan \fBdpkg\-split\fP en zijn hoogstwaarschijnlijk onbruikbaar voor
+andere programma's en in ieder geval mag men niet steunen op die
+bestandsnaamstructuur.
+.
+.SH BUGS
+Alle details over de pakketten die zich in de wachtrij bevinden, kunnen
+onmogelijk bekomen worden zonder zichzelf te verdiepen in de wachtrijmap.
+
+Er bestaat geen eenvoudige manier om na te gaan of een bestand dat een
+onderdeel van een binair pakket zou kunnen zijn, er effectief ook een is.
+.
+.SH "ZIE OOK"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\-deb\fP(1), \fBdpkg\fP(1).

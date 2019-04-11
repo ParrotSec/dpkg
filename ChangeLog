@@ -1,3 +1,414 @@
+commit 834e0f3329ce9be0c353c2c463da4deb91f6b0c7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 25 15:09:01 2019 +0100
+
+    Release 1.19.6
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 375cb622993ded786e99a28630439c8abb19a75f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 25 15:08:25 2019 +0100
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |  2 +-
+ dselect/po/ca.po        |  2 +-
+ dselect/po/cs.po        |  2 +-
+ dselect/po/da.po        |  2 +-
+ dselect/po/de.po        |  2 +-
+ dselect/po/dselect.pot  |  4 +--
+ dselect/po/el.po        |  2 +-
+ dselect/po/es.po        |  2 +-
+ dselect/po/et.po        |  2 +-
+ dselect/po/eu.po        |  2 +-
+ dselect/po/fr.po        |  2 +-
+ dselect/po/gl.po        |  2 +-
+ dselect/po/hu.po        |  2 +-
+ dselect/po/id.po        |  2 +-
+ dselect/po/it.po        |  2 +-
+ dselect/po/ja.po        |  2 +-
+ dselect/po/ko.po        |  2 +-
+ dselect/po/nb.po        |  2 +-
+ dselect/po/nl.po        |  2 +-
+ dselect/po/nn.po        |  2 +-
+ dselect/po/pl.po        |  2 +-
+ dselect/po/pt.po        |  2 +-
+ dselect/po/pt_BR.po     |  2 +-
+ dselect/po/ro.po        |  2 +-
+ dselect/po/ru.po        |  2 +-
+ dselect/po/sk.po        |  2 +-
+ dselect/po/sv.po        |  2 +-
+ dselect/po/tl.po        |  2 +-
+ dselect/po/vi.po        |  2 +-
+ dselect/po/zh_CN.po     |  2 +-
+ dselect/po/zh_TW.po     |  2 +-
+ man/po/dpkg-man.pot     | 17 ++++++++---
+ man/po/es.po            | 29 +++++++++++++++++--
+ man/po/fr.po            | 27 ++++++++++++++++--
+ man/po/hu.po            | 15 ++++++++--
+ man/po/it.po            | 15 ++++++++--
+ man/po/ja.po            | 29 +++++++++++++++++--
+ man/po/nl.po            | 75 +++++++++++++++++++++++--------------------------
+ man/po/pl.po            | 29 +++++++++++++++++--
+ man/po/pt_BR.po         | 15 ++++++++--
+ man/po/ru.po            | 15 ++++++++--
+ man/po/sv.po            | 29 +++++++++++++++++--
+ man/po/zh_CN.po         | 15 ++++++++--
+ po/ast.po               |  2 +-
+ po/bs.po                |  2 +-
+ po/ca.po                |  2 +-
+ po/cs.po                |  2 +-
+ po/da.po                |  2 +-
+ po/de.po                |  2 +-
+ po/dpkg.pot             |  4 +--
+ po/dz.po                |  2 +-
+ po/el.po                |  2 +-
+ po/eo.po                |  2 +-
+ po/es.po                |  2 +-
+ po/et.po                |  2 +-
+ po/eu.po                |  2 +-
+ po/fr.po                |  2 +-
+ po/gl.po                |  2 +-
+ po/hu.po                |  2 +-
+ po/id.po                |  2 +-
+ po/it.po                |  2 +-
+ po/ja.po                |  2 +-
+ po/km.po                |  2 +-
+ po/ko.po                |  2 +-
+ po/ku.po                |  2 +-
+ po/lt.po                |  2 +-
+ po/mr.po                |  2 +-
+ po/nb.po                |  2 +-
+ po/ne.po                |  2 +-
+ po/nl.po                | 58 +-------------------------------------
+ po/nn.po                |  2 +-
+ po/pa.po                |  2 +-
+ po/pl.po                |  2 +-
+ po/pt.po                |  2 +-
+ po/pt_BR.po             |  2 +-
+ po/ro.po                |  2 +-
+ po/ru.po                |  2 +-
+ po/sk.po                |  2 +-
+ po/sv.po                |  2 +-
+ po/th.po                |  2 +-
+ po/tl.po                |  2 +-
+ po/tr.po                |  2 +-
+ po/vi.po                |  2 +-
+ po/zh_CN.po             |  2 +-
+ po/zh_TW.po             |  2 +-
+ scripts/po/ca.po        |  2 +-
+ scripts/po/de.po        |  2 +-
+ scripts/po/dpkg-dev.pot |  4 +--
+ scripts/po/es.po        |  2 +-
+ scripts/po/fr.po        |  2 +-
+ scripts/po/pl.po        |  2 +-
+ scripts/po/ru.po        |  2 +-
+ scripts/po/sv.po        |  2 +-
+ 93 files changed, 321 insertions(+), 213 deletions(-)
+
+commit 32ad241cca413bf31ef584da91a3461fd19f9619
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 25 15:03:18 2019 +0100
+
+    debian, man: Fix typos
+    
+    Warned-by: lintian
+
+ debian/changelog    | 2 +-
+ man/deb-changes.man | 2 +-
+ man/po/de.po        | 2 +-
+ man/po/fr.po        | 2 +-
+ man/po/nl.po        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 6d5eed759b7ec67ecd96e4481bae0fe6012938ea
+Author: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>
+Date:   Mon Mar 25 12:10:12 2019 +0100
+
+    po: Update Dutch translations
+    
+    Closes: #924776, #924777
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   4 +
+ man/po/nl.po     | 309 ++++++++++++++++++++++++++++++-------------------------
+ po/nl.po         | 287 ++++++++++++++++++++++++++-------------------------
+ 3 files changed, 317 insertions(+), 283 deletions(-)
+
+commit 042c994a42f01606f669eae0e9e7dd6b4b765053
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Mar 24 07:00:04 2019 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2997t1f.
+
+ man/po/de.po | 108 ++++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 62 insertions(+), 46 deletions(-)
+
+commit 1da502d98ca40a9495172a95a49fdbf0f27ec4de
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 11 23:21:38 2019 +0100
+
+    dpkg-gencontrol: Check presence of package build dir before traversing it
+    
+    The find() function does not cope well with trying to traverse an
+    unexistent directory and generates various alarming warnings.
+
+ debian/changelog           | 1 +
+ scripts/dpkg-gencontrol.pl | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit ae3b466f03f30a71b31403dd1696ccda65e7177b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 11 22:39:38 2019 +0100
+
+    Dpkg::Source::Package: Handle Format field being undefined
+    
+    On source format 1.0, the default is for the debian/source/format file
+    not being present, which means we'll start with an empty Format field
+    name.
+    
+    Fixes: commit d1d35a56e401181b6d15baf474a7db21d3372a65
+
+ debian/changelog               | 4 ++++
+ scripts/Dpkg/Source/Package.pm | 3 ++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit 740c330ad0deb5d4894ad43619fc80cfa0cf8313
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 2 02:41:40 2019 +0100
+
+    Dpkg::Source::Package::V1: Change default build option style to -sa
+    
+    Using -sA by default means the user might lose data on overwrite if
+    there is already a directory with the same name laying around.
+    
+    Closes: #910737
+
+ debian/changelog                  | 5 +++++
+ man/dpkg-source.man               | 2 +-
+ scripts/Dpkg/Source/Package/V1.pm | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+commit dcd19c7820e0294245837ee9e8beec9244ea3b2d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 6 03:52:10 2019 +0100
+
+    libdpkg: Use ERANGE instead of EINVAL for tar_atol8() out-of-range error
+    
+    We should use the correct errno value, otherwise the error string makes
+    little sense, and ends up being very confusing.
+
+ debian/changelog   | 1 +
+ lib/dpkg/t/t-tar.c | 8 ++++----
+ lib/dpkg/tarfn.c   | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+commit a1f9ccf08ddc99e4e3f1ead01abb6a8d8d506b3a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 6 03:52:10 2019 +0100
+
+    libdpkg: Handle non end-of-tape errors from tar_header_decode()
+    
+    We need to assign a status value in the non end-of-tape branch,
+    otherwise we are using an uninitialized value, which might be anything,
+    and could end up making the code proceed even if the archive is
+    damaged/broken, etc.
+
+ debian/changelog | 1 +
+ lib/dpkg/tarfn.c | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 04b6b5bb2def5e361ae54d44664602fbeacb4398
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 6 03:52:10 2019 +0100
+
+    libdpkg: Set tar_entry to zero on tar_entry_destroy()
+    
+    When we are destroying a tar_entry we need to zero the struct, otherwise
+    we will end up freeing already freed memory and crashing.
+
+ debian/changelog | 2 ++
+ lib/dpkg/tarfn.c | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 3391b1f3d9f5e7ce9e08ec635350fc383187e685
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 6 03:52:10 2019 +0100
+
+    libdpkg: Add a new TAR_FORMAT_UNKNOWN enum value
+    
+    This will make it possible to have a value denoting an unknown format,
+    when we initialize the tar_entry or tar_archive structs.
+
+ debian/changelog | 1 +
+ lib/dpkg/tarfn.h | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 132160d2f4d07b5892640c98038a149906db8bfc
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Nov 6 03:15:36 2018 +0100
+
+    t-func: Quote the 'yes' command to make the comment clearer
+
+ debian/changelog    | 1 +
+ t-func/deb-split.at | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 5df9c47d74ef5a39ea0d274002ebb016b55b0f84
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Nov 6 03:14:57 2018 +0100
+
+    t-func: Export and move TESTDATA definition close to the PATH definition
+    
+    These both are related to pathname handling, group them together.
+
+ debian/changelog  | 1 +
+ t-func/atlocal.in | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 7964e3c77df6f404dbed47703e0fdd1ddb417552
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Nov 6 03:11:58 2018 +0100
+
+    t-func: Stop requiring (pseudo-)root
+    
+    Pass --root-owner-group to dpkg-deb, which was the only command needing
+    (pseudo-)root.
+
+ debian/changelog     |  2 ++
+ t-func/atlocal.in    | 10 ----------
+ t-func/deb-format.at |  2 +-
+ t-func/deb-split.at  |  2 +-
+ 4 files changed, 4 insertions(+), 12 deletions(-)
+
+commit c9930d56c35246a7473c2b064db5d56ad58cdbbf
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 20 06:28:57 2019 +0100
+
+    debian: Add Breaks on lsb-base due to s-s-d breaking killproc
+    
+    There was a bug in the killproc function implementation that made it not
+    pass the --name argument, so it would end up with just the --pidfile.
+    The new security requirements from s-s-d made that in some cases, when
+    the usage was not secure, it would bail out with an error.
+    
+    Closes: #923861
+
+ debian/changelog | 2 ++
+ debian/control   | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 7658b575d978b9c6655854cd6dc1c2de031fdca5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed Mar 20 06:26:45 2019 +0100
+
+    debian: Add a lintian dpkg profile to supress Debian specific tags
+    
+    This makes it possible to disable tags that are Debian specific, such as
+    the controversial tag emitted for vendor-specific patch series files.
+
+ Makefile.am                 | 1 +
+ debian/changelog            | 3 +++
+ debian/dpkg.install         | 1 +
+ debian/dpkg.lintian-profile | 7 +++++++
+ debian/rules                | 5 +++++
+ man/dpkg-source.man         | 5 +++++
+ 6 files changed, 22 insertions(+)
+
+commit d347adb2fda7f627db946db9efc15d70fd0db569
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Mar 2 18:11:19 2019 +0100
+
+    debian: Update usertags
+    
+    This updates the categories used, changes the default view, and update
+    the file with what was already configued in the BTS.
+
+ debian/changelog |  3 ++-
+ debian/usertags  | 48 +++++++++++++++++++++++++++---------------------
+ 2 files changed, 29 insertions(+), 22 deletions(-)
+
+commit 418d578d23091a1ad9d15ef6a500498f3f46bcbb
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Feb 24 03:36:52 2019 +0100
+
+    debian: Add bug closures
+    
+    This helps link the reported issues with the changes done.
+
+ debian/changelog | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit ba0091e2d97d0084222cd3caee4908aa1feddd75
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Mar 3 11:51:42 2019 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2996t1f.
+
+ man/po/de.po | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+commit e36fa014ad08ee82f5ca6e1fecf0b0bcd8232d5e
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Feb 24 18:41:33 2019 +0100
+
+    Fix spelling of exempt
+
+ man/po/dpkg-man.pot       | 2 +-
+ man/po/es.po              | 4 ++--
+ man/po/fr.po              | 4 ++--
+ man/po/hu.po              | 4 ++--
+ man/po/it.po              | 4 ++--
+ man/po/ja.po              | 4 ++--
+ man/po/nl.po              | 4 ++--
+ man/po/pl.po              | 4 ++--
+ man/po/pt_BR.po           | 4 ++--
+ man/po/ru.po              | 4 ++--
+ man/po/sv.po              | 4 ++--
+ man/po/zh_CN.po           | 4 ++--
+ man/start-stop-daemon.man | 2 +-
+ 13 files changed, 24 insertions(+), 24 deletions(-)
+
+commit 236cdaffcb2a34cea42009d530afa26082c6a353
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Feb 24 18:40:43 2019 +0100
+
+    Update German translation of manual pages
+    
+    Update to 2994t2f1u.
+
+ debian/changelog |   3 ++
+ man/po/de.add    |   2 +-
+ man/po/de.po     | 157 +++++++++++++++++++++++++------------------------------
+ 3 files changed, 74 insertions(+), 88 deletions(-)
+
+commit 6b405c6db943486bbb59a476d71c86db55ebe237
+Author: Helge Kreutzmann <debian@helgefjell.de>
+Date:   Sun Feb 24 17:43:50 2019 +0100
+
+    Update German scripts translation
+    
+    Update to 603t.
+
+ debian/changelog |  4 ++++
+ scripts/po/de.po | 15 +++++----------
+ 2 files changed, 9 insertions(+), 10 deletions(-)
+
+commit 931d4ffac832ab17971bc8bd077d23111de3d47f
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sat Feb 23 18:30:10 2019 +0100
+
+    Bump version to 1.19.6
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit f2b4f5475d421178ec813d8c5c8e65d041536cc2
 Author: Guillem Jover <guillem@debian.org>
 Date:   Sat Feb 23 18:03:54 2019 +0100

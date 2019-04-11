@@ -1,0 +1,365 @@
+.\" dpkg manual page - dpkg-deb(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2007-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-shlibdeps 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-shlibdeps \- G\('en\('erateur de variables de substitution de d\('ependances pour
+biblioth\(`eques partag\('ees
+.
+.SH SYNOPSIS
+\fBdpkg\-shlibdeps\fP [\fIoption\fP...] [\fB\-e\fP]\fIex\('ecutable\fP [\fIoption\fP...]
+.
+.SH DESCRIPTION
+\fBdpkg\-shlibdeps\fP calcule, pour les ex\('ecutables indiqu\('es dans ses
+param\(`etres, les d\('ependances envers les biblioth\(`eques partag\('ees. Ces
+d\('ependances sont ajout\('ees au fichier de variables de substitution
+\fBdebian/substvars\fP sous la forme \fBshlibs:\fP\fIchamp\-d\('ependance\fP o\(`u
+\fIchamp\-d\('ependance\fP est le nom du champ de d\('ependance. Toute autre variable
+apr\(`es \fIshlibs:\fP est supprim\('ee du fichier.
+.P
+\fBdpkg\-shlibdeps\fP a deux sources possibles pour cr\('eer les informations
+concernant les d\('ependances, soit les fichiers \fIsymbols\fP, soit les fichiers
+\fIshlibs\fP. Pour chaque fichier binaire qu'il analyse, \fBdpkg\-shlibdeps\fP
+recherche la liste des biblioth\(`eques partag\('ees qui lui sont li\('ees. Puis,
+pour chacune d'elles il analyse soit le fichier \fIsymbols\fP, soit le fichier
+\fIshlibs\fP (si le premier n'existe pas ou si debian/shlibs.local contient les
+d\('ependances appropri\('ees). Ces deux fichiers sont cens\('es \(^etre fournis par le
+paquet de la biblioth\(`eque et disponibles dans
+/var/lib/dpkg/info/\fIpaquet\fP.\fIsymbols\fP ou
+/var/lib/dpkg/info/\fIpaquet\fP.\fIshlibs\fP. Le nom du paquet est trouv\('e en deux
+\('etapes\ : en cherchant le fichier de la biblioth\(`eque sur le syst\(`eme, dans le
+r\('epertoire que \fBld.so\fP utiliserait, puis en utilisant \fBdpkg \-S
+\fP\fIfichier\-biblioth\(`eque\fP pour trouver le paquet qui fournit cette
+biblioth\(`eque.
+.SS "Fichiers symboles"
+Les fichiers symboles contiennent des informations de d\('ependances plus fines
+en fournissant les d\('ependances minimales pour chaque symbole de la
+biblioth\(`eque export\('ee. Le script essaie de trouver un fichier de symboles
+associ\('e \(`a un paquet de biblioth\(`eque dans les emplacements suivants (le
+premier trouv\('e est utilis\('e)\ :
+.IP debian/*/DEBIAN/symbols
+Les informations de biblioth\(`eque partag\('ee g\('en\('er\('ee par l'actuel processus de
+construction qui invoque aussi \fBdpkg\-shlibdeps\fP. Elles sont g\('en\('er\('ees par
+\fBdpkg\-gensymbols\fP(1) et ne sont utilis\('ees que si la biblioth\(`eque se trouve
+dans l'arbre de construction d'un paquet. Le fichier des symboles qui
+construit l'arbre s'appuie sur les fichiers de symboles d'autres paquets
+binaires.
+.IP /etc/dpkg/symbols/\fIpaquet\fP.symbols.\fIarchitecture\fP
+.IP /etc/dpkg/symbols/\fIpaquet\fP.symbols
+Les informations de d\('ependance de biblioth\(`eque partag\('ee principales par
+syst\(`eme. \fIarch\fP est l'architecture du syst\(`eme actuel (obtenu par
+\fBdpkg\-architecture \-qDEB_HOST_ARCH\fP).
+.IP "Affichage de \(lq\fBdpkg\-query \-\-control\-path\fP \fIpaquet\fP symbols\(rq"
+Les informations de d\('ependance de biblioth\(`eque partag\('ee fournies par le
+paquet. Sauf indication contraire par le biais de \fB\-\-admindir\fP, ces
+fichiers sont par d\('efaut dans /var/lib/dpkg.
+.P
+Lors de l'analyse des symboles utilis\('es par tous les binaires,
+\fBdpkg\-shlibdeps\fP retient la (plus grande) version minimale n\('ecessaire pour
+chaque biblioth\(`eque. \(`A la fin du processus, il est capable d'\('ecrire la
+d\('ependance minimale pour toutes les biblioth\(`eques utilis\('ees (\(`a condition que
+l'information des fichiers \fIsymbols\fP soit exacte).
+.P
+Comme garde\-fou, un fichier de symboles peut fournir un champ
+\fBBuild\-Depends\-Package\fP de m\('eta\-information et \fBdpkg\-shlibdeps\fP en
+extraira la version minimale requise par le paquet correspondant depuis ce
+champ \fBBuild\-Depends\fP et utilisera cette version si elle est sup\('erieure \(`a
+la version minimale calcul\('ee par l'examen des symboles.
+.SS "Fichiers Shlibs"
+Les fichiers Shlibs associent directement une biblioth\(`eque \(`a une d\('ependance
+(sans regarder les symboles). C'est donc souvent plus puissant que les
+besoins r\('eels mais cela reste tr\(`es s\(^ur et facile \(`a manipuler.
+.P
+Les d\('ependances d'une biblioth\(`eque sont recherch\('ees \(`a plusieurs endroits. Le
+premier fichier d'informations trouv\('e qui concerne la biblioth\(`eque est
+utilis\('e\ :
+.IP debian/shlibs.local
+Fichier particulier \(`a un paquet rempla\(,cant les informations qui concernent
+les d\('ependances envers des biblioth\(`eques partag\('ees.
+.IP /etc/dpkg/shlibs.override
+Fichier syst\(`eme rempla\(,cant les informations qui concernent les d\('ependances
+envers des biblioth\(`eques partag\('ees.
+.IP debian/*/DEBIAN/shlibs
+Information sur la biblioth\(`eque partag\('ee g\('en\('er\('ee par le processus actuel de
+construction qui invoque aussi \fBdpkg\-shlibdeps\fP. Il n'est utilis\('e que si la
+biblioth\(`eque se trouve dans l'arbre de construction du paquet. Le fichier
+shlibs qui construit l'arbre a priorit\('e sur les fichiers shlibs des autres
+paquets binaires.
+.IP "Affichage de \(Fo\ \fBdpkg\-query \-\-control\-path\fP \fIpaquet\fP shlibs\ \(Fc"
+Les informations de d\('ependance de biblioth\(`eque partag\('ee fournies par le
+paquet. Sauf indication contraire par le biais de \fB\-\-admindir\fP, ces
+fichiers sont par d\('efaut dans /var/lib/dpkg.
+.IP /etc/dpkg/shlibs.default
+Fichier syst\(`eme par d\('efaut concernant les informations de d\('ependance envers
+des biblioth\(`eques partag\('ees.
+.P
+Les d\('ependances trouv\('ees sont ensuite directement utilis\('ees (sauf si elles
+sont filtr\('ees parce qu'elles ont \('et\('e identifi\('ees comme \('etant en double, ou
+d'un niveau plus faible qu'une autre d\('ependance).
+.SH OPTIONS
+\fBdpkg\-shlibdeps\fP interpr\(`ete des arguments sans option comme des commandes
+ex\('ecutables, comme si on avait simplement donn\('e \fB\-e\fP\fIex\('ecutable\fP.
+.TP 
+\fB\-e\fP\fIex\('ecutable\fP
+Cette option inclut les bonnes d\('ependances envers les biblioth\(`eques
+partag\('ees que demande \fIex\('ecutable\fP. Cette option peut \(^etre utilis\('ee
+plusieurs fois.
+.TP 
+\fB\-l\fP\fIr\('epertoire\fP
+Ajoute \fIr\('epertoire\fP au d\('ebut de la liste des r\('epertoires o\(`u chercher des
+biblioth\(`eques partag\('ees priv\('ees (depuis dpkg\ 1.17.0). Cette option peut \(^etre
+utilis\('ee plusieurs fois.
+
+Note\ : Utilisez cette option plut\(^ot que le r\('eglage de \fBLD_LIBRARY_PATH\fP,
+parce que cette variable d'environnement est utilis\('ee pour contr\(^oler
+l'\('editeur de liens d'ex\('ecution et se servir d'elle pour d\('efinir les chemins
+des biblioth\(`eques partag\('ees au moment de la construction peut \(^etre
+probl\('ematique, par exemple, lors d'une compilation crois\('ee.
+.TP 
+\fB\-d\fP\fIchamp\-d\('ependance\fP
+Cette option ajoute les d\('ependances destin\('ees au champ \(Fo\ d\('ependance\ \(Fc du
+fichier de contr\(^ole \fIchamp\-d\('ependance.\fP (Les d\('ependances pour ce champ sont
+dans la variable \fBshlibs:\fP\fIchamp\-d\('ependance\fP.)
+
+L'option \fB\-d\fP\fIchamp\-d\('ependance\fP concerne tous les ex\('ecutables qui suivent
+l'option, jusqu'\(`a la prochaine option \fB\-d\fP\fIchamp\-d\('ependance\fP. Par d\('efaut,
+\fIchamp\-d\('ependance\fP vaut \fBDepends\fP.
+
+Quand, dans plusieurs champs reconnus ayant trait aux d\('ependances comme les
+champs \fBPre\-Depends\fP, \fBDepends\fP, \fBRecommends\fP, \fBEnhances\fP ou \fBSuggests\fP
+appara\(^it la m\(^eme entr\('ee (ou bien un ensemble d'alternatives),
+\fBdpkg\-shlibdeps\fP supprime automatiquement les d\('ependances dans tous les
+champs sauf celui qui repr\('esente les d\('ependances les plus importantes.
+.TP 
+\fB\-p\fP\fIpr\('efixe\-pour\-le\-nom\-des\-variables\fP
+Fait commencer les variables de substitution par
+\fIpr\('efixe\-pour\-le\-nom\-des\-variables\fP\fB:\fP au lieu de \fBshlibs:\fP. De m\(^eme,
+toute variable de substitution commen\(,cant par
+\fIpr\('efixe\-pour\-le\-nom\-des\-variables\fP\fB:\fP (au lieu de \fBshlibs:\fP) est enlev\('ee
+du fichier de substitution des variables.
+.TP 
+\fB\-O\fP[\fInom\-de\-fichier\fP]
+Affiche les d\('efinitions des variables de substitution sur la sortie standard
+(ou \fInom\-de\-fichier\fP si sp\('ecifi\('e, depuis dpkg\ 1.17.2), plut\(^ot que de les
+ajouter dans le fichier de substitution des variables qui est par d\('efaut
+\fBdebian/substvars\fP.
+.TP 
+\fB\-t\fP\fItype\fP
+Pr\('ef\('erer les informations sur les d\('ependances des biblioth\(`eques partag\('ees
+qui sont \('etiquet\('ees pour un type de paquet donn\('e. Si aucune information de
+type n'est donn\('ee, il n'utilisera pas d'information. Par d\('efaut, le type de
+paquet est \fBdeb\fP. On peut cr\('eer une \('etiquette pour ces informations en les
+pr\('efixant par le nom du type, un deux\-points et une espace.
+.TP 
+\fB\-L\fP\fIfichier\-local\-shlibs\fP
+Lire les informations de remplacement concernant les d\('ependances envers les
+biblioth\(`eques partag\('ees dans \fIfichier\-local\-shlibs\fP au lieu de
+\fBdebian/shlibs.local\fP.
+.TP 
+\fB\-T\fP\fIfichier\-substvars\fP
+\('Ecrire les variables de substitution dans \fIfichier\-substvars\fP\ ; le fichier
+par d\('efaut est \fBdebian/substvars\fP.
+.TP 
+\fB\-v\fP
+Active le mode bavard (depuis dpkg\ 1.14.8). De nombreux messages sont
+affich\('es pour expliquer ce que \fBdpkg\-shlibdeps\fP fait.
+.TP 
+\fB\-x\fP\fIpackage\fP
+Exclut le paquet des d\('ependances g\('en\('er\('ees (depuis dpkg\ 1.14.8). Cela \('evite
+les auto\-d\('ependances pour les paquets fournissant des ex\('ecutables ELF
+(ex\('ecutables ou modules compl\('ementaires de biblioth\(`eque) qui utilisent une
+biblioth\(`eque incluse dans ce m\(^eme paquet. Cette option peut \(^etre utilis\('ee
+plusieurs fois pour exclure plusieurs paquets.
+.TP 
+\fB\-S\fP\fIr\('epertoire\-construction\-paquet\fP
+Recherche dans \fIr\('epertoire\-construction\-paquet\fP en premier et essaie de
+trouver une biblioth\(`eque (depuis dpkg\ 1.14.15). C'est utile lorsque le
+paquet source construit plusieurs saveurs de la m\(^eme biblioth\(`eque et que
+vous voulez vous assurer que vous obtiendrez la d\('ependance d'un paquet
+binaire donn\('e. Cette option peut \(^etre utilis\('ee plusieurs fois\ : les
+r\('epertoires seront examin\('es dans le m\(^eme ordre avant les r\('epertoires
+d'autres paquets binaires.
+.TP 
+\fB\-I\fP\fIr\('epertoire\-construction\-paquet\fP
+Ignore \fIr\('epertoire\-construction\-paquet\fP lors de la recherche des fichiers
+shlibs, de symboles et des biblioth\(`eques partag\('ees (depuis
+dpkg\ 1.18.5). Cette option peut \(^etre utilis\('ee plusieurs fois.
+.TP 
+\fB\-\-ignore\-missing\-info\fP
+Pas d'\('echec si l'information de d\('ependance ne peut pas \(^etre trouv\('ee pour une
+biblioth\(`eque partag\('ee (depuis dpkg\ 1.14.8). L'utilisation de cette option
+est d\('econseill\('ee, toutes les biblioth\(`eques devraient fournir leurs
+informations de d\('ependance (que ce soit avec les fichiers shlibs, ou avec
+les fichiers symboles), m\(^eme si elles ne sont pas encore utilis\('ees par
+d'autres paquets.
+.TP 
+\fB\-\-warnings=\fP\fIvaleur\fP
+\fIvaleur\fP est un champ de \(Fo\ bit\ \(Fc d\('efinissant l'ensemble des avertissements
+qui peuvent \(^etre \('emis par \fBdpkg\-shlibdeps\fP (depuis dpkg\ 1.14.17). Le bit
+\fB0\fP (valeur\ =\ 1) active l'avertissement \(Fo\ symbole \fIsym\fP utilis\('e par le
+\fIbinaire\fP trouv\('e dans aucune des biblioth\(`eques\ \(Fc. Le bit \fB1\fP (valeur\ =\ 2)
+active l'avertissement \(Fo\ le paquet pourrait \('eviter une d\('ependance
+inutile\ \(Fc. Le bit \fB2\fP (valeur\ =\ 4) active l'avertissement \(Fo\ Le \fIbinaire\fP
+ne devrait pas \(^etre li\('e \(`a \fIbiblioth\(`eque\fP\ \(Fc. La \fIvaleur\fP par d\('efaut est
+\fB3\fP\ : les deux premi\(`eres mises en garde sont actives par d\('efaut, la
+derni\(`ere ne l'est pas. Positionnez la \fIvaleur\fP \(`a\ 7 si vous souhaitez que
+tous les avertissements soient actifs.
+.TP 
+\fB\-\-admindir\fP=\fIr\('epertoire\fP
+Changer l'endroit o\(`u se trouve la base de donn\('ees de \fBdpkg\fP (depuis
+dpkg\ 1.14.0). Par d\('efaut, c'est \fI/var/lib/dpkg\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH DIAGNOSTICS
+.SS Avertissements
+Depuis que \fBdpkg\-shlibdeps\fP analyse l'ensemble des symboles utilis\('es par
+chaque binaire g\('en\('er\('e par le paquet, il est en mesure d'\('emettre des
+avertissements dans plusieurs cas. Ils vous informent des choses qui peuvent
+\(^etre am\('elior\('ees dans le paquet. Dans la plupart des cas, ces am\('eliorations
+concernent directement les sources amont. Dans l'ordre d'importance
+d\('ecroissant, voici les diff\('erents avertissements que vous pouvez
+rencontrer\ :
+.TP 
+\fBsymbole\fP\fI sym\fP\fB utilis\('e par \fP\fIbinaire\fP\fB trouv\('e dans aucune des biblioth\(`eques.\fP
+Le symbole indiqu\('e n'a pas \('et\('e trouv\('e dans les biblioth\(`eques li\('ees au
+binaire. Le \fIbinaire\fP est probablement plut\(^ot une biblioth\(`eque et il doit
+\(^etre li\('e avec une biblioth\(`eque suppl\('ementaire durant le processus de
+construction (l'option \fB\-l\fP\fIbiblioth\(`eque\fP de l'\('editeur de liens).
+.TP 
+\fIbinary\fP\fB contient une r\('ef\('erence non r\('esolue au symbole \fP\fIsym\fP\ \fB: il s'agit probablement d'un greffon (plugin)\fP
+Le symbole indiqu\('e n'a pas \('et\('e trouv\('e dans les biblioth\(`eques li\('ees avec le
+fichier binaire. Le \fIbinaire\fP est tr\(`es probablement un greffon (plugin) et
+le symbole est probablement fourni par le programme qui charge ce
+greffon. En th\('eorie, un greffon n'a pas de \(Fo\ SONAME\ \(Fc mais ce binaire en
+poss\(`ede un et n'a pas pu \(^etre identifi\('e en tant que tel. Cependant, le fait
+que le binaire soit stock\('e dans un r\('epertoire non public est une indication
+forte qu'il ne s'agit pas d'une biblioth\(`eque partag\('ee normale. Si le binaire
+est vraiment un greffon, vous pouvez ignorer cet avertissement. Il existe
+cependant une possibilit\('e qu'il s'agisse d'un vrai binaire et que les
+programmes avec lequel il est li\('e utilisent un RPATH afin que le chargeur
+dynamique le trouve. Dans ce cas, la biblioth\(`eque est incorrecte et doit
+\(^etre corrig\('ee.
+.TP 
+\fBpaquet pourrait \('eviter une d\('ependance inutile si\fP \fIle binaire\fP \fBn'\('etait pas li\('e avec\fP \fIbiblioth\(`eque\fP \fB(il ne fait usage d'aucun de ses symboles)\fP
+Aucun des \fIbinaires\fP li\('es \(`a la \fIbiblioth\(`eque\fP utilise les symboles qu'elle
+fournit. En corrigeant tous les binaires, vous \('eviteriez la d\('ependance
+associ\('ee \(`a cette biblioth\(`eque (\(`a moins que la m\(^eme d\('ependance soit \('egalement
+li\('ee \(`a une autre biblioth\(`eque qui est elle r\('eellement utilis\('ee).
+.TP 
+\fBpaquet pourrait \('eviter une d\('ependance inutile si\fP \fIles binaires\fP \fBn'\('etaient pas li\('es avec\fP \fIbiblioth\(`eque\fP \fB(ils ne font usage d'aucun de ses symboles)\fP
+Identique \(`a l'avertissement pr\('ec\('edent, pour des binaires multiples.
+.TP 
+\fIle binaire\fP \fBne devrait pas \(^etre li\('e avec la\fP \fIbiblioth\(`eque\fP \fB(il ne fait usage d'aucun de ses symboles)\fP
+Le \fIbinaire\fP est li\('e \(`a une biblioth\(`eque dont il n'a pas besoin. Ce n'est
+pas un probl\(`eme mais de petites am\('eliorations de performance dans le temps
+de chargement de celui\-ci peuvent \(^etre obtenues en ne le liant pas \(`a cette
+biblioth\(`eque. Cet avertissement v\('erifie la m\(^eme information que la
+pr\('ec\('edente mais elle le fait pour tous les binaires au lieu de ne faire le
+contr\(^ole qu'au niveau global sur tous les binaires analys\('es.
+.SS Erreurs
+\fBdpkg\-shlibdeps\fP \('echouera s'il ne peut pas trouver de biblioth\(`eque publique
+utilis\('ee par un binaire ou si cette biblioth\(`eque n'a pas d'informations sur
+les d\('ependances associ\('ees (soit le fichier shlibs, soit le fichier des
+symboles). Une biblioth\(`eque publique a un SONAME et un num\('ero de version
+(libsomething.so.\fIX\fP). Une biblioth\(`eque priv\('ee (comme un module
+additionnel) ne devrait pas avoir de SONAME et n'a pas besoin d'avoir de
+version.
+.TP 
+\fBimpossible de trouver la biblioth\(`eque\fP \fIlibrary\-soname\fP \fBdemand\('ee par le\fP \fIbinaire\fP \fB(son RPATH est \(Fo\ \fP\fIrpath\fP\fB\ \(Fc)\fP
+Le \fIbinaire\fP utilise une biblioth\(`eque appel\('ee \fIlibrary\-soname\fP mais
+\fBdpkg\-shlibdeps\fP n'a pas \('et\('e en mesure de trouver cette
+biblioth\(`eque. \fBdpkg\-shlibdeps\fP cr\('ee une liste de r\('epertoires \(`a v\('erifier de
+la mani\(`ere suivante\ : les r\('epertoires \('enum\('er\('es dans le RPATH du binaire, les
+r\('epertoires ajout\('es par l'option \fB\-l\fP, les r\('epertoires list\('es dans la
+variable d'environnement \fBLD_LIBRARY_PATH\fP, les r\('epertoires crois\('es
+multi\-architerctures (par exemple, /lib/arm64\-linux\-gnu,
+/usr/lib/arm64\-linux\-gnu), les r\('epertoires publics standard (/lib,
+/usr/lib), les r\('epertoires list\('es dans /etc/ld.so.conf et les r\('epertoires
+obsol\(`etes multilib (/lib32, /usr/lib32, /lib64, /usr/lib64). Ensuite, il
+v\('erifie les r\('epertoires qui sont dans l'arbre de construction du paquet
+binaire en cours d'analyse, dans l'arbre de construction du paquet indiqu\('e
+avec l'option de ligne de commande \fB\-S\fP, dans les autres arbres de paquets
+qui contiennent un fichier DEBIAN/shlibs ou DEBIAN/symbols et enfin dans le
+r\('epertoire racine. Si la biblioth\(`eque n'est pas trouv\('ee dans l'un de ces
+r\('epertoires, alors ce message d'erreur est obtenu.
+
+Si la biblioth\(`eque non trouv\('ee est cependant disponible dans le r\('epertoire
+priv\('e de ce m\(^eme paquet, alors il vous faut ajouter ce r\('epertoire avec
+\fB\-l\fP. S'il est dans un autre paquet binaire en cours de construction, alors
+assurez\-vous que le fichier shlibs/symbols de ce paquet a d\('ej\(`a cr\('e\('e et que
+\fB\-l\fP contient le r\('epertoire appropri\('e si c'est aussi un r\('epertoire priv\('e.
+.TP 
+\fBaucune information de d\('ependance trouv\('ee pour\fP \fIla biblioth\(`eque\fP \fB(utilis\('ee par le\fP \fIbinaire\fP\fB).\fP
+La biblioth\(`eque n\('ecessaire au \fIbinaire\fP a \('et\('e trouv\('ee par \fBdpkg\-shlibdeps\fP
+dans \fIfichier\-biblioth\(`eque\fP mais \fBdpkg\-shlibdeps\fP n'a pas \('et\('e en mesure de
+trouver d'informations de d\('ependance pour cette biblioth\(`eque. Pour trouver
+la d\('ependance, il a essay\('e de lier la biblioth\(`eque \(`a un paquet Debian avec
+l'aide de \fBdpkg \-S \fP\fIfichier\-biblioth\(`eque\fP. Puis, il a v\('erifi\('e les shlibs
+correspondants et les fichiers symboles de /var/lib/dpkg/info/ et enfin les
+diff\('erents arbres des paquets construits (debian/*/DEBIAN/).
+
+Cet \('echec peut \(^etre caus\('e par un shlibs ou un fichier de symboles qui serait
+mauvais ou manquant dans le paquet. Une autre cause serait que la
+biblioth\(`eque soit construite au sein du m\(^eme paquet source et que les
+fichiers shlibs n'aient pas encore \('et\('e cr\('e\('es (dans ce cas debian/rules doit
+\(^etre modifi\('e pour cr\('eer le shlibs avant l'appel de \fBdpkg\-shlibdeps\fP). Un
+mauvais RPATH peut aussi conduire \(`a ce que la biblioth\(`eque soit trouv\('ee sous
+un nom non canonique (comme\ : /usr/lib/openoffice.org/../lib/libssl.so.0.9.8
+au lieu de /usr/lib/libssl.so.0.9.8) qui n'est associ\('e \(`a aucun paquet,
+\fBdpkg\-shlibdeps\fP essaie de contourner cela en se repliant vers un nom
+canonique (en utilisant \fBrealpath\fP(3)), mais cela ne fonctionne pas
+toujours. Il est toujours pr\('ef\('erable de bien nettoyer le RPATH du binaire
+afin d'\('eviter ces probl\(`emes.
+
+L'appel de \fBdpkg\-shlibdeps\fP en mode bavard (\fB\-v\fP) fournira beaucoup plus
+d'informations sur l'endroit o\(`u il a essay\('e de trouver l'information sur les
+d\('ependances. Cela peut \(^etre utile si vous ne comprenez pas pourquoi vous
+obtenez cette erreur.
+.SH "VOIR AUSSI"
+\fBdeb\-shlibs\fP(5), \fBdeb\-symbols\fP(5), \fBdpkg\-gensymbols\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

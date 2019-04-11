@@ -1,0 +1,67 @@
+.\" dpkg manual page - deb-old(5)
+.\"
+.\" Copyright © 1995 Raul Miller
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-old 5 2019-03-25 1.19.6 Dpkg\-sviten
+.nh
+.SH NAMN
+deb\-old \- Debians gamla bin\(:arpaketformat
+.
+.SH SYNOPS
+\fIfilnamn\fP\fB.deb\fP
+.
+.SH BESKRIVNING
+\&\fB.deb\fP\-formatet \(:ar Debians bin\(:ara paketformat. Denna manualsida beskriver
+det \fBgamla\fP formatet som anv\(:ands f\(:ore Debian 0.93. Se \fBdeb\fP(5) f\(:or
+detaljerad information om det nya formatet.
+.
+.SH FORMAT
+Filen inneh\(oaller tv\(oa rader av formatinformation som ASCII\-text, f\(:oljt av tv\(oa
+sammaslagna gzip\-packade ustar\-filer.
+.PP
+Den f\(:orsta raden i filen \(:ar formatversionsnumret utfyllt till \(oatta siffror,
+och \(:ar \fB0.939000\fP f\(:or alla arkiv i det gamla formatet.
+.PP
+N\(:asta rad \(:ar en decimalstr\(:ang (utan inledande nollor) som anger l\(:angden p\(oa
+den f\(:orsta gzip\-packade tar\-filen.
+.PP
+B\(oada dessa rader avslutas med ett ensamt radbrytningstecken.
+.PP
+Den f\(:orsta tar\-filen inneh\(oaller kontrollinformationen, lagrade som ett antal
+vanliga filer. Filen \fBcontrol\fP m\(oaste finnas, eftersom den inneh\(oaller
+grundl\(:aggande kontrollinformation.
+.PP
+In some very old archives, the files in the control tarfile may optionally
+be in a \fBDEBIAN\fP subdirectory. In that case, the \fBDEBIAN\fP subdirectory
+will be in the control tarfile too, and the control tarfile will have only
+files in that directory. Optionally the control tarfile may contain an entry
+for \(oq\fB.\fP\(cq, that is, the current directory.
+.PP
+Den andra gzip\-packade tar\-filen \(:ar filsystemsarkivet, vilken inneh\(oaller
+s\(:okv\(:agar relativt rotkatalogen f\(:or systemet det skall installeras
+p\(oa. S\(:okv\(:agarna inneh\(oaller inte inledande snedstreck.
+.
+.SH "SE \(:AVEN"
+\fBdeb\fP(5), \fBdpkg\-deb\fP(1), \fBdeb\-control\fP(5).
+.SH \(:OVERS\(:ATTNING
+Peter Krefting och Daniel Nylander.

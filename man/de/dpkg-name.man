@@ -58,10 +58,10 @@ Dateien werden in ein Unterverzeichnis verschoben. Falls das als Argument
 existierende Verzeichnis existiert, dann werden die Dateien in das
 Verzeichnis verschoben, andernfalls wird das Zielverzeichnis aus dem
 »section«\-Feld des Steuerteils des Pakets entnommen. Das Zielverzeichnis
-wird »unstable/binary\-\fIArchitektur\fP/\fIBereich\fP« sein. Falls die Sektion
+wird „unstable/binary\-\fIArchitektur\fP/\fIBereich\fP“ sein. Falls die Sektion
 nicht in der Steuerdatei gefunden werden kann, dann wird \fBno\-section\fP
 angenommen, und in diesem Fall, wie auch für die Sektionen \fBnon\-free\fP und
-\fBcontrib\fP ist das Zielverzeichnis »\fIBereich\fP/binary\-\fIArchitektur\fP«. Das
+\fBcontrib\fP ist das Zielverzeichnis „\fIBereich\fP/binary\-\fIArchitektur\fP“. Das
 Sektionsfeld muss nicht angegeben werden, daher werden viele Pakete ihren
 Weg in das \fBno\-section\fP\-Gebiet finden. Verwenden Sie diese Option mit
 Vorsicht, sie ist unordentlich.
@@ -121,7 +121,7 @@ Dies kann beim Bau neuer Pakete verwendet werden.
 \fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1), \fBfind\fP(1),
 \fBxargs\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

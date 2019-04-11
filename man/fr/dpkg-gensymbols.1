@@ -1,0 +1,591 @@
+.\" dpkg manual page - dpkg-gensymbols(1)
+.\"
+.\" Copyright © 2007-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2009-2010 Modestas Vainius <modestas@vainius.eu>
+.\" Copyright © 2012-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gensymbols 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-gensymbols \- Cr\('eation des fichiers de symboles (information de
+d\('ependances de biblioth\(`eques partag\('ees)
+.
+.SH SYNOPSIS
+\fBdpkg\-gensymbols\fP [\fIoption\fP...]
+.
+.SH DESCRIPTION
+\fBdpkg\-gensymbols\fP analyse un r\('epertoire temporaire de construction (par
+d\('efaut debian/tmp), y recherche les biblioth\(`eques et cr\('ee un fichier
+\fIsymbols\fP qui les d\('ecrit. Si ce fichier n'est pas vide, il est install\('e
+dans le sous\-r\('epertoire DEBIAN du r\('epertoire de construction afin de pouvoir
+\(^etre inclus dans les informations de contr\(^ole du paquet.
+.P
+Lors de la cr\('eation de ces fichiers, il utilise en entr\('ee certains fichiers
+de symboles fournis par le responsable. Il recherche les fichiers suivants
+(en utilisant le premier trouv\('e)\ :
+.IP \(bu 4
+debian/\fIpaquet\fP.symbols.\fIarch\fP
+.IP \(bu 4
+debian/symbols.\fIarch\fP
+.IP \(bu 4
+debian/\fIpaquet\fP.symbols
+.IP \(bu 4
+debian/symbols
+.P
+L'int\('er\(^et principal de ces fichiers est de fournir la version minimale
+associ\('ee \(`a chaque symbole fourni par les biblioth\(`eques. En g\('en\('eral, cela
+correspond \(`a la premi\(`ere version du paquet qui a fourni ce symbole, mais
+cette valeur peut \(^etre augment\('ee manuellement par le responsable si
+l'interface binaire applicative (ABI) du symbole est \('etendue sans casser la
+compatibilit\('e avec les versions pr\('ec\('edentes. La tenue \(`a jour de ces fichiers
+est \(`a la charge du responsable du paquet, avec l'aide de
+\fBdpkg\-gensymbols\fP.
+.P
+Quand les fichiers de symboles cr\('e\('es sont diff\('erents de ceux fournis par le
+responsable, \fBdpkg\-gensymbols\fP affichera les diff\('erences entre les deux
+versions. Si ces diff\('erences sont trop importantes, le programme peut m\(^eme
+se terminer en \('echec (le nombre de diff\('erences tol\('er\('ees peut \(^etre r\('egl\('e avec
+l'option \fB\-c\fP).
+.SH "TENUE \(`A JOUR DES FICHIERS SYMBOLES"
+Les fichiers de symboles deviennent r\('eellement utiles lorsqu'ils permettent
+de suivre l'\('evolution du paquet sur plusieurs versions. En cons\('equence, le
+responsable doit les mettre \(`a jour chaque fois qu'un nouveau symbole est
+ajout\('e afin que la version minimale associ\('ee corresponde \(`a la r\('ealit\('e. Pour
+effectuer cette op\('eration correctement, le fichier de diff\('erences indiqu\('e
+dans le journal de construction peut \(^etre utilis\('e. Dans la plupart des cas,
+ce fichier de diff\('erences peut \(^etre appliqu\('e tel quel au fichier
+debian/\fIpaquet\fP.symbols. Cela \('etant, quelques adaptations sont g\('en\('eralement
+n\('ecessaires\ : il est par exemple recommand\('e de retirer le num\('ero de r\('evision
+Debian de la version minimale afin que les paquets r\('etro\-port\('es, de num\('ero
+de version inf\('erieur mais avec la m\(^eme version amont continuent \(`a r\('epondre
+aux pr\('e\-requis. Si le num\('ero de r\('evision Debian ne peut vraiment pas \(^etre
+retir\('e car le nouveau symbole est la cons\('equence d'une modification propre \(`a
+Debian, il est sugg\('er\('e d'ajouter un suffixe \(Fo\ \fB~\fP\ \(Fc au num\('ero de version.
+.P
+Avant d'appliquer le correctif au fichier de symboles, le responsable doit
+contr\(^oler qu'il est correct. Les symboles publics sont suppos\('es ne jamais
+dispara\(^itre et le correctif ne devrait donc qu'ajouter des lignes.
+.P
+Veuillez noter qu'il est possible de placer des commentaires dans les
+fichiers de symboles\ :\ toute ligne commen\(,cant par \(Fo\ #\ \(Fc est un commentaire
+sauf si elle commence par \(Fo\ #include\ \(Fc (voir la section \fButilisation des
+inclusions\fP). Les lignes commen\(,cant par \(Fo\ #MISSING:\ \(Fc sont des commentaires
+sp\('eciaux qui indiquent les symboles qui peuvent avoir disparu.
+.P
+N'oubliez pas de v\('erifier si les anciennes versions des symboles ne doivent
+pas \(^etre incr\('ement\('ees. Il n'y a pas de moyen pour que \fBdpkg\-gensymbols\fP
+pr\('evienne de cela. Appliquer aveuglement le fichier de diff\('erences ou
+supposer qu'il n'y a rien \(`a changer, s'il n'y a pas de fichier de
+diff\('erences, sans v\('erifier s'il y a ces modifications, peut faire que des
+paquets, avec des d\('ependances l\(^aches, pr\('etendent qu'ils peuvent fonctionner
+avec des paquets plus anciens avec lesquels ils ne peuvent fonctionner. Cela
+introduira des bogues difficiles \(`a trouver avec des mises \(`a niveau
+(partielles).
+.SS "Utilisation du remplacement de #PACKAGE#"
+.P
+Dans de rares cas, le nom de la biblioth\(`eque d\('epend de l'architecture. Afin
+d'\('eviter de coder le nom du paquet en dur dans le fichier de symboles, il
+est possible d'utiliser le marqueur \fI#PACKAGE#\fP. Il sera remplac\('e par le
+vrai nom du paquet lors de l'installation des fichiers de symboles. \(`A la
+diff\('erence du marqueur \fI#MINVER#\fP, \fI#PACKAGE#\fP n'appara\(^itra jamais dans le
+fichier de symboles d'un paquet binaire.
+.SS "Utilisation des \('etiquettes de symbole"
+.P
+L'\('etiquetage des symboles (\(Fo\ symbol tagging\ \(Fc) est utile pour marquer des
+symboles qui sont particuliers d'une mani\(`ere ou d'une autre. Tout symbole
+peut avoir un nombre quelconque d'\('etiquettes associ\('ees. Bien que toutes les
+\('etiquettes soient analys\('ees et conserv\('ees, seules certaines d'entre elles
+sont comprises par \fBdpkg\-gensymbols\fP et d\('eclenchent un traitement
+sp\('ecifique des symboles. Veuillez consulter la sous\-section \fB\('Etiquettes
+standard de symbole\fP pour une r\('ef\('erence compl\(`ete \(`a propos de ces \('etiquettes.
+.P
+L'indication de l'\('etiquette vient juste avant le nom du symbole (sans
+espace). Elle commence toujours par une parenth\(`ese ouvrante \fB(\fP, se termine
+avec une parenth\(`ese fermante \fB)\fP et doit contenir au moins une
+\('etiquette. Les \('etiquettes multiples doivent \(^etre s\('epar\('ees par le caract\(`ere
+\fB|\fP. Chaque \('etiquette peut comporter optionnellement une valeur, s\('epar\('ee du
+nom de l'\('etiquette par le caract\(`ere \fB=\fP. Les noms et valeurs des \('etiquettes
+sont des cha\(^ines quelconques qui ne doivent pas comporter les caract\(`eres
+\fB)\fP \fB|\fP et \fB=\fP. Les noms de symbole qui suivent une \('etiquette peuvent
+optionnellement \(^etre mis entre guillemets avec les caract\(`eres \fB'\fP ou \fB"\fP
+afin d'y autoriser la pr\('esence d'espaces. Cependant, si aucune \('etiquette
+n'est utilis\('ee, les guillemets sont alors trait\('es comme une partie du nom du
+symbole, qui s'arr\(^ete alors au premier espace.
+.P
+ (\('etiq1=je suis marqu\('e|\('etiquette avec espace)"symbole comportant des espaces"@Base 1.0
+ (optional)symbole_non_prot\('eg\('e@Base 1.0 1
+ symbole_non_\('etiquet\('e@Base 1.0
+.P
+Le premier symbole de cet exemple est appel\('e \fIsymbole comportant des
+espaces\fP et utilise deux \('etiquettes\ :\ \fI\('etiq1\fP avec la valeur \fIje suis
+marqu\('e\fP et \fI\('etiquette avec espace\fP sans valeur. Le deuxi\(`eme symbole, appel\('e
+\fIsymbole_non_prot\('eg\('e\fP ne comporte que l'\('etiquette \fIoptional\fP. Le dernier
+symbole est un exemple de symbole normal sans \('etiquette.
+.P
+Comme les \('etiquettes de symbole sont une extension du format de
+\fBdeb\-symbols(5)\fP, elles ne peuvent appara\(^itre que dans les fichiers de
+symboles des paquets source (ces fichiers peuvent ensuite \(^etre vus comme des
+mod\(`eles permettant de construire les fichiers de symboles inclus dans les
+paquets binaires). Lorsque \fBdpkg\-gensymbols\fP est lanc\('e sans l'option \fB\-t\fP,
+il affiche les fichiers de symboles compatibles avec le format
+\fBdeb\-symbols(5)\fP\ : il traite enti\(`erement les symboles d'apr\(`es les exigences
+des \('etiquettes standard et supprime les \('etiquettes dans sa sortie. Au
+contraire, dans le mode mod\(`ele (\(Fo\ template\ \(Fc, option \fB\-t\fP), tous les
+symboles et leurs \('etiquettes (standard et inconnues) sont conserv\('es dans la
+sortie et \('ecrits dans leur forme d'origine.
+.SS "\('Etiquettes standard de symbole"
+.TP 
+\fBoptional\fP
+Un symbole marqu\('e comme optionnel peut dispara\(^itre de la biblioth\(`eque \(`a tout
+moment et ne provoquera pas l'\('echec de \fBdpkg\-gensymbols\fP. Cependant, les
+symboles optionnels disparus appara\(^itront en permanence comme manquants dans
+le fichier de diff\('erences, \(`a chaque nouvelle version du paquet. Ce
+comportement sert de rappel au responsable qu'un tel symbole doit \(^etre
+supprim\('e du fichier de symboles ou bien rajout\('e \(`a la biblioth\(`eque. Un tel
+symbole optionnel, pr\('ec\('edemment d\('eclar\('e comme manquant (\(Fo\ MISSING\ \(Fc), peut
+r\('eappara\(^itre soudainement dans la version suivante en \('etant remis \(`a l'\('etat
+existant (\(Fo\ existing\ \(Fc), sans modification de sa version minimale.
+
+Cette \('etiquette est utile pour les symboles qui sont priv\('es car leur
+disparition ne provoque pas de changement d'interface applicative (ABI). Par
+exemple, la plupart des mod\(`eles d'instanciation C++ sont dans cette
+cat\('egorie. Comme toute autre \('etiquette, celle\-ci peut comporter une valeur
+arbitraire qui peut servir \(`a indiquer pour quelle raison le symbole est
+optionnel.
+.TP 
+\fBarch=\fP\fIliste\-d'architectures\fP
+.TQ
+\fBarch\-bits=\fP\fIoctets\-architecture\fP
+.TQ
+\fBarch\-endian=\fP\fIboutisme\-d'architecture\fP
+Ces \('etiquettes permettent de restreindre la liste des architectures avec
+lesquelles le symbole est cens\('e exister. Les \('etiquettes \fBarch\-bits\fP et
+\fBarch\-endian\fP sont prises en charge depuis dpkg\ 1.18.0. Lorsque la liste
+des symboles est mise \(`a jour avec ceux d\('ecouverts dans la biblioth\(`eque, tous
+les symboles sp\('ecifiques d'architectures qui ne concernent pas
+l'architecture en cours sont ignor\('es. Si un symbole propre \(`a l'architecture
+en cours n'existe pas dans la biblioth\(`eque, les processus normaux pour des
+symboles manquants s'appliquent jusqu'\(`a \('eventuellement provoquer l'\('echec de
+\fBdpkg\-gensymbols\fP. D'un autre c\(^ot\('e, si le symbole propre \(`a une architecture
+est trouv\('e alors qu'il n'est pas cens\('e exister (parce que l'architecture
+courante n'est pas mentionn\('ee dans l'\('etiquette ou ne correspond pas au
+boutisme et aux octets), il est rendu ind\('ependant de l'architecture
+(c'est\-\(`a\-dire que les \('etiquettes d'architecture, d'octets de l'architecture
+et de boutisme d'architecture sont abandonn\('ees et le symbole appara\(^it dans
+le fichier de diff\('erences) mais non consid\('er\('e comme nouveau. (NdT\ : une
+aspirine peut \(^etre n\('ecessaire apr\(`es la lecture de ce paragraphe)
+
+Dans le mode de fonctionnement par d\('efaut (pas en mode \(Fo\ mod\(`ele\ \(Fc), seuls
+les symboles sp\('ecifiques de certaines architectures qui correspondent \(`a
+l'architecture courante sont \('ecrits dans le fichier de symboles. Au
+contraire, tous les symboles sp\('ecifiques d'architectures (y compris ceux des
+architectures diff\('erentes) seront \('ecrits dans le fichier de symboles, dans
+le mode \(Fo\ mod\(`ele\ \(Fc.
+
+Le format de \fIliste\-d'architectures\fP est le m\(^eme que le format utilis\('e dans
+les champs \fBBuild\-Depends\fP des fichiers \fIdebian/control\fP (\(`a l'exception
+des crochets d'inclusion []). Par exemple, le premier symbole de la liste
+qui suit sera pris en compte sur les architectures alpha, n'importe quelle
+amd64 et ia64, le second uniquement sur les architectures linux et le
+troisi\(`eme partout sauf sur armel.
+
+ (arch=alpha any\-amd64 ia64)un_symbole_sp\('ecifique_64bit@Base 1.0
+ (arch=linux\-any)un_symbole_sp\('ecifique_linux@Base 1.0
+ (arch=!armel)un_symbole_inexistant_sur_armel@Base 1.0
+
+Les \fIoctets\-architecture\fP sont soit \fB32\fP soit \fB64\fP.
+
+ (arch\-bits=32)32bit_specific_symbol@Base 1.0
+ (arch\-bits=64)64bit_specific_symbol@Base 1.0
+
+Le \fIboutisme\-d'architecture\fP est soit \fBlittle\fP soit \fBbig\fP.
+
+ (arch\-endian=little)little_endian_specific_symbol@Base 1.0
+ (arch\-endian=big)big_endian_specific_symbol@Base 1.0
+
+Plusieurs restrictions peuvent \(^etre cha\(^in\('ees.
+
+ (arch\-bits=32|arch\-endian=little)32bit_le_symbol@Base 1.0
+.TP 
+\fBignore\-blacklist\fP
+\fBdpkg\-gensymbols\fP comporte une liste interne de symboles ignor\('es qui ne
+devraient pas appara\(^itre dans les fichiers de symboles car ils sont en
+g\('en\('eral uniquement des effets de bord de d\('etails de mise en \(oeuvre de la
+cha\(^ine d'outils de construction. Si, pour une raison pr\('ecise, vous voulez
+vraiment inclure un de ces symboles dans le fichier, vous pouvez imposer
+qu'il soit ignor\('e, avec \fBignore\-blacklist\fP. Cela peut \(^etre utile pour
+certaines biblioth\(`eques de bas niveau telles que libgcc.
+.TP 
+\fBc++\fP
+Indique un motif de symbole \fIc++\fP. Voir la sous\-section \fBUtilisation de
+motifs de symbole\fP plus loin.
+.TP 
+\fBsymver\fP
+Indique un motif de symbole \fIsymver\fP (version de symbole). Voir la
+sous\-section \fBUtilisation des motifs de symbole\fP plus loin.
+.TP 
+\fBregex\fP
+Indique un motif de symbole bas\('e sur une \fIexpression\-rationnelle\fP. Voir la
+sous\-section \fBUtilisation des motifs de symbole\fP plus loin.
+.SS "Utilisation de motifs de symbole"
+.P
+Au contraire d'une indication normale de symbole, un motif permet de couvrir
+des symboles multiples de la biblioth\(`eque. \fBdpkg\-gensymbols\fP essaie de
+faire correspondre chaque motif \(`a chaque symbole qui n'est pas explicitement
+d\('efini dans le fichier de symboles. D\(`es qu'un motif est trouv\('e qui
+correspond au symbole, l'ensemble de ses \('etiquettes et propri\('et\('es sont
+utilis\('ees comme sp\('ecification de base du symbole. Si aucun des motifs ne
+correspond, le symbole sera consid\('er\('e comme nouveau.
+
+Un motif est consid\('er\('e comme perdu si aucun symbole ne lui correspond dans
+la biblioth\(`eque. Par d\('efaut, cela provoquera un \('echec de \fBdpkg\-gensymbols\fP
+s'il est utilis\('e avec l'option \fB\-c1\fP (ou une valeur plus
+\('elev\('ee). Cependant, si l'\('echec n'est pas souhait\('e, le motif peut \(^etre marqu\('e
+comme optionnel avec l'\('etiquette \fIoptional\fP. Dans ce cas, si le motif ne
+correspond \(`a rien, il sera simplement mentionn\('e dans le fichier de
+diff\('erences comme \fIMISSING\fP (manquant). De plus, comme pour tout autre
+symbole, le motif peut \(^etre limit\('e \(`a des architectures donn\('ees avec
+l'\('etiquette \fIarch\fP. Veuillez consulter la sous\-section \fB\('Etiquettes
+standard de symbole\fP pour plus d'informations.
+
+Les motifs sont une extension du format de \fBdeb\-symbols(5)\fP en ce sens
+qu'ils ne sont valables que dans les mod\(`eles de fichiers de
+symboles. Cependant, la partie comportant le nom de symbole est utilis\('ee
+comme une expression \(`a faire correspondre \(`a \fIname@version\fP du symbole
+r\('eel. Afin de faire la distinction entre les diff\('erents types de motifs, un
+motif sera usuellement marqu\('e avec une \('etiquette sp\('eciale.
+
+Actuellement, \fBdpkg\-gensymbols\fP g\(`ere trois types de base de motifs\ :
+.TP  3
+\fBc++\fP
+Ce motif est rep\('er\('e par l'\('etiquette \fIc++\fP. Il ne sera compar\('e qu'aux
+symboles C++ avec leur nom de symbole r\('etabli (demangled) tel qu'affich\('e
+avec l'utilitaire \fBc++filt\fP. Ce motif est tr\(`es pratique pour faire
+correspondre les symboles dont les noms d\('ecor\('es (mangled) peuvent diff\('erer
+selon les architectures bien que leurs noms d'origine restent les m\(^emes. Un
+tel groupe de symboles sont les \fInon\-virtual thunks\fP pour lesquels les
+d\('ecalages (offsets) sp\('ecifiques d'architectures sont inclus dans leur nom
+d\('ecor\('e. Une manifestation usuelle de ce cas est le destructeur virtuel qui,
+dans le contexte d'un \(Fo\ probl\(`eme du diamant\ \(Fc, a besoin d'un symbole de
+transition sp\('ecial (ou \(Fo\ thunk\ \(Fc) non virtuel. Par exemple, m\(^eme si
+_ZThn8_N3NSB6ClassDD1Ev@Base sur une architecture 32\ bits est identique \(`a
+_ZThn16_N3NSB6ClassDD1Ev@Base sur une architecture 64\ bits, les deux peuvent
+\(^etre indiqu\('es avec le m\(^eme motif \fIc++\fP\ :
+
+libdummy.so.1 libdummy1 #MINVER#
+ [...]
+ (c++)"non\-virtual thunk to NSB::ClassD::~ClassD()@Base" 1.0
+ [...]
+
+Le nom non d\('ecor\('e ci\-dessus peut \(^etre obtenu avec la commande suivante\ :
+
+ $ echo '_ZThn8_N3NSB6ClassDD1Ev@Base' | c++filt
+
+Veuillez noter que, bien que le nom d\('ecor\('e soit unique dans la biblioth\(`eque
+par d\('efinition, cela n'est pas forc\('ement vrai pour le nom non d\('ecor\('e. Deux
+symboles r\('eels diff\('erents peuvent avoir le m\(^eme nom non d\('ecor\('e. C'est par
+exemple le cas avec les symboles \(Fo\ thunk\ \(Fc non virtuels dans des
+configurations d'h\('eritage complexes ou avec la plupart des constructeurs et
+destructeurs (puisque g++ cr\('ee usuellement deux symboles r\('eels pour
+eux). Cependant, comme ces collisions se produisent au niveau de l'interface
+applicative binaire (ABI), elles ne devraient pas d\('egrader la qualit\('e du
+fichier de symboles.
+.TP 
+\fBsymver\fP
+Ce motif est indiqu\('e par l'\('etiquette \fIsymver\fP. Les biblioth\(`eques bien
+g\('er\('ees utilisent des symboles versionn\('es o\(`u chaque version correspond \(`a la
+version amont \(`a laquelle le symbole a \('et\('e ajout\('e. Si c'est le cas, il est
+possible d'utiliser un motif \fIsymver\fP pour faire correspondre chaque
+symbole associ\('e \(`a la version sp\('ecifique. Par exemple\ :
+
+libc.so.6 libc6 #MINVER#
+ (symver)GLIBC_2.0 2.0
+ [...]
+ (symver)GLIBC_2.7 2.7
+ access@GLIBC_2.0 2.2
+
+Tous les symboles associ\('es avec les versions GLIBC_2.0 et GLIBC_2.7
+conduiront respectivement \(`a des versions minimales de\ 2.0 et\ 2.7, \(`a
+l'exception du symbole access@GLIBC_2.0. Ce dernier am\(`ene \(`a une d\('ependance
+minimale sur la version\ 2.2 de libc6 bien qu'il soit dans le scope de
+\(Fo\ (symvar)GLIBC_2.0\ \(Fc. Cela est d\(^u au fait que les symboles sp\('ecifiques
+prennent le pas sur les motifs.
+
+Veuillez noter que les anciens motifs avec caract\(`eres g\('en\('eriques (indiqu\('es
+sous la forme \(Fo\ *@version\ \(Fc) dans le champ de nom de symbole sont toujours
+g\('er\('es. La nouvelle syntaxe \(Fo\ (symver|optional)version\ \(Fc doit toutefois leur
+\(^etre pr\('ef\('er\('ee. Par exemple, \(Fo\ *@GLIBC_2.0\ 2.0\ \(Fc devrait \(^etre \('ecrit sous la
+forme \(Fo\ (symver|optional)GLIBC_2.0\ 2.0\ \(Fc si un comportement analogue est
+recherch\('e.
+.TP 
+\fBregex\fP
+Les motifs d'expressions rationnelles sont indiqu\('es par l'\('etiquette
+\fIexpression\-rationnelle\fP. La correspondance se fait avec une expression
+rationnelle Perl sur le champ de nom de symbole. La correspondance est faite
+telle quelle et il ne faut donc pas oublier le caract\(`ere \fI^\fP, sinon la
+correspondance est faite sur n'importe quelle partie du symbole r\('eel
+\fIname@version\fP. Par exemple\ :
+
+libdummy.so.1 libdummy1 #MINVER#
+ (regex)"^mystack_.*@Base$" 1.0
+ (regex|optional)"private" 1.0
+
+Les symboles tels que \(Fo\ mystack_new@Base\ \(Fc, \(Fo\ mystack_push@Base\ \(Fc,
+\(Fo\ mystack_pop@Base\ \(Fc, etc., seront en correspondance avec le premier motif
+alors que, par exemple, \(Fo\ ng_mystack_new@Base\ \(Fc ne le sera pas. Le deuxi\(`eme
+motif correspondra pour tous les symboles qui comportent la cha\(^ine
+\(Fo\ private\ \(Fc dans leur nom et les correspondances h\('eriteront de l'\('etiquette
+\fIoptional\fP depuis le motif.
+.P
+Les motifs de base indiqu\('es pr\('ec\('edemment peuvent \(^etre combin\('es au
+besoin. Dans ce cas, ils sont trait\('es dans l'ordre o\(`u les \('etiquettes sont
+indiqu\('ees. Par exemple, les deux motifs
+
+ (c++|regex)"^NSA::ClassA::Private::privmethod\ed\e(int\e)@Base" 1.0
+ (regex|c++)N3NSA6ClassA7Private11privmethod\edEi@Base 1.0
+
+seront en correspondance avec les symboles
+\(Fo\ _ZN3NSA6ClassA7Private11privmethod1Ei@Base"\ \(Fc et
+\(Fo\ _ZN3NSA6ClassA7Private11privmethod2Ei@Base\ \(Fc. Lors de la correspondance
+avec le premier motif, le symbole brut est d'abord r\('etabli d\(cqorigine en tant
+que symbole C++, puis compar\('e \(`a l'expression rationnelle. D'un autre c\(^ot\('e,
+lors de la correspondance avec le deuxi\(`eme motif, l'expression rationnelle
+est compar\('ee au nom de symbole brut, puis le symbole est test\('e en tant que
+symbole C++ en tentant de le r\('etablir d\(cqorigine. L'\('echec de n'importe quel
+motif basique provoquera l'\('echec de l'ensemble du motif. Ainsi, par exemple,
+\(Fo\ __N3NSA6ClassA7Private11privmethod\edEi@Base\ \(Fc ne correspondra \(`a aucun des
+motifs car ce n'est pas un symbole C++ valable (NdT\ :\ j'ai l'impression de
+traduire du Klingon\ !).
+
+En g\('en\('eral, les motifs sont divis\('es en deux groupes\ :\ les alias (\fIc++\fP et
+\fIsymver\fP basique) et les motifs g\('en\('eriques (\fIexpression\-rationnelle\fP et
+toutes les combinaisons de motifs basiques multiples). La correspondance de
+motifs bas\('es sur des alias est rapide (O(1)) alors que les motifs g\('en\('eriques
+sont O(N) (N \('etant le nombre de motifs g\('en\('eriques) pour chaque symbole. En
+cons\('equence, il est d\('econseill\('e d'abuser des motifs g\('en\('eriques.
+
+Lorsque plusieurs motifs correspondent pour le m\(^eme symbole r\('eel, les alias
+(d'abord \fIc++\fP, puis \fIsymver\fP) sont privil\('egi\('es par rapport aux motifs
+g\('en\('eriques. Ceux\-ci sont essay\('es dans l'ordre o\(`u ils apparaissent dans le
+mod\(`ele de fichier de symboles, en s'arr\(^etant \(`a la premi\(`ere
+correspondance. Veuillez noter, cependant, que la modification manuelle de
+l'ordre des entr\('ees de fichiers n'est pas recommand\('ee car \fBdpkg\-gensymbols\fP
+cr\('ee des fichiers de diff\('erences d'apr\(`es l'ordre alphanum\('erique de leur nom.
+.SS "Utilisation des inclusions"
+.P
+Lorsqu'un jeu de symboles export\('es varie selon les architectures, il est
+souvent peu efficace d'utiliser un seul fichier de symboles. Pour couvrir
+ces cas, une directive d'inclusion peut devenir utile dans certains cas\ :
+.IP \(bu 4
+Il est possible de factoriser la partie commune dans un fichier externe
+donn\('e et l'inclure dans le fichier \fIpaquet\fP.symbols.\fIarch\fP avec une
+directive \(Fo\ include\ \(Fc utilis\('ee de la mani\(`ere suivante\ :
+
+#include "\fIpaquets\fP.symbols.common"
+.IP \(bu
+La directive d'inclusion peut \('egalement \(^etre \('etiquet\('ee comme tout autre
+symbole\ :
+
+(\('etiquette|...|\('etiquetteN)#include "fichier_\(`a_inclure"
+
+Le r\('esultat sera que tous les symboles inclus depuis \fIfichier_\(`a_inclure\fP
+seront consid\('er\('es comme \('etiquet\('es par d\('efaut avec \fIetiq\fP ... \fIetiqN\fP. Cela
+permet de cr\('eer un fichier \fIpaquet\fP.symbols commun qui inclut les fichiers
+de symboles sp\('ecifiques des architectures\ :
+
+  symbole_commun1@Base 1.0
+ (arch=amd64 ia64 alpha)#include "package.symbols.64bit"
+ (arch=!amd64\ !ia64\ !alpha)#include "package.symbols.32bit"
+  symbole_commun2@Base 1.0
+.P
+Les fichiers de symboles sont lus ligne par ligne et les directives
+d'inclusion sont trait\('ees d\(`es qu'elles sont trouv\('ees. En cons\('equence, le
+contenu du fichier d'inclusion peut remplacer une d\('efinition qui pr\('ec\(`ede
+l'inclusion et ce qui suit l'inclusion peut remplacer une d\('efinition qu'elle
+ajoutait. Tout symbole (ou m\(^eme une autre directive d'inclusion) dans le
+fichier inclus peut d\('efinir des \('etiquettes suppl\('ementaires ou remplacer les
+valeurs d'\('etiquettes h\('erit\('ees, dans sa d\('efinition d'\('etiquettes. Cependant,
+pour un symbole donn\('e, il n'existe pas de m\('ethode permettant de remplacer
+une de ses \('etiquettes h\('erit\('ees.
+.P
+Un fichier inclus peut reprendre la ligne d'en\-t\(^ete qui contient le
+\(Fo\ SONAME\ \(Fc de la biblioth\(`eque. Dans ce cas, cela remplace toute ligne
+d'en\-t\(^ete pr\('ec\('edente. Il est cependant d\('econseill\('e de dupliquer les lignes
+d'en\-t\(^ete. Une fa\(,con de le faire est la m\('ethode suivante\ :
+.PP
+#include "libmachin1.symbols.common"
+ symboles_specifique_architecture@Base 1.0
+.SS "Bonnes pratiques de gestion des biblioth\(`eques"
+.P
+Une biblioth\(`eque bien maintenue offre les possibilit\('es suivantes\ :
+.IP \(bu 4
+son interface de programmation (API) est stable (les symboles publics ne
+sont jamais supprim\('es et les changements ne concernent que des ajouts de
+nouveaux symboles publics) et les modifications provoquant une
+incompatibilit\('e doivent \(^etre combin\('es avec un changement de SONAME\ ;
+.IP \(bu 4
+id\('ealement, elle utilise le versionnage des symboles pour garantir la
+stabilit\('e de l'interface applicative binaire (ABI) malgr\('e ses modifications
+internes et l'extension de son API\ ;
+.IP \(bu 4
+elle n'exporte pas les symboles priv\('es (afin de contourner cela, de tels
+symboles peuvent \(^etre \('etiquet\('es comme optionnels).
+.P
+En maintenant le fichier de symboles, il est facile d'en voir appara\(^itre et
+dispara\(^itre. Cependant, il est plus difficile de contr\(^oler la pr\('esence
+d'\('eventuelles modifications d'API ou ABI. En cons\('equence, le responsable
+doit contr\(^oler soigneusement le journal des modifications amont, \(`a la
+recherche de cas o\(`u une saine gestion des biblioth\(`eques peut avoir \('et\('e
+omise. Si des probl\(`emes potentiels sont d\('ecouverts, l'auteur amont doit \(^etre
+averti(e) car une correction en amont est meilleure qu'un travail sp\('ecifique
+au paquet Debian.
+.SH OPTIONS
+.TP 
+\fB\-P\fP\fIr\('epertoire\-construction\-paquet\fP
+Analyse de \fIr\('epertoire\-construction\-paquet\fP, plut\(^ot que debian/tmp.
+.TP 
+\fB\-p\fP\fIpaquet\fP
+D\('efinit le nom du paquet. Requis si plus d'un paquet binaire est indiqu\('e
+dans debian/control (ou s'il n'y a pas de fichier debian/control).
+.TP 
+\fB\-v\fP\fIversion\fP
+D\('efinit la version du paquet. La valeur par d\('efaut est la version extraite
+de debian/changelog. Ce param\(`etre est requis si le programme est lanc\('e en
+dehors de l'arborescence source d'un paquet.
+.TP 
+\fB\-e\fP\fIfichier\-biblioth\(`eque\fP
+N'analyse que les biblioth\(`eques explicitement mentionn\('ees au lieu de
+rechercher toutes les biblioth\(`eques publiques. Les motifs du shell peuvent
+\(^etre utilis\('es pour l'expansion des chemins d'acc\(`es (voir la page de manuel
+de \fBFile::Glob\fP(3perl) pour plus d'informations) dans
+\fIfichier\-biblioth\(`eque\fP pour \('etablir une correspondance avec plusieurs
+biblioth\(`eques avec un seul param\(`etre (afin d'\('eviter d'utiliser plusieurs
+options \fB\-e\fP).
+.TP 
+\fB\-l\fP\fIr\('epertoire\fP
+Ajoute \fIr\('epertoire\fP au d\('ebut de la liste des r\('epertoires o\(`u chercher des
+biblioth\(`eques partag\('ees priv\('ees (depuis dpkg\ 1.19.1). Cette option peut \(^etre
+utilis\('ee plusieurs fois.
+
+Note\ : Utilisez cette option plut\(^ot que le r\('eglage de \fBLD_LIBRARY_PATH\fP,
+parce que cette variable d'environnement est utilis\('ee pour contr\(^oler
+l'\('editeur de liens d'ex\('ecution et se servir d'elle pour d\('efinir les chemins
+des biblioth\(`eques partag\('ees au moment de la construction peut \(^etre
+probl\('ematique, par exemple, lors d'une compilation crois\('ee.
+.TP 
+\fB\-I\fP\fInom\-de\-fichier\fP
+Utilise \fInom\-de\-fichier\fP comme fichier de r\('ef\('erence pour cr\('eer le fichier
+de symboles \(`a int\('egrer dans le paquet lui\-m\(^eme.
+.TP 
+\fB\-O\fP[\fInom\-de\-fichier\fP]
+Affiche le fichier de symboles cr\('e\('e sur la sortie standard ou dans le
+\fInom\-de\-fichier\fP, si sp\('ecifi\('e, plut\(^ot que dans \fBdebian/tmp/DEBIAN/symbols\fP
+(ou \fIr\('epertoire\-construction\-paquet\fP\fB/DEBIAN/symbols\fP si \fB\-P\fP est
+pr\('esent). Si \fInom\-de\-fichier\fP existe d\('ej\(`a, son contenu sera utilis\('e comme
+base pour le fichier cr\('e\('e. Cette fonctionnalit\('e permet de mettre \(`a jour le
+fichier de symboles pour qu'il corresponde \(`a une nouvelle version amont de
+la biblioth\(`eque.
+.TP 
+\fB\-t\fP
+\('Ecrit le fichier de symboles en mode mod\(`ele plut\(^ot que dans un format
+compatible avec \fBdeb\-symbols\fP(5). La diff\('erence majeure r\('eside dans le fait
+que les noms de symboles et les \('etiquettes sont \('ecrits dans leur forme
+d'origine au lieu d'\(^etre interpr\('et\('es, avec r\('eduction des \('etiquettes en mode
+de compatibilit\('e. De plus, certains symboles peuvent \(^etre omis lors de
+l'\('ecriture d'un fichier \fBdeb\-symbols\fP(5) standard (selon les r\(`egles de
+traitement des \('etiquettes) alors que tous les symboles sont \('ecrits lors de
+la cr\('eation d'un mod\(`ele de fichier de symboles.
+.TP 
+\fB\-c\fP\fI[0\-4]\fP
+D\('efinit les contr\(^oles \(`a effectuer lors de la comparaison du fichier de
+symboles cr\('e\('e en utilisant le fichier de mod\(`ele comme point de d\('epart. Le
+niveau par d\('efaut est\ 1. Plus le niveau est augment\('e, plus le nombre de
+contr\(^oles effectu\('es est important. Chaque niveau de contr\(^ole comporte les
+contr\(^oles effectu\('es pour les niveaux inf\('erieurs. Le niveau\ 0 n'\('echoue
+jamais. Le niveau\ 1 \('echoue si certains symboles ont disparu. Le niveau\ 2
+\('echoue si de nouveaux symboles ont \('et\('e ajout\('es. Le niveau\ 3 \('echoue si
+certaines biblioth\(`eques ont disparu. Le niveau\ 4 \('echoue si des biblioth\(`eques
+ont \('et\('e ajout\('ees.
+
+Cette valeur peut \(^etre remplac\('ee par la valeur de la variable
+d'environnement \fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP.
+.TP 
+\fB\-q\fP
+Fonctionne en mode silencieux et ne cr\('ee jamais de fichier de diff\('erences
+entre le fichier de symboles cr\('e\('e et le fichier mod\(`ele utilis\('e comme point
+de d\('epart. N'affiche \('egalement aucun avertissement \(`a propos de biblioth\(`eques
+nouvelles ou disparues ou de symboles nouveaux ou disparus. Cette option ne
+d\('esactive que l'affichage informatif, mais pas les contr\(^oles eux\-m\(^emes (voir
+l'option \fB\-c\fP).
+.TP 
+\fB\-a\fP\fIarch\fP
+D\('efinit \fIarch\fP comme architecture lors du traitement des fichiers de
+symboles. Cette option permet de cr\('eer un fichier de symboles ou un fichier
+de diff\('erences pour n'importe quelle architecture, \(`a condition que les
+fichiers binaires correspondants soient d\('ej\(`a disponibles.
+.TP 
+\fB\-d\fP
+Active le mode bavard. De nombreux messages sont affich\('es pour expliquer ce
+que \fBdpkg\-gensymbols\fP fait.
+.TP 
+\fB\-V\fP
+Active le mode bavard. Le fichier de symboles cr\('e\('e contiendra les symboles
+d\('epr\('eci\('es sous forme de commentaires. De plus, en mode mod\(`ele, les motifs de
+symboles seront suivis de commentaires affichant les symboles r\('eels qui
+correspondent au motif.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP
+Remplace le niveau de v\('erification de commande, m\(^eme si l'argument en ligne
+de commande \fB\-c\fP a \('et\('e donn\('e (notez que cela va \(`a l'encontre de la
+convention g\('en\('erale qui veut que les arguments en ligne de commande ont la
+pr\('es\('eance sur les variables d'environnement).
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH "VOIR AUSSI"
+\fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
+.br
+\fBhttps://people.redhat.com/drepper/goodpractice.pdf\fP
+.br
+\fBhttps://people.redhat.com/drepper/dsohowto.pdf\fP
+.br
+\fBdeb\-symbols\fP(5), \fBdpkg\-shlibdeps\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

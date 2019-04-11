@@ -1,0 +1,220 @@
+.\" dpkg manual page - dpkg-split(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-split 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-split \- Outil de d\('ecomposition/recomposition des paquets Debian
+.
+.SH SYNOPSIS
+\fBdpkg\-split\fP [\fIoption\fP...] \fIcommande\fP
+.
+.SH DESCRIPTION
+\fBdpkg\-split\fP d\('ecompose les fichiers d'un paquet binaire Debian en parties
+plus petites (et les recompose), pour permettre l'enregistrement des
+fichiers d'un paquet volumineux sur des m\('edia de faible capacit\('e tels que
+les disquettes.
+
+On peut s'en servir \(Fo\ \(`a la main\ \(Fc avec les options \fB\-\-split\fP, \fB\-\-join\fP et
+\fB\-\-info\fP.
+
+Il poss\(`ede aussi un mode automatique, appel\('e avec l'option \fB\-\-auto\fP, dans
+lequel il conserve s\('epar\('ement dans une file les parties connues ou recompose
+le fichier d'un paquet quand il conna\(^it toutes ses parties. Les options
+\fB\-\-listq\fP et \fB\-\-discard\fP permettent la gestion de cette file.
+
+Toutes les op\('erations de d\('ecomposition, recomposition ou de mise en file
+produisent des messages sur la sortie standard\ ; ils peuvent \(^etre
+tranquillement ignor\('es.
+.
+.SH COMMANDES
+.TP 
+\fB\-s\fP, \fB\-\-split\fP \fIarchive\-compl\(`ete\fP [\fIpr\('efixe\fP]
+D\('ecompose en plusieurs parties un paquet binaire Debian.
+
+Le nom d'une partie est\ : \fIpr\('efixe\fP\fB.\fP\fIN\fP\fBde\fP\fIM\fP\fB.deb\fP o\(`u \fIN\fP le
+num\('ero de partie, commen\(,cant \(`a 1, et \fIM\fP est le nombre total de parties
+(les deux sont des d\('ecimaux).
+
+Quand on ne donne pas de \fIpr\('efixe\fP, le nom du fichier \fIarchive\-compl\(`ete\fP
+est utilis\('e, en incluant le r\('epertoire et en supprimant tout \fB.deb\fP
+restant.
+.TP 
+\fB\-j\fP, \fB\-\-join\fP \fIpartie\fP...
+Rassemble les parties d'un fichier, recomposant ainsi le fichier d'origine
+tel qu'il \('etait avant la d\('ecomposition.
+
+Ces parties, donn\('ees comme arguments, doivent appartenir toutes au m\(^eme
+fichier binaire d'origine. Chaque partie ne doit appara\(^itre qu'une seule
+fois dans la liste des arguments\ ; mais il est inutile de les ordonner.
+
+Les parties doivent bien s\(^ur avoir \('et\('e cr\('e\('ees selon le m\(^eme mod\(`ele (taille
+maximum des parties), qui est d\('eclar\('e au moment de la d\('ecomposition\ ; ce qui
+signifie en fait qu'elles doivent avoir \('et\('e cr\('e\('ees par le m\(^eme appel \(`a
+\fBdpkg\-split \-\-split\fP.
+
+Les parties des noms ne sont pas significatives pour le processus de
+recomposition.
+
+Par d\('efaut, le fichier produit s'appelle
+\fIpaquet\fP\fB_\fP\fIversion\fP\fB_\fP\fIarch\fP\fB.deb\fP.
+
+.TP 
+\fB\-I\fP, \fB\-\-info\fP \fIpartie\fP...
+Affiche les renseignements concernant telle partie dans un format lisible
+par tous. Les arguments ne repr\('esentant pas la partie d'un fichier binaire
+le disent aussi sur la sortie standard.
+.TP 
+\fB\-a\fP, \fB\-\-auto \-o\fP \fIfichier\-complet partie\fP
+Met en file automatiquement les parties en vue de la recomposition d'un
+paquet.
+
+La \fIpartie\fP d\('eclar\('ee est examin\('ee et compar\('ee avec les autres parties du
+m\(^eme paquet qui se trouvent (si elles existent) dans la file.
+
+Quand toutes les parties d'un fichier (auquel appartient la partie
+\fIpartie\fP) sont pr\('esentes, le fichier est recompos\('e et cr\('e\('e en tant que
+\fIfichier\-complet\fP (ce fichier ne devrait pas d\('ej\(`a exister, mais ce n'est
+pas une erreur).
+
+Quand ce n'est pas le cas, la partie \fIpartie\fP est mise dans la file et le
+fichier \fIfichier\-complet\fP n'est pas cr\('e\('e.
+
+Quand la \fIpartie\fP n'appartient pas \(`a un paquet binaire d\('ecompos\('e,
+\fBdpkg\-split\fP se termine avec un code de sortie \('egal \(`a \fB1\fP\ ; s'il y a une
+autre erreur, c'est un code de sortie \('egal \(`a \fB2\fP.
+
+L'option \fB\-\-output\fP ou \fB\-o\fP doit \(^etre fournie avec l'action \fB\-\-auto\fP. Si
+cela n'\('etait pas obligatoire, le programme appelant ne saurait pas quel
+fichier attendre.
+.TP 
+\fB\-l\fP, \fB\-\-listq\fP
+Liste le contenu d'une file de paquets \(`a recomposer.
+
+Pour chaque fichier poss\('edant des parties dans la file, cette action donne
+le nom du fichier, les parties pr\('esentes dans la file et le nombre total
+d'octets conserv\('es.
+.TP 
+\fB\-d\fP, \fB\-\-discard\fP [\fIpaquet\fP...]
+Cette action laisse de c\(^ot\('e certaines parties dans la file, celles qui sont
+en attente des autres parties composant le paquet.
+
+Quand aucun \fIpaquet\fP n'est donn\('e, la file est vid\('ee\ ; si un paquet est
+donn\('e, seules les parties de ce paquet sont d\('etruites.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-depotdir\fP\fI r\('epertoire\fP
+Indique un r\('epertoire diff\('erent pour la file comprenant les parties en
+attente d'une recomposition automatique. Par d\('efaut, c'est le r\('epertoire
+\fB/var/lib/dpkg\fP.
+.TP 
+\fB\-S\fP, \fB\-\-partsize\fP \fIkibioctets\fP
+Indique, en kibioctet (1024 octets), la taille maximum d'une partie lors
+d'une d\('ecomposition. Par d\('efaut, la taille maximum est de 450\ Kio.
+.TP 
+\fB\-o\fP, \fB\-\-output\fP \fIfichier\-complet\fP
+Indique le nom du fichier \(`a produire pour une recomposition.
+
+Cela annule le fichier par d\('efaut lors d'une recomposition \(Fo\ \(`a la main\ \(Fc
+(\fB\-\-join\fP) et c'est obligatoire pour une recomposition ou une mise en file
+automatiques (\fB\-\-auto\fP).
+.TP 
+\fB\-Q\fP, \fB\-\-npquiet\fP
+Pour une recomposition ou une mise en file automatiques, \fBdpkg\-split\fP
+affiche habituellement un message si on lui donne une \fIpartie\fP qui n'est
+pas une partie d'un paquet binaire. Cette option supprime ce message\ ; cela
+permet \(`a des programmes comme \fBdpkg\fP de ne pas afficher de faux messages
+quand il est confront\('e \(`a des paquets d\('ecompos\('es et des paquets non
+d\('ecompos\('es.
+.TP 
+\fB\-\-msdos\fP
+Oblige le nom des fichiers produits par \fB\-\-split\fP \(`a se conformer \(`a MS\-DOS.
+
+Cela supprime le pr\('efixe, soit celui par d\('efaut d\('eriv\('e du nom du fichier
+d'entr\('ee, soit celui donn\('e comme argument\ : les caract\(`eres alphanum\('eriques
+sont en minuscules, les signes plus sont remplac\('es par des \fBx\fP et tous les
+autres caract\(`eres sont abandonn\('es.
+
+Le r\('esultat est alors tronqu\('e autant que n\('ecessaire et des fichiers de la
+forme\ : \fIprefixN\fP\fBof\fP\fIM\fP\fB.deb\fP sont cr\('e\('es.
+.
+.SH "CODE DE SORTIE"
+.TP 
+\fB0\fP
+La recomposition ou bien toute autre commande a r\('eussi. Les commandes
+\fB\-\-info\fP r\('eussissent toujours m\(^eme si les fichiers ne sont pas des parties
+d'un paquet binaire.
+.TP 
+\fB1\fP
+Ne peut appara\(^itre qu'avec l'action \fB\-\-auto\fP et signale que le fichier
+\fIpartie\fP n'est pas une partie d'un paquet binaire.
+.TP 
+\fB2\fP
+Erreur fatale ou irr\('ecup\('erable due \(`a une utilisation non valable de la ligne
+de commande, \(`a un fichier qui ressemble \(`a fichier appartenant \(`a un paquet
+mais qui est corrompu, ou \(`a des interactions avec le syst\(`eme, telles que des
+acc\(`es \(`a la base de donn\('ees, des allocations m\('emoires,\ etc.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+Si cette option est utilis\('ee, elle sera utilis\('ee comme horodatage (en
+seconde \(`a partir de \(Fo\ l'epoch\ \(Fc) dans le conteneur \fBar\fP(5) de
+\fBdeb\-split\fP(5).
+.
+.SH FICHIERS
+.TP 
+\fI/var/lib/dpkg/parts\fP
+Le r\('epertoire par d\('efaut de la file contenant les fichiers qui attendent une
+recomposition automatique.
+
+Les noms de fichiers utilis\('es dans ce r\('epertoire sont dans un format
+particulier \(`a \fBdpkg\-split\fP et ne sont sans doute pas utiles pour d'autres
+programmes\ ; en tous cas on ne peut pas compter sur ce format de nom de
+fichier.
+.
+.SH BOGUES
+On ne peut pas obtenir tous les d\('etails voulus sur les paquets pr\('esents dans
+la file \(`a moins d'aller voir soi\-m\(^eme dans le r\('epertoire de la file.
+
+On ne peut pas facilement savoir si un fichier est vraiment la partie d'un
+paquet binaire ou non.
+.
+.SH "VOIR AUSSI"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\-deb\fP(1), \fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

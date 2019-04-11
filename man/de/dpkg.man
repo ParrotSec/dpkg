@@ -113,9 +113,9 @@ wollen alle Dateien aus den Systemverzeichnissen inklusive der
 Konfigurationsdateien entfernen).
 .TP 
 \fBunknown\fP
-The package selection is unknown.  A package that is also in a
-\fBnot\-installed\fP state, and with an \fBok\fP flag will be forgotten in the next
-database store.
+Die Paketauswahl ist unbekannt. Ein Paket, das auch im Zustand
+\fBnot\-installed\fP und ohne Schalter \fBok\fP ist, wird beim nächsten Abspeichern
+der Datenbank vergessen.
 .SS Paketschalter
 .TP 
 \fBok\fP
@@ -281,8 +281,8 @@ verfügbar sind. Mit der Aktion \fB\-\-merge\-avail\fP wird alte Information mit
 der Information aus der \fIPackages\-Datei\fP zusammengeführt. Mit der Aktion
 \fB\-\-update\-avail\fP wird die alte Information durch die Information aus der
 \fIPackages\-Datei\fP ersetzt. Die mit Debian vertriebene \fIPackages\-Datei\fP
-heißt einfach »\fIPackages\fP«. Falls das Argument \fIPackages\-file\fP fehlt oder
-»\fB\-\fP« benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg
+heißt einfach „\fIPackages\fP“. Falls das Argument \fIPackages\-file\fP fehlt oder
+„\fB\-\fP“ benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg
 1.17.7). \fBdpkg\fP hält seine Aufzeichnungen über die verfügbaren Pakete in
 \fI%ADMINDIR%/available\fP.
 
@@ -625,15 +625,16 @@ Datei aus einem anderen Paket.
 \fBoverwrite\-diverted\fP: Überschreibe eine umgeleitete (»diverted«) Datei mit
 einer nicht umgeleiteten.
 
-\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
-(since dpkg 1.19.5).
+\fBstatoverride\-add\fP: Überschreibt eine existierende Status\-Hinwegsetzung
+beim Hinzufügen (seit Dpkg 1.19.5).
 
-\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
-(since dpkg 1.19.5).
+\fBstatoverride\-remove\fP: Ignoriert eine fehlende Status\-Hinwegsetzung beim
+Entfernen (seit Dpkg 1.19.5).
 
-\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
-based security when installing files into the filesystem (since dpkg
-1.19.5).  On Linux systems the implementation uses SELinux.
+\fBsecurity\-mac\fP(*): Verwendet plattformspezifische »Mandatory Access Control
+(MAC)«\-basierende Sicherheit bei der Installation von Dateien in das
+Dateisystem (seit Dpkg 1.19.5). Auf Linux\-Systemen verwendet die
+Implementierung SELinux.
 
 \fBunsafe\-io\fP: Beim Entpacken keine sicheren E/A\-Operationen durchführen
 (seit Dpkg 1.15.8.6). Derzeit impliziert dies, dass vor Dateiumbenennungen
@@ -706,19 +707,19 @@ Paketes installiert ist. Dies ist ein Alias für \fB\-\-refuse\-downgrade\fP.
 Setzt das Standardadministrationsverzeichnis auf \fIVerzeichnis\fP. Diess
 Verzeichnis enthält viele Dateien, die Informationen über den Status von
 installierten und deinstallierten Paketen usw. enthalten. Standardmäßig
-»\fI%ADMINDIR%\fP«.
+„\fI%ADMINDIR%\fP“.
 .TP 
 \fB\-\-instdir=\fP\fIVerz\fP
 Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt
 an, wo Pakete installiert werden. \fBinstdir\fP ist auch das Verzeichnis, das
 an \fBchroot\fP(2) vor dem Aufruf der Installationsskripte des Paketes
 übergeben wird, was bedeutet, dass die Skripte \fBinstdir\fP als ein
-Wurzelverzeichnis sehen. Standardmäßig »\fI/\fP«.
+Wurzelverzeichnis sehen. Standardmäßig „\fI/\fP“.
 .TP 
 \fB\-root=\fP\fIVerz\fP
 Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
-Installationsverzeichnis auf »\fIVerz\fP« und das administrative Verzeichnis
-auf »\fIVerz\fP\fB%ADMINDIR%\fP« gesetzt wird.
+Installationsverzeichnis auf „\fIVerz\fP“ und das administrative Verzeichnis
+auf „\fIVerz\fP\fB%ADMINDIR%\fP“ gesetzt wird.
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
 Bearbeite nur die Pakete, die zur Installation ausgewählt sind. Die
@@ -758,8 +759,8 @@ vorsichtig.\fP
 
 Das Glob\-Muster kann die gleichen Platzhalter wie in der Shell verwenden,
 wobei ‚*’ auf eine beliebige Folge von Zeichen, auch dem Leerzeichen und
-‚/’, passt. Beispielsweise passt »\fI/usr/*/READ*\fP« auf
-»\fI/usr/share/doc/package/README\fP«. Wie gewöhnlich passt ‚?’ auf ein
+‚/’, passt. Beispielsweise passt „\fI/usr/*/READ*\fP“ auf
+„\fI/usr/share/doc/package/README\fP“. Wie gewöhnlich passt ‚?’ auf ein
 einzelnes Zeichen (wieder auch auf ‚/’). Und ‚[’ beginnt eine Zeichenklasse,
 die eine Liste von Zeichen, Bereiche und Komplemente enthalten kann. Lesen
 Sie \fBglob\fP(7) für detaillierte Informationen über das Globben. Hinweis:
@@ -925,7 +926,7 @@ Shell startet oder einen Befehl über eine Shell ausführt.
 \fBDPKG_PAGER\fP
 Das Programm, das \fBdpkg\fP ausführen wird, wenn es einen Pager ausführt,
 beispielsweise zur Anzeige von Conffile\-Dateiunterschieden. Falls \fBSHELL\fP
-nicht gesetzt ist, wird stattdessen »\fBsh\fP« verwandt. \fBDPKG_PAGER\fP setzt
+nicht gesetzt ist, wird stattdessen „\fBsh\fP“ verwandt. \fBDPKG_PAGER\fP setzt
 die Umgebungsvariable \fBPAGER\fP außer Kraft (seit Dpkg 1.19.2).
 .TP 
 \fBDPKG_COLORS\fP
@@ -933,9 +934,10 @@ Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte
 sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
 .TP 
 \fBDPKG_FORCE\fP
-Sets the force flags (since dpkg 1.19.5).  When this variable is present, no
-built\-in force defaults will be applied.  If the variable is present but
-empty, all force flags will be disabled.
+Setzt die Erzwingungsschalter (seit Dpkg 1.19.5). Wenn diese Variable
+vorhanden ist, werden keine eingebauten Vorgaben für Erzwingungen
+angewandt. Falls diese Variable vorhanden aber leer ist, werden alle
+Erzwingungsschalter deaktiviert.
 .TP 
 \fBDPKG_FRONTEND_LOCKED\fP
 Wird von einer Paketverwalterprogrammoberfläche gesetzt, um Dpkg zu
@@ -949,7 +951,7 @@ oder wenn ein Pager gestartet wird (seit Dpkg 1.19.2). Um das
 Vorgabeverhalten zu verändern, kann diese Variable auf einen anderen Wert
 einschließlich der leeren Zeichenkette voreingestellt werden oder die
 Variablen \fBPAGER\fP oder \fBDPKG_PAGER\fP können gesetzt werden, um bestimmte
-Optionen mit »\fB\-+\fP« zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
+Optionen mit „\fB\-+\fP“ zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
 \-+F"\fP.
 .TP 
 \fBDPKG_ROOT\fP
@@ -969,8 +971,9 @@ verwendende administrative Verzeichnis von \fBdpkg\fP anzuzeigen (seit Dpkg
 gesetzt.
 .TP 
 \fBDPKG_FORCE\fP
-Defined by \fBdpkg\fP on the subprocesses environment to all the currently
-enabled force option names separated by commas (since dpkg 1.19.5).
+Wird von \fBdpkg\fP für alle Unterprozessumgebungen auf alle aktuell
+aktivierten Erzwingungsoptionennamen (getrennt durch Kommata) gesetzt (seit
+Dpkg 1.19.5).
 .TP 
 \fBDPKG_SHELL_REASON\fP
 Wird von \fBdpkg\fP auf der Shell, die von der Conffile\-Eingabeaufforderung
@@ -1135,7 +1138,7 @@ Pakete erhalten werden: \fBapt\fP, \fBaptitude\fP und \fBdebsums\fP.
 Lesen Sie \fI%PKGDOCDIR%/THANKS\fP für die Liste der Leute, die zu \fBdpkg\fP
 beigetragen haben.
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

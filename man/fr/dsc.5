@@ -1,0 +1,252 @@
+.\" dpkg manual page - dsc(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dsc 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dsc \- Format du fichier de contr\(^ole dans les paquets source Debian
+.
+.SH SYNOPSIS
+\fInom\-du\-fichier\fP\fB.dsc\fP
+.
+.SH DESCRIPTION
+Chaque paquet Debian poss\(`ede un fichier de contr\(^ole .dsc qui contient un
+certain nombre de champs. Chaque champ commence par une \('etiquette, telle que
+\fBSource\fP ou \fBBinary\fP (la casse n'importe pas), suivie d'un \(Fo\ :\ \(Fc, et du
+contenu du champ. Les champs sont s\('epar\('es seulement par des \('etiquettes de
+champ. En d'autres termes, le contenu d'un champ peut s'\('etendre sur
+plusieurs lignes, mais les outils d'installation joindront en g\('en\('eral les
+lignes pendant le traitement du contenu du champ (sauf pour les champs \(`a
+lignes multiples \fBPackage\-List\fP, \fBFiles\fP, \fBChecksums\-Sha1\fP et
+\fBChecksums\-Sha256\fP, voir ci\-dessous).
+.PP
+Les donn\('ees de contr\(^ole pourraient \(^etre incluses dans une signature OpenPGP
+\(Fo\ ASCII Armored\ \(Fc, comme sp\('ecifi\('e dans RFC4880.
+.
+.SH "LES CHAMPS"
+.TP 
+\fBFormat:\fP \fIversion\-format\fP (requis)
+The value of this field declares the format version of the source package.
+The field value is used by programs acting on a source package to interpret
+the list of files in the source package and determine how to unpack it.  The
+syntax of the field value is a numeric major revision (\(lq0\-9\(rq), a period
+(\(lq.\(rq), a numeric minor revision (\(lq0\-9\(rq), and then an optional subtype after
+whitespace (\(lq\ \et\(rq), which if specified is a lowercase alphanumeric
+(\(lqa\-z0\-9\(rq) word in parentheses (\(lq()\(rq).  The subtype is optional in the
+syntax but may be mandatory for particular source format revisions.
+
+Les formats source actuellement pris en charge par \fBdpkg\fP sont \fB1.0\fP,
+\fB2.0\fP, \fB3.0 (native)\fP, \fB3.0 (quilt)\fP, \fB3.0 (git)\fP, \fB3.0 (bzr)\fP et \fB3.0
+(custom)\fP. Voir \fBdpkg\-source\fP(1) pour leur description.
+.TP 
+\fBSource:\fP \fInom\-source\fP (requis)
+La valeur de ce champ donne le nom du paquet, et la plupart des outils
+d'installation s'en servent pour produire les noms des paquets.
+.TP 
+\fBBinary:\fP \fIliste\-de\-paquets\-binaires\fP
+Ce champ coup\('e liste des paquets binaires que ce paquet source peut produire
+s\('epar\('es par des virgules.
+
+Ce champ a maintenant \('et\('e remplac\('e par le champ \fBPackage\-List\fP qui donne
+suffisamment d'informations sur quels paquets binaires sont produits sur
+quelle architecture, quel profil de construction et autres restrictions
+actives.
+.TP 
+\fBArchitecture:\fP \fIliste\-architectures\fP (recommand\('e)
+Une liste d'architectures et de jokers d'architecture s\('epar\('es par des
+espaces qui pr\('ecisent le type de mat\('eriel pour lequel ce paquet peut \(^etre
+compil\('e. Les noms et les jokers d'architecture courants sont \fBamd64\fP,
+\fBarmel\fP, \fBi386\fP, \fBlinux\-any\fP, \fBany\-amd64\fP,\ etc.
+
+Notez que la valeur \fBall\fP est destin\('ee aux paquets ind\('ependants de
+l'architecture et \fBany\fP \(`a ceux qui sont d\('ependants d'une architecture. La
+liste peut comprendre (ou consister uniquement de) la valeur sp\('eciale
+\fBall\fP. Quand la liste comprend le joker d'architecture \fBany\fP, la seule
+autre valeur permise dans la liste est \fBall\fP.
+
+La valeur du champ est en g\('en\('eral g\('en\('er\('ee par les champs \fBArchitecture\fP du
+fichier \fIdebian/control\fP du paquet source.
+.TP 
+\fBVersion:\fP \fIcha\(^ine\-de\-la\-version\fP (requis)
+C'est classiquement le num\('ero de version du paquet d'origine dans la forme
+choisie par l'auteur du programme. Il peut y avoir aussi un num\('ero de
+r\('evision Debian (pour les paquets non natifs). Le format exact et
+l'algorithme de tri sont d\('ecrits dans \fBdeb\-version\fP(7).
+.TP 
+\fBOrigin:\fP\fI nom\fP
+Nom de la distribution dont ce paquet provient.
+.TP 
+\fBMaintainer:\fP \fInom\-complet\-et\-adresse\-\('electronique\fP (recommand\('e)
+Le format de ce champ sera \(Fo\ Jean Dupont <jdupont@foo.com>\ \(Fc\ ; et
+c'est bien s\(^ur le cr\('eateur du paquet, par opposition \(`a l'auteur du programme
+mis en paquet.
+.TP 
+\fBUploaders:\fP \fIliste\-de\-noms\-complets\-et\-adresses\-\('electroniques\fP
+Affiche les noms et les adresses \('electroniques des co\-responsables du
+paquet, au m\(^eme format que le champ \fBMaintainer\fP. Des co\-responsables
+multiples peuvent \(^etre s\('epar\('es par des virgules.
+.TP 
+\fBDescription\fP \fIdescription\-courte\fP
+.TQ
+\fB \fP\fIdescription\-longue\fP
+Le format de la description du paquet est un r\('esum\('e bref sur la premi\(`ere
+ligne (apr\(`es le champ \fBDescription\fP). Les lignes suivantes peuvent servir \(`a
+une description plus longue et plus d\('etaill\('ee. Chaque ligne de cette
+description longue doit \(^etre pr\('ec\('ed\('ee d'une espace\ ; quand c'est une ligne
+blanche, elle doit contenir un seul \(Fo\ \fB.\fP\ \(Fc apr\(`es cette espace.
+.TP 
+\fBHomepage:\fP\fI URL\fP
+\fIURL\fP de la page d'accueil du projet amont.
+.TP 
+\fBStandards\-Version:\fP \fIcha\(^ine\-de\-la\-version\fP (recommand\('e)
+Ce champ indique la version la plus r\('ecente des normes de la charte de la
+distribution auxquelles ce paquet se conforme.
+.TP 
+\fBVcs\-Browser:\fP\fI URL\fP
+Indique l'\fIURL\fP de l'interface web permettant de parcourir le d\('ep\(^ot du
+syst\(`eme de gestion de versions.
+.TP 
+\fBVcs\-Arch:\fP\fI URL\fP
+.TQ
+\fBVcs\-Bzr:\fP\fI URL\fP
+.TQ
+\fBVcs\-Cvs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Darcs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Git:\fP\fI URL\fP
+.TQ
+\fBVcs\-Hg:\fP\fI URL\fP
+.TQ
+\fBVcs\-Mtn:\fP\fI URL\fP
+.TQ
+\fBVcs\-Svn:\fP\fI URL\fP
+Ces champs indiquent l'\fIURL\fP du d\('ep\(^ot du syst\(`eme de gestion de versions
+utilis\('e pour la gestion du paquet. Voir \fBdeb\-src\-control\fP(5) pour plus de
+d\('etails.
+.TP 
+\fBTestsuite:\fP\fI liste\-de\-noms\fP
+Ce champ indique que le paquet source contient les suites de tests
+sp\('ecifi\('ees. La valeur est une liste des suites de tests s\('epar\('ees par des
+virgules. Si la valeur \fBautopkgtest\fP est pr\('esente, un fichier
+\fIdebian/tests/control\fP devrait \(^etre pr\('esent, et si la fichier est pr\('esent
+mais pas la valeur, alors \fBdpkg\-source\fP l'ajoutera automatiquement, en
+conservant les valeurs pr\('ec\('edentes.
+.TP 
+\fBTestsuite\-Triggers:\fP\fI liste\-de\-paquets\fP
+This field declares the comma\-separated union of all test dependencies
+(\fBDepends\fP fields in \fIdebian/tests/control\fP file), with all restrictions
+removed, and OR dependencies flattened (that is, converted to separate AND
+relationships), except for binaries generated by this source package and its
+meta\-dependency equivalent \fB@\fP.
+
+Raison\ : ce champ est n\('ecessaire parce qu'autrement chaque paquet source
+devrait \(^etre d\('epaquet\('e pour pouvoir obtenir les d\('ependances de test.
+.TP 
+\fBBuild\-Depends:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBBuild\-Depends\-Arch:\fP\fIliste\-de\-paquets\fP
+.TQ
+\fBBuild\-Depends\-Indep:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBBuild\-Conflicts:\fP\fI liste de paquets\fP
+.TQ
+\fBBuild\-Conflicts\-Arch:\fP\fI liste\-de\-paquets\fP
+.TQ
+\fBBuild\-Conflicts\-Indep:\fP\fI liste\-de\-paquets\fP
+Ces champs indiquent les relations entre le paquet source et les paquets
+utilis\('es pour le construire. Ils sont d\('etaill\('es dans la page de manuel
+\fBdeb\-src\-control\fP(5).
+.TP 
+\fBPackage\-List:\fP
+.TQ
+\fIpaquet\fP \fItype\-de\-paquet\fP \fIsection\fP \fIpriorit\('e\fP \fIliste\-cl\('es\-valeurs\fP
+Ce champ \(`a lignes multiples contient une liste des paquets binaires g\('en\('er\('es
+par le paquet source.
+
+Le \fIpaquet\fP est le nom du paquet binaire.
+
+Le \fItype\-de\-paquet\fP est le type du paquet binaire, habituellement \fBdeb\fP\ ;
+une autre valeur commune est \fBudeb\fP.
+
+La \fIsection\fP et la \fIpriorit\('e\fP correspondent aux champs du m\(^eme nom du
+paquet binaire.
+
+La \fIliste\-cl\('es\-valeurs\fP est une liste de \fIcl\('es\fP\fB=\fP\fIvaleurs\fP s\('epar\('ees par
+des valeurs et les cl\('es optionnelles actuellement reconnues sont\ :
+
+.RS
+.TP 
+\fBarch\fP
+Les restrictions d'architecture \(`a partir du champ \fBArchitecture\fP du paquet
+binaire avec les espaces converties en \(Fo\ ,\ \(Fc.
+.TP 
+\fBprofile\fP
+La formule normalis\('ee de restrictions de profil de construction \(`a partir du
+champ \fBBuild\-Profile\fP du paquet binaire avec les OR convertis en \(Fo\ +\ \(Fc et
+les \(Fo\ AND\ \(Fc en \(Fo\ ,\ \(Fc.
+.TP 
+\fBessential\fP
+Si le paquet binaire est essentiel, cette cl\('e contiendra la valeur du champ
+\fBEssential\fP, qui est la valeur \fByes\fP.
+.RE
+.TP 
+\fBFiles:\fP (requis)
+.TQ
+\fBChecksums\-Sha1:\fP (requis)
+.TQ
+\fBChecksums\-Sha256:\fP (requis)
+.TQ
+\fIsomme\-de\-contr\(^ole\fP \fItaille\fP \fInom\-du\-fichier\fP
+Ces champs \(`a lignes multiples contiennent une liste de fichiers avec une
+somme de contr\(^ole et une taille pour chacun. Ces champs ont la m\(^eme syntaxe
+et diff\(`erent seulement par l'algorithme de somme de contr\(^ole employ\('e\ : MD5
+pour \fBFiles\fP, SHA\-1 pour \fBChecksums\-Sha1\fP et SHA\-256 pour
+\fBChecksums\-Sha256\fP.
+
+La premi\(`ere ligne de la valeur du champ (la partie sur la m\(^eme ligne que le
+nom du champ suivi par deux\-points) est toujours vide. Le contenu du champ
+est exprim\('e sous la forme de lignes de continuation, un ligne par
+fichier. Chaque ligne consiste en la somme de contr\(^ole, une espace, la
+taille du fichier, une espace et le nom du fichier.
+
+Ces champs listent tous les fichiers qui composent le paquet source. La
+liste de fichiers de ces champs doit correspondre \(`a celle pr\('esente dans les
+autres champs relatifs.
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\" .fi
+.\" .RE
+.
+.SH BOGUES
+Le champ \fBFormat\fP combine le format pour le fichier \fB.dsc\fP lui\-m\(^eme et le
+format du paquet source extrait.
+.SH "VOIR AUSSI"
+\fBdeb\-src\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

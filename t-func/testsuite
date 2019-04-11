@@ -909,7 +909,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-dpkg 1.19.5 test suite: dpkg tools functional test suite test groups:
+dpkg 1.19.6 test suite: dpkg tools functional test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -950,7 +950,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (dpkg 1.19.5)" &&
+  $as_echo "$as_me (dpkg 1.19.6)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1133,11 +1133,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 $as_echo "## --------------------------------------------------------- ##
-## dpkg 1.19.5 test suite: dpkg tools functional test suite. ##
+## dpkg 1.19.6 test suite: dpkg tools functional test suite. ##
 ## --------------------------------------------------------- ##"
 {
   $as_echo "## --------------------------------------------------------- ##
-## dpkg 1.19.5 test suite: dpkg tools functional test suite. ##
+## dpkg 1.19.6 test suite: dpkg tools functional test suite. ##
 ## --------------------------------------------------------- ##"
   echo
 
@@ -1981,7 +1981,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <debian-dpkg@lists.debian.org>
-   Subject: [dpkg 1.19.5] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [dpkg 1.19.6] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2058,7 +2058,7 @@ $as_echo "$at_srcdir/deb-format.at:16:
 mv pkg-deb-format pkg-templ
 chmod -R u+w pkg-templ
 find pkg-templ | xargs touch -t 197001010100.00
-\$ASROOT dpkg-deb --uniform-compression -Znone -b pkg-templ >/dev/null
+dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
 
 # Extract the base members
 ar x pkg-templ.deb
@@ -2077,7 +2077,7 @@ at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:16"
 mv pkg-deb-format pkg-templ
 chmod -R u+w pkg-templ
 find pkg-templ | xargs touch -t 197001010100.00
-$ASROOT dpkg-deb --uniform-compression -Znone -b pkg-templ >/dev/null
+dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
 
 # Extract the base members
 ar x pkg-templ.deb
@@ -3063,21 +3063,21 @@ CTRL_TEMPL
 $as_echo "$at_srcdir/deb-split.at:14:
 # Initialize the template package
 chmod -R u+w pkg-split
-# XXX: Some environments set SIGPIPE to ignore which we cannot reset, and yes
+# XXX: Some environments set SIGPIPE to ignore which we cannot reset, and 'yes'
 # does check print error conditions, so we ignore its error message here.
 yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=1024 status=none
 find pkg-split | xargs touch -t 197001010100.00
-\$ASROOT dpkg-deb -b -Znone pkg-split >/dev/null
+dpkg-deb --root-owner-group -Znone -b pkg-split >/dev/null
 "
 at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:14"
 ( $at_check_trace;
 # Initialize the template package
 chmod -R u+w pkg-split
-# XXX: Some environments set SIGPIPE to ignore which we cannot reset, and yes
+# XXX: Some environments set SIGPIPE to ignore which we cannot reset, and 'yes'
 # does check print error conditions, so we ignore its error message here.
 yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=1024 status=none
 find pkg-split | xargs touch -t 197001010100.00
-$ASROOT dpkg-deb -b -Znone pkg-split >/dev/null
+dpkg-deb --root-owner-group -Znone -b pkg-split >/dev/null
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false

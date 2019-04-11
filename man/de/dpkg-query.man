@@ -344,9 +344,9 @@ wird (seit Dpkg 1.19.2).
 \fBPAGER\fP
 .TQ
 \fBDPKG_PAGER\fP
-Setzt den zu verwendenen Pager\-Befehl (seit Dpkg 1.19.1), der mit »\fB$SHELL
-\-c\fP« ausgeführt wird. Falls \fBSHELL\fP nicht gesetzt ist, wird stattdessen
-»\fBsh\fP« verwandt. \fBDPKG_PAGER\fP setzt die Umgebungsvariable \fBPAGER\fP außer
+Setzt den zu verwendenen Pager\-Befehl (seit Dpkg 1.19.1), der mit „\fB$SHELL
+\-c\fP“ ausgeführt wird. Falls \fBSHELL\fP nicht gesetzt ist, wird stattdessen
+„\fBsh\fP“ verwandt. \fBDPKG_PAGER\fP setzt die Umgebungsvariable \fBPAGER\fP außer
 Kraft (seit Dpkg 1.19.2).
 .TP 
 \fBDPKG_ADMINDIR\fP
@@ -364,14 +364,14 @@ ist oder wenn ein Pager gestartet wird (seit Dpkg 1.19.2). Um das
 Vorgabeverhalten zu verändern, kann diese Variable auf einen anderen Wert
 einschließlich der leeren Zeichenkette voreingestellt werden oder die
 Variablen \fBPAGER\fP oder \fBDPKG_PAGER\fP können gesetzt werden, um bestimmte
-Optionen mit »\fB\-+\fP« zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
+Optionen mit „\fB\-+\fP“ zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
 \-+F"\fP.
 .
 .SH "SIEHE AUCH"
 \fBdpkg\fP(1).
 
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -110,7 +110,7 @@ tar_atol8(const char *s, size_t size)
 		if (*s == '\0' || *s == ' ')
 			break;
 		if (*s < '0' || *s > '7')
-			return tar_ret_errno(EINVAL, 0);
+			return tar_ret_errno(ERANGE, 0);
 		n = (n * 010) + (*s++ - '0');
 	}
 
@@ -408,6 +408,8 @@ tar_entry_destroy(struct tar_entry *te)
 	free(te->linkname);
 	free(te->stat.uname);
 	free(te->stat.gname);
+
+	memset(te, 0, sizeof(*te));
 }
 
 struct tar_symlink_entry {
@@ -464,6 +466,8 @@ tar_extractor(struct tar_archive *tar)
 			if (h.name[0] == '\0') {
 				/* End Of Tape. */
 				status = 0;
+			} else {
+				status = -1;
 			}
 			tar_entry_destroy(&h);
 			break;

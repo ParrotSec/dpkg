@@ -371,7 +371,7 @@ Paket kein Debianisierungs\-Diff sondern nur ein direktes Quellarchiv (dies
 ist äquivalent zu \fB\-sn\fP). Falls sowohl ein Verzeichnis als auch eine
 Tar\-Datei gefunden werden, dann ignoriert \fBdpkg\-source\fP das Verzeichnis,
 und überschreibt es, falls \fB\-sA\fP angegeben wurde (dies ist äquivalent zu
-\fB\-sP\fP) oder löst einen Fehler aus, falls \fB\-sa\fP angegeben wurde. \fB\-sA\fP ist
+\fB\-sP\fP) oder löst einen Fehler aus, falls \fB\-sa\fP angegeben wurde. \fB\-sa\fP ist
 die Voreinstellung.
 .TP 
 \fB\-\-abort\-on\-upstream\-changes\fP
@@ -476,6 +476,12 @@ Optionen dann aber ignoriert und immer erwartet, dass die Patches mit der
 Option \fB\-p1\fP von \fBpatch\fP angewandt werden können. Es wird daher eine
 Warnung ausgeben, wenn es auf solche Optionen trifft, und der Bau wird
 wahrscheinlich fehlschlagen.
+.PP
+Beachten Sie, dass \fBlintian\fP(1) aufgrund Debian\-spezifischer Regularien
+bedingungslos Warnungen ausgeben wird, wenn Lieferantenserien verwandt
+werden. Dies sollte die Verwendung außerhalb von Debian nicht betreffen. Um
+diese Warnungen auszublenden, kann das Dpkg\-Lintian\-Profil mittels Übergabe
+von „\fB\-\-profile dpkg\fP“ an \fBlintian\fP(1) verwandt werden.
 .PP
 Der Zeitstempel aller gepatchten Dateien wird auf die Entpackzeit des
 Quellpakets zurückgesetzt. Damit werden Zeitstempelversätze vermieden, die
@@ -854,7 +860,7 @@ bestimmten Standard\-Ausgabe\-Feldeinstellungen, ist eher konfus.
 .ad l
 \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5), \fBdsc\fP(5).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

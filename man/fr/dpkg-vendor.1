@@ -1,0 +1,86 @@
+.\" dpkg manual page - dpkg-vendor(1)
+.\"
+.\" Copyright © 2009 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-vendor 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-vendor \- R\('ecup\(`ere les informations sur les \('editeurs de distribution
+.
+.SH SYNOPSIS
+\fBdpkg\-vendor\fP [\fIoption\fP...] \fIcommande\fP
+.
+.SH DESCRIPTION
+\fBdpkg\-vendor\fP est un outil qui permet de r\('ecup\('erer des informations sur les
+\('editeurs (\(Fo\ vendors\ \(Fc) de distributions r\('ef\('erenc\('es dans
+\fB/etc/dpkg/origins\fP. \fB/etc/dpkg/origins/default\fP contient
+l'information relative \(`a l'\('editeur actuellement utilis\('e.
+.
+.SH COMMANDES
+.TP 
+\fB\-\-is\fP\fI \('editeur\fP
+Retourne \fB0\fP si l'\('editeur est \fI\('editeur\fP. Retourne \fB1\fP dans le cas
+contraire.
+.TP 
+\fB\-\-derives\-from\fP\fI \('editeur\fP
+Retourne \fB0\fP si la distribution de l'\('editeur actuel est une distribution
+d\('eriv\('ee de \fI\('editeur\fP, autrement, retourne \fB1\fP. Le champ \fBParent\fP est
+utilis\('e pour parcourir tous les anc\(^etres de l'\('editeur actuel.
+.TP 
+\fB\-\-query\fP\fI champ\fP
+Affiche sur la sortie standard la valeur du champ sp\('ecifique \fIchamp\fP de
+l'\('editeur actuel.
+.TP 
+\fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-vendor\fP\fI \('editeur\fP
+Suppose que l'\('editeur actuel est \fI\('editeur\fP au lieu d'utiliser la variable
+\fBDEB_VENDOR\fP ou \fB/etc/dpkg/origins/default\fP.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDEB_VENDOR\fP
+Ce r\('eglage d\('efinit l'\('editeur (\(Fo\ vendor\ \(Fc) actuel. Si cette valeur est vide,
+le contenu du fichier \fB/etc/dpkg/origins/default\fP est utilis\('e.
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH "VOIR AUSSI"
+\fBdeb\-origin\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

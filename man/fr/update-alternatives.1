@@ -1,0 +1,443 @@
+.\" dpkg manual page - update-alternatives(1)
+.\"
+.\" Copyright © 1997-1998 Charles Briscoe-Smith
+.\" Copyright © 1999 Ben Collins <bcollins@debian.org>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2003 Adam Heath <doogie@debian.org>
+.\" Copyright © 2005 Scott James Remnant <scott@netsplit.com>
+.\" Copyright © 2006-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008 Pierre Habouzit <madcoder@debian.org>
+.\" Copyright © 2009-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH update\-alternatives 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+update\-alternatives \- Maintenance des liens symboliques d\('eterminant les noms
+par d\('efaut de certaines commandes
+.
+.SH SYNOPSIS
+\fBupdate\-alternatives\fP [\fIoption\fP...] \fIcommande\fP
+.
+.SH DESCRIPTION
+\fBupdate\-alternatives\fP cr\('ee, enl\(`eve, conserve et affiche des informations
+concernant les liens symboliques qui forment le syst\(`eme Debian des
+\(Fo\ alternatives\ \(Fc.
+.PP
+Il est possible d'installer, sur un m\(^eme syst\(`eme et en m\(^eme temps, des
+programmes qui remplissent des fonctions identiques ou semblables. Par
+exemple, beaucoup de syst\(`emes installent plusieurs \('editeurs de texte en m\(^eme
+temps. Cela permet \(`a chaque utilisateur d'un syst\(`eme de choisir, s'il le
+d\('esire, un \('editeur de texte diff\('erent\ ; mais cela rend les choses difficiles
+pour le programme qui doit choisir un bon \('editeur de texte quand
+l'utilisateur n'a pas fait de choix pr\('ecis.
+.PP
+Le syst\(`eme Debian des \(Fo\ alternatives\ \(Fc essaie de r\('esoudre ce probl\(`eme. Tous
+les fichiers qui proposent des fonctions interchangeables se servent d'un
+nom g\('en\('erique qui se trouve dans l'arborescence. Le syst\(`eme des
+\(Fo\ alternatives\ \(Fc et l'administrateur syst\(`eme font conna\(^itre ensemble le
+fichier qui est r\('eellement vis\('e par ce nom g\('en\('erique. Par exemple, si les
+\('editeurs de texte \fBed\fP(1) et \fBnvi\fP(1) sont tous les deux install\('es, le
+syst\(`eme des \(Fo\ alternatives\ \(Fc fait que le nom g\('en\('erique \fI/usr/bin/editor\fP
+renvoie par d\('efaut \(`a \fI/usr/bin/nvi\fP. L'administrateur syst\(`eme peut
+remplacer cette assignation par \fI/usr/bin/ed\fP et le syst\(`eme des
+\(Fo\ alternatives\ \(Fc ne la changera pas tant qu'on ne lui aura pas demand\('e
+explicitement de le faire.
+.PP
+Le nom g\('en\('erique n'est pas un lien symbolique direct vers l'alternative
+choisie. C'est en fait un lien symbolique vers un nom situ\('e dans le
+\fIr\('epertoire\fP \fIdes \(Fo\ alternatives\ \(Fc\fP, lequel nom est \(`a son tour un lien
+symbolique vers le fichier r\('eellement vis\('e. Les modifications faites par
+l'administrateur syst\(`eme sont ainsi confin\('ees dans le r\('epertoire
+\fI/etc\fP\ ; le FHS (lisez\-le) donne de Bonnes Raisons de faire ainsi.
+.PP
+Chaque fois qu'un paquet, proposant un fichier pour une fonction d\('etermin\('ee,
+est install\('e, modifi\('e ou d\('esinstall\('e, \fBupdate\-alternatives\fP est appel\('e pour
+mettre \(`a jour les informations concernant ce fichier dans le syst\(`eme des
+\(Fo\ alternatives\ \(Fc. En g\('en\('eral, \fBupdate\-alternatives\fP est appel\('e dans les
+scripts \fBpostinst\fP (configure) et \fBprerm\fP (remove and deconfigure) des
+paquets Debian.
+.PP
+Il est souvent utile de synchroniser certaines alternatives, de mani\(`ere \(`a
+pouvoir les manipuler globalement\ ; par exemple, quand plusieurs versions de
+\fBvi\fP(1) sont install\('ees, la page de manuel qui est vis\('ee par
+\fI/usr/share/man/man1/vi.1\fP devrait correspondre \(`a
+\fI/usr/bin/vi\fP. \fBupdate\-alternatives\fP g\(`ere ce probl\(`eme avec les liens
+\fIprincipaux (\(Fo\ master\ \(Fc)\fP et les liens \fIsecondaires (\(Fo\ slave\ \(Fc)\fP. Quand le
+lien principal est chang\('e, tous les liens secondaires associ\('es sont
+chang\('es. Un lien principal et ses liens secondaires associ\('es composent un
+\fIgroupe\fP de \fIliens\fP.
+.PP
+\(`A tout moment, un groupe de liens est dans l'un des deux modes suivants\ :
+automatique ou manuel. Quand un groupe est dans le mode automatique et que
+des paquets sont install\('es ou d\('esinstall\('es, le syst\(`eme des \(Fo\ alternatives\ \(Fc
+d\('ecide automatiquement s'il doit mettre \(`a jour les liens et comment le
+faire. Dans le mode manuel, le syst\(`eme des \(Fo\ alternatives\ \(Fc ne change pas
+les liens et laisse l'administrateur syst\(`eme prendre toutes les d\('ecisions
+(sauf si quelque chose est cass\('e).
+.PP
+Un groupe de liens est en mode automatique quand il est cr\('e\('e sur un syst\(`eme
+pour la premi\(`ere fois. Quand l'administrateur syst\(`eme modifie le param\('etrage
+automatique du syst\(`eme, \fBupdate\-alternatives\fP le remarquera la prochaine
+fois qu'il sera lanc\('e pour ce groupe aux liens modifi\('es et il fera passer ce
+groupe en mode manuel.
+.PP
+\(`A chaque alternative est associ\('ee une \fIpriorit\('e\fP. Quand un groupe de liens
+est en mode automatique, l'alternative vis\('ee par les \('el\('ements du groupe est
+celle qui poss\(`ede la priorit\('e la plus \('elev\('ee.
+.PP
+Quand l'option \fB\-\-config\fP est utilis\('ee, \fBupdate\-alternatives\fP affiche
+toutes les possibilit\('es du groupe pour lequel \fInom\fP est le lien
+principal. Le choix actuel est not\('e par un \(Fo\ *\ \(Fc. Il sera alors demand\('e quel
+choix doit \(^etre fait pour ce groupe. Suivant le choix effectu\('e, le groupe de
+liens peut ne plus \(^etre en mode \fIauto\fP. Il vous faudra utiliser l'option
+\fB\-\-auto\fP pour revenir au mode automatique (ou r\('eutiliser \fB\-\-config\fP et
+choisir l'entr\('ee marqu\('ee comme automatique).
+.PP
+Si vous voulez configurer de mani\(`ere non interactive, vous pouvez utiliser
+l'option \fB\-\-set\fP (voir ci\-dessous).
+.PP
+Les diff\('erents paquets qui fournissent un m\(^eme fichier doivent le faire en
+\fBcollaborant\fP. En d'autres termes, l'utilisation de \fBupdate\-alternatives\fP
+est \fBobligatoire\fP pour tous les paquets qui sont dans ce cas et il n'est
+pas possible de remplacer un fichier d'un paquet qui n'utilise pas le
+m\('ecanisme offert par \fBupdate\-alternatives\fP.
+.
+.SH TERMINOLOGIE
+Comme les op\('erations de \fBupdate\-alternatives\fP sont tr\(`es compliqu\('ees, voici
+quelques termes qui faciliteront l'explication.
+.TP 
+nom g\('en\('erique (ou lien alternatif)
+C'est un nom, par exemple \fI/usr/bin/editor\fP, qui renvoie, \(`a travers le
+syst\(`eme des \(Fo\ alternatives\ \(Fc, \(`a l'un des fichiers qui remplissent des
+fonctions similaires.
+.TP 
+nom alternatif
+Nom d'un lien symbolique dans le r\('epertoire des alternatives.
+.TP 
+alternative (ou chemin alternatif)
+C'est le nom d'un fichier particulier dans l'arborescence\ ; il peut \(^etre
+accessible avec un nom g\('en\('erique gr\(^ace au syst\(`eme d'alternatives.
+.TP 
+r\('epertoire des alternatives 
+C'est le r\('epertoire qui contient les liens symboliques\ ; il s'agit par
+d\('efaut de \fI/etc/alternatives\fP.
+.TP 
+r\('epertoire administratif
+C'est le r\('epertoire qui contient des renseignements sur l'\('etat de
+\fBupdate\-alternatives.\fP Il s'agit par d\('efaut de \fI/var/lib/dpkg/alternatives\fP.
+.TP 
+groupe de liens
+C'est un ensemble de liens symboliques corr\('el\('es, de mani\(`ere qu'on puisse les
+mettre \(`a jour en une seule fois.
+.TP 
+lien principal
+Dans un groupe de liens, c'est le lien alternatif qui d\('etermine comment sont
+configur\('es les autres liens du groupe.
+.TP 
+lien secondaire (\(Fo\ slave\ \(Fc)
+Dans un groupe de liens, c'est un lien alternatif contr\(^ol\('e par la
+configuration du lien principal.
+.TP 
+mode automatique
+Quand un groupe de liens est en mode automatique, le syst\(`eme des
+\(Fo\ alternatives\ \(Fc assure que les liens dans le groupe pointent vers
+l'alternative poss\('edant la priorit\('e la plus \('elev\('ee dans ce groupe.
+.TP 
+mode manuel 
+Quand un groupe de liens est en mode manuel, le syst\(`eme des \(Fo\ alternatives\ \(Fc
+ne modifie pas le param\('etrage de l'administrateur syst\(`eme.
+.
+.SH COMMANDES
+.TP 
+\fB\-\-install\fP \fIlien nom chemin priorit\('e\fP [\fB\-\-slave\fP \fIlien nom chemin\fP]...
+Ajoute un groupe d'alternatives au syst\(`eme. \fIlien\fP est le nom g\('en\('erique du
+lien principal, \fInom\fP est le nom de son lien symbolique, et \fIchemin\fP est
+l'alternative pr\('esent\('ee pour le lien principal. Les param\(`etres qui suivent
+\fB\-\-slave\fP sont le nom g\('en\('erique, le lien symbolique dans le r\('epertoire des
+alternatives et l'alternative pour un lien secondaire. On peut indiquer z\('ero
+ou plusieurs options \fB\-\-slave\fP, chacune suivie par trois
+param\(`etres. L'alternative principale doit exister, sinon la commande
+\('echouera. Cependant, si une alternative secondaire n'existe pas, le lien
+secondaire ne sera simplement pas install\('e (mais un avertissement sera
+affich\('e). Si un fichier existe \(`a l'emplacement o\(`u l'alternative doit \(^etre
+install\('ee, il est conserv\('e sauf si \fB\-\-force\fP est utilis\('e.
+.IP
+Quand le lien principal sp\('ecifi\('e existe d\('ej\(`a dans les enregistrements du
+syst\(`eme des \(Fo\ alternatives\ \(Fc, les renseignements fournis sont ajout\('es dans
+un nouvel ensemble d'alternatives pour le groupe. Sinon, un nouveau groupe
+contenant ces informations est ajout\('e et mis en mode automatique. Quand un
+groupe est en mode automatique, et que la priorit\('e des alternatives
+nouvellement ajout\('ees est sup\('erieure \(`a celle de toutes les alternatives
+install\('ees dans ce groupe, les liens symboliques sont mis \(`a jour et pointent
+vers les alternatives nouvellement ajout\('ees.
+.TP 
+\fB\-\-set\fP \fInom chemin\fP
+Ajoute le programme \fIchemin\fP comme alternative pour \fInom\fP. C'est
+\('equivalent \(`a \fB\-\-config\fP mais ce n'est pas interactif et on peut donc \('ecrire
+un script.
+.TP 
+\fB\-\-remove\fP \fInom chemin\fP
+Enl\(`eve une alternative et tous les liens secondaires associ\('es. \fInom\fP est un
+nom dans le r\('epertoire des \(Fo\ alternatives\ \(Fc, et \fIchemin\fP est un nom de
+fichier auquel \fInom\fP peut \(^etre li\('e. Quand \fInom\fP est en effet li\('e \(`a
+\fIchemin\fP, \fInom\fP est mis \(`a jour et pointe vers une autre alternative
+ad\('equate ou bien est enlev\('e s'il n'y en a pas d'autre. De m\(^eme, les liens
+secondaires associ\('es sont mis \(`a jour ou enlev\('es. Quand le lien ne pointe pas
+d\('ej\(`a sur \fIchemin\fP, aucun lien n'est modifi\('e\ ; seules les informations sur
+l'alternative sont supprim\('ees.
+.TP 
+\fB\-\-remove\-all\fP \fInom\fP
+Supprime toutes les alternatives et tous les liens secondaires
+associ\('es. \fInom\fP est un nom dans le r\('epertoire des alternatives.
+.TP 
+\fB\-\-all\fP
+Utilise \fB\-\-config\fP sur toutes les alternatives. Cette option peut \(^etre
+combin\('ee avec \fB\-\-skip\-auto\fP pour revoir et configurer toutes les
+alternatives qui ne sont pas en mode automatique. Les alternatives erron\('ees
+sont aussi affich\('ees. Ainsi, une m\('ethode simple pour corriger les
+alternatives cass\('ees est d'utiliser \fByes \*(rq | update\-alternatives \-\-force
+\-\-all\fP.
+.TP 
+\fB\-\-auto\fP \fInom\fP
+Passe le groupe de liens suivant l'alternative de \fInom\fP en mode
+automatique. En m\(^eme temps, le lien symbolique principal et ses liens
+secondaires sont mis \(`a jour et pointent vers les alternatives avec les
+priorit\('es les plus \('elev\('ees.
+.TP 
+\fB\-\-display\fP \fInom\fP
+Affiche des renseignements sur le groupe de liens. L'information affich\('ee
+comprend le mode du groupe (auto ou manuel), les liens principal et
+secondaires, vers quelle alternative le lien principal pointe actuellement,
+quelles autres alternatives sont disponibles (et les liens secondaires
+associ\('es), et l'alternative actuellement install\('ee qui poss\(`ede la priorit\('e
+la plus \('elev\('ee.
+.TP 
+\fB\-\-get\-selections\fP
+Affiche tous les noms principaux d'alternatives (ceux qui contr\(^olent un
+groupe de liens) ainsi que leur \('etat (depuis la version\ 1.15.0). Chaque
+ligne comporte jusqu'\(`a trois champs (s\('epar\('es par une ou plusieurs
+espaces). Le premier est le nom de l'alternative, le second est son \('etat
+(\fBauto\fP ou \fBmanual\fP) et le dernier montre le choix actuel pour
+l'alternative (il s'agit d'un nom de fichier et donc peut contenir des
+espaces).
+.TP 
+\fB\-\-set\-selections\fP
+Lit la configuration des alternatives sur l'entr\('ee standard, dans le format
+utilis\('e par \fB\-\-get\-selections\fP et les configure en cons\('equence (depuis la
+version\ 1.15.0).
+.TP 
+\fB\-\-query\fP \fInom\fP
+Affiche des informations sur le groupe de liens de mani\(`ere analogue \(`a
+\fB\-\-display\fP, mais sous une forme qui peut \(^etre analys\('ee automatiquement
+(depuis la version\ 1.15.0, voir la section \fBFORMAT DE REQU\(^ETE\fP ci\-dessous).
+.TP 
+\fB\-\-list\fP \fInom\fP
+Affiche toutes les cibles du groupe de liens.
+.TP 
+\fB\-\-config\fP \fInom\fP
+Affiche les alternatives disponibles pour un groupe de liens et permet de
+choisir interactivement laquelle doit \(^etre utilis\('ee. Le groupe de liens est
+mis \(`a jour.
+.TP 
+\fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH OPTIONS
+.TP 
+\fB\-\-altdir\fP\fI r\('epertoire\fP
+Donne le r\('epertoire des alternatives, quand il est diff\('erent de celui par
+d\('efaut.
+.TP 
+\fB\-\-admindir\fP\fI r\('epertoire\fP
+Donne le r\('epertoire administratif, quand il est diff\('erent de celui par
+d\('efaut.
+.TP 
+\fB\-\-log\fP\fI fichier\fP
+Indique le fichier journal (depuis la version\ 1.15.0), pour utiliser un
+fichier diff\('erent du fichier par d\('efaut (/var/log/alternatives.log).
+.TP 
+\fB\-\-force\fP
+Autorise le remplacement ou la suppression de tout fichier install\('e \(`a la
+place d'un lien d'alternative qui doit \(^etre cr\('e\('e ou supprim\('e.
+.TP 
+\fB\-\-skip\-auto\fP
+Passe l'invite de configuration pour les alternatives qui sont correctement
+configur\('ees en mode automatique. Cette option n'est pertinente qu'avec
+\fB\-\-config\fP ou \fB\-\-all\fP.
+.TP 
+\fB\-\-quiet\fP
+Do not generate any comments unless errors occur.
+.TP 
+\fB\-\-verbose\fP
+Produit plus de commentaires sur ce qui est fait.
+.TP 
+\fB\-\-debug\fP
+Generate even more comments, helpful for debugging, about what is being done
+(since version 1.19.3).
+.
+.SH "CODE DE SORTIE"
+.TP 
+\fB0\fP
+L'action demand\('ee s'est correctement d\('eroul\('ee.
+.TP 
+\fB2\fP
+Des probl\(`emes sont survenus lors de l'analyse de la ligne de commande ou
+bien pendant l'ex\('ecution de l'action.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_ADMINDIR\fP
+Si cette variable est positionn\('ee et que l'option \fB\-\-admindir\fP n'est pas
+pr\('ecis\('ee, ce r\('epertoire sera utilis\('e comme r\('epertoire de base pour
+l'administration.
+.
+.SH FICHIERS
+.TP 
+\fI/etc/alternatives/\fP
+Le r\('epertoire des \(Fo\ alternatives\ \(Fc par d\('efaut. Peut \(^etre remplac\('e avec
+l'option \fB\-\-altdir\fP.
+.TP 
+\fI/var/lib/dpkg/alternatives/\fP
+Le r\('epertoire administratif par d\('efaut. Peut \(^etre remplac\('e avec l'option
+\fB\-\-admindir\fP
+.
+.SH "FORMAT DE REQU\(^ETE"
+Le format de \fB\-\-query\fP est un format \(`a plat de type RFC822. Il est
+constitu\('e de \fIn\fP\ +\ 1 blocs o\(`u \fIn\fP est le nombre d'alternatives disponibles
+dans le groupe de liens interrog\('e. Le premier bloc contient les champs
+suivants\ :
+.TP 
+\fBName:\fP\fI nom\fP
+Nom de l'alternative dans le r\('epertoire des alternatives.
+.TP 
+\fBLink:\fP\fI lien\fP
+Nom g\('en\('erique de l'alternative.
+.TP 
+\fBSlaves:\fP \fI liste\-des\-liens\-secondaires\fP
+Lorsque cet en\-t\(^ete est pr\('esent, les lignes \fBsuivantes\fP contiennent tous
+les liens secondaires associ\('es au lien principal de cette alternative, \(`a
+raison d'un lien secondaire par ligne. Chaque ligne comporte une espace, le
+nom de l'alternative secondaire, une espace et le chemin vers le lien
+secondaire.
+.TP 
+\fBStatus:\fP\fI \('etat\fP
+\('Etat de l'alternative (\fBauto\fP ou \fBmanual\fP).
+.TP 
+\fBBest:\fP\fI meilleur\-choix\fP
+Chemin de la meilleure alternative pour ce groupe de liens. N'est pas
+pr\('esent si aucune alternative n'est disponible.
+.TP 
+\fBValue:\fP \fI alternative\-actuellement\-choisie\fP
+Chemin de l'alternative actuellement choisie. Peut aussi prendre la valeur
+sp\('eciale \fBnone\fP, utilis\('ee si le lien n'existe pas.
+.PP
+Les autres blocs d\('ecrivent les alternatives disponibles dans le groupe de
+liens interrog\('e.
+.TP 
+\fBAlternative:\fP \fI chemin\-de\-cette\-alternative\fP
+Chemin vers l'alternative de ce bloc
+.TP 
+\fBPriority:\fP \fI valeur\-de\-la\-priorit\('e\fP
+Valeur de la priorit\('e de cette alternative.
+.TP 
+\fBSlaves:\fP \fI liste\-des\-liens\-secondaires\fP
+Lorsque ce champ est pr\('esent, les lignes \fBsuivantes\fP contiennent toutes les
+alternatives secondaires associ\('ees au lien principal de cette alternative, \(`a
+raison d'une alternative secondaire par ligne. Chaque ligne comporte une
+espace, le nom de l'alternative secondaire, une espace et le chemin vers
+l'alternative secondaire.
+.
+.SS Exemple
+.nf
+$ update\-alternatives \-\-query editor
+Name: editor
+Link: /usr/bin/editor
+Slaves:
+ editor.1.gz /usr/share/man/man1/editor.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/editor.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/editor.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/editor.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/editor.1.gz
+Status: auto
+Best: /usr/bin/vim.basic
+Value: /usr/bin/vim.basic
+
+Alternative: /bin/ed
+Priority: \-100
+Slaves:
+ editor.1.gz /usr/share/man/man1/ed.1.gz
+
+Alternative: /usr/bin/vim.basic
+Priority: 50
+Slaves:
+ editor.1.gz /usr/share/man/man1/vim.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/vim.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/vim.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/vim.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/vim.1.gz
+.fi
+.
+.SH DIAGNOSTICS
+Avec l'option \fB\-\-verbose\fP, \fBupdate\-alternatives\fP affiche de tr\(`es
+nombreuses informations sur la sortie standard. Quand un probl\(`eme survient,
+\fBupdate\-alternatives\fP envoie des messages d'erreur sur la sortie d'erreur
+standard et retourne un \('etat de sortie \('egal \(`a \fB2\fP. Ces diagnostics
+devraient \(^etre simples \(`a comprendre\ ; si ce n'est pas le cas, veuillez
+envoyer un rapport de bogue.
+.
+.SH EXEMPLES
+Plusieurs paquets fournissent un \('editeur de texte compatible avec \fBvi\fP, par
+exemple \fBnvi\fP et \fBvim\fP. Celui qui sera utilis\('e est d\('etermin\('e par le groupe
+de liens \fBvi\fP, qui comprend des liens pour le programme lui\-m\(^eme et sa page
+de manuel.
+.PP
+Pour afficher les paquets disponibles qui fournissent \fBvi\fP et son
+param\('etrage actuel, on peut utiliser l'action \fB\-\-display\fP\ :
+.PP
+.RS
+\fBupdate\-alternatives \-\-display vi\fP
+.RE
+.PP
+Pour choisir une impl\('ementation particuli\(`ere de \fBvi\fP, on peut utiliser
+cette commande en tant que superutilisateur et choisir un nombre dans la
+liste\ :
+.PP
+.RS
+\fBupdate\-alternatives \-\-config vi\fP
+.RE
+.PP
+Pour retrouver l'impl\('ementation par d\('efaut de \fBvi\fP, on peut utiliser cette
+commande en tant que superutilisateur\ :
+.PP
+.RS
+\fBupdate\-alternatives \-\-auto vi\fP
+.RE
+.
+.SH "VOIR AUSSI"
+\fBln\fP(1), FHS, le standard pour l'organisation du syst\(`eme de fichiers.
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

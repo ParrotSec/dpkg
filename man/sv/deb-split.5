@@ -1,0 +1,76 @@
+.\" dpkg manual page - deb-split(5)
+.\"
+.\" Copyright © 2009-2012 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-split 5 2019-03-25 1.19.6 Dpkg\-sviten
+.nh
+.SH NAMN
+deb\-split \- Debians flerdelade bin\(:ara paketformat
+.SH SYNOPS
+\fIfilnamn\fP\fB.deb\fP
+.SH BESKRIVNING
+Det flerdelade \fB.deb\fP\-formatet anv\(:ands f\(:or att dela stora paket i mindre
+delar f\(:or att f\(:orenkla transport \(:over sm\(oa medier.
+.SH FORMAT
+Filen \(:ar ett \fBar\fP\-arkiv med det magiska numret
+\fB!<arch>\fP. Filnamnen kan inneh\(oalla ett avslutande snedstreck (sedan
+dpkg 1.15.6).
+.PP
+Den f\(:orsta posten heter \fBdebian\-split\fP och inneh\(oaller en serie av rader,
+avdelade med nyradstecken. F\(:or n\(:arvarande finns \(oatta rader:
+.IP \(bu 4
+Formatets versionsnummer, \fB2.1\fP d\(oa denna manualsida skrivs.
+.IP \(bu
+Paketets namn.
+.IP \(bu
+Paketets versionsnummer.
+.IP \(bu
+md5\-kontrollsumman f\(:or paketet.
+.IP \(bu
+Total storlek p\(oa paketet.
+.IP \(bu
+Maximal storlek p\(oa en del.
+.IP \(bu
+Nummer p\(oa aktuell del, f\(:oljt av ett snedstreck och totalt antal delar (som i
+\(oq1/10\(cq).
+.IP \(bu
+Paketets arkitektur (sedan dpkg 1.16.1).
+.PP
+Filer som l\(:aser flerdelade arkiv b\(:or vara beredda p\(oa att underversionsnumret
+kan \(:okas och att ytterligare rader kan vara n\(:arvarande, och b\(:or ignorera
+dessa om s\(oa \(:ar fallet.
+.PP
+Om huvudversionsnumret har \(:andrats har en inkompatibel \(:andring inf\(:orts, och
+programmet skall avbrytas. Om s\(oa inte har gjorts, skall programmet kunna
+forts\(:atta utan problem, s\(oavida det inte st\(:oter p\(oa en ov\(:antad post i arkivet
+(f\(:orutom i slutet), enligt vad beskrivs nedan.
+.PP
+Den andra och sista n\(:odv\(:andiga posten heter \fBdata.\fP\fIN\fP, d\(:ar \fIN\fP anger
+delnumret. Den inneh\(oaller r\(oadata f\(:or delen.
+.PP
+Dessa poster m\(oaste ligga i exakt denna ordning. Nuvarande implementationer
+b\(:or ignorera eventuella ytterligare poster efter \fBdata.\fP\fIN\fP. Ytterligare
+poster kan komma att definieras i framtiden, och kommer (om m\(:ojligt)
+placeras efter dessa tv\(oa.
+.SH "SE \(:AVEN"
+\fBdeb\fP(5), \fBdpkg\-split\fP(1).
+.SH \(:OVERS\(:ATTNING
+Peter Krefting och Daniel Nylander.

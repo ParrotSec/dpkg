@@ -1,0 +1,165 @@
+.\" dpkg manual page - dpkg-gencontrol(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006, 2012-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gencontrol 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-gencontrol \- Cr\('eer des fichiers de contr\(^ole Debian.
+.
+.SH SYNOPSIS
+\fBdpkg\-gencontrol\fP [\fIoption\fP...]
+.
+.SH DESCRIPTION
+\fBdpkg\-gencontrol\fP lit les informations contenues dans une arborescence
+Debian d\('epaquet\('ee et cr\('ee le fichier \(Fo\ control\ \(Fc d'un paquet binaire (par
+d\('efaut, c'est le fichier debian/tmp/DEBIAN/control)\ ; durant cette action il
+y a simplification des champs de relations.
+.sp
+\fBPre\-Depends\fP, \fBDepends\fP, \fBRecommends\fP et \fBSuggests\fP sont simplifi\('es
+dans cet ordre pour supprimer les d\('ependances qui sont connues pour \(^etre
+v\('erifi\('ees par la plus forte d\('ependance d\('ej\(`a trait\('ee. Sont aussi supprim\('ees
+toutes les auto\-d\('ependances (dans les faits, cela supprime les d\('ependances
+qui sont d\('ej\(`a valid\('ees par la version du paquet d\('ej\(`a install\('e). Logiquement,
+il conserve les correspondances entre plusieurs d\('ependances dans le m\(^eme
+paquet. L'ordre des d\('ependances est conserv\('e du mieux possible\ : si une
+d\('ependance doit \(^etre supprim\('ee \(`a cause d'une autre d\('ependance qui appara\(^it
+plus loin dans le champ, la d\('ependance rempla\(,cante prendra la place de celle
+\('elimin\('ee.
+.sp
+Les autres champs (\fBEnhances\fP, \fBConflicts\fP, \fBBreaks\fP, \fBReplaces\fP et
+\fBProvides\fP) sont \('egalement simplifi\('es individuellement par l'analyse des
+diff\('erentes d\('ependances lorsque un paquet est indiqu\('e plusieurs fois dans le
+champ.
+.sp
+\fBdpkg\-gencontrol\fP ajoute aussi une entr\('ee pour un paquet binaire dans
+\fBdebian/files\fP.
+.
+.SH OPTIONS
+.TP 
+\fB\-v\fP\fIversion\fP
+Fixe le num\('ero de version du paquet binaire qui sera cr\('e\('e.
+.TP 
+\fB\-V\fP\fInom\fP\fB=\fP\fIvaleur\fP
+Fixe la valeur d'une variable de substitution. Consultez \fBdeb\-substvars\fP(5)
+pour une discussion sur la valeur de substitution.
+.TP 
+\fB\-T\fP\fIfichier\-substvars\fP
+Lecture des variables de substitution depuis \fIfichier\-substvars\fP\ ; la
+valeur par d\('efaut est \fBdebian/substvars\fP. Cette option peut \(^etre utilis\('ee
+plusieurs fois pour lire les variables de substitution depuis plusieurs
+fichiers (depuis dpkg\ 1.15.6).
+.TP 
+\fB\-D\fP\fIchamp\fP\fB=\fP\fIvaleur\fP
+Remplace ou ajoute en sortie un champ dans le fichier de contr\(^ole.
+.TP 
+\fB\-U\fP\fIchamp\fP
+Supprime en sortie un champ dans le fichier de contr\(^ole.
+.TP 
+\fB\-c\fP\fIfichier\-de\-contr\(^ole\fP
+Indique le principal fichier de contr\(^ole des sources o\(`u trouver des
+renseignements. Par d\('efaut, c'est le fichier \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIfichier\-des\-changements\fP
+Indique le fichier des changements o\(`u trouver des renseignements. Par
+d\('efaut, c'est le fichier \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIfichier/liste\-des\-fichiers\fP
+Lit ou \('ecrit la liste des fichiers qui doivent \(^etre envoy\('es vers l'archive
+dans ce fichier plut\(^ot que dans le fichier \fBdebian/files\fP.
+.TP 
+\fB\-F\fP\fIformat\-du\-fichier\-des\-changements\fP
+Indique le format du fichier des changements. Voir \fBdpkg\-parsechangelog\fP(1)
+pour plus d'informations \(`a propos des formats g\('er\('es.
+.TP 
+\fB\-p\fP\fIpaquet\fP
+Cette option produit les informations concernant le paquet binaire
+\fIpaquet\fP.Si le fichier de contr\(^ole des sources liste un seul paquet
+binaire, on peut omettre cette option\ ; sinon il est indispensable
+d'indiquer le paquet pour lequel on veut produire les informations.
+.TP 
+\fB\-n\fP\fInom\-de\-fichier\fP
+Le nom du paquet est \fInom\-de\-fichier\fP au lieu de l'habituel\ :
+paquet_version_arch.deb.
+.TP 
+\fB\-is\fP, \fB\-ip\fP, \fB\-isp\fP
+Ces options, conserv\('ees pour compatibilit\('e avec les anciennes versions des
+scripts de construction de dpkg, sont maintenant d\('econseill\('ees. Elles
+servaient \(`a dire \(`a \fBdpkg\-gencontrol\fP d'inclure les champs \(Fo\ Section\ \(Fc et
+\(Fo\ Priority\ \(Fc dans le fichier \(Fo\ control\ \(Fc. C'est maintenant le comportement
+par d\('efaut. Si vous voulez l'ancien comportement, vous pouvez utiliser
+l'option \fB\-U\fP pour supprimer ces champs du fichier \(Fo\ control\ \(Fc.
+.TP 
+\fB\-P\fP\fIr\('epertoire\-construction\-paquet\fP
+Cette option indique \(`a \fBdpkg\-source\fP que le r\('epertoire de construction du
+paquet est \fIr\('epertoire\-construction\-paquet\fP au lieu de \fBdebian/tmp\fP. Cette
+valeur sert \(`a trouver la valeur par d\('efaut de la variable de substitution
+\fBInstalled\-Size\fP et celle du champ correspondant dans le fichier de
+contr\(^ole (on utilise la commande \fBdu\fP)\ ; elle donne aussi l'emplacement par
+d\('efaut pour le fichier de sortie.
+.TP 
+\fB\-O\fP[\fInom\-de\-fichier\fP]
+Affiche le fichier \(Fo\ control\ \(Fc sur la sortie standard (ou \fInom\-de\-fichier\fP,
+depuis dpkg\ 1.17.2), au lieu de \fBdebian/tmp/DEBIAN/control\fP (ou
+\fIr\('epertoire\-construction\-paquet\fP\fB/DEBIAN/control\fP si l'option \fB\-P\fP a \('et\('e
+utilis\('ee).
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH FICHIERS
+.TP 
+\fBdebian/control\fP
+Le principal fichier d'information sur les sources\ ; il donne des
+renseignements qui ne d\('ependent pas d'une version concernant le paquet
+source et les paquets binaires qui peuvent \(^etre cr\('e\('es.
+.TP 
+\fBdebian/files\fP
+La liste des fichiers cr\('e\('es qui font partie de ceux qui seront envoy\('es sur
+le serveur. \fBdpkg\-gencontrol\fP ajoute les noms pr\('esum\('es des fichiers des
+paquets binaires \(`a partir des fichiers \(Fo\ control\ \(Fc qu'il cr\('ee.
+.SH "VOIR AUSSI"
+.ad l
+\fBdeb\-substvars\fP(5), \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5),
+\fBdeb\-control\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

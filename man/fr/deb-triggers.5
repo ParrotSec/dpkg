@@ -1,0 +1,122 @@
+.\" dpkg manual page - deb-triggers(5)
+.\"
+.\" Copyright © 2008, 2013-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2011, 2014 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-triggers 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+deb\-triggers \- Actions diff\('er\('ees du paquet
+.
+.SH SYNOPSIS
+actions diff\('er\('ees
+.
+.SH DESCRIPTION
+Un paquet d\('eclare ses relations avec des actions diff\('er\('ees en incluant un
+fichier \fItriggers\fP dans son archive de contr\(^ole (c'est\-\(`a\-dire
+\fIDEBIAN/triggers\fP au moment de la cr\('eation du paquet).
+.PP
+Ce fichier contient des directives, une par ligne. Les espaces de d\('ebut et
+fin de ligne et tout ce qui suit le premier caract\(`ere \fB\(Fo\ #\ \(Fc\fP sont
+supprim\('es, et les lignes vides seront ignor\('ees.
+.PP
+Les directives actuellement g\('er\('ees sont\ :
+.TP 
+\fBinterest\fP \fInom\-action\-diff\('er\('ee\fP
+.TQ
+\fBinterest\-await\fP \fInom\-action\-diff\('er\('ee\fP
+.TQ
+\fBinterest\-noawait\fP \fInom\-action\-diff\('er\('ee\fP
+.IP
+Indique que le paquet est concern\('e par l'action diff\('er\('ee indiqu\('ee. Toutes
+les actions diff\('er\('ees associ\('ees au paquet doivent \(^etre list\('ees en utilisant
+cette directive depuis le fichier de contr\(^ole des actions diff\('er\('ees.
+.IP
+Les variantes \(Fo\ await\ \(Fc placent le paquet qui provoque l'action diff\('er\('ee
+dans l'\('etat \(Fo\ triggers\-awaited\ \(Fc (actions diff\('er\('ees attendues) selon la
+mani\(`ere dont l'action diff\('er\('ee est activ\('ee. La variante \(Fo\ noawait\ \(Fc ne place
+pas les paquets qui provoquent cette action diff\('er\('ee dans l'\('etat
+\(Fo\ triggers\-awaited\ \(Fc m\(^eme si le paquet d\('eclenchant a d\('eclar\('e une activation
+\(Fo\ await\ \(Fc (par soit une directive \fBactivate\-await\fP ou \fBactivate\fP, soit en
+utilisant l'option en ligne de commande \fBdpkg\-trigger\fP \fB\-\-no\-await\fP. La
+variante \(Fo\ await\ \(Fc ne devrait \(^etre utilis\('ee que lorsque la fonctionnalit\('e
+fournie par l'action diff\('er\('ee n'est pas critique.
+.TP 
+\fBactivate\fP \fInom\-action\-diff\('er\('ee\fP
+.TQ
+\fBactivate\-await\fP \fInom\-action\-diff\('er\('ee\fP
+.TQ
+\fBactivate\-noawait\fP \fInom\-action\-diff\('er\('ee\fP
+.IP
+Cette directive permet que tout changement dans l'\('etat de ce paquet active
+l'action diff\('er\('ee sp\('ecifi\('ee. L'action diff\('er\('ee sera activ\('ee au d\('ebut des
+op\('erations suivantes\ : d\('epaquetage, configuration, suppression (y compris en
+cas de remplacement par un paquet conflictuel), purge et d\('econfiguration.
+.IP
+Les variantes \(Fo\ await\ \(Fc ne placent le paquet qui provoque cette action
+diff\('er\('ee dans l'\('etat \(Fo\ triggers\-awaited\ \(Fc que si la directive concern\('ee est
+aussi \(Fo\ await\ \(Fc. La variante \(Fo\ noawait\ \(Fc ne place jamais les paquets qui
+provoquent cette action diff\('er\('ee dans l'\('etat \(Fo\ triggers\-awaited\ \(Fc. Elle ne
+devrait \(^etre utilis\('ee que lorsque la fonctionnalit\('e fournie par l'action
+diff\('er\('ee n'est pas critique.
+.IP
+Si ce paquet dispara\(^it durant le d\('epaquetage d'un autre paquet, l'action
+diff\('er\('ee sera activ\('ee lorsque la disparition est constat\('ee vers la fin du
+d\('epaquetage. L'ex\('ecution d'une action diff\('er\('ee, et donc le passage du statut
+triggers\-awaited (action\-diff\('er\('ee\-attendue) \(`a installed (install\('e), ne
+provoquera pas l'activation. Dans le cas d'un d\('epaquetage, les actions
+diff\('er\('ees list\('ees dans l'ancienne et la nouvelle version du paquet seront
+activ\('ees.
+.PP
+Les directives inconnues sont des erreurs qui emp\(^echeront l'installation du
+paquet.
+.PP
+Les variantes \(Fo\ \-noawait\ \(Fc doivent toujours \(^etre privil\('egi\('ees quand c'est
+possible dans la mesure o\(`u les paquets provoquant une action diff\('er\('ee ne
+sont pas plac\('es en \('etat \(Fo\ triggers\-awaited\ \(Fc (actions diff\('er\('ees attendues),
+et peuvent donc \(^etre imm\('ediatement configur\('es sans recourir \(`a l'ex\('ecution de
+l'action diff\('er\('ee. Si les paquets provoquant l'action diff\('er\('ee sont des
+d\('ependances d'autres paquets mis \(`a jour, cela \('evitera le lancement de
+l'action diff\('er\('ee et rendra possible l'ex\('ecution de l'action diff\('er\('ee une
+seule fois au cours des \('etapes finales de la mise \(`a jour.
+.PP
+Les variantes \(Fo\ \-noawait\ \(Fc ne sont g\('er\('ees qu'\(`a partir de dpkg\ 1.16.1 et
+provoqueront des erreurs avec les versions plus anciennes.
+.PP
+Les alias de variantes \(Fo\ \-await\ \(Fc ne sont g\('er\('es qu'\(`a partir de dpkg\ 1.17.21
+et provoqueront des erreurs avec les versions plus anciennes.
+.PP
+Si un paquet fournit une directive \fBinterest\-noawait\fP, toute activation
+mettra le paquet provoquant l'action diff\('er\('ee en mode \(Fo\ noawait\ \(Fc,
+ind\('ependamment du mode d'attente demand\('e par l'activation (soit \(Fo\ await\ \(Fc,
+soit \(Fo\ noawait\ \(Fc). Si un paquet fournit une directive \fBinterest\fP ou
+\fBinterest\-await\fP, toute activation mettra le paquet provoquant l'action
+diff\('er\('ee en mode \(Fo\ await\ \(Fc ou \(Fo\ noawait\ \(Fc selon la mani\(`ere dont il a \('et\('e
+activ\('e.
+.
+.SH "VOIR AUSSI"
+.\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.
+\fBdpkg\-trigger\fP(1), \fBdpkg\fP(1), \fB/usr/share/doc/dpkg\-dev/triggers.txt.gz\fP.
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

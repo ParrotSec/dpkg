@@ -1,0 +1,684 @@
+.\" dpkg manual page - dpkg-buildflags(1)
+.\"
+.\" Copyright © 2010-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011 Kees Cook <kees@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-buildflags 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-buildflags \- Renvoie les options de compilation \(`a utiliser pour la
+construction du paquet
+.
+.SH SYNOPSIS
+\fBdpkg\-buildflags\fP [\fIoption\fP...] [\fIcommande\fP]
+.
+.SH DESCRIPTION
+\fBdpkg\-buildflags\fP est un script qui permet de r\('ecup\('erer les options de
+compilation \(`a utiliser pour la construction d'un paquet.
+.
+Les drapeaux par d\('efaut sont d\('efinis par le distributeur mais peuvent \(^etre
+\('etendus ou remplac\('es de plusieurs fa\(,cons\ :
+.IP 1.
+pour tout le syst\(`eme avec \fB/etc/dpkg/buildflags.conf\fP\ ;
+.IP 2.
+pour l'utilisateur courant avec \fB$XDG_CONFIG_HOME/dpkg/buildflags.conf\fP o\(`u
+la valeur par d\('efaut de \fB$XDG_CONFIG_HOME\fP est \fB$HOME/.config\fP\ ;
+.IP 3.
+temporairement par l'utilisateur avec des variables d'environnement (voir
+\fBVARIABLES D'ENVIRONNEMENT\fP)\ ;
+.IP 4.
+dynamiquement par le responsable du paquet avec des variables
+d'environnement \(`a l'aide de \fBdebian/rules\fP (voir \fBVARIABLES
+D'ENVIRONNEMENT\fP).
+.P
+Les fichiers de configuration peuvent contenir quatre types de directives\ :
+.TP 
+\fBSET\fP\fI drapeau valeur\fP
+Remplace le drapeau \fIdrapeau\fP par la valeur \fIvaleur\fP.
+.TP 
+\fBSTRIP\fP\fI drapeau valeur\fP
+Retire du drapeau \fIdrapeau\fP tous les drapeaux de construction list\('es dans
+\fIvaleur\fP.
+.TP 
+\fBAPPEND\fP\fI drapeau valeur\fP
+\('Etend le drapeau \fIdrapeau\fP avec les options indiqu\('ees dans \fIvaleur\fP. Une
+espace est ajout\('ee au d\('ebut de ce qui est ajout\('e si la valeur actuelle du
+drapeau n'est pas vide.
+.TP 
+\fBPREPEND\fP\fI drapeau valeur\fP
+Pr\('efixe le drapeau \fIdrapeau\fP avec les options indiqu\('ees dans \fIvaleur\fP. Une
+espace est ajout\('ee au d\('ebut de ce qui est ajout\('e si la valeur actuelle du
+drapeau n'est pas vide.
+.P
+Les fichiers de configuration peuvent contenir des commentaires sur les
+lignes commen\(,cant par un di\(`ese (#). Les lignes vides sont \('egalement
+ignor\('ees.
+.SH COMMANDES
+.TP 
+\fB\-\-dump\fP
+Affiche sur la sortie standard tous les drapeaux de compilation et leurs
+valeurs. Un drapeau par ligne est affich\('e, suivi de sa valeur, s\('epar\('ee par
+le caract\(`ere \(Fo\ \('egal\ \(Fc (\(Fo\ \fIdrapeau\fP=\fIvaleur\fP\ \(Fc). Il s'agit de l'action par
+d\('efaut.
+.TP 
+\fB\-\-list\fP
+Affiche la liste des drapeaux g\('er\('es par le distributeur actuel (un par
+ligne). Voir la section \fBDRAPEAUX G\('ER\('ES\fP pour plus d'informations sur
+chacun d'eux.
+.TP 
+\fB\-\-status\fP
+Affiche toute information utile pour expliquer le comportement de
+\fBdpkg\-buildflags\fP (depuis dpkg\ 1.16.5)\ : variables  d'environnement,
+distributeur actuel, \('etat de tous les drapeaux de fonctionnalit\('es. Affiche
+\('egalement les drapeaux de compilation r\('esultants ainsi que leur origine.
+
+Cette option est destin\('ee \(`a \(^etre utilis\('ee depuis \fBdebian/rules\fP, afin de
+garder dans le journal de construction une trace claire des drapeaux de
+compilation utilis\('es. Cela peut \(^etre utile pour diagnostiquer des probl\(`emes
+qui y seraient li\('es.
+.TP 
+\fB\-\-export=\fP\fIformat\fP
+Affiche sur la sortie standard les commandes qui permettent d'exporter tous
+les drapeaux de compilation pour un outil particulier. Si \fIformat\fP n'est
+pas sp\('ecifi\('e, sa valeur est \fBsh\fP. Seuls les drapeaux de compilation
+commen\(,cant par une majuscule sont inclus, les autres \('etant suppos\('es
+inadapt\('es \(`a l'environnement. Formats pris en charge\ :
+.RS
+.TP 
+\fBsh\fP
+Commandes shell pour d\('efinir et exporter tous les drapeaux de compilation
+dans l'environnement. Les valeurs drapeau sont prot\('eg\('ees et ainsi la sortie
+est pr\(^ete \(`a \(^etre \('evalu\('ee par un shell.
+.TP 
+\fBcmdline\fP
+Arguments \(`a passer \(`a la ligne de commande d'un programme de construction
+pour utiliser tous les drapeaux de compilation (depuis dpkg\ 1.17.0). Les
+valeurs drapeau sont prot\('eg\('ees dans la syntaxe du shell.
+.TP 
+\fBconfigure\fP
+C'est un ancien alias pour \fBcmdline\fP.
+.TP 
+\fBmake\fP
+Directives de make pour d\('efinir et exporter tous les drapeaux de compilation
+dans l'environnement. La sortie peut \(^etre \('ecrite dans un fragment de
+makefile et \('evalu\('ee en utilisant une directive \fBinclude\fP.
+.RE
+.TP 
+\fB\-\-get\fP\fI drapeau\fP
+Affiche la valeur de ce drapeau sur la sortie standard. Retourne un code de
+sortie \fB0\fP si le drapeau est connu et \fB1\fP s'il est inconnu.
+.TP 
+\fB\-\-origin\fP\fI drapeau\fP
+Affiche l'origine de la valeur renvoy\('ee par \fB\-\-get\fP. Retourne un code de
+sortie \fB0\fP si le drapeau est connu et \fB1\fP s'il est inconnu. L'origine est
+une des valeurs suivantes\ :
+.RS
+.TP 
+\fBvendor\fP
+le drapeau d\('efini \(`a l'origine par le distributeur est renvoy\('e\ ;
+.TP 
+\fBsystem\fP
+le drapeau est plac\('e ou modifi\('e par un r\('eglage syst\(`eme\ ;
+.TP 
+\fBuser\fP
+le drapeau est plac\('e ou modifi\('e par une configuration sp\('ecifique \(`a
+l'utilisateur\ ;
+.TP 
+\fBenv\fP
+le drapeau est plac\('e ou modifi\('e par une configuration sp\('ecifique dans
+l'environnement.
+.RE
+.TP 
+\fB\-\-query\fP
+Print any information that can be useful to explain the behaviour of the
+program: current vendor, relevant environment variables, feature areas,
+state of all feature flags, and the compiler flags with their origin (since
+dpkg 1.19.0).
+.IP
+Par exemple\ :
+.nf
+  Vendor: Debian
+  Environment:
+   DEB_CFLAGS_SET=\-O0 \-Wall
+
+  Area: qa
+  Features:
+   bug=no
+   canary=no
+
+  Area: reproducible
+  Features:
+   timeless=no
+
+  Flag: CFLAGS
+  Value: \-O0 \-Wall
+  Origin: env
+
+  Flag: CPPFLAGS
+  Value: \-D_FORTIFY_SOURCE=2
+  Origin: vendor
+.fi
+.TP 
+\fB\-\-query\-features\fP\fI domaine\fP
+Affiche les fonctionnalit\('es activ\('ees pour un domaine donn\('e (depuis
+dpkg\ 1.16.2). Les seuls domaines reconnus actuellement sur Debian et ses
+d\('eriv\('es sont \fBfuture\fP, \fBqa\fP, \fBreproducible\fP, \fBsanitize\fP et \fBhardening\fP,
+voir la section \fBZONES D'OPTION\fP pour plus de d\('etails. Retourne un code de
+sortie \fB0\fP si le domaine est connu et \fB1\fP s'il est inconnu.
+.IP
+L'affichage est dans le format RFC822, avec une section par
+fonctionnalit\('e. Par exemple\ :
+.IP
+.nf
+  Feature: pie
+  Enabled: yes
+
+  Feature: stackprotector
+  Enabled: yes
+.fi
+.TP 
+\fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH "DRAPEAUX G\('ER\('ES"
+.TP 
+\fBCFLAGS\fP
+Options du compilateur\ C. La valeur par d\('efaut d\('efinie par le distributeur
+comporte \fB\-g\fP et le niveau d'optimisation par d\('efaut (\fB\-O2\fP en g\('en\('eral, ou
+\fB\-O0\fP si la variable d'environnement \fBDEB_BUILD_OPTIONS\fP contient
+\fInoopt\fP).
+.TP 
+\fBCPPFLAGS\fP
+Options du pr\('eprocesseur\ C. Valeur par d\('efaut\ :\ aucune.
+.TP 
+\fBCXXFLAGS\fP
+Options du compilateur\ C++. Analogue \(`a \fBCFLAGS\fP.
+.TP 
+\fBOBJCFLAGS\fP
+Options du compilateur Objective\ C. Analogue \(`a \fBCFLAGS\fP.
+.TP 
+\fBOBJCXXFLAGS\fP
+Options du compilateur Objective\ C++. Analogue \(`a \fBCXXFLAGS\fP.
+.TP 
+\fBGCJFLAGS\fP
+Options du compilateur Java GNU (gcj). Un sous\-ensemble de \fBCFLAGS\fP.
+.TP 
+\fBFFLAGS\fP
+Options du compilateur Fortran\ 77. Un sous\-ensemble de \fBCFLAGS\fP.
+.TP 
+\fBFCFLAGS\fP
+Options du compilateur Fortran\ 9x. Analogue \(`a \fBFFLAGS\fP.
+.TP 
+\fBLDFLAGS\fP
+Options pass\('ees au compilateur lors du processus de liaison des ex\('ecutables
+ou des objets partag\('es (si le linker est appel\('e directement, alors \fB\-Wl\fP et
+\fB,\fP doivent \(^etre retir\('es de ces options). Valeur par d\('efaut\ :\ aucune.
+.PP
+De nouveaux drapeaux pourront \(^etre ajout\('es si besoin est (par exemple pour
+la prise en charge de nouveaux langages).
+.
+.SH "ZONES D'OPTION"
+.P
+Chaque option de zone peut \(^etre activ\('ee ou d\('esactiv\('ee avec les valeurs
+\fBDEB_BUILD_OPTIONS\fP et \fBDEB_BUIL_MAINT_OPTIONS\fP de l'espace de variables
+d'environnement gr\(^ace aux modificateurs \(Fo\ \fB+\fP\ \(Fc et \(Fo\ \fB\-\fP\ \(Fc. Par exemple,
+pour activer l'option \fBhardening\fP \(Fo\ pie\ \(Fc et d\('esactiver l'option
+\(Fo\ fortify\ \(Fc, il est possible d'indiquer cela dans \fBdebian/rules\fP\ :
+.P
+  export DEB_BUILD_MAINT_OPTIONS=hardening=+pie,\-fortify
+.P
+L'option sp\('eciale \fBall\fP (valable dans toutes les zones) peut \(^etre utilis\('ee
+pour activer ou d\('esactiver toutes les options de la zone \(`a la fois. Ainsi,
+tout d\('esactiver dans la zone \fBhardening\fP en n'activant que \(Fo\ format\ \(Fc et
+\(Fo\ fortify\ \(Fc peut \(^etre r\('ealis\('e avec\ :
+.P
+  export DEB_BUILD_MAINT_OPTIONS=hardening=\-all,+format,+fortify
+.
+.SS future
+Plusieurs options de compilation (d\('etaill\('ees ci\-dessous) peuvent \(^etre
+utilis\('ees pour activer des fonctionnalit\('es qui devraient \(^etre activ\('ees par
+d\('efaut, mais ne peuvent pas l'\(^etre pour des raisons de compatibilit\('e avec
+les versions pr\('ec\('edentes.
+.TP 
+\fBlfs\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) active la prise en charge des gros
+fichiers (LFS) sur les architectures 32\ bits o\(`u l'ABI n'inclut pas LFS par
+d\('efaut, en ajoutant \fB\-D_LARGEFILE_SOURCE \-D_FILE_OFFSET_BITS=64\fP \(`a
+\fBCPPFLAGS\fP.
+.
+.SS qa
+Plusieurs options de compilation (d\('etaill\('ees ci\-dessous) peuvent \(^etre
+utilis\('ees pour d\('etecter des probl\(`emes dans le code source ou dans le syst\(`eme
+de construction.
+.TP 
+\fBbug\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute toutes les options
+d'avertissement d\('etectant de fa\(,con fiable du code source probl\('ematique. Les
+avertissements sont fatals. Les seuls drapeaux actuellement g\('er\('es sont
+\fBCFLAGS\fP et \fBCXXFLAGS\fP avec des drapeaux d\('efinis \(`a
+\fB\-Werror=array\-bounds\fP, \fB\-Werror=clobbered\fP,
+\fB\-Werror=implicit\-function\-declaration\fP et
+\fB\-Werror=volatile\-register\-var\fP.
+.
+.TP 
+\fBcanary\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute des options d\('etectrices
+\(Fo\ canary\ \(Fc factices aux drapeaux de construction de telle sorte que les
+rapports de compilation permettront de v\('erifier la fa\(,con dont ces drapeaux
+se propagent et de rep\('erer toute omission des param\(`etres de drapeaux
+habituels. Les drapeaux actuellement pris en charge sont \fBCPPFLAGS\fP,
+\fBCFLAGS\fP, \fBOBJCFLAGS\fP, \fBCXXFLAGS\fP ainsi que \fBOBJCXXFLAGS\fP, avec les
+drapeaux d\('efinis \(`a \fB\-D__DEB_CANARY_\fP\fIflag\fP_\fIrandom\-id\fP\fB__\fP, et
+\fBLDFLAGS\fP param\('etr\('e \(`a \fB\-Wl,\-z,deb\-canary\-\fP\fIrandom\-id\fP.
+.
+.SS sanitize
+Plusieurs options de compilation (d\('etaill\('ees ci\-dessous) peuvent \(^etre
+utilis\('ees pour aider \(`a nettoyer le binaire compil\('e face aux corruptions de
+la m\('emoire, aux fuites de m\('emoire, \(`a l'utilisation de m\('emoire apr\(`es
+lib\('eration et \(`a des bogues au comportement ind\('efini. \fBNote\fP\ : ces options
+ne devraient pas \(^etre utilis\('ees pour des constructions en production car
+elles peuvent r\('eduire la fiabilit\('e du code, r\('eduire la s\('ecurit\('e ou m\(^eme les
+fonctionnalit\('es.
+.TP 
+\fBaddress\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute \fB\-fsanitize=address\fP \(`a
+\fBLDFLAGS\fP et \fB\-fsanitize=address \-fno\-omit\-frame\-pointer\fP \(`a \fBCFLAGS\fP et
+\fBCXXFLAGS\fP.
+.TP 
+\fBthread\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute \fB\-fsanitize=thread\fP \(`a \fBCFLAGS\fP,
+\fBCXXFLAGS\fP et \fBLDFLAGS\fP.
+.TP 
+\fBleak\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute \fB\-fsanitize=leak\fP \(`a
+\fBLDFLAGS\fP. Il est automatiquement d\('esactiv\('e si les fonctions \fBaddress\fP ou
+\fBthread\fP sont activ\('ees, parce qu'elles l'impliquent.
+.TP 
+\fBundefined\fP
+Ce param\(`etre (d\('esactiv\('e par d\('efaut) ajoute \fB\-fsanitize=undefined\fP \(`a
+\fBCFLAGS\fP, \fBCXXFLAGS\fP et \fBLDFLAGS\fP.
+.SS "compilation renforc\('ee"
+Plusieurs options de compilation (d\('etaill\('ees ci\-dessous) peuvent \(^etre
+utilis\('ees pour accro\(^itre la r\('esistance du binaire compil\('e face aux attaques
+par corruption de la m\('emoire ou fournir des messages d'avertissement
+suppl\('ementaires lors de la compilation. Sauf mention contraire (voir
+ci\-dessous), ces options sont activ\('ees par d\('efaut pour les architectures qui
+les g\(`erent.
+.TP 
+\fBformat\fP
+Ce r\('eglage, activ\('e par d\('efaut, ajoute \fB\-Wformat \-Werror=format\-security\fP \(`a
+\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP et \fBOBJCXXFLAGS\fP. Cela provoquera
+l'avertissement en cas d'utilisation de cha\(^ines de formatage incorrectes et
+\('echouera si les fonctions de formatage sont utilis\('ees d'une fa\(,con qui
+pr\('esente des risques pour la s\('ecurit\('e. Actuellement, ce r\('eglage cr\('ee des
+avertissements pour les appels des fonctions \fBprintf\fP et \fBscanf\fP lorsque
+la cha\(^ine de formatage n'est pas une cha\(^ine litt\('erale et qu'aucun param\(`etre
+de formatage n'est utilis\('e (par exemple dans \fBprintf(foo);\fP au lieu de \fB
+printf("%s", foo);\fP. Ce type de syntaxe peut cr\('eer un probl\(`eme de s\('ecurit\('e
+si la cha\(^ine de formatage vient d'une source non s\(^ure et contient \(Fo\ %n\ \(Fc.
+.
+.TP 
+\fBfortify\fP
+Ce r\('eglage, activ\('e par d\('efaut, ajoute \fB\-D_FORTIFY_SOURCE=2\fP \(`a
+\fBCPPFLAGS\fP. Lors de la cr\('eation du code, le compilateur conna\(^it un nombre
+important d'informations relatives aux tailles de tampons (quand c'est
+possible) et tente alors de remplacer des appels de fonctions avec une
+taille illimit\('ee de tampons, peu s\(^urs, par des appels avec des tampons de
+taille limit\('ee. Cette fonctionnalit\('e est particuli\(`erement utile pour du code
+ancien et mal \('ecrit. De plus, les cha\(^ines de formatage dans la m\('emoire
+accessible en \('ecriture qui contiennent \(Fo\ %n\ \(Fc sont bloqu\('ees. Si une
+application d\('epend de telles cha\(^ines de formatage, un contournement devra
+\(^etre mis en place.
+
+Veuillez noter que pour que cette option fasse effet, la source devra aussi
+\(^etre compil\('ee avec \fB\-O1\fP ou plus. Si la variable d'environnement
+\fBDEB_BUILD_OPTIONS\fP contient \fInoopt\fP, la prise en charge de \fBfortify\fP
+sera d\('esactiv\('ee du fait des nouveaux avertissements \('emis par glibc
+version\ 2.16 et ult\('erieure.
+.TP 
+\fBstackprotector\fP
+Ce r\('eglage (activ\('e par d\('efaut si stackprotectorstrong n'est pas employ\('e),
+ajoute \fB\-fstack\-protector \-\-param=ssp\-buffer\-size=4\fP \(`a \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP et
+\fBFCFLAGS\fP. Il ajoute des contr\(^oles li\('es aux r\('e\('ecritures de piles. Cela
+conduit des tentatives d'attaques par injection de code \(`a terminer en
+\('echec. Dans le meilleur des cas, cette protection transforme une
+vuln\('erabilit\('e d'injection de code en d\('eni de service ou en non\-probl\(`eme
+(selon les applications).
+
+Cette fonctionnalit\('e impose de lier le code \(`a glibc (ou toute autre
+biblioth\(`eque fournissant \fB__stack_chk_fail\fP) et doit donc \(^etre d\('esactiv\('ee
+lorsque le code est construit avec \fB\-nostdlib\fP, \fB\-ffreestanding\fP ou
+\('equivalents.
+.
+.TP 
+\fBstackprotectorstrong\fP
+Ce r\('eglage, activ\('e par d\('efaut, ajoute \fB\-fstack\-protector\-strong\fP \(`a
+\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP
+et \fBFCFLAGS\fP. Il s'agit d'une version renforc\('ee de \fBstackprotector\fP qui
+n'affecte pas les performances de mani\(`ere importante.
+
+D\('esactiver \fBstackprotector\fP d\('esactive \('egalement ce param\(`etre.
+
+Cette fonctionnalit\('e a les m\(^eme exigences que \fBstackprotector\fP, en plus de
+n\('ecessiter gcc\ 4.9 ou plus r\('ecent.
+.
+.TP 
+\fBrelro\fP
+Ce r\('eglage, activ\('e par d\('efaut, ajoute \fB\-Wl,\-z,relro\fP \(`a \fBLDFLAGS\fP. Lors du
+chargement du programme, plusieurs parties de la m\('emoire ELF doivent \(^etre
+\('ecrites par l'\('editeur de liens. Ce r\('eglage indique au chargeur de mettre ces
+sections en lecture seule avant de rendre le contr\(^ole au
+programme. L'utilisation habituelle de ce r\('eglage est la protection contre
+les attaques par r\('e\('ecriture GOT. Si cette option est d\('esactiv\('ee, l'option
+\fBbindnow\fP sera \('egalement d\('esactiv\('ee.
+.
+.TP 
+\fBbindnow\fP
+Ce r\('eglage, d\('esactiv\('e par d\('efaut, ajoute \fB\-Wl,\-z,now\fP \(`a \fBLDFLAGS\fP. Lors du
+chargement du programme, tous les symboles dynamiques sont r\('esolus, ce qui
+permet au PLT (Procedure Linkage Table) entier d'\(^etre en lecture seule (du
+fait du r\('eglage \fBrelro\fP ci\-dessus). Cette option ne peut \(^etre activ\('ee si
+\fBrelro\fP ne l'est pas.
+.
+.TP 
+\fBpie\fP
+Ce r\('eglage (sans option globale par d\('efaut depuis dpkg\ 1.18.23, parce qu'il
+est maintenant activ\('e par d\('efaut par gcc dans les architectures Debian
+amd64, arm64, armel, armhf, hurd\-i386, i386, kfreebsd\-amd64, kfreebsd\-i386,
+mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc et
+sparc64) ajoute les options requises pour activer ou d\('esactiver PIE
+(ex\('ecutable ind\('ependant de l'emplacement) au moyen des fichiers de
+sp\('ecifications de gcc, si n\('ecessaire, selon que gcc injecte sur cette
+architecture les drapeaux par lui\-m\(^eme ou non. Si le r\('eglage est activ\('e et
+que gcc injecte les drapeaux, il n'ajoute rien. Si le r\('eglage est activ\('e et
+que gcc n'injecte pas les drapeaux, il ajoute \fB\-fPIE\fP (au moyen de
+\fI/usr/share/dpkg/pie\-compiler.specs\fP) \(`a \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP,
+\fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP et \fBFCFLAGS\fP, et \fB\-fPIE \-pie\fP (au
+moyen de \fI/usr/share/dpkg/pie\-link.specs\fP) \(`a \fBLDFLAGS\fP. Si le r\('eglage est
+d\('esactiv\('e et que gcc injecte les drapeaux, il ajoute \fB\-fno\-PIE\fP (au moyen
+de \fI/usr/share/dpkg/no\-pie\-compile.specs\fP) \(`a \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP et \fBFCFLAGS\fP, et
+\fB\-fno\-PIE \-no\-pie\fP (au moyen de \fI/usr/share/dpkg/no\-pie\-link.specs\fP) \(`a
+\fBLDFLAGS\fP.
+
+Les ex\('ecutables \(`a position ind\('ependante (\(Fo\ Position Independent
+Executable\ \(Fc) permettent d'utiliser la randomisation de l'organisation de
+l'espace d'adressage (ASLR\ :\ \(Fo\ Address Space Layout Randomization\ \(Fc), qui
+est g\('er\('ee par certaines versions du noyau. Bien que ASLR puisse d\('ej\(`a \(^etre
+mise en \(oeuvre pour les zones de donn\('ees dans la pile et le tampon (brk et
+mmap), les zones de codes doivent \(^etre compil\('ees comme ind\('ependantes de la
+position. Les biblioth\(`eques partag\('ees font d\('ej\(`a cela (\fB\-fPIC\fP) ce qui
+permet automatiquement d'utiliser ASLR. Par contre les r\('egions .text
+binaires doivent \(^etre construites en mode PIE pour mettre en \(oeuvre ASLR. Une
+fois cela r\('ealis\('e, les attaques ROP (\(Fo\ Return Oriented Programming\ \(Fc)
+deviennent plus difficiles car il n'existe pas d'emplacement statique d'o\(`u
+rebondir pendant une attaque par corruption de la m\('emoire.
+
+PIE n'est pas compatible avec \fBfPIC\fP, aussi, en g\('en\('eral, des pr\('ecautions
+doivent \(^etre prises lors de la construction d'objets partag\('es. Mais comme
+les drapeaux PIE \('emis sont inject\('es par des fichiers de sp\('ecifications de
+gcc, il devrait toujours \(^etre s\(^ur de les d\('efinir sans condition
+ind\('ependamment du type d'objet en train d'\(^etre compil\('e ou li\('e.
+
+Les biblioth\(`eques statiques peuvent \(^etre utilis\('ees par des programmes ou
+d'autres biblioth\(`eques partag\('ees. Selon les drapeaux utilis\('es pour compiler
+tous les objets d'une biblioth\(`eque statique, ces biblioth\(`eques seront
+utilisables par divers ensembles d'objets\ :
+
+.RS
+.TP 
+\fBnone\fP
+Ne peut \(^etre li\('e ni \(`a un programme PIE, ni \(`a une biblioth\(`eque partag\('ee.
+.TP 
+\fB\-fPIE\fP
+Peut \(^etre li\('e \(`a tout programme, mais pas \(`a une biblioth\(`eque partag\('ee
+(recommand\('e).
+.TP 
+\fB\-fPIC\fP
+Peut \(^etre li\('e \(`a tout programme et toute biblioth\(`eque partag\('ee.
+.RE
+
+.IP
+S'il est n\('ecessaire de r\('egler ces drapeaux manuellement, en contournant
+l'injonction des sp\('ecifications de gcc, il y a plusieurs choses \(`a prendre en
+compte. Le passage sans condition et de fa\(,con explicite de \fB\-fPIE\fP,
+\fB\-fpie\fP ou \fB\-pie\fP \(`a un syst\(`eme de construction en utilisant libtool est
+s\(^ur dans la mesure o\(`u ces drapeaux seront retir\('es lors de la construction de
+biblioth\(`eques partag\('ees. Sinon, sur les projets qui construisent \(`a la fois
+des programmes et des biblioth\(`eques partag\('ees, il faudrait s'assurer que,
+lors de la construction des biblioth\(`eques partag\('ees, \fB\-fPIC\fP soit toujours
+pass\('e en dernier aux drapeaux de compilation tels que \fBCFLAGS\fP (de sorte
+qu'il remplace tout \fB\-PIE\fP ant\('erieur), et que \fB\-shared\fP soit pass\('e en
+dernier aux drapeaux de cr\('eation de lien tels que \fBLDFLAGS\fP (de sorte qu'il
+remplace tout \fB\-pie\fP ant\('erieur). \fBNote\fP\ : Cela ne devrait pas \(^etre
+n\('ecessaire avec les m\('ecanismes de sp\('ecification de gcc par d\('efaut.
+
+.IP
+De plus, comme la protection PIE est mise en \(oeuvre \(`a l'aide d'un registre
+global, certaines architectures priv\('ees de registre (mais plus i386 depuis
+les optimisations mises en \(oeuvre dans gcc\ >=\ 5) peuvent souffrir de
+pertes de performances allant jusqu'\(`a 15\ % sur des charges d'applications
+utilisant largement les segments de texte\ ; le plus souvent, cette perte de
+performances n\(cqexc\('edera pas\ 1\ %. Pour des architectures offrant plus de
+registres globaux (par exemple amd64), cette p\('enalisation n'existe
+pratiquement pas.
+.SS reproductible
+Les options de compilation (d\('etaill\('ees ci\-dessous) peuvent aider \(`a am\('eliorer
+la reproductibilit\('e de la construction ou fournir des messages
+d'avertissement suppl\('ementaires lors de la compilation. Sauf mention
+contraire (voir ci\-dessous), ces options sont activ\('ees par d\('efaut pour les
+architectures qui les g\(`erent.
+.TP 
+\fBtimeless\fP
+Ce param\(`etre, activ\('e par d\('efaut, ajoute \fB\-Wdate\-time\fP \(`a \fBCPPFLAGS\fP. Cela
+provoquera des avertissements quand les macros \fB__TIME__\fP, \fB__DATE__\fP et
+\fB__TIMESTAMP__\fP sont utilis\('ees.
+.
+.TP 
+\fBfixfilepath\fP
+Ce param\(`etre, d\('esactiv\('e par d\('efaut, ajoute
+\fB\-ffile\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP \(`a \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP et \fBFCFLAGS\fP o\(`u
+\fBBUILDPATH\fP est fix\('e sur le r\('epertoire de plus haut niveau du paquet en
+construction. Cela a pour effet de retirer le chemin de construction de tout
+fichier g\('en\('er\('e.
+
+Si \(`a la fois \fBfixdebugpath\fP et \fBfixfilepath\fP sont d\('efinis, cette option a
+la priorit\('e parce c'est un sur\-ensemble du premier.
+.TP 
+\fBfixdebugpath\fP
+Ce r\('eglage, activ\('e par d\('efaut, ajoute
+\fB\-fdebug\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP \(`a \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP et \fBFCFLAGS\fP o\(`u
+\fBBUILDPATH\fP est fix\('e sur le r\('epertoire de plus haut niveau du paquet en
+construction. Cela a pour effet de retirer le chemin de construction de tous
+les symboles de d\('ebogage g\('en\('er\('es.
+.
+.SH ENVIRONNEMENT
+Deux jeux de variables d'environnement effectuent les m\(^emes op\('erations. Le
+premier (DEB_\fIdrapeau\fP_\fIop\('eration\fP) ne devrait jamais \(^etre utilis\('e depuis
+\fBdebian/rules\fP. Il est destin\('e aux utilisateurs souhaitant recompiler le
+paquet source avec des drapeaux de compilation modifi\('es. Le second
+(DEB_\fIdrapeau\fP_MAINT_\fIop\('eration\fP) ne doit \(^etre utilis\('e que dans
+\fBdebian/rules\fP par les responsables de paquets pour modifier les drapeaux
+de compilation concern\('es.
+.TP 
+\fBDEB_\fP\fIdrapeau\fP\fB_SET\fP
+.TQ
+\fBDEB_\fP\fIdrapeau\fP\fB_MAINT_SET\fP
+Cette variable permet de forcer la valeur renvoy\('ee pour le \fIdrapeau\fP
+indiqu\('e.
+.TP 
+\fBDEB_\fP\fIdrapeau\fP\fB_STRIP\fP
+.TQ
+\fBDEB_\fP\fIdrapeau\fP\fB_MAINT_STRIP\fP
+Cette variable peut \(^etre utilis\('ee pour fournir une liste d'options (s\('epar\('ees
+par des espaces) qui seront retir\('ees du jeu de drapeaux renvoy\('e pour le
+\fIdrapeau\fP indiqu\('e.
+.TP 
+\fBDEB_\fP\fIdrapeau\fP\fB_APPEND\fP
+.TQ
+\fBDEB_\fP\fIdrapeau\fP\fB_MAINT_APPEND\fP
+Cette variable permet d'ajouter des options \(`a la valeur renvoy\('ee pour le
+\fIdrapeau\fP indiqu\('e.
+.TP 
+\fBDEB_\fP\fIdrapeau\fP\fB_PREPEND\fP
+.TQ
+\fBDEB_\fP\fIdrapeau\fP\fB_MAINT_PREPEND\fP
+Cette variable permet de pr\('efixer la valeur renvoy\('ee pour le \fIdrapeau\fP
+indiqu\('e par des options suppl\('ementaires.
+.TP 
+\fBDEB_BUILD_OPTIONS\fP
+.TQ
+\fBDEB_BUILD_MAINT_OPTIONS\fP
+Ces variables peuvent \(^etre utilis\('ees par un utilisateur ou un responsable de
+paquet pour activer ou d\('esactiver diff\('erentes options de zone qui affectent
+les drapeaux de construction. La variable \fBDEB_BUILD_MAINT_OPTIONS\fP
+outrepasse tous les param\(`etres de la zone d'options
+\fBDEB_BUILD_OPTIONS\fP. Voir la section \fBZONES D'OPTION\fP pour plus de
+d\('etails.
+.TP 
+\fBDEB_VENDOR\fP
+Ce r\('eglage d\('efinit l'\('editeur (\(Fo\ vendor\ \(Fc) actuel. Si cette valeur est vide,
+le contenu du fichier \fB/etc/dpkg/origins/default\fP est utilis\('e.
+.TP 
+\fBDEB_BUILD_PATH\fP
+Cette variable configure le chemin de construction (depuis dpkg\ 1.18.8) \(`a
+utiliser avec des fonctions telles que \fBfixdebugpath\fP de telle sorte
+qu'elles soient contr\(^ol\('ees par l'appelant. Cette variable est actuellement
+sp\('ecifique \(`a Debian et \(`a ses d\('eriv\('es.
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH FICHIERS
+.SS "Fichiers de configuration."
+.TP 
+\fB/etc/dpkg/buildflags.conf\fP
+Fichier de configuration pour l'ensemble du syst\(`eme.
+.TP 
+\fB$XDG_CONFIG_HOME/dpkg/buildflags.conf\fP ou 
+.TQ
+\fB$HOME/.config/dpkg/buildflags.conf\fP
+Fichier de configuration propre \(`a l'utilisateur
+.SS "Gestion de l'empaquetage"
+.TP 
+\fB/usr/share/dpkg/buildflags.mk\fP
+Fragment de fichier Makefile qui chargera (et facultativement exportera)
+dans les variables (depuis dpkg\ 1.16.1) tous les drapeaux pris en charge par
+\fBdpkg\-buildflags\fP.
+.
+.SH EXEMPLES
+Pour passer des drapeaux de compilation \(`a une commande de compilation dans
+un Makefile\ :
+.PP
+.RS 4
+.nf
+$(MAKE) $(shell dpkg\-buildflags \-\-export=cmdline)
+
+\&./configure $(shell dpkg\-buildflags \-\-export=cmdline)
+.fi
+.RE
+.PP
+Pour d\('efinir les drapeaux de compilation dans un script shell ou un fragment
+de shell, on peut utiliser \fBeval\fP pour interpr\('eter la sortie et exporter
+les drapeaux dans l'environnement\ :
+.PP
+.RS 4
+.nf
+eval "$(dpkg\-buildflags \-\-export=sh)" && make
+.fi
+.RE
+.PP
+ou d\('efinir les param\(`etres de position \(`a passer \(`a la commande\ :
+.PP
+.RS 4
+.nf
+eval "set \-\- $(dpkg\-buildflags \-\-export=cmdline)"
+for dir in a b c; do (cd $dir && ./configure "$@" && make); done
+.fi
+.RE
+.
+.SS "Utilisation dans debian/rules"
+Il faut appeler \fBdpkg\-buildflags\fP ou inclure \fBbuildflags.mk\fP \(`a partir du
+fichier \fBdebian/rules\fP pour obtenir les drapeaux de compilation n\('ecessaires
+\(`a passer au syst\(`eme de construction. Veuillez noter que les anciennes
+versions de \fBdpkg\-buildpackage\fP (ant\('erieures \(`a dpkg\ 1.16.1) exportaient ces
+drapeaux automatiquement. N\('eanmoins, il est d\('econseill\('e de d\('ependre de ce
+comportement parce qu'il casse l'appel manuel de \fBdebian/rules\fP.
+.PP
+Pour les paquets avec des syst\(`emes de construction du style autoconf, il est
+possible de passer les options appropri\('ees \(`a configure ou \fBmake\fP(1)
+directement, comme vu ci\-dessus.
+.PP
+Pour d'autres syst\(`emes de construction ou si on souhaite un contr\(^ole
+extr\(^emement pr\('ecis sur le choix et la position o\(`u sont pass\('es les drapeaux,
+\fB\-\-get\fP peut \(^etre utilis\('e. Autrement, il est possible d'inclure
+\fBbuildflags.mk\fP qui s'occupe de l'appel de \fBdpkg\-buildflags\fP et du
+placement des drapeaux de compilation dans les variables de make.
+.PP
+Si vous voulez exporter tous les drapeaux de compilation dans
+l'environnement (o\(`u le syst\(`eme de construction peut les r\('ecup\('erer)\ :
+.PP
+.RS 4
+.nf
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+.fi
+.RE
+.PP
+Pour un contr\(^ole suppl\('ementaire sur ce qui est export\('e, vous pouvez exporter
+manuellement les variables (puisque aucune n'est export\('ee par d\('efaut)\ :
+.PP
+.RS 4
+.nf
+include /usr/share/dpkg/buildflags.mk
+export CPPFLAGS CFLAGS LDFLAGS
+.fi
+.RE
+.PP
+Et enfin, vous pouvez bien s\(^ur passer manuellement les drapeaux aux
+commandes\ :
+.PP
+.RS 4
+.nf
+include /usr/share/dpkg/buildflags.mk
+build\-arch:
+\&	$(CC) \-o hello hello.c $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
+.fi
+.RE
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

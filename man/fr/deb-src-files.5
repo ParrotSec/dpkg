@@ -1,0 +1,64 @@
+.\" dpkg manual page - deb-src-files(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-files 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+deb\-src\-files \- Format des fichiers distribu\('es de Debian
+.
+.SH SYNOPSIS
+debian/files
+.
+.SH DESCRIPTION
+Ce fichier fournit la liste des objets qui seront distribu\('es au moyen du
+fichier de contr\(^ole \fB.changes\fP.
+.PP
+Les \('el\('ements du fichier \fIdebian/files\fP sont s\('epar\('es simplement par des
+espaces.
+.PP
+.in +5
+\fInom\-de\-fichier\fP \fIsection\fP \fIpriorit\('e\fP [ \fImot\-cl\('e=valeur\&...\&\fP ]
+.in -5
+.PP
+\fInom\-de\-fichier\fP est le nom de l'objet \(`a distribuer.
+.PP
+\fIsection\fP et \fIpriority\fP correspondent respectivement aux champs de
+contr\(^ole pr\('esents dans le fichier .deb. Les valeurs autoris\('ees sont
+sp\('ecifiques pour chaque distribution.
+.PP
+\fImot\-cl\('e=valeur\&...\&\fP correspond \(`a une liste optionnelle des attributs
+s\('epar\('es par des espaces pour cette entr\('ee. Le seul mot cl\('e pris en charge
+actuellement est \fBautomatic\fP avec la valeur \fByes\fP, pour marquer les
+fichiers g\('en\('er\('es automatiquement.
+.
+.SH NOTES
+Ce fichier n'est pas cens\('e \(^etre modifi\('e directement, veuillez utiliser soit
+\fBdpkg\-gencontrol\fP ou \fBdpkg\-distaddfile\fP pour lui ajouter des entr\('ees.
+.
+.SH "VOIR AUSSI"
+.ad l
+\fBdpkg\-genchanges\fP(1), \fBdpkg\-distaddfile\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

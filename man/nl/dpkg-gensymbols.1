@@ -1,0 +1,605 @@
+.\" dpkg manual page - dpkg-gensymbols(1)
+.\"
+.\" Copyright © 2007-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2009-2010 Modestas Vainius <modestas@vainius.eu>
+.\" Copyright © 2012-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gensymbols 1 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-gensymbols \- genereer symbolenbestanden (informatie over
+afhankelijkheidsrelaties met gedeelde bibliotheken)
+.
+.SH OVERZICHT
+\fBdpkg\-gensymbols\fP [\fIoptie\fP...]
+.
+.SH BESCHRIJVING
+\fBdpkg\-gensymbols\fP doorzoekt een tijdelijke bouwboom (standaard is dat
+debian/tmp) op zoek naar bibliotheken en genereert een \fIsymbols\fP\-bestand
+dat ze beschrijft. Dit bestand wordt dan als het niet leeg is, ge\(:installeerd
+in een onderliggende map van de bouwboom met de naam DEBIAN, zodat het
+uiteindelijk opgenomen geraakt in de controle\-informatie van het pakket.
+.P
+Bij het genereren van deze bestanden gebruikt het als invoer bepaalde
+symbolenbestanden die door de onderhouder aangeleverd worden. Het zoekt naar
+de volgende bestanden (en gebruikt het eerste dat gevonden wordt):
+.IP \(bu 4
+debian/\fIpakket\fP.symbols.\fIarch\fP
+.IP \(bu 4
+debian/symbols.\fIarch\fP
+.IP \(bu 4
+debian/\fIpakket\fP.symbols
+.IP \(bu 4
+debian/symbols
+.P
+Het hoofddoel van deze bestanden is aan te geven welke de minimale versie is
+die behoort bij elk van de symbolen die door de bibliotheken aangeleverd
+worden. Gewoonlijk komt dit overeen met de eerste versie van het pakket dat
+in dat symbool voorzag, maar dit kan door de onderhouder manueel verhoogd
+worden indien de ABI van het symbool uitgebreid werd zonder dat daardoor de
+neerwaartse compatibiliteit verbroken wordt. Het is de verantwoordelijkheid
+van de onderhouder om deze bestanden up\-to\-date en accuraat te houden, maar
+\fBdpkg\-gensymbols\fP helpt hierbij.
+.P
+Indien het gegenereerde symbolenbestand verschilt van datgene wat de
+onderhouder aanlevert, zal \fBdpkg\-gensymbols\fP de verschillen tussen de twee
+versies tonen in diff\-formaat. Bovendien kan dit zelfs tot een mislukking
+leiden als de verschillen te significant zijn (u kunt aanpassen hoeveel
+verschil u kunt tolereren; zie de optie \fB\-c\fP).
+.SH "HET ONDERHOUD VAN SYMBOLENBESTANDEN"
+De symbolenbestanden zijn pas echt nuttig als ze de evolutie van het pakket
+reflecteren doorheen verschillende releases. De onderhouder moet ze dus
+iedere keer bijwerken wanneer een nieuw symbool toegevoegd wordt, zodat de
+minimale versie die eraan gekoppeld wordt, overeenkomt met de realiteit. De
+diffs (weergave van de verschillen) die in de bouwlogs te vinden zijn,
+kunnen als startpunt genomen worden, maar daarbovenop moet de onderhouder
+erop letten dat het gedrag van deze symbolen niet zodanig veranderd werd,
+dat iets dat van deze symbolen gebruik maakt en linkt met de nieuwe versie,
+niet stopt met werken met de oude versie. In de meeste gevallen kan de diff
+rechtstreeks toegepast worden op het bestand debian/\fIpakket\fP.symbols. Dit
+gezegd zijnde, zijn verdere aanpassingen meestal wel nodig: het wordt
+bijvoorbeeld aanbevolen om het Debian revisienummer weg te laten uit de
+minimale versie, zodat backports (nieuwere programmaversies die geschikt
+gemaakt worden voor een vroegere release) met een lager versienummer maar
+eenzelfde toeleveraarsversie (upstream version) nog steeds voldoen aan de
+gegenereerde afhankelijkheidsrelaties. Indien het Debian revisienummer niet
+weggelaten kan worden omdat het symbool echt via een Debian\-specifieke
+aanpassing toegevoegd werd, moet men aan het versienummer het achtervoegsel
+\(oq\fB~\fP\(cq toevoegen.
+.P
+Vooraleer een patch toe te passen op een symbolenbestand, moet de
+onderhouder grondig controleren of dat wel correct is. Publieke symbolen
+worden verondersteld niet te verdwijnen. Een patch zou dus idealiter enkel
+nieuwe regels mogen toevoegen.
+.P
+Merk op dat u commentaar kunt opnemen in symbolenbestanden: elke regel met
+\(oq#\(cq als eerste teken is een commentaarregel, behalve als die regel begint
+met \(oq#include\(cq (zie het onderdeel over \fBHet gebruik van includes\fP). Regels
+die beginnen met \(oq#MISSING:\(cq zijn een bijzondere vorm van commentaar waarin
+symbolen die verdwenen zijn, gedocumenteerd worden.
+.P
+Vergeet niet na te gaan of oudere symboolversies niet verhoogd moeten
+worden. Er bestaat geen manier voor \fBdpkg\-gensymbols\fP om in dit verband
+waarschuwingen te geven. Een diff (weergave van de verschillen) blindweg
+toepassen of ervan uitgaan dat er niets aangepast moet worden als er geen
+diff is zonder zelf op eventuele wijzigingen te controleren, kan leiden tot
+pakketten met verslapte afhankelijkheidsrelaties die onterecht laten
+veronderstellen dat ze met oudere pakketten kunnen samenwerken. Dit kan bij
+(gedeeltelijke) opwaarderingen leiden tot moeilijk te vinden bugs.
+.SS "Substitutie van #PACKAGE# gebruiken"
+.P
+In enkele zeldzame gevallen verschilt de naam van de bibliotheek naargelang
+de architectuur. Om de naam van het pakket niet rechtstreeks in het
+symbolenbestand te moeten inschrijven, kunt u gebruik maken van de marker
+\fI#PACKAGE#\fP. Die zal tijdens de installatie van de symbolenbestanden
+vervangen worden door de echte pakketnaam. In tegenstelling tot de marker
+\fI#MINVER#\fP, zal \fI#PACKAGE#\fP nooit te vinden zijn in een symbolenbestand
+binnenin een binair pakket.
+.SS "Symbooltags gebruiken"
+.P
+Het gebruik van symbooltags is nuttig om symbolen te markeren die op een of
+andere manier bijzonder zijn. Aan elk symbool kan een arbitrair aantal tags
+gekoppeld worden. Hoewel alle tags ontleed en opgeslagen worden, worden
+slechts een aantal ervan herkend door \fBdpkg\-gensymbols\fP. Ze lokken een
+speciale behandeling van de symbolen uit. Zie het onderdeel \fBStandaard
+symbooltags\fP voor een voorstelling van deze tags.
+.P
+Tags worden vlak voor de symboolnaam opgegeven (tussenin mag er geen
+witruimte zijn). Een opgave begint steeds met het openen van een haakje \fB(\fP
+en eindigt met het sluiten ervan \fB)\fP en moet minstens \('e\('en tag
+bevatten. Meerdere tags worden onderling gescheiden door een
+\fB|\fP\-teken. Elke tag kan een facultatieve waarde hebben die van de naam van
+de tag gescheiden wordt door het teken \fB=\fP. Namen van tags en waarden
+kunnen arbitraire tekenreeksen zijn, behalve dat zij niet de speciale tekens
+\fB)\fP \fB|\fP \fB=\fP mogen bevatten. De symboolnaam die na een tagopgave komt kan
+facultatief tussen aanhalingstekens geplaatst worden, ofwel met \fB'\fP of met
+\fB"\fP, waardoor hij witruimte mag bevatten. Evenwel, indien er voor het
+symbool geen tags opgegeven werden, zullen de aanhalingstekens behandeld
+worden als onderdeel van de naam van het symbool die eindigt bij de eerste
+spatie.
+.P
+ (tag1=ik werd gemarkeerd|tagnaam met spatie)"getagd en aangehaald symbool"@Base 1.0
+ (optional)getagd_niet\-aangehaald_symbool@Base 1.0 1
+ niet\-getagd_symbool@Base 1.0
+.P
+Het eerste symbool in het voorbeeld werd \fIgetagd en aangehaald symbool\fP
+genoemd en heeft twee tags: \fItag1\fP met als waarde \fIik werd gemarkeerd\fP en
+\fItagnaam met spatie\fP die geen waarde heeft. Het tweede symbool met als naam
+\fIgetagd_niet\-aangehaald_symbool\fP werd enkel gemarkeerd met de tag die
+\fIoptional\fP als naam heeft. Het laatste symbool is een voorbeeld van een
+normaal niet\-gemarkeerd symbool.
+.P
+Aangezien symbooltags een uitbreiding zijn van het
+\fBdeb\-symbols\fP(5)\-systeem, kunnen zij enkel deel uitmaken van de
+symbolenbestanden die in broncodepakketten gebruikt worden (die bestanden
+moeten dan gezien worden als sjablonen die gebruikt worden om de
+symbolenbestanden te bouwen die in de binaire pakketten zitten). Indien
+\fBdpkg\-gensymbols\fP aangeroepen wordt zonder de optie \fB\-t\fP zal het
+symbolenbestanden produceren die compatibel zijn met het
+\fBdeb\-symbols\fP(5)\-systeem: er gebeurt een volledige verwerking van de
+symbolen in overeenstemming met de vereisten van hun standaardtags en de
+uitvoer wordt ontdaan van alle tags. In sjabloonmodus (\fB\-t\fP) daarentegen
+blijven in de uitvoer alle symbolen en hun tags (zowel de standaardtags als
+de niet\-gekende) behouden en worden ze in hun originele vorm neergeschreven
+zoals ze geladen werden.
+.SS "Standaard symbooltags"
+.TP 
+\fBoptional\fP
+Een symbool dat als optional (facultatief) gemarkeerd is, kan om het even
+wanneer uit de bibliotheek verdwijnen en dat feit zal nooit een mislukking
+van \fBdpkg\-gensymbols\fP tot gevolg hebben. Nochtans zullen verdwenen
+facultatieve symbolen permanent als MISSING (ontbrekend) aangegeven worden
+in de diff (weergave van de veranderingen) bij elke nieuwe
+pakketrevisie. Dit gedrag dient als een geheugensteuntje voor de onderhouder
+dat een dergelijk symbool verwijderd moet worden uit het symbolenbestand of
+terug toegevoegd aan de bibliotheek. Indien een facultatief symbool dat
+eerder als MISSING opgetekend stond in een volgende revisie plots opnieuw
+terug opduikt, zal het terug opgewaardeerd worden naar de status \(lqexisting\(rq
+(bestaand) zonder wijziging van zijn minimumversie.
+
+Deze tag is nuttig voor private symbolen waarvan de verdwijning geen
+ABI\-breuk veroorzaakt. De meeste van de C++\-sjabloon\-instantiaties vallen
+bijvoorbeeld onder deze categorie. Zoals elke andere tag kan ook deze een
+arbitraire waarde hebben: die kan gebruikt worden om aan te geven waarom het
+symbool als facultatief beschouwd wordt.
+.TP 
+\fBarch=\fP\fIarchitectuurlijst\fP
+.TQ
+\fBarch\-bits=\fP\fIarchitectuur\-bits\fP
+.TQ
+\fBarch\-endian=\fP\fIarchitectuur\-endianness\fP
+Deze tags laten iemand toe om de set architecturen waarvoor het symbool
+verondersteld wordt te bestaan, te beperken. De tags \fBarch\-bits\fP en
+\fBarch\-endian\fP worden sinds dpkg 1.18.0 ondersteund. Als de symbolenlijst
+bijgewerkt wordt met de symbolen die in de bibliotheek gevonden worden,
+worden alle architectuurspecifieke symbolen die van geen belang zijn voor de
+huidige hostarchitectuur, behandeld alsof ze niet bestaan. Indien een
+architectuurspecifiek symbool dat betrekking heeft op de huidige
+hostarchitectuur, ontbreekt in de bibliotheek, zijn de normale procedures
+die gelden voor ontbrekende symbolen, van toepassing en dit kan het
+mislukken van \fBdpkg\-gensymbols\fP tot gevolg hebben. Anderzijds, indien het
+architectuurspecifieke symbool aangetroffen wordt als het er niet
+verondersteld wordt te zijn (omdat de huidige hostarchitectuur niet vermeld
+wordt in de tag of niet overeenkomt met de endianness of de bits), dan wordt
+het architectuurneutraal gemaakt (d.w.z. dat de tags arch, arch\-bits en
+arch\-endian weggelaten worden en het symbool omwille van deze verandering in
+de diff (weergave van de veranderingen) opgenomen zal worden), maar het
+wordt niet als nieuw beschouwd.
+
+Als in de standaardmodus (niet\-sjabloonmodus) gewerkt wordt, worden van de
+architectuurspecifieke symbolen enkel die in het symbolenbestand
+opgeschreven die overeenkomen met de huidige hostarchitectuur. Als
+daarentegen in de sjabloonmodus gewerkt wordt, worden steeds alle
+architectuurspecifieke symbolen (ook die voor vreemde architecturen)
+opgeschreven in het symbolenbestand.
+
+De indeling voor de \fIarchitectuurlijst\fP is dezelfde als die welke gebruikt
+wordt voor het veld \fBBuild\-Depends\fP van \fIdebian/control\fP (behalve de
+omsluitende vierkante haakjes []). Met het eerste symbool uit de
+onderstaande lijst zal bijvoorbeeld enkel rekening gehouden worden bij de
+architecturen alpha, any\-amd64 en ia64, met het tweede enkel op
+linux\-architecturen en met het derde overal behalve op armel.
+
+ (arch=alpha any\-amd64 ia64)een_64bits_specifiek_symbool@Base 1.0
+ (arch=linux\-any)linux_specifiek_symbool@Base 1.0
+ (arch=!armel)symbool_dat_armel_niet_heeft@Base 1.0
+
+De waarde van \fIarchitectuur\-bits\fP is ofwel \fB32\fP of \fB64\fP.
+
+ (arch\-bits=32)32bits_specifiek_symbool@Base 1.0
+ (arch\-bits=64)64bits_specifiek_symbool@Base 1.0
+
+De waarde van \fIarchitectuur\-endianness\fP is ofwel \fBlittle\fP of \fBbig\fP.
+
+ (arch\-endian=little)little_endian_specifiek_symbool@Base 1.0
+ (arch\-endian=big)big_endian_specifiek_symbool@Base 1.0
+
+Meerdere beperkingen kunnen aaneengeregen worden.
+
+ (arch\-bits=32|arch\-endian=little)32bits_le_symbool@Base 1.0
+.TP 
+\fBignore\-blacklist\fP
+dpkg\-gensymbols hanteert een interne zwarte lijst van symbolen die niet
+zouden mogen voorkomen in symbolenbestanden omdat ze gewoonlijk slechts een
+neveneffect zijn van details in de wijze waarop de gereedschapskist
+(toolchain) ge\(:implementeerd wordt. Indien u om een of andere reden echt wilt
+dat een van deze symbolen opgenomen wordt in het symbolenbestand, moet u het
+symbool markeren met de tag \fBignore\-blacklist\fP. Dit kan nodig zijn voor
+sommige gereedschapskistbibliotheken van lagere orde zoals libgcc
+.TP 
+\fBc++\fP
+Geeft een \fIc++\fP\-symboolpatroon aan. Zie hierna in de subsectie \fBHet
+gebruik van symboolpatronen\fP.
+.TP 
+\fBsymver\fP
+Geeft een \fIsymver\fP (symboolversie) symboolpatroon aan. Zie hierna in de
+subsectie \fBHet gebruik van symboolpatronen\fP.
+.TP 
+\fBregex\fP
+Geeft een \fIregex\fP\-symboolpatroon aan. Zie hierna in de subsectie \fBHet
+gebruik van symboolpatronen\fP.
+.SS "Het gebruik van symboolpatronen"
+.P
+Anders dan een standaardbeschrijving van een symbool, kan een patroon
+meerdere echte symbolen uit de bibliotheek dekken. \fBdpkg\-gensymbols\fP zal
+proberen om elk patroon te vergelijken met elk re\(:eel symbool waarvoor in het
+symbolenbestand \fIgeen\fP specifiek symboolpendant gedefinieerd werd. Telkens
+wanneer een eerste overeenkomst met een patroon gevonden wordt, worden alle
+tags en eigenschappen ervan gebruikt als basisspecificatie voor het
+symbool. Indien er met geen enkel patroon een overeenkomst gevonden wordt,
+zal het symbool als nieuw beschouwd worden.
+
+Een patroon wordt als verloren beschouwd als het met geen enkel symbool uit
+de bibliotheek overeenkomt. Standaard zal dit onder \fB\-c1\fP of een hoger
+niveau een mislukking van \fBdpkg\-gensymbols\fP uitlokken. Indien een
+dergelijke mislukking echter onwenselijk is, kan het patroon gemarkeerd
+worden met de tag \fIoptional\fP. Als het patroon in dat geval geen
+overeenkomst oplevert, zal het enkel in de diff (weergave van de
+wijzigingen) als MISSING (ontbrekend) vermeld worden. Zoals elk ander
+symbool kan ook een patroon beperkt worden tot specifieke architecturen met
+de tag \fIarch\fP. Raadpleeg het onderdeel \fBStandaard symbooltags\fP hierboven
+voor meer informatie.
+
+Patronen vormen een uitbreiding van het \fBdeb\-symbols\fP(5)\-systeem en zijn
+daarom enkel geldig in symbolenbestandsjablonen. De syntaxis voor het
+opgeven van patronen verschilt niet van die voor een specifiek symbool. Het
+onderdeel symboolnaam van de specificatie fungeert echter als een expressie
+die vergeleken wordt met \fInaam@versie\fP van het echte symbool. Om het
+onderscheid te maken tussen verschillende types patronen, wordt een patroon
+doorgaans gemarkeerd met een speciale tag
+
+Op dit ogenblik ondersteunt \fBdpkg\-gensymbols\fP drie fundamentele
+patroontypes:
+.TP  3
+\fBc++\fP
+Dit patroon wordt met de tag \fIc++\fP aangeduid. Het zoekt enkel een
+overeenkomst met C++\-symbolen aan de hand van hun ontwarde (demangled)
+symboolnaam (zoals die weergegeven wordt door het hulpprogramma
+\fBc++filt\fP(1)). Dit patroon is zeer handig om symbolen te vinden waarvan de
+verhaspelde naam op verschillende architecturen anders kan zijn, terwijl hun
+ontwarde naam gelijk blijft. Een groep van dergelijke symbolen is
+\fInon\-virtual thunks\fP die architectuurspecifieke geheugenplaatsen ingebed
+hebben in hun verhaspelde naam. Een courant voorkomend voorbeeld hiervan is
+een virtuele destructor die onder een diamantovererving een niet\-virtueel
+thunk\-symbool nodig heeft. Bijvoorbeeld, zelfs als
+_ZThn8_N3NSB6ClassDD1Ev@Base op 32\-bits\-architecturen wellicht
+_ZThn16_N3NSB6ClassDD1Ev@Base zal zijn op 64\-bits\-architecturen, kunnen zij
+met \('e\('en enkel \fIc++\fP\-patroon aangeduid worden:
+
+libdummy.so.1 libdummy1 #MINVER#
+ [...]
+ (c++)"non\-virtual thunk to NSB::ClassD::~ClassD()@Base" 1.0
+ [...]
+
+De bovenstaande ontwarde naam kan verkregen worden door het volgende
+commando uit te voeren:
+
+ $ echo '_ZThn8_N3NSB6ClassDD1Ev@Base' | c++filt
+
+Merk op dat een verhaspelde naam per definitie uniek is in de bibliotheek,
+maar dat dit niet noodzakelijk het geval is voor ontwarde namen. Een aantal
+verschillende echte symbolen kan dezelfde ontwarde naam hebben. Dat is
+bijvoorbeeld het geval met niet\-virtuele thunk\-symbolen in complexe
+overervingsconfiguraties of met de meeste constructors en destructors
+(vermits g++ voor hen doorgaans twee echte symbolen genereert). Vermits deze
+collisies zich op het ABI\-niveau voordoen, verminderen zij evenwel niet de
+kwaliteit van het symbolenbestand.
+.TP 
+\fBsymver\fP
+Dit patroon wordt door de tag \fIsymver\fP aangegeven. Goed onderhouden
+bibliotheken hebben symbolen met versienummers, waarbij elke versie
+overeenkomt met de toeleveraarsversie waar het symbool toegevoegd
+werd. Indien dat het geval is, kunt u een \fIsymver\fP\-patroon gebruiken om
+eventuele symbolen aan te duiden die gekoppeld zijn aan de specifieke
+versie. Bijvoorbeeld:
+
+libc.so.6 libc6 #MINVER#
+ (symver)GLIBC_2.0 2.0
+ [...]
+ (symver)GLIBC_2.7 2.7
+ access@GLIBC_2.0 2.2
+
+Alle symbolen die horen bij de versies GLIBC_2.0 en GLIBC_2.7 zullen
+resulteren in de respectieve minimale versies 2.0 en 2.7, met uitzondering
+van het symbool access@GLIBC_2.0. Dit laatste zal resulteren in een minimale
+vereiste van libc6 versie 2.2 en dit ondanks het feit dat het valt binnen
+het bereik van het patroon "(symver)GLIBC_2.0". De reden hiervoor is dat
+specifieke symbolen voorrang hebben op patronen.
+
+Merk op dat hoewel patronen met jokertekens volgens de oude stijl (in het
+veld symboolnaam aangegeven door "*@version") nog steeds ondersteund worden,
+zij vervangen werden door een syntaxis volgens de nieuwe stijl
+"(symver|optional)version". Als hetzelfde effect gewenst wordt moet
+bijvoorbeeld "*@GLIBC_2.0 2.0" geschreven worden als
+"(symver|optional)GLIBC_2.0 2.0".
+.TP 
+\fBregex\fP
+Patronen in de vorm van reguliere expressies worden aangegeven met de tag
+\fIregex\fP. Zij zoeken naar een overeenkomst met de in het veld symboolnaam
+vermelde perl reguliere expressie. Een reguliere expressie wordt als zodanig
+vergeleken. Daarom mag u niet vergeten ze te laten beginnen met het teken
+\fI^\fP. Anders kan ze een overeenkomst opleveren met om het even welk deel van
+de tekenreeks \fInaam@versie\fP van het echte symbool. Bijvoorbeeld:
+
+libdummy.so.1 libdummy1 #MINVER#
+ (regex)"^mystack_.*@Base$" 1.0
+ (regex|optional)"private" 1.0
+
+Symbolen zoals "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base"
+enz. zullen door het eerste patroon gevonden worden, terwijl
+"ng_mystack_new@Base" bijvoorbeeld niet. Het tweede patroon zal een
+overeenkomst opleveren met alle symbolen die in hun naam de tekenreeks
+"private" hebben en de gevonden symbolen zullen de tag \fIoptional\fP overerven
+van het patroon.
+.P
+De hierboven vermelde basispatronen kunnen met elkaar gecombineerd worden
+als dat zinvol is. In dat geval worden zij verwerkt in de volgorde waarin de
+tags opgegeven werden. Bijvoorbeeld beide onderstaande patronen
+
+ (c++|regex)"^NSA::ClassA::Private::privmethod\ed\e(int\e)@Base" 1.0
+ (regex|c++)N3NSA6ClassA7Private11privmethod\edEi@Base 1.0
+
+zullen de symbolen "_ZN3NSA6ClassA7Private11privmethod1Ei@Base" en
+"_ZN3NSA6ClassA7Private11privmethod2Ei@Base" vinden. Bij het vergelijken met
+het eerste patroon wordt het rauwe symbool eerst ontward als een C++\-symbool
+en vervolgens wordt de ontwarde naam vergeleken met de reguliere
+expressie. Bij het vergelijken met het tweede patroon daarentegen, wordt de
+reguliere expressie vergeleken met de rauwe symboolnaam en vervolgens wordt
+nagegaan of het een C++\-symbool is door het te proberen ontwarren. Als een
+basispatroon een mislukking oplevert, betekent dit het mislukken van het
+hele patroon. Om die reden zal
+"__N3NSA6ClassA7Private11privmethod\edEi@Base" bijvoorbeeld met geen van
+beide patronen een overeenkomst opleveren, aangezien het geen geldig
+C++\-symbool is.
+
+Over het algemeen genomen kunnen alle patronen in twee groepen onderverdeeld
+worden: aliassen (basale \fIc++\fP\- en \fIsymver\fP\-patronen) en generieke
+patronen (\fIregex\fP, alle combinaties van meerdere basale patronen). Het
+vergelijken met basale patronen van het alias\-type verloopt snel (O(1)),
+terwijl dat bij generieke patronen voor elk symbool O(N) is (waarbij N het
+aantal generieke patronen is). Daarom wordt aangeraden om geen overdadig
+gebruik te maken van generieke patronen.
+
+Indien meerdere patronen een overeenkomst opleveren met hetzelfde echte
+symbool, krijgen aliassen (eerst \fIc++\fP, dan \fIsymver\fP) de voorkeur boven
+generieke patronen. Generieke patronen worden vergeleken in de volgorde
+waarin zij aangetroffen worden in het symbolenbestandsjabloon tot er een
+eerste succes volgt. Merk nochtans op dat het manueel herordenen van items
+uit het sjabloonbestand niet aangeraden wordt, aangezien \fBdpkg\-gensymbols\fP
+diffs (weergave van de veranderingen) genereert op basis van de
+alfanumerieke volgorde van hun namen.
+.SS "Het gebruik van includes"
+.P
+Als de set van ge\(:exporteerde symbolen onderling verschilt tussen
+verschillende architecturen, kan het ineffici\(:ent worden om \('e\('en enkel
+symbolenbestand te gebruiken. In die gevallen kan een include\-opdracht op
+een aantal wijzen nuttig blijken:
+.IP \(bu 4
+U kunt het gemeenschappelijke gedeelte afsplitsen in een extern bestand en
+dat bestand opnemen in uw bestand \fIpakket\fP.symbols.\fIarch\fP met behulp van
+een include\-opdracht op de volgende manier:
+
+#include "\fIpakketten\fP.symbols.common"
+.IP \(bu
+Net zoals om het even welk symbool kan ook een include\-opdracht tags
+krijgen:
+
+(tag|...|tagN)#include "in\-te\-voegen\-bestand"
+
+Als gevolg daarvan zal er standaard van uitgegaan worden dat alle symbolen
+die uit \fIin\-te\-voegen\-bestand\fP opgenomen worden, gemarkeerd zijn met \fItag\fP
+\&... \fItagN\fP. U kunt van deze functionaliteit gebruik maken om een
+gemeenschappelijk bestand \fIpakket\fP.symbols te maken waarin
+architectuurspecifieke symbolenbestanden opgenomen worden:
+
+  gemeenschappelijk_symbool1@Base 1.0
+ (arch=amd64 ia64 alpha)#include "pakket.symbolen.64bits"
+ (arch=!amd64 !ia64 !alpha)#include "pakket.symbolen.32bits"
+  gemeenschappelijk_symbool2@Base 1.0
+.P
+De symbolenbestanden worden regel per regel gelezen en include\-opdrachten
+worden verwerkt van zodra ze tegengekomen worden. Dit betekent dat de inhoud
+van het ingevoegde bestand eventueel zaken kan vervangen die voor de
+include\-opdracht stonden en dat zaken die na de opdracht komen, eventueel
+inhoud uit het ingevoegde bestand kunnen vervangen. Elk symbool (of zelfs
+een andere #include\-opdracht) uit het ingevoegde bestand kan bijkomende tags
+opgeven of via zijn tag\-vermeldingen waarden van de overge\(:erfde tags
+vervangen. Er bestaat nochtans geen manier waarop een symbool eventueel
+overge\(:erfde tags zou kunnen verwijderen.
+.P
+Een ingevoegd bestand kan de kopregel die de SONAME van de bibliotheek
+bevat, herhalen. In dat geval vervangt het een eventueel eerder ingelezen
+kopregel. Het is over het algemeen nochtans best om het dupliceren van
+kopregels te vermijden. Een manier om dat te doen is de volgende:
+.PP
+#include "libding1.symbols.common"
+ arch_specifiek_symbool@Base 1.0
+.SS "Goed beheer van bibliotheken"
+.P
+Een goed onderhouden bibliotheek heeft de volgende functionaliteit:
+.IP \(bu 4
+haar API is stabiel (publieke symbolen worden nooit verwijderd, enkel worden
+nieuwe publieke symbolen toegevoegd) en zij ondergaat enkel op een
+incompatibele manier veranderingen als de SONAME verandert;
+.IP \(bu 4
+idealiter gebruikt zij symboolversienummering om ondanks interne wijzigingen
+en API\-uitbreidingen ABI\-stabiliteit te bekomen;
+.IP \(bu 4
+zij exporteert geen private symbolen (dergelijke symbolen kunnen de tag
+optional krijgen om dat te omzeilen).
+.P
+Bij het onderhoud van een symbolenbestand is het gemakkelijk om het
+verschijnen en verdwijnen van symbolen op te merken. Maar het is moeilijker
+om incompatibele API\- en ABI\-wijzigingen op te merken. Daarom moet de
+onderhouder het changelog\-bestand van de toeleveraar grondig nakijken op
+situaties waarbij de regels van goed bibliotheekbeheer geschonden
+worden. Indien mogelijke problemen ontdekt worden, zou de toeleverende
+auteur erover ingelicht moeten worden, aangezien een reparatie op het niveau
+van de toeleveraar altijd te verkiezen valt boven een Debian\-specifieke
+tijdelijke oplossing.
+.SH OPTIES
+.TP 
+\fB\-P\fP\fIpakketbouwmap\fP
+Zoek in \fIpakketbouwmap\fP in plaats van in debian/tmp.
+.TP 
+\fB\-p\fP\fIpakket\fP
+Definieer de pakketnaam. Is vereist als meer dan \('e\('en binair pakket vermeld
+wordt in debian/control (of indien er geen bestand debian/control is).
+.TP 
+\fB\-v\fP\fIversie\fP
+Definieer de pakketversie. Standaard is dat de versie die uit
+debian/changelog gehaald wordt. Is vereist indien het aanroepen gebeurt van
+buiten de boom van het broncodepakket.
+.TP 
+\fB\-e\fP\fIbibliotheekbestand\fP
+Analyseer enkel de expliciet vermelde bibliotheken in plaats van alle
+publieke bibliotheken te zoeken. U kunt in \fIbibliotheekbestand\fP gebruik
+maken van shell\-patronen met het oog op padnaamexpansie (zie de man\-pagina
+\fBFile::Glob\fP(3perl) voor details) om met \('e\('en enkel argument meerdere
+bibliotheken aan te duiden (anders heeft u meerdere malen \fB\-e\fP nodig).
+.TP 
+\fB\-l\fP\fImap\fP
+Voeg \fImap\fP vooraan toe aan de lijst van mappen waarin naar private gedeelde
+bibliotheken gezocht moet worden (sinds dpkg 1.19.1). Deze optie kan
+meermaals gebruikt worden.
+
+Opmerking: gebruik deze optie in de plaats van het instellen van
+\fBLD_LIBRARY_PATH\fP, aangezien die omgevingsvariabele gebruikt wordt om de
+runtime linker aan te sturen. Daarvan misbruik maken om de paden van
+gedeelde bibliotheken in te stellen tijdens het bouwen van het programma,
+kan problematisch zijn, bijvoorbeeld bij het cross\-compileren.
+.TP 
+\fB\-I\fP\fIbestandsnaam\fP
+Gebruik \fIbestandsnaam\fP als referentiebestand om het symbolenbestand te
+genereren dat in het pakket zelf ge\(:integreerd wordt.
+.TP 
+\fB\-O\fP[\fIbestandsnaam\fP]
+Geef het gegenereerde symbolenbestand uit weer op de standaarduitvoer of
+schrijf het naar \fIbestandsnaam\fP als dat opgegeven werd, eerder dan naar
+\fBdebian/tmp/DEBIAN/symbols\fP (of \fIpakketbouwmap\fP\fB/DEBIAN/symbols\fP indien
+\fB\-P\fP gebruikt werd). Indien \fIbestandsnaam\fP reeds bestond, wordt de inhoud
+ervan gebruikt als basis voor het gegenereerde symbolenbestand. U kunt van
+deze functionaliteit gebruik maken om een symbolenbestand bij te werken
+zodat het in overeenstemming is met een nieuwere toeleveraarsversie van uw
+bibliotheek.
+.TP 
+\fB\-t\fP
+Schrijf het symbolenbestand in sjabloonmodus eerder dan in de indeling die
+compatibel is met \fBdeb\-symbols\fP(5). Het grootste verschil is dat in de
+sjabloonmodus symboolnamen en tags geschreven worden in hun originele vorm
+in tegenstelling tot in de compatibele modus waarin de verwerkte
+symboolnamen ontdaan van hun tags gebruikt worden. Daarenboven kunnen bij
+het schrijven van een standaard \fBdeb\-symbols\fP(5)\-bestand sommige symbolen
+weggelaten worden (overeenkomstig de regels voor het verwerken van tags),
+terwijl in een symbolenbestandsjabloon steeds alle symbolen neergeschreven
+worden.
+.TP 
+\fB\-c\fP\fI[0\-4]\fP
+Definieer de controles die moeten gebeuren bij het vergelijken van het
+gegenereerde symbolenbestand met het sjabloonbestand dat als vertrekpunt
+gebruikt werd. Standaard is dat volgens niveau 1. Het verhogen van het
+niveau leidt tot meer controles, terwijl alle controles van lagere niveaus
+behouden blijven. Niveau 0 leidt nooit tot een mislukking. Niveau 1 mislukt
+als er symbolen verdwenen zijn. Niveau 2 geeft een mislukking als nieuwe
+symbolen ge\(:introduceerd werden. Niveau 3 mislukt als er bibliotheken
+verdwenen zijn. Niveau 4 geeft een mislukking als nieuwe bibliotheken
+ge\(:introduceerd werden.
+
+Deze waarde kan vervangen worden door de omgevingsvariabele
+\fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP.
+.TP 
+\fB\-q\fP
+Gedraag u rustig en genereer nooit een diff (een overzicht van de
+verschillen) tussen het gegenereerde symbolenbestand en het sjabloonbestand
+dat als vertrekpunt gebruikt werd en toon geen enkele waarschuwing in
+verband met nieuwe/verloren bibliotheken of nieuwe/verloren symbolen. Deze
+optie schakelt enkel de informatieve uitvoer uit, maar niet de controles
+zelf (zie de optie \fB\-c\fP).
+.TP 
+\fB\-a\fP\fIarch\fP
+Ga uit van \fIarch\fP als hostarchitectuur bij het verwerken van
+symbolenbestanden. Gebruik deze optie om een symbolenbestand of een diff
+(overzicht van de verschillen) voor een willekeurige architectuur te
+genereren op voorwaarde dat de binaire bestanden ervan reeds voorhanden
+zijn.
+.TP 
+\fB\-d\fP
+Zet debug\-modus aan. Talrijke berichten worden dan getoond om toe te lichten
+wat \fBdpkg\-gensymbols\fP doet.
+.TP 
+\fB\-V\fP
+Schakel de breedsprakige modus in. Het gegenereerde symbolenbestand bevat
+dan verouderde symbolen in de vorm van commentaar. In sjabloonmodus worden
+daarenboven patroonsymbolen gevolgd door commentaar met daarin een opsomming
+van de echte symbolen die met het patroon overeenkwamen.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP
+Overschrijft het controleniveau van het commando, zelfs als het argument
+\fB\-c\fP opgegeven werd aan de commandoregel (merk op dat dit ingaat tegen de
+algemeen geldende afspraak dat commandoregel\-argumenten voorrang hebben op
+omgevingsvariabelen).
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
+.
+.SH "ZIE OOK"
+\fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
+.br
+\fBhttps://people.redhat.com/drepper/goodpractice.pdf\fP
+.br
+\fBhttps://people.redhat.com/drepper/dsohowto.pdf\fP
+.br
+\fBdeb\-symbols\fP(5), \fBdpkg\-shlibdeps\fP(1).

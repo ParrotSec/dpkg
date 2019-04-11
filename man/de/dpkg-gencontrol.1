@@ -1,0 +1,166 @@
+.\" dpkg manual page - dpkg-gencontrol(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006, 2012-2013, 2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gencontrol 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-gencontrol \- erstelle Debian\-control\-Dateien
+.
+.SH \(:UBERSICHT
+\fBdpkg\-gencontrol\fP [\fIOption\fP …]
+.
+.SH BESCHREIBUNG
+\fBdpkg\-gencontrol\fP liest Informationen aus einem entpackten
+Debian\-Quellcodebaum und erzeugt eine bin\(:are Paket\-control\-Datei
+(standardm\(:a\(ssig debian/tmp/DEBIAN/control); dabei vereinfacht es die Felder
+mit Paketbeziehungen.
+.sp
+Daher werden \fBPre\-Depends\fP, \fBDepends\fP, \fBRecommends\fP und \fBSuggests\fP in
+dieser Reihenfolge vereinfacht, indem Abh\(:angigkeiten, die aufgrund der
+jeweils ermittelten st\(:arkeren Abh\(:angigkeit bereits erf\(:ullt sind, entfernt
+werden. Es wird auch alle Selbstabh\(:angigkeiten entfernen (tats\(:achlich werden
+alle Abh\(:angigkeiten entfernt, die aufgrund der installierten Version des
+aktuellen Pakets automatisch erf\(:ullt werden). Logisch betrachtet beh\(:alt es
+den Durchschnitt von mehrfachen Abh\(:angigkeiten auf das gleiche Paket. Die
+Reihenfolge der Abh\(:angigkeiten wird so gut wie m\(:oglich beibehalten: falls
+eine Abh\(:angigkeit aufgrund einer weiter hinten im Feld auftauchenden
+weiteren Abh\(:angigkeit gestrichen werden muss, so \(:ubernimmt die letztere
+Abh\(:angigkeit den Platz der gestrichenen.
+.sp
+Die anderen Paketbeziehungsfelder (\fBEnhances\fP, \fBConflicts\fP, \fBBreaks\fP,
+\fBReplaces\fP und \fBProvides\fP) werden auch individuell vereinfacht, indem die
+Vereinigung der verschiedenen Abh\(:angigkeiten berechnet wird, wenn ein Paket
+mehrfach in dem Feld aufgef\(:uhrt ist.
+.sp
+\fBdpkg\-gencontrol\fP f\(:ugt auch einen Eintrag f\(:ur das Bin\(:arpaket in
+\fBdebian/files\fP hinzu.
+.
+.SH OPTIONEN
+.TP 
+\fB\-v\fP\fIVersion\fP
+Setzt die Versionsnummer des zu erstellenden Bin\(:arpaketes.
+.TP 
+\fB\-V\fP\fIName\fP\fB=\fP\fIWert\fP
+Setzt eine Ausgabesubstitutionsvariable. Lesen Sie \fBdeb\-substvars\fP(5) f\(:ur
+eine Besprechung der Ausgabesubstitution.
+.TP 
+\fB\-T\fP\fISubstvars\-Datei\fP
+Lese die Substitutionsvariablen aus \fISubstvars\-Datei\fP; standardm\(:a\(ssig
+\fBdebian/substvars\fP. Diese Option kann mehrfach verwandt werden, um
+Substitutionsvariablen aus mehreren Dateien einzulesen (seit Dpkg 1.15.6).
+.TP 
+\fB\-D\fP\fIFeld\fP\fB=\fP\fIWert\fP
+\(:Uberschreibe oder erg\(:anze ein Ausgabesteuerdateifeld.
+.TP 
+\fB\-U\fP\fIfield\fP
+Entferne ein Ausgabesteuerdateifeld.
+.TP 
+\fB\-c\fP\fISteuerdatei\fP
+Gibt die Haupt\-control\-Datei an, aus der Informationen gelesen werden
+sollen. Standardm\(:a\(ssig \fBdebian/control\fP.
+.TP 
+\fB\-l\fP\fIChangelog\-Datei\fP
+Gibt die \(:Anderungsprotokolldatei an, aus der Informationen gelesen werden
+sollen. Standardm\(:a\(ssig \fBdebian/changelog\fP.
+.TP 
+\fB\-f\fP\fIDateienlist\-Datei\fP
+Lese oder schreibe die Liste der hochzuladenen Dateien hierher, statt
+\fBdebian/files\fP zu verwenden.
+.TP 
+\fB\-F\fP\fIChangelog\-Format\fP
+Spezifiziert das Format des Changelogs. Lesen Sie \fBdpkg\-parsechangelog\fP(1)
+f\(:ur Informationen \(:uber alternative Formate.
+.TP 
+\fB\-p\fP\fIPaket\fP
+Erstellt Informationen f\(:ur das Bin\(:arpaket \fIPaket\fP. Falls die Steuerdatei
+der Quellen nur ein Bin\(:arpakete auff\(:uhrt, kann diese Option weggelassen
+werden; andernfalls ist sie notwendig, um festzulegen, von welchen
+Bin\(:arpaketen die Informationen erstellt werden sollen.
+.TP 
+\fB\-n\fP\fIDateiname\fP
+Gehe davon aus, das der Dateiname des Pakets \fIDateiname\fP sein wird, statt
+des normalen Dateinamens Paket_Version_Architektur.deb.
+.TP 
+\fB\-is\fP, \fB\-ip\fP, \fB\-isp\fP
+Diese Optionen werden aufgrund der Kompatibilit\(:at mit \(:alteren Versionen der
+Dpkg\-Bauskripte ignoriert, sind aber jetzt veraltet. Bisher wurden sie
+verwendet, um \fBdpkg\-gencontrol\fP mitzuteilen, die Felder \(FcSection\(Fo und
+\(FcPriority\(Fo in die Steuerdatei mit aufzunehmen. Dies passiert jetzt
+standardm\(:a\(ssig. Falls Sie das alte Verhalten erreichen m\(:ochten, k\(:onnen Sie
+die Option \fB\-U\fP verwenden, um Felder aus der Steuerdatei zu entfernen.
+.TP 
+\fB\-P\fP\fIPaketbauverzeichnis\fP
+Teilt \fBdpkg\-source\fP mit, dass das Paket in \fIPaketbauverzeichnis\fP statt in
+\fBdebian/tmp\fP gebaut wird. Dieser Wert wird dazu verwendet, den Standardwert
+der Substitutionsvariablen \fBInstalled\-Size\fP und des Feldes der Steuerdatei
+(mittels \fBdu\fP) zu finden, und f\(:ur den Standard\-Ablageplatz der
+Ausgabedatei.
+.TP 
+\fB\-O\fP[\fIDateiname\fP]
+Die control\-Datei in die Standardausgabe (oder \fIDateiname\fP falls angegeben,
+seit Dpkg 1.17.2) statt nach \fBdebian/tmp/DEBIAN/control\fP (oder
+\fIPaketbauverzeichnis\fP\fB/DEBIAN/control\fP falls \fB\-P\fP verwendet worden ist)
+ausgeben.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterst\(:utzung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
+.
+.SH DATEIEN
+.TP 
+\fBdebian/control\fP
+Die Hauptsteuerinformationsdatei f\(:ur die Quellen. Sie gibt
+versionsunabh\(:angige Informationen \(:uber das Quellpaket und die Bin\(:arpakete,
+die sie erstellen kann, an.
+.TP 
+\fBdebian/files\fP
+Die Liste der erstellten Dateien, die Teil des Uploads sind, der vorbereitet
+wird. \fBdpkg\-gencontrol\fP f\(:ugt die vermuteten Dateinamen von Bin\(:arpaketen
+hinzu, deren Steuerdateien es hier generiert.
+.SH "SIEHE AUCH"
+.ad l
+\fBdeb\-substvars\fP(5), \fBdeb\-src\-control\fP(5), \fBdeb\-changelog\fP(5),
+\fBdeb\-control\fP(5).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

@@ -1,0 +1,1146 @@
+.\" dpkg manual page - dpkg(1)
+.\"
+.\" Copyright © 1996 Juho Vuori <javuori@cc.helsinki.fi>
+.\" Copyright © 1999 Jim Van Zandt <jrv@vanzandt.mv.com>
+.\" Copyright © 1999-2003 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2000-2003 Adam Heath <doogie@debian.org>
+.\" Copyright © 2002 Josip Rodin
+.\" Copyright © 2004-2005 Scott James Remnant <keybuk@debian.org>
+.\" Copyright © 2006-2016 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2008-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg \- Paketverwalter f\(:ur Debian
+.
+.SH \(:UBERSICHT
+\fBdpkg\fP [\fIOption\fP …] \fIAktionen\fP
+.
+.SH WARNUNG
+Dieses Handbuch ist f\(:ur Benutzer gedacht, die die Befehlszeilenoptionen und
+Paketzust\(:ande von \fBdpkg\fP detaillierter verstehen wollen, als durch \fBdpkg
+\-\-help\fP beschrieben ist.
+
+Es sollte \fInicht\fP von Paketbetreuern verwendet werden, die verstehen
+wollen, wie \fBdpkg\fP ihr Paket installieren wird. Die Beschreibung von den
+T\(:atigkeiten von \fBdpkg\fP beim Installieren und Entfernen von Paketen ist
+besonders unzul\(:anglich.
+.
+.SH BESCHREIBUNG
+\fBdpkg\fP ist ein Werkzeug, um Debian\-Pakete zu installieren, zu bauen und zu
+verwalten. Die prim\(:are und benutzerfreundlichere Oberfl\(:ache f\(:ur \fBdpkg\fP ist
+\fBaptitude\fP(1). \fBdpkg\fP selbst wird komplett \(:uber Befehlszeilenoptionen
+gesteuert, die aus genau einer Aktion und Null oder mehreren Optionen
+bestehen. Der Aktionsparameter teilt \fBdpkg\fP mit, was zu tun ist, und die
+Optionen steuern die Aktionen in irgendeiner Weise.
+
+\fBdpkg\fP kann auch als Oberfl\(:ache f\(:ur \fBdpkg\-deb\fP(1) und \fBdpkg\-query\fP(1)
+verwendet werden. Die Liste der unterst\(:utzen Aktionen kann im Abschnitt
+\fBAKTIONEN\fP gefunden werden. Falls so eine Aktion angetroffen wird, f\(:uhrt
+\fBdpkg\fP einfach \fBdpkg\-deb\fP oder \fBdpkg\-query\fP mit den \(:ubergebenen
+Parametern aus, allerdings werden derzeit keine spezifischen Optionen an
+diese \(:ubergeben. Um solche Optionen zu verwenden, m\(:ussen die Backends direkt
+aufgerufen werden.
+.
+.SH "INFORMATIONEN \(:UBER PAKETE"
+\fBdpkg\fP verwaltet einige n\(:utzliche Informationen \(:uber verf\(:ugbare Pakete. Die
+Informationen sind in drei Klassen unterteilt: \fBStatus\fP, \fBAuswahlstatus\fP
+und \fBSchalter\fP. Diese Werte sind haupts\(:achlich zur \(:Anderung durch
+\fBdselect\fP gedacht.
+.SS Paketstatus
+.TP 
+\fBnot\-installed\fP (nicht\-installiert)
+Das Paket ist nicht auf Ihrem System installiert.
+.TP 
+\fBconfig\-files\fP (Config\-Dateien)
+Nur die Konfigurationsdateien des Pakets existieren auf dem System.
+.TP 
+\fBhalf\-installed\fP (halb\-installiert)
+Die Installation des Paketes wurde begonnen, aber aus irgendeinem Grund
+nicht abgeschlossen.
+.TP 
+\fBunpacked\fP (entpackt)
+Das Paket ist entpackt, aber nicht konfiguriert.
+.TP 
+\fBhalf\-configured\fP (halb\-konfiguriert)
+Das Paket ist entpackt und die Konfiguration wurde begonnen, aber aus
+irgendeinem Grund nicht abgeschlossen.
+.TP 
+\fBtriggers\-awaited\fP (triggers\-awaited)
+Das Paket erwartet Trigger\-Verarbeitung durch ein anderes Paket.
+.TP 
+\fBtriggers\-pending\fP (triggers\-pending)
+Das Paket wurde getriggert.
+.TP 
+\fBinstalled\fP (installiert)
+Das Paket ist korrekt entpackt und konfiguriert.
+.SS Paketauswahlstatus
+.TP 
+\fBinstalliere\fP
+Das Paket ist zur Installation ausgew\(:ahlt.
+.TP 
+\fBhalten\fP
+Ein Paket, das mit \fBhalten\fP markiert ist, wird von \fBdpkg\fP nicht behandelt,
+es sei denn Sie erzwingen dies mit der Option \fB\-\-force\-hold\fP.
+.TP 
+\fBdeinstalliere\fP
+Das Paket ist zur Deinstallation ausgew\(:ahlt (d.h. wir wollen alle Dateien
+au\(sser den Konfigurationsdateien entfernen).
+.TP 
+\fBvollst\(:andig l\(:oschen\fP
+Das Paket ist zum vollst\(:andigen L\(:oschen (\(Fcpurge\(Fo) ausgew\(:ahlt (d.h. wir
+wollen alle Dateien aus den Systemverzeichnissen inklusive der
+Konfigurationsdateien entfernen).
+.TP 
+\fBunknown\fP
+Die Paketauswahl ist unbekannt. Ein Paket, das auch im Zustand
+\fBnot\-installed\fP und ohne Schalter \fBok\fP ist, wird beim n\(:achsten Abspeichern
+der Datenbank vergessen.
+.SS Paketschalter
+.TP 
+\fBok\fP
+Ein mit \fBok\fP markiertes Paket ist in einem bekannten Zustand, kann aber
+weitere Verarbeitung ben\(:otigen.
+.TP 
+\fBNeuinst.\fP
+Ein mit \fBNeuinst.\fP markiertes Paket ist defekt und muss erneut installiert
+werden. Diese Pakete k\(:onnen nicht entfernt werden, es sei denn, Sie
+erzwingen dies mit der Option \fB\-\-force\-remove\-reinstreq\fP.
+.
+.SH AKTIONEN
+.TP 
+\fB\-i\fP, \fB\-\-install\fP \fIPaketdatei\fP …
+Installiere das Paket. Falls die \fB\-\-recursive\fP oder \fB\-R\fP\-Option angegeben
+ist, muss sich \fIPaketdatei\fP stattdessen auf ein Verzeichnis beziehen.
+
+Die Installation besteht aus folgenden Schritten:
+.br
+
+\fB1.\fP Extrahiere die control\-Dateien aus dem neuen Paket.
+.br
+
+\fB2.\fP Falls eine andere Version des gleichen Pakets vor der der neuen
+Installation installiert war, dann f\(:uhre das \fIprerm\fP\-Skript des alten
+Paketes aus.
+.br
+
+\fB3.\fP F\(:uhre das \fIpreinst\fP\-Skript aus, falls dies vom Paket bereitgestellt
+wird.
+.br
+
+\fB4.\fP Entpacke die neuen Dateien und sichere gleichzeitig die alten Dateien,
+so dass diese, falls etwas schief geht, wiederhergestellt werden k\(:onnen.
+.br
+
+\fB5.\fP Falls eine andere Version des gleichen Pakets vor der der neuen
+Installation installiert war, dann f\(:uhre das \fIpostrm\fP\-Skript des alten
+Paketes aus. Beachten Sie, dass dieses Skript nach dem \fIpreinst\fP\-Skript des
+neuen Pakets ausgef\(:uhrt wird, da neue Dateien zeitgleich zu der Entfernung
+alter Dateien geschrieben werden.
+.br
+
+\fB6.\fP Konfiguriere das Paket. Lesen Sie \fB\-\-configure\fP f\(:ur detaillierte
+Informationen wie dies geschieht.
+.TP 
+\fB\-\-unpack \fP\fIPaketdatei\fP …
+Entpacke das Paket, aber konfiguriere es nicht. Falls die \fB\-\-recursive\fP
+oder \fB\-R\fP\-Option angegeben ist, muss sich \fIPaketdatei\fP stattdessen auf ein
+Verzeichnis beziehen.
+.TP 
+\fB\-\-configure \fP\fIPaket\fP …|\fB\-a\fP|\fB\-\-pending\fP
+Konfiguriert ein entpacktes aber noch nicht konfiguriertes Paket. Falls
+\fB\-a\fP oder \fB\-\-pending\fP anstelle von \fIPaket\fP angegeben ist, werden alle
+entpackten aber nicht konfigurierten Pakete konfiguriert.
+
+Um ein Paket zu rekonfigurieren, dass bereits konfiguriert wurde, verwenden
+Sie stattdessen den Befehl \fBdpkg\-reconfigure\fP(8).
+
+Die Konfiguration besteht aus folgenden Schritten:
+.br
+
+\fB1.\fP Entpacke die Conffiles und sichere gleichzeitig die alten Conffiles,
+so dass diese, falls etwas schief geht, wiederhergestellt werden k\(:onnen.
+.br
+
+\fB2.\fP F\(:uhre das \fIpostinst\fP\-Skript aus, falls dies vom Paket bereitgestellt
+wird.
+.TP 
+\fB\-\-triggers\-only\fP \fIPaket\fP …|\fB\-a\fP|\fB\-\-pending\fP
+Verarbeite nur Trigger (seit Dpkg 1.14.17). Alle ausstehenden Trigger werden
+verarbeitet. Falls Paketnamen \(:ubergeben werden, werden nur die Trigger
+dieser Pakete verarbeitet, jedes genau einmal wo notwendig. Die Verwendung
+dieser Option kann Pakete in die unzul\(:assigen Stati \fBtriggers\-awaited\fP und
+\fBtriggers\-pending\fP bringen. Durch die Ausf\(:uhrung von \(Fc\fBdpkg \-\-configure
+\-\-pending\fP\(Fo kann dies sp\(:ater behoben werden.
+.TP 
+\fB\-r\fP, \fB\-\-remove\fP \fIPaket\fP…|\fB\-a\fP|\fB\-\-pending\fP
+Entfernt ein installiertes Paket. Dies entfernt alles au\(sser Conffiles und
+anderen Daten, die vom Skript \fIpostrm\fP bereinigt werden, da damit eine
+erneute Konfiguration des Paketes vermieden wird, falls es sp\(:ater nochmals
+installiert wird. Conffiles sind Konfigurationsdateien, die in der
+Steuerdatei \fIDEBIAN/conffiles\fP aufgef\(:uhrt sind. Falls es keine Steuerdatei
+\fIDEBIAN/conffiles\fP oder kein Skript \fIDEBIAN/postrm\fP gibt, ist dieser
+Befehl \(:aquivalent zum Aufruf von \fB\-\-purge\fP. Falls statt des Paketnamens
+\fB\-a\fP oder \fB\-\-pending\fP angegeben wird, werden alle Pakete, die entpackt,
+aber in der Datei \fI/var/lib/dpkg/status\fP zur Entfernung vorgemerkt sind,
+entfernt.
+
+Entfernung eines Paketes besteht aus den folgenden Schritten:
+.br
+
+\fB1.\fP F\(:uhre das \fIprerm\fP\-Skript aus
+.br
+
+\fB2.\fP Entferne die installierten Dateien
+.br
+
+\fB3.\fP F\(:uhre das \fIpostrm\fP\-Skript aus
+.br
+
+.TP 
+\fB\-P\fP, \fB\-\-purge\fP \fIPaket\fP…|\fB\-a\fP|\fB\-\-pending\fP
+L\(:oscht ein installiertes oder bereits entferntes Paket vollst\(:andig. Damit
+wird alles entfernt, auch Conffiles und alles, was im Skript \fIpostrm\fP
+bereinigt wird. Falls statt des Paketnamens \fB\-a\fP oder \fB\-\-pending\fP
+angegeben wird, werden alle Pakete, die entpackt oder entfernt, aber in der
+Datei \fI/var/lib/dpkg/status\fP zum vollst\(:andigen L\(:oschen vorgemerkt sind,
+vollst\(:andig gel\(:oscht.
+
+Hinweis: Einige Konfigurationsdateien k\(:onnen \fBdpkg\fP nicht bekannt sein, da
+sie separat durch die Konfigurationsskripte angelegt und verwaltet
+werden. In diesem Fall wird \fBdpkg\fP sie nicht selbst entfernen sondern das
+Skript \fIpostrm\fP (das von \fBdpkg\fP aufgerufen wird) des Pakets muss sich
+w\(:ahrend des vollst\(:andigen L\(:oschens um das Entfernen k\(:ummern. Nat\(:urlich
+betrifft dies nur Dateien in den Systemverzeichnissen, nicht
+Konfigurationsdateien, die in die Home\-Verzeichnisse der individuellen
+Benutzer geschrieben werden.
+
+Entg\(:ultiges L\(:oschen eines Paketes besteht aus den folgenden Schritten:
+.br
+
+\fB1.\fP Entfernen des Pakets, falls es noch nicht entfernt ist. Lesen Sie
+\fB\-\-remove\fP f\(:ur detaillierte Informationen, wie dies erfolgt.
+.br
+
+\fB2.\fP F\(:uhre das \fIpostrm\fP\-Skript aus
+.br
+.TP 
+\fB\-V\fP, \fB\-\-verify\fP [\fIPaketname\fP …]
+\(:Uberpr\(:uft die Integrit\(:at von \fIPaketname\fP oder allen Paketen, falls nicht
+angegeben, indem Informationen aus den durch ein Paket installierten Dateien
+mit den in der \fBdpkg\fP\-Datenbank gespeicherten Dateimetadateninformationen
+verglichen werden (seit Dpkg 1.17.2). Die Quelle der
+Dateimetadateninformationen in der Datenbank ist das Bin\(:arpaket
+selbst. Diese Metadaten werden zum Zeitpunkt des Entpackens w\(:ahrend des
+Installationsprozesses gesammelt.
+
+Derzeit ist die einzige funktionale Pr\(:ufung eine Md5sum\-\(:Uberpr\(:ufung der
+Dateiinhalte mit den gespeicherten Wert in der Datei\-Datenbank. Er wird nur
+gepr\(:uft, falls die Datenbank die Md5sum der Datei enth\(:alt. Um auf fehlende
+Metadaten in der Datenbank zu pr\(:ufen, kann der Befehl \fB\-\-audit\fP verwandt
+werden.
+
+Das Ausgabeformat kann mit der Option \fB\-\-verify\-format\fP ausgew\(:ahlt
+werden. Standardm\(:a\(ssig wird das Format \fBrpm\fP verwandt. Das kann sich in der
+Zukunft aber \(:andern und daher sollten Programme, die die Ausgabe dieses
+Befehls auswerten, explizit das Format angeben, das sie erwarten.
+.TP 
+\fB\-C\fP, \fB\-\-audit\fP [\fIPaketname\fP …]
+F\(:uhrt Plausibilit\(:ats\- und Konsistenzpr\(:ufungen der Datenbank f\(:ur \fIPaketname\fP
+oder alle Pakete, falls das Argument fehlt, durch (pro\-Paket\-Pr\(:ufungen seit
+Dpkg 1.17.10). Sucht beispielsweise nach Paketen die auf Ihrem System nur
+teilweise installiert wurden oder fehlende, falsch oder veraltete
+Steuerdaten oder \-Dateien haben. \fBdpkg\fP wird einen Vorschlag machen, was
+mit Ihnen zur Korrektur gemacht werden sollte.
+.TP 
+\fB\-\-update\-avail\fP [\fIPackages\-Datei\fP]
+.TQ
+\fB\-\-merge\-avail\fP [\fIPackages\-Datei\fP]
+Aktualisiere \fBdpkg\fPs und \fBdselect\fPs Verst\(:andnis dar\(:uber, welche Pakete
+verf\(:ugbar sind. Mit der Aktion \fB\-\-merge\-avail\fP wird alte Information mit
+der Information aus der \fIPackages\-Datei\fP zusammengef\(:uhrt. Mit der Aktion
+\fB\-\-update\-avail\fP wird die alte Information durch die Information aus der
+\fIPackages\-Datei\fP ersetzt. Die mit Debian vertriebene \fIPackages\-Datei\fP
+hei\(sst einfach \(Bq\fIPackages\fP\(lq. Falls das Argument \fIPackages\-file\fP fehlt oder
+\(Bq\fB\-\fP\(lq benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg
+1.17.7). \fBdpkg\fP h\(:alt seine Aufzeichnungen \(:uber die verf\(:ugbaren Pakete in
+\fI/var/lib/dpkg/available\fP.
+
+Ein einfacher Befehl, um die Datei \fIavailable\fP in einem Rutsch zu holen und
+zu aktualisieren ist \fBdselect update\fP. Beachten Sie, dass diese Datei
+nahezu nutzlos ist, falls Sie nicht \fBdselect\fP sondern eine APT\-basierte
+Oberfl\(:ache verwenden: APT verf\(:ugt \(:uber sein eigenes System, die verf\(:ugbaren
+Pakete zu \(:uberwachen.
+.TP 
+\fB\-A\fP, \fB\-\-record\-avail\fP \fIPaketdatei\fP …
+Aktualisiere mit den Informationen aus dem Paket \fIPaketdatei\fP \fBdpkg\fPs und
+\fBdselect\fPs Verst\(:andnis dar\(:uber, welche Pakete verf\(:ugbar sind. Falls die
+\fB\-\-recursive\fP oder \fB\-R\fP\-Option angegeben ist, muss sich \fIPaketdatei\fP
+stattdessen auf ein Verzeichnis beziehen.
+.TP 
+\fB\-\-forget\-old\-unavail\fP
+Jetzt \fBveraltet\fP und ohne Funktion, da \fBdpkg\fP automatisch nicht
+installierte nicht verf\(:ugbare Pakete vergisst (seit Dpkg 1.15.4). Allerdings
+nur solche, die keine Benutzerinformationen enthalten, wie Paketauswahlen.
+.TP 
+\fB\-\-clear\-avail\fP
+L\(:osche die existierenden Informationen dar\(:uber, welche Pakete verf\(:ugbar
+sind.
+.TP 
+\fB\-\-get\-selections\fP [\fIPaket\-Name\-Muster\fP …]
+Hole Liste von Paketauswahlen und schreibe sie auf die Standardausgabe. Ohne
+Muster werden nicht\-installierte Pakete (d.h. solche, die vorher
+\(Fcvollst\(:andig gel\(:oscht\(Fo wurden) nicht angezeigt.
+.TP 
+\fB\-\-set\-selections\fP
+Setze die Paketauswahl durch Einlesen einer Datei von der
+Standardeingabe. Diese Datei sollte im Format \(Bq\fIPaket\fP \fIZustand\fP\(lq sein,
+wobei Zustand einer aus \fBinstall\fP, \fBhold\fP, \fBdeinstall\fP oder \fBpurge\fP
+ist. Leerzeilen und Kommentarzeilen (beginnend mit \(bq\fB#\fP\(cq) sind auch
+erlaubt.
+
+Die Datei \fIavailable\fP muss f\(:ur diesen Befehl aktuell sein, damit dies
+Nutzen hat, andernfalls werden unbekannte Pakete mit einer Warnung
+ignoriert. Siehe die Befehle \fB\-\-update\-avail\fP und \fB\-\-merge\-avail\fP f\(:ur
+weitere Informationen.
+.TP 
+\fB\-\-clear\-selections\fP
+Setze den erbetenen Zustand von jedem nicht\-essenziellen Paket auf
+\(FcDeinstallation\(Fo (seit Dpkg 1.13.18). Dies ist dazu gedacht, direkt vor
+\fB\-\-set\-selections\fP verwendet zu werden, um jedes Paket, das nicht in der
+Liste von \fB\-\-set\-selections\fP vorkommt, zu deinstallieren.
+.TP 
+\fB\-\-yet\-to\-unpack\fP
+Sucht nach Paketen, die zur Installation ausgew\(:ahlt wurden, die aber aus
+irgendeinem Grund noch nicht installiert wurden.
+.IP
+Beachten Sie: Dieser Befehl verwendet sowohl die Datei available als auch
+die Paketauswahlen.
+.TP 
+\fB\-\-predep\-package\fP
+Gibt ein einzelnes Paket aus, das das Ziel einer oder mehrere relevanter
+Vorabh\(:angigkeiten ist und selbst keine unerf\(:ullten Vorabh\(:angigkeiten hat.
+.IP
+Falls ein solches Paket vorhanden ist, wird es als Dateieintrag f\(:ur
+\(FcPackages\(Fo ausgegeben, der passend weiterverarbeitet werden kann.
+.IP
+Beachten Sie: Dieser Befehl verwendet sowohl die Datei available als auch
+die Paketauswahlen.
+.IP
+Liefert 0 zur\(:uck, wenn ein Paket ausgegeben wird und 1, wenn kein passendes
+Paket verf\(:ugbar ist und 2 im Fehlerfall.
+.TP 
+\fB\-\-add\-architecture \fP\fIArchitektur\fP
+F\(:ugt \fIArchitektur\fP zu der Liste von Architekturen hinzu, f\(:ur die Pakete
+ohne die Verwendung von \fB\-\-force\-architecture\fP installiert werden k\(:onnen
+(seit Dpkg 1.16.2). Die Architektur, f\(:ur die \fBdpkg\fP gebaut wurde (d.h. der
+Ausgabe von \fB\-\-print\-architecture\fP), ist immer Teil der Liste.
+.TP 
+\fB\-\-remove\-architecture \fP\fIArchitektur\fP
+Entfernt \fIArchitektur\fP von der Liste von Architekturen, f\(:ur die Pakete ohne
+die Verwendung von \fB\-\-force\-architecture\fP installiert werden k\(:onnen (seit
+Dpkg 1.16.2). Falls die Architektur derzeit in der Datenbank benutzt wird,
+dann wird die Durchf\(:uhrung verweigert, falls nicht \fB\-\-force\-architecture\fP
+verwandt wird. Die Architektur, f\(:ur die \fBdpkg\fP gebaut wurde (d.h. der
+Ausgabe von \fB\-\-print\-architecture\fP), kann niemals von der Liste entfernt
+werden.
+.TP 
+\fB\-\-print\-architecture\fP
+Gebe die Architektur der Pakete aus, die \fBdpkg\fP installiert (beispielsweise
+\(Bqi386\(lq).
+.TP 
+\fB\-\-print\-foreign\-architectures\fP
+Gibt eine durch Zeilenumbr\(:uche getrennte Liste von zus\(:atzlichen
+Architekturen aus, f\(:ur die \fBdpkg\fP konfiguriert ist, Paketinstallationen f\(:ur
+zu erlauben (seit Dpkg 1.16.2).
+.TP 
+\fB\-\-assert\-\fP\fIFunktionalit\(:at\fP
+Best\(:atigt, dass \fBdpkg\fP die erbetene Funktionalit\(:at unterst\(:utzt. Liefert 0,
+falls die Funktionalit\(:at voll unterst\(:utzt wird, 1, falls die Funktionalit\(:at
+bekannt ist aber noch keine Unterst\(:utzung daf\(:ur geliefert werden kann und 2,
+falls die Funktionalit\(:at unbekannt ist. Die aktuelle Liste von best\(:atigbaren
+Funktionalit\(:aten ist wie folgt:
+.RS
+.TP 
+\fBsupport\-predepends\fP
+Unterst\(:utzt das Feld \fBPre\-Depends\fP (seit Dpkg 1.1.0).
+.TP 
+\fBworking\-epoch\fP
+Unterst\(:utzt Epochen in Versionszeichenketten (seit Dpkg 1.4.0.7).
+.TP 
+\fBlong\-filenames\fP
+Unterst\(:utzt in \fBdeb\fP(5)\-Archiven lange Dateinamen (seit Dpkg 1.4.1.17).
+.TP 
+\fBmulti\-conrep\fP
+Unterst\(:utzt mehrere \fBConflicts\fP und \fBReplaces\fP (seit Dpkg 1.4.1.19).
+.TP 
+\fBmulti\-arch\fP
+Unterst\(:utzt Multi\-Arch\-Felder und deren Semantik (seit Dpkg 1.16.2).
+.TP 
+\fBversioned\-provides\fP
+Unterst\(:utzt versionierte \fBProvides\fP (seit Dpkg 1.17.11).
+.RE
+.TP 
+\fB\-\-validate\-\fP\fISachenzeichenkette\fP
+Best\(:atigt, dass die \fISachenzeichenkette\fP eine korrekte Syntax hat (seit
+Dpkg 1.18.16). Liefert 0 zur\(:uck, falls die \fIZeichenkette\fP g\(:ultig ist, 1
+falls die \fIZeichenkette\fP ung\(:ultig ist, aber in lockeren Umgebungen
+akzeptiert werden k\(:onnte und 2, falls die \fIZeichenkette\fP ung\(:ultig ist. Die
+aktuelle Liste der \(:uberpr\(:ufbaren \fISachen\fP ist:
+.RS
+.TP 
+\fBpkgname\fP
+\(:Uberpr\(:uft den \(:ubergebenen Paketnamen (seit Dpkg 1.18.16).
+.TP 
+\fBtrigname\fP
+\(:Uberpr\(:uft den \(:ubergebenen Triggernamen (seit Dpkg 1.18.16).
+.TP 
+\fBarchname\fP
+\(:Uberpr\(:uft den \(:ubergebenen Architekturnamen (seit Dpkg 1.18.16).
+.TP 
+\fBversion\fP
+\(:Uberpr\(:uft die \(:ubergebene Version (seit Dpkg 1.18.16).
+.RE
+.TP 
+\fB\-\-compare\-versions \fP\fIVer1 Op Ver2\fP
+.\" .TP
+.\" .B \-\-command\-fd \fIn\fP
+.\" Accept a series of commands on input file descriptor \fIn\fP. Note:
+.\" additional options set on the command line, and through this file descriptor,
+.\" are not reset for subsequent commands executed during the same run.
+Vergleiche Versionsnummern, wobei \fIOp\fP ein bin\(:arer Operator ist. \fBdpkg\fP
+liefert wahr (\fB0\fP), falls die angegebene Bedingung erf\(:ullt ist und falsch
+(\fB1\fP) andernfalls. Es gibt zwei Gruppen von Operatoren, die sich in der
+Behandlung von leeren \fIVer1\fP oder \fIVer2\fP unterscheiden. Die folgenden
+behandeln leere Versionen als j\(:unger als jede andere Version: \fBlt le eq ne
+ge gt\fP. Die folgenden behandeln eine leere Version als \(:alter als jede
+Version: \fBlt\-nl le\-nl ge\-nl gt\-nl\fP. Die folgenden sind nur aus
+Kompatibilit\(:at mit der Steuerdateisyntax bereitgestellt: \fB< <<
+<= = >= >> >\fP. Die Operatoren \fB<\fP und \fB>\fP sind
+obsolet und sollten \fBnicht\fP verwandt werden, da ihre Semantik verwirrend
+ist. Beispielsweise ergibt \fB0.1 < 0.1\fP wahr.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige eine kurze Hilfenachricht an.
+.TP 
+\fB\-\-force\-help\fP
+Gebe Hilfe \(:uber die \fB\-\-force\-\fP\fISache\fP\-Optionen aus.
+.TP 
+\fB\-Dh\fP, \fB\-\-debug=help\fP
+Gibt Hilfe \(:uber Fehlersuchoptionen aus.
+.TP 
+\fB\-\-version\fP
+Zeige \fBdpkg\fP Versionsinformationen an.
+.TP 
+\fBdpkg\-deb\-Aktionen\fP
+Lesen Sie \fBdpkg\-deb\fP(1) f\(:ur weitere Informationen \(:uber die folgenden
+Aktionen.
+
+.nf
+\fB\-b\fP, \fB\-\-build\fP \fIVerzeichnis\fP [\fIArchiv\fP|\fIVerzeichnis\fP]
+    Baue ein deb\-Paket.
+\fB\-c\fP, \fB\-\-contents\fP \fIArchiv\fP
+    Liste den Inhalt eines deb\-Paketes auf.
+\fB\-e\fP, \fB\-\-control\fP \fIArchiv\fP [\fIVerzeichnis\fP]
+    Extrahiere Steuerinformationen von einem Paket.
+\fB\-x\fP, \fB\-\-extract\fP \fIArchiv Verzeichnis\fP
+    Extrahiere die vom Paket enthaltenen Dateien.
+\fB\-f\fP, \fB\-\-field\fP \fIArchiv\fP [\fISteuerfeld\fP] …
+    Zeige das/die Steuerfeld(er) eines Paketes an.
+\fB\-\-ctrl\-tarfile\fP \fIArchive\fP
+    Gebe die von einem Debian\-Paket enthaltene Steuer\-Tar\-Datei aus.
+\fB\-\-fsys\-tarfile\fP \fIArchiv\fP
+    Gebe die von einem Debian\-Paket enthaltene Dateisystem\-Tar\-Datei aus.
+\fB\-I\fP, \fB\-\-info\fP \fIArchiv\fP [\fISteuerdatei\fP …]
+    Zeige Informationen \(:uber ein Paket.
+.fi
+
+.TP 
+\fBdpkg\-query\-Aktionen\fP
+Lesen Sie \fBdpkg\-query\fP(1) f\(:ur weitere Informationen \(:uber die folgenden
+Aktionen.
+
+.nf
+
+\fB\-l\fP, \fB\-\-list\fP \fIPaketnamen\-Muster\fP …
+    Liste auf das \(:ubergebene Suchmuster passende Pakete auf.
+\fB\-s\fP, \fB\-\-status\fP \fIPaketname\fP …
+    Berichte den Status des spezifizierten Pakets.
+\fB\-L\fP, \fB\-\-listfiles\fP \fIPaketname\fP …
+    Liste die aus \fBPaketname\fP auf Ihrem System installierten Dateien auf.
+\fB\-S\fP, \fB\-\-search\fP \fIDateinamen\-Suchmuster\fP …
+    Suche nach einem Dateinamen in installierten Paketen.
+\fB\-p\fP, \fB\-\-print\-avail\fP \fIPaketname\fP
+    Zeige Details \(:uber \fIPaketname\fP, wie in \fI/var/lib/dpkg/available\fP
+    gefunden. Benutzer von APT\-basierten Oberfl\(:achen sollten stattdessen
+    \fBapt\-cache show\fP \fIPaketname\fP verwenden.
+.fi
+.
+.SH OPTIONEN
+Alle Optionen k\(:onnen auf der Befehlszeile, in der
+\fBdpkg\fP\-Konfigurationsdatei \fI/etc/dpkg/dpkg.cfg\fP oder Fragementdateien
+(mit Namen, die auf das Shell\-Muster '[0\-9a\-zA\-Z_\-]*' passen) in den Dateien
+im Konfigurationsverzeichnis \fI/etc/dpkg/dpkg.cfg.d/\fP angegeben
+werden. Jede Zeile in der Konfigurationsdatei ist entweder eine Option
+(exakt die gleiche wie die Befehlszeilenoption nur ohne f\(:uhrende
+Bindestriche) oder ein Kommentar (falls sie mit \(bq\fB#\fP\(cq beginnt).
+.br
+.TP 
+\fB\-\-abort\-after=\fP\fIZahl\fP
+\(:Andere nach wie vielen Fehlern \fBdpkg\fP abbrechen wird. Der Standardwert ist
+50.
+.TP 
+\fB\-B\fP, \fB\-\-auto\-deconfigure\fP
+Wenn ein Paket entfernt wird besteht die M\(:oglichkeit, dass ein anderes
+installiertes Paket von dem entfernten Paket abh\(:angt. Die Angabe dieser
+Option f\(:uhrt zur automatischen Dekonfiguration des Paketes, das von dem
+entfernten Paket abh\(:angt.
+.TP 
+\fB\-D\fP\fIOktal\fP\fB, \-\-debug=\fP\fIOktal\fP
+Schalte Fehlersuche ein. \fIOktal\fP wird durch bitweise Oder\-Verkn\(:upfung der
+gew\(:unschten Werte von der nachfolgenden Liste gebildet (beachten Sie, dass
+sich diese Werte in zuk\(:unftigen Ver\(:offentlichungen ver\(:andern k\(:onnen). \fB\-Dh\fP
+oder \fB\-\-debug=help\fP zeigen diese Fehlersuchwerte an.
+
+  Nummer  Beschreibung
+      1   Allgemein hilfreiche Fortschrittsinformationen
+      2   Aufruf und Status der Betreuerskripte
+     10   Ausgabe f\(:ur jede verarbeitete Datei
+    100   Umfangreiche Ausgabe f\(:ur jede verarbeitete Datei
+     20   Ausgabe f\(:ur jede Konfigurationsdatei
+    200   Umfangreiche Ausgabe f\(:ur jede Konfigurationsdatei
+     40   Abh\(:angigkeiten und Konflikte
+    400   Umfangreiche Abh\(:angigkeiten/Konflikte\-Ausgabe
+  10000   Trigger\-Aktivierung und \-Verarbeitung
+  20000   Umfangreiche Ausgabe bez\(:uglich Trigger
+  40000   Alberne Menge an Ausgabe bez\(:uglich Trigger
+   1000   Umfangreiches Gelaber beispielsweise \(:uber das dpkg/info\-Verzeichnis
+   2000   Verr\(:uckte Mengen an Gelaber
+.TP 
+\fB\-\-force\-\fP\fISachen\fP
+.TQ
+\fB\-\-no\-force\-\fP\fISachen\fP, \fB\-\-refuse\-\fP\fISachen\fP
+Erzwinge oder verweigere (\fBno\-force\fP und \fBrefuse\fP bedeuten das gleiche)
+bestimmte Sachen. \fISachen\fP ist eine Komma\-separierte Liste von Dingen, die
+im folgenden beschrieben sind. \fB\-\-force\-help\fP zeigt eine Nachricht an, die
+diese beschreibt. Mit (*) markierte Dinge werden standardm\(:a\(ssig erzwungen.
+
+\fIWarnung. Diese Optionen sind haupts\(:achlich f\(:ur den Einsatz durch Experten
+gedacht. Der Einsatz ohne komplettes Verst\(:andnis der Effekte kann Ihr
+gesamtes System zerst\(:oren.\fP
+
+\fBall\fP: Schaltet alle \(Fcforce\(Fo\-Optionen ein (oder aus).
+
+\fBdowngrade\fP(*): Installiere ein Paket, selbst wenn eine neuere Version
+davon bereits installiert ist.
+
+\fIWarnung: Derzeit f\(:uhrt \fP\fBdpkg\fP\fI keine Abh\(:angigkeits\(:uberpr\(:ufung bei der
+Installation \(:alterer Versionen (als bereits installiert) durch
+(sog. Downgrade) und wird Sie daher nicht warnen, falls dadurch die
+Abh\(:angigkeit eines anderen Pakets nicht mehr erf\(:ullt ist. Dies kann
+ernsthafte Seiteneffekte haben, ein Downgrade einer essenziellen
+Systemkomponente kann Ihr gesamtes System unbrauchbar machen. Verwenden Sie
+diese Option mit Vorsicht.\fP
+
+\fBconfigure\-any\fP: Konfiguriere auch jedes entpackte, aber unkonfigurierte
+Paket von dem das aktuelle Paket abh\(:angt.
+
+\fBhold\fP: Verarbeite auch Pakete, die mit \(Bqhalten\(lq markiert sind.
+
+\fBremove\-reinstreq\fP: Entferne ein Paket, selbst falls es defekt ist und zur
+Neuinstallation markiert ist. Dies kann beispielsweise dazu f\(:uhren, dass
+Teile des Pakets auf dem System bleiben und von \fBdpkg\fP vergessen werden.
+
+\fBremove\-essential\fP: Entferne, selbst falls das Paket als essenziell
+betrachtet wird. Essenzielle Pakete enthalten haupts\(:achlich sehr
+grundlegende Unix\-Befehle. Diese zu entfernen kann dazu f\(:uhren, dass das
+gesamte System nicht mehr arbeitet \- verwenden Sie diese Option daher mit
+Vorsicht.
+
+\fBdepends\fP: Verwandle alle Abh\(:angigkeitsprobleme in Warnungen. Dies betrifft
+die Felder \fBPre\-Depends\fP und \fBDepends\fP.
+
+\fBdepends\-version\fP: Ignoriere Versionen bei der Pr\(:ufung von
+Abh\(:angigkeiten. Dies betrifft die Felder \fBPre\-Depends\fP und \fBDepends\fP.
+
+\fBbreaks\fP: Installiere, selbst falls dies ein anderes Paket besch\(:adigt (seit
+Dpkg 1.14.6). Dies betrifft das Feld \fBBreaks\fP.
+
+\fBconflicts\fP: Installiere, selbst wenn es mit einem anderen Paket in
+Konflikt steht. Dies ist gef\(:ahrlich, da dies gew\(:ohnlich dazu f\(:uhrt, dass
+einige Dateien \(:uberschrieben werden. Dies betrifft das Feld \fBConflicts\fP.
+
+\fBconfmiss\fP: Installiere das fehlende Conffile immer ohne R\(:uckfrage. Dies
+ist gef\(:ahrlich, da es bedeutet, dass eine \(:Anderung (die Entfernung) an der
+Datei nicht erhalten wird.
+
+\fBconfnew\fP: Falls eine Conffile modifiziert wurde und sich die Version im
+Paket ge\(:andert hat, installiere immer die neue Version ohne R\(:uckfrage, es
+sei denn, \fB\-\-force\-confdef\fP ist ebenfalls angegeben, in welchem Falle die
+Standardaktion bevorzugt wird.
+
+\fBconfold\fP: Falls eine Conffile modifiziert wurde und sich die Version im
+Paket ge\(:andert hat, behalte immer die alte Version ohne R\(:uckfrage, es sei
+denn, \fB\-\-force\-confdef\fP ist ebenfalls angegeben, in welchem Falle die
+Standardaktion bevorzugt wird.
+
+\fBconfdef\fP: Falls eine Conffile ver\(:andert wurde und sich die Version im
+Paket ge\(:andert hat, w\(:ahle immer die Standardaktion ohne R\(:uckfrage. Falls es
+keine Standardaktion gibt, halte an, um den Benutzer zu fragen, es sei denn,
+\fB\-\-force\-confnew\fP oder \fB\-\-force\-confold\fP sind ebenfalls angegeben, in
+welchem Falle dies verwendet wird, um die letztendliche Aktion zu bestimmen.
+
+\fBconfask\fP: Falls eine Conffile ver\(:andert wurde, biete immer an, sie durch
+die Version aus dem Paket zu ersetzen, selbst falls sich die Version in dem
+Paket nicht ge\(:andert hat (seit Dpkg 1.15.8). Falls auch einer von
+\fB\-\-force\-confnew\fP, \fB\-\-force\-confold\fP oder \fB\-\-force\-confdef\fP angegeben
+wird, wird sie dazu verwandt, die letztendliche Aktion zu ermitteln.
+
+\fBoverwrite\fP: \(:Uberschreibe die Datei aus einem Paket mit einer Datei aus
+einem anderen Paket.
+
+\fBoverwrite\-dir\fP: \(:Uberschreibe das Verzeichnis aus einem Paket mit einer
+Datei aus einem anderen Paket.
+
+\fBoverwrite\-diverted\fP: \(:Uberschreibe eine umgeleitete (\(Fcdiverted\(Fo) Datei mit
+einer nicht umgeleiteten.
+
+\fBstatoverride\-add\fP: \(:Uberschreibt eine existierende Status\-Hinwegsetzung
+beim Hinzuf\(:ugen (seit Dpkg 1.19.5).
+
+\fBstatoverride\-remove\fP: Ignoriert eine fehlende Status\-Hinwegsetzung beim
+Entfernen (seit Dpkg 1.19.5).
+
+\fBsecurity\-mac\fP(*): Verwendet plattformspezifische \(FcMandatory Access Control
+(MAC)\(Fo\-basierende Sicherheit bei der Installation von Dateien in das
+Dateisystem (seit Dpkg 1.19.5). Auf Linux\-Systemen verwendet die
+Implementierung SELinux.
+
+\fBunsafe\-io\fP: Beim Entpacken keine sicheren E/A\-Operationen durchf\(:uhren
+(seit Dpkg 1.15.8.6). Derzeit impliziert dies, dass vor Dateiumbenennungen
+kein Systemsync durchgef\(:uhrt wird. Dieser Sync f\(:uhrt bei einigen
+Dateisystemen zu erheblichen Leistungseinbu\(ssen, ungl\(:ucklicherweise bei
+solchen, die \(:uberhaupt sichere E/A aufgrund ihres unzuverl\(:assigen Verhaltens
+ben\(:otigen, auf denen bei abrupten Systemabst\(:urzen Dateien der L\(:ange Null
+entstehen k\(:onnen.
+
+\fIHinweis:\fP F\(:ur den Hauptmisst\(:ater Ext4 sollten Sie stattdessen die
+Einh\(:angeoption \fBnodelalloc\fP verwenden, die sowohl die Leistungseinbu\(sse
+verhindert als auch Datensicherheitsprobleme vermeidet. Letzteres bedeutet,
+dass bei abrupten Systemabst\(:urzen bei jeder Software, die keine Syncs vor
+atomaren Umbenennungen durchf\(:uhrt, keine Dateien der L\(:ange Null generiert
+werden.
+
+\fIWarnung: Die Verwendung dieser Option kann die Leistung erh\(:ohen,
+allerdings k\(:onnen dabei Daten verloren gehen. Verwenden Sie die Option
+vorsichtig.\fP
+
+\fBscript\-chrootless\fP: Skripte ausf\(:uhren, ohne per \fBchroot\fP(2) in das
+\fBinstdir\fP zu wechseln, selbst falls das Paket diese Vorgehensweise nicht
+unterst\(:utzt (seit Dpkg 1.18.5).
+
+\fIWarnung: Dies kann Ihr Wirtsystem besch\(:adigen, passen Sie sehr gut auf!\fP
+
+\fBarchitecture\fP: Verarbeite sogar Pakete mit der falschen oder keiner
+Architektur.
+
+\fBbad\-version\fP: Verarbeite sogar Pakete mit falschen Versionen (seit Dpkg
+1.16.1).
+
+\fBbad\-path\fP: Im \fBPATH\fP fehlen wichtige Programme, daher sind Probleme
+wahrscheinlich.
+
+\fBnot\-root\fP: Versuche Sachen zu (de)installieren, selbst falls nicht root.
+
+\fBbad\-verify\fP: Installiere ein Paket selbst wenn die Authentizit\(:atspr\(:ufung
+fehlschl\(:agt.
+
+.TP 
+\fB\-\-ignore\-depends\fP=\fIPaket\fP, …
+Ignoriere Abh\(:angigkeits\(:uberpr\(:ufungen f\(:ur bestimmte Pakete (tats\(:achlich wird
+die \(:Uberpr\(:ufung durchgef\(:uhrt, aber nur Warnungen \(:uber Konflikte werden
+angezeigt, sonst nichts). Dies betrifft die Felder \fBPre\-Depends\fP,
+\fBDepends\fP und \fBBreaks\fP.
+.TP 
+\fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
+Erledige alles, was gemacht werden soll, aber schreibe keine
+\(:Anderungen. Dies wird verwendet um zu sehen, was mit der spezifizierten
+\(:Anderung passieren w\(:urde ohne tats\(:achlich etwas zu modifizieren.
+
+Stellen Sie sicher, dass \fB\-\-no\-act\fP vor dem Aktions\-Parameter steht, oder
+Sie k\(:onnten mit unerw\(:unschten Ergebnissen enden. (Beispielsweise wird \fBdpkg
+\-\-purge foo \-\-no\-act\fP zuerst das Paket foo bereinigen und dann versuchen,
+das Paket \-\-no\-act zu bereinigen, obwohl Sie wahrscheinlich davon ausgingen,
+dass tats\(:achlich gar nichts passieren sollte)
+.TP 
+\fB\-R\fP, \fB\-\-recursive\fP
+Behandle rekursiv alle regul\(:aren Dateien, die auf das Muster \fB*.deb\fP passen
+und im angegeben Verzeichnis sowie allen Unterverzeichnis liegen. Dies kann
+mit den Aktionen \fB\-i\fP, \fB\-A\fP, \fB\-\-install\fP, \fB\-\-unpack\fP und
+\fB\-\-record\-avail\fP verwendet werden.
+.TP 
+\fB\-G\fP
+Installiere ein Paket nicht, falls bereits eine neuere Version des gleichen
+Paketes installiert ist. Dies ist ein Alias f\(:ur \fB\-\-refuse\-downgrade\fP.
+.TP 
+\fB\-\-admindir=\fP\fIVerz\fP
+Setzt das Standardadministrationsverzeichnis auf \fIVerzeichnis\fP. Diess
+Verzeichnis enth\(:alt viele Dateien, die Informationen \(:uber den Status von
+installierten und deinstallierten Paketen usw. enthalten. Standardm\(:a\(ssig
+\(Bq\fI/var/lib/dpkg\fP\(lq.
+.TP 
+\fB\-\-instdir=\fP\fIVerz\fP
+Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt
+an, wo Pakete installiert werden. \fBinstdir\fP ist auch das Verzeichnis, das
+an \fBchroot\fP(2) vor dem Aufruf der Installationsskripte des Paketes
+\(:ubergeben wird, was bedeutet, dass die Skripte \fBinstdir\fP als ein
+Wurzelverzeichnis sehen. Standardm\(:a\(ssig \(Bq\fI/\fP\(lq.
+.TP 
+\fB\-root=\fP\fIVerz\fP
+Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
+Installationsverzeichnis auf \(Bq\fIVerz\fP\(lq und das administrative Verzeichnis
+auf \(Bq\fIVerz\fP\fB/var/lib/dpkg\fP\(lq gesetzt wird.
+.TP 
+\fB\-O\fP, \fB\-\-selected\-only\fP
+Bearbeite nur die Pakete, die zur Installation ausgew\(:ahlt sind. Die
+eigentliche Markierung erfolgt mit \fBdselect\fP oder durch \fBdpkg\fP, wenn es
+Pakete bearbeitet. Beispielsweise wird ein Paket bei der Entfernung als \(Fczur
+Deinstallation ausgew\(:ahlt\(Fo markiert.
+.TP 
+\fB\-E\fP, \fB\-\-skip\-same\-version\fP
+Installiere das Paket nicht, falls die gleiche Version des Pakets bereits
+installiert ist.
+.TP 
+\fB\-\-pre\-invoke=\fP\fIBefehl\fP
+.TQ
+\fB\-\-post\-invoke=\fP\fIBefehl\fP
+Setzt einen Aufruf\-Hook \fIBefehl\fP, der via \(Fcsh \-c\(Fo vor oder nach dem
+\fBdpkg\fP\-Aufruf der \fBdpkg\fP\-Aktionen \fIunpack\fP, \fIconfigure\fP, \fIinstall\fP,
+\fItriggers\-only\fP, \fIremove\fP, \fIpurge\fP, \fIadd\-architecture\fP und
+\fIremove\-architecture\fP ausgef\(:uhrt wird (seit Dpkg 1.15.4; Aktionen
+\fIadd\-architecture\fP und \fIremove\-architecture\fP seit Dpkg 1.17.19). Diese
+Option kann mehrfach angegeben werden. Die Reihenfolge der Optionen wird
+erhalten, wobei Eintr\(:age aus den Konfigurationsdateien Vorrang
+einnehmen. Die Umgebungsvariable \fBDPKG_HOOK_ACTION\fP wird f\(:ur die Hooks auf
+die aktuelle \fBdpkg\fP\-Aktion gesetzt. Hinweis: Oberfl\(:achen k\(:onnten \fBdpkg\fP
+mehrere Male pro Ausf\(:uhrung aufrufen, wodurch die Hooks \(:ofter als erwartet
+ausgef\(:uhrt werden k\(:onnten.
+.TP 
+\fB\-\-path\-exclude=\fP\fIGlob\-Muster\fP
+.TQ
+\fB\-\-path\-include=\fP\fIGlob\-Muster\fP
+Setzt \fIGlob\-Muster\fP als Pfadfilter, entweder durch Ausschluss oder durch
+Wiedereinschluss vorher ausgeschlossener Pfade, die w\(:ahrend der Installation
+auf bestimmte Muster passen (seit Dpkg 1.15.8).
+
+\fIWarnung: Beachten Sie, dass abh\(:angig von den ausgeschlossenen Pfaden Sie
+Ihr System komplett besch\(:adigen k\(:onnten. Verwenden Sie dies daher
+vorsichtig.\fP
+
+Das Glob\-Muster kann die gleichen Platzhalter wie in der Shell verwenden,
+wobei \(bq*\(cq auf eine beliebige Folge von Zeichen, auch dem Leerzeichen und
+\(bq/\(cq, passt. Beispielsweise passt \(Bq\fI/usr/*/READ*\fP\(lq auf
+\(Bq\fI/usr/share/doc/package/README\fP\(lq. Wie gew\(:ohnlich passt \(bq?\(cq auf ein
+einzelnes Zeichen (wieder auch auf \(bq/\(cq). Und \(bq[\(cq beginnt eine Zeichenklasse,
+die eine Liste von Zeichen, Bereiche und Komplemente enthalten kann. Lesen
+Sie \fBglob\fP(7) f\(:ur detaillierte Informationen \(:uber das Globben. Hinweis:
+Aktuelle Implementierungen k\(:onnten mehr Verzeichnisse und symbolische Links
+als ben\(:otigt wieder einschlie\(ssen. Um auf der sicheren Seite zu sein und in
+der Zukunft m\(:ogliche Entpackfehler zu vermeiden, k\(:onnte dies durch
+zuk\(:unftige Arbeiten behoben werden.
+
+Dies kann dazu verwandt werden, alle Pfade au\(sser bestimmten zu entferen, ein
+typischer Fall lautet:
+
+.nf
+\fB\-\-path\-exclude=/usr/share/doc/*\fP
+\fB\-\-path\-include=/usr/share/doc/*/copyright\fP
+.fi
+
+Hiermit werden alle Dokumentationsdateien (au\(sser den Copyright\-Dateien)
+entfernt.
+
+Diese zwei Optionen k\(:onnen mehrfach angegeben und miteinander verschachtelt
+werden. Beide werden in der angegebenen Reihenfolge ausgewertet, wobei die
+letzte Regel, die auf eine Datei passt, die Entscheidung f\(:allt.
+
+Die Filter werden beim Entpacken des Bin\(:arpakets angewandt und haben daher
+nur Wissen \(:uber den Typ des derzeit gefilterten Objekts (d.h. eine normale
+Datei oder ein Verzeichnis) und sehen daher nicht, welche Objekte als
+n\(:achstes kommen. Da diese Filter Seiteneffekte haben (im Gegensatz zu
+\fBfind\fP(1)\-Filtern) wird das Ausschlie\(ssen eines genauen Pfadnamens, der ein
+Verzeichnisobjekt wie \fI/usr/share/doc\fP ist, nicht den gew\(:unschten Effekt
+haben und nur der Pfadname wird ausgeschlossen (der automatisch wieder
+eingeschlossen werden k\(:onnte, falls der Code eine Notwendigkeit hierf\(:ur
+sieht). Alle folgenden Dateien innerhalb des Verzeichnisses werden beim
+Entpacken fehlschlagen.
+
+Tipp: Stellen Sie sicher, dass die Metazeichen nicht durch Ihre Shell
+expandiert werden.
+.TP 
+\fB\-\-verify\-format=\fP\fIFormatname\fP
+Setzt das Ausgabeformat f\(:ur den Befehl \fB\-\-verify\fP (seit Dpkg 1.17.2).
+
+Derzeit wird nur das Ausgabeformat \fBrpm\fP unterst\(:utzt. Es besteht aus einer
+Zeile f\(:ur jeden Pfad, der bei der Pr\(:ufung fehlschlug. Die Zeilen starten mit
+9 Zeichen, um die Ergebnisse jeder angegebenen Pr\(:ufung zu berichten. Ein
+\(bq\fB?\fP\(cq impliziert, dass die Pr\(:ufung nicht durchgef\(:uhrt werden konnte (keine
+Unterst\(:utzung daf\(:ur, Dateirechte usw.). \(bq\fB.\fP\(cq impliziert, dass die Pr\(:ufung
+erfolgreich durchgef\(:uhrt wurde und ein alphanumerisches Zeichen impliziert,
+dass eine angegebene Pr\(:ufung fehlschlug. Der Md5sum\-\(:Uberpr\(:ufungsfehlschlag
+(die Dateiinhalte haben sich ge\(:andert) wird durch ein \(bq\fB5\fP\(cq als drittes
+Zeichen angezeigt. Der Zeile folgt ein Leerzeichen und ein Attributszeichen
+(derzeit \(bq\fBc\fP\(cq f\(:ur Conffiles), ein weiteres Leerzeichen und der Pfadnmae.
+.TP 
+\fB\-\-status\-fd \fP\fIn\fP
+Schicke maschinenlesbare Paketstatus\- und Fortschrittsinformationen an den
+Dateideskriptor \fIn\fP. Diese Option kann mehrfach angegeben werden. Die
+Information besteht typischerweise aus einem Datensatz pro Zeile in
+folgendem Format:
+.RS
+.TP 
+\fBstatus: \fP\fIPaket\fP\fB: \fP\fIStatus\fP
+Paketstatus ge\(:andert; \fIStatus\fP entsprechend der Statusdatei.
+.TP 
+\fBstatus: \fP\fIPaket\fP\fB : error : \fP\fIausf\(:uhrliche\-Fehlermeldung\fP
+Ein Fehler ist aufgetreten. Alle m\(:oglichen Zeilenumbr\(:uche in
+\fIausf\(:uhrliche\-Fehlermeldung\fP werden vor der Ausgabe in Leerzeichen
+gewandelt.
+.TP 
+\fBstatus: \fP\fIDatei\fP\fB : conffile\-prompt : \(Fc\fP\fIecht\-alt\fP\fB\(Fo \(Fc\fP\fIecht\-neu\fP\fB\(Fo \fP\fIbenutzer\-edit\fP\fB \fP\fIdist\-edit\fP
+Dem Benutzer wird eine Conffile\-Frage gestellt.
+.TP 
+\fBprocessing: \fP\fIStufe\fP\fB: \fP\fIPaket\fP
+Versandt genau bevor eine Verarbeitungsstufe beginnt. \fIStufe\fP ist eine der
+folgenden: \fBupgrade\fP, \fBinstall\fP (beide werden vor dem Entpacken versandt),
+\fBconfigure\fP, \fBtrigproc\fP, \fBdisappear\fP, \fBremove\fP, \fBpurge\fP.
+.RE
+.TP 
+\fB\-\-status\-logger\fP=\fIBefehl\fP
+Schicke maschinenlesbare Paketstatus\- und Fortschrittsinformationen an die
+Standardeingabe des \fIBefehl\fPs der Shell, was dann mittels \(Fcsh \-c\(Fo
+ausgef\(:uhrt wird (seit Dpkg 1.16.0). Diese Option kann mehrfach angegeben
+werden. Das verwandte Ausgabeformat ist identisch zu dem in \fB\-\-status\-fd\fP.
+.TP 
+\fB\-\-log=\fP\fIDateiname\fP
+Protokolliere Status\(:anderungen und \-aktionen in \fIDateiname\fP statt zu dem
+standardm\(:a\(ssigen \fI/var/log/dpkg.log\fP. Falls diese Option mehrfach angegeben
+ist, wird der letzte Dateiname verwandt. Protokollnachrichten haben die
+Form:
+.RS
+.TP 
+YYYY\-MM\-DD HH:MM:SS \fBstartup\fP \fITyp\fP \fIBefehl\fP
+F\(:ur jeden Dpkg\-Aufruf, wobei \fITyp\fP entweder \fBarchives\fP (mit einem
+\fIBefehl\fP \fBunpack\fP oder \fBinstall\fP) oder \fBpackages\fP (mit einem \fIBefehl\fP
+\fBconfigure\fP, \fBtriggers\-only\fP, \fBremove\fP oder \fBpurge\fP) ist.
+.TP 
+YYYY\-MM\-DD HH:MM:SS \fBstatus\fP \fIZustand\fP \fIPkt\fP \fIinstallierte_Version\fP
+F\(:ur Statusaktualisierungen.
+.TP 
+YYYY\-MM\-DD HH:MM:SS \fIAktion\fP \fIPkt\fP \fIinstallierte_Version\fP \fIverf\(:ugbar_Version\fP
+F\(:ur Aktionen, wobei \fIAktion\fP einer aus \fBinstall\fP, \fBupgrade\fP,
+\fBconfigure\fP, \fBtrigproc\fP, \fBdisappear\fP, \fBremove\fP oder \fBpurge\fP ist.
+.TP 
+YYYY\-MM\-DD HH:MM:SS \fBconffile\fP \fIDateiname\fP \fIEntscheidung\fP
+F\(:ur Conffile\-\(:Anderungen, wobei \fIEntscheidung\fP entweder \fBinstall\fP oder
+\fBkeep\fP ist.
+.RE
+.TP 
+\fB\-\-no\-pager\fP
+Deaktiviert die Verwendung jeglichen Pagers bei der Anzeige von
+Informationen (seit Dpkg 1.19.2).
+.TP 
+\fB\-\-no\-debsig\fP
+Versuche nicht, Paketsignaturen zu \(:uberpr\(:ufen.
+.TP 
+\fB\-\-no\-triggers\fP
+F\(:uhre keine Trigger in diesem Durchlauf aus (seit Dpkg
+1.14.17). Aktivierungen werden aber dennoch aufgezeichnet. Falls dies mit
+\fB\-\-configure\fP \fIPaket\fP oder \fB\-\-triggers\-only\fP \fIPaket\fP verwandt wird, wird
+das Postinst des benannten Pakets dennoch ausgef\(:uhrt, selbst falls nur ein
+Trigger\-Lauf notwendig ist. Die Verwendung dieser Option kann Pakete in die
+unzul\(:assigen Stati \fBtriggers\-awaited\fP und \fBtriggers\-pending\fP
+bringen. Durch die Ausf\(:uhrung von \(Fc\fBdpkg \-\-configure \-\-pending\fP\(Fo kann dies
+sp\(:ater behoben werden.
+.TP 
+\fB\-\-triggers\fP
+Annulliert ein vorheriges \fB\-\-no\-triggers\fP (seit Dpkg 1.14.17).
+.
+.SH R\(:UCKGABEWERT
+.TP 
+\fB0\fP
+Die angeforderte Aktion wurde erfolgreich ausgef\(:uhrt. Oder ein Pr\(:ufausdruck
+oder eine Zusicherung (Assertion) lieferte Wahr zur\(:uck.
+.TP 
+\fB1\fP
+Ein Pr\(:ufausdruck oder eine Zusicherung lieferte Falsch zur\(:uck.
+.TP 
+\fB2\fP
+Fataler oder nicht behebbarer Fehler aufgrund ung\(:ultiger
+Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
+die Datenbank, Speicherzuweisungen usw.
+.
+.SH UMGEBUNG
+.SS "Externe Umgebung"
+.TP 
+\fBPATH\fP
+Es wird erwartet, dass diese Variable in der Umgebung gesetzt ist und auf
+die Systempfade zeigt, in denen eine Reihe von ben\(:otigten Programmen
+gefunden werden k\(:onnen. Falls sie nicht gesetzt ist oder die Programme nicht
+gefunden werden k\(:onnen, wird \fBdpkg\fP die Bearbeitung abbrechen.
+.TP 
+\fBHOME\fP
+Falls gesetzt, wird \fBdpkg\fP es als das Verzeichnis verwenden, aus dem die
+benutzerspezifische Konfigurationsdatei gelesen wird.
+.TP 
+\fBTMPDIR\fP
+Falls gesetzt, wird \fBdpkg\fP es als das Verzeichnis verwenden, in dem
+tempor\(:are Dateien und Verzeichnisse erstellt werden.
+.TP 
+\fBSHELL\fP
+Das Programm, das \fBdpkg\fP ausf\(:uhren wird, wenn es eine neue interaktive
+Shell startet oder einen Befehl \(:uber eine Shell ausf\(:uhrt.
+.TP 
+\fBPAGER\fP
+.TQ
+\fBDPKG_PAGER\fP
+Das Programm, das \fBdpkg\fP ausf\(:uhren wird, wenn es einen Pager ausf\(:uhrt,
+beispielsweise zur Anzeige von Conffile\-Dateiunterschieden. Falls \fBSHELL\fP
+nicht gesetzt ist, wird stattdessen \(Bq\fBsh\fP\(lq verwandt. \fBDPKG_PAGER\fP setzt
+die Umgebungsvariable \fBPAGER\fP au\(sser Kraft (seit Dpkg 1.19.2).
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_FORCE\fP
+Setzt die Erzwingungsschalter (seit Dpkg 1.19.5). Wenn diese Variable
+vorhanden ist, werden keine eingebauten Vorgaben f\(:ur Erzwingungen
+angewandt. Falls diese Variable vorhanden aber leer ist, werden alle
+Erzwingungsschalter deaktiviert.
+.TP 
+\fBDPKG_FRONTEND_LOCKED\fP
+Wird von einer Paketverwalterprogrammoberfl\(:ache gesetzt, um Dpkg zu
+informieren, dass es nicht die Sperre der Oberfl\(:ache erlangen soll (seit
+Dpkg 1.19.1).
+.SS "Interne Umgebung"
+.TP 
+\fBLESS\fP
+Von \fBdpkg\fP auf \(Fc\fB\-FRSXMQ\fP\(Fo definiert, falls es nicht bereits gesetzt ist
+oder wenn ein Pager gestartet wird (seit Dpkg 1.19.2). Um das
+Vorgabeverhalten zu ver\(:andern, kann diese Variable auf einen anderen Wert
+einschlie\(sslich der leeren Zeichenkette voreingestellt werden oder die
+Variablen \fBPAGER\fP oder \fBDPKG_PAGER\fP k\(:onnen gesetzt werden, um bestimmte
+Optionen mit \(Bq\fB\-+\fP\(lq zu deaktivieren, beispielsweise \fBDPKG_PAGER="less
+\-+F"\fP.
+.TP 
+\fBDPKG_ROOT\fP
+Durch \fBdpkg\fP in der Betreuerskriptumgebung definiert, um anzuzeigen, auf
+welche Installation gehandelt werden soll (seit Dpkg 1.18.5). Der Wert soll
+jedem Pfad, auf den Betreuerskripte handeln, vorangestellt werden. W\(:ahrend
+des Normalbetriebs ist diese Variable leer. Bei der Installation von Paketen
+in ein anderes \fBinstdir\fP wird \fBdpkg\fP normalerweise Betreuerskripte mittels
+\fBchroot\fP(2) aufrufen und diese Variable leer lassen. Falls aber
+\fB\-\-force\-script\-chrootless\fP angegeben ist, wird dieser \fBchroot\fP(2)\-Aufruf
+\(:ubersprungen und \fBinstdir\fP ist nicht leer.
+.TP 
+\fBDPKG_ADMINDIR\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung gesetzt, um das zu
+verwendende administrative Verzeichnis von \fBdpkg\fP anzuzeigen (seit Dpkg
+1.16.0). Diese Variable wird immer auf den aktuellen Wert von \fB\-\-admindir\fP
+gesetzt.
+.TP 
+\fBDPKG_FORCE\fP
+Wird von \fBdpkg\fP f\(:ur alle Unterprozessumgebungen auf alle aktuell
+aktivierten Erzwingungsoptionennamen (getrennt durch Kommata) gesetzt (seit
+Dpkg 1.19.5).
+.TP 
+\fBDPKG_SHELL_REASON\fP
+Wird von \fBdpkg\fP auf der Shell, die von der Conffile\-Eingabeaufforderung
+gestartet wird, um die Situation zu analysieren, gesetzt (seit Dpkg
+1.15.6). Derzeit g\(:ultiger Wert: \fBconffile\-prompt\fP.
+.TP 
+\fBDPKG_CONFFILE_OLD\fP
+Wird von \fBdpkg\fP auf der Shell, die von der Conffile\-Eingabeaufforderung
+gestartet wird, um die Situation zu analysieren, gesetzt (seit Dpkg
+1.15.6). Enth\(:alt den Pfad zu der alten Conffile.
+.TP 
+\fBDPKG_CONFFILE_NEW\fP
+Wird von \fBdpkg\fP auf der Shell, die von der Conffile\-Eingabeaufforderung
+gestartet wird, um die Situation zu analysieren, gesetzt (seit Dpkg
+1.15.6). Enth\(:alt den Pfad zu der neuen Conffile.
+.TP 
+\fBDPKG_HOOK_ACTION\fP
+Wird von \fBdpkg\fP auf der Shell, die beim Ausf\(:uhren von Hook\-Aktionen
+gestartet wird, gesetzt (seit Dpkg 1.15.4). Enth\(:alt die aktuelle
+\fBdpkg\fP\-Aktion.
+.TP 
+\fBDPKG_RUNNING_VERSION\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf die Version der
+aktuell laufenden Instanz von \fBdpkg\fP gesetzt (seit Dpkg 1.14.17).
+.TP 
+\fBDPKG_MAINTSCRIPT_PACKAGE\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf den in Arbeit
+befindlichen (nicht architekturspezifizierte) Paketnamen gesetzt (seit Dpkg
+1.14.17).
+.TP 
+\fBDPKG_MAINTSCRIPT_PACKAGE_REFCOUNT\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf die Paketreferenzzahl
+gesetzt, d.h. die Anzahl der Paketinstanzen mit einem Status gr\(:o\(sser als
+\fBnot\-installed\fP (seit Dpkg 1.17.2).
+.TP 
+\fBDPKG_MAINTSCRIPT_ARCH\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf die Architektur
+gesetzt, f\(:ur die das Paket gebaut wurde (seit Dpkg 1.15.4).
+.TP 
+\fBDPKG_MAINTSCRIPT_NAME\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf den Namen des
+laufenden Skripts, eines von \fBpreinst\fP, \fBpostinst\fP, \fBprerm\fP oder
+\fBpostrm\fP (seit Dpkg 1.15.7).
+.TP 
+\fBDPKG_MAINTSCRIPT_DEBUG\fP
+Wird von \fBdpkg\fP f\(:ur die Betreuer\-Skript\-Umgebung auf einen Wert (\(bq\fB0\fP\(cq
+oder \(bq\fB1\fP\(cq) gesetzt, der angibt, ob die Fehlersuche (mit der Option
+\fB\-\-debug\fP) f\(:ur die Betreuerskripte angefordert wurde (seit Dpkg 1.18.4).
+.
+.SH DATEIEN
+.TP 
+\fI/etc/dpkg/dpkg.cfg.d/[0\-9a\-zA\-Z_\-]*\fP
+Konfigurationsfragmentdateien (seit Dpkg 1.15.4).
+.TP 
+\fI/etc/dpkg/dpkg.cfg\fP
+Konfigurationsdatei mit Standardeinstellungen der Optionen.
+.TP 
+\fI/var/log/dpkg.log\fP
+Standard\-Protokolldatei (lesen Sie \fI/etc/dpkg/dpkg.cfg\fP und die Option
+\fB\-\-log\fP).
+.P
+Die anderen unten aufgef\(:uhrten Dateien sind in ihrem Standardverzeichnis,
+lesen Sie den Text zur Option \fB\-\-admindir\fP um zu sehen, wie sie den Ort
+dieser Dateien \(:andern k\(:onnen.
+.TP 
+\fI/var/lib/dpkg/available\fP
+Liste der verf\(:ugbaren Pakete.
+.TP 
+\fI/var/lib/dpkg/status\fP
+Statusse der verf\(:ugbaren Pakete. Diese Datei enth\(:alt Informationen dar\(:uber,
+ob ein Paket zur Entfernung markiert ist oder nicht, ob es installiert ist
+oder nicht usw. Lesen Sie den Abschnitt \fBINFORMATIONEN \(:UBER PAKETE\fP f\(:ur
+weitere Informationen.
+
+Die Statusdatei wird t\(:aglich nach \fI/var/backups\fP gesichert. Dies kann
+hilfreich sein, falls sie aufgrund von Problemen mit dem Dateisystem
+verloren gegangen oder besch\(:adigt worden ist.
+.P
+Das Format und die Inhalte eines Bin\(:arpakets sind in \fBdeb\fP(5) beschrieben.
+.
+.SH FEHLER
+\fB\-\-no\-act\fP gibt gew\(:ohnlich weniger Informationen als hilfreich sein
+k\(:onnten.
+.
+.SH BEISPIELE
+Um die installierten Pakete mit Bezug zum Editor \fBvi\fP(1) aufzulisten
+(beachten Sie, dass \fBdpkg\-query\fP nicht mehr standardm\(:a\(ssig die Datei
+\fIavailable\fP l\(:adt und stattdessen daf\(:ur die Option \fBdpkg\-query\fP
+\fB\-\-load\-avail\fP verwandt werden sollte):
+.br
+     \fBdpkg \-l '*vi*'\fP
+.br
+
+Um die Eintr\(:age von zwei Paketen in \fI/var/lib/dpkg/available\fP zu sehen:
+.br
+     \fBdpkg \-\-print\-avail elvis vim | less\fP
+.br
+
+Wenn Sie die Liste der Pakete selbst durchsuchen wollen:
+.br
+     \fBless /var/lib/dpkg/available\fP
+.br
+
+Um ein installiertes Elvis\-Paket zu entfernen:
+.br
+     \fBdpkg \-r elvis\fP
+.br
+
+Um ein Paket zu installieren, m\(:ussen Sie es erst in einem Archiv oder auf
+einer CD\-ROM finden. Die Datei \fIavailable\fP zeigt, dass das vim\-Paket in der
+Sektion \fBeditors\fP ist:
+.br
+     \fBcd /media/cdrom/pool/main/v/vim\fP
+     \fBdpkg \-i vim_4.5\-3.deb\fP
+.br
+
+Um eine lokale Kopie der Paketauswahl\-Zust\(:ande zu erstellen:
+.br
+     \fBdpkg \-\-get\-selections >meine_auswahl\fP
+.br
+
+Sie k\(:onnten diese Datei auf einen anderen Rechner \(:ubertragen und dann die
+Datei \fIavailable\fP dort mit dem Paketverwalter Ihrer Wahl (siehe
+https://wiki.debian.org/Teams/Dpkg/FAQ f\(:ur weitere Details) aktualisieren,
+zum Beispiel:
+.br
+     \fBapt\-cache dumpavail | dpkg \-\-merge\-avail\fP
+.br
+Oder mit Dpkg 1.17.6 oder \(:alter:
+.br
+     \fBavail=`mktemp`\fP
+     \fBapt\-cache dumpavail >"$avail"\fP
+     \fBdpkg \-\-merge\-avail "$avail"\fP
+     \fBrm "$avail"\fP
+.br
+Sie k\(:onnen sie dann wie folgt installieren:
+.br
+     \fBdpkg \-\-clear\-selections\fP
+     \fBdpkg \-\-set\-selections <meine_auswahl\fP
+.br
+
+Beachten Sie, dass dies nichts wirklich installiert oder entfernt, sondern
+lediglich den Auswahlzustand der angeforderten Pakete setzt. Sie werden eine
+andere Anwendung ben\(:otigen, um die angeforderten Pakete tats\(:achlich
+herunterzuladen und zu installieren. F\(:uhren Sie beispielsweise \fBapt\-get
+dselect\-upgrade\fP aus.
+
+Gew\(:ohnlich werden Sie feststellen, dass \fBdselect\fP(1) eine bequemere Art
+ist, den Paketauswahlzustand zu \(:andern.
+.br
+.
+.SH "ZUS\(:ATZLICHE FUNKTIONALIT\(:AT"
+Zus\(:atzliche Funktionalit\(:at kann durch die Installation jedes der folgenden
+Pakete erhalten werden: \fBapt\fP, \fBaptitude\fP und \fBdebsums\fP.
+.
+.SH "SIEHE AUCH"
+.ad l
+\fBaptitude\fP(1), \fBapt\fP(1), \fBdselect\fP(1), \fBdpkg\-deb\fP(1), \fBdpkg\-query\fP(1),
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg.cfg\fP(5) und \fBdpkg\-reconfigure\fP(8).
+.
+.SH AUTOREN
+Lesen Sie \fI/usr/share/doc/dpkg/THANKS\fP f\(:ur die Liste der Leute, die zu \fBdpkg\fP
+beigetragen haben.
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

@@ -1,0 +1,532 @@
+.\" dpkg manual page - dpkg-gensymbols(1)
+.\"
+.\" Copyright © 2007-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2009-2010 Modestas Vainius <modestas@vainius.eu>
+.\" Copyright © 2012-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-gensymbols 1 2019-03-25 1.19.6 Dpkg\-sviten
+.nh
+.SH NAMN
+dpkg\-gensymbols \- generera symbolfiler (information om delade bibliotek)
+.
+.SH SYNOPS
+\fBdpkg\-gensymbols\fP [\fIflagga\fP...]
+.
+.SH BESKRIVNING
+\fBdpkg\-gensymbols\fP s\(:oker genom en tempor\(:art byggtr\(:ad (som standard
+debian/tmp) efter bibliotek och skapar en \fIsymbols\fP\-fil som beskriver
+dem. Denna fil kommer sedan, s\(oavida den inte \(:ar tom, att installeras i
+DEBIAN\-underkatalogen i byggtr\(:adet s\(oa att den hamnar i styrinformationen i
+paketet.
+.P
+N\(:ar dessa filer skapas, anv\(:ands ett par symbolfiler fr\(oan paketansvariga som
+indata. Programmet s\(:oker efter f\(:oljande filer (och anv\(:ander den f\(:orsta det
+finner):
+.IP \(bu 4
+debian/\fIpaket\fP.symbols.\fIarkitektur\fP
+.IP \(bu 4
+debian/symbols.\fIarkitektur\fP
+.IP \(bu 4
+debian/\fIpaket\fP.symbols
+.IP \(bu 4
+debian/symbols
+.P
+Dessa filer \(:ar i huvudsak intressanta f\(:or att kunna tillhandah\(oalla den
+minimala version associerad med varje symbol i biblioteken. Detta motsvarar
+normalt den f\(:orsta version av paketet som tillhandah\(:oll symbolen, men det
+kan manuellt inkrementeras av de ansvariga om symbolens ABI ut\(:okas med
+bibeh\(oallen bak\(oatkompatibilitet. Det \(:ar den ansvarigas ansvar att h\(oalla dessa
+filer \(`ajourf\(:orda och korrekta, men \fBdpkg\-gensymbols\fP kan hj\(:alpa till med
+detta.
+.P
+N\(:ar den genererade symbolfilen skiljer sig mot den version som
+tillhandah\(oallits av de paketansvariga kommer \fBdpkg\-gensymbols\fP att skriva
+ut en differens mellan de tv\(oa versionerna. Om \(:andringarna \(:ar f\(:or stora
+kommer programmet dessutom att misslyckas (du kan justera hur stora
+\(:andringar du kan tolerera, se flaggan \fB\-c\fP).
+.SH "UNDERH\(oALLA SYMBOLFILER"
+The symbols files are really useful only if they reflect the evolution of
+the package through several releases. Thus the maintainer has to update them
+every time that a new symbol is added so that its associated minimal version
+matches reality.  The diffs contained in the build logs can be used as a
+starting point, but the maintainer, additionally, has to make sure that the
+behaviour of those symbols has not changed in a way that would make anything
+using those symbols and linking against the new version, stop working with
+the old version.  In most cases, the diff applies directly to the
+debian/\fIpackage\fP.symbols file. That said, further tweaks are usually
+needed: it's recommended for example to drop the Debian revision from the
+minimal version so that backports with a lower version number but the same
+upstream version still satisfy the generated dependencies.  If the Debian
+revision can't be dropped because the symbol really got added by the Debian
+specific change, then one should suffix the version with \(oq\fB~\fP\(cq.
+.P
+Innan man applicerar en patch p\(oa symbolfilen b\(:or de ansvariga dubbelchecka
+att den \(:ar korrekt. Publicerade symboler b\(:or inte f\(:orsvinna, s\(oa patchen b\(:or
+ideellt sett bara l\(:agga till nya rader.
+.P
+Note that you can put comments in symbols files: any line with \(oq#\(cq as the
+first character is a comment except if it starts with \(oq#include\(cq (see
+section \fBUsing includes\fP).  Lines starting with \(oq#MISSING:\(cq are special
+comments documenting symbols that have disappeared.
+.P
+Gl\(:om inte att kontrollera om de gamla symbolversionerna m\(oaste \(:okas. Det
+finns inget s\(:att f\(:or \fBdpkg\-gensymbols\fP att varna om detta. Att blint
+applicera diffen eller utg\(oa fr\(oan att inget har \(:andrats om diffen \(:ar tom,
+utan att se efter s\(oadana \(:andringar, kan leda till att paket med l\(:osa
+beroenden kan deklarera att de fungerar med \(:aldre paket de inte kan fungera
+tillsammans med. Detta kommer introducera sv\(oarfunna problem vid (delvisa)
+uppgraderingar.{
+.SS "Anv\(:anda #PACKAGE#\-substituering"
+.P
+I n\(oagra s\(:allsynta fall skiljer sig namnet p\(oa biblioteket mellan
+arkitekturer. F\(:or att undvika att h\(oardkoda namnet p\(oa paketet i symbolfilen
+kan du anv\(:anda mark\(:oren \fI#PACKAGE#\fP. Den ers\(:atts av det faktiska
+paketnamnet n\(:ar symbolfilen installeras. Till skillnad fr\(oan
+\fI#MINVER#\fP\-mark\(:oren kommer \fI#PACKAGE#\fP aldrig att dyka upp i en symbolfil
+i ett bin\(:arpaket.
+.SS "Anv\(:anda symboltaggar"
+.P
+Symboltaggning \(:ar nyttigt f\(:or att markera symboler som \(:ar speciella p\(oa n\(oagot
+s\(:att. Alla symboler kan ha ett godtyckligt antal taggar associerade med
+sig. Medan alla taggar tolkas och lagras \(:ar det bara ett par av dem som
+f\(:orst\(oas av \fBdpkg\-gensymbols\fP och som utl\(:oser specialhantering av
+symbolerna. Se undersymbolen \fBStandardsymboltaggar\fP f\(:or mer information om
+dessa taggar.
+.P
+Taggarna anges precis f\(:ore symbolnamnet (inga blanksteg till\(oats mellan). Den
+b\(:orjar alltid med en v\(:ansterparentes \fB(\fP, slutar med en h\(:ogerparentes \fB)\fP,
+och m\(oaste inneh\(oalla minst en tagg. Ytterligare taggar avdelas med tecknet
+\fB|\fP. En tagg kan ha ett v\(:arde, vilket separeras fr\(oan taggnamnet med tecknet
+\fB=\fP. Taggnamn och v\(:arden kan vara godtyckliga str\(:angar, f\(:orutom att de inte
+kan inneh\(oalla de speciella tecknen \fB)\fP \fB|\fP \fB=\fP. Symbolnamn som f\(:oljer en
+taggangivelse kan, om s\(oa \(:onskas, citeras med antingen \fB'\fP eller \fB"\fP f\(:or
+att till\(oata blanksteg. Om inga taggar anges f\(:or symbolen tolkas dock
+citattecken som en del av symbolnamnet, vilket forts\(:atter till det f\(:orsta
+blanksteget.
+.P
+ (tag1=jag \(:ar markerad|taggnamn med blanksteg)"taggad citerad symbol"@Bas 1.0
+ (optional)taggad_ociterad_symbol@Bas 1.0 1
+ ociterad_symbol@Bas 1.0
+.P
+Den f\(:orsta symbolen i exemplet \(:ar heter \fItaggad citerad symbol\fP och har tv\(oa
+taggar: \fItag1\fP med v\(:ardet \fIjag \(:ar markerad\fP och \fItaggnamn med blanksteg\fP
+som inte har n\(oagot v\(:arde. Den andra symbolen heter \fItaggad_ociterad_symbol\fP
+och \(:ar bara taggad med taggen som heter \fIoptional\fP. Den sista symbolen \(:ar
+ett exempel p\(oa en normal, otaggad symbol.
+.P
+Eftersom symboltaggar er en ut\(:okning av formatet i \fIdeb\-symbols(5)\fP kan de
+bara anv\(:andas i symbolfiler i k\(:allkodspaket (dessa filer \(:ar att anse som
+mallar som anv\(:ands f\(:or att bygga symbolfilerna som finns i
+bin\(:arpaketen). N\(:ar \fBdpkg\-gensymbols\fP anropas utan flaggan \fB\-t\fP kommer det
+att mata ut symbolfiler kompatibla med \fBdeb\-symbols\fP(5)\-formatet: det
+hanterar symboler helt beroende p\(oa vad som beskrivs av standardtaggarna och
+tar bort alla taggar fr\(oan utdata. I mall\-l\(:age (\fB\-t\fP) kommer d\(:aremot alla
+symboler och deras taggar (b\(oade standard och ok\(:anda) att beh\(oallas i utdata
+och skrivas i sin originalform s\(oa som de l\(:astes in.
+.SS Standardsymboltaggar
+.TP 
+\fBoptional\fP
+A symbol marked as optional can disappear from the library at any time and
+that will never cause \fBdpkg\-gensymbols\fP to fail. However, disappeared
+optional symbols will continuously appear as MISSING in the diff in each new
+package revision.  This behaviour serves as a reminder for the maintainer
+that such a symbol needs to be removed from the symbol file or readded to
+the library. When the optional symbol, which was previously declared as
+MISSING, suddenly reappears in the next revision, it will be upgraded back
+to the \(lqexisting\(rq status with its minimum version unchanged.
+
+Taggen \(:ar anv\(:andbar f\(:or symboler som \(:ar privata och vars f\(:orsvinnande inte
+g\(:or att ABI:et g\(oar s\(:onder. De flesta C++\-mallinstansieringar faller till
+exempel in under denna kategori. Som andra taggar kan den h\(:ar \(:aven ha ett
+godtyckligt v\(:arde: det kan anv\(:andas f\(:or att indikera varf\(:or symbolen \(:ar att
+anse som valfri.
+.TP 
+\fBarch=\fP\fIarchitecture\-list\fP
+.TQ
+\fBarch\-bits=\fP\fIarchitecture\-bits\fP
+.TQ
+\fBarch\-endian=\fP\fIarchitecture\-endianness\fP
+These tags allow one to restrict the set of architectures where the symbol
+is supposed to exist. The \fBarch\-bits\fP and \fBarch\-endian\fP tags are supported
+since dpkg 1.18.0. When the symbols list is updated with the symbols
+discovered in the library, all arch\-specific symbols which do not concern
+the current host architecture are treated as if they did not exist. If an
+arch\-specific symbol matching the current host architecture does not exist
+in the library, normal procedures for missing symbols apply and it may cause
+\fBdpkg\-gensymbols\fP to fail. On the other hand, if the arch\-specific symbol
+is found when it was not supposed to exist (because the current host
+architecture is not listed in the tag or does not match the endianness and
+bits), it is made arch neutral (i.e. the arch, arch\-bits and arch\-endian
+tags are dropped and the symbol will appear in the diff due to this change),
+but it is not considered as new.
+
+I det vanliga icke\-mall\-l\(:aget skrivs endast de arkitekturspecifika symboler
+som motsvarar den aktuella v\(:ardarkitekturen till symbolfilen. \(oA andra sidan
+skrivs alla arkitekturspecifika symboler (inklusive de fr\(oan andra
+arkitekturer) till symbolfilen i mall\-l\(:aget.
+
+The format of \fIarchitecture\-list\fP is the same as the one used in the
+\fBBuild\-Depends\fP field of \fIdebian/control\fP (except the enclosing square
+brackets []). For example, the first symbol from the list below will be
+considered only on alpha, any\-amd64 and ia64 architectures, the second only
+on linux architectures, while the third one anywhere except on armel.
+
+ (arch=alpha any\-amd64 ia64)64bit_specific_symbol@Base 1.0
+ (arch=linux\-any)linux_specific_symbol@Base 1.0
+ (arch=!armel)symbol_armel_does_not_have@Base 1.0
+
+The \fIarchitecture\-bits\fP is either \fB32\fP or \fB64\fP.
+
+ (arch\-bits=32)32bit_specific_symbol@Base 1.0
+ (arch\-bits=64)64bit_specific_symbol@Base 1.0
+
+The \fIarchitecture\-endianness\fP is either \fBlittle\fP or \fBbig\fP.
+
+ (arch\-endian=little)little_endian_specific_symbol@Base 1.0
+ (arch\-endian=big)big_endian_specific_symbol@Base 1.0
+
+Multiple restrictions can be chained.
+
+ (arch\-bits=32|arch\-endian=little)32bit_le_symbol@Base 1.0
+.TP 
+\fBignore\-blacklist\fP
+dpkg\-gensymbols har en intern svartlista \(:over symboler som inte skall
+f\(:orekomma i symbolfiler eftersom de oftast bara \(:ar sidoeffekter fr\(oan
+implementationsdetaljer i verktygskedjan. Om du, av n\(oagon orsak, verkligen
+vill att en av dessa symboler skall tas med i symbolfilen m\(oaste du tagga
+symbolen med \fBignore\-blacklist\fP. Det kan vara n\(:odv\(:andigt f\(:or
+l\(oagniv\(oa\-verktygskedjebibliotek som libgcc.
+.TP 
+\fBc++\fP
+Betecknar \fIc++\fP\-symbolm\(:onster. Se stycket \fBAnv\(:anda symbolm\(:onster\fP nedan.
+.TP 
+\fBsymver\fP
+Anger \fIsymver\fP (symbolversion)\-symbolm\(:onstret. Se stycket \fBAnv\(:anda
+symbolm\(:onster\fP nedan.
+.TP 
+\fBregex\fP
+Anger \fIregex\fP\-symbolm\(:onstret. Se stycket \fIAnv\(:anda symbolm\(:onster\fP nedan.
+.SS "Anv\(:anda symbolm\(:onster"
+.P
+Till skillnad fr\(oan vanliga symbolspecifikationer kan ett m\(:onster t\(:acka flera
+faktiska symboler fr\(oan biblioteket. \fBdpkg\-gensymbols\fP kommer f\(:ors\(:oka matcha
+varje m\(:onster mot varje faktisk symbol som \fIinte\fP har en motsvarande
+specifik symbol definierad i symbolfilen. S\(oa fort det f\(:orsta m\(:onster som
+motsvarar symbolen hittas kommer alla dess taggar och egenskaper att
+anv\(:andas som en basspecifikation f\(:or symbolen. Om inget m\(:onster motsvarar
+symbolen kommer den att tolkas som ny.
+
+Ett m\(:onster anses som tappat om det inte motsvarar n\(oagra symboler i
+biblioteket. Som standard kommer detta f\(oa \fBdpkg\-genchanges\fP att misslyckas
+om \fB\-c1\fP eller h\(:ogre anges. Om ett s\(oadant misslyckande inte \(:ar \(:onskv\(:art kan
+m\(:onstret dock m\(:arkas med taggen \fIoptional\fP. Om m\(:onstret d\(oa inte motsvarar
+n\(oagonting kommer det bara dyka upp i differensen som saknas
+(MISSING). M\(:onstret kan dessutom, precis som andra symboler, begr\(:ansas till
+specifika arkitekturer med hj\(:alp av \fIarch\fP\-taggen. Se stycket
+\fBStandardsymboltaggar\fP ovan f\(:or mer information.
+
+M\(:onster \(:ar en ut\(:okning av \fBdeb\-symbols(5)\fP\-formatet och \(:ar d\(:arf\(:or endast
+till\(oatna i symbolfilmallar. Syntax f\(:or angivelse av m\(:onster skiljer sig inte
+fr\(oan den f\(:or en specifik symbol. Symbolnamnsdelen av specifikationen
+fungerar dock som ett uttryck som skall j\(:amf\(:oras mot \fInamn@version\fP f\(:or den
+faktiska symbolen. F\(:or att skilja mellan olika sorters m\(:onster, taggas
+m\(:onster normalt med en speciell tagg.
+
+F\(:or n\(:arvarande st\(:oder \fBdpkg\-gensymbols\fP tre grundl\(:aggande m\(:onstertyper:
+.TP  3
+\fBc++\fP
+Detta m\(:onster anges med taggen \fIc++\fP. Den matchar enbart C++\-symboler med
+deras avmanglade symbolnamn (som det skrivs ut av
+\fBc++filt\fP(1)\-verktyget). Det h\(:ar m\(:onstret \(:ar v\(:aldigt nyttigt f\(:or att matcha
+symboler vars manglade namn kan skilja sig mellan olika arkitekturer, medan
+deras avmanglade namn \(:ar desamma. En grupp dylika symboler \(:ar
+\fIicke\-virtuella "thunks"\fP som har arkitekturspecifika offsetv\(:arden inbyggda
+i sina manglade namn. En vanlig instans av detta fall \(:ar en virtuell
+destrukt\(:or som under diamantarv beh\(:over en icke\-virtuell
+"thunk"\-symbol. \(:Aven om till exempel ZThn8_N3NSB6ClassDD1Ev@Base p\(oa
+32\-bitarsarkitekturer troligtvis \(:ar _ZThn16_N3NSB6ClassDD1Ev@Base
+p\(oa64\-bitarsarkitekturer, s\(oa kan de matchas med ett enda \fIc++\fP\-m\(:onster:
+
+libdummy.so.1 libdummy1 #MINVER#
+ [...]
+ (c++)"non\-virtual thunk to NSB::ClassD::~ClassD()@Base" 1.0
+ [...]
+
+Det avmanglade namnet ovan kan h\(:amtas genom att utf\(:ora f\(:oljande kommando:
+
+ $ echo '_ZThn8_N3NSB6ClassDD1Ev@Base' | c++filt
+
+Observera att \(:aven om det manglade namnet per definition \(:ar unikt i
+biblioteket g\(:aller inte detta f\(:or avmanglade namn. Flera distinkta verkliga
+symboler kan ha samma avmanglade namn. Det g\(:aller till exempel f\(:or
+icke\-virtuella "thunk"\-symboler i konfigurationer med komplexa arv eller f\(:or
+de flesta konstrukt\(:orer och destrukt\(:orer (eftersom g++ normalt genererar tv\(oa
+symboler f\(:or dem). Eftersom dessa kollisioner sker p\(oa ABI\-niv\(oan b\(:or de dock
+inte s\(:anka kvaliteten p\(oa symbolfilen.
+.TP 
+\fBsymver\fP
+Detta m\(:onster anges med taggen \fIsymver\fP. V\(:alunderh\(oallna bibliotek har
+versionshanterade symboler d\(:ar varje version motsvarar uppstr\(:omsversionen
+d\(:ar symbolen lades till. Om det \(:ar fallet kan du anv\(:anda ett
+\fIsymver\fP\-m\(:oster f\(:or att matcha alla symboler som matchar den specifika
+versionen. Till exempel:
+
+libc.so.6 libc6 #MINVER#
+ (symver)GLIBC_2.0 2.0
+ [...]
+ (symver)GLIBC_2.7 2.7
+ access@GLIBC_2.0 2.2
+
+Alla symboler associerade med versionerna GLIBC_2.0 och GLIBC_2.7 kommer
+leda till den minimal version 2.0 respektive 2.7, med undantag av symbolen
+access@GLIBC_2.0. Den sistn\(:amnda kommer leda till ett minsta beroende p\(oa
+libc6 version 2.2 trots att den motsvarar m\(:onstret
+"(symver)GLIBC_2.0"\-m\(:onstret, eftersom specifika symboler g\(:aller f\(:ore
+m\(:onster.
+
+Observera att \(:aven om den gamla sortens jokerteckenm\(:onster (anges med
+"*@version" i symbolnamnf\(:altet) fortfarande st\(:ods s\(oa rekommenderas de inte
+l\(:angre i och med den nya sortens syntax "(symver|optional)version". Till
+exempel b\(:or "*@GLIBC_2.0 2.0" skrivas som "(symver|optional)GLIBC_2.0 2.0"
+om samma beteende beh\(:ovs.
+.TP 
+\fBregex\fP
+M\(:onster med regulj\(:ara uttryck anges med taggen \fIregex\fP. De matchar med det
+regulj\(:ara uttrycket p\(oa perl\-form som anges i symbolnamnsf\(:altet. Ett
+regulj\(:art uttryck matchar som det st\(oar, gl\(:om d\(:arf\(:or inte att inleda det med
+tecknet \fI^\fP, annars kommer det matcha godtycklig del av den verkliga
+symbolens \fInamn@version\fP\-str\(:ang. Till exempel:
+
+libdummy.so.1 libdummy1 #MINVER#
+ (regex)"^mystack_.*@Base$" 1.0
+ (regex|optional)"private" 1.0
+
+Symboler som "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base"
+osv. kommer att tr\(:affas av det f\(:orsta m\(:onstret medan t.ex
+"ng_mystack_new@Base" inte g\(:or det. Det andra m\(:onstret motsvarar alla
+symbolen som inneh\(oaller str\(:angen "private" i sina namn och tr\(:affar kommer
+att \(:arva \fIoptional\fP\-taggen fr\(oan m\(:onstret.
+.P
+Grundl\(:aggande m\(:onster som anges ovan kan kombineras d\(:ar det \(:ar vettigt. I s\(oa
+fall behandlas de i den ordning taggarna anges. Till exempel kommer b\(oade
+
+ (c++|regex)"^NSA::ClassA::Private::privmethod\ed\e(int\e)@Base" 1.0
+ (regex|c++)N3NSA6ClassA7Private11privmethod\edEi@Base 1.0
+
+att tr\(:affa symbolerna "_ZN3NSA6ClassA7Private11privmethod1Ei@Base" och
+"_ZN3NSA6ClassA7Private11privmethod2Ei@Base". N\(:ar det f\(:orsta m\(:onstret
+j\(:amf\(:ors avmanglas f\(:orst symbolen som en C++\-symbol, varefter det avmanglade
+namnet j\(:amf\(:ors med det regulj\(:ara uttrycket. N\(:ar det andra m\(:onstret j\(:amf\(:ors,
+\(oa andra sidan, j\(:amf\(:ors det regulj\(:ara uttrycket mot det r\(oaa symbolnamnet,
+varefter symbolen testas f\(:or att se om det \(:ar av C++\-typ genom att f\(:ors\(:oka
+avmangla det. Om ett grundl\(:aggande m\(:onster misslyckas kommer hela uttrycket
+att misslyckas. D\(:arf\(:or kommer, till exempel
+"__N3NSA6ClassA7Private11privmethod\edEi@Base" inte att tr\(:affas av n\(oagot av
+m\(:onstrena eftersom det inte \(:ar en giltig C++\-symbol.
+
+I allm\(:anhet delas alla m\(:onster in i tv\(oa grupper. alias (grundl\(:aggande \fIc++\fP
+och \fIsymver\fP) och generella m\(:onster (\fIregex\fP, samtliga kombinationer av
+multipla grundl\(:aggande m\(:onster). Det g\(oar snabbt att tr\(:affa grundl\(:aggande
+aliasbaserade m\(:onster (O(1)) medan generella m\(:onster \(:ar O(N) (N \- antal
+generella m\(:onster) f\(:or varje symbol. Det rekommenderas d\(:arf\(:or inte att
+anv\(:anda f\(:or m\(oanga generella m\(:onster.
+
+N\(:ar flera m\(:onster tr\(:affar samma verkliga symbol f\(:oredras alias (f\(:orst
+\fIc++\fP, sedan \fIsymver\fP) framf\(:or generella m\(:onster. Generella m\(:onster
+tr\(:affas i den ordning de uppt\(:acktes i symbolfilmallen fram till den f\(:orsta
+lyckade tr\(:affen. Observera dock att manuell omsortering av poster i
+mallfilen inte rekommenderas d\(oa \fBdpkg\-gensymbols\fP genererar differensfiler
+baserad p\(oa den alfanumeriska sorteringsordningen av dess namn.
+.SS "Anv\(:anda inkluderingar"
+.P
+N\(:ar upps\(:attningen av exporterade symboler skiljer sig mellan arkitekturer
+kan det vara ineffektivt att anv\(:anda en enda symbolfil. I dessa fall kan ett
+inkluderingsdirektiv vara nyttigt p\(oa flera s\(:att:
+.IP \(bu 4
+Du kan faktorisera de gemensamma delarna i en extern fil och inkludera den
+filen i din \fIpaket\fP.symbols.\fIarkitektur\fP\-fil genom att anv\(:anda ett
+inkluderingsdirektiv som detta:
+
+#include "\fIpaket\fP.symbols.common"
+.IP \(bu
+Inkluderingsdirektivet kan \(:aven taggas som alla andra symboler:
+
+(tag|...|tagN)#include "fil\-att\-inkludera"
+
+Alla symboler som inkluderas fr\(oan \fIfil\-att\-inkludera\fP kommer att anses som
+standard vara taggade med \fItag\fP ... \fItagN\fP. Du kan anv\(:anda denna funktion
+f\(:or att skapa en gemensam \fIpaket\fP.symbols\-fil som inkluderar
+arkitekturspecifika filer:
+
+  gemensam_symbol1@Base 1.0
+ (arch=amd64 ia64 alpha)#include "paket.symbols.64bit"
+ (arch=!amd64 !ia64 !alpha)#include "paket.symbols.32bit"
+  gemensam_symbol2@Base 1.0
+.P
+Symbolfilerna l\(:ases radvis, och inkluderingsdirektiv utf\(:ors s\(oa fort de
+uppt\(:acks. Det betyder att inneh\(oallet i den inkluderade filen kan \(:overstyra
+allt inneh\(oall som f\(:orekom f\(:ore inkluderingsdirektivet och att inneh\(oall efter
+direktivet kan \(:overstyra allt fr\(oan den inkluderade filen. Alla symboler
+(\(:aven andra #include\-direktiv) i den inkluderade filen kan ange ytterligare
+taggar eller \(:overstyra v\(:arden f\(:or de \(:arvda taggarna i sin
+taggspecifikation. Det finns dock inte n\(oagot s\(:att f\(:or en symbol att ta bort
+n\(oagon av sina \(:arvda taggar.
+.P
+En inkluderad fil kan repetera huvudraden som inneh\(oaller SONAMNet f\(:or
+biblioteket. I s\(oa fall \(:overstyr den en eventuell huvudrad som l\(:asts in
+tidigare. Det \(:ar vanligtvis dock b\(:ast att undvika att duplicera
+huvudrader. Ett s\(:att att g\(:ora det \(:ar som f\(:oljer:
+.PP
+#include "libn\(oagonting1.symbols.common"
+ arkitekturspecifik_symbol@Base 1.0
+.SS "God hantering av bibliotek"
+.P
+Ett v\(:alunderh\(oallet bibliotek har f\(:oljande funktioner:
+.IP \(bu 4
+dess API \(:ar stabilt (publika symboler tas aldrig bort, endast nya publika
+symboler l\(:aggs till) och inkompatibla \(:andringar g\(:ors endast n\(:ar SONAMNet
+\(:andras;
+.IP \(bu 4
+ideellt anv\(:ander det en versionhanterade symboler f\(:or att uppr\(:atth\(oalla
+ABI\-stabilitet trots interna \(:andringar och API\-ut\(:okningar;
+.IP \(bu 4
+det exporterar inte privata symboler (s\(oadana symboler kan taggas med
+"optional" f\(:or att g\(oa runt detta).
+.P
+N\(:ar man underh\(oaller symbolfilen \(:ar det l\(:att att uppt\(:acka symboler som dyker
+upp och f\(:orsvinner. Det \(:ar sv\(oarare att uppt\(:acka inkompatibla API\- och
+ABI\-\(:andringar. Den paketansvarige b\(:or d\(:arf\(:or noggrant l\(:asa igenom
+uppstr\(:oms\(:andringsloggen f\(:or fall d\(oa reglerna f\(:or god hantering av bibliotek
+bryts. Om ett m\(:ojligt fel uppt\(:acks b\(:or uppstr\(:omsf\(:orfattaren meddelas, d\(oa det
+alltid \(:ar b\(:attre att problemet r\(:attas uppstr\(:oms \(:an specifikt i Debian.
+.SH FLAGGOR
+.TP 
+\fB\-P\fP\fIpaketbyggkatalog\fP
+S\(:ok \fIpaketbyggkatalog\fP ist\(:allet f\(:or debian/tmp.
+.TP 
+\fB\-p\fP\fIpaket\fP
+Definiera paketnamnet. Kr\(:avs om mer \(:an ett bin\(:arpaket listas i
+debian/control (eller om det inte finns n\(oagon debian/control\-fil).
+.TP 
+\fB\-v\fP\fIversion\fP
+Definiera paketversion. Standardv\(:ardet \(:ar versionen som h\(:amtas fr\(oan
+debian/changelog. Kr\(:avs om programmet anropas utanf\(:or ett k\(:allkodspakettr\(:ad.
+.TP 
+\fB\-e\fP\fIbiblioteksfil\fP
+Analyserar endast bibliotek som listats explicit ist\(:allet f\(:or att hitta alla
+publika bibliotek. Du kan anv\(:anda ett jokertecken f\(:or filnamn (se
+manualsidan \fBFile::Glob\fP(3perl) f\(:or detaljer) i \fIbiblioteksfil\fP f\(:or att
+tr\(:affa multipla bibliotek med ett enda argument (annars beh\(:over du flera
+\fB\-e\fP).
+.TP 
+\fB\-l\fP\fIkatalog\fP
+Prepend \fIdirectory\fP to the list of directories to search for private shared
+libraries (since dpkg 1.19.1). This option can be used multiple times.
+
+Observera: Anv\(:and den h\(:ar flaggan ist\(:allet f\(:or att s\(:atta \fBLD_LIBRARY_PATH\fP,
+eftersom milj\(:ovariabeln anv\(:ands f\(:or att styra k\(:ortidsl\(:ankaren, och genom att
+utnyttja det f\(:or att ange s\(:okv\(:agen till delade bibliotek vid kompilering kan
+det uppst\(oa problem, till exempel vid korskompilering.
+.TP 
+\fB\-I\fP\fIfilnamn\fP
+Anv\(:and \fIfilnamn\fP som referensfil f\(:or att generera symbolfilen som
+integreras i sj\(:alva paketet.
+.TP 
+\fB\-O\fP[\fIfilnamn\fP]
+Visa den genererade symbolfilen p\(oa standard ut eller spara som \fIfilnamn\fP om
+det anges, ist\(:allet f\(:or \fBdebian/tmp/DEBIAN/symbols\fP (eller
+\fIpaketbyggkatalog\fP\fB/DEBIAN/symbols\fP om \fB\-P\fP anv\(:andes). Om \fIfilnamn\fP
+redan existerar kommer dess inneh\(oall att anv\(:andas som bas f\(:or den genererade
+symbolfilen. Du kan anv\(:anda den h\(:ar funktionen f\(:or att uppdatera en
+symbolfil s\(oa att den motsvarar en nyare uppstr\(:omsversion av ditt bibliotek.
+.TP 
+\fB\-t\fP
+Skriv symbolfilen i mall\-l\(:age ist\(:allet f\(:or i formatet kompatibelt med
+\fBdeb\-symbols\fP(5). Huvudskillnaden \(:ar att symbolnamn och taggar skrivs i sin
+originalform i mall\-l\(:aget, till skillnad fr\(oan de efterbehandlade
+symbolnamnen med borttagna taggar som skrivs i det kompatibla
+l\(:aget. Dessutom kan vissa symboler uteslutas n\(:ar en vanlig
+\fBdeb\-symbols\fP(5)\-fil skrivs (i enlighet med tagghanteringsreglerna) medan
+alla symboler alltid skrivs till symbolfilsmallen.
+.TP 
+\fB\-c\fP\fI[0\-4]\fP
+Definiera vilka kontroller som skall utf\(:oras n\(:ar den genererade symbolfilen
+j\(:amf\(:ors med den mallfil som anv\(:ands som startpunkt. Som standard \(:ar niv\(oan
+1. Genom att \(:oka niv\(oan utf\(:ors flera kontroller, inklusive alla kontroller p\(oa
+l\(:agre niv\(oa. Niv\(oa 2 misslyckas om nya symboler har introducerats. Niv\(oa 3
+misslyckas om n\(oagra bibliotek har f\(:orsvunnit. Niv\(oa 4 misslyckas om n\(oagra
+bibliotek har introducerats.
+
+V\(:ardet kan \(:overstyras med milj\(:ovariabeln \fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP.
+.TP 
+\fB\-q\fP
+H\(oall tyst och generera aldrig en differens mellan den genererade symbolfilen
+och mallfilen som anv\(:andes som startpunkt eller visa varningar om
+nya/f\(:orlorade bibliotek eller nya/f\(:orlorade symboler. Den h\(:ar flaggan tar
+endast bort informationsutdata, inte sj\(:alva kontrolleran (se flaggan \fB\-c\fP).
+.TP 
+\fB\-a\fP\fIarkitektur\fP
+Anta \fIarkitektur\fP som v\(:ardarkitektur vid hantering av symbolfiler. Anv\(:and
+den h\(:ar flaggan f\(:or att generera en symbolfil eller differens f\(:or valfri
+arkitektur s\(oa l\(:ange dess bin\(:arer \(:ar tillg\(:angliga.
+.TP 
+\fB\-d\fP
+Aktiverar fels\(:okningsl\(:age. Flera meddelanden visas f\(:or att f\(:orklara vad
+\fBdpkg\-gensymbols\fP g\(:or.
+.TP 
+\fB\-V\fP
+Aktivera pratsamt l\(:age. Den genererade symbolfilen inneh\(oaller ej l\(:angre
+rekommenderade symboler som kommentarer. I mall\-l\(:age f\(:oljs dessutom
+m\(:onstersymboler av kommentarer som visar vilka verkliga symboler som har
+tr\(:affats av m\(:onstret.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Visar hj\(:alpsk\(:arm och avslutar.
+.TP 
+\fB\-\-version\fP
+Visar version och avslutar.
+.
+.SH MILJ\(:OVARIABLER
+.TP 
+\fBDPKG_GENSYMBOLS_CHECK_LEVEL\fP
+Overrides the command check level, even if the \fB\-c\fP command\-line argument
+was given (note that this goes against the common convention of command\-line
+arguments having precedence over environment variables).
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+If set, it will be used to decide whether to activate Native Language
+Support, also known as internationalization (or i18n) support (since dpkg
+1.19.0).  The accepted values are: \fB0\fP and \fB1\fP (default).
+.
+.SH "SE \(:AVEN"
+\fBhttps://people.redhat.com/drepper/symbol\-versioning\fP
+.br
+\fBhttps://people.redhat.com/drepper/goodpractice.pdf\fP
+.br
+\fBhttps://people.redhat.com/drepper/dsohowto.pdf\fP
+.br
+\fBdeb\-symbols\fP(5), \fBdpkg\-shlibdeps\fP(1).
+.SH \(:OVERS\(:ATTNING
+Peter Krefting och Daniel Nylander.

@@ -1,0 +1,121 @@
+.\" dpkg manual page - deb-triggers(5)
+.\"
+.\" Copyright © 2008, 2013-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2011, 2014 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-triggers 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-triggers \- Paket\-Trigger
+.
+.SH \(:UBERSICHT
+triggers
+.
+.SH BESCHREIBUNG
+Ein Paket erkl\(:art seine Beziehung zu einigen Trigger(n) (deutsch: Ausl\(:osern)
+indem es eine Datei \fItriggers\fP in seinem Steuerarchiv
+(d.h. \fIDEBIAN/triggers\fP w\(:ahrend der Paketerstellung) hinzunimmt.
+.PP
+Diese Datei enth\(:alt Direktiven, eine pro Zeile. Leerraumzeichen am Anfang
+und Ende sowie alles nach dem ersten \fB#\fP werden in jeder Zeile entfernt und
+leere Zeilen werden ignoriert.
+.PP
+Die derzeit unterst\(:utzten Steuerdirektiven f\(:ur Trigger sind:
+.TP 
+\fBinterest\fP \fITrigger\-Name\fP
+.TQ
+\fBinterest\-await\fP \fITrigger\-Name\fP
+.TQ
+\fBinterest\-noawait\fP \fITrigger\-Name\fP
+.IP
+Gibt an, dass das Paket an dem benannten Trigger interessiert ist. Alle
+Trigger, an denen ein Paket interessiert ist, m\(:ussen mit dieser Direktive in
+der Trigger\-Steuerdatei aufgef\(:uhrt werden.
+.IP
+Die Variante \(Bqawait\(lq setzt die triggernden Pakete in den Zustand
+\(Bqtriggers\-awaited\(lq. Die Variante \(Bqnoawait\(lq setzt die triggernden Pakete
+nicht in den Zustand \(Bqtriggers\-awaited\(lq, selbst falls das triggernde Paket
+eine \(Bqawait\(lq\-Aktivierung deklariert hat (entweder mit den Direktiven
+\fBactivate\-await\fP oder \fBactivate\fP oder durch Verwendung der
+Befehlszeilenoption \fBdpkg\-trigger\fP \fB\-\-no\-await\fP). Die Variante \(Bqnoawait\(lq
+sollte verwandt werden, wenn die von den Triggern bereitgestellte
+Funktionalit\(:at nicht \(:au\(sserst wichtig ist.
+.TP 
+\fBactivate\fP \fITrigger\-Name\fP
+.TQ
+\fBactivate\-await\fP \fITrigger\-Name\fP
+.TQ
+\fBactivate\-noawait\fP \fITrigger\-Name\fP
+.IP
+Sorgt daf\(:ur, dass \(:Anderungen an dem Zustand dieses Pakets einen
+spezifizierten Trigger aktiviert. Der Trigger wird am Beginn folgender
+Operationen aktiviert: unpack, configure, remove (hinzugef\(:ugt zum Nutzen von
+Paketen, die im Konflikt zueinander stehen), purge und deconfigure.
+.IP
+Die \(Bqawait\(lq\-Varianten setzen das Trigger\-ausl\(:osende Paket in den Zustand
+\(Bqtriggers\-awaited\(lq, falls die Direktive \(Bqinterest\(lq auch \(Bqawait\(lq ist. Die
+Variante \(Bqnoawait\(lq setzt die triggernden Pakete nicht in den Zustand
+\(Bqtriggers\-awaited\(lq. Die Variante \(Bqnoawait\(lq sollte verwandt werden, wenn die
+von den Triggern bereitgestellte Funktionalit\(:at nicht \(:au\(sserst wichtig ist.
+.IP
+Falls dieses Paket w\(:ahrend des Entpackens eines anderen Pakets verschwindet,
+wird der Trigger aktiviert, wenn das Verschwinden w\(:ahrend des Endes der
+unpack\-Operation bemerkt wird. Triggerverarbeitung und \(:Uberg\(:ange von
+Trigger\-erwartend auf installiert f\(:uhren nicht zu Aktivierungen. Im Falle
+von unpack werden sowohl die in der alten als auch die in der neuen Version
+des Pakets angegebenen Trigger aktiviert.
+.PP
+Unbekannte Direktiven sind ein Fehler, der die Installation eines Pakets
+verhindert.
+.PP
+Die Variante \(Bq\-noawait\(lq sollte stets wenn m\(:oglich bevorzugt werden, da die
+Trigger\-ausl\(:osenden Pakete nicht in den Zustand \(Fctriggers\-awaited\(Fo \(:uberf\(:uhrt
+werden und daher sofort konfiguriert werden k\(:onnen, ohne die Verarbeitung
+des Triggers zu verlangen. Falls die Trigger\-ausl\(:osenden Pakete
+Abh\(:angigkeiten von anderen, im Upgrade befindlichen Paketen sind, wird dies
+einen fr\(:uhzeitigen Lauf der Trigger\-Verarbeitung vermeiden und es
+erm\(:oglichen, den Trigger nur einmal als einen der letzten Schrittes des
+Upgrades auszuf\(:uhren.
+.PP
+Die Varianten \(Bq\-noawait\(lq werden seit Dpkg 1.16.1 unterst\(:utzt und bei \(:alteren
+Dpkg zu Fehlern f\(:uhren.
+.PP
+Die Alias\-Varianten \(Bq\-await\(lq werden seit Dpkg 1.17.21 unterst\(:utzt und bei
+\(:alteren Dpkg zu Fehlern f\(:uhren.
+.PP
+Wenn ein Paket eine Direktive \fBinterest\-noawait\fP bereitstellt, wird jede
+Aktivierung das triggernde Paket in den Modus \(Bqnoawait\(lq setzen, unabh\(:angig
+von dem durch die Aktivierung erbetenen Awaiting\-Modus (entweder \(Bqawait\(lq
+oder \(Bqnoawait\(lq). Wenn ein Paket eine Direktive \fBinterest\fP oder
+\fBinterest\-await\fP bereitstellt, werden alle Aktivierungen des triggernden
+Paketes in \(Bqawait\(lq oder \(Bqnoawait\(lq gebracht, abh\(:angig von der Art der
+Aktivierung.
+.
+.SH "SIEHE AUCH"
+.\" FIXME: Unhardcode the pathname, and use dpkg instead of dpkg-dev.
+\fBdpkg\-trigger\fP(1), \fBdpkg\fP(1), \fB/usr/share/doc/dpkg\-dev/triggers.txt.gz\fP.
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

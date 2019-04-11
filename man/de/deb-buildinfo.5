@@ -1,0 +1,229 @@
+.\" dpkg manual page - deb-buildinfo(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2015-2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-buildinfo 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-buildinfo \- Format der Bauinformationsdateien von Debian
+.
+.SH \(:UBERSICHT
+\fIDateiname\fP\fB.buildinfo\fP
+.
+.SH BESCHREIBUNG
+Jeder Bau eines Debian\-Quellpakets kann die Bauinformationen in einer
+\&\fB.buildinfo\fP\-Steuerdatei aufzeichnen. Diese enth\(:alt eine Reihe von
+Feldern. Jedes Feld beginnt mit einer Markierung, wie \fBSource\fP oder
+\fBBinary\fP (Gro\(ss\-/Kleinschreibung ist egal), gefolgt von einem Doppelpunkt
+und dem Inhalt des Feldes. Felders werden nur durch Feldmarkierungen
+begrenzt. Mit anderen Worten, Felder k\(:onnen mehrere Zeilen umfasssen, aber
+die Installationswerkzeuge werden im Allgemeinen die Zeilen bei der
+Verarbeitung des Feldinhaltes zusammenfassen (au\(sser im Falle der
+mehrzeiligen Felder \fBBinary\-Only\-Changes\fP, \fBInstalled\-Build\-Depends\fP,
+\fBEnvironment\fP, \fBChecksums\-Md5\fP, \fBChecksums\-Sha1\fP und \fBChecksums\-Sha256\fP,
+siehe unten).
+.PP
+Die Steuerdaten k\(:onnen in eine Signatur mit einer wie in RFC4880
+spezifizierten OpenPGP\-ASCII\-H\(:ulle eingeschlossen sein.
+.PP
+Der Name der \fB.buildinfo\fP\-Datei wird von der Art des Baus abh\(:angen und wird
+so spezifisch wie notwendig sein, aber nicht mehr; f\(:ur einen Bau, der \fBany\fP
+enth\(:alt, wird der Name
+\fIQuellname\fP\fB_\fP\fIBin\(:arversion\fP\fB_\fP\fIArch\fP\fB.buildinfo\fP oder andernfalls f\(:ur
+einen Bau, der \fBall\fP enth\(:alt, wird der Name
+\fIQuellname\fP\fB_\fP\fIQuellversion\fP\fB_\fP\fBall.buildinfo\fP oder andernfalls f\(:ur
+einen Bau, der \fBsource\fP enth\(:alt, wird der Name
+\fIQuellname\fP\fB_\fP\fIBin\(:arversion\fP\fB_\fP\fBsource.buildinfo\fP lauten.
+.
+.SH FELDER
+.TP 
+\fBFormat:\fP \fIFormatversion\fP (verpflichtend)
+Das Wert dieses Feldes legt die Formatversion der Datei fest. Die Syntax des
+Feldwertes ist eine Versionsnummer mit einer Haupt\- und einer
+Nebenkomponente. R\(:uckw\(:artsinkompatible \(:Anderungen im Format f\(:uhren zu einer
+Erh\(:ohung der Hauptversion und r\(:uckw\(:artskompatible \(:Anderungen (wie die
+Aufnahme neuer Felder) f\(:uhren zu einer Erh\(:ohung der Nebenversion. Die
+aktuelle Formatversion ist \fB1.0\fP.
+.TP 
+\fBSource:\fP \fIQuellname\fP [\fB(\fP\fIQuellversion\fP\fB)\fP] (verpflichtend)
+Der Name des Quellpakets. Falls sich die Quellversion von der Bin\(:arversion
+unterscheidet folgt dem \fIQuellname\fPn in Klammern eine \fIQuellversion\fP. Dies
+kann passieren, falls der Bau f\(:ur einen rein\-bin\(:arern, nicht\-Betreuer\-Upload
+ist.
+.TP 
+\fBBinary:\fP \fIBin\(:arpaketliste\fP (verpflichtend)
+Dieses gefaltete Feld ist eine durch Leerzeichen getrennte Liste von
+gebauten bin\(:aren Paketen.
+.TP 
+\fBArchitecture:\fP \fIArchitekturliste\fP (verpflichtend)
+Dieses, durch Leerzeichen getrennte Feld f\(:uhrt die Architekturen der derzeit
+gebauten Dateien auf. Typische Architekturen sind \fBamd64\fP, \fBarmel\fP,
+\fBi386\fP usw. Beachten Sie, dass der Wert \fBall\fP f\(:ur architekturunabh\(:angige
+Pakete gedacht ist. Falls die Quelle f\(:ur das Paket auch gebaut wird, ist der
+besondere Eintrag \fBsource\fP auch vorhanden. Architektur\-Platzhalter d\(:urfen
+in der Liste niemals auftauchen.
+.TP 
+\fBVersion:\fP \fIVersionszeichenkette\fP (verpflichtend)
+Typischerweise ist das die Original\-Paketversionsnummer, in der Form, die
+der Programmautor verwendet. Es kann auch eine Debian\-Revisionsnummer
+enthalten (f\(:ur nicht aus Debian stammende Pakete). Das genaue Format und der
+Sortieralgorithmus sind in \fBdeb\-version\fP(7) beschrieben.
+.TP 
+\fBBinary\-Only\-Changes:\fP
+.TQ
+\fIChangelog\-Eintrag\fP
+Das mehrzeilige Feld enth\(:alt den aneinandergeh\(:angten Text des
+Changelog\-Eintrages eines rein bin\(:aren, nicht\-Betreuer\-Uploads (binNMU),
+falls dies der Fall ist. Um ein g\(:ultiges mehrzeiliges Feld zu erhalten,
+werden leere Zeilen durch ein einzelnen Satzpunkt (\(bq.\(cq) ersetzt und alle
+Zeilen mit einem Leerzeichen einger\(:uckt. Der genaue Inhalt h\(:angt vom
+Changelog\-Format ab.
+.TP 
+\fBChecksums\-Md5:\fP (verpflichtend)
+.TQ
+\fBChecksums\-Sha1:\fP (verpflichtend)
+.TQ
+\fBChecksums\-Sha256:\fP (verpflichtend)
+.TQ
+ \fIPr\(:ufsumme\fP \fIGr\(:o\(sse\fP \fIDateiname\fP
+Diese mehrzeiligen Felder enthalten eine Liste von Dateien mit einer
+Pr\(:ufsumme und Gr\(:o\(sse f\(:ur jede. Diese Felder haben die gleiche Syntax und
+unterscheiden sich nur im verwandten Pr\(:ufsummenalgorithmus: MD5 f\(:ur
+\fBChecksums\-Md5\fP, SHA\-1 f\(:ur \fBChecksums\-Sha1\fP und SHA\-256 f\(:ur
+\fBChecksums\-Sha256\fP.
+
+Die erste Zeile des Feldwertes (der Teil auf dem durch ein Doppelpunkt
+gefolgten Namen) ist immer leer. Der Inhalt des Feldes wird durch
+Fortsetzungszeilen ausgedr\(:uckt, eine Zeile pro Datei. Jede Zeile besteht aus
+durch Leerzeichen getrennten Eintr\(:agen, die die Datei beschreiben: der
+Pr\(:ufsumme, der Dateigr\(:o\(sse und dem Dateinamen.
+
+Diese Datei f\(:uhrt alle Dateien auf, aus denen der Bau besteht.
+.TP 
+\fBBuild\-Origin:\fP \fIName\fP
+Der Name der Distribution, aus der dieses Paket urspr\(:unglich stammt.
+.TP 
+\fBBuild\-Architecture:\fP \fIArch\fP (verpflichtend)
+Die Debian\-Architektur f\(:ur die Installation, unter der das Paket gebaut
+wurde. Typische Architekturen sind \fBamd64\fP, \fBarmel\fP, \fBi386\fP, usw.
+.TP 
+\fBBuild\-Date:\fP \fIBaudatum\fP
+Das Datum, an dem das Paket letztmalig gebaut wurde. Es muss im gleichen
+Format wie in einem Eintrag bei \fBdeb\-changelog\fP(5) sein.
+.TP 
+\fBBuild\-Kernel\-Version:\fP \fIBau\-Kernel\-Version\fP
+Die Ver\(:offentlichung und die Version (in einem nicht festgelegten Format)
+des auf dem Bausystem laufenden Kernels. Dieses Feld ist nur vorhanden,
+falls der Bauende es explizit angefordert hat, um zu verhindern, dass
+vertrauliche Informationen versehentlich ver\(:offentlicht werden.
+.TP 
+\fBBuild\-Path:\fP \fIBaupfad\fP
+Der absolute Baupfad, der dem entpackten Quellbaum entspricht. Dieses Feld
+ist nur vorhanden, falls der Lieferant das Feld \(:uber ein Muster
+freigeschaltet hat, um zu verhindern, dass vertrauliche Informationen
+versehentlich ver\(:offentlicht werden.
+
+Unter Debian und abgeleiteten Distributionen werden nur Baupfade, die mit
+\fI/build/\fP beginnen, dieses Feld ausgeben.
+.TP 
+\fBBuild\-Tainted\-By:\fP
+.TQ
+\fItaint\-reason\-list\fP
+Dieses gefaltete Feld enth\(:alt eine durch Leerzeichen getrennte, nicht
+abschlie\(ssende Liste von Markierungen (die durch alphanumerische und
+Bindestrichzeichen aufgebaut werden), die identifizieren, warum der aktuelle
+Bau unsauber (tainted) wurde (seit Dpkg 1.19.5).
+.IP
+Unter Debian und abgeleiteten Distributionen k\(:onnen die folgenden
+Begr\(:undungsmarkierungen ausgeben werden.
+.RS
+.TP 
+\fBmerged\-usr\-via\-symlinks\fP
+Das System hat ein mittels Symlinks zusammengef\(:uhrtes \fI/usr\fP. Dies wird
+\fBdpkg\-query\fP, \fBdpkg\-statoverride\fP, \fBdpkg\-trigger\fP, \fBupdate\-alternatives\fP
+und weitere Werkzeuge, die Pfadnamen als Schl\(:ussel in ihren Datenbanken
+verwenden, durcheinanderbringen, da es Dateisystem\-Alias\-Probleme erzeugt
+und bringt das Verst\(:andnis, das \fBdpkg\fP in seiner Datenbank aufnotiert hat,
+durcheinander. F\(:ur Bausysteme, die Pfadnamen auf bestimmte Programme oder
+Bibliotheken auf den enstandenen Artefakten hartkodieren, kann dies auch zu
+Paketen f\(:uhren, die mit nichtzusammengef\(:uhrten usr\-Dateisystemen
+inkompatibel sind.
+.TP 
+\fBusr\-local\-has\-configs\fP
+Das System hat Konfigurationsdateien unter \fI/usr/local/etc\fP.
+.TP 
+\fBusr\-local\-has\-includes\fP
+Das System hat Header\-Dateien unter \fI/usr/local/include\fP.
+.TP 
+\fBusr\-local\-has\-programs\fP
+Das System hat Programme unter \fI/usr/local/bin\fP oder \fI/usr/local/sbin\fP.
+.TP 
+\fBusr\-local\-has\-libraries\fP
+Das System hat Bibliotheken, entweder statische oder Laufzeit\-, unter
+\fI/usr/local/lib\fP.
+.RE
+.TP 
+\fBInstalled\-Build\-Depends:\fP (verpflichtend)
+.TQ
+\fIPaketliste\fP
+Die Liste der installierten und konfigurierten Pakete, die den Bauprozess
+des Pakets beeinflussen k\(:onnten.
+
+Die Liste besteht aus jedem Paketnamen, optional architekturqualifiziert f\(:ur
+fremde Architekturen, mit einer genauen Versionseinschr\(:ankung, getrennt
+durch Kommata.
+
+Die Liste enth\(:alt alle essenziellen Pakete, die in Quell\-Steuerfeldern
+\fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP, \fBBuild\-Depends\-Indep\fP aufgef\(:uhrten
+Pakete, alle Lieferanten\-spezifischen eingebauten Abh\(:angigkeiten und alle
+ihre rekursiven Abh\(:angigkeiten. Unter Debian und abgeleiteten Distributionen
+ist die eingebaute Abh\(:angigkeit \fBbuild\-essential\fP.
+
+F\(:ur Abh\(:angigkeiten aus den Quellsteuerfeldern werden alle
+Abh\(:angigkeitsalternativen und alle Anbieter abh\(:angiger virtueller Pakete mit
+aufgenommen.
+.TP 
+\fBUmgebung\fP
+.TQ
+\fIVariablenliste\fP
+Die Liste der Umgebungsvariablen, die bekannterma\(ssen den Paketbauprozess
+beeinflussen, wobei jede Umgebungsvariable von einem Gleichheitszeichen
+(,=\(cq) und dem mit R\(:uckw\(:artsschr\(:agstrichen (,\e\e\(cq) maskierte Wert in
+doppelten Anf\(:uhrungszeichen (,=\(cq) gefolgt wird.
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\"
+.\" .fi
+.\" .RE
+.
+.SH "SIEHE AUCH"
+\fBdeb\-changes\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-genbuildinfo\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

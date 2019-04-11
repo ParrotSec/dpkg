@@ -98,14 +98,15 @@ Hinweis: Wird diese Abgleichoption alleine verwandt, könnte auf nicht
 geplante Prozesse eingewirkt werden, falls der alte Prozess beendet wurde,
 ohne dass er \fIpid\-Datei\fP entfernen konnte.
 .IP
-\fBWarning:\fP using this match option with a world\-writable pidfile or using
-it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
-user will be refused with an error (since version 1.19.3) as this is a
-security risk, because either any user can write to it, or if the daemon
-gets compromised, the contents of the pidfile cannot be trusted, and then a
-privileged runner (such as an init script executed as root) would end up
-acting on any system process.  Using \fI/dev/null\fP is excempt from these
-checks.
+\fBWarnung\fP: Wird diese Abgleichoption mit einer weltschreibbaren PID\-Datei
+oder alleine mit einem Daemon, der als nicht privilegierter Benutzer
+(d.h. nicht als root) in eine PID\-Datei schreibt, verwandt, dann wird dies
+mit einem Fehler abgelehnt (seit Version 1.19.3), da dies ein
+Sicherheitsrisiko darstellt, da entweder jeder Benutzer hineinschreiben kann
+oder, falls der Daemon kompromitiert wird, dem Inhalt der PID\-Datei nicht
+vertraut werden kann und dann ein privilegierter Ausführer (wie ein als Root
+ausgeführtes Init\-Skript) am Ende auf jeden Systemprozess agieren würde. Die
+Verwendung von \fI/dev/null\fP ist von diesen Prüfungen ausgenommen.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIProgramm\fP
 Überprüfe auf Prozesse, die Instanzen von diesem Programm sind. Das Argument
@@ -346,7 +347,7 @@ start\-stop\-daemon \-\-stop \-\-oknodo \-\-user food \-\-name food \e
 	\-\-pidfile /run/food.pid \-\-retry=TERM/30/KILL/5
 .fi
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

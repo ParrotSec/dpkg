@@ -1,0 +1,295 @@
+.\" dpkg manual page - dpkg-deb(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 1999 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2007-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-deb 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-deb \- Debian\-Paketarchiv (.deb) Manipulationswerkzeug
+.
+.SH \(:UBERSICHT
+\fBdpkg\-deb\fP [\fIOption\fP …] \fIBefehl\fP
+.
+.SH BESCHREIBUNG
+\fBdpkg\-deb\fP packt und entpackt Debian\-Archive und stellt Informationen \(:uber
+sie breit.
+.PP
+Verwenden Sie \fBdpkg\fP, um Pakete auf Ihrem System hinzuzuf\(:ugen oder zu
+entfernen
+.PP
+Sie k\(:onnen \fBdpkg\-deb\fP durch Aufruf von \fBdpkg\fP mit beliebigen Optionen, die
+Sie an \fBdpkg\-deb\fP \(:ubergeben wollen, aufrufen. \fBdpkg\fP erkennt, dass Sie
+\fBdpkg\-deb\fP wollten und wird es f\(:ur Sie ausf\(:uhren.
+.PP
+Bei den meisten Befehlen, die ein Archiv als Eingabeargument erwarten, kann
+der Archivname von der Standardeingabe gelesen werden, wenn er als einzelnes
+Minuszeichen (\(Bq\fB\-\fP\(lq) angegeben ist. Falls dies nicht unterst\(:utzt wird, ist
+dies in der jeweiligen Beschreibung des Befehls dokumentiert.
+.
+.SH BEFEHLE
+.TP 
+\fB\-b\fP, \fB\-\-build\fP \fIProgrammverzeichnis\fP [\fIArchiv\fP|\fIVerzeichnis\fP]
+Legt ein Debian\-Archiv aus dem Dateisystembaum, das in
+\fIProgrammverzeichnis\fP gespeichert ist, an. \fIProgrammverzeichnis\fP muss ein
+\fBDEBIAN\fP\-Unterverzeichnis aufweisen, das die Dateien mit Steuerinformation
+wie die control\-Datei selbst enth\(:alt. Dieses Verzeichnis wird \fInicht\fP in
+dem Dateisystemarchiv des Bin\(:arpakets auftauchen, sondern die Dateien selbst
+werden in den Steuer\-Informationsbereich des Bin\(:arpakets gepackt.
+
+Falls Sie nicht \fB\-\-nocheck\fP angeben, wird \fBdpkg\-deb\fP \fBDEBIAN/control\fP
+lesen und es auswerten. Es pr\(:uft die Datei auf Syntax\-Fehler und andere
+Probleme und zeigt den Namen des zu bauenden Bin\(:arpakets an. \fBdpkg\-deb\fP
+wird auch die Rechte der Betreuer\-Skripte und anderer Dateien im
+\fBDEBIAN\fP\-Steuer\-Informationsverzeichnis pr\(:ufen.
+
+Falls kein \fIArchiv\fP angegeben ist, wird \fBdpkg\-deb\fP das Paket in die Datei
+\fIProgrammverzeichnis\fP\fB.deb\fP schreiben.
+
+Falls das anzulegende Archiv bereits existiert, wird es \(:uberschrieben.
+
+Falls das zweite Argument ein Verzeichnis ist, wird \fBdpkg\-deb\fP in die Datei
+\fIVerzeichnis\fP\fB/\fP\fIPaket\fP\fB_\fP\fIVersion\fP\fB_\fP\fIArch\fP\fB.deb.\fP schreiben. Wenn
+ein Zielverzeichnis statt einer Datei angegeben ist, darf die Option
+\fB\-\-nocheck\fP nicht verwendet werden (da \fBdpkg\-deb\fP die Paketsteuerdatei
+lesen und auswerten muss, um den zu verwendenen Dateinamen zu bestimmen).
+.TP 
+\fB\-I\fP, \fB\-\-info\fP \fIArchiv\fP [\fISteuer\-Dateiname\fP …]
+Stellt Informationen \(:uber ein Bin\(:arpaketarchiv bereit.
+
+Falls keine \fISteuer\-Dateiname\fPn angegeben sind, wird es eine
+Zusammenfassung des Inhalts des Pakets sowie dessen control\-Datei ausgeben.
+
+Falls \fISteuer\-Dateiname\fPn angegeben sind, wird \fBdpkg\-deb\fP diese in der
+angegebenen Reihenfolge ausgeben; falls einige der Komponenten nicht
+vorhanden sind, wird es eine Fehlernachricht nach Stderr \(:uber jede ausgeben
+und sich mit dem Status 2 beenden.
+.TP 
+\fB\-W\fP, \fB\-\-show\fP \fIArchiv\fP
+Stellt Informationen \(:uber Bin\(:arpaketarchive im Format dar, das mit dem
+Argument \fB\-\-showformat\fP angegeben wurde. Das Standardformat zeigt den
+Paketnamen und die Paketversion in einer Zeile, getrennt durch einen
+Tabulator.
+.TP 
+\fB\-f\fP, \fB\-\-field\fP \fIArchiv\fP [\fISteuer\-Feldname\fP …]
+Extrahiert die Informationen der control\-Datei aus einem Bin\(:arpaketarchiv.
+
+Falls keine \fISteuer\-Feldname\fPn angegeben sind, gibt es die gesamte
+control\-Datei aus.
+
+Falls welche angegeben sind, gibt \fBdpkg\-deb\fP ihren Inhalt in der
+Reihenfolge aus, in der sie in der control\-Datei angegeben sind. Falls mehr
+als ein \fISteuer\-Feldname\fP angegeben ist, stellt \fBdpkg\-deb\fP jedem Inhalt
+seinen Feldnamen (und einen Doppelpunkt mit Leerzeichen) voran.
+
+Falls angeforderte Felder nicht gefunden werden wird kein Fehler gemeldet.
+.TP 
+\fB\-c\fP, \fB\-\-contents\fP \fIArchiv\fP
+Listet den Inhalt des Dateisystem\-Archivanteils des Paketarchivs auf. Die
+Ausgabe erfolgt derzeit in dem Format, das von \fBtar\fP in der ausf\(:uhrlichen
+Auflistung erstellt wird.
+.TP 
+\fB\-x\fP, \fB\-\-extract\fP \fIArchiv\-Verzeichnis\fP
+Extrahiert den Dateisystembaum aus einem Paketarchiv in das angegebene
+Verzeichnis.
+
+Beachten Sie, dass das Extrahieren eines Pakets in das Wurzelverzeichnis
+\fInicht\fP zu einer korrekten Installation f\(:uhrt! Verwenden Sie \fBdpkg\fP zur
+Paketinstallation.
+
+\fIVerzeichnis\fP (aber nicht die \(:ubergeordneten) wird falls notwendig
+angelegt. Seine Rechte werden angepasst, um mit dem Inhalt des Pakets
+\(:ubereinzustimmen.
+.TP 
+\fB\-X\fP, \fB\-\-vextract\fP \fIArchiv\-Verzeichnis\fP
+Ist wie \fB\-\-extract\fP (\fB\-x\fP) mit \fB\-\-verbose\fP (\fB\-v\fP), das beim Arbeiten
+eine Liste von entpackten Dateien ausgibt.
+.TP 
+\fB\-R\fP, \fB\-\-raw\-extract\fP \fIArchiv\-Verzeichnis\fP
+Extrahiert den Dateisystembaum aus einem Paketarchiv in ein angegebenes
+Verzeichnis und die Steuerinformationensdateien in das
+\fBDEBIAN\fP\-Unterverzeichnis des angegebenen Verzeichnisses (seit Dpkg
+1.16.1).
+
+Das Zielverzeichnis (aber nicht \(:ubergeordnete) wird, falls notwendig,
+angelegt.
+
+Das Eingebearchiv wird (derzeit) nicht sequenziell verarbeitet, daher wird
+das Einlesen von der Standardeingabe (\(Bq\fB\-\fP\(lq) \fBnicht\fP unterst\(:utzt.
+.TP 
+\fB\-\-ctrl\-tarfile\fP \fIArchiv\fP
+Extrahiert die Steuerdaten aus einem Bin\(:arpaket und schickt sie zur
+Standardausgabe im \fBtar\fP\-Format (seit Dpkg 1.17.14. Dies kann zusammen mit
+\fBtar\fP(1) verwendet werden, um eine bestimmte control\-Datei aus einem
+Paketarchiv zu extrahieren. Das Eingabearchiv wird immer sequenziell
+verarbeitet.
+.TP 
+\fB\-\-fsys\-tarfile\fP \fIArchiv\fP
+Extrahiert die Dateisystembaum\-Daten aus einem Bin\(:arpaket und schickt sie
+zur Standardausgabe im \fBtar\fP\-Format. Dies kann zusammen mit \fBtar\fP(1)
+verwendet werden, um eine bestimmte Datei aus einem Paketarchiv zu
+extrahieren. Das Eingabearchiv wird immer sequenziell verarbeitet.
+.TP 
+\fB\-e\fP, \fB\-\-control\fP \fIArchiv\fP [\fIVerzeichnis\fP]
+Extrahiert die Steuer\-Informationsdateien aus einem Paketarchiv in das
+angegebene Verzeichnis.
+
+Falls kein Verzeichnis angegeben ist, wird das Unterverzeichnis \fBDEBIAN\fP im
+aktuellen Verzeichnis verwendet.
+
+Das Zielverzeichnis (aber nicht \(:ubergeordnete) wird, falls notwendig,
+angelegt.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH OPTIONEN
+.TP 
+\fB\-\-showformat=\fP\fIFormat\fP
+Diese Option wird dazu verwendet, das Format der Ausgabe anzugeben, das
+\fB\-\-show\fP verwenden wird. Das Format ist eine Zeichenkette, die f\(:ur jedes
+aufgef\(:uhrte Paket ausgegeben wird.
+
+Die Zeichenkette darf jedes Statusfeld in der Form \(Bq${\fIFeldname\fP}\(lq
+referenzieren, eine Liste der m\(:oglichen Felder kann leicht mittels \fB\-I\fP f\(:ur
+das gleiche Paket ermittelt werden. Eine komplette Erl\(:auterung der
+Formatieroptionen (darunter die Escape\-Sequenzen und Feld\-Tabulatoren) kann
+in der Erkl\(:arung der Option \fB\-\-showformat\fP von \fBdpkg\-query\fP(1) gefunden
+werden.
+
+Die Voreinstellung f\(:ur dieses Feld ist \(Bq${Package}\et${Version}\en\(lq.
+.TP 
+\fB\-z\fP\fIKomprimierstufe\fP
+Gibt die Komprimierstufe an, die im Komprimier\-Backendprogramm beim Bau
+eines Pakets verwendet werden soll. Standardm\(:a\(ssig ist dies 9 f\(:ur Gzip, 6 f\(:ur
+Xz. Die akzeptierten Werte innerhalb von 0\-9 sind: 0 wird auf den
+Komprimierer \(Fcnone\(Fo f\(:ur Gzip einstellen. Vor Dpkg 1.16.2 war die Stufe 0
+\(:aquivalent zu dem Komprimierer \(Fcnone\(Fo f\(:ur alle Komprimierer.
+.TP 
+\fB\-S\fP\fIKomprimierstrategie\fP
+Gibt die zu verwendende Komprimierstrategie an, die f\(:ur den
+Komprimierer\-Backend beim Bau eines Pakets verwandt werden soll (seit Dpkg
+1.16.2). Erlaubte Werte sind \fBnone\fP (seit Dpkg 1.16.4), \fBfiltered\fP,
+\fBhuffman\fP, \fBrle\fP und \fBfixed\fP f\(:ur Gzip (seit Dpkg 1.17.0) und \fBextreme\fP
+f\(:ur Xz.
+.TP 
+\fB\-Z\fP\fIKomprimierart\fP
+Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind
+\fBgzip\fP, \fBxz\fP (seit Dpkg 1.15.6) und \fBnone\fP (voreingestellt ist \fBxz\fP).
+.TP 
+\fB\-\-[no\-]uniform\-compression\fP
+Gibt an, dass die gleichen Komprimierungsparameter f\(:ur alle Archivteile
+(d.h. \fBcontrol.tar\fP und \fBdata.tar\fP; seit Dpkg 1.17.6) verwandt werden
+sollen. Andernfalls wird nur der Teil \fBdata.tar\fP diese Parameter
+verwenden. Die einzigen unterst\(:utzten Kompressionstypen, die \(:ubergreifend
+benutzt werden d\(:urfen, sind \fBnone\fP, \fBgzip\fP und \fBxz\fP. Die Option
+\fB\-\-no\-uniform\-compression\fP deaktiviert die \(:ubergreifende Komprimierung
+(seit Dpkg 1.19.0). \(:Ubergreifende Komprimierung ist die Vorgabe (seit Dpkg
+1.19.0).
+.TP 
+\fB\-\-root\-owner\-group\fP
+Setzt f\(:ur jeden Eintrag in den Dateisystembaumdaten den Eigent\(:umer und die
+Gruppe auf Kennung 0 (seit Dpkg 1.19.0).
+
+\fBHinweis\fP: Diese Option kann f\(:ur rootloses Bauen (siehe
+\fIrootless\-builds.txt\fP) n\(:utzlich sein, sollte aber \fBnicht\fP verwandt werden,
+wenn Eintr\(:age eine von root verschiedenen Eigent\(:umer oder Gruppe haben. Die
+Unterst\(:utzung hierf\(:ur wird sp\(:ater in der Form eines Meta\-Manifests
+hinzugef\(:ugt.
+.TP 
+\fB\-\-deb\-format=\fP\fIFormat\fP
+Setzt das beim Bau verwandte Archivformat (seit Dpkg 1.17.0). Erlaubte Werte
+sind \fB2.0\fP f\(:ur das neue Format und \fB0.939000\fP f\(:ur das alte Format (Vorgabe
+ist \fB2.0\fP).
+
+Das alte Format wird nicht so leicht von nicht\-Debian\-Werkzeugen eingelesen
+und ist jetzt veraltet; der einzige Zweck ist zum Bau von Paketen, die von
+Dpkg\-Versionen kleiner 0.93.76 (September 1995) eingelesen werden
+sollen. Diese Dpkg\-Version wurde nur als i386 a.out\-Programm ver\(:offentlicht.
+.TP 
+\fB\-\-nocheck\fP
+Unterdr\(:uckt die normalen \(:Uberpr\(:ufungen von \fBdpkg\-deb \-\-build\fP \(:uber die
+vorgeschlagenen Inhalte eines Archivs. Damit k\(:onnen Sie jedes Archiv bauen,
+das Sie m\(:ochten, egal wie defekt es ist.
+.TP 
+\fB\-v\fP, \fB\-\-verbose\fP
+Aktiviert ausf\(:uhrliche Ausgabe (seit Dpkg 1.16.1). Dies betrifft derzeit nur
+\fB\-\-extract\fP, wodurch dieses sich wie \fB\-\-vextract\fP verh\(:alt.
+.TP 
+\fB\-D\fP, \fB\-\-debug\fP
+Aktiviert Fehlersuchausgaben (\(Fcdebugging\(Fo). Dies ist nicht sehr interessant.
+.
+.SH R\(:UCKGABEWERT
+.TP 
+\fB0\fP
+Die angeforderte Aktion wurde erfolgreich ausgef\(:uhrt.
+.TP 
+\fB2\fP
+Fataler oder nicht behebbarer Fehler aufgrund ung\(:ultiger
+Befehlszeilenverwendung oder Interaktionen mit dem System, wie Zugriffe auf
+die Datenbank, Speicherzuweisungen usw.
+.
+.SH UMGEBUNG
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBTMPDIR\fP
+Falls gesetzt, wird \fBdpkg\-deb\fP es als das Verzeichnis verwenden, in dem
+tempor\(:are Dateien und Verzeichnisse erstellt werden.
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+Falls gesetzt, wird es als Zeitstempel (als Sekunden seit der Epoche) in dem
+\fBar\fP(5)\-Container von \fBdeb\fP(5) und zum Festlegen der Mtime in den
+Dateieintr\(:agen von \fBtar\fP(5) verwandt.
+.
+.SH BEMERKUNGEN
+Versuchen Sie nicht, nur mit \fBdpkg\-deb\fP Software zu installieren! Sie
+m\(:ussen \fBdpkg\fP selber verwenden, um sicherzustellen, dass alle Dateien an
+den richtigen Ort platziert werden, die Paketskripte ausgef\(:uhrt werden und
+sein Status und Inhalt aufgezeichnet wird.
+.
+.SH FEHLER
+\fBdpkg\-deb \-I\fP \fIPaket1\fP\fB.deb\fP \fIPaket2\fP\fB.deb\fP macht das Falsche.
+
+\&\fB.deb\fP\-Dateien werden nicht authentifiziert; in der Tat gibt es noch nicht
+mal eine klare Pr\(:ufsumme. (Abstraktere Werkzeuge wie APT unterst\(:utzten die
+Authentifizierung von \fB.deb\fP\-Paketen, die von einem vorgegebenen Depot
+geholt wurden und die meisten Pakete stellen heutzutage eine
+md5sum\-Steuerdatei bereit, die mittels debian/rules erstellt
+wurde. Allerdings wird dies von den Werkzeugen auf niedrigerer Ebene nicht
+direkt unterst\(:utzt.)
+.
+.SH "SIEHE AUCH"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\fP(1), \fBdselect\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

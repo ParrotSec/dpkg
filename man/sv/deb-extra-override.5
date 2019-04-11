@@ -1,0 +1,56 @@
+.\" dpkg manual page - deb-extra-override(5)
+.\"
+.\" Copyright © 2009-2010 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-extra\-override 5 2019-03-25 1.19.6 Dpkg\-sviten
+.nh
+.SH NAMN
+deb\-extra\-override \- Debianarkivets extra \(:overstyrningsfil
+.
+.SH SYNOPS
+override
+.
+.SH BESKRIVNING
+\(:Aven om det mesta av informationen om ett bin\(:ar\-/k\(:allkodspaket finns i
+control\-/.dsc\-filen s\(oa kan allt \(:overstyras n\(:ar det exporteras till
+Packages\-/Sources\-filer. Den extra override\-filen inneh\(oaller dessa
+\(:overstyrningar.
+.PP
+Den extra override\-filen har ett enkelt blanksteg\-avdelat
+format. Kommentarer \(:ar till\(oatna (markeras med ett \fB#\fP).
+.PP
+.in +5
+\fIpaket\fP \fIf\(:altnamn\fP \fIv\(:arde\fP
+.in -5
+.PP
+\fIpaket\fP \(:ar namnet p\(oa bin\(:ar\-/k\(:allkodspaketet
+.PP
+\fIf\(:altnamn\fP \(:ar namnet p\(oa f\(:altet som skall \(:overstyras. \fIv\(:arde\fP \(:ar v\(:ardet som
+skall l\(:aggas in i f\(:altet. Det kan inneh\(oalla blanksteg d\(oa raden delas upp i
+maximalt tre kolumner vid tolkning.
+.PP
+De extra override\-filer som anv\(:ands f\(:or att skapa den officiella listan \(:over
+paket ("Packages") finns i \fIindices\fP\-katalogen p\(oa alla Debianspeglar.
+.
+.SH "SE \(:AVEN"
+\fBdpkg\-scanpackages\fP(1), \fBdpkg\-scansources\fP(1), \fBapt\-ftparchive\fP(1).
+.SH \(:OVERS\(:ATTNING
+Peter Krefting och Daniel Nylander.

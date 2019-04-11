@@ -1,0 +1,465 @@
+.\" dpkg manual page - deb-src-control(5)
+.\"
+.\" Copyright © 2010 Oxan van Leeuwen <oxan@oxanvanleeuwen.nl>
+.\" Copyright © 2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-control 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-src\-control \- Dateiformat der Hauptsteuerdatei von Debian\-Quellpaketen
+.
+.SH \(:UBERSICHT
+debian/control
+.
+.SH BESCHREIBUNG
+Jedes Debian\-Quellpaket enh\(:alt die Hauptsteuerdatei \(Bqcontrol\(lq, die
+mindestens zwei Abs\(:atze enth\(:alt, die durch eine Leerzeile getrennt
+werden. Der erste Absatz f\(:uhrt alle allgemeinen Informationen \(:uber das
+Quellpaket auf, w\(:ahrend jeder folgende Absatz genau ein Bin\(:arpaket
+beschreibt. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt
+mit einem Feldnamen, wie \fBPackage\fP oder \fBSection\fP (Gro\(ss\-/Kleinschreibung
+egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes und einem
+Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede erg\(:anzende
+Zeile ohne Feldnamen sollte mit mindestens einem Leerzeichen beginnen. Der
+Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu
+einer Zeile zusammengef\(:uhrt (das Feld \fBDescription\fP ist eine Ausnahme,
+siehe unten). Um Leerzeilen in ein mehrzeiliges Feld einzuf\(:ugen, verwenden
+Sie einen Satzpunkt nach dem Leerzeichen. Zeilen, die mit \(bq\fB#\fP\(cq beginnen,
+werden als Kommentare betrachtet.
+.
+.SH QUELLPAKET\-FELDER
+.TP 
+\fBSource:\fP \fIQuellpaketname\fP (verpflichtend)
+Der Wert dieses Feldes ist der Name des Quellpakets und sollte mit dem Namen
+des Quellpakets in der Datei debian/changelog \(:ubereinstimmen. Ein Paketname
+darf nur aus Kleinbuchstaben (a\-z), Ziffern (0\-9), Plus\- (+) und
+Minuszeichen (\-) und Satzpunkten (.) bestehen. Paketnamen m\(:ussen mindestens
+zwei Zeichen lang sein und mit einem klein geschriebenen alphanumerischen
+Zeichen (a\-z0\-9) beginnen.
+
+.TP 
+\fBMaintainer:\fP \fIVollst\(:andiger\-Name\-und\-E\-Mail\fP (empfohlen)
+Sollte in dem Format \(BqJoe Bloggs <jbloggs@foo.com>\(lq sein und
+verweist auf die Person, die derzeit das Paket betreut, im Gegensatz zum
+Autor der Software, die paketiert wurde, oder dem urspr\(:unglichen Paketierer.
+
+.TP 
+\fBUploaders:\fP\fI Vollst\(:andiger\-Name\-und\-E\-Mail\fP
+Listet die Namen und E\-Mail\-Adressen der Ko\-Betreuer des Pakets auf, im
+gleichen Format wie das Feld \fBMaintainer\fP. Mehrere Ko\-Betreuer sollten
+durch Kommata getrennt werden.
+
+.TP 
+\fBStandards\-Version:\fP \fI Versionszeichenkette\fP
+Dies dokumentiert die neuste Version der Standards der Distribution, an den
+sich das Paket h\(:alt.
+
+.TP 
+\fBDescription\fP\fI Kurzbeschreibung\fP
+.TQ
+\fB \fP\fILangbeschreibung\fP
+Das Format der Quellpaketbeschreibung ist eine kurze knappe Zusammenfassung
+auf der ersten Zeile (nach dem Feld \fBDescription\fP). Die folgenden Zeilen
+sollten als l\(:angere, detailliertere Beschreibung verwendet werden. Jede
+Zeile der Langbeschreibung muss von einem Leerzeichen begonnen werden, und
+Leerzeilen in der Langbeschreibung m\(:ussen einen einzelnen \(bq\fB.\fP\(cq hinter dem
+einleitenden Leerzeichen enthalten.
+
+.TP 
+\fBHomepage:\fP\fI URL\fP
+Die URL des Original\- (Upstream\-)Projekts.
+
+.TP 
+\fBBugs:\fP\fI URL\fP
+Die \fIURL\fP der Fehlerdatenbank f\(:ur dieses Paket. Das derzeit verwendete
+Format ist \fIBTS\-Art\fP\fB://\fP\fIBTS\-Adresse\fP wie in
+\fBdebbugs://bugs.debian.org\fP. Dieses Feld wird normalerweise nicht ben\(:otigt.
+
+.TP 
+\fBRules\-Requires\-Root:\fP \fBno\fP|\fBbinary\-targets\fP|\fIimpl\-keywords\fP
+Dieses Feld wird verwandt, um anzuzeigen, ob die Datei \fBdebian/rules\fP
+(fake)root\-Priviliegien ben\(:otigt, um einige ihrer Ziele auszuf\(:uhren, und
+falls ja, wann.
+.RS
+.TP 
+\fBno\fP
+Die Bin\(:arziele werden \(:uberhaupt kein (fake)root ben\(:otigen.
+.TP 
+\fBbinary\-targets\fP
+Die Bin\(:arziele m\(:ussen immer unter (fake)root ausgef\(:uhrt werden. Dieser Wert
+ist die Vorgabe, wenn die Datei fehlt. Die Aufnahme dieses Feld mit einem
+expliziten \fBbinary\-targets\fP ist zwar streng genommen nicht notwendig,
+markiert aber, dass es darauf untersucht wurde.
+.TP 
+\fIImpl\-Schl\(:usselw\(:orter\fP
+Dies ist eine durch Leerzeichen getrennte Liste von Schl\(:usselw\(:ortern, die
+festlegen, wann (fake)root ben\(:otigt wird.
+
+Schl\(:usselw\(:orter bestehen aus \fINamensraum\fP/\fIF\(:alle\fP. Der Teil \fINamensraum\fP
+kann kein \(Fc/\(Fo oder Leerraum enthalten. Der Teil \fIF\(:alle\fP kann kein Leerraum
+enthalten. Desweiteren m\(:ussen beide Teile ausschlie\(sslich aus druckbaren
+ASCII\-Zeichen bestehen.
+
+Jedes Werkzeug/Paket wird einen Namensraum nach sich selbst definieren und
+eine Reihe von F\(:allen bereitstellen, in denen (fake)root ben\(:otigt wird
+(siehe \(FcImplementation provided keywords\(Fo in \fIrootless\-builds.txt\fP).
+
+Wenn das Feld auf eines der \fIImpl\-Schl\(:usselw\(:orter\fP gesetzt wird, wird das
+Bauprogramm eine Schnittstelle bereitstellen, die zur Ausf\(:uhrung unter
+(fake)root verwandt wird (siehe \(FcGain Root API\(Fo in \fIrootless\-builds.txt\fP).
+.RE
+
+.TP 
+\fBTestsuite:\fP\fI Namenliste\fP
+.TQ
+\fBTestsuite\-Triggers:\fP\fI Paketliste\fP
+Diese Felder sind in der Handbuchseite \fBdsc\fP(5) beschrieben, da sie aus
+Informationen, die aus \fBdebian/tests/control\fP abgeleitet sind, erstellt
+oder w\(:ortlich in die control\-Datei der Quellen kopiert werden.
+
+.TP 
+\fBVcs\-Arch*:\fP\fI URL\fP
+.TQ
+\fBVcs\-Bzr:\fP\fI URL\fP
+.TQ
+\fBVcs\-Cvs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Darcs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Git:\fP\fI URL\fP
+.TQ
+\fBVcs\-Hg:\fP\fI URL\fP
+.TQ
+\fBVcs\-Mtn:\fP\fI URL\fP
+.TQ
+\fBVcs\-Svn:\fP\fI URL\fP
+Die \fIURL\fP des Versionskontrollsystem\-Depots, das f\(:ur die Betreuung des
+Pakets verwandt wird. Derzeit werden \fBArch\fP, \fBBzr\fP (Bazaar), \fBCvs\fP,
+\fBDarcs\fP, \fBGit\fP, \fBHg\fP (Mercurial), \fBMtn\fP (Monotone) und \fBSvn\fP
+(Subversion) unterst\(:utzt. Normalerweise zeigt dieses Feld auf die neuste
+Version des Pakets, wie den Hauptzweig oder den Trunk.
+
+.TP 
+\fBVcs\-Browser:\fP\fI URL\fP
+Die \fIURL\fP der Webschnittstelle, um das Versionskontrollsystem\-Depot
+anzuschauen.
+
+.TP 
+\fBOrigin:\fP\fI Name\fP
+Der Name der Distribution, aus der dieses Paket urspr\(:unglich stammt. Dieses
+Feld wird normalerweise nicht ben\(:otigt.
+
+.TP 
+\fBSection:\fP\fI Sektion\fP
+Dies ist ein allgemeines Feld, das dem Paket eine Kategorie gibt, basierend
+auf der Software, die es installiert. Einige \(:ubliche Sektionen sind
+\fButils\fP, \fBnet\fP, \fBmail\fP, \fBtext\fP, \fBx11\fP usw.
+
+.TP 
+\fBPriority:\fP\fI Priorit\(:at\fP
+Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. \(:Ubliche
+Priorit\(:aten sind \fBrequired\fP, \fBstandard\fP, \fBoptional\fP, \fBextra\fP usw.
+
+Die Felder \fBSection\fP und \fBPriority\fP haben eine definierte Menge an Werten,
+abh\(:angig von den jeweiligen Distributionsrichtlinien.
+
+.TP 
+\fBBuild\-Depends:\fP\fI Paketliste\fP
+Eine Liste der Pakete, die installiert und konfiguriert sein m\(:ussen, um das
+Paket aus den Quellen zu bauen. Diese Abh\(:angigkeiten m\(:ussen erf\(:ullt wein,
+wenn bin\(:are architekturabh\(:angige und unabh\(:angige und Quellpakete gebaut
+werden. Die Aufnahme einer Abh\(:angigkeit in diese Liste hat nicht den
+gleichen Effekt wie die Aufnahme in \fBBuild\-Depends\-Arch\fP und
+\fBBuild\-Depends\-Indep\fP, da die Abh\(:angigkeit auch beim Bau des Quellpaketes
+erf\(:ullt sein muss.
+.
+.TP 
+\fBBuild\-Depends\-Arch:\fP\fI Paketliste\fP
+Identisch zu \fBBuild\-Depends\fP, wird aber nur zum Bau der
+architekturabh\(:angigen Pakete ben\(:otigt. In diesem Fall sind die
+\fBBuild\-Depends\fP auch installiert. Dieses Feld wurde seit Dpkg 1.16.4
+unterst\(:utzt; um mit \(:alteren Dpkg\-Versionen zu bauen, sollte stattdessen
+\fBBuild\-Depends\fP verwandt werden.
+
+.TP 
+\fBBuild\-Depends\-Indep:\fP\fI Paketliste\fP
+Identisch zu \fBBuild\-Depends\fP, wird aber nur zum Bau der
+architekturunabh\(:angigen Pakete ben\(:otigt. In diesem Fall sind die
+\fBBuild\-Depends\fP auch installiert.
+
+.TP 
+\fBBuild\-Conflicts:\fP\fI Paketliste\fP
+Eine Liste von Paketen, die beim Bau des Pakets nicht installiert sein
+sollten, beispielsweise da sie mit dem verwandten Bausystem in Konflikt
+geraten. Die Aufnahme einer Abh\(:angigkeit in diese Liste hat den gleichen
+Effekt wie die Aufnahme in \fBBuild\-Conflicts\-Arch\fP und
+\fBBuild\-Conflicts\-Indep\fP mit dem zus\(:atzlichen Effekt, dass es f\(:ur reine
+Quellen\-Bauten verwandt wird.
+
+.TP 
+\fBBuild\-Conflicts\-Arch:\fP\fI Paketliste\fP
+Identisch zu \fBBuild\-Conflicts\fP, aber nur beim Bau der architekturabh\(:angigen
+Pakete. Dieses Feld wird seit Dpkg 1.16.4 unterst\(:utzt; um mit \(:alteren
+Dpkg\-Versionen zu bauen, sollte stattdessen \fBBuild\-Conflicts\fP verwandt
+werden.
+
+.TP 
+\fBBuild\-Conflicts\-Indep:\fP\fI Paketliste\fP
+Identisch zu \fBBuild\-Conflicts\fP, wird aber nur zum Bau der
+architekturunabh\(:angigen Pakete ben\(:otigt.
+
+.PP
+Die Syntax der Felder \fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP und
+\fBBuild\-Depends\-Indep\fP ist eine Liste von Gruppen von alternativen
+Paketen. Jede Gruppe ist eine Liste von durch vertikale Striche (oder
+\(BqPipe\(lq\-Symbole) \(bq\fB|\fP\(cq getrennten Paketen. Die Gruppen werden durch Kommata
+\(bq\fB,\fP\(cq getrennt. Sie k\(:onnen mit einem abschlie\(ssenden Komma enden, das beim
+Erstellen der Felder f\(:ur \fBdeb\-control\fP(5) entfernt wird (seit Dpkg
+1.10.14). Kommata m\(:ussen als \(BqUND\(lq, vertikale Striche als \(BqODER\(lq gelesen
+werden, wobei die vertikalen Striche st\(:arker binden. Jeder Paketname wird
+optional von einer Architektur\-Spezifikation gefolgt, die nach einem
+Doppelpunkt \(bq\fB:\fP\(cq angeh\(:angt wird, optional gefolgt von einer
+Versionsnummer\-Spezifikation in Klammern \(bq\fB(\fP\(cq und \(bq\fB)\fP\(cq, einer
+Architekturspezifikation in eckigen Klammern \(bq\fB[\fP\(cq und \(bq\fB]\fP\(cq und einer
+Einschr\(:ankungsformel, die aus einer oder mehr Listen von Profilnamen in
+spitzen Klammern \(bq\fB<\fP\(cq und \(bq\fB>\fP\(cq besteht.
+
+Syntaxtisch werden die Felder \fBBuild\-Conflicts\fP, \fBBuild\-Conflicts\-Arch\fP
+und \fBBuild\-Conflicts\-Indep\fP durch eine Komma\-separierte Liste von
+Paketnamen dargestellt, wobei das Komma als \(BqUND\(lq verstanden wird. Die Liste
+kann mit einem abschlie\(ssenden Komma enden, das beim Erstellen der Felder f\(:ur
+\fBdeb\-control\fP(5) entfernt wird (seit Dpkg 1.10.14). Die Angabe alternativer
+Pakete mit dem \(BqPipe\(lq\-Symbol wird nicht unterst\(:utzt. Jedem Paketnamen folgt
+optional eine Versionnummerangabe in Klammern, eine Architekturspezifikation
+in eckigen Klammern und einer Einschr\(:ankungsformel, die aus einer oder mehr
+Listen von Profilnamen in spitzen Klammern besteht.
+
+Eine Architektur\-Spezifikation kann ein echter Debian\-Architekturname sein
+(seit Dpkg 1.16.5), \fBany\fP (seit Dpkg 1.16.2) oder \fBnative\fP (seit Dpkg
+1.16.5). Falls er fehlt, ist die Vorgabe f\(:ur das Feld \fBBuild\-Depends\fP die
+aktuelle Host\-Architektur, die Vorgabe f\(:ur das Feld \fBBuild\-Conflicts\fP ist
+\fBany\fP. Jeder echte Debian\-Architekturname passt genau auf diese Architektur
+f\(:ur diesen Paketnamen, \fBany\fP passt auf jede Architektur f\(:ur diesen
+Paketnamen, falls das Paket mit \fBMulti\-Arch: allowed\fP markiert ist, und
+\fBnative\fP passt auf die aktuelle Bau\-Architektur, falls das Paket nicht mit
+\fBMulti\-Arch: foreign\fP markiert ist.
+
+Eine Versionsnummer kann mit \(bq\fB>>\fP\(cq beginnen, in diesem Falle
+passen alle neueren Versionen, und kann die Debian\-Paketrevision (getrennt
+durch einen Bindestrich) enthalten oder auch nicht. Akzeptierte
+Versionsbeziehungen sind \(bq\fB>>\fP\(cq f\(:ur gr\(:o\(sser als, \(bq\fB<<\fP\(cq f\(:ur
+kleiner als, \(bq\fB>=\fP\(cq f\(:ur gr\(:o\(sser als oder identisch zu, \(bq\fB<=\fP\(cq f\(:ur
+kleiner als oder identisch zu und \(bq\fB=\fP\(cq f\(:ur identisch zu.
+
+Eine Architekturspezifikation besteht aus einer oder mehreren durch
+Leerraumzeichen getrennten Architekturnamen. Jedem Namen darf ein
+Ausrufezeichen vorangestellt werden, das \(BqNICHT\(lq bedeutet.
+
+Eine Einschr\(:ankungsformel besteht aus einer oder mehrerer durch Leerraum
+getrennten Einschr\(:ankungslisten. Jede Einschr\(:ankungsliste wird in spitze
+Klammern eingeschlossen. Eintr\(:age in den Einschr\(:ankungslisten sind
+Bauprofilnamen, getrennt durch Leerraum. Diesen Listen kann ein
+Ausrufezeichen vorangestellt werden, das \(BqNICHT\(lq bedeutet. Eine
+Einschr\(:ankungsformel stellt einen Ausdruck in einer disjunkte Normalform
+dar.
+
+Beachten Sie, dass die Abh\(:angigkeiten von Paketen aus der Menge der
+\fBbuild\-essential\fP entfallen kann und die Angabe von Baukonflikten gegen sie
+nicht m\(:oglich ist. Eine Liste dieser Pakete befindet sich im Paket
+build\-essential.
+
+
+.SH BIN\(:ARPAKET\-FELDER
+
+.LP
+Beachten Sie, dass die Felder \fBPriority\fP, \fBSection\fP und \fBHomepage\fP sich
+auch im Bin\(:arprogrammabsatz befinden k\(:onnen, um die globalen Werte des
+Quellpakets zu \(:uberschreiben.
+
+.TP 
+\fBPackage:\fP \fIBin\(:arpaketname\fP (verpflichtend)
+Dieses Feld wird zur Angabe des Bin\(:arpaketnamens verwandt. Es gelten die
+gleichen Einschr\(:ankungen wie beim Quellpaketnamen.
+
+.TP 
+\fBPackage\-Type:\fP \fBdeb\fP|\fBudeb\fP|\fItype\fP
+Dieses Feld definiert die Art des Pakets. \fBudeb\fP ist f\(:ur gr\(:o\(ssenbegrenzte
+Pakete, wie sie vom Debian\-Installer verwandt werden. \fBdeb\fP ist der
+Standardwert, er wird angenommen, falls das Feld fehlt. Weitere Typen
+k\(:onnten in der Zukunft hinzugef\(:ugt werden.
+
+.TP 
+\fBArchitecture:\fP \fIarch\fP|\fBall\fP|\fBany\fP (verpflichtend)
+Die Architektur gibt an, auf welcher Art von Hardware dieses Paket
+l\(:auft. Bei Paketen, die auf allen Architekturen laufen, verwenden Sie den
+Wert \fBany\fP. F\(:ur Pakete, die architekturunabh\(:angig sind, wie Shell\- und
+Perl\-Skripte oder Dokumentation, verwenden Sie den Wert \fBall\fP. Um das Paket
+f\(:ur einen bestimmten Satz von Architekturen zu begrenzen, geben Sie die
+durch Leerzeichen getrennten Namen der Architekturen an. Es ist auch
+m\(:oglich, Platzhalter f\(:ur Architekturen in dieser Liste anzugeben (lesen Sie
+\fBdpkg\-architecture\fP(1) f\(:ur weitere Informationen dazu).
+
+.TP 
+\fBBuild\-Profiles:\fP \fIEinschr\(:ankungsformel\fP
+Dieses Feld legt die Bedingungen fest, zu denen dieses Bin\(:arpaket (nicht)
+baut. Um diese Bedingung auszudr\(:ucken, wird die Einschr\(:ankungsformelsyntax
+aus dem Feld \fBBuild\-Depends\fP verwandt.
+
+Falls der Absatz eines bin\(:aren Pakets dieses Feld nicht enth\(:alt, dann
+bedeutet dies implizit, dass es mit allen Bauprofilen (darunter auch keinem)
+baut.
+
+Mit anderen Worten: Falls der Absatz eines Bin\(:arpaketes mit einem nicht
+leeren Feld \fBBuild\-Profiles\fP kommentiert wird, dann wird dieses Bin\(:arpaket
+erstellt, falls und nur falls der Ausdruck in konjunktiver Normalform sich
+auf \(Fcwahr\(Fo berechnet.
+
+.TP 
+\fBEssential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBBuild\-Essential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBMulti\-Arch:\fP \fBsame\fP|\fBforeign\fP|\fBallowed\fP|\fBno\fP
+.TQ
+\fBTag:\fP \fI Liste\-von\-Markierungen\fP
+.TQ
+\fBDescription:\fP \fIKurzbeschreibung\fP (empfohlen)
+Diese Felder sind in der Handbuchseite \fBdeb\-control\fP(5) beschrieben, da sie
+w\(:ortlich in die control\-Datei des Bin\(:arpakets kopiert werden.
+
+.TP 
+\fBDepends:\fP \fI Paketliste\fP
+.TQ
+\fBPre\-Depends:\fP \fI Paketliste\fP
+.TQ
+\fBRecommends:\fP \fI Paketliste\fP
+.TQ
+\fBSuggests:\fP \fI Paketliste\fP
+.TQ
+\fBBreaks:\fP \fI Paketliste\fP
+.TQ
+\fBEnhances:\fP \fI Paketliste\fP
+.TQ
+\fBReplaces:\fP \fIPaketliste\fP
+.TQ
+\fBConflicts:\fP \fI Paketliste\fP
+.TQ
+\fBProvides:\fP \fI Paketliste\fP
+.TQ
+\fBBuilt\-Using:\fP \fI Paketliste\fP
+Diese Felder geben Beziehungen zwischen Paketen an. Sie werden in der
+Handbuchseite \fBdeb\-control\fP(5) erl\(:autert. In \fIdebian/control\fP k\(:onnen diese
+Felder auch mit einem abschlie\(ssenden Komma enden (seit Dpkg 1.10.14),
+Architekturspezifikations\- und \-einschr\(:ankungsformeln enthalten, die alle
+beim Erstellen von \fBdeb\-control\fP(5) reduziert werden.
+
+.TP 
+\fBSubarchitecture:\fP \fI Wert\fP
+.TQ
+\fBKernel\-Version:\fP \fI Wert\fP
+.TQ
+\fBInstaller\-Menu\-Item:\fP \fI Wert\fP
+Diese Felder werden im Debian\-Installer in \fBudeb\fPs verwandt und werden
+normalerweise nicht ben\(:otigt. Lesen Sie
+/usr/share/doc/debian\-installer/devel/modules.txt aus dem Paket
+\fBdebian\-installer\fP f\(:ur weitere Informationen \(:uber sie.
+
+.SH "BENUTZERDEFINIERTE FELDER"
+Es ist erlaubt, zus\(:atzliche benutzerdefinierte Felder zu der Steuerdatei
+hinzuzuf\(:ugen. Die Werkzeuge werden diese Felder ignorieren. Falls Sie
+m\(:ochten, dass diese Felder in die Ausgabedateien, wie das Bin\(:arpaket,
+r\(:uberkopiert werden sollen, m\(:ussen Sie ein angepasstes Namensschema
+verwenden: Die Felder sollten mit einem \fBX\fP, gefolgt von Null oder mehreren
+Buchstaben aus \fBSBC\fP und einem Gedankenstrich, beginnen.
+
+.TP 
+\fBS\fP
+Das Feld wird in der Steuerdatei des Quellpakets auftauchen, siehe
+\fBdsc\fP(5).
+.TP 
+\fBB\fP
+Das Feld wird in der Steuerdatei des Bin\(:arpakets auftauchen, siehe
+\fBdeb\-control\fP(5).
+.TP 
+\fBC\fP
+Das Feld wird in der Steuerdatei des Uploads (.changes) auftauchen, siehe
+\fBdeb\-changes\fP(5).
+
+.P
+Beachten Sie, dass die Pr\(:afixe \fBX\fP[\fBSBC\fP]\fB\-\fP abgeschnitten werden, wenn
+die Felder in die Ausgabedateien r\(:uberkopiert werden. Ein Feld
+\fBXC\-Approved\-By\fP wird als \fBApproved\-By\fP in der .changes\-Datei und nicht in
+der Steuerdatei des Bin\(:ar\- und Quellpakets auftauchen.
+
+Beachten Sie, dass diese Benutzer\-definierten Felder den globalen Namensraum
+nutzen werden und somit in der Zukunft mit offiziell erkannten Feldern
+kollidieren k\(:onnten. Um solche m\(:oglichen Situationen zu vermeiden, k\(:onnen
+Sie den Feldern \fBPrivate\-\fP, wie in \fBXB\-Private\-Neues\-Feld\fP, voranstellen.
+
+.SH BEISPIEL
+.\" .RS
+.nf
+# Kommentar
+Source: dpkg
+Section: admin
+Priority: required
+Maintainer: Dpkg Developers <debian\-dpkg@lists.debian.org>
+# dieses Feld wird in das Bin\(:ar\- und Quellpaket kopiert
+XBS\-Upstream\-Release\-Status: stable
+Homepage: https://wiki.debian.org/Teams/Dpkg
+Vcs\-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs\-Git: https://git.dpkg.org/git/dpkg/dpkg.git
+Standards\-Version: 3.7.3
+Build\-Depends: pkg\-config, debhelper (>= 4.1.81),
+ libselinux1\-dev (>= 1.28\-4) [!linux\-any]
+
+Package: dpkg\-dev
+Section: utils
+Priority: optional
+Architecture: all
+# dies ist ein spezielles Feld im Bin\(:arpaket
+XB\-Mentoring\-Contact: Raphael Hertzog <hertzog@debian.org>
+Depends: dpkg (>= 1.14.6), perl5, perl\-modules, cpio (>= 2.4.2\-2),
+ bzip2, lzma, patch (>= 2.2\-1), make, binutils, libtimedate\-perl
+Recommends: gcc | c\-compiler, build\-essential
+Suggests: gnupg, debian\-keyring
+Conflicts: dpkg\-cross (<< 2.0.0), devscripts (<< 2.10.26)
+Replaces: manpages\-pl (<= 20051117\-1)
+Description: Debian package development tools
+ This package provides the development tools (including dpkg\-source)
+ required to unpack, build and upload Debian source packages.
+ .
+ Most Debian source packages will require additional tools to build;
+ for example, most packages need make and the C compiler gcc.
+.fi
+
+
+.\" .RE
+.SH "SIEHE AUCH"
+\fBdeb\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1)
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

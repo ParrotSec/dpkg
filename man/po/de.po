@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-man 1.19.5\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-02-23 18:00+0100\n"
-"PO-Revision-Date: 2019-01-23 19:46+0100\n"
+"POT-Creation-Date: 2019-03-24 06:30+0100\n"
+"PO-Revision-Date: 2019-03-24 06:58+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -992,50 +992,40 @@ msgstr ""
 
 #. type: TP
 #: deb-buildinfo.man
-#, fuzzy, no-wrap
-#| msgid "B<build-indep>"
+#, no-wrap
 msgid "B<Build-Tainted-By:>"
-msgstr "B<build-indep>"
+msgstr "B<Build-Tainted-By:>"
 
 #. type: TQ
 #: deb-buildinfo.man
-#, fuzzy, no-wrap
-#| msgid "I<variable-list>"
+#, no-wrap
 msgid "I<taint-reason-list>"
-msgstr "I<Variablenliste>"
+msgstr "I<taint-reason-list>"
 
 #. type: Plain text
 #: deb-buildinfo.man
-#, fuzzy
-#| msgid ""
-#| "This folded field is a space-separated list of binary packages to "
-#| "upload.  If the upload is source-only, then the field is omitted (since "
-#| "dpkg 1.19.3)."
 msgid ""
 "This folded field contains a space-separated list of non-exhausitve reason "
 "tags (formed by alphanumeric and dash characters) which identify why the "
 "current build has been tainted (since dpkg 1.19.5)."
 msgstr ""
-"Dieses gefaltete Feld ist eine durch Leerzeichen getrennte Liste von "
-"hochzuladenen binären Paketen. Falls es sich um einen reinen Quell-Upload "
-"handelt, wird dieses Feld ausgelassen (seit Dpkg 1.19.3)."
+"Dieses gefaltete Feld enthält eine durch Leerzeichen getrennte, nicht "
+"abschließende Liste von Markierungen (die durch alphanumerische und "
+"Bindestrichzeichen aufgebaut werden), die identifizieren, warum der aktuelle "
+"Bau unsauber (tainted) wurde (seit Dpkg 1.19.5)."
 
 #. type: Plain text
 #: deb-buildinfo.man
-#, fuzzy
-#| msgid ""
-#| "On Debian and derivatives only build paths starting with I</build/> will "
-#| "emit this field."
 msgid "On Debian and derivatives the following reason tags can be emitted:"
 msgstr ""
-"Unter Debian und abgeleiteten Distributionen werden nur Baupfade, die mit I</"
-"build/> beginnen, dieses Feld ausgeben."
+"Unter Debian und abgeleiteten Distributionen können die folgenden "
+"Begründungsmarkierungen ausgeben werden."
 
 #. type: TP
 #: deb-buildinfo.man
 #, no-wrap
 msgid "B<merged-usr-via-symlinks>"
-msgstr ""
+msgstr "B<merged-usr-via-symlinks>"
 
 #. type: Plain text
 #: deb-buildinfo.man
@@ -1049,54 +1039,63 @@ msgid ""
 "artifacts, it can also produce packages that will be incompatible with non-/"
 "usr-merged filesystems."
 msgstr ""
+"Das System hat ein mittels Symlinks zusammengeführtes I</usr>. Dies wird "
+"B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> "
+"und weitere Werkzeuge, die Pfadnamen als Schlüssel in ihren Datenbanken "
+"verwenden, durcheinanderbringen, da es Dateisystem-Alias-Probleme erzeugt "
+"und bringt das Verständnis, das B<dpkg> in seiner Datenbank aufnotiert hat, "
+"durcheinander. Für Bausysteme, die Pfadnamen auf bestimmte Programme oder "
+"Bibliotheken auf den enstandenen Artefakten hartkodieren, kann dies auch zu "
+"Paketen führen, die mit nichtzusammengeführten usr-Dateisystemen "
+"inkompatibel sind."
 
 #. type: TP
 #: deb-buildinfo.man
-#, fuzzy, no-wrap
-#| msgid "B<-L>I<local-shlibs-file>"
+#, no-wrap
 msgid "B<usr-local-has-configs>"
-msgstr "B<-L>I<lokale_shlibs-Datei>"
+msgstr "B<usr-local-has-configs>"
 
 #. type: Plain text
 #: deb-buildinfo.man
 msgid "The system has configuration files under I</usr/local/etc>."
-msgstr ""
+msgstr "Das System hat Konfigurationsdateien unter I</usr/local/etc>."
 
 #. type: TP
 #: deb-buildinfo.man
-#, fuzzy, no-wrap
-#| msgid "B<--always-include-path>"
+#, no-wrap
 msgid "B<usr-local-has-includes>"
-msgstr "B<--always-include-path>"
+msgstr "B<usr-local-has-includes>"
 
 #. type: Plain text
 #: deb-buildinfo.man
 msgid "The system has header files under I</usr/local/include>."
-msgstr ""
+msgstr "Das System hat Header-Dateien unter I</usr/local/include>."
 
 #. type: TP
 #: deb-buildinfo.man
 #, no-wrap
 msgid "B<usr-local-has-programs>"
-msgstr ""
+msgstr "B<usr-local-has-programs>"
 
 #. type: Plain text
 #: deb-buildinfo.man
 msgid "The system has programs under I</usr/local/bin> or I</usr/local/sbin>."
 msgstr ""
+"Das System hat Programme unter I</usr/local/bin> oder I</usr/local/sbin>."
 
 #. type: TP
 #: deb-buildinfo.man
-#, fuzzy, no-wrap
-#| msgid "B<-L>I<local-shlibs-file>"
+#, no-wrap
 msgid "B<usr-local-has-libraries>"
-msgstr "B<-L>I<lokale_shlibs-Datei>"
+msgstr "B<usr-local-has-libraries>"
 
 #. type: Plain text
 #: deb-buildinfo.man
 msgid ""
 "The system has libraries, either static or shared under I</usr/local/lib>."
 msgstr ""
+"Das System hat Bibliotheken, entweder statische oder Laufzeit-, unter I</usr/"
+"local/lib>."
 
 #. type: TP
 #: deb-buildinfo.man
@@ -1361,7 +1360,7 @@ msgid ""
 "of RFC2822 and RFC5322, or what «date -R» generates):"
 msgstr ""
 "Das I<Datum> hat das folgende Format (kompatibel zu und mit der gleichen "
-"Semantik von RFC2822 und RFC5322 bzw. der Ausgabe von »date -R«):"
+"Semantik von RFC2822 und RFC5322 bzw. der Ausgabe von „date -R“):"
 
 #. type: Plain text
 #: deb-changelog.man
@@ -1845,7 +1844,7 @@ msgstr "B<Binary-Only: yes>"
 msgid ""
 "This field denotes that the upload is a binary-only non-maintainer build.  "
 "It originates from the B<binary-only=yes> key/value from the changelog "
-"matadata entry."
+"metadata entry."
 msgstr ""
 "Das Feld kennzeichnet, dass der Upload ein rein binärer, nicht-Betreuer-"
 "Upload ist. Er stammt aus dem Schlüssel/Werte-Paar B<binary-only=yes> aus "
@@ -2383,7 +2382,7 @@ msgstr ""
 "vom Namen des Pakets selbst unterscheidet. Falls die Quellversion sich von "
 "der Binärversion unterscheidet, folgt dem I<Quellnamen> in Klammern eine "
 "I<Quellversion>. Dies kann zum Beispiel bei einem rein-binären, nicht "
-"Betreuer-Upload passieren, oder wenn mittels »B<dpkg-gencontrol -v>« eine "
+"Betreuer-Upload passieren, oder wenn mittels „B<dpkg-gencontrol -v>“ eine "
 "andere Binärversion gesetzt wird."
 
 #. type: TP
@@ -2950,7 +2949,7 @@ msgid ""
 "see below). To insert empty lines into a multi-line field, insert a dot "
 "after the space.  Lines starting with a ‘B<#>’ are treated as comments."
 msgstr ""
-"Jedes Debian-Quellpaket enhält die Hauptsteuerdatei »control«, die "
+"Jedes Debian-Quellpaket enhält die Hauptsteuerdatei „control“, die "
 "mindestens zwei Absätze enthält, die durch eine Leerzeile getrennt werden. "
 "Der erste Absatz führt alle allgemeinen Informationen über das Quellpaket "
 "auf, während jeder folgende Absatz genau ein Binärpaket beschreibt. Jeder "
@@ -3001,7 +3000,7 @@ msgid ""
 "references the person who currently maintains the package, as opposed to the "
 "author of the software or the original packager."
 msgstr ""
-"Sollte in dem Format »Joe Bloggs E<lt>jbloggs@foo.comE<gt>« sein und "
+"Sollte in dem Format „Joe Bloggs E<lt>jbloggs@foo.comE<gt>“ sein und "
 "verweist auf die Person, die derzeit das Paket betreut, im Gegensatz zum "
 "Autor der Software, die paketiert wurde, oder dem ursprünglichen Paketierer."
 
@@ -6288,10 +6287,10 @@ msgstr ""
 "wird von Programmen, die mit Quellpaketen arbeiten, verwandt, um die Liste "
 "der Dateien in dem Quellpaket zu interpretieren und zu bestimmen, wie es "
 "entpackt wird. Die Syntax des Feldwertes ist eine numerische Hauptrevision "
-"(»0-9«), ein Satzpunkt (».«), eine numerische Unterrevision (»0-9«) und dann "
+"(„0-9“), ein Satzpunkt („.“), eine numerische Unterrevision („0-9“) und dann "
 "ein optionaler Untertyp nach Leerraum (»\\ \\et«). Falls dieser spezifiziert "
-"wird, ist er ein klein geschriebenes alphanumerisches (»a-z0-9«) Wort in "
-"Klammern (»()«). Der Untertyp ist in der Syntax optional, kann aber für eine "
+"wird, ist er ein klein geschriebenes alphanumerisches („a-z0-9“) Wort in "
+"Klammern („()“). Der Untertyp ist in der Syntax optional, kann aber für eine "
 "bestimmte Quellformatrevision verpflichtend sein."
 
 #. type: Plain text
@@ -6882,7 +6881,7 @@ msgstr ""
 #: dpkg.man
 #, no-wrap
 msgid "B<unknown>"
-msgstr ""
+msgstr "B<unknown>"
 
 #. type: Plain text
 #: dpkg.man
@@ -6891,6 +6890,9 @@ msgid ""
 "installed> state, and with an B<ok> flag will be forgotten in the next "
 "database store."
 msgstr ""
+"Die Paketauswahl ist unbekannt. Ein Paket, das auch im Zustand B<not-"
+"installed> und ohne Schalter B<ok> ist, wird beim nächsten Abspeichern der "
+"Datenbank vergessen."
 
 #. type: SS
 #: dpkg.man
@@ -7304,8 +7306,8 @@ msgstr ""
 "der Information aus der I<Packages-Datei> zusammengeführt. Mit der Aktion "
 "B<--update-avail> wird die alte Information durch die Information aus der "
 "I<Packages-Datei> ersetzt. Die mit Debian vertriebene I<Packages-Datei> "
-"heißt einfach »I<Packages>«. Falls das Argument I<Packages-file> fehlt oder "
-"»B<->« benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg "
+"heißt einfach „I<Packages>“. Falls das Argument I<Packages-file> fehlt oder "
+"„B<->“ benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg "
 "1.17.7). B<dpkg> hält seine Aufzeichnungen über die verfügbaren Pakete in I<"
 "%ADMINDIR%/available>."
 
@@ -8259,6 +8261,8 @@ msgid ""
 "B<statoverride-add>: Overwrite an existing stat override when adding it "
 "(since dpkg 1.19.5)."
 msgstr ""
+"B<statoverride-add>: Überschreibt eine existierende Status-Hinwegsetzung "
+"beim Hinzufügen (seit Dpkg 1.19.5)."
 
 #. type: Plain text
 #: dpkg.man dpkg-statoverride.man
@@ -8266,6 +8270,8 @@ msgid ""
 "B<statoverride-remove>: Ignore a missing stat override when removing it "
 "(since dpkg 1.19.5)."
 msgstr ""
+"B<statoverride-remove>: Ignoriert eine fehlende Status-Hinwegsetzung beim "
+"Entfernen (seit Dpkg 1.19.5)."
 
 #. type: Plain text
 #: dpkg.man dpkg-statoverride.man
@@ -8274,6 +8280,10 @@ msgid ""
 "based security when installing files into the filesystem (since dpkg "
 "1.19.5).  On Linux systems the implementation uses SELinux."
 msgstr ""
+"B<security-mac>(*): Verwendet plattformspezifische »Mandatory Access Control "
+"(MAC)«-basierende Sicherheit bei der Installation von Dateien in das "
+"Dateisystem (seit Dpkg 1.19.5). Auf Linux-Systemen verwendet die "
+"Implementierung SELinux."
 
 #. type: Plain text
 #: dpkg.man
@@ -8471,8 +8481,8 @@ msgid ""
 msgstr ""
 "Setzt das Standardadministrationsverzeichnis auf I<Verzeichnis>. Diess "
 "Verzeichnis enthält viele Dateien, die Informationen über den Status von "
-"installierten und deinstallierten Paketen usw. enthalten. Standardmäßig »I<"
-"%ADMINDIR%>«."
+"installierten und deinstallierten Paketen usw. enthalten. Standardmäßig „I<"
+"%ADMINDIR%>“."
 
 #. type: TP
 #: dpkg.man
@@ -8492,7 +8502,7 @@ msgstr ""
 "an, wo Pakete installiert werden. B<instdir> ist auch das Verzeichnis, das "
 "an B<chroot>(2) vor dem Aufruf der Installationsskripte des Paketes "
 "übergeben wird, was bedeutet, dass die Skripte B<instdir> als ein "
-"Wurzelverzeichnis sehen. Standardmäßig »I</>«."
+"Wurzelverzeichnis sehen. Standardmäßig „I</>“."
 
 #. type: TP
 #: dpkg.man
@@ -8508,8 +8518,8 @@ msgid ""
 "%>»."
 msgstr ""
 "Setzt das Wurzelverzeichnis auf I<Verzeichnis>, wodurch das "
-"Installationsverzeichnis auf »I<Verz>« und das administrative Verzeichnis "
-"auf »I<Verz>B<%ADMINDIR%>« gesetzt wird."
+"Installationsverzeichnis auf „I<Verz>“ und das administrative Verzeichnis "
+"auf „I<Verz>B<%ADMINDIR%>“ gesetzt wird."
 
 #. type: TP
 #: dpkg.man
@@ -8630,8 +8640,8 @@ msgid ""
 msgstr ""
 "Das Glob-Muster kann die gleichen Platzhalter wie in der Shell verwenden, "
 "wobei ‚*’ auf eine beliebige Folge von Zeichen, auch dem Leerzeichen und "
-"‚/’, passt. Beispielsweise passt »I</usr/*/READ*>« auf »I</usr/share/doc/"
-"package/README>«. Wie gewöhnlich passt ‚?’ auf ein einzelnes Zeichen (wieder "
+"‚/’, passt. Beispielsweise passt „I</usr/*/READ*>“ auf „I</usr/share/doc/"
+"package/README>“. Wie gewöhnlich passt ‚?’ auf ein einzelnes Zeichen (wieder "
 "auch auf ‚/’). Und ‚[’ beginnt eine Zeichenklasse, die eine Liste von "
 "Zeichen, Bereiche und Komplemente enthalten kann. Lesen Sie B<glob>(7) für "
 "detaillierte Informationen über das Globben. Hinweis: Aktuelle "
@@ -9129,7 +9139,7 @@ msgid ""
 msgstr ""
 "Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager ausführt, "
 "beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> "
-"nicht gesetzt ist, wird stattdessen »B<sh>« verwandt. B<DPKG_PAGER> setzt "
+"nicht gesetzt ist, wird stattdessen „B<sh>“ verwandt. B<DPKG_PAGER> setzt "
 "die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2)."
 
 #. type: TP
@@ -9161,10 +9171,9 @@ msgstr ""
 
 #. type: TP
 #: dpkg.man dpkg-statoverride.man
-#, fuzzy, no-wrap
-#| msgid "B<DPKG_COLORS>"
+#, no-wrap
 msgid "B<DPKG_FORCE>"
-msgstr "B<DPKG_COLORS>"
+msgstr "B<DPKG_FORCE>"
 
 #. type: Plain text
 #: dpkg.man
@@ -9173,6 +9182,10 @@ msgid ""
 "built-in force defaults will be applied.  If the variable is present but "
 "empty, all force flags will be disabled."
 msgstr ""
+"Setzt die Erzwingungsschalter (seit Dpkg 1.19.5). Wenn diese Variable "
+"vorhanden ist, werden keine eingebauten Vorgaben für Erzwingungen angewandt. "
+"Falls diese Variable vorhanden aber leer ist, werden alle "
+"Erzwingungsschalter deaktiviert."
 
 #. type: TP
 #: dpkg.man
@@ -9216,7 +9229,7 @@ msgstr ""
 "Vorgabeverhalten zu verändern, kann diese Variable auf einen anderen Wert "
 "einschließlich der leeren Zeichenkette voreingestellt werden oder die "
 "Variablen B<PAGER> oder B<DPKG_PAGER> können gesetzt werden, um bestimmte "
-"Optionen mit »B<-+>« zu deaktivieren, beispielsweise B<DPKG_PAGER=\"less -+F"
+"Optionen mit „B<-+>“ zu deaktivieren, beispielsweise B<DPKG_PAGER=\"less -+F"
 "\">."
 
 #. type: TP
@@ -9267,16 +9280,13 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg.man
-#, fuzzy
-#| msgid ""
-#| "Defined by B<dpkg> on the maintainer script environment to the "
-#| "architecture the package got built for (since dpkg 1.15.4)."
 msgid ""
 "Defined by B<dpkg> on the subprocesses environment to all the currently "
 "enabled force option names separated by commas (since dpkg 1.19.5)."
 msgstr ""
-"Wird von B<dpkg> für die Betreuer-Skript-Umgebung auf die Architektur "
-"gesetzt, für die das Paket gebaut wurde (seit Dpkg 1.15.4)."
+"Wird von B<dpkg> für alle Unterprozessumgebungen auf alle aktuell "
+"aktivierten Erzwingungsoptionennamen (getrennt durch Kommata) gesetzt (seit "
+"Dpkg 1.19.5)."
 
 #. type: TP
 #: dpkg.man
@@ -10900,7 +10910,7 @@ msgid ""
 msgstr ""
 "Falls dies gesetzt ist, wird es als Datenverzeichnis von B<dpkg> verwandt, "
 "in dem sich die Architekturtabellen befinden (seit Dpkg 1.14.17). "
-"Standardmäßig »%PKGDATADIR%«."
+"Standardmäßig „%PKGDATADIR%“."
 
 #. type: TP
 #: dpkg-architecture.man dpkg-buildflags.man dpkg-buildpackage.man
@@ -10995,7 +11005,7 @@ msgid ""
 "B<dpkg-buildflags> is a tool to retrieve compilation flags to use during "
 "build of Debian packages."
 msgstr ""
-"B<dpkg-buildflags> ist ein Werkzeug, das zum Abfragen der zu verwendenden "
+"B<dpkg-buildflags> ist ein Werkzeug, das zum Abfragen der zu verwendenen "
 "Kompilierungsschalter für den Bau von Debian-Paketen eingesetzt wird."
 
 #. type: Plain text
@@ -14815,7 +14825,7 @@ msgid ""
 msgstr ""
 "Bei den meisten Befehlen, die ein Archiv als Eingabeargument erwarten, kann "
 "der Archivname von der Standardeingabe gelesen werden, wenn er als einzelnes "
-"Minuszeichen (»B<->«) angegeben ist. Falls dies nicht unterstützt wird, ist "
+"Minuszeichen („B<->“) angegeben ist. Falls dies nicht unterstützt wird, ist "
 "dies in der jeweiligen Beschreibung des Befehls dokumentiert."
 
 #. type: TP
@@ -14883,7 +14893,7 @@ msgstr ""
 "I<Verzeichnis>B</>I<Paket>B<_>I<Version>B<_>I<Arch>B<.deb.> schreiben. Wenn "
 "ein Zielverzeichnis statt einer Datei angegeben ist, darf die Option B<--"
 "nocheck> nicht verwendet werden (da B<dpkg-deb> die Paketsteuerdatei lesen "
-"und auswerten muss, um den zu verwendenden Dateinamen zu bestimmen)."
+"und auswerten muss, um den zu verwendenen Dateinamen zu bestimmen)."
 
 #. type: TP
 #: dpkg-deb.man
@@ -15075,7 +15085,7 @@ msgid ""
 "from standard input («B<->») is B<not> supported."
 msgstr ""
 "Das Eingebearchiv wird (derzeit) nicht sequenziell verarbeitet, daher wird "
-"das Einlesen von der Standardeingabe (»B<->«) B<nicht> unterstützt."
+"das Einlesen von der Standardeingabe („B<->“) B<nicht> unterstützt."
 
 #. type: TP
 #: dpkg-deb.man
@@ -15548,8 +15558,8 @@ msgid ""
 "Set the administrative directory to I<directory>.  Defaults to «I<%ADMINDIR"
 "%>»."
 msgstr ""
-"Setze das adminitrative Verzeichnis auf I<Verzeichnis> (Standard: I<%ADMINDIR"
-"%>)."
+"Setze das adminitrative Verzeichnis auf I<Verzeichnis> (Standard: „I<%ADMINDIR"
+"%>“)."
 
 #. type: TP
 #: dpkg-divert.man dpkg-statoverride.man
@@ -15564,7 +15574,7 @@ msgid ""
 "get installed (since dpkg 1.19.2). Defaults to «I</>»."
 msgstr ""
 "Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in "
-"dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig »I</>«."
+"dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig „I</>“."
 
 #. type: TP
 #: dpkg-divert.man dpkg-statoverride.man
@@ -15580,8 +15590,8 @@ msgid ""
 "«I<directory>B<%ADMINDIR%>» (since dpkg 1.19.2)."
 msgstr ""
 "Setzt das Wurzelverzeichnis auf I<Verzeichnis>, wodurch das "
-"Installationsverzeichnis auf »I<Verzeichnis>« und das administrative "
-"Verzeichnis auf »I<Verzeichnis>B<%ADMINDIR%>« gesetzt wird (seit Dpkg "
+"Installationsverzeichnis auf „I<Verzeichnis>“ und das administrative "
+"Verzeichnis auf „I<Verzeichnis>B<%ADMINDIR%>“ gesetzt wird (seit Dpkg "
 "1.19.2)."
 
 #. type: TP
@@ -18572,10 +18582,10 @@ msgstr ""
 "existierende Verzeichnis existiert, dann werden die Dateien in das "
 "Verzeichnis verschoben, andernfalls wird das Zielverzeichnis aus dem "
 "»section«-Feld des Steuerteils des Pakets entnommen. Das Zielverzeichnis "
-"wird »unstable/binary-I<Architektur>/I<Bereich>« sein. Falls die Sektion "
+"wird „unstable/binary-I<Architektur>/I<Bereich>“ sein. Falls die Sektion "
 "nicht in der Steuerdatei gefunden werden kann, dann wird B<no-section> "
 "angenommen, und in diesem Fall, wie auch für die Sektionen B<non-free> und "
-"B<contrib> ist das Zielverzeichnis »I<Bereich>/binary-I<Architektur>«. Das "
+"B<contrib> ist das Zielverzeichnis „I<Bereich>/binary-I<Architektur>“. Das "
 "Sektionsfeld muss nicht angegeben werden, daher werden viele Pakete ihren "
 "Weg in das B<no-section>-Gebiet finden. Verwenden Sie diese Option mit "
 "Vorsicht, sie ist unordentlich."
@@ -19111,7 +19121,7 @@ msgid ""
 "z0-9”)."
 msgstr ""
 "Changelog-Formatnamen sind nichtleere kleine alphanumerische Zeichenketten "
-"(»a-z0-9«)."
+"(„a-z0-9“)."
 
 #. type: Plain text
 #: dpkg-parsechangelog.man
@@ -19983,9 +19993,9 @@ msgid ""
 "The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg "
 "1.19.2)."
 msgstr ""
-"Setzt den zu verwendenen Pager-Befehl (seit Dpkg 1.19.1), der mit »B<$SHELL -"
-"c>« ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen "
-"»B<sh>« verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer "
+"Setzt den zu verwendenen Pager-Befehl (seit Dpkg 1.19.1), der mit „B<$SHELL -"
+"c>“ ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen "
+"„B<sh>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer "
 "Kraft (seit Dpkg 1.19.2)."
 
 #. type: Plain text
@@ -20011,7 +20021,7 @@ msgstr ""
 "Vorgabeverhalten zu verändern, kann diese Variable auf einen anderen Wert "
 "einschließlich der leeren Zeichenkette voreingestellt werden oder die "
 "Variablen B<PAGER> oder B<DPKG_PAGER> können gesetzt werden, um bestimmte "
-"Optionen mit »B<-+>« zu deaktivieren, beispielsweise B<DPKG_PAGER=\"less -+F"
+"Optionen mit „B<-+>“ zu deaktivieren, beispielsweise B<DPKG_PAGER=\"less -+F"
 "\">."
 
 #. type: TH
@@ -22013,7 +22023,7 @@ msgid ""
 "straightforward source archive (this is equivalent to B<-sn>).  If both are "
 "found then B<dpkg-source> will ignore the directory, overwriting it, if B<-"
 "sA> was specified (this is equivalent to B<-sP>)  or raise an error if B<-"
-"sa> was specified.  B<-sA> is the default."
+"sa> was specified.  B<-sa> is the default."
 msgstr ""
 "Gibt an, dass nach dem Original-Quellarchiv als Tar-Datei oder als "
 "Verzeichnis gesucht werden soll - das zweite Argument, falls vorhanden, kann "
@@ -22027,7 +22037,7 @@ msgstr ""
 "äquivalent zu B<-sn>). Falls sowohl ein Verzeichnis als auch eine Tar-Datei "
 "gefunden werden, dann ignoriert B<dpkg-source> das Verzeichnis, und "
 "überschreibt es, falls B<-sA> angegeben wurde (dies ist äquivalent zu B<-"
-"sP>) oder löst einen Fehler aus, falls B<-sa> angegeben wurde. B<-sA> ist "
+"sP>) oder löst einen Fehler aus, falls B<-sa> angegeben wurde. B<-sa> ist "
 "die Voreinstellung."
 
 #. type: TP
@@ -22268,6 +22278,20 @@ msgstr ""
 "ignoriert und immer erwartet, dass die Patches mit der Option B<-p1> von "
 "B<patch> angewandt werden können. Es wird daher eine Warnung ausgeben, wenn "
 "es auf solche Optionen trifft, und der Bau wird wahrscheinlich fehlschlagen."
+
+#. type: Plain text
+#: dpkg-source.man
+msgid ""
+"Note that B<lintian>(1) will emit unconditional warnings when using vendor "
+"series due to a controversial Debian specific ruling, which should not "
+"affect any external usage; to silence these, the dpkg lintian profile can be "
+"used by passing «B<--profile dpkg>» to B<lintian>(1)."
+msgstr ""
+"Beachten Sie, dass B<lintian>(1) aufgrund Debian-spezifischer Regularien "
+"bedingungslos Warnungen ausgeben wird, wenn Lieferantenserien verwandt "
+"werden. Dies sollte die Verwendung außerhalb von Debian nicht betreffen. Um "
+"diese Warnungen auszublenden, kann das Dpkg-Lintian-Profil mittels Übergabe "
+"von „B<--profile dpkg>“ an B<lintian>(1) verwandt werden."
 
 #. type: Plain text
 #: dpkg-source.man
@@ -23823,10 +23847,9 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg-statoverride.man
-#, fuzzy
-#| msgid "Give help about the B<--force->I<thing> options."
 msgid "Give help about the B<--force->I<thing> options (since dpkg 1.19.5)."
-msgstr "Gebe Hilfe über die B<--force->I<Sache>-Optionen aus."
+msgstr ""
+"Gebe Hilfe über die B<--force->I<Sache>-Optionen aus (seit Dpkg 1.19.5)."
 
 #. type: Plain text
 #: dpkg-statoverride.man
@@ -23835,7 +23858,7 @@ msgid ""
 "I<statoverride> file is stored.  Defaults to «I<%ADMINDIR%>»."
 msgstr ""
 "Setzt das administrative Verzeichnis auf I<Verzeichnis>. Hier wird auch die "
-"Datei I<statoverride> gelagert. Standardmäßig I<%ADMINDIR%>."
+"Datei I<statoverride> gelagert. Standardmäßig „I<%ADMINDIR%>“."
 
 #. type: Plain text
 #: dpkg-statoverride.man
@@ -23844,16 +23867,10 @@ msgid ""
 "get installed (since dpkg 1.19.2).  Defaults to «I</>»."
 msgstr ""
 "Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in "
-"dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig »I</>«."
+"dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig „I</>“."
 
 #. type: Plain text
 #: dpkg-statoverride.man
-#, fuzzy
-#| msgid ""
-#| "Force or refuse (B<no-force> and B<refuse> mean the same thing)  to do "
-#| "some things. I<things> is a comma separated list of things specified "
-#| "below. B<--force-help> displays a message describing them.  Things marked "
-#| "with (*) are forced by default."
 msgid ""
 "Force or refuse (B<no-force> and B<refuse> mean the same thing)  to do some "
 "things (since dpkg 1.19.5).  I<things> is a comma separated list of things "
@@ -23861,17 +23878,13 @@ msgid ""
 "Things marked with (*) are forced by default."
 msgstr ""
 "Erzwinge oder verweigere (B<no-force> und B<refuse> bedeuten das gleiche) "
-"bestimmte Sachen. I<Sachen> ist eine Komma-separierte Liste von Dingen, die "
-"im folgenden beschrieben sind. B<--force-help> zeigt eine Nachricht an, die "
-"diese beschreibt. Mit (*) markierte Dinge werden standardmäßig erzwungen."
+"bestimmte Sachen (seit Dpkg 1.19.5). I<Sachen> ist eine Komma-separierte "
+"Liste von Dingen, die im folgenden beschrieben sind. B<--force-help> zeigt "
+"eine Nachricht an, die diese beschreibt. Mit (*) markierte Dinge werden "
+"standardmäßig erzwungen."
 
 #. type: Plain text
 #: dpkg-statoverride.man
-#, fuzzy
-#| msgid ""
-#| "I<Warning: These options are mostly intended to be used by experts only. "
-#| "Using them without fully understanding their effects may break your whole "
-#| "system.>"
 msgid ""
 "I<Warning: These options are mostly intended to be used by experts only.  "
 "Using them without fully understanding their effects may break your whole "
@@ -23889,10 +23902,6 @@ msgstr "B<--force>"
 
 #. type: Plain text
 #: dpkg-statoverride.man
-#, fuzzy
-#| msgid ""
-#| "Force an action, even if a sanity check would otherwise prohibit it.  "
-#| "This is necessary to override an existing override."
 msgid ""
 "Force an action, even if a sanity check would otherwise prohibit it.  This "
 "is necessary to override an existing override.  This option is deprecated "
@@ -23900,7 +23909,8 @@ msgid ""
 msgstr ""
 "Erzwinge eine Aktion, selbst wenn eine Sinn-Überprüfung diese normalerweise "
 "verböte. Dies ist notwendig, um sich über eine existierende Hinwegsetzung "
-"hinwegzusetzen."
+"hinwegzusetzen. Diese Option ist (seit Dpkg 1.19.5) veraltet. Sie wurde "
+"durch B<--force-all> ersetzt."
 
 #. type: TP
 #: dpkg-statoverride.man
@@ -23931,16 +23941,12 @@ msgstr ""
 
 #. type: Plain text
 #: dpkg-statoverride.man
-#, fuzzy
-#| msgid ""
-#| "If set and the B<--instdir> or B<--root> options have not been specified, "
-#| "it will be used as the filesystem root directory (since dpkg 1.19.2)."
 msgid ""
 "If set and none of the B<--force->I<...> options have been specified, it "
 "will be used as the force options to use (since dpkg 1.19.5)."
 msgstr ""
-"Falls gesetzt und die Option B<--instdir> oder B<--root> nicht angegeben "
-"wurde, wird dies als Dateisystemwurzelverzeichnis verwandt."
+"Falls gesetzt und keine der B<--force->I<…>-Optionen festgelegt wurde, wird "
+"es als die zu verwendenen Erzwingungsoptionen verwandt (seit Dpkg 1.19.5)."
 
 #. type: TP
 #: dpkg-statoverride.man
@@ -25302,7 +25308,7 @@ msgid ""
 msgstr ""
 "Der gegenteilige Effekt, um alle Auswahländerungen zurückzusetzen und zurück "
 "auf die vorherige Auswahlliste zu gehen, wird durch Drücken der Tasten "
-"‚B<X>’ oder B<»Esc«> erreicht. Durch wiederholtes Drücken dieser Tasten "
+"‚B<X>’ oder »B<Esc>« erreicht. Durch wiederholtes Drücken dieser Tasten "
 "können möglicherweise schädliche Änderungen an der angeforderten "
 "Paketauswahl komplett auf die letzten bestehenden Einstellungen "
 "zurückgesetzt werden."
@@ -25623,13 +25629,6 @@ msgstr ""
 
 #. type: Plain text
 #: start-stop-daemon.man
-#, fuzzy
-#| msgid ""
-#| "B<Warning:> Using this match option alone with a daemon that writes the "
-#| "pidfile as an unprivileged user is a security risk, because if the daemon "
-#| "gets compromised the contents of the pidfile cannot be trusted, and then "
-#| "a privileged runner (such as an init script executed as root) would end "
-#| "up acting on any system process."
 msgid ""
 "B<Warning:> using this match option with a world-writable pidfile or using "
 "it alone with a daemon that writes the pidfile as an unprivileged (non-"
@@ -25637,15 +25636,18 @@ msgid ""
 "a security risk, because either any user can write to it, or if the daemon "
 "gets compromised, the contents of the pidfile cannot be trusted, and then a "
 "privileged runner (such as an init script executed as root) would end up "
-"acting on any system process.  Using I</dev/null> is excempt from these "
+"acting on any system process.  Using I</dev/null> is exempt from these "
 "checks."
 msgstr ""
-"B<Warnung>: Es ist ein Sicherheitsrisiko, diese Abgleichoption alleine mit "
-"einem Daemon, der die PID-Datei als ein nicht privilegierte Benutzer "
-"schreibt, zu verwenden, da bei einer Kompromittierung des Daemons, dem "
-"Inhalt der PID-Datei nicht vertraut werden kann und dann ein privilegiertes "
-"laufendes Programm (wie ein Init-Skript, das als root ausgeführt wird) "
-"schlussendlich auf einem Systemprozess agieren würde."
+"B<Warnung>: Wird diese Abgleichoption mit einer weltschreibbaren PID-Datei "
+"oder alleine mit einem Daemon, der als nicht privilegierter Benutzer (d.h. "
+"nicht als root) in eine PID-Datei schreibt, verwandt, dann wird dies mit "
+"einem Fehler abgelehnt (seit Version 1.19.3), da dies ein Sicherheitsrisiko "
+"darstellt, da entweder jeder Benutzer hineinschreiben kann oder, falls der "
+"Daemon kompromitiert wird, dem Inhalt der PID-Datei nicht vertraut werden "
+"kann und dann ein privilegierter Ausführer (wie ein als Root ausgeführtes "
+"Init-Skript) am Ende auf jeden Systemprozess agieren würde. Die Verwendung "
+"von I</dev/null> ist von diesen Prüfungen ausgenommen."
 
 #. type: TP
 #: start-stop-daemon.man
@@ -27464,7 +27466,7 @@ msgstr ""
 #~ "Set the name of the changelog file to use in error messages, instead of "
 #~ "using the name from the B<--file> option, or its default value."
 #~ msgstr ""
-#~ "Setzt die bei Fehlermeldungen zu verwendenden Changelog-Datei, statt den "
+#~ "Setzt die bei Fehlermeldungen zu verwendenen Changelog-Datei, statt den "
 #~ "Namen von der Option B<--file> oder den Vorgabewert zu verwenden."
 
 #~ msgid "The B<.buildinfo> filename by default has the following form:"
@@ -27479,8 +27481,8 @@ msgstr ""
 #~ "B<strftime>(2) «%Y%m%dT%H%M%Sz», followed by a minus ‘-’ and the eight "
 #~ "left-most characters from the B<.buildinfo>'s file contents MD5 digest."
 #~ msgstr ""
-#~ "wobei I<Buildinfo-ID> aus der Bauzeit (formatiert als B<strftime>(2) »%Y%m"
-#~ "%dT%H%M%Sz«), gefolgt von einem Minus ,-´ und den acht ganz links "
+#~ "wobei I<Buildinfo-ID> aus der Bauzeit (formatiert als B<strftime>(2) „%Y%m"
+#~ "%dT%H%M%Sz“), gefolgt von einem Minus ,-´ und den acht ganz links "
 #~ "stehenden Zeichen aus dem MD5-Hash des Dateiinhaltes der Datei B<."
 #~ "buildinfo> zusammengesetzt ist."
 

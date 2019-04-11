@@ -105,7 +105,7 @@ user will be refused with an error (since version 1.19.3) as this is a
 security risk, because either any user can write to it, or if the daemon
 gets compromised, the contents of the pidfile cannot be trusted, and then a
 privileged runner (such as an init script executed as root) would end up
-acting on any system process.  Using \fI/dev/null\fP is excempt from these
+acting on any system process.  Using \fI/dev/null\fP is exempt from these
 checks.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIprogramma\fP

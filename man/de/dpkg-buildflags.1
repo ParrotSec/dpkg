@@ -1,0 +1,681 @@
+.\" dpkg manual page - dpkg-buildflags(1)
+.\"
+.\" Copyright © 2010-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011 Kees Cook <kees@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-buildflags 1 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+dpkg\-buildflags \- liefert Bauschalter zum Einsatz beim Paketbau
+.
+.SH \(:UBERSICHT
+\fBdpkg\-buildflags\fP [\fIOption\fP …] [\fIBefehl\fP]
+.
+.SH BESCHREIBUNG
+\fBdpkg\-buildflags\fP ist ein Werkzeug, das zum Abfragen der zu verwendenen
+Kompilierungsschalter f\(:ur den Bau von Debian\-Paketen eingesetzt wird.
+.
+Die Standardschalter werden vom Lieferanten definiert, sie k\(:onnen auf
+mehrere Arten erweitert/\(:uberschrieben werden:
+.IP 1.
+systemweit mit \fB/etc/dpkg/buildflags.conf\fP
+.IP 2.
+f\(:ur den aktuellen Benutzer mit \fB$XDG_CONFIG_HOME/dpkg/buildflags.conf\fP,
+wobei \fB$XDG_CONFIG_HOME\fP standardm\(:a\(ssig auf \fB$HOME/.config\fP gesetzt ist
+.IP 3.
+tempor\(:ar durch den Benutzer mittels Umgebungsvariablen (siehe Abschnitt
+\fBUMGEBUNG\fP)
+.IP 4.
+dynamisch durch den Paketverwalter mittels Umgebungsvariablen, die \(:uber
+\fBdebian/rules\fP gesetzt wurden (siehe Abschnitt \fBUMGEBUNG\fP)
+.P
+Die Konfigurationsdateien k\(:onnen vier Arten von Direktiven enthalten:
+.TP 
+\fBSET\fP\fI Schalter Wert\fP
+\(:Uberschreibt den Schalter namens \fISchalter\fP, um den Wert \fIWert\fP zu
+erhalten.
+.TP 
+\fBSTRIP\fP\fI Schalter Wert\fP
+Aus dem Schalter namens \fISchalter\fP alle in \fIWert\fP aufgef\(:uhrten Bauschalter
+entfernen
+.TP 
+\fBAPPEND\fP\fI Schalter Wert\fP
+Erweitert den Schalter namens \fISchalter\fP durch Anh\(:angen der in \fIWert\fP
+angegebenen Optionen. Ein Leerzeichen wird vor den angeh\(:angten Wert
+vorangestellt, falls der derzeitige Wert nicht leer ist.
+.TP 
+\fBPREPEND\fP\fI Schalter Wert\fP
+Erweitert den Schalter namens \fISchalter\fP durch Voranstellen der in \fIWert\fP
+angegebenen Optionen. Ein Leerzeichen wird hinter den vorangestellten Wert
+angeh\(:angt, falls der derzeitige Wert nicht leer ist.
+.P
+Die Konfigurationsdateien k\(:onnen Kommentare auf Zeilen enthalten, die mit
+einer Raute (#) beginnen. Leere Zeilen werden auch ignoriert.
+.SH BEFEHLE
+.TP 
+\fB\-\-dump\fP
+Auf der Standardausgabe alle Kompilierschalter und ihre Werte ausgeben. Es
+wird ein Schalter pro Zeile ausgegeben, wobei der Werte durch ein
+Gleichheitszeichen (\(Bq\fISchalter\fP=\fIWert\fP\(lq) abgetrennt wird. Dies ist die
+Standardaktion.
+.TP 
+\fB\-\-list\fP
+Gibt die Liste der vom aktuellen Lieferanten unterst\(:utzen Schalter (eine pro
+Zeile) aus. Lesen Sie den Abschnitt \fBUNTERST\(:UTZTE SCHALTER\fP f\(:ur weitere
+Informationen \(:uber sie.
+.TP 
+\fB\-\-status\fP
+Alle Informationen anzeigen, die zum Verst\(:andnis des Verhaltens von
+\fBdpkg\-buildflags\fP n\(:utzlich sein k\(:onnen (seit Dpkg 1.16.5): relevante
+Umgebungsvariablen, aktueller Lieferant, Zustand der Funktionsschalter. Auch
+die entstehenden Compiler\-Schalter mit ihrem Ursprung werden ausgeben.
+
+Dies ist zur Ausf\(:uhrung in \fBdebian/rules\fP gedacht, so dass das Bauprotokoll
+einen klaren Nachweis der verwandten Bauschalter enth\(:alt. Dies kann zur
+Diagnose von Problemen in Zusammenhang mit diesen n\(:utzlich sein.
+.TP 
+\fB\-\-export=\fP\fIFormat\fP
+Auf der Standardausgabe Befehle ausgeben, die dazu verwandt werden k\(:onnen,
+alle Kompilierschalter f\(:ur bestimmte Werkzeuge zu exportieren. Falls der
+Wert von \fIFormat\fP nicht angegeben wird, wird \fBsh\fP angenommen. Nur
+Kompilierschalter, die mit einem Gro\(ssbuchstaben beginnen, werden
+aufgenommen. Bei allen anderen wird angenommen, dass sie f\(:ur die Umgebung
+nicht geeignet sind. Unterst\(:utzte Formate:
+.RS
+.TP 
+\fBsh\fP
+Shell\-Befehle, um alle Kompilierungsschalter in der Umgebung zu setzen und
+zu exportieren. Die Schalterwerte werden maskiert, so dass die Ausgabe f\(:ur
+Auswertung durch eine Shell bereit ist.
+.TP 
+\fBcmdline\fP
+Argumente, die an die Befehlszeile eines Bauprogrammes \(:ubergeben werden, um
+alle \(:Ubersetzungsschalter zu verwenden (seit Dpkg 1.17.0). Die Schalterwerte
+werden in Shell\-Syntax maskiert.
+.TP 
+\fBconfigured\fP (konfiguriert)
+Dies ist ein historischer Alias f\(:ur \fBcmdline\fP.
+.TP 
+\fBmake\fP
+Make\-Direktiven, um alle Kompilierungsschalter in der Umgebung zu setzen und
+zu exportieren. Die Ausgabe kann in ein Makefile\-Fragment geschrieben und
+mit einer \fBinclude\fP\-Direktive ausgewertet werden.
+.RE
+.TP 
+\fB\-\-get\fP\fI Schalter\fP
+Gibt den Wert des Schalters auf der Standardausgabe aus. Beendet sich mit 0,
+falls der Schalter bekannt ist, andernfalls mit 1.
+.TP 
+\fB\-\-origin\fP\fI Schalter\fP
+Gibt den Ursprung des von \fB\-\-get\fP gelieferten Werts aus. Beendet sich mit
+0, falls der Schalter bekannt ist, andernfalls mit 1. Der Ursprung kann
+einer der folgenden Werte sein:
+.RS
+.TP 
+\fBvendor\fP
+der urspr\(:unglich vom Lieferanten gesetzte Schalter wird zur\(:uckgeliefert
+.TP 
+\fBsystem\fP
+der Schalter wurde durch eine systemweite Konfiguration gesetzt/ver\(:andert
+.TP 
+\fBuser\fP
+der Schalter wurde durch eine benutzerspezifische Konfiguration
+gesetzt/ver\(:andert
+.TP 
+\fBenv\fP
+der Schalter wurde durch eine umgebungsspezifische Konfiguration
+gesetzt/ver\(:andert
+.RE
+.TP 
+\fB\-\-query\fP
+Alle Informationen anzeigen, die zur Erkl\(:arung des Verhaltens des Programms
+hilfreich sein k\(:onnten: aktueller Lieferant, relevante Umgebungsvariablen,
+Funktionalit\(:atsbereiche, Zustand der Funktionsschalter und die
+Complier\-Schalter mit ihrem Ursprung (seit Dpkg 1.19.0).
+.IP
+Zum Beispiel:
+.nf
+  Vendor: Debian
+  Environment:
+   DEB_CFLAGS_SET=\-O0 \-Wall
+
+  Area: qa
+  Features:
+   bug=no
+   canary=no
+
+  Area: reproducible
+  Features:
+   timeless=no
+
+  Flag: CFLAGS
+  Value: \-O0 \-Wall
+  Origin: env
+
+  Flag: CPPFLAGS
+  Value: \-D_FORTIFY_SOURCE=2
+  Origin: vendor
+.fi
+.TP 
+\fB\-\-query\-features\fP\fI Bereich\fP
+Gibt die Funktionalit\(:aten, die f\(:ur den \(:ubergebenen Bereich aktiviert sind,
+aus (seit Dpkg 1.16.2). Die einzigen unter Debian und abgeleiteten
+Distributionen derzeit erkannten Bereiche sind \fBfuture\fP, \fBqa\fP,
+\fBreproducible\fP, \fBsanitize\fP und \fBhardening\fP. Lesen Sie den Abschnitt
+\fBFUNKTIONALIT\(:ATSBEREICHE\fP f\(:ur weitere Details. Beendet sich mit 0, falls
+der Bereich bekannt ist, andernfalls mit 1.
+.IP
+Das Ausgabeformat ist im RFC822\-Format, mit einem Abschnitt pro
+Funktionalit\(:at. Beispiel:
+.IP
+.nf
+  Feature: pie
+  Enabled: yes
+
+  Feature: stackprotector
+  Enabled: yes
+.fi
+.TP 
+\fB\-\-help\fP
+Zeige den Bedienungshinweis und beende.
+.TP 
+\fB\-\-version\fP
+Gebe die Version aus und beende sich.
+.
+.SH "UNTERST\(:UTZTE SCHALTER"
+.TP 
+\fBCFLAGS\fP
+Optionen f\(:ur den C\-Compiler. Der vom Lieferanten gesetzte Standardwert
+enth\(:alt \fI\-g\fP und die Standard Optimierungsstufe (normalerweise \fI\-O2\fP oder
+\fB\-O0\fP, falls die Umgebungsvariable \fBDEB_BUILD_OPTIONS\fP \fInoopt\fP definiert.
+.TP 
+\fBCPPFLAGS\fP
+Optionen f\(:ur den C\-Pr\(:aprozessor. Standardwert: leer
+.TP 
+\fBCXXFLAGS\fP
+Optionen f\(:ur den C++\-Compiler. Identisch zu \fBCFLAGS\fP.
+.TP 
+\fBOBJCFLAGS\fP
+Optionen f\(:ur den Objective\-C\-Compiler. Identisch zu \fBCFLAGS\fP.
+.TP 
+\fBOBJCXXFLAGS\fP
+Optionen f\(:ur den Objective\-C++\-Compiler. Identisch zu \fBCXXFLAGS\fP.
+.TP 
+\fBGCJFLAGS\fP
+Optionen f\(:ur den GNU\-Java\-Compiler (gcj). Eine Untermenge von \fBCFLAGS\fP.
+.TP 
+\fBFFLAGS\fP
+Optionen f\(:ur den Fortran\-77\-Compiler. Eine Untermenge von \fBCFLAGS\fP.
+.TP 
+\fBFCFLAGS\fP
+Optionen f\(:ur den Fortran\-9x\-Compiler. Identisch zu \fBFFLAGS\fP.
+.TP 
+\fBLDFLAGS\fP
+Optionen die beim Linken von Programmen oder Laufzeitbibliotheken an den
+Compiler weitergegeben werden (falls der Linker direkt aufgerufen wird,
+m\(:ussen \fB\-Wl\fP und \fB,\fP aus diesen Optionen entfernt werden). Standardm\(:a\(ssig
+leer.
+.PP
+Neue Schalter k\(:onnen in Zukunft hinzugef\(:ugt werden, falls die Notwendigkeit
+aufkommt (beispielsweise, um weitere Sprachen zu unterst\(:utzen).
+.
+.SH FUNKTIONALIT\(:ATSBEREICHE
+.P
+Jede Bereichsfunktionalit\(:at kann durch den entsprechenden Bereichswert in
+den Umgebungsvariablen \fBDEB_BUILD_OPTIONS\fP und \fBDEB_BUILD_MAINT_OPTIONS\fP
+mit den \(bq\fB+\fP\(cq\- und \(bq\fB\-\fP\(cq\-Schaltern aktiviert und deaktiviert werden. Soll
+beispielsweise f\(:ur \fBhardening\fP die \(Bqpie\(lq\-Funktionalit\(:at aktiviert und die
+\(Bqfortify\(lq\-Funktionalit\(:at deaktiviert werden, k\(:onnen Sie Folgendes in
+\fBdebian/rules\fP verwenden:
+.P
+  export DEB_BUILD_MAINT_OPTIONS=hardening=+pie,\-fortify
+.P
+Die spezielle Funktionalit\(:at \fBall\fP (in allen Bereichen g\(:ultig) kann dazu
+verwandt werden, alle Bereichsfunktionalit\(:aten auf einmal zu aktivieren oder
+zu deaktiveren. Um daher alles im Bereich \fBhardening\fP zu deaktiveren und
+nur \(Bqformat\(lq und \(Bqfortify\(lq zu aktiveren, kann Folgendes eingesetzt werden:
+.P
+  export DEB_BUILD_MAINT_OPTIONS=hardening=\-all,+format,+fortify
+.
+.SS future
+Mehrere Optionen zur Kompilierung (Details weiter unten) k\(:onnen verwandt
+werden, um Funktionen zu aktivieren, die standardm\(:a\(ssig aktiviert sein
+sollten, dies aber aufgrund von R\(:uckw\(:artskompatibilit\(:atsgr\(:unden nicht sein
+k\(:onnen.
+.TP 
+\fBlfs\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) aktiviert die Unterst\(:utzung
+f\(:ur gro\(sse Dateien auf 32\-Bit\-Architekturen, bei denen ihre ABI diese
+Unterst\(:utzung nicht standardm\(:a\(ssig aktiviert, indem \fB\-D_LARGEFILE_SOURCE
+\-D_FILE_OFFSET_BITS=64\fP zu \fBCPPFLAGS\fP hinzugef\(:ugt wird.
+.
+.SS QS
+Mehrere Optionen zur Kompilierung (Details weiter unten) k\(:onnen verwandt
+werden, um dabei zu helfen, Probleme im Quellcode oder im Bausystem zu
+erkennen.
+.TP 
+\fBbug\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt Warnoptionen hinzu, die
+zuverl\(:assig problematischen Quellcode erkennen. Diese Warnungen sind
+fatal. Die einzigen derzeit unterst\(:utzten Schalter sind \fBCFLAGS\fP und
+\fBCXXFLAGS\fP, wobei die Schalter auf \fB\-Werror=array\-bounds\fP,
+\fB\-Werror=clobbered\fP, \fB\-Werror=implicit\-function\-declaration\fP und
+\fB\-Werror=volatile\-register\-var\fP gesetzt werden.
+.
+.TP 
+\fBcanary\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt
+Pseudo\-Kanarienv\(:ogel\-Optionen zu den Bauschaltern hinzu, so dass die
+Bauprotokolle \(:uberpr\(:uft werden k\(:onnen, wie die Bauschalter sich
+fortpflanzen. Dies erlaubt, Auslassungen in den normalen
+Bauschaltereinstellungen zu finden. Derzeit werden nur die Schalter
+\fBCPPFLAGS\fP, \fBCFLAGS\fP, \fBOBJCFLAGS\fP, \fBCXXFLAGS\fP und \fBOBJCXXFLAGS\fP
+unterst\(:utzt, wobei die Schalter auf
+\fB\-D__DEB_CANARY_\fP\fISchalter\fP_\fIZufallskennung\fP\fB__\fP gesetzt werden, und
+\fBLDFLAGS\fP, das auf \fB\-Wl,\-z,deb\-canary\-\fP\fIZufallskennung\fP gesetzt wird.
+.
+.SS Bereinigung
+Mehrere Kompilierzeit\-Optionen (weiter unten beschrieben) k\(:onnen dazu
+verwandt werden, ein erstelltes Programm vor Speicherverf\(:alschungsangriffen
+Speicherlecks, Verwendung nach Freigabe, Daten\-Zugriffswettl\(:aufen (\(Fcraces\(Fo)
+in Threads und Fehlern durch undefiniertes Verhalten zu
+bereinigen. \fBHinweis\fP: Diese Optionen sollten \fBnicht\fP beim Bauen im
+Produktivbetrieb benutzt werden, da sie die Zuverl\(:assigkeit von
+spezifikationsgetreuem Code, die Sicherheit oder sogar die Funktionalit\(:at
+reduzieren k\(:onnen.
+.TP 
+\fBaddress\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt \fB\-fsanitize=address\fP zu
+\fBLDFLAGS\fP und \fB\-fsanitize=address \-fno\-omit\-frame\-pointer\fP zu \fBCFLAGS\fP
+und \fBCXXFLAGS\fP hinzu.
+.TP 
+\fBthread\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt \fB\-fsanitize=thread\fP zu
+\fBCFLAGS\fP, \fBCXXFLAGS\fP und \fBLDFLAGS\fP hinzu.
+.TP 
+\fBleak\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt \fB\-fsanitize=leak\fP zu
+\fBLDFLAGS\fP hinzu. Sie wird automatisch deaktiviert, falls entweder die
+Funktionalit\(:aten \fBaddress\fP oder \fBthread\fP aktiviert werden, da diese sie
+einschlie\(ssen.
+.TP 
+\fBundefined\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt \fB\-fsanitize=undefined\fP
+zu \fBCFLAGS\fP, \fBCXXFLAGS\fP und \fBLDFLAGS\fP hinzu.
+.SS H\(:artung
+Mehrere Kompilierzeit\-Optionen (weiter unten beschrieben) k\(:onnen dazu
+verwandt werden, ein erstelltes Programm gegen Speicherverf\(:alschungsangriffe
+zu h\(:arten, oder zus\(:atzliche Warnungsmeldungen w\(:ahrend der \(:Ubersetzung
+auszugeben. Sie werden f\(:ur Architekturen, die diese unterst\(:utzen,
+standardm\(:a\(ssig aktiviert; die Ausnahmen sind unten angegeben.
+.TP 
+\fBformat\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert) f\(:ugt \fB\-Wformat
+\-Werror=format\-security\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP
+und \fBOBJCXXFLAGS\fP hinzu. Damit wird \(:uber inkorrekte
+Formatzeichenkettenverwendungen gewarnt und zu einem Fehler f\(:uhren, wenn
+Formatfunktionen deart verwandt werden, dass daraus ein m\(:ogliches
+Sicherheitsproblem werden k\(:onnte. Derzeit warnt dies \(:uber Aufrufe auf
+\fBprintf\fP\- und \fBscanf\fP\-Funktionen, bei denen die Formatzeichenkette nicht
+eine reine Zeichenkette ist und es keine Formatargumente gibt, wie in
+\fBprintf(foo);\fP statt \fBprintf("%s", foo);\fP. Dies k\(:onnte ein
+Sicherheitsproblem sein, falls die Formatzeichenkette aus einer
+unvertrauensw\(:urdigen Eingabe stammt und \(bq%n\(cq enth\(:alt.
+.
+.TP 
+\fBfortify\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert) f\(:ugt \fB\-D_FORTIFY_SOURCE=2\fP zu
+\fBCPPFLAGS\fP hinzu. W\(:ahrend der Code\-Erstellung hat der Compiler umfangreiche
+Informationen \(:uber Puffergr\(:o\(ssen (wo m\(:oglich) und versucht, unsichere
+unbegrenzte Pufferfunktionsaufrufe durch l\(:angenbegrenzte zu ersetzen. Das
+ist besonders f\(:ur alten, verkramten Code n\(:utzlich. Zus\(:atzlich werden
+Formatzeichenketten in schreibbarem Speicher, die \(bq%n\(cq enthalten,
+blockiert. Falls eine Anwendung von solchen Formatzeichenketten abh\(:angt,
+m\(:ussen daf\(:ur andere L\(:osungsm\(:oglichkeiten gefunden werden.
+
+Beachten Sie, dass die Quellen auch mit \fB\-O1\fP oder h\(:oher \(:ubersetzt werden
+m\(:ussen, damit diese Option einen Effekt hat. Falls die Umgebungsvariable
+\fBDEB_BUILD_OPTIONS\fP \fInoopt\fP enth\(:alt, dann wird die Unterst\(:utzung von
+\fBfortify\fP aufgrund neuer Warnungen von Glibc 2.16 und neuer deaktiviert.
+.TP 
+\fBstackprotector\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert falls stackprotectorstrong nicht
+verwandt wird) f\(:ugt \fB\-fstack\-protector \-\-param=ssp\-buffer\-size=4\fP zu
+\fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP
+und \fBFCFLAGS\fP hinzu. Dies f\(:ugt Sicherheitspr\(:ufungen gegen die
+\(:Uberschreibung des Stapelspeichers (Stacks) hinzu. Damit werden viele
+m\(:ogliche Code\-Einf\(:ugeangriffe zu Abbruchsituationen. Im besten Fall werden
+damit Code\-Einf\(:ugungsangriffe zu Diensteverweigerungsangriffen oder zu
+keinen Problemen (abh\(:angig von der Anwendung).
+
+Diese Funktionalit\(:at ben\(:otigt das Linken mit Glibc (oder einem anderen
+Anbieter von \fB__stack_chk_fail\fP). Sie muss daher deaktiviert werden, wenn
+mit \fB\-nostdlib\fP oder \fB\-ffreestanding\fP oder \(:Ahnlichem gebaut wird.
+.
+.TP 
+\fBstackprotectorstrong\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert) f\(:ugt \fB\-fstack\-protector\-strong\fP
+zu \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP,
+\fBFFLAGS\fP und \fBFCFLAGS\fP hinzu. Dies ist eine st\(:arkere Variante von
+\fBstackprotector\fP allerdings ohne signifikante Einbu\(ssen bei der Leistung.
+
+Deaktivierung von \fBstackprotector\fP deaktiviert auch diese Einstellung.
+
+Diese Funktionalit\(:at stellt die gleichen Anforderungen wie \fBstackprotector\fP
+und ben\(:otigt zus\(:atzlich Gcc 4.9 oder neuer.
+.
+.TP 
+\fBrelro\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert) f\(:ugt \fB\-Wl,\-z,relro\fP zu
+\fBLDFLAGS\fP hinzu. W\(:ahrend des Ladens des Programms m\(:ussen mehrere
+ELF\-Speicherabschnitte vom Binder (Linker) geschrieben werden. Diese
+Einstellung signalisiert dem Ladeprogramm, diese Abschnitte in
+nur\-Lese\-Zugriff zu \(:andern, bevor die Steuerung an das Programm \(:ubergeben
+wird. Insbesondere verhindert dies GOT\-\(:Uberschreibeangriffe. Falls diese
+Option deaktiviert ist, wird auch \fBbindnow\fP deaktiviert.
+.
+.TP 
+\fBbindnow\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt \fB\-Wl,\-z,now\fP zu
+\fBLDFLAGS\fP hinzu. W\(:ahrend des Ladens des Programms werden alle dynamischen
+Symbole aufgel\(:ost, womit das gesamte PLT nur\-lesend markiert werden kann
+(aufgrund von \fBrelro\fP oben). Diese Option kann nicht aktiviert werden,
+falls \fBrelro\fP nicht aktiviert ist.
+.
+.TP 
+\fBpie\fP
+Diese Einstellung (seit Dpkg 1.18.23 ohne globale Vorgabe, da sie jetzt
+standardm\(:a\(ssig durch GCC auf den Debian\-Architekturen Amd64, Arm64, Armel,
+Armhf, Hurd\-i386, I386, Kfreebsd\-amd64, Kfreebsd\-i386, Mips, Mipsel,
+Mips64el, Powerpc, PPC64, PPC64el, Riscv64, S390x, Sparc und Sparc64
+aktiviert ist) f\(:ugt, falls ben\(:otigt, die ben\(:otigten Optionen, um PIE zu
+aktivieren oder zu deaktiveren, \(:uber GCC\-Spezifikationsdateien hinzu,
+abh\(:angig davon, ob GCC auf diesen Architekturen die Schalter selbst
+einspeist oder nicht. Wenn die Einstellung aktiviert ist und GCC den
+Schalter einspeist, f\(:ugt dies nichts hinzu. Wenn die Einstellung aktiviert
+ist und GCC den Schalter nicht einspeist, dann f\(:ugt es \fB\-fPIE\fP (mittels
+\fI/usr/share/dpkg/pie\-compiler.specs\fP) zu \fBCFLAGS\fP, \fBCXXFLAGS\fP, \fBOBJCFLAGS\fP,
+\fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP und \fB\-fPIE \-pie\fP
+(mittels \fI/usr/share/dpkg/pie\-link.specs\fP) zu \fBLDFLAGS\fP hinzu.  Wenn die
+Einstellung deaktiviert ist und GCC den Schalter einspeist, dann f\(:ugt es
+\fB\-fno\-PIE\fP (mittels \fI/usr/share/dpkg/no\-pie\-compile.specs\fP) zu \fBCFLAGS\fP,
+\fBCXXFLAGS\fP, \fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und
+\fBFCFLAGS\fP und \fB\-fno\-PIE \-no\-pie\fP (mittels
+\fI/usr/share/dpkg/no\-pie\-link.specs\fP) zu \fBLDFLAGS\fP hinzu.
+
+\(FcPosition Independent Executable\(Fo (positionsunabh\(:angige Programme) werden
+ben\(:otigt, um \(FcAddress Space Layout Randomization\(Fo (Bereitstellung eines
+zuf\(:alligen Adressbereichlayouts) auszunutzen, der von einigen
+Kernelversionen bereitgestellt wird. W\(:ahrend ASLR bereits f\(:ur Datenbereiche
+auf dem Stapel (Stack) und Heap erzwungen werden kann (brk und mmap), m\(:ussen
+die Codebereiche positionsunabh\(:angig \(:ubersetzt werden. Laufzeitbibliotheken
+machen dies bereits (\fB\-fPIC\fP), so dass sie ASLR automatisch erhalten, aber
+Programm\-.text\-Regionen m\(:ussen mit PIE gebaut werden, um ASLR zu
+erhalten. Wenn dies passiert, sind ROP\- (Return Oriented Programming)
+Angriffe sehr viel schwerer durchzuf\(:uhren, da es keine statischen Orte mehr
+gibt, zu denen w\(:ahrend eines Speicherverf\(:alschungsangriffs hingesprungen
+werden k\(:onnte.
+
+PIE ist nicht mit \fB\-fPIC\fP kompatibel, daher muss im Allgemeinen Vorsicht
+beim Bau von Laufzeitbibliotheksobjekten walten gelassen werden. Da aber der
+ausgegebene PIE\-Schalter mittels GCC\-Spezifikationsdateien hinzugef\(:ugt wird,
+sollte es immer sicher sein, sie bedingungslos zu setzen, unabh\(:angig von dem
+Objekttyp, der \(:ubersetzt oder gelinkt wird.
+
+Statische Bibliotheken k\(:onnen von jedem Programm und anderen statischen
+Bibliotheken benutzt werden. Abh\(:angig von den zum Kompilieren aller Objekte
+innerhalb einer statischen Bibliothek verwandten Schaltern k\(:onnen diese
+Bibliotheken von verschiedenen Gruppen von Objekten verwandt werden:
+
+.RS
+.TP 
+keine
+Kann weder in ein PIE\-Programm noch in eine Laufzeitbibliothek gelinkt
+werden.
+.TP 
+\fB\-fPIE\fP
+Kann in jedes Programm, aber nicht in eine Laufzeitbibliothek gelinkt werden
+(empfohlen).
+.TP 
+\fB\-fPIC\fP
+Kann in jedes Programm und jede Laufzeitbibliothek gelinkt werden.
+.RE
+
+.IP
+Falls es notwendig ist, diese Schalter manuell zu setzen und die
+GGC\-Spezifikations\-Hinzuf\(:ugung zu umgehen, m\(:ussen mehrere Dinge beachtet
+werden. Die bedingungslose und explizite \(:Ubergabe von \fB\-fPIE\fP, \fB\-fpie\fP
+oder \fB\-pie\fP an das Bausystem mit Libtool ist sicher, da diese Schalter
+entfernt werden, wenn Laufzeit\-Bibliotheken gebaut werden. Andernfalls
+k\(:onnte es bei Projekten, die sowohl Programme wie auch Laufzeit\-Bibliotheken
+bauen, notwendig sein, dass Sie beim Bau der Laufzeit\-Bibliotheken
+sicherstellen, dass \fB\-fPIC\fP immer als letztes an die Kompilierungsschalter
+wie \fBCFLAGS\fP \(:ubergeben wird (so dass es jedes fr\(:uhere \fB\-PIE\fP au\(sser Kraft
+setzen kann) und \fB\-shared\fP als letztes an Link\-Schalter wie \fBLDFLAGS\fP
+\(:ubergeben wird (so dass es jedes fr\(:uhere \fB\-pie\fP au\(sser Kraft setzen
+kann). \fBHinweis\fP: Das sollte mit der Vorgabe\-GCC\-Spezifikationsmaschinerie
+nicht notwendig sein.
+
+.IP
+Zus\(:atzlich k\(:onnen auf einigen Architekturen mit sehr wenigen Registern (dazu
+geh\(:ort aber i386 nicht mehr, seitdem in GCC >= 5 Optimierungen
+erfolgten) Leistungsverluste von bis zu 15% in sehr text\-Segment\-lastigen
+Anwendungsf\(:allen auftreten, da PIE \(:uber allgemeine Register implementiert
+ist; in den meisten Anwendungsf\(:allen sind dies weniger als 1%. Architekturen
+mit mehr allgemeinen Registern (z.B. Amd64) erfahren nicht diese
+Schlimmstfall\-Strafe.
+.SS Reproduzierbarkeit
+Die Kompilierzeit\-Optionen (weiter unten beschrieben) k\(:onnen dazu verwandt
+werden, die Reproduzierbarkeit zu verbessern oder zus\(:atzliche
+Warnungsmeldungen w\(:ahrend der \(:Ubersetzung auszugeben. Sie werden f\(:ur
+Architekturen, die diese unterst\(:utzen, standardm\(:a\(ssig aktiviert; die
+Ausnahmen sind unten angegeben.
+.TP 
+\fBtimeless\fP
+Diese (standardm\(:a\(ssig aktivierte) Einstellung f\(:ugt \fB\-Wdate\-time\fP zu
+\fBCPPFLAGS\fP hinzu. Dies f\(:uhrt zu Warnungen, wenn die Makros \fB__TIME__\fP,
+\fB__DATE__\fP und \fB__TIMESTAMP__\fP verwandt werden.
+.
+.TP 
+\fBfixfilepath\fP
+Diese Einstellung (standardm\(:a\(ssig deaktiviert) f\(:ugt
+\fB\-ffile\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP hinzu,
+wobei \fBBUILDPATH\fP auf das oberste Verzeichnis des bauenden Pakets gesetzt
+wird. Dies f\(:uhrt dazu, dass der Baupfad aus allen erstellten Dateien
+entfernt wird.
+
+Falls sowohl \fBfixdebugpath\fP als auch \fBfixfilepath\fP gesetzt sind, hat diese
+Option Vorrang, da sie eine Obermenge erster ist.
+.TP 
+\fBfixdebugpath\fP
+Diese Einstellung (standardm\(:a\(ssig aktiviert) f\(:ugt
+\fB\-fdebug\-prefix\-map=\fP\fIBUILDPATH\fP\fB=.\fP zu \fBCFLAGS\fP, \fBCXXFLAGS\fP,
+\fBOBJCFLAGS\fP, \fBOBJCXXFLAGS\fP, \fBGCJFLAGS\fP, \fBFFLAGS\fP und \fBFCFLAGS\fP hinzu,
+wobei \fBBUILDPATH\fP auf das oberste Verzeichnis des bauenden Pakets gesetzt
+wird. Dies f\(:uhrt dazu, dass der Baupfad aus allen erstellten Debug\-Symbolen
+entfernt wird.
+.
+.SH UMGEBUNG
+Es gibt zwei Gruppen von Umgebungsvariablen, die den gleichen Vorgang
+durchf\(:uhren. Der erste (DEB_\fISchalter\fP_\fIVorg\fP) sollte niemals innerhalb
+von \fBdebian/rules\fP verwandt werden. Er ist f\(:ur Benutzer gedacht, die das
+Quellpaket mit anderen Bauschaltern erneut bauen m\(:ochten. Der zweite Satz
+(DEB_\fISchalter\fP_MAINT_\fIVorg\fP) sollte nur durch Paketbetreuer in
+\fBdebian/rules\fP verwandt werden, um die entstehenden Bauschalter zu \(:andern.
+.TP 
+\fBDEB_\fP\fISchalter\fP\fB_SET\fP
+.TQ
+\fBDEB_\fP\fISchalter\fP\fB_MAINT_SET\fP
+Diese Variable kann zum Erzwingen des f\(:ur \fISchalter\fP zur\(:uckgegebenen Werts
+verwandt werden.
+.TP 
+\fBDEB_\fP\fISchalter\fP\fB_STRIP\fP
+.TQ
+\fBDEB_\fP\fISchalter\fP\fB_MAINT_STRIP\fP
+Diese Variable kann zum Bereitstellen einer durch Leerzeichen getrennten
+Liste von Optionen verwandt werden, die aus dem Satz von \fISchalter\fP
+zur\(:uckgelieferten Schaltern entfernt werden.
+.TP 
+\fBDEB_\fP\fISchalter\fP\fB_APPEND\fP
+.TQ
+\fBDEB_\fP\fISchalter\fP\fB_MAINT_APPEND\fP
+Diese Variable kann zum Anh\(:angen erg\(:anzender Optionen zum Wert, der von
+\fISchalter\fP zur\(:uckgegeben wird, verwandt werden.
+.TP 
+\fBDEB_\fP\fISchalter\fP\fB_PREPEND\fP
+.TQ
+\fBDEB_\fP\fISchalter\fP\fB_MAINT_PREPEND\fP
+Diese Variable kann zum Voranstellen erg\(:anzender Optionen zum Wert, der von
+\fISchalter\fP zur\(:uckgegeben wird, verwandt werden.
+.TP 
+\fBDEB_BUILD_OPTIONS\fP
+.TQ
+\fBDEB_BUILD_MAINT_OPTIONS\fP
+Diese Variablen k\(:onnen von Benutzern oder Betreuern zum Deaktivieren oder
+Aktivieren verschiedener Bereichsfunktionalit\(:aten benutzt werden, die
+Bauschalter beeinflussen. Die Variable \fBDEB_BUILD_MAINT_OPTIONS\fP setzt jede
+Einstellung in den Funktionalit\(:atsbereichen \fBDEB_BUILD_OPTIONS\fP au\(sser
+Kraft. Lesen Sie den Abschnitt \fBFUNKTIONALIT\(:ATSBEREICHE\fP f\(:ur weitere
+Details.
+.TP 
+\fBDEB_VENDOR\fP
+Diese Einstellung definiert den aktuellen Lieferanten. Falls nicht gesetzt,
+wird er aus \fB/etc/dpkg/origins/default\fP ermittelt.
+.TP 
+\fBDEB_BUILD_PATH\fP
+Diese Variable setzt den Baupfad (seit Dpkg 1.18.8), der in Funktionalit\(:aten
+wie \fBfixdebugpath\fP verwandt wird, so dass sie durch den Aufrufenden
+gesteuert werden k\(:onnen. Diese Variable ist derzeit spezifisch f\(:ur Debian
+und Derivative.
+.TP 
+\fBDPKG_COLORS\fP
+Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterst\(:utzten Werte
+sind: \fBauto\fP (Vorgabe), \fBalways\fP und \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language
+Support, auch als Internationalisierung (oder i18n) Unterst\(:utzung bekannt,
+aktiviert wird (seit Dpkg 1.19.0). Die akzeptierten Werte sind: \fB0\fP und
+\fB1\fP (Vorgabe).
+.
+.SH DATEIEN
+.SS Konfigurationsdateien
+.TP 
+\fB/etc/dpkg/buildflags.conf\fP
+Systemweite Konfigurationsdatei
+.TP 
+\fB$XDG_CONFIG_HOME/dpkg/buildflags.conf\fP oder 
+.TQ
+\fB$HOME/.config/dpkg/buildflags.conf\fP
+Benutzer\-Konfigurationsdatei
+.SS Paketierungsunterst\(:utzung
+.TP 
+\fB/usr/share/dpkg/buildflags.mk\fP
+Makefile\-Schnipsel, das alle von \fBdpkg\-buildflags\fP unterst\(:utzten Schalter
+in Variablen laden (und optional exportieren) wird. (seit Dpkg 1.16.1)
+.
+.SH BEISPIELE
+Um Bauschalter an eine Baubefehl in einer Makefile zu \(:ubergeben:
+.PP
+.RS 4
+.nf
+$(MAKE) $(shell dpkg\-buildflags \-\-export=cmdline)
+
+\&./configure $(shell dpkg\-buildflags \-\-export=cmdline)
+.fi
+.RE
+.PP
+Um Bauschalter in einem Shell\-Skript oder Shell\-Fragement zu setzen, kann
+\fBeval\fP verwendet werden, um die Ausgabe zu interpretieren und die Schalter
+in die Umgebung zu exportieren:
+.PP
+.RS 4
+.nf
+eval "$(dpkg\-buildflags \-\-export=sh)" && make
+.fi
+.RE
+.PP
+Oder die Positionsparameter zu setzen, die an einen Befehl \(:ubergeben werden
+sollen:
+.PP
+.RS 4
+.nf
+eval "set \-\- $(dpkg\-buildflags \-\-export=cmdline)"
+for dir in a b c; do (cd $dir && ./configure "$@" && make); done
+.fi
+.RE
+.
+.SS "Verwendung in debian/rules"
+Sie sollten \fBdpkg\-buildflags\fP aufrufen oder \fBbuildflags.mk\fP in die Datei
+\fBdebian/rules\fP einbinden, um die ben\(:otigten Bauschalter, die an das
+Bausystem weitergegeben werden sollen, abzufragen. Beachten Sie, dass \(:altere
+Versionen von \fBdpkg\-buildpackage\fP (vor Dpkg 1.16.1) diese Variablen
+automatisch exportierten. Allerdings sollten Sie sich nicht darauf
+verlassen, da dies den manuellen Aufruf von \fBdebian/rules\fP nicht korrekt
+erm\(:oglicht.
+.PP
+F\(:ur Pakete mit Autoconf\-artigen Bausystemen k\(:onnen Sie die relevanten
+Optionen direkt wie oben gezeigt an Configure oder \fBmake\fP(1) \(:ubergeben.
+.PP
+F\(:ur andere Bausysteme oder wenn Sie feingranularere Steuerung ben\(:otigen
+(welcher Schalter wo weitergegeben wird), k\(:onnen Sie \fB\-\-get\fP
+verwenden. Oder Sie k\(:onnen stattdessen \fBbuildflags.mk\fP einbinden, das sich
+um den Aufruf von \fBdpkg\-buildflags\fP k\(:ummert und die Bauschalter in
+Make\-Variablen speichert.
+.PP
+Falls Sie alle Bauschalter in die Umgebung exportieren m\(:ochten (wo sie dann
+vom Baussystem eingelesen werden k\(:onnen):
+.PP
+.RS 4
+.nf
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+.fi
+.RE
+.PP
+F\(:ur zus\(:atzliche Steuerung was exportiert wird, k\(:onnen Sie die Variablen
+manuell exportieren (da keine standardm\(:a\(ssig exportiert werden):
+.PP
+.RS 4
+.nf
+include /usr/share/dpkg/buildflags.mk
+export CPPFLAGS CFLAGS LDFLAGS
+.fi
+.RE
+.PP
+Und nat\(:urlich k\(:onnen Sie die Schalter manuell an Befehle weitergeben:
+.PP
+.RS 4
+.nf
+include /usr/share/dpkg/buildflags.mk
+build\-arch:
+\&	$(CC) \-o hello hello.c $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
+.fi
+.RE
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

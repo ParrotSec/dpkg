@@ -1,0 +1,233 @@
+.\" dpkg manual page - dpkg-parsechangelog(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006, 2011-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2007-2008 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2009 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-parsechangelog 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-parsechangelog \- Analyse un fichier changelog Debian.
+.
+.SH SYNOPSIS
+\fBdpkg\-parsechangelog\fP [\fIoption\fP...]
+.
+.SH DESCRIPTION
+\fBdpkg\-parsechangelog\fP lit et fait l'analyse du fichier \(Fo\ changelog\ \(Fc d'une
+arborescence source d\('epaquet\('ee et affiche les informations qu'il contient
+sur la sortie standard et sous une forme lisible par la machine.
+.
+.SH OPTIONS
+.TP 
+\fB\-l\fP, \fB\-\-file\fP \fIfichier\-des\-changements\fP
+Indique le fichier des changements o\(`u trouver des renseignements. Un \(Fo\ \-\ \(Fc
+peut \(^etre utilis\('e pour sp\('ecifier une lecture \(`a partir de l'entr\('ee
+standard. Par d\('efaut, c'est le fichier \fBdebian/changelog\fP.
+.TP 
+\fB\-F\fP \fIformat\-du\-fichier\-des\-changements\fP
+Indique le format du fichier changelog. Par d\('efaut, c'est une ligne
+sp\('eciale, pr\(`es de la fin du fichier, qui l'indique\ ; sinon, on utilise le
+format classique \fBdebian\fP. Voir aussi \fBFORMATS DES FICHIERS DE
+CHANGEMENTS\fP.
+.TP 
+\fB\-L\fP \fIrep_lib\fP
+Option obsol\(`ete sans effet (depuis dpkg\ 1.18.8). Fixer les variables
+d'environnement de Perl \fBPERL5LIB\fP ou \fBPERLLIB\fP a un effet similaire lors
+de la recherche des modules d'analyse de Perl.
+.TP 
+\fB\-S\fP, \fB\-\-show\-field\fP \fIchamp\fP
+Indique le nom du champ \(`a afficher (depuis dpkg\ 1.17.0). Le nom du champ
+n'est pas affich\('e, mais seulement sa valeur.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.SS "Options de filtrage"
+Les options suivantes peuvent \(^etre utilis\('ees pour influencer la sortie de
+l'analyseur du journal des modifications (\(Fo\ changelog\ \(Fc), par exemple la
+gamme d'entr\('ees ou le format de sortie.
+.TP 
+\fB\-\-format\fP\fI format\-de\-sortie\fP
+R\(`egle le format de sortie. Actuellement les valeurs g\('er\('ees sont \fIdpkg\fP et
+\fBrfc822\fP. \fIdpkg\fP est le format classique de sortie (avant que cette option
+n'existe) et l'option par d\('efaut. Il se compose d'un paragraphe dans le
+format du fichier de contr\(^ole Debian (voir \fBdeb\-control\fP(5)). Si plus d'une
+entr\('ee est demand\('ee, alors la plupart des champs sont tir\('es de la premi\(`ere
+entr\('ee (habituellement la plus r\('ecente), sauf si c'est indiqu\('e autrement.
+.RS
+.TP 
+\fBSource:\fP\fI nom\-du\-paquet\fP
+.TP 
+\fBVersion:\fP\fI version\fP
+.TP 
+\fBDistribution:\fP\fI distribution\-cible\fP
+.TP 
+\fBUrgency:\fP\fI priorit\('e\fP
+La priorit\('e la plus \('elev\('ee de toutes les entr\('ees incluses est utilis\('ee,
+suivie par les commentaires concat\('en\('es et s\('epar\('es par des espaces pour
+toutes les versions demand\('ees.
+.TP 
+\fBMaintainer:\fP\fI auteur\fP
+.TP 
+\fBDate:\fP\fI date\fP
+La date de l'entr\('ee sous forme d'une cha\(^ine, telle qu'elle appara\(^it dans le
+changelog. Avec un format \fBstrptime\fP(3) \(Fo\ \fB%a, %d %b %Y %T %z\fP\ \(Fc mais o\(`u
+le nom du jour de la semaine pourrait ne pas vraiment correspondre au jour
+r\('eel obtenu \(`a partir du reste de la cha\(^ine de date. Si une repr\('esentation
+plus pr\('ecise du jour est n\('ecessaire, utilisez le champ \fBTimestamp\fP, mais il
+faut prendre en compte qu'il pourrait ne pas \(^etre possible de la faire
+correspondre \(`a la valeur exacte de ce champ.
+.TP 
+\fBTimestamp:\fP \fIhorodatage\fP
+La date de l'entr\('ee comme horodatage en secondes depuis \(Fo\ l'epoch\ \(Fc (depuis
+dpkg\ 1.18.8).
+.TP 
+\fBCloses:\fP\fI num\('ero\-bogue\fP
+Les champs \(Fo\ Closes\ \(Fc de toutes les entr\('ees incluses sont fusionn\('es.
+.TP 
+\fBChanges:\fP\fI entr\('ees\-du\-fichier\-des\-changements\fP
+Les textes de toutes les entr\('ees de changelog sont concat\('en\('es. Pour faire de
+ce champ un champ de contr\(^ole Debian valable, les lignes multiples qui sont
+vides sont remplac\('ees par un point \fB\(Fo\ .\ \(Fc\fP et toutes les lignes sont
+indent\('ees par une seule espace. Le contenu exact d\('epend du format du
+changelog.
+.RE
+.IP
+Les champs \fBVersion\fP, \fBDistribution\fP, \fBUrgency\fP, \fBMaintainer\fP et
+\fBChanges\fP sont obligatoires.
+.IP
+Il est possible d'avoir d'autres champs qui sont d\('efinis par l'utilisateur.
+.IP
+Le format \fBrfc822\fP utilise les m\(^emes champs mais le r\('esultat est un
+paragraphe distinct pour chaque entr\('ee du changelog afin que toutes les
+m\('etadonn\('ees de chaque entr\('ee soit pr\('eserv\('ees.
+.TP 
+\fB\-\-reverse\fP
+Inclut toutes les modifications en ordre inverse (depuis
+dpkg\ 1.19.1). Note\ : pour le format de \fBdpkg\fP, la premi\(`ere entr\('ee sera
+l'entr\('ee la plus ancienne.
+.TP 
+\fB\-\-all\fP
+Inclut toutes les modifications. Note\ :\ d'autres options deviennent sans
+effet lorsque celle\-ci est utilis\('ee.
+.TP 
+\fB\-s\fP, \fB\-\-since\fP \fIversion\fP
+.TQ
+\fB\-v\fP \fIversion\fP
+Inclut tous les changements qui ont suivi la \fIversion\fP.
+.TP 
+\fB\-u\fP, \fB\-\-until\fP \fIversion\fP
+Inclut tous les changements qui ont eu lieu avant la \fIversion\fP.
+.TP 
+\fB\-f\fP, \fB\-\-from\fP \fIversion\fP
+Inclut tous les changements depuis la \fIversion\fP (incluse).
+.TP 
+\fB\-t\fP, \fB\-\-to\fP \fIversion\fP
+Inclut tous les changements apport\('es jusqu'\(`a la \fIversion\fP comprise.
+.TP 
+\fB\-c\fP, \fB\-\-count\fP \fInombre\fP
+.TQ
+\fB\-n\fP \fInombre\fP
+Inclut ce \fInombre\fP d'entr\('ees depuis le d\('ebut (ou la fin si le \fInombre\fP est
+inf\('erieur \(`a\ 0).
+.TP 
+\fB\-o\fP, \fB\-\-offset\fP \fInombre\fP
+Modifie le point de d\('epart pour \fB\-\-count\fP, \(`a compter du d\('ebut (ou la fin si
+le \fInombre\fP est inf\('erieur \(`a\ 0).
+.
+.SH "FORMATS DE JOURNAUX DE MODIFICATIONS"
+Il est possible d'utiliser un format diff\('erent de celui utilis\('e
+habituellement, en fournissant un analyseur pour le format alternatif.
+
+Afin que \fBdpkg\-parsechangelog\fP utilise le nouvel analyseur, il doit exister
+une ligne, parmi les 40\ derni\(`eres du fichier, qui corresponde \(`a l'expression
+r\('eguli\(`ere Perl \(lq\fB\eschangelog\-format:\es+([0\-9a\-z]+)\eW\fP\ (la partie entre
+parenth\(`eses doit \(^etre le nom du format). Exemple\ :
+
+       @@@ changelog\-format: \fIautreformat\fP @@@
+
+Changelog format names are non\-empty strings of lowercase alphanumerics
+(\(lqa\-z0\-9\(rq).
+
+Si une telle ligne existe, \fBdpkg\-parsechangelog\fP recherchera l'analyseur
+sous le nom du module Perl \fBDpkg::Changelog::\fP\fIautreformat\fP\ ; s'il n'est
+pas pr\('esent, c'est une condition d'erreur. Le nom de l'analyseur dans le
+module Perl sera automatiquement mis en capitale. Le format de journaux des
+modifications par d\('efaut est \fBdebian\fP et un analyseur pour ce format est
+fourni par d\('efaut.
+
+L'analyseur doit \(^etre d\('eriv\('ee de la classe Dpkg::Changelog et impl\('ementer
+l'interface document\('ee requise.
+
+Si le format du journal des modifications analys\('e laisse toujours ou presque
+une ligne blanche entre chaque changement, ces lignes blanches devraient
+\(^etre retir\('ees, afin de rendre l'affichage de sortie plus compact.
+
+Si le journal des modifications ne contient pas d'informations de date ou de
+nom de paquet, cette information doit \(^etre omise de l'affichage. L'analyseur
+ne doit pas essayer de les calculer ou de les retrouver depuis d'autres
+sources.
+
+Si le journal des modifications n'utilise pas le format attendu, l'analyseur
+produira une erreur, plut\(^ot que d'essayer de s'en tirer comme il peut et
+produire une sortie incorrecte.
+
+Un analyseur de journal de modifications ne doit pas du tout interagir avec
+l'utilisateur.
+.
+.SH NOTES
+Toutes les \fBoptions d'analyse\fP sauf \fB\-v\fP sont g\('er\('ees par \fBdpkg\fP seulement
+depuis la version\ 1.14.16.
+.PP
+Analyse des options courtes avec des valeurs non\-group\('ees, disponible
+seulement \(`a partir de dpkg 1.18.0.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH FICHIERS
+.TP 
+\fBdebian/changelog\fP
+Le journal des modifications\ ; on s'en sert pour conna\(^itre les informations
+qui d\('ependent d'une version du paquet source, par exemple l'urgence ou la
+distribution d'une installation sur le serveur, les modifications faites
+depuis telle \('edition et le num\('ero de la version source lui\-m\(^eme.
+.
+.SH "VOIR AUSSI"
+\fBdeb\-changelog\fP(5).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

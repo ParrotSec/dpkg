@@ -1,0 +1,105 @@
+.\" dpkg manual page - dpkg-scansources(1)
+.\"
+.\" Copyright © 2005 Roderick Schertler <roderick@argon.org>
+.\" Copyright © 2006 Frank Lichtenheld <djpig@debian.org>
+.\" Copyright © 2009 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-scansources 1 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+dpkg\-scansources \- maak Sources indexbestanden
+.
+.SH OVERZICHT
+\fBdpkg\-scansources\fP [\fIoptie\fP...] \fImap\-binair\-pakket\fP [\fIoverride\-bestand\fP
+[\fIpadprefix\fP]] \fB>\fP \fISources\fP
+.
+.SH BESCHRIJVING
+\fBdpkg\-scansources\fP zoekt in de opgegeven \fImap\-binair\-pakket\fP naar
+\&\fI.dsc\fP\-bestanden. Die worden gebruikt om een Debian broncode\-index te
+maken, die naar de standaarduitvoer gestuurd wordt.
+.PP
+Als dat opgegeven wordt, wordt het \fIoverride\-bestand\fP gebruikt om de
+prioriteit in te stellen in het resulterende item in het indexbestand en om
+de inhoud van het maintainer\-veld dat in het \fI.dsc\fP\-bestand opgegeven
+wordt, te vervangen. Het bestand mag gecomprimeerd zijn (sinds dpkg
+1.15.5). Zie \fBdeb\-override\fP(5) voor de indeling van dit bestand. Opmerking:
+vermits het bestand override volgens binaire pakketten ge\(:indexeerd wordt en
+niet volgens broncodepakketten, stelt zich hier een zeker probleem. De
+huidige implementatie gebruikt de hoogste prioriteit van alle binaire
+pakketten die door een \fI.dsc\fP\-bestand geproduceerd worden, voor de
+prioriteit van het broncodepakket en het override\-item voor het binaire
+pakket dat het eerst vermeld wordt in het \fI.dsc\fP\-bestand om de informatie
+over de pakketonderhouder aan te passen. Dit kan veranderen.
+.PP
+Indien het \fIpadprefix\fP opgegeven werd, wordt het voorgevoegd bij het veld
+directory in het gegenereerde broncode\-indexbestand. In het algemeen wordt
+dit gebruikt om er voor te zorgen dat het veld directory het pad bevat vanaf
+de basis van de hi\(:erarchische structuur van het Debian pakketarchief.
+.
+.PP
+\fBOpmerking:\fP indien u het gegenereerde Sources\-bestand wilt gebruiken met
+\fBapt\fP(8), zult u het wellicht moeten comprimeren met \fBgzip\fP(1) (hetgeen
+een bestand Sources.gz genereert). apt negeert niet\-gecomprimeerde
+Sources\-bestanden tenzij in geval van lokale toegang (d.w.z. pakketbronnen
+in de vorm van \fBfile://\fP).
+.
+.SH OPTIES
+.IP "\fB\-n\fP, \fB\-\-no\-sort\fP" 4
+Sorteer de index\-items niet. Normaal gezien worden ze volgens de naam van
+het bronpakket geordend.
+.TP 
+.IP "\fB\-e\fP, \fB\-\-extra\-override\fP \fIbestand\fP" 4
+Zoek in \fIbestand\fP naar bijkomende vervangingen (sinds dpkg 1.15.4; het
+bestand mag gecomprimeerd zijn sinds dpkg 1.15.5). Zie
+\fBdeb\-extra\-override\fP(5) voor meer informatie over de indeling ervan.
+.IP "\fB\-s\fP, \fB\-\-source\-override\fP \fIbestand\fP" 4
+Gebruik \fIbestand\fP als het override\-bestand van de broncode (het bestand mag
+gecomprimeerd zijn sinds dpkg 1.15.5). Als standaard geldt de naam van het
+override\-bestand dat u opgaf, met daaraan \fI.src\fP toegevoegd.
+.sp
+Het override\-bestand voor de broncode heeft een andere indeling dan het
+override\-bestand voor het binaire pakket. Het bevat slechts twee velden die
+onderling door witruimte gescheiden worden. Het eerste veld bevat de naam
+van het broncodepakket en het tweede de sectie waartoe het behoort. Lege
+regels en commentaarregels worden op de normale manier genegeerd. Indien een
+pakket in beide bestanden voorkomt, heeft het override\-bestand van de
+broncode voorrang bij het instellen van de sectie.
+.IP \fB\-\-debug\fP 4
+Zet debuggen aan.
+.IP \fB\-\-help\fP 4
+Toon info over het gebruik en sluit af.
+.IP \fB\-\-version\fP 4
+Toon de versie en sluit af.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_COLORS\fP
+Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
+mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het
+activeren van moedertaalondersteuning, ook gekend als
+internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige
+waarden zijn: \fB0\fP and \fB1\fP (standaard).
+.
+.SH "ZIE OOK"
+\fBdeb\-override\fP(5), \fBdeb\-extra\-override\fP(5), \fBdpkg\-scanpackages\fP(1).

@@ -44,7 +44,7 @@ Sie an \fBdpkg\-deb\fP übergeben wollen, aufrufen. \fBdpkg\fP erkennt, dass Sie
 .PP
 Bei den meisten Befehlen, die ein Archiv als Eingabeargument erwarten, kann
 der Archivname von der Standardeingabe gelesen werden, wenn er als einzelnes
-Minuszeichen (»\fB\-\fP«) angegeben ist. Falls dies nicht unterstützt wird, ist
+Minuszeichen („\fB\-\fP“) angegeben ist. Falls dies nicht unterstützt wird, ist
 dies in der jeweiligen Beschreibung des Befehls dokumentiert.
 .
 .SH BEFEHLE
@@ -72,7 +72,7 @@ Falls das zweite Argument ein Verzeichnis ist, wird \fBdpkg\-deb\fP in die Datei
 \fIVerzeichnis\fP\fB/\fP\fIPaket\fP\fB_\fP\fIVersion\fP\fB_\fP\fIArch\fP\fB.deb.\fP schreiben. Wenn
 ein Zielverzeichnis statt einer Datei angegeben ist, darf die Option
 \fB\-\-nocheck\fP nicht verwendet werden (da \fBdpkg\-deb\fP die Paketsteuerdatei
-lesen und auswerten muss, um den zu verwendenden Dateinamen zu bestimmen).
+lesen und auswerten muss, um den zu verwendenen Dateinamen zu bestimmen).
 .TP 
 \fB\-I\fP, \fB\-\-info\fP \fIArchiv\fP [\fISteuer\-Dateiname\fP …]
 Stellt Informationen über ein Binärpaketarchiv bereit.
@@ -135,7 +135,7 @@ Das Zielverzeichnis (aber nicht übergeordnete) wird, falls notwendig,
 angelegt.
 
 Das Eingebearchiv wird (derzeit) nicht sequenziell verarbeitet, daher wird
-das Einlesen von der Standardeingabe (»\fB\-\fP«) \fBnicht\fP unterstützt.
+das Einlesen von der Standardeingabe („\fB\-\fP“) \fBnicht\fP unterstützt.
 .TP 
 \fB\-\-ctrl\-tarfile\fP \fIArchiv\fP
 Extrahiert die Steuerdaten aus einem Binärpaket und schickt sie zur
@@ -287,7 +287,7 @@ direkt unterstützt.)
 .SH "SIEHE AUCH"
 \fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\fP(1), \fBdselect\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -1,0 +1,60 @@
+.\" dpkg manual page - deb-preinst(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-preinst 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-preinst \- Pr\(:ainstallationsbetreuerskript eines Paketes
+.
+.SH \(:UBERSICHT
+preinst
+.
+.SH BESCHREIBUNG
+Ein Paket kann eine Reihe von Pr\(:ainstallationsaktionen mittels seiner
+Betreuerskripte durchf\(:uhren, indem es eine ausf\(:uhrbare Datei \fIpreinst\fP in
+seinem Steuerarchiv (d.h. \fIDEBIAN/preinst\fP w\(:ahrend der Paketerstellung)
+hinzunimmt.
+.PP
+Das Skript kann in den folgenden Weisen aufgerufen werden:
+.TP 
+\fInew\-preinst\fP \fBinstall\fP
+Bevor das Paket installiert wird.
+.TP 
+\fInew\-preinst\fP \fBinstall\fP \fIalte_Version neue_Version\fP
+Bevor ein Upgrade des entfernten Pakets durchgef\(:uhrt wird.
+.TP 
+\fInew\-preinst\fP \fBupgrade\fP \fIalte_Version neue_Version\fP
+Bevor das Upgrade des Pakets durchgef\(:uhrt wird.
+.TP 
+\fIold\-preinst\fP \fBabort\-upgrade\fP \fIneue_Version\fP
+Falls \fIpostrm\fP w\(:ahrend des Upgrades oder w\(:ahrend eines fehlgeschlagenen
+Upgrades fehlschl\(:agt.
+.
+.SH "SIEHE AUCH"
+\fBdpkg\fP(1).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

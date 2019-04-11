@@ -1,0 +1,214 @@
+.\" dpkg manual page - dpkg-split(1)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2011 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-split 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOME
+dpkg\-split \- strumento per suddividere/unire archivi di pacchetto Debian
+.
+.SH SINTASSI
+\fBdpkg\-split\fP [\fIopzione\fP...] \fIcomando\fP
+.
+.SH DESCRIZIONE
+\fBdpkg\-split\fP suddivide i file dei pacchetti binari Debian in parti pi\(`u
+piccole e li riassembla, per permettere l'archiviazione di grandi file di
+pacchetto su supporti piccoli, come floppy disk.
+
+Pu\(`o essere utilizzato manualmente usando le opzioni \fB\-\-split\fP, \fB\-\-join\fP e
+\fB\-\-info\fP.
+
+Ha anche una modalit\(`a automatica, invocata usando l'opzione \fB\-\-auto\fP, con
+la quale mantiene una coda di parti viste ma non ancora riassemblate, e
+riassembla un file di pacchetto quando ha visto tutte le sue parti. Le
+opzioni \fB\-\-listq\fP e \fB\-\-discard\fP permettono la gestione della coda.
+
+Tutte le azioni di suddivisione, unione e gestione della coda producono
+messaggi informativi sullo standard output che possono essere ignorati senza
+problemi.
+.
+.SH COMANDI
+.TP 
+\fB\-s\fP, \fB\-\-split\fP \fIarchivio\-completo\fP [\fIprefisso\fP]
+Suddivide un singolo pacchetto binario Debian in pi\(`u parti.
+
+Le parti vengono chiamate \fIprefisso\fP\fB.\fP\fIN\fP\fBof\fP\fIM\fP\fB.deb\fP dove \fIN\fP \(`e il
+numero della parte, cominciando da 1, e \fIM\fP \(`e il numero totale delle parti
+(entrambi in forma decimale).
+
+Se non viene specificato un \fIprefisso\fP, allora viene usato il nome file
+\fIarchivio\-completo\fP, inclusa la directory, rimuovendo qualsiasi parte
+\&\fB.deb\fP finale.
+.TP 
+\fB\-j\fP, \fB\-\-join\fP \fIparte\fP...
+Unisce insieme le parti di un pacchetto, riassemblando il file originale
+cos\(`i come era prima che fosse suddiviso.
+
+I file delle parti specificati come argomenti devono rappresentare tutte le
+parti dello stesso identico file binario originale. Ogni parte deve essere
+presente una ed una sola volta nell'elenco degli argomenti, anche se non \(`e
+necessario che le parti siano elencate in ordine.
+
+Naturalmente, le parti devono essere state tutte generate specificando, al
+momento della suddivisione, la medesima dimensione delle parti, il che
+solitamente significa che devono essere state generate con la medesima
+invocazione di \fBdpkg\-split \-\-split\fP.
+
+I nomi dei file delle parti non sono significativi per il processo di
+riassemblaggio.
+
+In modo predefinito il file di output si chiama
+\fIpacchetto\fP\fB_\fP\fIversione\fP\fB_\fP\fIarch\fP\fB.deb\fP.
+
+.TP 
+\fB\-I\fP, \fB\-\-info\fP \fIparte\fP...
+Stampa informazioni, in un formato intelligibile, riguardo ai file delle
+parti specificati. Gli argomenti che non sono parti di un pacchetto binario
+producono invece un messaggio che informa della cosa (ma sempre sullo
+standard output).
+.TP 
+\fB\-a\fP, \fB\-\-auto \-o\fP \fIoutput\-completo parte\fP
+Accoda automaticamente le parti e riassembla un pacchetto se ci\(`o \(`e
+possibile.
+
+La \fIparte\fP specificata viene esaminata e confrontata con altre parti dello
+stesso pacchetto (se presenti) nella coda delle parti dei file pacchetto.
+
+Se sono disponibili tutte le parti del file pacchetto a cui appartiene
+\fIparte\fP, allora il pacchetto viene riassemblato e scritto in
+\fIoutput\-completo\fP (che normalmente non dovrebbe essere gi\(`a esistente,
+bench\('e ci\(`o non causi un errore).
+
+Altrimenti, la \fIparte\fP viene copiata nella coda e non viene creato
+\fIoutput\-completo\fP.
+
+Se \fIparte\fP non \(`e una parte di un pacchetto binario suddiviso, allora
+\fBdpkg\-split\fP terminer\(`a con lo stato \fB1\fP; se si verifica qualche altro
+problema allora terminer\(`a con lo stato \fB2\fP.
+
+Quando si usa \fB\-\-auto\fP deve essere specificata l'opzione \fB\-\-output\fP o
+\fB\-o\fP. (Se ci\(`o non fosse obbligatorio il programma che sta invocando
+l'azione non saprebbe quale file di output attendersi.)
+.TP 
+\fB\-l\fP, \fB\-\-listq\fP
+Elenca il contenuto della coda dei pacchetti da riassemblare.
+
+Per ogni file di pacchetto per il quale esistono parti nella coda, l'output
+fornisce il nome del pacchetto, le parti nella coda e il numero totale di
+byte archiviati nella coda.
+.TP 
+\fB\-d\fP, \fB\-\-discard\fP [\fIpacchetto\fP...]
+Questo scarta parti dalla coda di quelle in attesa delle parti restanti del
+proprio pacchetto.
+
+Se non viene specificato alcun \fIpacchetto\fP, allora la coda viene svuotata
+completamente; se ne \(`e specificato qualcuno, allora vengono eliminate solo
+le parti dei pacchetti indicati.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Mostra il messaggio sull'uso ed esce.
+.TP 
+\fB\-\-version\fP
+Mostra la versione ed esce.
+.
+.SH OPZIONI
+.TP 
+\fB\-\-depotdir\fP\fI directory\fP
+Specifica una directory alternativa per la coda delle parti in attesa di
+essere automaticamente riassemblate. Il valore predefinito \(`e
+\fB/var/lib/dpkg\fP.
+.TP 
+\fB\-S\fP, \fB\-\-partsize\fP \fIkibibyte\fP
+Specifica la dimensione massima, in kibibyte (1024 byte), delle parti quando
+viene fatta la suddivisione. Il valore predefinito \(`e 450 KiB.
+.TP 
+\fB\-o\fP, \fB\-\-output\fP \fIoutput\-completo\fP
+Specifica il nome del file di output per il riassemblamento.
+
+Questo valore scavalca quello predefinito per il riassemblaggio manuale
+(\fB\-\-join\fP) ed \(`e obbligatorio per la messa in coda o il riassemblaggio
+automatici (\fB\-\-auto\fP).
+.TP 
+\fB\-Q\fP, \fB\-\-npquiet\fP
+Quando vengono fatti una messa in coda o un riassemblaggio automatici,
+\fBdpkg\-split\fP stampa solitamente un messaggio se gli viene passata una
+\fIparte\fP che non \(`e una parte di un pacchetto binario. Questa opzione
+disabilita tali messaggi per permettere a programmi come \fBdpkg\fP di gestire
+sia pacchetti suddivisi sia non suddivisi, senza produrre messaggi spuri.
+.TP 
+\fB\-\-msdos\fP
+Forza la compatibilit\(`a con MSDOS dei nomi file in output generati da
+\fB\-\-split\fP.
+
+Questo storpia il prefisso, o quello predefinito derivato dal nome file di
+input o quello fornito come argomento: i caratteri alfanumerici vengono resi
+minuscoli, i caratteri \(Fo+\(Fc vengono sostituiti da \fBx\fP e tutti gli altri
+caratteri vengono eliminati.
+
+Il risultato viene quindi troncato alla lunghezza necessaria e vengono
+generati nomi di file nella forma \fIprefissoN\fP\fBof\fP\fIM\fP\fB.deb\fP.
+.
+.SH "STATO D'USCITA"
+.TP 
+\fB0\fP
+La suddivisione, unione o altra azione richiesta ha avuto successo. I
+comandi \fB\-\-info\fP vengono considerati conclusi con successo anche se i file
+non sono parti di un pacchetto binario.
+.TP 
+\fB1\fP
+Si verifica solo con \fB\-\-auto\fP e indica che il file \fIparte\fP non era una
+parte di un pacchetto binario.
+.TP 
+\fB2\fP
+Fatal or unrecoverable error due to invalid command\-line usage, a file that
+looked like a package part file but was corrupted, or interactions with the
+system, such as accesses to the database, memory allocations, etc.
+.
+.SH AMBIENTE
+.TP 
+\fBDPKG_COLORS\fP
+Sets the color mode (since dpkg 1.18.5).  The currently accepted values are:
+\fBauto\fP (default), \fBalways\fP and \fBnever\fP.
+.TP 
+\fBSOURCE_DATE_EPOCH\fP
+If set, it will be used as the timestamp (as seconds since the epoch) in the
+\fBdeb\-split\fP(5)'s \fBar\fP(5) container.
+.
+.SH FILE
+.TP 
+\fI/var/lib/dpkg/parts\fP
+La directory predefinita per la coda dei file delle parti in attesa di
+essere automaticamente riassemblate.
+
+I nomi dei file usati in questa directory sono nel formato interno di
+\fBdpkg\-split\fP ed \(`e improbabile che siano utili per altri programmi; in ogni
+caso non si dovrebbe fare affidamento sul formato del nome file.
+.
+.SH BUG
+I dettagli completi sui pacchetti nella coda sono impossibili da ottenere a
+meno che l'utente non guardi da solo nella directory della coda.
+
+Non esiste un modo semplice per testare se un file che potrebbe essere una
+parte di un pacchetto binario lo \(`e realmente.
+.
+.SH "VEDERE ANCHE"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\-deb\fP(1), \fBdpkg\fP(1).

@@ -45,7 +45,7 @@ toevoegen, verwijderen en opsommen van modificaties.
 .SH COMMANDO'S
 .TP 
 \fB\-\-add\fP\fI gebruiker groep modus pad\fP
-Voeg een statusmodificatie toe voor \fIpad\fP. Het is niet nodig dat \fIpad\fP
+Een statusmodificatie toevoegen voor \fIpad\fP. Het is niet nodig dat \fIpad\fP
 reeds bestaat op het ogenblik dat dit commando gebruikt wordt. De
 modificatie zal opgeslagen worden en later gebruikt worden. Gebruikers en
 groepen kunnen bij hun naam opgegeven worden (bijvoorbeeld \fBroot\fP of
@@ -57,18 +57,19 @@ Indien \fB\-\-update\fP opgegeven wordt en \fIpad\fP bestaat, dan wordt dat
 onmiddellijk op de nieuwe eigenaar en modus ingesteld.
 .TP 
 \fB\-\-remove\fP\fI pad\fP
-Verwijder een statusmodificatie voor \fIpad\fP. De status zelf van \fIpad\fP wordt
-door dit commando niet gewijzigd.
+Een statusmodificatie verwijderen voor \fIpad\fP. De status zelf van \fIpad\fP
+wordt door dit commando niet gewijzigd.
 .TP 
 \fB\-\-list\fP [\fIglob\-patroon\fP]
-Som alle modificaties (overrides) op. Beperk de uitvoer tot modificaties die
-overeenkomen met het glob\-patroon, indien een glob\-patroon opgegeven werd.
+Alle modificaties (overrides) opsommen. Beperk de uitvoer tot modificaties
+die overeenkomen met het glob\-patroon, indien een glob\-patroon opgegeven
+werd.
 .TP 
 \fB\-\-help\fP
 Toon info over het gebruik en sluit af.
 .TP 
 \fB\-\-force\-help\fP
-Give help about the \fB\-\-force\-\fP\fIthing\fP options (since dpkg 1.19.5).
+Hulp bieden over de opties \fB\-\-force\-\fP\fIiets\fP (sinds dpkg 1.19.5).
 .TP 
 \fB\-\-version\fP
 Toon de versie en sluit af.
@@ -76,12 +77,12 @@ Toon de versie en sluit af.
 .SH OPTIES
 .TP 
 \fB\-\-admindir\fP\fI map\fP
-Stel de administratieve map in op \fImap\fP. Dit is waar het
+De administratieve map instellen op \fImap\fP. Dit is waar het
 \fIstatusmodificatie\fP\-bestand opgeslagen is. Standaard is dat
 «\fI%ADMINDIR%\fP».
 .TP 
 \fB\-\-instdir\fP\fI map\fP
-Stel de installatiemap in, welke verwijst naar de map waar pakketten
+Instellen van de installatiemap, welke verwijst naar de map waar pakketten
 geïnstalleerd worden (sinds dpkg 1.19.2). Standaard is dat «\fI/\fP».
 .TP 
 \fB\-\-root\fP\fI map\fP
@@ -92,38 +93,40 @@ Stel de hoofdmap in op \fBmap\fP, hetgeen de installatiemap instelt op
 \fB\-\-force\-\fP\fIdingen\fP
 .TQ
 \fB\-\-no\-force\-\fP\fIdingen\fP, \fB\-\-refuse\-\fP\fIdingen\fP
-Force or refuse (\fBno\-force\fP and \fBrefuse\fP mean the same thing)  to do some
-things (since dpkg 1.19.5).  \fIthings\fP is a comma separated list of things
-specified below.  \fB\-\-force\-help\fP displays a message describing them.
-Things marked with (*) are forced by default.
+Het uitvoeren van sommige dingen opleggen of weigeren (\fBno\-force\fP en
+\fBrefuse\fP betekenen hetzelfde) (sinds dpkg 1.19.5). \fIdingen\fP is een door
+komma's gescheiden lijst van hierna gespecificeerde zaken. \fB\-\-force\-help\fP
+geeft er een beschrijving van weer. Zaken die met een (*) gemarkeerd zijn,
+worden standaard opgelegd.
 
-\fIWarning: These options are mostly intended to be used by experts only.
-Using them without fully understanding their effects may break your whole
-system.\fP
+\fIWaarschuwing: Deze opties zijn vooral bedoeld om enkel door experts
+gebruikt te worden. Er gebruik van maken zonder een volkomen begrip van hun
+effecten kan uw volledig systeem defect maken.\fP
 
 \fBall\fP: Schakelt alle forceer\-opties aan (of uit).
 
-\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
-(since dpkg 1.19.5).
+\fBstatoverride\-add\fP: Bij het toevoegen ervan een bestaande statusmodificatie
+overschrijven (sinds dpkg 1.19.5).
 
-\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
-(since dpkg 1.19.5).
+\fBstatoverride\-remove\fP: Bij het verwijderen ervan een ontbrekende
+statusmodificatie negeren (sinds dpkg 1.19.5).
 
-\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
-based security when installing files into the filesystem (since dpkg
-1.19.5).  On Linux systems the implementation uses SELinux.
+\fBsecurity\-mac\fP(*): Bij het installeren van bestanden op het bestandssysteem
+gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory
+Access Controls (MAC) (since dpkg 1.19.5). Op Linux\-systemen gebruikt de
+implementatie SELinux.
 .TP 
 \fB\-\-force\fP
-Force an action, even if a sanity check would otherwise prohibit it.  This
-is necessary to override an existing override.  This option is deprecated
-(since dpkg 1.19.5), it is replaced by \fB\-\-force\-all\fP.
+Een actie verplicht maken, zelfs als een redelijkheidstoets deze anders zou
+verbieden. Dit is noodzakelijk om een bestaande modificatie (override) te
+wijzigen.
 .TP 
 \fB\-\-update\fP
-Tracht onmiddellijk het \fIpad\fP, als dat bestaat, in te stellen op de nieuwe
-eigenaar en modus.
+Proberen om onmiddellijk het \fIpad\fP, als dat bestaat, in te stellen op de
+nieuwe eigenaar en modus.
 .TP 
 \fB\-\-quiet\fP
-Wees minder breedsprakig over wat er gedaan wordt.
+Minder breedsprakig zijn over wat er gedaan wordt.
 .
 .SH AFSLUITSTATUS
 .TP 
@@ -151,8 +154,9 @@ Indien dit ingesteld is en de opties \fB\-\-admindir\fP of \fB\-\-root\fP niet
 opgegeven werden, zal dit gebruikt worden als de datamap voor \fBdpkg\fP.
 .TP 
 \fBDPKG_FORCE\fP
-If set and none of the \fB\-\-force\-\fP\fI...\fP options have been specified, it
-will be used as the force options to use (since dpkg 1.19.5).
+Indien dit ingesteld is en geen enkele van de opties \fB\-\-force\-\fP\fI...\fP
+opgegeven werd, zal dit gebruikt worden als de te gebruiken forceer\-opties
+(sinds dpkg 1.19.5).
 .TP 
 \fBDPKG_COLORS\fP
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt

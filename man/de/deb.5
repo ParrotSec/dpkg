@@ -1,0 +1,121 @@
+.\" dpkg manual page - deb(5)
+.\"
+.\" Copyright © 1995 Raul Miller
+.\" Copyright © 1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2006-2017 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb \- Debian\-Bin\(:arpaketformat
+.SH \(:UBERSICHT
+\fIDateiname\fP\fB.deb\fP
+.SH BESCHREIBUNG
+Das \fB.deb\fP\-Format ist das Debian\-Bin\(:arpaketdateiformat. Es wird seit Dpkg
+0.93.76 verstanden, und wird standardm\(:a\(ssig seit Dpkg1.2.0 und 1.1.1elf
+(i386/ELF\-Versionen) erzeugt.
+.PP
+Das hier beschriebene Format wird seit Debian 0.93 verwendet; Details \(:uber
+das alte Format sind in \fBdeb\-old\fP(5) beschrieben.
+.SH FORMAT
+Die Datei ist ein \fBar\fP\-Archiv mit dem magischen Wert
+\fB!<arch>\fP. Nur das allgemeine \fBar\fP\-Archivformat wird unterst\(:utzt,
+ohne Unterst\(:utzung von Dateinamenerweiterungen, aber mit Dateinamen, die
+einen optionalen abschlie\(ssenden Schr\(:agstrich enthalten d\(:urfen, deren L\(:ange
+damit auf 15 Zeichen (von den erlaubten 16) begrenzt ist. Dateigr\(:o\(ssen sind
+auf 10 dezimale ASCII\-Ziffern begrenzt, wodurch bis zu ungef\(:ahr 9536,74
+MiB\-Mitgliedsdateien erlaubt sind.
+.PP
+Derzeit werden die folgenden \fBtar\fP\-Archive erlaubt: alter Stil (V7\-)Format,
+pre\-POSIX\-ustar\-Format, eine Teilmenge des GNU\-Formats (der neue Stil mit
+langen Pfadnamen und langen Linknamen, unterst\(:utzt seit Dpkg 1.4.1.17; gro\(sse
+Datei\-Metadaten seit Dpkg 1.18.24) und das POSIX\-ustar\-Format (lange Namen
+seit Dpkg 1.15.0 unterst\(:utzt). Unbekannte Tar\-Typeinstellungen werden als
+Fehler betrachtet. Jede Tar\-Eintraggr\(:o\(sse innerhalb eines Tar\-Archivs ist auf
+11 ASCII\-Oktalziffern begrenzt; damit sind bis zu 8 GiB\-Tar\-Eintr\(:age
+m\(:oglich. Die Unterst\(:utzung der gro\(ssen Dateimetadaten im GNU\-Format
+erm\(:oglicht 95\-Bit\-Tar\-Eintragsgr\(:o\(ssen und negative Zeitstempel und
+63\-Bit\-UID, \-GID und \-Ger\(:atenummern.
+.PP
+Das erste Mitglied hei\(sst \fBdebian\-binary\fP und enth\(:alt eine Reihe von Zeilen,
+die durch Zeilenumbr\(:uche getrennt sind. Derzeit ist nur eine Zeile
+vorhanden, die Versionsnummer, \fB2.0\fP zum Zeitpunkt zu dem diese
+Handbuchseite geschrieben wurde. Programme, die Archive im neuen Format
+lesen, sollten darauf vorbereitet sein, dass sich die Nachkommazahl erh\(:oht
+und neue Zeilen vorhanden sein k\(:onnen, und sollten diese ignorieren, falls
+dies der Fall ist.
+.PP
+Falls sich die Vorkommazahl ge\(:andert hat, wurde eine inkompatible \(:Anderung
+durchgef\(:uhrt und das Programm sollte sich beenden. Falls dies nicht der Fall
+ist, dann sollte das Programm sicher fortfahren k\(:onnen, es sei denn, ein
+unerwartetes Mitglied ist im Archiv (abgesehen vom Ende) gefunden worden,
+wie unten beschrieben.
+.PP
+Das zweite erforderliche Mitglied hei\(sst \fBcontrol.tar\fP. Es ist ein
+Tar\-Archiv (entweder nicht komprimiert (wird seit Dpkg 1.17.6 unterst\(:utzt)
+oder mit Gzip (mit der Endung \fB.gz\fP) bzw. Xz (mit der Endung \fB.xz\fP, seit
+Dpkg 1.17.6 unterst\(:utzt) komprimiert), das die Steuerinformationen als eine
+Reihe von normalen Dateien enth\(:alt, von denen die Datei \fBcontrol\fP zwingend
+erforderlich ist und die Kern\-Steuerinformationen enth\(:alt. Die Dateien
+\fBconffiles\fP, \fBtriggers\fP, \fBshlibs\fP und \fBsymbols\fP enthalten bestimmte
+optionale Steuerinformationen und die Dateien \fBpreinst\fP, \fBpostinst\fP,
+\fBprerm\fP und \fBpostrm\fP sind optionale Betreuerskripte. Der Steuer\-Tarball
+kann optional einen Eintrag f\(:ur \(bq\fB.\fP\(cq, das aktuelle Verzeichnis, enthalten.
+.PP
+Das dritte, letzte zwingend ben\(:otigte Mitglied hei\(sst \fBdata.tar\fP. Es enth\(:alt
+das Dateisystem als Tar\-Archiv, entweder unkomprimiert (seit Dpkg 1.10.24
+unterst\(:utzt) oder mit gzip (Dateiendung \fB.gz\fP), xz (Dateiendung \fB.xz\fP seit
+Dpkg 1.15.6 unterst\(:utzt),bzip2 (Dateiendung \fB.bz2\fP, seit Dpkg 1.10.24
+unterst\(:utzt) oder lzma (Dateiendung \fB.lzma\fP, seit Dpkg 1.13.25 unterst\(:utzt)
+komprimiert.
+.PP
+Diese Mitglieder m\(:ussen in genau dieser Reihenfolge auftauchen. Aktuelle
+Implementationen sollten zus\(:atzliche Mitglieder nach \fBdata.tar\fP
+ignorieren. Weitere Mitglieder k\(:onnten in der Zukunft definiert werden und
+werden (falls m\(:oglich) nach diesen drei platziert. Alle zus\(:atzlichen
+Mitglieder, die nach \fBdebian\-binary\fP und vor \fBcontrol.tar\fP oder
+\fBdata.tar\fP eingef\(:ugt werden k\(:onnten und die problemlos von \(:alteren
+Programmen ignoriert werden sollten, werden Namen haben, die mit einem
+Unterstrich \(bq\fB_\fP\(cq anfangen.
+.PP
+Solche neuen Mitglieder, die nicht problemlos ignoriert werden k\(:onnen,
+werden vor \fBdata.tar\fP mit Namen, die nicht mit einem Unterstrich anfangen,
+eingef\(:ugt oder werden (wahrscheinlicher) dazu f\(:uhren, dass die
+Hauptversionsnummer erh\(:oht wird.
+.SH MEDIENTYP
+.SS Aktuell
+application/vnd.debian.binary\-package
+.SS Veraltet
+application/x\-debian\-package
+.br
+application/x\-deb
+.SH "SIEHE AUCH"
+\fBdeb\-old\fP(5), \fBdpkg\-deb\fP(1), \fBdeb\-control\fP(5), \fBdeb\-conffiles\fP(5)
+\fBdeb\-triggers\fP(5), \fBdeb\-shlibs\fP(5), \fBdeb\-symbols\fP(5), \fBdeb\-preinst\fP(5),
+\fBdeb\-postinst\fP(5), \fBdeb\-prerm\fP(5), \fBdeb\-postrm\fP(5).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

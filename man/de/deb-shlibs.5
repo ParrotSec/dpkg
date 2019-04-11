@@ -1,0 +1,67 @@
+.\" dpkg manual page - deb-shlibs(5)
+.\"
+.\" Copyright © 1996 Michael Shields <shields@crosslink.net>
+.\" Copyright © 2008 Zack Weinberg <zackw@panix.com>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-shlibs 5 2019-03-25 1.19.6 dpkg\-Programmsammlung
+.nh
+.SH BEZEICHNUNG
+deb\-shlibs \- Debians Informationsdatei f\(:ur Laufzeitbibliotheken
+.
+.SH BESCHREIBUNG
+.PP
+\fBshlibs\fP\-Dateien bilden Laufzeitbibliotheknamen und \-versionen (\fIsonames\fP)
+auf Abh\(:angigkeiten ab, die f\(:ur eine Paket\-control\-Datei geeignet sind. Es
+gibt einen Eintrag pro Zeile. Leerzeilen sind \fBnicht\fP erlaubt. Zeilen, die
+mit \fB#\fP beginnen, werden als Kommentarzeilen betrachtet und ignoriert. Alle
+anderen Zeilen m\(:ussen dem nachfolgenden Format folgen:
+.IP
+[\fITyp\fP\fB:\fP] \fIBibliothek\fP \fIVersion\fP \fIAbh\(:angigkeiten\fP
+.PP
+Die Felder \fIBibliothek\fP und \fIVersion\fP werden durch Leerraumzeichen
+begrenzt, das Feld \fIAbh\(:angigkeiten\fP geht aber bis zum Ende der Zeile. Das
+Feld \fITyp\fP ist optional und wird normalerweise nicht ben\(:otigt.
+.PP
+Das Feld \fIdependencies\fP hat die gleiche Syntax wie das Feld \fBDepends\fP in
+einer bin\(:aren control\-Datei, siehe \fBdeb\-control\fP(5).
+.
+.SH BEISPIELE
+.PP
+Die \fBshlibs\fP\-Datei f\(:ur ein typisches Bibliothekspaket namens \fIlibcrunch1\fP,
+das eine Bibliothek mit dem Sonamen \fIlibcrunch.so.1\fP bereitstellt, k\(:onnte
+wie folgt lauten:
+.IP
+libcrunch 1 libcrunch1 (>= 1.2\-1)
+.PP
+\fIAbh\(:angigkeiten\fP muss die neuste Version des Pakets erw\(:ahnen, das neuen
+Symbole zu der Bibliothek hinzugef\(:ugt hat: im obigen Beispiel wurden neue
+Symbole zu Version 1.2 von \fIlibcrunch\fP hinzugef\(:ugt. Dies ist nicht der
+einzige Grund, dass Abh\(:angigkeiten enger gefasst werden m\(:ussen.
+.
+.SH "SIEHE AUCH"
+\fBdeb\-control\fP(5), \fBdpkg\-shlibdeps\fP(1), \fBdeb\-symbols\fP(5).
+.SH \(:UBERSETZUNG
+Die deutsche \(:Ubersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
+<debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
+2008 von Sven Joachim <svenjoac@gmx.de>
+angefertigt. Diese \(:Ubersetzung ist Freie Dokumentation; lesen Sie die
+GNU General Public License Version 2 oder neuer f\(:ur die Kopierbedingungen.
+Es gibt KEINE HAFTUNG.

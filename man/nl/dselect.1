@@ -1,0 +1,503 @@
+.\" dselect manual page - dselect(1)
+.\"
+.\" Copyright © 1995 Juho Vuori <javuori@cc.helsinki.fi>
+.\" Copyright © 2000 Josip Rodin
+.\" Copyright © 2001 Joost Kooij
+.\" Copyright © 2001 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2010-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dselect 1 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+dselect \- Debian frontend voor pakketbeheer
+.
+.SH OVERZICHT
+\fBdselect\fP [\fIoptie\fP...] [\fIcommando\fP...]
+.
+.SH BESCHRIJVING
+\fBdselect\fP
+is een van de primaire gebruikersinterfaces voor het beheer van pakketten
+op een Debian systeem. In het hoofdmenu van \fBdselect\fP kan de systeembeheerder:
+ \- De lijst van beschikbare pakketversies bijwerken,
+ \- De status van ge\(:installeerde en beschikbare pakketten bekijken,
+ \- Pakketselecties wijzigen en afhankelijkheden beheren,
+ \- Nieuwe pakketten installeren of ze opwaarderen naar een recentere versie.
+.PP
+\fBdselect\fP functioneert als een frontend voor \fBdpkg\fP(1), het primaire
+Debian gereedschap voor het behandelen van pakketten. Het maakt gebruik van
+het volledige scherm om een systeem ter beschikking te stellen voor het
+beheren van pakketselecties met een oplosser voor vereisten en
+tegenstrijdigheden. Indien het uitgevoerd wordt met beheerdersrechten,
+kunnen er pakketten mee ge\(:installeerd, opgewaardeerd of verwijderd
+worden. Verschillende benaderingsmethodes kunnen ingesteld worden voor het
+ophalen van informatie over beschikbare pakketversies en voor het ophalen
+van installeerbare pakketten uit pakketbronnen. Afhankelijk van de gebruikte
+benaderingsmethode kunnen deze pakketbronnen publieke archiefservers zijn op
+het internet, lokale archiefservers of CD's. De aanbevolen
+benaderingsmethode is \fIapt\fP, welke door het pakket \fBapt\fP geleverd wordt.
+.PP
+Gewoonlijk wordt \fBdselect\fP zonder parameters gestart. Er wordt een
+interactief menu weergegeven dat de gebruiker een lijst met commando's
+biedt. Indien een commando opgegeven wordt als argument, dan wordt dat
+commando onmiddellijk opgestart. Er kunnen ook nog verschillende
+commandoregelparameters gebruikt worden om de werking van \fBdselect\fP aan te
+passen of bijkomende informatie over het programma te tonen.
+.
+.SH OPTIES
+Alle opties kunnen zowel opgegeven worden aan de commandoregel als in het
+configuratiebestand \fI/etc/dpkg/dselect.cfg\fP of in de bestanden van de
+configuratiemap \fI/etc/dpkg/dselect.cfg.d/\fP van \fBdselect\fP. Elke regel in
+het configuratiebestand is ofwel een optie (exact hetzelfde als de
+commandoregeloptie, maar zonder de verbindingsstreepjes aan het begin) of
+commentaar (als hij begint met een \(oq\fB#\fP\(cq).
+.br
+.TP 
+\fB\-\-admindir\fP\fI map\fP
+Wijzigt de map waarin de bestanden \(oq\fIstatus\fP\(cq en \(oq\fIavailable\fP\(cq van dpkg en
+gelijkaardige bestanden te vinden zijn. De standaard ervoor is \fI/var/lib/dpkg\fP
+en normaal gezien zou het miet nodig moeten zijn om dit te wijzigen.
+.TP 
+\fB\-D\fP\fIbestand\fP, \fB\-\-debug\fP \fIbestand\fP
+Schakel debuggen in. Debug\-informatie wordt naar \fIbestand\fP gezonden.
+.TP 
+\fB\-\-expert\fP
+Schakelt de expert\-modus in, d.w.z. dat het geen mogelijks vervelende
+hulpmededelingen toont.
+.TP 
+\fB\-\-colour\fP|\fB\-\-color\fP \fIschermdeel\fP:[\fIvoorgrond\fP],[\fIachtergrond\fP][:\fIattr\fP[\fI+attr\fP]...]
+Configureert de schermkleuren. Dit werkt enkel indien uw scherm kleuren
+ondersteunt. Deze optie kan meermaals gebruikt worden (en wordt best
+gebruikt in \fIdselect.cfg\fP). Elk gebruik wijzigt de kleur (en eventueel
+andere attributen) van een deel van het scherm. De delen van het scherm (van
+boven naar onder) zijn:
+.RS
+.TP 
+\fBtitle\fP
+De titel van het scherm.
+.TP 
+\fBlisthead\fP
+De kopregel boven de pakketlijst.
+.TP 
+\fBlist\fP
+De schuivende lijst met pakketten (en ook wat hulptekst).
+.TP 
+\fBlistsel\fP
+Het geselecteerde item uit de lijst.
+.TP 
+\fBpkgstate\fP
+De tekst die in de pakketlijst de huidige status van elk pakket aangeeft.
+.TP 
+\fBpkgstatesel\fP
+De tekst die in de pakketlijst de huidige status van het momenteel
+geselecteerde pakket weergeeft.
+.TP 
+\fBinfohead\fP
+De kopregel die de toestand van het momenteel geselecteerde pakket toont.
+.TP 
+\fBinfodesc\fP
+De korte beschrijving van het pakket.
+.TP 
+\fBinfo\fP
+Gebruikt om pakket\-info te tonen, zoals de beschrijving van het pakket.
+.TP 
+\fBinfofoot\fP
+De onderste regel van het scherm bij het selecteren van pakketten.
+.TP 
+\fBquery\fP
+Gebruikt om opvragingsregels te tonen
+.TP 
+\fBhelpscreen\fP
+De kleur voor hulpschermen.
+.RE
+.IP
+Na het schermdeel komt een dubbele punt en de opgave van de kleur. U kunt
+ofwel de voorgrondkleur, de achtergrondkleur of beide instellen ter
+vervanging van de ingebouwde kleuren. Maak gebruik van de standaardnamen
+voor curses\-kleuren.
+.IP
+Facultatief kan er na de kleuropgave opnieuw een dubbele punt staan en een
+attribuutspecificatie. Dit is een lijst van \('e\('en of meer attributen,
+onderling gescheiden door plus\-tekens (\(oq+\(cq). Mogelijke attributen (niet alle
+zullen op alle terminals werken) zijn: \fBnormal\fP, \fBstandout\fP, \fBunderline\fP,
+\fBreverse\fP, \fBblink\fP, \fBbright\fP, \fBdim\fP, \fBbold\fP.
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Geef een korte hulptekst weer en sluit succesvol af.
+.TP 
+\fB\-\-version\fP
+Toon versie\-informatie en sluit succesvol af.
+.
+.SH COMMANDO'S
+Als \fBdselect\fP opgestart wordt, kan het de volgende commando's uitvoeren,
+ofwel rechtstreeks als het commando opgegeven werd aan de commandoregel,
+ofwel door de gebruiker een menu aan te bieden met beschikbare commando's
+als het interactief uitgevoerd wordt:
+.SS toegang
+Kies en configureer een benaderingsmethode om pakketbronnen te benaderen.
+.sp
+Standaard biedt \fBdselect\fP diverse benaderingsmethodes, zoals \fIcdrom\fP,
+\fImulti_cd\fP, \fInfs\fP, \fImulti_nfs\fP, \fIharddisk\fP, \fImounted\fP, \fImulti_mount\fP
+of \fIftp\fP, maar andere pakketten kunnen andere methodes aanbieden, zoals
+bijvoorbeeld het pakket \fBapt\fP dat de benaderingsmethode \fIapt\fP aanbiedt.
+.sp
+Het gebruik van de benaderingsmethode \fIapt\fP wordt sterk aanbevolen.
+.sp
+.SS bijwerken
+Ververs de database met beschikbare pakketten.
+.sp
+Haalt een lijst van beschikbare pakketversies op uit de voor de huidige
+benaderingsmethode geconfigureerde pakketbronnen en werkt de database van
+dpkg bij. Gewoonlijk wordt de pakketlijst door de pakketbron aangeleverd
+onder de vorm van een bestand met de naam \fIPackages\fP of
+\fIPackages.gz\fP. Deze bestanden kunnen door onderhouders van pakketbronnen
+gegenereerd worden met het programma \fBdpkg\-scanpackages\fP(1).
+.sp
+De bijzonderheden van het update\-commando zijn afhankelijk van de
+implementatie van de benaderingsmethode. Normaal gezien is het een eenvoudig
+proces dat geen tussenkomst van de gebruiker nodig heeft.
+.sp
+.SS selecteren
+Bekijk of beheer pakketselecties en vereisten.
+.sp
+Dit is de hoofdfunctie van \fBdselect\fP. In het selectiescherm kan de
+gebruiker een lijst van alle beschikbare en ge\(:installeerde pakketten
+nakijken. Indien dit uitgevoerd wordt met beheerdersrechten, is het ook
+mogelijk om interactief de selectiestatus van pakketten te
+wijzigen. \fBdselect\fP gaat de implicaties van deze wijzigingen na voor andere
+pakketten die ervan afhankelijk of ermee in tegenstrijd zijn.
+.sp
+Indien een tegenstrijdigheid of een falende vereiste ontdekt wordt, krijgt
+de gebruiker een scherm voor het oplossen van vereisten aangeboden. In dat
+scherm wordt een lijst van tegenstrijdige of afhankelijke pakketten getoond
+en voor elk weergegeven pakket wordt aangegeven wat de reden is waarom het
+daar getoond wordt. De gebruiker kan de door \fBdselect\fP voorgestelde
+suggesties toepassen, ze veranderen of alle wijzigingen intrekken, met
+inbegrip van die welke de onopgeloste vereisten of tegenstrijdigheden
+cre\(:eerden.
+.sp
+Het gebruik van het scherm voor interactief selectiebeheer wordt hierna meer
+gedetailleerd uitgelegd.
+.sp
+.SS installeren
+Installeert geselecteerde pakketten.
+.sp
+De geconfigureerde benaderingsmethode zal installeerbare of opwaardeerbare
+pakketten ophalen uit de betrokken pakketbronnen en ze met behulp van
+\fBdpkg\fP installeren. Afhankelijk van de implementatie van de
+benaderingsmethode, kunnen alle pakketten voor de installatie vooraf
+opgehaald worden, of opgehaald worden als dat nodig is. Sommige
+benaderingsmethodes kunnen ook pakketten verwijderen die gemarkeerd waren om
+verwijderd te worden.
+.sp
+Indien zich tijdens het installeren een fout voordeed, wordt over het
+algemeen aangeraden om het commando install nogmaals uit te voeren. In de
+meeste gevallen zullen de problemen verdwijnen of opgelost geraken. Indien
+er problemen blijven bestaan of de uitgevoerde installatie niet correct was,
+gelieve dan op zoek te gaan naar de oorzaken ervan en de omstandigheden te
+onderzoeken en een bugrapport te sturen naar het bugopvolgsysteem van
+Debian. Instructies over hoe u dit kunt doen, zijn te vinden op
+https://bugs.debian.org/ of u kunt de documentatie lezen bij \fBbug\fP(1) of
+\fBreportbug\fP(1) mochten die ge\(:installeerd zijn.
+.sp
+De bijzonderheden van het install\-commando hangen af van de implementatie
+van de benaderingsmethode. Er kan behoefte zijn aan aandacht en invoer
+vanwege de gebruiker tijdens het installeren, configureren of verwijderen
+van pakketten. Dit is afhankelijk van de scripts van de pakketonderhouder
+uit het pakket. Een aantal pakketten maakt gebruik van de bibliotheek
+\fBdebconf\fP(1) die meer flexibele installatieopstellingen en zelfs
+geautomatiseerde installaties toelaat.
+.sp
+.SS configureren
+Configureert eventuele eerder ge\(:installeerde maar nog niet volledig
+geconfigureerde pakketten.
+.sp
+.SS verwijderen
+Verwijdert of wist ge\(:installeerde pakketten die gemarkeerd waren om
+verwijderd te worden.
+.sp
+.SS einde
+Be\(:eindigt \fBdselect\fP.
+.sp
+Sluit het programma af met de foutcode nul (succesvol).
+.sp
+.
+.SH "PAKKETSELECTIES BEHEREN"
+.sp
+.SS Inleiding
+.sp
+\fBdselect\fP stelt de beheerder rechtstreeks bloot aan sommige aspecten van de
+complexiteit van het beheren van een grote hoeveelheid pakketten met een
+grote onderlinge afhankelijkheid. Voor een gebruiker die niet vertrouwd is
+met het concept en de werkwijze van het Debian pakketbeheersysteem kan dit
+behoorlijk overdonderend zijn. Hoewel \fBdselect\fP erop gericht is
+pakketbeheer te vergemakkelijken, is het niet meer dan een instrument ervoor
+en er kan niet van verwacht worden dat het afdoend in de plaats treedt van
+de vaardigheden en de kennis van de beheerder. Van de gebruiker wordt
+vereist dat hij vertrouwd is met de onderliggende concepten van het Debian
+pakketsysteem. Gelieve in geval van twijfel de man\-pagina van \fBdpkg\fP(1) te
+raadplegen en de beleidsrichtlijnen van de distributie.
+.sp
+Tenzij \fBdselect\fP uitgevoerd wordt in de rechtstreekse of de expertmodus,
+wordt eerst een hulpscherm getoond als u dit commando via het menu
+uitvoert. Het wordt de gebruiker \fIten stelligste\fP aangeraden om bij het
+verschijnen van een online hulpvenster alle informatie eruit grondig te
+bestuderen. Op elk moment kan een online hulpvenster opgeroepen worden met
+de \(oq\fB?\fP\(cq\-toets.
+.sp
+.SS Schermopmaak
+.sp
+Het selectiescherm is standaard opgesplitst in een bovenste en onderste
+helft. De bovenste helft toont een lijst met pakketten. Een cursorbalk kan
+een individueel pakket selecteren of een groep pakketten door de kopregel
+van een groep te selecteren, waar dat van toepassing is. De onderste helft
+van het scherm toont een aantal bijzonderheden over het momenteel
+geselecteerde pakket uit de bovenste schermhelft. Het soort getoonde
+bijzonderheden kan verschillen.
+.sp
+Drukken op de toets \(oq\fBI\fP\(cq wisselt tussen de pakketlijst over het volledige
+scherm, een meer uitgebreide weergave van de pakketdetails en een
+opgesplitst scherm in twee gelijke helften.
+.sp
+.SS "Het scherm met de pakketbijzonderheden"
+.sp
+Het scherm met de pakketdetails toont standaard de uitvoerige pakketbeschrijving
+van het pakket dat momenteel geselecteerd is in de pakketstatuslijst.
+Tussen het type van informatie kan geschakeld worden met de toets \(oq\fBi\fP\(cq.
+Daarmee wisselt u af tussen:
+ \- de uitvoerige beschrijving
+ \- de controle\-informatie over de ge\(:installeerde versie
+ \- de controle\-informatie voor de beschikbare versie
+.sp
+In een scherm voor het oplossen van vereisten bestaat ook de mogelijkheid om
+de specifieke niet\-voldane vereisten of tegenstrijdigheden in verband met
+het pakket, die de reden zijn waarom het pakket vermeld wordt, te zien.
+.sp
+.SS "De pakketstatuslijst"
+.sp
+Het selectiehoofdscherm toont een lijst met alle pakketten die door het
+Debian pakketbeheersysteem gekend zijn. Dit omvat de pakketten die op het
+systeem ge\(:installeerd zijn en de pakketten die gekend zijn in de databank
+van beschikbare pakketten.
+.sp
+Voor elk pakket geeft de lijst de status van het pakket weer, zijn
+prioriteit, sectie, ge\(:installeerde en beschikbare architectuur,
+ge\(:installeerde en beschikbare versies, de pakketnaam en een beknopte
+beschrijving ervan, en dit allemaal op \('e\('en enkele regel. Door op de toets
+\(oq\fBA\fP\(cq te drukken, kan de weergave van de ge\(:installeerde en beschikbare
+architectuur aan\- en uitgeschakeld worden. Door op de toets \(oq\fBV\fP\(cq te
+drukken, kan de weergave van de ge\(:installeerde en beschikbare versie aan\- en
+uitgeschakeld worden. Door op de toets \(oq\fBv\fP\(cq te drukken, kan gewisseld
+worden tussen een verkorte of een uitgebreide weergave van de
+pakketstatus. De verkorte weergave is standaard.
+.sp
+De verkorte statusaanduiding bestaat uit vier delen: een foutvlag, die
+normaal gezien leeg zou moeten zijn, de huidige status, de laatste
+selectiestatus en de huidige selectiestatus. De eerste twee houden verband
+met de actuele toestand van het pakket, de laatste twee hebben betrekking op
+de selecties die door de gebruiker gemaakt zijn.
+.sp
+Dit is de betekenis van de codes voor de verkorte aanduiding van de pakketstatus:
+ Foutvlag:
+  \fIleeg\fP   geen fout
+  \fBR\fP      ernstige fout, herinstalleren is nodig;
+ Installatietoestand:
+  \fIleeg\fP   niet ge\(:installeerd;
+  \fB*\fP      volledig ge\(:installeerd en geconfigureerd;
+  \fB\-\fP      niet ge\(:installeerd, maar nog resterende configuratiebestanden;
+  \fBU\fP      uitgepakt maar nog niet geconfigureerd;
+  \fBC\fP      half\-geconfigureerd (er deed zich een fout voor);
+  \fBI\fP      half\-ge\(:installeerd (er deed zich een fout voor).
+ Huidige een aangevraagde selectie:
+  \fB*\fP      gemarkeerd om ge\(:installeerd of opgewaardeerd te worden;
+  \fB\-\fP      gemarkeerd om verwijderd te worden, configuratiebestanden blijven;
+  \fB=\fP      te handhaven: pakket wordt helemaal niet behandeld;
+  \fB_\fP      gemarkeerd om gewist te worden, ook de configuratiebestanden;
+  \fBn\fP      pakket is nieuw en moet nog gemarkeerd worden.
+.sp
+.SS "Cursor\- en schermbewegingen"
+.sp
+Men kan door de pakketselectielijst en in de schermen voor het oplossen van
+vereisten en tegenstrijdigheden navigeren met behulp van bewegingscommando's
+die aan de volgende toetsen gekoppeld zijn:
+.br
+  \fBp, pijl omhoog, k\fP  verplaats de cursorbalk omhoog
+  \fBn, pijl omlaag, j\fP  verplaats de cursorbalk omlaag
+  \fBP, Pgup, Backspace\fP schuif de lijst 1 pagina naar voor
+  \fBN, Pgdn, Spatie\fP    schuif de lijst 1 pagina naar achter
+  \fB^p\fP                 schuif de lijst 1 regel naar voor
+  \fB^n\fP                 schuif de lijst 1 regel naar achter
+  \fBt, Home\fP            spring naar het begin van de lijst
+  \fBe, End\fP             spring naar het einde van de lijst
+  \fBu\fP                  schuif de info 1 pagina naar voor
+  \fBd\fP                  schuif de info 1 pagina naar achter
+  \fB^u\fP                 schuif de info 1 regel naar voor
+  \fB^d\fP                 schuif de info 1 regel naar achter
+  \fBB, pijl links\fP      verschuif weergave 1/3 schermbreedte naar links
+  \fBF, pijl rechts\fP     verschuif weergave 1/3 schermbreedte naar rechts
+  \fB^b\fP                 verschuif weergave 1 tekenbreedte naar links
+  \fB^f\fP                 verschuif weergave 1 tekenbreedte naar rechts
+.sp
+.SS "Zoeken en sorteren"
+.sp
+In de pakketlijst kan gezocht worden op pakketnaam. Dit gebeurt door op
+\(oq\fB/\fP\(cq te drukken en een eenvoudige zoektekenreeks in te typen. De
+tekenreeks wordt als een \fBregex\fP(7) reguliere expressie
+ge\(:interpreteerd. Indien u \(oq\fB/d\fP\(cq toevoegt aan de zoekexpressie, dan zal
+dselect ook in de beschrijvingen zoeken. Indien u \(oq\fB/i\fP\(cq toevoegt, dan zal
+de zoekbewerking hoofdletterongevoelig zijn. U kunt deze beide suffixen op
+de volgende manier combineren: \(oq\fB/id\fP\(cq. Herhaalde zoekbewerkingen gebeuren
+door telkens opnieuw op de toets \(oq\fBn\fP\(cq of \(oq\fB\e\fP\(cq te drukken, totdat het
+gewenste pakket gevonden werd. Indien de zoekbewerking onderaan de lijst
+uitkomt, loopt ze door naar boven en zoekt van daaraf verder.
+.sp
+De volgorde van de lijst kan veranderd worden door herhaaldelijk
+op de toetsen \(oq\fBo\fP\(cq en \(oq\fBO\fP\(cq te drukken.
+Uit de volgende negen volgordes kan gekozen worden:
+ alfabetisch        beschikbaar             status
+ prioriteit+sectie  beschikbaar+prioriteit  status+prioriteit
+ sectie+prioriteit  beschikbaar+sectie      status+sectie
+.br
+Waar die hierboven niet expliciet vermeld wordt, wordt de alfabetische
+volgorde als sorteersleutel gebruikt voor het laatste subniveau.
+.sp
+.SS "Selecties wijzigen"
+.sp
+De gevraagde selectiestatus van individuele pakketten kan
+gewijzigd worden met de volgende commando's:
+  \fB+, Insert\fP    installeer of waardeer op
+  \fB=, H\fP         behoud in de huidige toestand en versie
+  \fB:, G\fP         maak behouden ongedaan: waardeer op of laat niet\-ge\(:installeerd
+  \fB\-, Delete\fP    verwijder, maar laat configuratie op het systeem
+  \fB_\fP            verwijder & wis configuratie
+.sp
+Indien de gevraagde verandering resulteert in \('e\('en of meer niet\-voldane
+vereisten of tegenstrijdigheden, zal \fBdselect\fP de gebruiker een scherm
+presenteren voor het oplossen van afhankelijkheden. Dit zal hierna verder
+toegelicht worden.
+.sp
+Het is ook mogelijk om deze commando's te gebruiken voor groepen
+pakketselecties door de cursorbalk te plaatsen op een koptekst van een
+groep. De exacte groepering van pakketten is afhankelijk van de huidige
+instellingen voor de lijstordening.
+.sp
+Het aanbrengen van wijzigingen aan de selectie van een grote groep pakketten
+moet met voldoende zorg gebeuren, aangezien dit onmiddellijk een groot
+aantal niet\-voldane vereisten en tegenstrijdigheden kan cre\(:eren. Die worden
+dan allemaal tegelijk opgesomd in \('e\('en enkel scherm met het oog op het
+oplossen van afhankelijkheden, hetgeen het zeer moeilijk kan maken om ermee
+om te gaan. In de praktijk heeft het enkel nut om groepsactivatie of
+\-deactivatie te gebruiken voor de instelling 'te handhaven'.
+.sp
+.SS "Vereisten en tegenstrijdigheden oplossen"
+.sp
+Wanneer een wijzigingsverzoek resulteert in \('e\('en of meer onvoldane vereisten
+of tegenstrijdigheden, krijgt de gebruiker een scherm gepresenteerd om de
+afhankelijkheden op te lossen. Eerst wordt er echter een informatief
+hulpscherm weergegeven.
+.sp
+De bovenste helft van dat scherm somt alle pakketten op die niet\-voldane
+vereisten en tegenstrijdigheden zullen hebben ten gevolge van de gevraagde
+wijziging en al de pakketten waarvan de installatie een vereiste kan
+oplossen of waarvan een verwijdering een oplossing kan bieden voor een
+tegenstrijdigheid. De onderste helft toont standaard de vereisten of
+tegenstrijdigheden die er de oorzaak van zijn dat het momenteel
+geselecteerde pakket vermeld wordt.
+.sp
+Bij de initi\(:ele weergave van de sub\-lijst met pakketten, kan \fBdselect\fP
+reeds voor sommige van de opgesomde pakketten de aangevraagde selectiestatus
+ingesteld hebben in functie van een oplossing voor de vereiste of de
+tegenstrijdigheid die leidde tot het weergeven van dit scherm, gericht op
+het oplossen van afhankelijkheidsproblemen. Gewoonlijk doet u er goed aan de
+suggesties van \fBdselect\fP te volgen.
+.sp
+De selectiestatus van de vermelde pakketten kan teruggedraaid worden naar de
+originele instelling, zoals die was vooraleer de niet\-voldane vereiste of
+tegenstrijdigheid gecre\(:eerd werd, door op de toets \(oq\fBR\fP\(cq te drukken. Door
+op de toets \(oq\fBD\fP\(cq worden de automatische suggesties teruggedraaid, maar
+blijft de wijziging die de aanleiding was voor het tonen van het
+oplossingsscherm voor afhankelijkheden, behouden op de aangevraagde
+toestand. Door op de toets \(oq\fBU\fP\(cq te drukken tenslotte, worden de selecties
+terug ingesteld op de automatisch gesuggereerde waarden.
+.sp
+.SS "De gevraagde selecties effectief tot stand brengen"
+.sp
+De momenteel weergegeven reeks selecties wordt aanvaard door op \fBenter\fP te
+drukken. Indien \fBdselect\fP geen niet\-voldane vereisten ontdekt die het
+gevolg zijn van de gevraagde selecties, dan zullen de nieuwe selecties
+ingesteld worden. Indien er echter wel nog niet\-voldane vereisten zijn, dan
+zal \fBdselect\fP de gebruiker opnieuw een scherm presenteren voor het oplossen
+van afhankelijkheden.
+.sp
+Om een reeks selecties die niet\-voldane vereisten of tegenstrijdigheden
+cre\(:eren, door te voeren en \fBdselect\fP te dwingen ze te aanvaarden, drukt u
+op de toets \(oq\fBQ\fP\(cq. Dit stelt de selecties onvoorwaardelijk in zoals ze door
+de gebruiker opgegeven werden. U zou dit over het algemeen niet moeten doen,
+tenzij u de kleine lettertjes gelezen heeft.
+.sp
+Het tegenovergestelde effect, namelijk intrekken van eventuele aangevraagde
+selectiewijzigingen en terugkeren naar de vorige lijst met selecties, bekomt
+u door op de toets \(oq\fBX\fP\(cq of \fBescape\fP te drukken. Door meermaals op deze
+toetsen te drukken kunnen eventuele misschien schadelijke wijzigingen aan de
+aangevraagde pakketselecties volledig ingetrokken worden en kan teruggekeerd
+worden tot aan de laatste effectief tot stand gebrachte instellingen.
+.sp
+Indien u bij vergissing bepaalde instellingen effectief tot stand bracht en
+alle selecties wilt terugdraaien naar wat momenteel op het systeem
+ge\(:installeerd is, drukt u op de toets \(oq\fBC\fP\(cq. Dit is min of meer gelijk aan
+voor alle pakketten het commando gebruiken 'annuleer te handhaven', maar het
+is een meer voor de hand liggende paniekknop voor het geval de gebruiker per
+ongeluk op \fBenter\fP drukte.
+.sp
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+Het gevraagde commando werd succesvol uitgevoerd.
+.TP 
+\fB2\fP
+Fatale of onherstelbare fout die te wijten is aan ongeldig gebruik van de
+commandoregel of aan interacties met het systeem, zoals het benaderen van de
+database, het toewijzen van geheugen, enz.
+.
+.SH OMGEVING
+.TP 
+\fBHOME\fP
+Indien dit ingesteld werd, zal \fBdselect\fP dit gebruiken als de map waarin
+het gebruikersspecifieke configuratiebestand te vinden is.
+.
+.SH BUGS
+De pakketselectie\-interface van \fBdselect\fP is voor sommige nieuwe gebruikers
+verwarrend. Volgens geruchten doet het zelfs ervaren kernelontwikkelaars
+huilen.
+.sp
+Er ontbreekt goede documentatie.
+.sp
+Het hoofdmenu bevat geen hulp\-optie.
+.sp
+De zichtbare lijst van beschikbare pakketten kan niet gereduceerd worden.
+.sp
+De ingebouwde benaderingsmethodes voldoen niet langer aan de huidige
+kwaliteitsnormen. Gebruik de benaderingsmethode die apt voorziet. Die is
+niet enkel niet defect, ze is ook veel flexibeler dan de ingebouwde
+methodes.
+.
+.SH "ZIE OOK"
+\fBdpkg\fP(1), \fBapt\-get\fP(8), \fBsources.list\fP(5), \fBdeb\fP(5).

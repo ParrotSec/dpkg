@@ -1,0 +1,140 @@
+.\" dpkg manual page - deb822(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb822 5 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+deb822 \- Debian RFC822\-indeling voor controledata
+.
+.SH BESCHRIJVING
+Het pakketbeheersysteem gebruikt gegevens die volgens een gangbare indeling
+weergegeven worden, die \fIcontroledata\fP (control\-data) genoemd worden en die
+opgeslagen worden in \fIcontrolebestanden\fP
+(control\-bestanden). Controlebestanden worden gebruikt voor
+broncodepakketten, voor binaire pakketten en voor de \fB.changes\fP\-bestanden
+die de installatie van ge\(:uploade bestanden sturen (de interne databases van
+\fBdpkg\fP hebben een soortgelijke indeling).
+.
+.SH SYNTAXIS
+Een controlebestand bestaat uit \('e\('en of meer paragrafen die velden bevatten
+(de paragrafen worden soms ook met de term stanzas aangeduid). De paragrafen
+worden onderling gescheiden door een lege regel. Bij ontleders (parsers)
+kunnen regels die enkel bestaan uit U+0020 \fBSPATIE\fP en U+0009 \fBTAB\fP,
+gebruikt worden als scheidingsteken tussen paragrafen, maar in
+controlebestanden moeten lege regels gebruikt worden. In sommige
+controlebestanden is enkel \('e\('en paragraaf toegestaan, in andere meerdere. In
+dat geval heeft elke paragraaf meestal betrekking op een ander pakket. (In
+broncodepakketten bijvoorbeeld, heeft de eerste paragraaf betrekking op het
+broncodepakket en de volgende op de binaire pakketten die uit de broncode
+gegenereerd worden.) De volgorde van de paragrafen in controlebestanden is
+betekenisvol.
+
+Elke paragraaf bestaat uit een reeks gegevensvelden. Elk veld bestaat uit de
+veldnaam, gevolgd door een dubbelepunt (U+003A \(oq\fB:\fP\(cq) en nadien de
+data/waarde die bij dat veld hoort. De veldnaam wordt gevormd uit
+US\-ASCII\-tekens met uitsluiting van controle\-tekens, spatie en dubbelepunt
+(d.w.z. tekens uit het bereik U+0021 \(oq\fB!\fP\(cq tot en met U+0039 \(oq\fB9\fP\(cq en uit
+het bereik U+003B \(oq\fB;\fP\(cq tot en met U+007E \(oq\fB~\fP\(cq). Veldnamen mogen niet
+beginnen met het commentaarteken (U+0023 \(oq\fB#\fP\(cq) en evenmin met het
+verbindingsteken (U+002D \(oq\fB\-\fP\(cq).
+
+Het veld eindigt op het einde van de regel of op het einde van de laatste
+vervolgregel (zie later). Er mag horizontale witruimte (U+0020 \fBSPATIE\fP en
+U+0009 \fBTAB\fP) voorkomen vlak voor en vlak na de waarde en daar wordt die
+genegeerd. Het is gebruikelijk om na de dubbelepunt een enkele spatie te
+plaatsen. Een voorbeeld van een veld zou kunnen zijn:
+.RS
+.nf
+Package: dpkg
+.fi
+.RE
+de veldnaam is \fBPackage\fP en de waarde van het veld is \fBdpkg\fP.
+
+Lege veldwaarden mogen enkel voorkomen in controlebestanden van
+broncodepakketten (\fIdebian/control\fP). Dergelijke velden worden genegeerd.
+
+In een paragraaf mag een specifieke veldnaam slechts eenmaal voorkomen.
+
+Er bestaan drie types velden:
+
+.RS 0
+.TP 
+\fBsimple\fP
+(enkelvoudig) Het veld, met inbegrip van zijn waarde, moet op \('e\('en enkele
+regel staan. Het uitvouwen van het veld is niet toegestaan. Dit is het
+standaard veldtype als de defini\(:ering van het veld geen ander type vermeldt.
+.TP 
+\fBfolded\fP
+(uitgevouwen) De waarde van een uitgevouwen veld is een logische regel die
+verschillende regels mag beslaan. De regels na de eerste regel worden
+vervolgregels genoemd en moeten beginnen met een U+0020 \fBSPATIE\fP of een
+U+0009 \fBTAB\fP. Witruimte, met inbegrip van regeleindes, is in de veldwaarde
+van uitgevouwen velden betekenisloos.
+
+Deze uitvouwmethode is gelijkaardig aan RFC5322, waardoor parsers die voor
+RFC5322 geschreven werden, ook in staat zijn controlebestanden te lezen die
+slechts \('e\('en paragraaf en geen velden van het multiregel\-type bevatten.
+.TP 
+\fBmultiline\fP
+(multiregel) De waarde van een multiregel\-veld mag bestaan uit meerdere
+vervolgregels. De eerste regel van de waarde, het deel dat op dezelfde regel
+staat als de veldnaam, heeft vaak een bijzondere betekenis en kan ook leeg
+zijn. De andere regels gebruiken dezelfde syntaxis als de vervolgregels van
+uitgevouwen velden. Witruimte, met inbegrip van regeleindes, is in de waarde
+van multiregel\-velden betekenisvol.
+.RE
+
+Er mag geen witruimte voorkomen in namen (van pakketten, architecturen,
+bestanden of om het even wat), in versienummers of tussen de tekens van
+versierelaties die uitgedrukt worden in meerdere tekens.
+
+De aanwezigheid en de functie van een veld en de syntaxis van zijn waarde
+kunnen verschillen naargelang het type van controlebestand.
+
+Veldnamen zijn niet hoofdlettergevoelig, maar het is gebruikelijk om in
+veldnamen hoofd\- en kleine letters samen te gebruiken, zoals hierna
+ge\(:illustreerd wordt. Veldwaarden zijn wel hoofdlettergevoelig, tenzij het in
+de beschrijving van het veld anders aangegeven wordt.
+
+Paragraafscheidingstekens (lege regels) en regels die enkel bestaan uit
+U+0020 \fBSPATIE\fP en U+0009 \fBTAB\fP, mogen in veldwaarden en tussen velden
+niet gebruikt worden. Lege regels in veldwaarden worden meestal gemaskeerd
+door ze voor te stellen als een U+0020 \fBSPATIE\fP gevolgd door een punt
+(U+002E \(oq\fB.\fP\(cq).
+
+Regels die beginnen met U+0023 \(oq\fB#\fP\(cq zonder dat daar witruimte aan vooraf
+gaat, zijn commentaarregels. Zij zijn enkel toegelaten in controlebestanden
+van broncodepakketten (\fIdebian/control\fP) en in
+\fBdeb\-origin\fP(5)\-bestanden. Deze commentaarregels worden genegeerd, zelfs
+tussen twee vervolgregels in. Ze sluiten geen logische regels af.
+
+Alle controlebestanden moeten in UTF\-8 opgesteld worden.
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\" .fi
+.\" .RE
+.
+.SH "ZIE OOK"
+\fBRFC822\fP, \fBRFC5322\fP.

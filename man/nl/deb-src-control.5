@@ -1,0 +1,478 @@
+.\" dpkg manual page - deb-src-control(5)
+.\"
+.\" Copyright © 2010 Oxan van Leeuwen <oxan@oxanvanleeuwen.nl>
+.\" Copyright © 2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-src\-control 5 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+deb\-src\-control \- Indeling van het hoofdcontrolebestand van
+Debian\-broncodepakketten
+.
+.SH OVERZICHT
+debian/control
+.
+.SH BESCHRIJVING
+Elk Debian broncodepakket bevat het hoofdcontrolebestand \(Focontrol\(Fc, dat
+tenminste uit twee paragrafen bestaat, gescheiden door een witregel. De
+eerste paragraaf geeft alle informatie weer over het broncodepakket in het
+algemeen, terwijl elke daaropvolgende paragraaf exact \('e\('en binair pakket
+beschrijft. Elke paragraaf bestaat minstens uit \('e\('en veld. Een veld begint
+met de veldnaam, zoals \fBPackage\fP of \fBSection\fP (niet hoofdlettergevoelig),
+gevolgd door een dubbele punt, het tekstgedeelte van het veld en een
+regeleinde. Velden mogen ook uit meerdere regels bestaan, maar iedere
+bijkomende regel zonder veldnaam moet minstens met \('e\('en spatie
+beginnen. Gereedschap voegt de inhoud van velden die uit meerdere regels
+bestaan, meestal samen tot \('e\('en regel (behalve in het geval van het veld
+\fBDescription\fP; zie hierna). Om lege regels toe te voegen in een veld dat
+uit meerdere regels bestaat, moet u na de spatie een punt toevoegen. Regels
+die met een \(oq\fB#\fP\(cq beginnen worden als commentaar behandeld.
+.
+.SH "VELDEN BRONCODEPAKKET"
+.TP 
+\fBSource:\fP \fIbroncodepakket\-naam\fP (verplicht)
+De waarde van dit veld is de naam van het broncodepakket en moet
+overeenkomen met de naam van het broncodepakket in het bestand
+debian/changelog. Een pakketnaam mag enkel bestaan uit kleine letters (a\-z),
+cijfers (0\-9), plussen (+) en minnen (\-) en punten (.). Pakketnamen moeten
+minstens twee tekens lang zijn en moeten met een alfanumeriek teken (a\-z0\-9)
+in kleine letter beginnen.
+
+.TP 
+\fBMaintainer:\fP \fIvolledige\-naam\-en\-e\-mail\fP (aanbevolen)
+Moet volgens de indeling \(FoJoe Bloggs <jbloggs@foo.com>\(Fc opgemaakt
+zijn en verwijzen naar de persoon die momenteel het pakket onderhoudt, in
+tegenstelling tot de auteur van de software of de originele verpakker ervan.
+
+.TP 
+\fBUploaders:\fP\fI volledige\-naam\-en\-e\-mailadres\fP
+Somt al de namen en de e\-mailadressen op van de personen die het pakket mee
+onderhouden volgens dezelfde indeling als van het veld
+\fBMaintainer\fP. Meerdere mede\-onderhouders moeten onderling door een komma
+gescheiden worden.
+
+.TP 
+\fBStandards\-Version:\fP\fI versietekenreeks\fP
+Dit documenteert de meest recente versie van de normen die vastgelegd werden
+in de richtlijnen van de distributie en waaraan dit pakket voldoet.
+
+.TP 
+\fBDescription:\fP \fIkorte\-beschrijving\fP
+.TQ
+\fB \fP\fIuitgebreide\-beschrijving\fP
+De indeling van een pakketbeschrijving bestaat uit een beknopte korte
+samenvatting op de eerste regel (na de veldmarkering \fBDescription\fP). De
+daaropvolgende regels moeten gebruikt worden voor een langere, meer
+gedetailleerde beschrijving. Elke regel van de uitgebreide beschrijving moet
+voorafgegaan worden door een spatie, en lege regels in de uitgebreide
+beschrijving moeten \('e\('en enkele \(oq\fB.\fP\(cq bevatten die volgt op de eraan
+voorafgaande spatie.
+
+.TP 
+\fBHomepage:\fP\fI URL\fP
+De URL van de homepage van het toeleverend project (upstream).
+
+.TP 
+\fBBugs:\fP\fI URL\fP
+De \fIURL\fP van het bugopvolgingssysteem voor dit pakket. De momenteel
+gebruikte indeling is \fIbts\-type\fP\fB://\fP\fIbts\-adres\fP, zoals
+\fBdebbugs://bugs.debian.org\fP. Meestal is dit veld niet nodig.
+
+.TP 
+\fBRules\-Requires\-Root:\fP \fBno\fP|\fBbinary\-targets\fP|\fIimpl\-trefwoorden\fP
+Dit veld wordt gebruikt om aan te geven of het bestand \fBdebian/rules\fP
+voorrechten van (fake)root nodig heeft om sommige van zijn targets uit te
+voeren, en zo ja wanneer.
+.RS
+.TP 
+\fBno\fP
+De binaire targets zullen (fake)root helemaal niet nodig hebben.
+.TP 
+\fBbinary\-targets\fP
+De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is
+de standaardwaarde als dit veld ontbreekt. Als dit veld toegevoegd wordt met
+een expliciete \fBbinary\-targets\fP, terwijl dit strikt genomen niet nodig is,
+geeft dit aan dat de noodzaak ervan onderzocht werd.
+.TP 
+\fIimpl\-trefwoorden\fP
+Dit is een door witruimte gescheiden lijst van trefwoorden die omschrijven
+wanneer (fake)root vereist is.
+
+Een trefwoord bestaat uit \fInaamruimte\fP/\fIgevallen\fP. Het onderdeel
+\fInaamruimte\fP mag geen "/" en geen witruimte bevatten. Het onderdeel
+\fIgevallen\fP mag geen witruimte bevatten. Voorts moeten beide delen volledig
+uit afdrukbare ASCII\-tekens bestaan.
+
+Elk gereedschap/pakket zal een naamruimte defini\(:eren die vernoemd wordt naar
+zichzelf en een aantal gevallen waarin (fake)root vereist is. (Zie
+"Implementation provided keywords" in \fIrootless\-builds.txt\fP).
+
+Wanneer het veld ingesteld is op een van de \fIimpl\-trefwoorden\fP, zal het
+bouwprogramma een interface ontsluiten die gebruikt wordt om een commando
+onder (fake)root uit te voeren. (Zie "Gain Root API" in
+\fIrootless\-builds.txt\fP.)
+.RE
+
+.TP 
+\fBTestsuite:\fP\fI namenlijst\fP
+.TQ
+\fBTestsuite\-Triggers:\fP\fI pakketlijst\fP
+Deze velden worden beschreven in de man\-pagina \fBdsc\fP(5), aangezien zij
+gegenereerd worden op basis van informatie, afgeleid uit
+\fBdebian/tests/control\fP, of letterlijk naar het controlebestand van de
+broncode gekopieerd worden.
+
+.TP 
+\fBVcs\-Arch:\fP\fI URL\fP
+.TQ
+\fBVcs\-Bzr:\fP\fI URL\fP
+.TQ
+\fBVcs\-Cvs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Darcs:\fP\fI URL\fP
+.TQ
+\fBVcs\-Git:\fP\fI URL\fP
+.TQ
+\fBVcs\-Hg:\fP\fI URL\fP
+.TQ
+\fBVcs\-Mtn:\fP\fI URL\fP
+.TQ
+\fBVcs\-Svn:\fP\fI URL\fP
+De \fIURL\fP van de opslagruimte van het versiecontrolesysteem dat gebruikt
+wordt bij het onderhouden van dit pakket. Momenteel worden ondersteund:
+\fBArch\fP, \fBBzr\fP (Bazaar), \fBCvs\fP, \fBDarcs\fP, \fBGit\fP, \fBHg\fP (Mercurial),
+\fBMtn\fP (Monotone) en \fBSvn\fP (Subversion). Meestal verwijst dit veld naar de
+laatste versie van het pakket, zoals de hoofdtak (main branch) of de stam
+(trunk)
+
+.TP 
+\fBVcs\-Browser:\fP\fI URL\fP
+De \fIURL\fP van een webinterface om door de opslagruimte van het
+versiecontrolesysteem te bladeren.
+
+.TP 
+\fBOrigin:\fP\fI naam\fP
+De naam van de distributie waaruit dit pakket afkomstig is. Meestal is dit
+veld niet nodig.
+
+.TP 
+\fBSection:\fP\fI sectie\fP
+Dit is een veld van algemene aard dat het pakket in een categorie
+onderbrengt op basis van de software die het installeert. Enkele
+gebruikelijke secties zijn \fButils\fP, \fBnet\fP, \fBmail\fP, \fBtext\fP, \fBx11\fP, enz.
+
+.TP 
+\fBPriority:\fP\fI prioriteit\fP
+Duidt het belang van dit pakket aan in verhouding tot het gehele
+systeem. Gebruikelijke prioriteiten zijn \fBrequired\fP, \fBstandard\fP,
+\fBoptional\fP, \fBextra\fP, enz.
+
+De velden \fBSection\fP en \fBPriority\fP hebben gewoonlijk een welbepaalde set
+mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
+
+.TP 
+\fBBuild\-Depends:\fP\fI pakketlijst\fP
+Een lijst van pakketten die ge\(:installeerd en geconfigureerd moeten zijn om
+het pakket uit de broncode te kunnen bouwen. Aan deze vereisten moet voldaan
+zijn bij het bouwen van binaire architectuurafhankelijke of
+architectuuronafhankelijke pakketten en broncodepakketten. Een vereiste
+vermelden in dit veld heeft niet exact hetzelfde effect als ze zowel in
+\fBBuild\-Depends\-Arch\fP als in \fBBuild\-Depends\-Indep\fP vermelden, aangezien ook
+voldaan moet zijn aan de vereiste voor het bouwen van het broncodepakket.
+.
+.TP 
+\fBBuild\-Depends\-Arch:\fP\fI pakketlijst\fP
+Hetzelfde als \fBBuild\-Depends\fP, maar ze zijn enkel nodig bij het bouwen van
+de architectuurafhankelijke pakketten. In dit geval worden ook de pakketten
+uit \fBBuild\-Depends\fP ge\(:installeerd. Dit veld wordt ondersteund sinds dpkg
+1.16.4; om met oudere versies van dpkg pakketten te bouwen moet in plaats
+daarvan \fBBuild\-Depends\fP gebruikt worden.
+
+.TP 
+\fBBuild\-Depends\-Indep:\fP\fI pakketlijst\fP
+Hetzelfde als \fBBuild\-Depends\fP, maar ze zijn enkel nodig bij het bouwen van
+de architectuuronafhankelijke pakketten. In dit geval worden ook de
+pakketten uit \fBBuild\-Depends\fP ge\(:installeerd.
+
+.TP 
+\fBBuild\-Conflicts:\fP\fI pakketlijst\fP
+Een lijst van pakketten die niet ge\(:installeerd mogen zijn bij het bouwen van
+het pakket, bijvoorbeeld omdat ze interfereren met het gebruikte
+bouwsysteem. Een afhankelijkheidsrelatie opnemen in deze lijst heeft
+hetzelfde effect als ze zowel in \fBBuild\-Conflicts\-Arch\fP als in
+\fBBuild\-Conflicts\-Indep\fP opnemen, met het bijkomende effect dat ze ook
+gebruikt wordt als enkel het broncodepakket gebouwd wordt.
+
+.TP 
+\fBBuild\-Conflicts\-Arch:\fP\fI pakketlijst\fP
+Hetzelfde als \fBBuild\-Conflicts\fP, maar enkel bij het bouwen van de
+architectuurafhankelijke pakketten. Dit veld wordt ondersteund sinds dpkg
+1.16.4; om met oudere versies van dpkg pakketten te bouwen moet in plaats
+daarvan \fBBuild\-Conflicts\fP gebruikt worden.
+
+.TP 
+\fBBuild\-Conflicts\-Indep:\fP\fI pakketlijst\fP
+Hetzelfde als \fBBuild\-Conflicts\fP, maar enkel bij het bouwen van de
+architectuuronafhankelijke pakketten.
+
+.PP
+De syntaxis van de velden \fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP en
+\fBBuild\-Depends\-Indep\fP is een lijst van groepen van alternatieve
+pakketten. Elke groep is een lijst van pakketten die onderling gescheiden
+worden door het symbool verticale streep (of \(lqpijp\(rq), \(oq\fB|\fP\(cq. De groepen
+worden onderling gescheiden door komma's \(oq\fB,\fP\(cq en de lijst kan eindigen met
+een afsluitende komma, die bij het genereren van de velden voor
+\fBdeb\-control\fP(5) weggelaten zal worden (sinds dpkg 1.10.14). Een komma moet
+ge\(:interpreteerd worden als een \(lqAND\(rq en een pijp als een \(lqOR\(rq, waarbij
+pijpen de sterkste binding hebben. Elke pakketnaam kan facultatief gevolgd
+worden door een architectuurkwalificatie, die toegevoegd wordt na een
+dubbele punt \(oq\fB:\fP\(cq, facultatief gevolgd door de vermelding van een
+versienummer tussen ronde haakjes \(oq\fB(\fP\(cq en \(oq\fB)\fP\(cq, een
+architectuurspecificatie tussen vierkante haakjes \(oq\fB[\fP\(cq en \(oq\fB]\fP\(cq en een
+restrictieformule die bestaat uit \('e\('en of meer lijsten van profielnamen
+tussen punthaakjes \(oq\fB<\fP\(cq en \(oq\fB>\fP\(cq.
+
+De syntaxis van de velden \fBBuild\-Conflicts\fP, \fBBuild\-Conflicts\-Arch\fP en
+\fBBuild\-Conflicts\-Indep\fP is een lijst van pakketnamen die onderling
+gescheiden zijn door een komma, waarbij de komma ge\(:interpreteerd moet worden
+als een \(lqAND\(rq en waarbij de lijst kan eindigen met een afsluitende komma,
+die bij het genereren van de velden voor \fBdeb\-control\fP(5) weggelaten zal
+worden (sinds dpkg 1.10.14).. Het specificeren van alternatieve pakketten
+met behulp van een \(lqpijp\(rq wordt niet ondersteund. Elke pakketnaam kan
+facultatief gevolgd worden door de vermelding van een versienummer tussen
+ronde haakjes, een architectuurspecificatie tussen vierkante haakjes en een
+restrictieformule die bestaat uit \('e\('en of meer lijsten van profielnamen
+tussen punthaakjes.
+
+De naam van een architectuurkwalificatie kan een echte
+Debian\-architectuurnaam zijn (sinds dpkg 1.16.5), \fBany\fP (sinds dpkg 1.16.2)
+of \fBnative\fP (since dpkg 1.16.5). Indien ze weggelaten is, is de standaard
+voor het veld \fBBuild\-Depends\fP de architectuur van de huidige computer en
+voor het veld \fBBuild\-Conflicts\fP is dat \fBany\fP. Een echte
+Debian\-architectuurnaam komt exact overeen met die architectuur voor die
+pakketnaam; \fBany\fP komt overeen met om het even welke architectuur voor die
+pakketnaam als het pakket gemarkeerd werd als \fBMulti\-Arch: allowed\fP;
+\fBnative\fP komt overeen met de huidige bouwarchitectuur indien het pakket
+niet gemarkeerd werd als \fBMulti\-Arch: foreign\fP.
+
+Een versienummer kan beginnen met een \(oq\fB>>\fP\(cq. In dat geval levert
+dit met alle latere versies een overeenkomst op. Een versienummer kan al dan
+niet ook een Debian\-pakketrevisie bevatten (met een koppelteken tussen
+versienummer en Debian\-pakketrevisie). Toegestane versierelaties zijn
+\(oq\fB>>\fP\(cq voor hoger dan, \(oq\fB<<\fP\(cq voor lager dan, \(oq\fB>=\fP\(cq
+voor hoger of gelijk aan, \(oq\fB<=\fP\(cq voor lager of gelijk aan en \(oq\fB=\fP\(cq
+voor gelijk aan.
+
+Een architectuuraanduiding bestaat uit \('e\('en of meer architectuurnamen,
+onderling gescheiden door witruimte. Een uitroepteken mag elk van de namen
+voorafgaan, hetgeen de betekenis heeft van \(lqNOT\(rq (niet).
+
+Een restrictieformule bestaat uit \('e\('en of meer restrictielijsten, onderling
+gescheiden door witruimte. Elke restrictielijst staat tussen punthaakjes. De
+items in de restrictielijst zijn bouwprofielnamen, onderling gescheiden door
+witruimte, en kunnen voorafgegaan worden door een uitroepteken, hetgeen de
+betekenis heeft van \(lqNOT\(rq (niet). Een restrictieformule heeft de
+verschijningsvorm van een expressie in disjunctieve normaalvorm.
+
+Merk op dat de vermelding dat pakketten vereist worden die behoren tot de
+categorie \fBbuild\-essential\fP, weggelaten kan worden en dat het onmogelijk is
+om tegenover dergelijke pakketten een bouwtegenstrijdigheid te
+formuleren. Een lijst van deze pakketten is te vinden in het pakket
+build\-essential.
+
+
+.SH "VELDEN BINAIR PAKKET"
+
+.LP
+Merk op dat de velden \fBPriority\fP, \fBSection\fP en \fBHomepage\fP ook in een
+paragraaf van het binaire pakket kunnen voorkomen ter vervanging van de
+globale waarde uit het broncodepakket.
+
+.TP 
+\fBPackage:\fP \fInaam\-binair\-pakket\fP (verplicht)
+Dit veld wordt gebruikt om de naam van het binaire pakket te
+vermelden. Dezelfde restricties gelden als voor de naam van een
+broncodepakket.
+
+.TP 
+\fBPackage\-Type:\fP \fBdeb\fP|\fBudeb\fP|\fItype\fP
+Dit veld definieert het pakkettype. \fBudeb\fP is voor pakketten waarvan de
+omvang aan beperkingen onderworpen is en die door het installatieprogramma
+van Debian gebruikt worden. \fBdeb\fP is de standaardwaarde, die verondersteld
+wordt als het veld ontbreekt. In de toekomst kunnen nog andere types
+toegevoegd worden.
+
+.TP 
+\fBArchitecture:\fP \fIarch\fP|\fBall\fP|\fBany\fP (verplicht)
+De architectuur geeft aan op welk type hardware dit pakket werkt. Gebruik de
+waarde \fBany\fP voor pakketten die op alle architecturen werken. Voor
+pakketten die architectuuronafhankelijk zijn, zoals shell\- en Perl\-scripts
+of documentatie, moet u de waarde \fBall\fP gebruiken. Om pakketten tot een
+bepaalde set van architecturen te beperken, moet u de namen van de
+architecturen opgeven, onderling gescheiden door een spatie. Het is ook
+mogelijk om architectuur\-jokers te plaatsen in de lijst (zie
+\fBdpkg\-architecture\fP(1) voor bijkomende informatie daarover).
+
+.TP 
+\fBBuild\-Profiles:\fP \fIrestrictie\-formule\fP
+Dit veld geeft de condities aan waaronder dit binaire pakket al dan niet te
+bouwen is. Om deze conditie uit te drukken wordt voor de restrictieformule
+dezelfde syntaxis gebruikt als die van het veld \fBBuild\-Depends\fP.
+
+Indien de paragraaf over een binair pakket dit veld niet bevat, dan betekent
+dit impliciet dat het te bouwen is met alle bouwprofielen (met inbegrip van
+helemaal geen).
+
+Met andere woorden, indien aan de paragraaf betreffende een binair pakket
+een niet\-leeg \fBBuild\-Profiles\fP\-veld toegevoegd is, dan wordt dat binair
+pakket gegenereerd indien en enkel indien de conditie die uitgedrukt wordt
+door de expressie in conjunctieve normaalvorm als waar ge\(:evalueerd wordt.
+
+.TP 
+\fBEssential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBBuild\-Essential:\fP \fByes\fP|\fBno\fP
+.TQ
+\fBMulti\-Arch:\fP \fBsame\fP|\fBforeign\fP|\fBallowed\fP|\fBno\fP
+.TQ
+\fBTag:\fP\fI lijst\-van\-markeringen\fP
+.TQ
+\fBDescription:\fP \fIkorte\-beschrijving\fP (aanbevolen)
+Deze velden worden beschreven in de man\-pagina \fBdeb\-control\fP(5), vermits
+zij letterlijk naar het controlebestand van het binaire pakket gekopieerd
+worden.
+
+.TP 
+\fBDepends:\fP\fI pakketlijst\fP
+.TQ
+\fBPre\-Depends:\fP\fI pakketlijst\fP
+.TQ
+\fBRecommends:\fP\fI pakketlijst\fP
+.TQ
+\fBSuggests:\fP\fI pakketlijst\fP
+.TQ
+\fBBreaks:\fP\fI pakketlijst\fP
+.TQ
+\fBEnhances:\fP\fI pakketlijst\fP
+.TQ
+\fBReplaces:\fP\fI pakketlijst\fP
+.TQ
+\fBConflicts:\fP\fI pakketlijst\fP
+.TQ
+\fBProvides:\fP\fI pakketlijst\fP
+.TQ
+\fBBuilt\-Using:\fP\fI pakketlijst\fP
+Deze velden benoemen relaties tussen pakketten. Ze worden besproken in de
+man\-pagina \fBdeb\-control\fP(5). Wanneer deze velden in \fIdebian/control\fP
+voorkomen, kunnen ze ook eindigen met een afsluitende komma (sinds dpkg
+1.10.14), kunnen ze architectuurspecificaties bevatten en restrictieformules
+bevatten, wat bij het genereren van de velden voor \fBdeb\-control\fP(5)
+allemaal teruggebracht zal worden.
+
+.TP 
+\fBSubarchitecture:\fP\fI waarde\fP
+.TQ
+\fBKernel\-Version:\fP\fI waarde\fP
+.TQ
+\fBInstaller\-Menu\-Item:\fP\fI waarde\fP
+Deze velden worden door het installatieprogramma van Debian in \fBudeb\fP's
+gebruikt en zijn meestal niet nodig. Zie voor meer details over deze velden
+/usr/share/doc/debian\-installer/devel/modules.txt uit het pakket
+\fBdebian\-installer\fP.
+
+.SH "DOOR DE GEBRUIKER GEDEFINIEERDE VELDEN"
+Het is toegelaten om aan het bestand control bijkomende door de gebruiker
+gedefinieerde velden toe te voegen. De gereedschappen zullen deze velden
+negeren. Indien u wilt dat de velden mee gekopieerd worden naar de
+uitvoerbestanden, zoals de binaire pakketten, moet u een aangepast
+naamgevingsschema hanteren: de velden moeten beginnen met een \fBX\fP, gevolgd
+door nul of meer van de tekens \fBSBC\fP en een koppelteken.
+
+.TP 
+\fBS\fP
+Het veld zal voorkomen in het control\-bestand van het broncodepakket, zie
+\fBdsc\fP(5).
+.TP 
+\fBB\fP
+Het veld zal voorkomen in het control\-bestand van het binair pakket, zie
+\fBdeb\-control\fP(5).
+.TP 
+\fBC\fP
+Het veld zal voorkomen in het controlebestand (.changes) van de upload, zie
+\fBdeb\-changes\fP(5).
+
+.P
+Merk op dat de voorvoegsels \fBX\fP[\fBSBC\fP]\fB\-\fP weggelaten worden wanneer de
+velden gekopieerd worden naar de uitvoerbestanden. Een veld
+\fBXC\-Approved\-By\fP zal als \fBApproved\-By\fP in het changes\-bestand vermeld
+staan en niet opgenomen zijn in het control\-bestand van het binair en het
+bronpakket.
+
+Houd er rekening mee dat deze door de gebruiker gedefinieerde velden gebruik
+maken van de globale naamruimte, waardoor ze op een gegeven ogenblik in de
+toekomst in botsing zouden kunnen komen met officieel erkende velden. Om
+deze mogelijke situatie te vermijden kunt u die velden laten voorafgaan door
+\fBPrivate\-\fP, zoals \fBXB\-Private\-Nieuw\-Veld\fP.
+
+.SH VOORBEELD
+.\" .RS
+.nf
+# Commentaar
+Source: dpkg
+Section: admin
+Priority: required
+Maintainer: Dpkg Developers <debian\-dpkg@lists.debian.org>
+# dit veld wordt gekopieerd naar het binaire en het broncodepakket
+XBS\-Upstream\-Release\-Status: stable
+Homepage: https://wiki.debian.org/Teams/Dpkg
+Vcs\-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs\-Git: https://git.dpkg.org/git/dpkg/dpkg.git
+Standards\-Version: 3.7.3
+Build\-Depends: pkg\-config, debhelper (>= 4.1.81),
+ libselinux1\-dev (>= 1.28\-4) [!linux\-any]
+
+Package: dpkg\-dev
+Section: utils
+Priority: optional
+Architecture: all
+# dit is een aangepast veld in het binaire pakket
+XB\-Mentoring\-Contact: Raphael Hertzog <hertzog@debian.org>
+Depends: dpkg (>= 1.14.6), perl5, perl\-modules, cpio (>= 2.4.2\-2),
+ bzip2, lzma, patch (>= 2.2\-1), make, binutils, libtimedate\-perl
+Recommends: gcc | c\-compiler, build\-essential
+Suggests: gnupg, debian\-keyring
+Conflicts: dpkg\-cross (<< 2.0.0), devscripts (<< 2.10.26)
+Replaces: manpages\-pl (<= 20051117\-1)
+Description: Gereedschap voor pakketontwikkeling in Debian
+ Dit pakket levert de ontwikkelingsgereedschappen (met inbegrip
+ van dpkg\-source) die nodig zijn om Debian broncodepakketten
+ uit te pakken, te bouwen en te uploaden.
+ .
+ De meeste Debian broncodepakketten zullen bijkomend gereedschap
+ nodig hebben om gebouwd te kunnen worden; de meeste pakketten hebben
+ bijvoorbeeld make nodig en de C\-compiler gcc.
+.fi
+
+
+.\" .RE
+.SH "ZIE OOK"
+\fBdeb\-control\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-source\fP(1)

@@ -1,0 +1,61 @@
+.\" dpkg manual page - deb-postinst(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-postinst 5 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+deb\-postinst \- post\-installatiescript van de pakketonderhouder
+.
+.SH OVERZICHT
+postinst
+.
+.SH BESCHRIJVING
+Een pakket kan verschillende post\-installatieacties uitvoeren via scripts
+van de pakketonderhouder door in zijn control\-archief een uitvoerbaar
+bestand \fIpostinst\fP op te nemen (d.w.z. \fIDEBIAN/postinst\fP bij het cre\(:eren
+van het pakket).
+.PP
+Het script kan op de volgende manieren geactiveerd worden:
+.TP 
+\fIpostinst\fP \fBconfigure\fP \fIoude\-versie\fP
+Nadat het pakket ge\(:installeerd werd.
+.TP 
+\fIpostinst\fP \fBtriggered\fP \fItriggernaam...\fP
+Nadat het pakket werd getriggerd.
+.TP 
+\fIold\-postinst\fP \fBabort\-upgrade\fP \fInieuwe\-versie\fP
+Indien \fIprerm\fP mislukt tijdens het opwaarderen of mislukt bij een mislukte
+opwaardering.
+.TP 
+\fIold\-postinst\fP \fBabort\-remove\fP
+Indien \fIprerm\fP mislukt bij het verwijderen.
+.TP 
+\fIpostinst\fP \fBabort\-deconfigure in\-favour\fP \fInieuw\-pakket nieuwe\-versie\fP
+.TQ
+       [ \fBremoving\fP \fIoud\-pakket oude\-versie\fP ]
+Indien \fIprerm\fP mislukt tijdens het deconfigureren van een pakket.
+.TP 
+\fIpostinst\fP \fBabort\-remove in\-favour\fP \fInieuw\-pakket nieuwe\-versie\fP
+Indien \fIprerm\fP omwille van een conflict mislukt tijdens de vervanging.
+.
+.SH "ZIE OOK"
+\fBdpkg\fP(1).

@@ -1,0 +1,452 @@
+.\" dpkg manual page - update-alternatives(1)
+.\"
+.\" Copyright © 1997-1998 Charles Briscoe-Smith
+.\" Copyright © 1999 Ben Collins <bcollins@debian.org>
+.\" Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
+.\" Copyright © 2003 Adam Heath <doogie@debian.org>
+.\" Copyright © 2005 Scott James Remnant <scott@netsplit.com>
+.\" Copyright © 2006-2015 Guillem Jover <guillem@debian.org>
+.\" Copyright © 2008 Pierre Habouzit <madcoder@debian.org>
+.\" Copyright © 2009-2011 Rapha\(:el Hertzog <hertzog@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH update\-alternatives 1 2019-03-25 1.19.6 dpkg\-suite
+.nh
+.SH NAAM
+update\-alternatives \- onderhoud symbolische koppelingen die
+standaardcommando's defini\(:eren
+.
+.SH OVERZICHT
+\fBupdate\-alternatives\fP [\fIoptie\fP...] \fIcommando\fP
+.
+.SH BESCHRIJVING
+\fBupdate\-alternatives\fP cre\(:eert, verwijdert, onderhoudt en toont informatie
+over de symbolische koppelingen die het Debian systeem van alternatieven
+vormen.
+.PP
+Het is mogelijk dat verschillende programma's die dezelfde of vergelijkbare
+functies vervullen, op hetzelfde moment op hetzelfde systeem ge\(:installeerd
+zijn. Op veel systemen zijn bijvoorbeeld tezelfdertijd meerdere teksteditors
+ge\(:installeerd. Dit biedt de gebruikers van een systeem keuzemogelijkheden en
+laat iedere gebruiker toe desgewenst een andere editor te gebruiken. Maar
+het maakt het ook moeilijk voor een programma om een goede keuze te maken
+betreffende de op te starten editor indien de gebruiker geen specifieke
+voorkeur opgegeven heeft.
+.PP
+Debian's systeem van alternatieven is erop gericht dit probleem op te
+lossen. Een algemene naam in het bestandssysteem wordt onderling gedeeld
+door alle bestanden die inwisselbare functionaliteit bieden. Het systeem van
+alternatieven samen met de systeembeheerder bepalen naar welk effectief
+bestand door deze algemene naam verwezen wordt. Indien bijvoorbeeld zowel de
+editor \fBed\fP(1) als \fBnvi\fP(1) op het systeem ge\(:installeerd zijn, zal het
+systeem van alternatieven er voor zorgen dat de algemene naam
+\fI/usr/bin/editor\fP standaard naar \fI/usr/bin/nvi\fP verwijst. De
+systeembeheerder kan dit aanpassen en hem in plaats daarvan naar
+\fI/usr/bin/ed\fP doen verwijzen. In dat geval zal het alternatievensysteem
+deze instelling niet wijzigen totdat het er expliciet om gevraagd wordt.
+.PP
+De algemene naam is geen rechtstreekse symbolische koppeling naar het
+geselecteerde alternatief. Hij is eerder een symbolische koppeling naar een
+naam in de \fImap\fP \fIalternatives\fP die op zijn beurt een symbolische
+koppeling is naar het eigenlijke bestand waarnaar verwezen wordt. Dit wordt
+gedaan zodat de wijzigingen van de systeembeheerder beperkt kunnen blijven
+tot de map \fI/etc\fP: de FHS (zie aldaar) legt uit waarom dit een goede
+zaak is.
+.PP
+Telkens een pakket dat voorziet in een bestand met een specifieke
+functionaliteit, wordt ge\(:installeerd, gewijzigd of verwijderd, wordt
+\fBupdate\-alternatives\fP aangeroepen om de informatie over dat bestand bij te
+werken in het alternatievensysteem. \fBupdate\-alternatives\fP wordt gewoonlijk
+aangeroepen vanuit het script \fBpostinst\fP (configure/configureren) of
+\fBprerm\fP (remove/verwijderen en deconfigure/de\-configureren) uit Debian
+pakketten.
+.PP
+Het is dikwijls nuttig om een aantal alternatieven te synchroniseren, zodat
+ze als groep aangepast worden. Als er bijvoorbeeld verschillende versies van
+de editor \fBvi\fP(1) ge\(:installeerd zijn, moet de man\-pagina waarnaar verwezen
+wordt door \fI/usr/share/man/man1/vi.1\fP overeenkomen met het uitvoerbaar
+programma waarnaar door \fI/usr/bin/vi\fP verwezen
+wordt. \fBupdate\-alternatives\fP handelt dit af met behulp van \fImaster\fP
+(hoofd\-) en \fIslave\fP (secundaire of slaaf\-) koppelingen. Als de
+hoofdkoppeling gewijzigd wordt, worden eventuele ermee verband houdende
+secundaire koppelingen ook gewijzigd. Een hoofdkoppeling en zijn ermee
+verbonden secundaire koppelingen vormen samen een \fIlink\fP \fIgroup\fP
+(koppelingengroep).
+.PP
+Elke koppelingengroep bevindt zich op gelijk welk moment in de tijd in \('e\('en
+van twee modi: automatische modus of manuele modus. Als een groep zich in
+automatische modus bevindt, dan zal wanneer pakketten ge\(:installeerd of
+verwijderd worden, het alternatievensysteem automatisch beslissen of en hoe
+de koppelingen bijgewerkt moeten worden. In de manuele modus zal het
+alternatievensysteem de keuze van de systeembeheerder behouden en vermijden
+om de koppelingen te wijzigen (behalve wanneer iets defect is).
+.PP
+Een koppelingengroep bevindt zich in de automatische modus als die voor het
+eerst op het systeem ge\(:introduceerd wordt. Indien de systeembeheerder aan de
+automatische instellingen van het systeem veranderingen aanbrengt, zal dit
+de volgende keer dat \fBupdate\-alternatives\fP uitgevoerd wordt op de groep van
+de gewijzigde koppeling, opgemerkt worden en de groep zal automatisch
+omgeschakeld worden naar manuele modus.
+.PP
+Aan elk alternatief is een \fIprioriteit\fP gekoppeld. Als een koppelingengroep
+zich in de automatische modus bevindt, dan zijn het de alternatieven met de
+hoogste prioriteit waarnaar verwezen zal worden door leden van die groep.
+.PP
+Als de optie \fB\-\-config\fP gebruikt wordt, zal \fBupdate\-alternatives\fP een
+lijst geven met al de keuzemogelijkheden voor de koppelingengroep waarvan de
+opgegeven \fInaam\fP de naam is van het hoofdalternatief. De huidige keuze
+wordt gemarkeerd met een\(oq*\(cq. Daarna zult u gevraagd worden naar uw keuze
+voor deze koppelingengroep. Afhankelijk van de gemaakte keuze, kan het zijn
+dat de koppelingengroep niet langer in de modus \fIauto\fP (automatische modus)
+verkeert. U zult de optie \fB\-\-auto\fP moeten gebruiken om terug te keren naar
+de automatische modus (of u kunt \fB\-\-config\fP opnieuw uitvoeren en het item
+selecteren dat als automatisch gemarkeerd staat).
+.PP
+Indien u op een niet\-interactieve manier wilt configureren, kunt u in de
+plaats daarvan de optie \fB\-\-set\fP gebruiken (zie hierna).
+.PP
+Verschillende pakketten die hetzelfde bestand leveren, moeten dat \fBop een
+co\(:operatieve manier\fP doen. Het gebruik van \fBupdate\-alternatives\fP is met
+andere woorden in dergelijke gevallen \fBverplicht\fP voor alle betrokken
+pakketten. Het is niet mogelijk om een bepaald bestand uit een pakket te
+vervangen dat geen gebruik maakt van het \fBupdate\-alternatives\fP mechanisme.
+.
+.SH TERMINOLOGIE
+Aangezien de activiteit van \fBupdate\-alternatives\fP behoorlijk ingewikkeld
+is, kunnen een aantal specifieke termen helpen bij het verduidelijken van
+zijn werking.
+.TP 
+algemene naam (of alternatief\-koppeling)
+Een naam, zoals \fI/usr/bin/editor\fP, die via het systeem van alternatieven
+verwijst naar \('e\('en of een aantal bestanden met een gelijkaardige functie.
+.TP 
+alternatief\-naam
+De naam van een symbolische koppeling in de map alternatives.
+.TP 
+alternatief (of alternatief\-pad)
+De naam van een specifiek bestand in het bestandssysteem, dat met behulp van
+het alternatievensysteem via een algemene naam benaderbaar gemaakt kan
+worden.
+.TP 
+alternatievenmap
+Een map, standaard \fI/etc/alternatives\fP, die de symbolische koppelingen
+bevat.
+.TP 
+beheersmap
+Een map, standaard \fI/var/lib/dpkg/alternatives\fP, die de statusinformatie voor
+\fBupdate\-alternatives\fP bevat.
+.TP 
+koppelingengroep
+Een reeks symbolische koppelingen die met elkaar verband houden en waarvan
+het de bedoeling is dat ze als groep bijgewerkt worden.
+.TP 
+hoofdkoppeling (master link)
+De alternatief\-koppeling uit een koppelingengroep die bepaalt hoe de andere
+koppelingen uit de groep geconfigureerd worden.
+.TP 
+secundaire koppeling (of slaafkoppeling) (slave link)
+Een alternatief\-koppeling uit een koppelingengroep die gecontroleerd wordt
+door de instelling van de hoofdkoppeling.
+.TP 
+automatische modus
+Als een koppelingengroep zich in automatische modus bevindt, verzekert het
+alternatievensysteem dat de koppelingen uit de groep verwijzen naar het voor
+de groep passende alternatief met de hoogste prioriteit.
+.TP 
+manuele modus
+Als een koppelingengroep zich in manuele modus bevindt, zal het
+alternatievensysteem geen enkele wijziging aanbrengen aan de instellingen
+van de systeembeheerder.
+.
+.SH COMMANDO'S
+.TP 
+\fB\-\-install\fP \fIkoppeling naam pad prioriteit\fP [\fB\-\-slave\fP \fIkoppeling naam pad\fP]...
+Voeg een groep alternatieven toe aan het systeem. \fIkoppeling\fP is de
+algemene naam voor de hoofdkoppeling. \fInaam\fP is de naam van zijn
+symbolische koppeling in de alternatievenmap. \fIpad\fP is het alternatief dat
+voor de hoofdkoppeling aangevoerd wordt. De argumenten na \fB\-\-slave\fP zijn de
+algemene naam, de naam van de symbolische koppeling in de alternatievenmap
+en het alternatief\-pad van een slaaf\-koppeling. Nul of meer
+\fB\-\-slave\fP\-opties kunnen opgegeven worden. Elk van hen moet door drie
+argumenten gevolgd worden. Merk op dat het hoofdalternatief moet bestaan. Zo
+niet, dan zal de aanroep mislukken. Indien evenwel een slaaf\-alternatief
+niet bestaat, dan zal de overeenkomstige slaaf\-alternatief\-koppeling gewoon
+niet ge\(:installeerd worden (er zal wel een waarschuwing gegeven
+worden). Indien een echt bestand ge\(:installeerd is waar een
+alternatief\-koppeling ge\(:installeerd moet worden, wordt dat behouden tenzij
+de optie \fB\-\-force\fP gebruikt wordt.
+.IP
+Indien de opgegeven alternatief\-naam reeds bestaat in de registers van het
+alternatievensysteem, dan zal de verstrekte informatie toegevoegd worden als
+een nieuwe reeks van alternatieven voor de groep. Anders zal een nieuwe
+groep in automatische modus toegevoegd worden met die informatie. Indien de
+groep zich in automatische modus bevindt en de pas toegevoegde alternatieven
+een grotere prioriteit hebben dan om het even welke andere ge\(:installeerde
+alternatieven voor die groep, dan zullen de symbolische koppelingen
+bijgewerkt worden zodat ze verwijzen naar de pas toegevoegde alternatieven.
+.TP 
+\fB\-\-set\fP \fInaam pad\fP
+Stel het programma \fIpad\fP in als alternatief voor \fInaam\fP. Dit is het
+equivalent voor \fB\-\-config\fP, maar het is non\-interactief en dus bruikbaar in
+scripts.
+.TP 
+\fB\-\-remove\fP \fInaam pad\fP
+Verwijder een alternatief en alle eraan gekoppelde secundaire (of slaaf\-)
+koppelingen. \fInaam\fP is een naam in de alternatievenmap en \fIpad\fP is een
+absolute bestandsnaam waaraan \fInaam\fP gekoppeld zou kunnen zijn. Indien
+\fInaam\fP inderdaad gekoppeld is aan \fIpad\fP, dan wordt \fInaam\fP bijgewerkt,
+zodat die verwijst naar een ander geschikt alternatief (en wordt de groep
+opnieuw in automatische modus geplaatst), of verwijderd als er geen
+dergelijk alternatief meer voorhanden is. Gelieerde slaafkoppelingen zullen
+navenant bijgewerkt of verwijderd worden. Indien de koppeling momenteel niet
+naar \fIpad\fP verwijst, worden geen koppelingen gewijzigd. Enkel de informatie
+over het alternatief wordt dan verwijderd.
+.TP 
+\fB\-\-remove\-all\fP \fInaam\fP
+Verwijder alle alternatieven en alle ermee verbonden secundaire (of slaaf\-)
+koppelingen. \fInaam\fP is een naam in de alternatievenmap.
+.TP 
+\fB\-\-all\fP
+Voer \fB\-\-config\fP uit op alle alternatieven. Het kan nuttig zijn om dit te
+combineren met \fB\-\-skip\-auto\fP om alle alternatieven te inspecteren en te
+configureren, die niet in automatische modus geconfigureerd zijn. Ook worden
+defecte alternatieven getoond. Een eenvoudige manier om alle defecte
+alternatieven te repareren is dus het aanroepen van \fByes \*(rq |
+update\-alternatives \-\-force \-\-all\fP.
+.TP 
+\fB\-\-auto\fP \fInaam\fP
+Schakel de koppelingengroep achter het alternatief voor \fInaam\fP om naar
+automatische modus. In dit proces worden de hoofdkoppeling en zijn
+slaafkoppelingen bijgewerkt zodat ze verwijzen naar de ge\(:installeerde
+alternatieven met de hoogste prioriteit.
+.TP 
+\fB\-\-display\fP \fInaam\fP
+Toon informatie over de koppelingengroep. De getoonde informatie bevat de
+modus van de groep (auto of manueel), de hoofdkoppeling en de
+slaafkoppelingen, het alternatief waarnaar de hoofdkoppeling momenteel
+verwijst, de andere alternatieven die beschikbaar zijn (en hun
+overeenkomstige slaaf\-alternatieven) en het momenteel ge\(:installeerde
+alternatief met de hoogste prioriteit.
+.TP 
+\fB\-\-get\-selections\fP
+Som alle namen op van de hoofdalternatieven (die welke een koppelingengroep
+controleren) en hun status (sinds versie 1.15.0). Elke regel kan tot 3
+velden bevatten (door \('e\('en of meer spaties van elkaar gescheiden). Het eerste
+veld is de naam van het alternatief. Het tweede is de status ervan (ofwel
+\fBauto\fP ofwel \fBmanual\fP). Het laatste bevat het momenteel gekozen
+alternatief (let op: dit is een bestandsnaam en kan dus spaties bevatten).
+.TP 
+\fB\-\-set\-selections\fP
+Lees op standaardinvoer configuratie voor alternatieven in de door
+\fB\-\-get\-selections\fP gegenereerde indeling en herconfigureer ze
+dienovereenkomstig (sinds versie 1.15.0).
+.TP 
+\fB\-\-query\fP \fInaam\fP
+Geef informatie weer over de koppelingengroep zoals \fB\-\-display\fP dat doet,
+maar dan op een manier die door een machine ontleed kan worden (sinds versie
+1.15.0, zie hierna bij het onderdeel \fBINDELING GEGEVENSOPVRAGING\fP).
+.TP 
+\fB\-\-list\fP \fInaam\fP
+Geef alle doelen van de koppelingengroep weer.
+.TP 
+\fB\-\-config\fP \fInaam\fP
+Toon de beschikbare alternatieven voor een koppelingengroep en laat de
+gebruiker toe om interactief te selecteren welke er gebruikt moet worden. De
+koppelingengroep wordt bijgewerkt.
+.TP 
+\fB\-\-help\fP
+Toon info over het gebruik en sluit af.
+.TP 
+\fB\-\-version\fP
+Toon de versie en sluit af.
+.
+.SH OPTIES
+.TP 
+\fB\-\-altdir\fP\fI map\fP
+Duidt de alternatievenmap aan als die anders dan de standaard moet zijn.
+.TP 
+\fB\-\-admindir\fP\fI map\fP
+Duidt de beheersmap aan als die anders dan de standaard moet zijn.
+.TP 
+\fB\-\-log\fP\fI bestand\fP
+Duidt het logbestand aan (sinds versie 1.15.0) als dat anders dan de
+standaard (/var/log/alternatives.log) moet zijn.
+.TP 
+\fB\-\-force\fP
+Laat toe om een echt bestand te vervangen of te verwijderen dat
+ge\(:installeerd is waar een alternatief\-koppeling ge\(:installeerd of verwijderd
+moet worden.
+.TP 
+\fB\-\-skip\-auto\fP
+Voor alternatieven die in automatische modus behoorlijk geconfigureerd zijn,
+de configuratievraag overslaan. Deze optie is enkel relevant in combinatie
+met \fB\-\-config\fP of \fB\-\-all\fP.
+.TP 
+\fB\-\-quiet\fP
+Geen commentaar genereren tenzij er zich fouten voordoen.
+.TP 
+\fB\-\-verbose\fP
+Genereer meer commentaar bij wat er gedaan wordt.
+.TP 
+\fB\-\-debug\fP
+Zelfs nog meer commentaar genereren bij wat er gedaan wordt, nuttig bij het
+debuggen (sinds versie 1.19.3).
+.
+.SH AFSLUITSTATUS
+.TP 
+\fB0\fP
+De gevraagde actie werd succesvol uitgevoerd.
+.TP 
+\fB2\fP
+Er deden zich problemen voor tijdens het ontleden van de commandoregel of
+het uitvoeren van de actie.
+.
+.SH OMGEVING
+.TP 
+\fBDPKG_ADMINDIR\fP
+Indien dit ingesteld is en de optie \fB\-\-admindir\fP niet opgegeven werd, zal
+dit gebruikt worden als de hoofdmap voor beheersdoeleinden.
+.
+.SH BESTANDEN
+.TP 
+\fI/etc/alternatives/\fP
+De standaardmap voor alternatieven. Kan gewijzigd worden met de optie
+\fB\-\-altdir\fP.
+.TP 
+\fI/var/lib/dpkg/alternatives/\fP
+De standaardmap voor beheersdoeleinden. Kan gewijzigd worden met de optie
+\fB\-\-admindir\fP.
+.
+.SH "INDELING GEGEVENSOPVRAGING"
+De indeling die gebruikt wordt bij \fB\-\-query\fP is een RFC822\-achtige vlakke
+indeling. Ze bestaat uit \fIn\fP + 1 blokken, waarbij \fIn\fP het aantal
+beschikbare alternatieven is uit de opgevraagde koppelingengroep. Het eerste
+blok bevat de volgende velden:
+.TP 
+\fBName:\fP\fI naam\fP
+De naam van het alternatief in de alternatievenmap.
+.TP 
+\fBLink:\fP\fI koppeling\fP
+De algemene naam van het alternatief.
+.TP 
+\fBSlaves:\fP\fI lijst\-van\-slaven\fP
+Als dit veld aanwezig is, bevatten de \fBvolgende\fP regels alle
+slaaf\-koppelingen die gelieerd zijn met de hoofdkoppeling van het
+alternatief. Per regel wordt \('e\('en slaaf vermeld. Elke regel bevat \('e\('en spatie,
+de algemene naam van het slaaf\-alternatief, opnieuw een spatie en het pad
+naar de slaaf\-koppeling.
+.TP 
+\fBStatus:\fP\fI status\fP
+The status van het alternatief (\fBauto\fP of \fBmanual\fP) (automatisch of
+manueel).
+.TP 
+\fBBest:\fP\fI beste\-keuze\fP
+Het pad naar het beste alternatief voor deze koppelingengroep. Komt niet
+voor als er geen alternatieven beschikbaar zijn.
+.TP 
+\fBValue:\fP\fI momenteel\-geselecteerd\-alternatief\fP
+Het pad naar het momenteel geselecteerde alternatief. Het kan ook de
+magische waarde \fBnone\fP hebben. Die wordt gebruikt als de koppeling niet
+bestaat.
+.PP
+De andere blokken geven de beschikbare alternatieven weer in de opgevraagde
+koppelingengroep:
+.TP 
+\fBAlternative:\fP\fI pad\-van\-dit\-alternatief\fP
+Het pad naar het alternatief uit dit blok.
+.TP 
+\fBPriority:\fP\fI waarde\-van\-prioriteit\fP
+De prioriteitswaarde van dit alternatief.
+.TP 
+\fBSlaves:\fP\fI lijst\-van\-slaven\fP
+Als dit veld voorkomt, bevatten de \fBvolgende\fP regels alle
+slaaf\-alternatieven die gelieerd zijn aan de hoofdkoppeling van het
+alternatief. Per slaaf wordt \('e\('en regel gebruikt. Elke regel bevat \('e\('en
+spatie, de algemene naam van het slaaf\-alternatief, opnieuw een spatie en
+het pad naar het slaaf\-alternatief.
+.
+.SS Voorbeeld
+.nf
+$ update\-alternatives \-\-query editor
+Name: editor
+Link: /usr/bin/editor
+Slaves:
+ editor.1.gz /usr/share/man/man1/editor.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/editor.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/editor.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/editor.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/editor.1.gz
+Status: auto
+Best: /usr/bin/vim.basic
+Value: /usr/bin/vim.basic
+
+Alternative: /bin/ed
+Priority: \-100
+Slaves:
+ editor.1.gz /usr/share/man/man1/ed.1.gz
+
+Alternative: /usr/bin/vim.basic
+Priority: 50
+Slaves:
+ editor.1.gz /usr/share/man/man1/vim.1.gz
+ editor.fr.1.gz /usr/share/man/fr/man1/vim.1.gz
+ editor.it.1.gz /usr/share/man/it/man1/vim.1.gz
+ editor.pl.1.gz /usr/share/man/pl/man1/vim.1.gz
+ editor.ru.1.gz /usr/share/man/ru/man1/vim.1.gz
+.fi
+.
+.SH DIAGNOSTIEK
+Als \fBupdate\-alternatives\fP gebruikt wordt met \fB\-\-verbose\fP, dan ratelt het
+onophoudelijk over zijn activiteiten op zijn standaard uitvoerkanaal. Indien
+er zich problemen voordoen, produceert \fBupdate\-alternatives\fP foutmeldingen
+op zijn standaard foutkanaal en geeft het een afsluitstatus 2 terug. Deze
+diagnostiek zou eenvoudig te verstaan moeten zijn. Mocht u dit niet vinden,
+gelieve dat dan als een bug te rapporteren.
+.
+.SH VOORBEELDEN
+Er zijn verschillende pakketten die een teksteditor leveren die compatibel
+is met \fBvi\fP, bijvoorbeeld \fBnvi\fP en \fBvim\fP. Welke er gebruikt wordt, wordt
+geregeld door de koppelingengroep \fBvi\fP, die koppelingen bevat naar het
+programma zelf en naar de ermee verband houdende man\-pagina.
+.PP
+Om weer te geven welke beschikbare pakketten \fBvi\fP leveren en wat de huidige
+instelling ervoor is, gebruikt u de actie \fB\-\-display\fP:
+.PP
+.RS
+\fBupdate\-alternatives \-\-display vi\fP
+.RE
+.PP
+Om een specifieke \fBvi\fP\-toepassing te kiezen, gebruikt u als
+systeembeheerder dit commando en vervolgens kiest u een nummer uit de lijst:
+.PP
+.RS
+\fBupdate\-alternatives \-\-config vi\fP
+.RE
+.PP
+Om terug te keren naar een situatie waarbij de \fBvi\fP\-toepassing automatisch
+gekozen wordt, doet u als systeembeheerder dit:
+.PP
+.RS
+\fBupdate\-alternatives \-\-auto vi\fP
+.RE
+.
+.SH "ZIE OOK"
+\fBln\fP(1), FHS, the Filesystem Hierarchy Standard. (Standaardisatie van
+bestandsorganisatie en mappenstructuur op unix\-achtige systemen)

@@ -1,0 +1,108 @@
+.\" dpkg manual page - deb-symbols(5)
+.\"
+.\" Copyright © 2007-2012 Rapha\(:el Hertzog <hertzog@debian.org>
+.\" Copyright © 2011, 2013-2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-symbols 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+deb\-symbols \- Fichier d'information sur les biblioth\(`eques partag\('ees Debian
+.
+.SH SYNOPSIS
+symboles
+.
+.SH DESCRIPTION
+Les fichiers de symboles sont fournis dans les paquets binaires de Debian et
+leur format est un sous\-ensemble des fichiers mod\(`eles de symboles utilis\('es
+par \fBdpkg\-gensymbols\fP(1) dans les paquets source Debian.
+.P
+Le format pour une entr\('ee d'information sur les d\('ependances \('etendues avec
+biblioth\(`eques partag\('ees dans ces fichiers est le suivant\ :
+.PP
+\fIsoname\-de\-biblioth\(`eque mod\(`ele\-principal\-de\-d\('ependance\fP
+.br
+[| \fImod\(`ele\-alternatif\-de\-d\('ependance\fP]
+.br
+[...]
+.br
+[* \fInom\-du\-champ\fP: \fIvaleur\-du\-champ\fP]
+.br
+[...]
+ \fIsymbole\fP \fIversion\-minimale\fP[\fIid\-du\-mod\(`ele\-de\-d\('ependance\fP]
+.P
+La variable \fIsoname\-de\-biblioth\(`eque\fP est exactement la valeur du champ
+SONAME telle qu'export\('ee par \fBobjdump\fP(1). Un \fImod\(`ele\-de\-d\('ependance\fP est
+une d\('ependance o\(`u \fI#MINVER#\fP est dynamiquement remplac\('e soit par une
+version comme \(Fo\ (>= \fIversion\-minimale\fP)\ \(Fc soit par rien (si une
+d\('ependance quelle que soit sa version est reconnue suffisante).
+.P
+Chaque \fIsymbole\fP export\('e (not\('e \fInom\fP@\fIversion\fP, avec \fIversion\fP r\('egl\('e \(`a
+\(Fo\ Base\ \(Fc si la biblioth\(`eque n'a pas de version) est associ\('e \(`a une
+\fIversion\-minimale\fP dans son mod\(`ele de d\('ependance (le mod\(`ele principal de
+d\('ependance est toujours utilis\('e et se termine combin\('e avec le mod\(`ele de
+d\('ependance r\('ef\('erenc\('e par l'\fIid\-du\-mod\(`ele\-de\-d\('ependance\fP est pr\('esent). La
+premi\(`ere alternative au mod\(`ele de d\('ependance est num\('erot\('ee\ 1, la
+seconde\ 2,\ etc.
+.P
+Chaque entr\('ee pour une biblioth\(`eque peut aussi avoir des champs de
+m\('eta\-information. Ces champs sont enregistr\('es dans des lignes qui d\('ebutent
+par un ast\('erisque (\(Fo\ *\ \(Fc). Actuellement, le seul champ valable est\ :
+.TP 
+\fBBuild\-Depends\-Package\fP
+Il indique le nom du paquet \(Fo\ \-dev\ \(Fc associ\('e \(`a la biblioth\(`eque et est
+utilis\('e par \fBdpkg\-shlibdeps\fP pour s'assurer que la d\('ependance produite est
+au moins aussi stricte que la d\('ependance de construction correspondante
+(depuis dpkg\ 1.14.13).
+.TP 
+\fBIgnore\-Blacklist\-Groups\fP
+Il indique que les groupes blacklist\('es seront ignor\('es, sous forme de liste
+s\('epar\('ee par des espaces, afin que les symboles contenus dans ces groupes
+soient inclus dans le fichier de sortie (depuis dpkg\ 1.17.6). Cela sera
+seulement n\('ecessaire pour les paquets de cha\(^ine d'outils qui fournissent ces
+symboles blacklist\('es. Les groupes disponibles d\('ependent des syst\(`emes et,
+pour les syst\(`emes bas\('es sur ELF et GNU, ce sont \fBaeabi\fP et \fBgomp\fP.
+.SH EXEMPLES
+.SS "Simple fichier de symboles"
+.PP
+libftp.so.3 libftp3 #MINVER#
+ DefaultNetbuf@Base 3.1\-1\-6
+ FtpAccess@Base 3.1\-1\-6
+ [...]
+.SS "Fichier avanc\('e de symboles"
+.PP
+libGL.so.1 libgl1
+.br
+| libgl1\-mesa\-glx #MINVER#
+.br
+* Build\-Depends\-Package: libgl1\-mesa\-dev
+ publicGlSymbol@Base 6.3\-1
+ [...]
+ implementationSpecificSymbol@Base 6.5.2\-7 1
+ [...]
+.SH "VOIR AUSSI"
+\fBhttps://wiki.debian.org/Projects/ImprovedDpkgShlibdeps\fP
+.br
+\fBdpkg\-shlibdeps\fP(1), \fBdpkg\-gensymbols\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

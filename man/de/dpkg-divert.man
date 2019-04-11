@@ -70,16 +70,16 @@ Zeige den echten Namen für eine umgeleitete Datei an.
 .TP 
 \fB\-\-admindir\fP\fI Verzeichnis\fP
 Setze das adminitrative Verzeichnis auf \fIVerzeichnis\fP (Standard:
-\fI%ADMINDIR%\fP).
+„\fI%ADMINDIR%\fP“).
 .TP 
 \fB\-\-instdir\fP\fI Verzeichnis\fP
 Setzt das Installationsverzeichnis, das sich auf das Verzeichnis bezieht, in
-dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig »\fI/\fP«.
+dem Pakete installiert werden (seit Dpkg 1.19.2). Standardmäßig „\fI/\fP“.
 .TP 
 \fB\-\-root\fP\fI Verzeichnis\fP
 Setzt das Wurzelverzeichnis auf \fIVerzeichnis\fP, wodurch das
-Installationsverzeichnis auf »\fIVerzeichnis\fP« und das administrative
-Verzeichnis auf »\fIVerzeichnis\fP\fB%ADMINDIR%\fP« gesetzt wird (seit Dpkg
+Installationsverzeichnis auf „\fIVerzeichnis\fP“ und das administrative
+Verzeichnis auf „\fIVerzeichnis\fP\fB%ADMINDIR%\fP“ gesetzt wird (seit Dpkg
 1.19.2).
 .TP 
 \fB\-\-divert\fP\fI Umleitziel\fP
@@ -203,7 +203,7 @@ dpkg\-divert \-\-package wibble \-\-rename \-\-remove /usr/bin/example
 .SH "SIEHE AUCH"
 \fBdpkg\fP(1).
 .SH ÜBERSETZUNG
-Die deutsche Übersetzung wurde 2004, 2006-2018 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2019 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

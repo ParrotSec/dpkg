@@ -1,0 +1,63 @@
+.\" dpkg manual page - deb-prerm(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-prerm 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+deb\-prerm \- Script du responsable pour le pr\('e\-retrait du paquet
+.
+.SH SYNOPSIS
+prerm
+.
+.SH DESCRIPTION
+Un paquet peut r\('ealiser plusieurs actions de pr\('e\-retrait \(`a l'aide de scripts
+du responsable, en incluant un fichier \fIprerm\fP ex\('ecutable dans son archive
+de contr\(^ole (c'est\-\(`a\-dire \fIDEBIAN/prerm\fP au moment de la cr\('eation du
+paquet).
+.PP
+Le script peut \(^etre appel\('e de diverses mani\(`eres\ :
+.TP 
+\fIprerm\fP \fBremove\fP
+Avant le retrait du paquet
+.TP 
+\fIancien\-prerm\fP \fBupgrade\fP \fInouvelle\-version\fP
+Avant une mise \(`a niveau.
+.TP 
+\fInouveau\-prerm\fP \fBfailed\-upgrade\fP \fIancienne\-version nouvelle\-version\fP
+Si le \fBupgrade\fP ci\-dessus \('echoue.
+.TP 
+\fIprerm\fP \fBdeconfigure in\-favour\fP \fInouveau\-paquet nouvelle\-version\fP
+.TQ
+    [ \fBremoving\fP \fIancien\-paquet ancienne\-version\fP ]
+Avant qu'un paquet soit d\('econfigur\('e pendant qu'une d\('ependance est remplac\('ee
+du fait d'un conflit.
+.TP 
+\fIprerm\fP \fBremove in\-favour\fP \fInouveau\-paquet nouvelle\-version\fP
+Avant que le paquet soit remplac\('e du fait d'un conflit.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

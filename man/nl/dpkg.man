@@ -113,9 +113,10 @@ Het pakket werd geselecteerd om gewist te worden (d.w.z. dat we alles uit de
 systeemmappen wensen te verwijderen, zelfs de configuratiebestanden).
 .TP 
 \fBunknown\fP
-The package selection is unknown.  A package that is also in a
-\fBnot\-installed\fP state, and with an \fBok\fP flag will be forgotten in the next
-database store.
+Het betreft een onbekende pakketselectie. Een pakket dat zich eveneens in de
+toestand \fBnot\-installed\fP (niet\-geïnstalleerd) bevindt en een \fBok\fP\-vlag
+heeft, zal de volgende keer weggelaten worden bij het opslaan van de
+databank.
 .SS Pakketvlaggen
 .TP 
 \fBok\fP
@@ -576,7 +577,7 @@ effecten kan uw volledig systeem defect maken.\fP
 
 \fBall\fP: Schakelt alle forceer\-opties aan (of uit).
 
-\fBdowngrade\fP(*): Installeer een pakket, zelfs als reeds een nieuwere versie
+\fBdowngrade\fP(*): Een pakket installeren, zelfs als reeds een nieuwere versie
 ervan geïnstalleerd is.
 
 \fIWaarschuwing: Momenteel voert \fP\fBdpkg\fP\fI geen enkele vereistencontrole uit
@@ -585,55 +586,55 @@ vereiste van een ander pakket defect maakt. Dit kan ernstige neveneffecten
 hebben. Degraderen van essentiële componenten van het systeem kan zelfs uw
 hele systeem onbruikbaar maken. Te gebruiken met voorzichtigheid.\fP
 
-\fBconfigure\-any\fP: Configureer ook elk uitgepakt maar niet\-geconfigureerd
-pakket waarvan het huidige pakket afhankelijk is.
+\fBconfigure\-any\fP: Ook elk uitgepakt maar niet\-geconfigureerd pakket waarvan
+het huidige pakket afhankelijk is, configureren.
 
-\fBhold\fP: Behandel ook pakketten die met “hold” (te handhaven) gemarkeerd
+\fBhold\fP: Ook pakketten verwerken die met “hold” (te handhaven) gemarkeerd
 zijn.
 
-\fBremove\-reinstreq\fP: Verwijder een pakket, zelfs als het defect is en er
+\fBremove\-reinstreq\fP: Een pakket verwijderen, zelfs als het defect is en er
 aangegeven staat dat een herinstallatie nodig is. Dit kan bijvoorbeeld tot
 gevolg hebben dat delen van het pakket op het systeem achterblijven, maar
 \fBdpkg\fP zal er dan niet meer van op de hoogte zijn.
 
-\fBremove\-essential\fP: Verwijder het pakket, zelfs al wordt het als essentieel
-beschouwd. Essentiële pakketten bevatten meestal hele basale Unix
+\fBremove\-essential\fP: Het pakket verwijderen, zelfs al wordt het als
+essentieel beschouwd. Essentiële pakketten bevatten meestal hele basale Unix
 commando's. Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt
 met werken. Gebruik dit dus met voorzichtigheid.
 
-\fBdepends\fP: Zet alle vereistenproblemen in waarschuwingen. Dit heeft invloed
-op de velden \fBPre\-Depends\fP en \fBDepends\fP.
+\fBdepends\fP: Alle vereistenproblemen omzetten in waarschuwingen. Dit heeft
+invloed op de velden \fBPre\-Depends\fP en \fBDepends\fP.
 
-\fBdepends\-version\fP: Bekommer u niet om versies bij het toetsen van
+\fBdepends\-version\fP: Zich niet om versies bekommeren bij het toetsen van
 vereisten. Dit heeft invloed op de velden \fBPre\-Depends\fP en \fBDepends\fP.
 
-\fBbreaks\fP: Installeer, zelfs als dit een ander pakket defect zou maken
+\fBbreaks\fP: Installeren, zelfs als dit een ander pakket defect zou maken
 (sinds dpkg 1.14.6). Dit heeft invloed op het veld \fBBreaks\fP.
 
-\fBconflicts\fP: Installeer, zelfs als er een tegenstelling is met een ander
+\fBconflicts\fP: Installeren, zelfs als er een tegenstelling is met een ander
 pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van
 bepaalde bestanden tot gevolg hebben. Dit heeft invloed op het veld
 \fBConflicts\fP.
 
-\fBconfmiss\fP: Installeer zonder vragen steeds de ontbrekende conffile
-(configuratiebestand). Dit is gevaarlijk, aangezien het betekent dat een
-verandering die aan een bestand aangebracht werd (het verwijderen ervan),
-niet behouden wordt.
+\fBconfmiss\fP: Zonder vragen steeds het ontbrekende conffile
+(configuratiebestand) installeren. Dit is gevaarlijk, aangezien het betekent
+dat een verandering die aan een bestand aangebracht werd (het verwijderen
+ervan), niet behouden wordt.
 
 \fBconfnew\fP: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, installeer dan steeds zonder vragen de
-nieuwe versie, tenzij ook \fB\-\-force\-confdef\fP opgegeven werd. In dat geval
-wordt de voorkeur gegeven aan de standaardactie.
+versie uit het pakket gewijzigd werd, dan steeds zonder vragen de nieuwe
+versie installeren, tenzij ook \fB\-\-force\-confdef\fP opgegeven werd. In dat
+geval wordt de voorkeur gegeven aan de standaardactie.
 
 \fBconfold\fP: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, behoud dan steeds zonder vragen de
-oude versie, tenzij ook \fB\-\-force\-confdef\fP opgegeven werd. In dat geval
+versie uit het pakket gewijzigd werd, dan steeds zonder vragen de oude
+versie behouden, tenzij ook \fB\-\-force\-confdef\fP opgegeven werd. In dat geval
 wordt de voorkeur gegeven aan de standaardactie.
 
 \fBconfdef\fP: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, kies dan steeds zonder vragen voor de
-standaardactie. Indien er geen standaardactie is, zal het programma stoppen
-en de gebruiker een vraag stellen, tenzij ook \fB\-\-force\-confnew\fP of
+versie uit het pakket gewijzigd werd, dan steeds zonder vragen voor de
+standaardactie kiezen. Indien er geen standaardactie is, zal het programma
+stoppen en de gebruiker een vraag stellen, tenzij ook \fB\-\-force\-confnew\fP of
 \fB\-\-force\-confold\fP opgegeven werd. In dat geval zal het dit gebruiken om
 over de uiteindelijke actie te beslissen.
 
@@ -644,26 +645,27 @@ de opties \fB\-\-force\-confnew\fP, \fB\-\-force\-confold\fP of \fB\-\-force\-co
 opgegeven werd, zal het die gebruiken om over de uiteindelijke actie te
 beslissen.
 
-\fBoverwrite\fP: Overschrijf een bestand van een pakket met het bestand van een
-ander pakket.
+\fBoverwrite\fP: Een bestand van een pakket overschrijven met het bestand van
+een ander pakket.
 
-\fBoverwrite\-dir\fP: Overschrijf een map van een pakket met het bestand van een
-ander pakket.
+\fBoverwrite\-dir\fP: Een map van een pakket overschrijven met het bestand van
+een ander pakket.
 
-\fBoverwrite\-diverted\fP: Overschrijf een omgeleid bestand met een
+\fBoverwrite\-diverted\fP: Een omgeleid bestand overschrijven met een
 niet\-omgeleide versie.
 
-\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
-(since dpkg 1.19.5).
+\fBstatoverride\-add\fP: Bij het toevoegen ervan een bestaande statusmodificatie
+overschrijven (sinds dpkg 1.19.5).
 
-\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
-(since dpkg 1.19.5).
+\fBstatoverride\-remove\fP: Bij het verwijderen ervan een ontbrekende
+statusmodificatie negeren (sinds dpkg 1.19.5).
 
-\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
-based security when installing files into the filesystem (since dpkg
-1.19.5).  On Linux systems the implementation uses SELinux.
+\fBsecurity\-mac\fP(*): Bij het installeren van bestanden op het bestandssysteem
+gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory
+Access Controls (MAC) (since dpkg 1.19.5). Op Linux\-systemen gebruikt de
+implementatie SELinux.
 
-\fBunsafe\-io\fP: Voer bij het uitpakken geen veilige I/O\-operaties uit (sinds
+\fBunsafe\-io\fP: Bij het uitpakken geen veilige I/O\-operaties uitvoeren (sinds
 dpkg 1.15.8.6). Momenteel houdt dit in dat geen
 bestandssysteemsynchronisatie gebeurt vooraleer bestanden hernoemd
 worden. Daarvan is geweten dat dit op sommige bestandssystemen tot
@@ -683,40 +685,40 @@ uitvoert voorafgaand aan een atomische hernoeming.
 \fIWaarschuwing: Het gebruik van deze optie kan de prestaties verbeteren ten
 koste van het verlies van gegevens. Gebruik ze behoedzaam.\fP
 
-\fBscript\-chrootless\fP: Voer de scripts van de pakketonderhouder uit zonder te
-\fBchroot\fP(2)en naar \fBinstdir\fP, zelfs als het pakket deze werkwijze niet
+\fBscript\-chrootless\fP: De scripts van de pakketonderhouder uitvoeren zonder
+te \fBchroot\fP(2)en naar \fBinstdir\fP, zelfs als het pakket deze werkwijze niet
 ondersteunt (sinds dpkg 1.18.5).
 
 \fIWaarschuwing: Dit kan uw computersysteem vernietigen, gebruik dit uiterst
 behoedzaam.\fP
 
-\fBarchitecture\fP: Verwerk pakketten zelfs als ze de verkeerde of geen
+\fBarchitecture\fP: Pakketten verwerken, zelfs als ze de verkeerde of geen
 architectuur hebben.
 
-\fBbad\-version\fP: Verwerk pakketten zelfs als ze een verkeerde versie hebben
-(sinds dpkg 1.16.1).
+\fBbad\-version\fP: Pakketten verwerken, zelfs als ze een verkeerde versie
+hebben (sinds dpkg 1.16.1).
 
 \fBbad\-path\fP: In \fBPATH\fP ontbreken belangrijke programma's, waardoor het
 waarschijnlijk is dat er zich problemen zullen voordoen.
 
-\fBnot\-root\fP: Tracht zaken te (de\-)installeren, zelfs als
-niet\-systeembeheerder.
+\fBnot\-root\fP: Proberen om zaken te (de\-)installeren, zelfs in opdracht van
+een niet\-systeembeheerder.
 
-\fBbad\-verify\fP: Installeer een pakket zelfs als de authenticiteitscontrole
+\fBbad\-verify\fP: Een pakket installeren, zelfs als de authenticiteitscontrole
 mislukt.
 
 .TP 
 \fB\-\-ignore\-depends\fP=\fIpakket\fP,...
-Negeer het toetsen van afhankelijkheden voor de opgegeven pakketten
+Voor de opgegeven pakketten het toetsen van afhankelijkheden negeren
 (eigenlijk wordt de controle wel uitgevoerd, maar er worden enkel
 waarschuwingen in verband met tegenstrijdigheden gegeven en verder
 niets). Dit heeft invloed op de velden \fBPre\-Depends\fP, \fBDepends\fP en
 \fBBreaks\fP.
 .TP 
 \fB\-\-no\-act\fP, \fB\-\-dry\-run\fP, \fB\-\-simulate\fP
-Voer alles wat gedaan moet worden, uit, maar schrijf geen veranderingen
-weg. Dit wordt gebruikt om te zien wat er bij de opgegeven actie zou
-gebeuren, zonder dat er effectief iets gewijzigd wordt.
+Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen
+wegschrijven. Dit wordt gebruikt om te zien wat er bij de opgegeven actie
+zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
 
 Zorg ervoor om \fB\-\-no\-act\fP voor de actie\-parameter op te geven, anders zou u
 ongewenste resultaten kunnen bekomen. (bijvoorbeeld zal \fBdpkg \-\-purge foo
@@ -724,51 +726,51 @@ ongewenste resultaten kunnen bekomen. (bijvoorbeeld zal \fBdpkg \-\-purge foo
 ook al verwachtte u wellicht dat er niets gedaan zou worden)
 .TP 
 \fB\-R\fP, \fB\-\-recursive\fP
-Behandel alle gewone bestanden die beantwoorden aan het patroon \fB*.deb\fP
-recursief in de opgegeven mappen en al hun onderliggende mappen. Dit kan
+Alle gewone bestanden die beantwoorden aan het patroon \fB*.deb\fP, recursief
+behandelen in de opgegeven mappen en al hun onderliggende mappen. Dit kan
 gebruikt worden samen met de acties \fB\-i\fP, \fB\-A\fP, \fB\-\-install\fP, \fB\-\-unpack\fP
 en \fB\-\-record\-avail\fP.
 .TP 
 \fB\-G\fP
-Installeer een pakket niet als reeds een nieuwere versie van dat pakket
+Een pakket niet installeren als reeds een nieuwere versie van dat pakket
 geïnstalleerd is. Dit is een alias voor \fB\-\-refuse\-downgrade\fP.
 .TP 
 \fB\-\-admindir=\fP\fImap\fP
-Stel de administratieve map in op \fIdirectory\fP. In deze map zitten veel
+De administratieve map instellen op \fIdirectory\fP. In deze map zitten veel
 bestanden met informatie over de status van geïnstalleerde of
 gede\-installeerde pakketten, enz. Standaard is dat «\fI%ADMINDIR%\fP»
 .TP 
 \fB\-\-instdir=\fP\fImap\fP
-Stel de installatiemap in, welke de map aangeeft waarin pakketten
+Instellen van de installatiemap, welke de map aangeeft waarin pakketten
 geïnstalleerd zullen worden. \fBinstdir\fP is ook de map die aan \fBchroot\fP(2)
 doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd
 worden, waardoor de scripts \fBinstdir\fP als de hoofdmap beschouwen. Standaard
 is dat «\fI/\fP»
 .TP 
 \fB\-\-root=\fP\fImap\fP
-Stel de hoofdmap in op \fBdirectory\fP, hetgeen de installatiemap instelt op
+De hoofdmap instellen op \fBdirectory\fP, hetgeen de installatiemap instelt op
 «\fImap\fP» en de administratieve map op «\fImap\fP\fB%ADMINDIR%\fP».
 .TP 
 \fB\-O\fP, \fB\-\-selected\-only\fP
-Verwerk enkel de pakketten die geselecteerd werden om geïnstalleerd te
+Enkel de pakketten verwerken welke geselecteerd werden om geïnstalleerd te
 worden. Het eigenlijke markeren gebeurt door \fBdselect\fP of door \fBdpkg\fP als
 het de pakketten behandelt. Als bijvoorbeeld een pakket verwijderd wordt,
 zal het als geselecteerd om verwijderd te worden gemarkeerd worden.
 .TP 
 \fB\-E\fP, \fB\-\-skip\-same\-version\fP
-Installeer het pakket niet als dezelfde versie van dat pakket reeds
+Het pakket niet installeren als dezelfde versie van dat pakket reeds
 geïnstalleerd is.
 .TP 
 \fB\-\-pre\-invoke=\fP\fIcommando\fP
 .TQ
 \fB\-\-post\-invoke=\fP\fIcommando\fP
-Stel in dat een uitbreiding (hook) \fIcommando\fP via \*(lqsh \-c\*(rq moet uitgevoerd
-worden voor of na het uitvoeren van \fBdpkg\fP bij de acties \fIunpack\fP,
-\fIconfigure\fP, \fIinstall\fP, \fItriggers\-only\fP, \fIremove\fP, \fIpurge\fP,
+Instellen dat een uitbreiding (hook) \fIcommando\fP via \*(lqsh \-c\*(rq moet
+uitgevoerd worden voor of na het uitvoeren van \fBdpkg\fP bij de acties
+\fIunpack\fP, \fIconfigure\fP, \fIinstall\fP, \fItriggers\-only\fP, \fIremove\fP, \fIpurge\fP,
 \fIadd\-architecture\fP en \fIremove\-architecture\fP van \fBdpkg\fP (sinds dpkg 1.15.4
-en de acties \fIadd\-architecture\fP en \fIremove\-architecture\fP sinds dpkg
+en de acties \fIadd\-architecture\fP en \fIremove\-architecture\fP (sinds dpkg
 1.17.19). Deze optie kan meermaals opgegeven worden. De volgorde waarin de
-opties opgegeven worden, wordt behouden, waarbij die uit de
+opties opgegeven worden, wordt behouden, waarbij deze uit de
 configuratiebestanden voorrang hebben. De omgevingsvariabele
 \fBDPKG_HOOK_ACTION\fP wordt ingesteld voor de uitbreidingen (hooks) bij de
 huidige actie van \fBdpkg\fP. Merk op dat frontends die uitgevoerd worden,
@@ -778,9 +780,10 @@ verwacht uitgevoerd kunnen worden.
 \fB\-\-path\-exclude=\fP\fIglob\-patroon\fP
 .TQ
 \fB\-\-path\-include=\fP\fIglob\-patroon\fP
-Stel \fIglob\-patroon\fP bij het installeren in als een filter voor paden, ofwel
-door paden die aan het opgegeven patroon beantwoorden, uit te sluiten ofwel
-door eerder uitgesloten paden opnieuw toe te voegen (sinds dpkg 1.15.8).
+Het \fIglob\-patroon\fP bij het installeren instellen als een filter voor paden,
+ofwel door paden die aan het opgegeven patroon beantwoorden, uit te sluiten
+ofwel door eerder uitgesloten paden opnieuw toe te voegen (sinds dpkg
+1.15.8).
 
 \fIWaarschuwing: houd er rekening mee dat u, afhankelijk van de paden die
 uitgesloten worden, uw systeem volledig defect kunt maken. Gebruik dit
@@ -845,10 +848,10 @@ attribuutteken (momenteel ‘\fBc\fP’ voor conffiles (configuratiebestanden)),
 nog een spatie en de padnaam.
 .TP 
 \fB\-\-status\-fd \fP\fIn\fP
-Stuur status\- en voortgangsinformatie die leesbaar is voor machines naar
-bestandsindicator \fIn\fP. Deze optie kan meermaals opgegeven worden. Meestal
-wordt de informatie met één item per regel weergegeven in een van de
-volgende vormen:
+Status\- en voortgangsinformatie die leesbaar is voor machines naar
+bestandsindicator \fIn\fP sturen. Deze optie kan meermaals opgegeven
+worden. Meestal wordt de informatie met één item per regel weergegeven in
+een van de volgende vormen:
 .RS
 .TP 
 \fBstatus: \fP\fIpakket\fP\fB: \fP\fIstatus\fP
@@ -869,16 +872,16 @@ de volgende: \fBupgrade\fP, \fBinstall\fP (beide verzonden voor het uitpakken),
 .RE
 .TP 
 \fB\-\-status\-logger\fP=\fIcommando\fP
-Verstuur door een machine te lezen informatie over pakketstatus en voortgang
-naar de standaardinvoer van het shell\-commando \fIcommando\fP dat via \*(lqsh \-c\*(rq
-moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals
-opgegeven worden. De indeling van de uitvoer is dezelfde als bij
+Door een machine te lezen informatie over pakketstatus en voortgang
+versturen naar de standaardinvoer van het shell\-commando \fIcommando\fP dat via
+\*(lqsh \-c\*(rq moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan
+meermaals opgegeven worden. De indeling van de uitvoer is dezelfde als bij
 \fB\-\-status\-fd\fP.
 .TP 
 \fB\-\-log=\fP\fIbestandsnaam\fP
-Log updates van toestandswijzigingen en acties in \fIbestandsnaam\fP in plaats
-van in het standaardlogbestand \fI%LOGDIR%/dpkg.log\fP. Indien deze optie
-meerdere keren opgegeven wordt, wordt de laatst opgegeven bestandsnaam
+Updates van toestandswijzigingen en acties loggen in \fIbestandsnaam\fP in
+plaats van in het standaardlogbestand \fI%LOGDIR%/dpkg.log\fP. Indien deze
+optie meerdere keren opgegeven wordt, wordt de laatst opgegeven bestandsnaam
 gebruikt. Log\-berichten zijn in de volgende vorm:
 .RS
 .TP 
@@ -904,10 +907,10 @@ Schakelt het gebruik van een pagineringsprogramma uit bij het weergeven van
 informatie (sinds dpkg 1.19.2).
 .TP 
 \fB\-\-no\-debsig\fP
-Tracht pakket\-ondertekeningen niet te verifiëren.
+Niet proberen pakket\-ondertekeningen te verifiëren.
 .TP 
 \fB\-\-no\-triggers\fP
-Voer in deze doorloop geen triggers uit (sinds dpkg 1.14.17), maar
+In deze doorloop geen triggers uitvoeren (sinds dpkg 1.14.17), maar
 activeringen blijven wel opgetekend worden. Indien het gebruikt wordt in
 combinatie met \fB\-\-configure\fP \fIpakket\fP of \fB\-\-triggers\-only\fP \fIpakket\fP, dan
 zullen de postinst\-scripts van het vermelde pakket nog steeds uitgevoerd
@@ -969,9 +972,10 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt
 mogen worden zijn: \fBauto\fP (standaard), \fBalways\fP en \fBnever\fP.
 .TP 
 \fBDPKG_FORCE\fP
-Sets the force flags (since dpkg 1.19.5).  When this variable is present, no
-built\-in force defaults will be applied.  If the variable is present but
-empty, all force flags will be disabled.
+Stelt de forceer\-vlaggen in (sinds dpkg 1.19.5). Indien deze variabele
+aanwezig is, zullen geen ingebouwde forceer\-standaardwaarden toegepast
+worden. Indien de variabele aanwezig, maar leeg is, zullen alle
+forceer\-vlaggen gedeactiveerd worden.
 .TP 
 \fBDPKG_FRONTEND_LOCKED\fP
 Ingesteld door een frontend voor pakketbeheer om dpkg te informeren dat het
@@ -1006,8 +1010,9 @@ te beheren (sinds dpkg 1.16.0). Deze variabele wordt steeds ingesteld op de
 huidige waarde van \fB\-\-admindir\fP.
 .TP 
 \fBDPKG_FORCE\fP
-Defined by \fBdpkg\fP on the subprocesses environment to all the currently
-enabled force option names separated by commas (since dpkg 1.19.5).
+Gedefinieerd door \fBdpkg\fP binnen de omgeving van de subprocessen voor alle
+momenteel geactiveerde forceer\-optienamen, gescheiden door komma's (sinds
+dpkg 1.19.5).
 .TP 
 \fBDPKG_SHELL_REASON\fP
 Gedefinieerd door \fBdpkg\fP in de shell die door de conffile\-prompt (een vraag

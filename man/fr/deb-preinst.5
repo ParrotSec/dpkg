@@ -1,0 +1,58 @@
+.\" dpkg manual page - deb-preinst(5)
+.\"
+.\" Copyright © 2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-preinst 5 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+deb\-preinst \- Script du responsable pour la pr\('e\-installation du paquet
+.
+.SH SYNOPSIS
+preinst
+.
+.SH DESCRIPTION
+Un paquet peut r\('ealiser plusieurs actions pr\('e\-installation \(`a l'aide de
+scripts du responsable, en incluant un fichier \fIpreinst\fP ex\('ecutable dans
+son archive de contr\(^ole (c'est\-\(`a\-dire \fIDEBIAN/preinst\fP au moment de la
+cr\('eation du paquet).
+.PP
+Le script peut \(^etre appel\('e de diverses mani\(`eres\ :
+.TP 
+\fInouveau\-preinst\fP \fBinstall\fP
+Avant que le paquet ne soit install\('e.
+.TP 
+\fInouveau\-preinst\fP \fBinstall\fP \fIancienne\-version nouvelle\-version\fP
+Avant qu'un paquet supprim\('e ne soit mis \(`a niveau.
+.TP 
+\fInouveau\-preinst\fP \fBupgrade\fP \fIancienne\-version nouvelle\-version\fP
+Avant qu'un paquet ne soit mis \(`a niveau.
+.TP 
+\fIancien\-preinst\fP \fBabort\-upgrade\fP \fInouvelle\-version\fP
+Si \fIpostrm\fP \('echoue lors de la mise \(`a niveau ou \('echoue apr\(`es l'\('echec de la
+mise \(`a niveau.
+.
+.SH "VOIR AUSSI"
+\fBdpkg\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.

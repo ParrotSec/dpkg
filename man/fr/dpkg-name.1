@@ -1,0 +1,127 @@
+.\" dpkg manual page - dpkg-name(1)
+.\"
+.\" Copyright © 1995-1996 Erick Branderhorst
+.\" Copyright © 2007-2013, 2015 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH dpkg\-name 1 2019-03-25 1.19.6 "suite dpkg"
+.nh
+.SH NOM
+dpkg\-name \- Redonne aux paquets Debian leur nom complet
+.
+.SH SYNOPSIS
+\fBdpkg\-name\fP [\fIoption\fP...] [\fB\-\-\fP] \fIfichier\fP...
+.
+.SH DESCRIPTION
+.PP
+Cette page de manuel documente le programme \fBdpkg\-name\fP qui fournit une
+fa\(,con simple de redonner aux paquets \fBDebian\fP leur nom complet. Ce nom
+consiste en une cha\(^ine
+\fIpaquet\fP\fB_\fP\fIversion\fP\fB_\fP\fIarchitecture\fP\fB.\fP\fItype\-de\-paquet\fP telle
+qu'elle est indiqu\('ee dans le fichier \(Fo\ control\ \(Fc du paquet. La partie
+\fIversion\fP du nom est compos\('ee d'informations sur la version originelle qui
+peuvent ou non \(^etre suivies d'un trait d'union et d'informations sur la
+r\('evision. La partie \fItype\-de\-paquet\fP provient de ce champ s'il existe. La
+valeur par d\('efaut est \fBdeb\fP.
+.
+.SH OPTIONS
+.TP 
+\fB\-a\fP, \fB\-\-no\-architecture\fP
+Le nom du fichier n'aura pas l'information sur l'architecture.
+.TP 
+\fB\-k\fP, \fB\-\-symlink\fP
+Fait un lien symbolique plut\(^ot qu'une transposition.
+.TP 
+\fB\-o\fP, \fB\-\-overwrite\fP
+Remplace des fichiers existants s'ils ont le m\(^eme nom que le fichier de
+destination.
+.TP 
+\fB\-s\fP, \fB\-\-subdir\fP [\fIrep\fP]
+Met les fichiers dans un sous\-r\('epertoire. Si le r\('epertoire donn\('e en
+param\(`etre existe, les fichiers sont d\('eplac\('es dans ce r\('epertoire\ ; sinon le
+r\('epertoire cible, extrait du champ \(Fo\ section\ \(Fc que contient la partie
+contr\(^ole du paquet, sera
+\(Fo\ unstable/binary\-\fIarchitecture\fP/\fIsection\fP\ \(Fc. Quand aucune information sur
+la section n'est trouv\('ee dans le fichier \(Fo\ control\ \(Fc, la section est
+suppos\('ee \(^etre \fBno\-section\fP. Dans ce cas, ainsi que si la section est
+\fBnon\-free\fP ou \fBcontrib\fP, le r\('epertoire cible est
+\(Fo\ \fIsection\fP/binary\-\fIarchitecture\fP\ \(Fc. Le champ \(Fo\ section\ \(Fc est facultatif\ ;
+aussi beaucoup de paquets sont dans la zone \(Fo\ no\-section\ \(Fc. Utilisez cette
+option avec pr\('ecaution\ : elle est compliqu\('ee.
+.TP 
+\fB\-c\fP, \fB\-\-create\-dir\fP
+On peut utiliser cette option avec l'option \fB\-s\fP. Quand un r\('epertoire cible
+n'est pas trouv\('e, il est cr\('e\('e automatiquement. \fBUtilisez cette option avec
+soin.\fP
+.TP 
+\fB\-?\fP, \fB\-\-help\fP
+Affiche un message d'aide puis quitte.
+.TP 
+\fB\-v\fP, \fB\-\-version\fP
+Affiche le num\('ero de version puis quitte.
+.
+.SH ENVIRONNEMENT
+.TP 
+\fBDPKG_COLORS\fP
+D\('efinit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
+accept\('ees sont \fBauto\fP (par d\('efaut), \fBalways\fP et \fBnever\fP.
+.TP 
+\fBDPKG_NLS\fP
+Si cette variable est d\('efinie, elle sera utilis\('ee pour d\('ecider l'activation
+de la prise en charge des langues (NLS \(en\ Native Language Support), connu
+aussi comme la gestion de l'internationalisation (ou i18n) (depuis
+dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par d\('efaut).
+.
+.SH BOGUES
+Certains paquets ne respectent pas l'organisation
+\fIpaquet\fP\fB_\fP\fIversion\fP\fB_\fP\fIarchitecture\fP\fB.deb\fP. Les paquets trait\('es par
+\fBdpkg\-name\fP la respectent. Cela n'a pas de cons\('equence sur la fa\(,con dont
+\fBdselect\fP(1) ou \fBdpkg\fP(1) installent les paquets, mais il se peut que
+d'autres syst\(`emes d'installation aient besoin de cette organisation.
+.
+.SH EXEMPLES
+.TP 
+\fBdpkg\-name bar\-foo.deb\fP
+Le nom du fichier \fIbar\-foo.deb\fP devient \fIbar\-foo_1.0\-2_i386.deb\fP ou
+quelque chose de similaire suivant les renseignements que contient la partie
+de contr\(^ole de \fIbar\-foo.deb\fP.
+.TP 
+\fBfind /root/debian/ \-name '*.deb' | xargs \-n 1 dpkg\-name \-a\fP
+Cette commande \fBdpkg\-name\fP redonne leur nom complet \(`a tous les fichiers qui
+se trouvent dans le r\('epertoire /root/debian et ses sous\-r\('epertoires et qui
+poss\(`edent une extension \fBdeb\fP, mais supprime l'information sur
+l'architecture.
+.TP 
+\fBfind \-name '*.deb' | xargs \-n 1 dpkg\-name \-a \-o \-s \-c\fP
+\fBNe faites pas \(,ca\ !\fP L'archive sera compl\(`etement g\(^ach\('ee par des paquets qui
+ne poss\(`edent pas d'informations sur la section. \fBNe faites pas \(,ca\ !\fP
+.TP 
+\fBdpkg\-deb \-\-build debian\-tmp && dpkg\-name \-o \-s .. debian\-tmp.deb\fP
+On peut se servir de cette commande lors de la construction d'un nouveau
+paquet.
+.
+.SH "VOIR AUSSI"
+\fBdeb\fP(5), \fBdeb\-control\fP(5), \fBdpkg\fP(1), \fBdpkg\-deb\fP(1), \fBfind\fP(1),
+\fBxargs\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas Fran\(,cois, 2006.
+Veuillez signaler toute erreur \(`a <debian\-l10n\-french@lists.debian.org>.
