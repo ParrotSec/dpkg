@@ -179,8 +179,8 @@ i386\-linux\-gnu, x86_64\-linux\-gnu. Exemple de chemins\ :
 /lib/powerpc64le\-linux\-gnu/, /usr/lib/i386\-kfreebsd\-gnu/.
 .
 .SH "VARIABLES D'ENVIRONNEMENT"
-The following variables are set by \fBdpkg\-architecture\fP (see the \fBTERMS\fP
-section for a description of the naming scheme):
+Les variables suivantes sont positionnées par \fBdpkg\-architecture\fP (voir la
+section \fBTERMS\fP pour une description du schéma de nommage)\ :
 .IP \fBDEB_BUILD_ARCH\fP 4
 Architecture Debian de la machine de construction.
 .IP \fBDEB_BUILD_ARCH_ABI\fP 4
@@ -266,8 +266,8 @@ Table des noms de processeurs connus et liaison avec leur nom
 GNU. Version\ 1.0 de format (depuis dpkg\ 1.13.2).
 .TP 
 \fI%PKGDATADIR%/table\-système\-exploitation\fP
-Table of known operating system names and mapping to their GNU name.  Format
-version 2.0 (since dpkg 1.18.11).
+Table des noms des systèmes d'exploitation connus et liaison avec leurs noms
+GNU. Version\ 2.0 de format (depuis dpkg\ 1.18.11).
 .TP 
 \fI%PKGDATADIR%/table\-n\-uplet\fP
 Correspondances entre les n\-uplets de l'architecture Debian et les noms des

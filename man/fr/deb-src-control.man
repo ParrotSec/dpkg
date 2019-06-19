@@ -51,12 +51,12 @@ des commentaires.
 .SH "LES CHAMPS SOURCE"
 .TP 
 \fBSource:\fP \fInom\-du\-paquet\-source\fP (requis)
-The value of this field is the name of the source package, and should match
-the name of the source package in the debian/changelog file. A package name
-must consist only of lowercase letters (a\-z), digits (0\-9), plus (+) and
-minus (\-) signs, and periods (.). Package names must be at least two
-characters long and must start with a lowercase alphanumeric character
-(a\-z0\-9).
+La valeur de ce champ est le nom du paquet source et doit correspondre au
+nom du paquet source dans le fichier debian/changelog. Un nom de paquet doit
+être constitué uniquement de lettres minuscules (a\-z), de chiffres (0\-9),
+des caractères plus (+) et moins (\-) et de points (.). Les noms de paquets
+doivent comporter au moins deux caractères et doivent commencer par un
+caractère alphanumérique (a\-z0\-9) en minuscule.
 
 .TP 
 \fBMaintainer:\fP \fInom\-complet\-et\-adresse\-électronique\fP (recommandé)

@@ -1,0 +1,227 @@
+.\" dpkg manual page - deb-buildinfo(5)
+.\"
+.\" Copyright © 1995-1996 Ian Jackson <ijackson@chiark.greenend.org.uk>
+.\" Copyright © 2010 Russ Allbery <rra@debian.org>
+.\" Copyright © 2015-2016 Guillem Jover <guillem@debian.org>
+.\"
+.\" This is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+.
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH deb\-buildinfo 5 %RELEASE_DATE% %VERSION% "suite dpkg"
+.nh
+.SH NOM
+deb\-buildinfo \- Format des fichiers d'information de construction de Debian
+.
+.SH SYNOPSIS
+\fInom\-du\-fichier\fP\fB.buildinfo\fP
+.
+.SH DESCRIPTION
+Chaque construction de paquet source Debian peut enregistrer les
+informations de construction dans un fichier de contrôle \fB.buildinfo\fP qui
+contient un certain nombre de champs. Chaque champ commence par une
+étiquette, telle que \fBSource\fP ou \fBBinary\fP (la casse n'importe pas), suivie
+d'un «\ :\ » et du contenu du champ. Les champs sont séparés seulement par des
+étiquettes de champ. En d'autres termes, le contenu d'un champ peut
+s'étendre sur plusieurs lignes, mais les outils d'installation joindront en
+général les lignes pendant le traitement du contenu du champ (sauf dans le
+cas des champs à lignes multiples  \fBBinary\-Only\-Changes\fP,
+\fBInstalled\-Build\-Depends\fP, \fBEnvironment\fP, \fBChecksums\-Md5\fP,
+\fBChecksums\-Sha1\fP et \fBChecksums\-Sha256\fP, voir ci\-dessous).
+.PP
+Les données de contrôle pourraient être incluses dans une signature OpenPGP
+«\ ASCII Armored\ », comme spécifié dans RFC4880.
+.PP
+Le nom du fichier \fB.buildinfo\fP dépendra du type de construction et sera
+aussi spécifique que nécessaire mais pas plus\ ; lorsque la construction
+inclut \fBany\fP, le nom sera
+\fInom\-source\fP\fB_\fP\fIversion\-binaire\fP\fB_\fP\fIarch\fP\fB.buildinfo\fP, ou sinon pour
+une construction \fBall\fP le nom sera
+\fInom\-source\fP\fB_\fP\fIbinary\-version\fP\fB_\fP\fBall.buildinfo\fP ou encore pour une
+construction qui inclut \fBsource\fP le nom sera
+\fInom\-source\fP\fB_\fP\fIversion\-source\fP\fB_\fP\fBsource.buildinfo\fP.
+.
+.SH "LES CHAMPS"
+.TP 
+\fBFormat:\fP \fIversion\-format\fP (requis)
+La valeur de ce champ déclare la version du format du fichier. La syntaxe de
+la valeur du champ est un numéro de version avec un composant majeur et
+mineur. Les modifications incompatibles avec les versions précédentes du
+format incrémenteront la version majeure, tandis que les modifications
+compatibles (telles que les ajouts de champ) incrémenteront la version
+mineure. La version de format actuelle est \fB1.0\fP.
+.TP 
+\fBSource:\fP \fInom\-source\fP [\fB(\fP\fIversion\-source\fP\fB)\fP] (requis)
+Le nom du paquet source. Si la version du source diffère de la version
+binaire, alors le \fInom\-source\fP sera suivi par une \fIversion\-source\fP entre
+parenthèses. Cela peut arriver quand la construction concerne un envoi
+seulement binaire NMU («\ non\-maintainer upload\ »).
+.TP 
+\fBBinary:\fP \fIliste\-paquets\-binaires\fP (requis)
+Ce champ coupé est une liste, séparée par des espaces, de paquets binaires
+construits.
+.TP 
+\fBArchitecture:\fP \fIliste\-architectures\fP (requis)
+Ce champ, séparé par des espaces, liste les architectures des fichiers
+actuellement en construction. Voici quelques architectures habituelles\ :
+\fBamd64\fP, \fBarmel\fP, \fBi386\fP,\ etc. Remarquez que l'option \fBall\fP signifie que
+le paquet est indépendant de toute architecture. Si le source du paquet est
+aussi en construction, l'entrée spéciale \fBsource\fP est aussi présente. Les
+architectures joker ne doivent jamais être présentes dans la liste.
+.TP 
+\fBVersion:\fP \fIchaîne\-de\-la\-version\fP (requis)
+C'est classiquement le numéro de version du paquet d'origine dans la forme
+choisie par l'auteur du programme. Il peut y avoir aussi un numéro de
+révision Debian (pour les paquets non natifs). Le format exact et
+l'algorithme de tri sont décrits dans \fBdeb\-version\fP(7).
+.TP 
+\fBBinary\-Only\-Changes:\fP
+.TQ
+\fIentrées\-du\-changelog\fP
+Ce champ à lignes multiples contient le texte concaténé des entrées de
+changelog pour un envoi seulement binaire (binNMU), si c'est le cas. Pour
+faire de ce champ un champ à lignes multiples valable, les lignes vides sont
+remplacées par un point \fB«\ .\ »\fP et toutes les lignes sont indentées par une
+seule espace. Le contenu exact dépend du format du changelog.
+.TP 
+\fBChecksums\-Md5:\fP (requis)
+.TQ
+\fBChecksums\-Sha1:\fP (requis)
+.TQ
+\fBChecksums\-Sha256:\fP (requis)
+.TQ
+\fIsomme\-de\-contrôle\fP \fItaille\fP \fInom\-du\-fichier\fP
+Ces champs à lignes multiples contiennent la liste des fichiers avec la
+somme de contrôle et la taille de chacun. Ces champs ont la même syntaxe et
+ne diffèrent que par l'algorithme de somme de contrôle utilisé\ : MD5 pour
+\fBChecksums\-Md5\fP, SHA\-1 pour \fBChecksums\-Sha1\fP et SHA\-256 pour
+\fBChecksums\-Sha256\fP.
+
+La première ligne de la valeur du champ (la partie sur la même ligne que le
+nom du champ suivi par deux\-points) est toujours vide. Le contenu du champ
+est exprimé par des lignes de continuation, une ligne par fichier. Chaque
+ligne consiste en des entrées séparées par des espaces décrivant le
+fichier\ :la somme de contrôle, la taille du fichier et le nom du fichier.
+
+Ces champs listent tous les fichiers qui composent la construction.
+.TP 
+\fBBuild\-Origin:\fP \fInom\fP
+Nom de la distribution dont ce paquet provient.
+.TP 
+\fBBuild\-Architecture:\fP \fIarch\fP (requis)
+L'architecture Debian pour l'installation des paquets en construction. Les
+architectures habituelles sont \fBamd64\fP, \fBarmel\fP, \fBi386\fP,\ etc.
+.TP 
+\fBBuild\-Date:\fP \fIdate\-construction\fP
+La date à laquelle le paquet a été construit. Elle peut être au même format
+que la date dans les entrées dans \fBdeb\-changelog\fP(5).
+.TP 
+\fBBuild\-Kernel\-Version:\fP \fIversion\-du\-noyau\-de\-construction\fP
+La publication et la version (dans un format non spécifié) du noyau exécuté
+dans le système de construction. Ce champ va seulement être présent si le
+constructeur l'a demandé explicitement, pour éviter de révéler des
+informations potentiellement sensibles.
+.TP 
+\fBBuild\-Path:\fP \fIchemin\-de\-construction\fP
+Le chemin de construction absolu qui correspond à l'arborescence des sources
+dépaquetée. Ce champ va seulement être présent si le distributeur l'a mis en
+liste blanche grâce à une recherche de motif pour éviter de révéler des
+informations potentiellement sensibles.
+
+Dans Debian et ses dérivés, seuls les chemins de construction débutant par
+\fI/build/\fP émettront ce champ.
+.TP 
+\fBBuild\-Tainted\-By:\fP
+.TQ
+\fIliste\-des\-raisons\-de\-souillure\fP
+Ce champ coupé est une liste, séparée par des espaces, non exhaustive des
+étiquettes de raison (formées de caractères alphanumériques et de tirets)
+qui définissent pourquoi la construction actuelle a été souillée (depuis
+dpkg\ 1.19.5).
+.IP
+Dans Debian et ses dérivées, les étiquettes de raisons suivantes peuvent
+être émises.
+.RS
+.TP 
+\fBmerged\-usr\-via\-symlinks\fP
+Le système possède un \fI/usr\fP fusionné au moyen de liens symboliques. Cela
+peut tromper \fBdpkg\-query\fP, \fBdpkg\-statoverride\fP, \fBdpkg\-trigger\fP,
+\fBupdate\-alternatives\fP et tous les autres outils qui utilisent les noms de
+chemin comme clés de leurs bases de données, parce que cela crée des
+problèmes d'alias du système de fichiers, et perturbe la compréhension du
+système de fichiers que \fBdpkg\fP a enregistré dans sa base de données. Pour
+des systèmes construits qui codent en dur les noms de chemin vers des
+binaires ou des bibliothèques particuliers sur les objets produits, cela
+peut aussi produire des paquets qui seront incompatibles avec des systèmes
+de fichiers sans \fI/usr\fP fusionné.
+.TP 
+\fBusr\-local\-has\-configs\fP
+Le système a des fichiers de configuration dans \fI/usr/local/etc\fP.
+.TP 
+\fBusr\-local\-has\-includes\fP
+Le système a des fichiers d'en\-tête dans \fI/usr/local/include\fP.
+.TP 
+\fBusr\-local\-has\-programs\fP
+Le système a des programmes dans \fI/usr/local/bin\fP ou \fI/usr/local/sbin\fP.
+.TP 
+\fBusr\-local\-has\-libraries\fP
+Le système a des bibliothèques statiques ou partagées dans
+\fI/usr/local/lib\fP.
+.RE
+.TP 
+\fBInstalled\-Build\-Depends:\fP (requis)
+.TQ
+\fIliste\-paquets\fP
+La liste des paquets installés et configurés que pourrait affecter le
+processus de construction du paquet.
+
+La liste contient le nom de chaque paquet, éventuellement avec une
+qualification d'architecture pour celles différentes, avec une restriction
+de version précise, séparés par des virgules.
+
+La liste inclut tous les paquets essentiels, les paquets listés dans les
+champs de contrôle des sources \fBBuild\-Depends\fP, \fBBuild\-Depends\-Arch\fP,
+\fBBuild\-Depends\-Indep\fP, chaque dépendance interne spécifique au
+distributeur, et toutes leurs dépendances récursives. Dans Debian et ses
+dérivés, une dépendance interne est \fBbuild\-essential\fP.
+
+Pour les dépendances provenant des champs de contrôle des sources, toutes
+les alternatives de dépendance et tous les fournisseurs de paquets virtuels
+dépendants seront inclus.
+.TP 
+\fBEnvironment:\fP
+.TQ
+\fIliste\-de\-variables\fP
+La liste des variables d'environnement qui sont connues pour affecter le
+processus de construction du paquet. Chaque variable d'environnement est
+suivie d'un signe égal («\ =\ ») et de la valeur de la variable protégé avec
+des guillemets doubles («\ "\ ») et des barres obliques inverses («\ \e\e\ »).
+.
+.\" .SH EXAMPLE
+.\" .RS
+.\" .nf
+.\"
+.\" .fi
+.\" .RE
+.
+.SH "VOIR AUSSI"
+\fBdeb\-changes\fP(5), \fBdeb\-version\fP(7), \fBdpkg\-genbuildinfo\fP(1).
+.SH TRADUCTION
+Ariel VARDI <ariel.vardi@freesbee.fr>, 2002.
+Philippe Batailler, 2006.
+Nicolas François, 2006.
+Veuillez signaler toute erreur à <debian\-l10n\-french@lists.debian.org>.

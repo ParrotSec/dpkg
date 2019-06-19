@@ -68,7 +68,8 @@ motif.
 Affiche un message d'aide puis quitte.
 .TP 
 \fB\-\-force\-help\fP
-Give help about the \fB\-\-force\-\fP\fIthing\fP options (since dpkg 1.19.5).
+Donne des renseignements sur les options \fB\-\-force\-\fP\fIquelque\-chose\fP (depuis
+dpkg\ 1.19.5).
 .TP 
 \fB\-\-version\fP
 Affiche le numéro de version puis quitte.
@@ -91,31 +92,33 @@ d'installation à «\ \fIrépertoire\fP\ » et le répertoire d'administration �
 \fB\-\-force\-\fP\fIquelque\-chose\fP
 .TQ
 \fB\-\-no\-force\-\fP\fIquelque\-chose\fP, \fB\-\-refuse\-\fP\fIquelque\-chose\fP
-Force or refuse (\fBno\-force\fP and \fBrefuse\fP mean the same thing)  to do some
-things (since dpkg 1.19.5).  \fIthings\fP is a comma separated list of things
-specified below.  \fB\-\-force\-help\fP displays a message describing them.
-Things marked with (*) are forced by default.
+Force ou refuse (\fBno\-force\fP et \fBrefuse\fP signifient la même chose) de faire
+quelque chose (depuis dpkg\ 1.19.5). \fIquelque\-chose\fP est une liste d'actions
+séparées par des virgules, décrites ci\-après. \fB\-\-force\-help\fP affiche un
+message qui les décrit. Les actions marquées d'un (*) sont forcées par
+défaut.
 
-\fIWarning: These options are mostly intended to be used by experts only.
-Using them without fully understanding their effects may break your whole
-system.\fP
+\fIAvertissement\ : ces options sont principalement destinées aux experts. Un
+usage auquel manque la pleine compréhension de leurs effets peut casser le
+système entier.\fP
 
 \fBall\fP\ : Met en œuvre (ou pas) toutes les options de forçage.
 
-\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
-(since dpkg 1.19.5).
+\fBstatoverride\-add\fP\ : remplacer une dérogation d'état existante lors de son
+ajout (depuis dpkg\ 1.19.5)
 
-\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
-(since dpkg 1.19.5).
+\fBstatoverride\-remove\fP\ : ignorer l'absence de dérogation d'état lors de sa
+suppression (depuis dpkg\ 1.19.5).
 
-\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
-based security when installing files into the filesystem (since dpkg
-1.19.5).  On Linux systems the implementation uses SELinux.
+\fBsecurity\-mac\fP(*)\ : utiliser une sécurité basée sur le contrôle d'accès
+obligatoire (Mandatory Access Controls –\ MAC) spécifique à la plateforme
+lors de l'installation de fichiers dans le systèmes de fichiers (depuis
+dpkg\ 1.19.5). Sur les systèmes Linux, la mise en œuvre utilise SELinux.
 .TP 
 \fB\-\-force\fP
-Force an action, even if a sanity check would otherwise prohibit it.  This
-is necessary to override an existing override.  This option is deprecated
-(since dpkg 1.19.5), it is replaced by \fB\-\-force\-all\fP.
+Force une opération, même si un test de validité l'interdirait. C'est
+nécessaire pour annuler une précédente dérogation. Cette option est obsolète
+(depuis dpkg\ 1.19.5), elle est remplacée par \fB\-\-force\-all\fP.
 .TP 
 \fB\-\-update\fP
 Essaye de changer immédiatement le \fIchemin\fP vers les nouveaux propriétaire
@@ -151,8 +154,9 @@ Si cette variable est positionnée et que les options \fB\-\-admindir\fP ou
 de données pour \fBdpkg\fP.
 .TP 
 \fBDPKG_FORCE\fP
-If set and none of the \fB\-\-force\-\fP\fI...\fP options have been specified, it
-will be used as the force options to use (since dpkg 1.19.5).
+Si cette variable est positionnée et qu'aucune des options \fB\-\-force\-\fP\fI...\fP
+n'est précisée, elle sera considérée comme l'option de forçage à utiliser
+(depuis dpkg\ 1.19.5).
 .TP 
 \fBDPKG_COLORS\fP
 Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement

@@ -38,12 +38,13 @@ contrôle \fB.dsc\fP pour \fBdpkg\-source\fP et sur la sortie standard pour
 \fBdpkg\-gencontrol\fP et \fBdpkg\-genchanges\fP), ils réalisent quelques
 substitutions de variables dans le fichier de sortie.
 
-A variable substitution has the form \fB${\fP\fIvariable\-name\fP\fB}\fP.  Variable
-names consist of alphanumerics (a\-zA\-Z0\-9), hyphens (\-) and colons (:) and
-start with an alphanumeric, and are case\-sensitive, even though they might
-refer to other entities which are case\-preserving.  Variable substitutions
-are performed repeatedly until none are left; the full text of the field
-after the substitution is rescanned to look for more substitutions.
+Une substitution de variable est de la forme\ : \fB${\fP\fInom\-variable\fP\fB}\fP. Les
+noms de variable consistent en caractères alphanumériques (a\-zA\-Z0\-9),
+traits d'union (\-) et «\ deux points\ » (:)\ ; ils commencent par une lettre ou
+un chiffre et sont sensibles à la casse même si ils se réfèrent à d'autres
+entités qui préservent la casse. La substitution se fait répétitivement
+jusqu'à ce qu'il n'en reste aucune à faire\ ; le texte entier du champ après
+la substitution est réexaminé pour chercher d'autres substitutions.
 
 Quand toutes les substitutions ont été faites, chaque occurrence de la
 chaîne \fB${}\fP (laquelle n'est pas une substitution autorisée) est remplacée

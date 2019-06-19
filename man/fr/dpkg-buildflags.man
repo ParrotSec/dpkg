@@ -87,7 +87,7 @@ chacun d'eux.
 .TP 
 \fB\-\-status\fP
 Affiche toute information utile pour expliquer le comportement de
-\fBdpkg\-buildflags\fP (depuis dpkg\ 1.16.5)\ : variables  d'environnement,
+\fBdpkg\-buildflags\fP (depuis dpkg\ 1.16.5)\ : variables d'environnement,
 distributeur actuel, état de tous les drapeaux de fonctionnalités. Affiche
 également les drapeaux de compilation résultants ainsi que leur origine.
 
@@ -120,7 +120,7 @@ C'est un ancien alias pour \fBcmdline\fP.
 \fBmake\fP
 Directives de make pour définir et exporter tous les drapeaux de compilation
 dans l'environnement. La sortie peut être écrite dans un fragment de
-makefile et évaluée en utilisant une directive \fBinclude\fP.
+Makefile et évaluée en utilisant une directive \fBinclude\fP.
 .RE
 .TP 
 \fB\-\-get\fP\fI drapeau\fP
@@ -149,10 +149,11 @@ l'environnement.
 .RE
 .TP 
 \fB\-\-query\fP
-Print any information that can be useful to explain the behaviour of the
-program: current vendor, relevant environment variables, feature areas,
-state of all feature flags, and the compiler flags with their origin (since
-dpkg 1.19.0).
+Affiche toute information utile pour expliquer le comportement du
+programme\ : distributeur actuel, variables d'environnement, domaines des
+fonctionnalités, état de tous les drapeaux de fonctionnalités. Affiche
+également les drapeaux de compilation résultants ainsi que leur origine
+(depuis dpkg\ 1.19.0).
 .IP
 Par exemple\ :
 .nf

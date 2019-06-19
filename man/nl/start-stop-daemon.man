@@ -99,14 +99,17 @@ Opmerking: deze vergelijkingsoptie alleen gebruiken, kan ertoe leiden dat
 geageerd wordt op niet\-bedoelde processen in het geval het oude proces
 eindigde zonder dat het in staat was het \fIpid\-bestand\fP te verwijderen.
 .IP
-\fBWarning:\fP using this match option with a world\-writable pidfile or using
-it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
-user will be refused with an error (since version 1.19.3) as this is a
-security risk, because either any user can write to it, or if the daemon
-gets compromised, the contents of the pidfile cannot be trusted, and then a
-privileged runner (such as an init script executed as root) would end up
-acting on any system process.  Using \fI/dev/null\fP is exempt from these
-checks.
+\fBWaarschuwing:\fP deze vergelijkingsoptie gebruiken met een pid\-bestand dat
+door iedereen beschreven kan worden, of deze enkel gebruiken met een
+achtergronddienst die het pid\-bestand wegschrijft als gebruiker zonder
+bijzondere rechten, zal met een foutmelding geweigerd worden (sinds versie
+1.19.3) omdat het een veiligheidsrisico inhoudt. Dit is omdat elke gebruiker
+er naartoe kan schrijven, of omdat de inhoud van het pid\-bestand niet
+vertrouwd kan worden als de achtergronddienst aangetast raakt, met als
+resultaat dat een programmauitvoerder met bijzondere rechten (zoals een
+init\-script dat als systeembeheerder uitgevoerd wordt) op gelijk welk
+systeemproces kan inwerken. Het gebruik van \fI/dev/null\fP is vrijgesteld van
+deze controles.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIprogramma\fP
 Ga na of er processen bestaan die exemplaren zijn van dit \fIprogramma\fP. Het
@@ -217,7 +220,7 @@ dat uit zichzelf zouden doen.
 \fB\-\-notify\-await\fP
 Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is,
 vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit
-past elementen van het 'readiness procotol' van systemd toe, zoals dit in de
+past elementen van het 'readiness protocol' van systemd toe, zoals dit in de
 man\-pagina \fBsd_notify\fP(3) gespecificeerd wordt. De volgende variabelen
 worden ondersteund:
 .RS

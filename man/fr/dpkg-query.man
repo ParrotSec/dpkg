@@ -38,16 +38,17 @@ connus par la base de données de \fBdpkg\fP.
 .SH COMMANDES
 .TP 
 \fB\-l\fP, \fB\-\-list\fP [\fImotif\-de\-nom\-de\-paquet\fP...]
-List all known packages matching one or more patterns, regardless of their
-status, which includes any real or virtual package referenced in any
-dependency relationship field (such as \fBBreaks\fP, \fBEnhances\fP, etc.).  If no
-\fIpackage\-name\-pattern\fP is given, list all packages in \fI%ADMINDIR%/status\fP,
-excluding the ones marked as not\-installed (i.e.  those which have been
-previously purged).  Normal shell wildcard characters are allowed in
-\fIpackage\-name\-pattern\fP.  Please note you will probably have to quote
-\fIpackage\-name\-pattern\fP to prevent the shell from performing filename
-expansion.  For example this will list all package names starting with
-\*(lqlibc6\*(rq:
+Affiche les paquets correspondant à un ou plusieurs motifs, quelque soit
+leur statut, ce qui comprend tout paquet réel ou virtuel référencé dans tout
+champ de relation de dépendance (tel que \fBBreaks\fP, \fBEnhances\fP,\ etc.). Si
+aucun \fImotif\-de\-nom\-de\-paquet\fP n'est indiqué, affiche tous les paquets de
+\fI%ADMINDIR%/status\fP, sauf ceux qui ne sont pas installés (c'est\-à\-dire ceux
+qui ont été précédemment purgés). Les métacaractères ordinaires de
+l'interpréteur de commandes sont autorisés dans
+\fImotif\-de\-nom\-de\-paquet\fP. Il faudra sans doute mettre
+\fImotif\-de\-nom\-de\-paquet\fP entre apostrophes pour éviter l'expansion des noms
+de fichier par l'interpréteur de commandes. Par exemple, tous les paquets
+dont le nom commence par «\ libc6\ » seront affichés par la commande\ :
 
 .nf
 \fBdpkg\-query \-l 'libc6*'\fP
@@ -193,9 +194,9 @@ Désactive l'utilisation d'un afficheur pour montrer les informations (depuis
 dpkg\ 1.19.2).
 .TP 
 \fB\-f\fP, \fB\-\-showformat=\fP\fIformat\fP
-This option is used to specify the format of the output \fB\-\-show\fP will
-produce (short option since dpkg 1.13.1).  The format is a string that will
-be output for each package listed.
+Cette option sert à spécifier le format de sortie de l'option \fB\-\-show\fP
+(option courte depuis dpkg\ 1.13.1). Ce format est une chaîne qui sera
+utilisée pour chaque paquet listé.
 
 Dans la chaîne, «\ \fB\e\fP\ » préfixe des caractères de contrôle\ :
 
@@ -289,12 +290,13 @@ Il contient le drapeau d'erreur d'état du paquet, extrait du champ Status
 (depuis dpkg\ 1.17.11).
 .TP 
 \fBdb\-fsys:Files\fP
-It contains the list of the package filesystem entries separated by newlines
-(since dpkg 1.19.3).
+Il contient la liste des entrées de paquets du système de fichiers, séparées
+par des sauts de lignes (depuis dpkg\ 1.19.3).
 .TP 
 \fBdb\-fsys:Last\-Modified\fP
-It contains the timestamp in seconds of the last time the package filesystem
-entries were modified (since dpkg 1.19.3).
+Il contient l'horodatage en seconde de la dernière date à laquelle les
+entrées de paquets du système de fichiers ont été modifiées (depuis
+dpkg\ 1.19.3).
 .TP 
 \fBsource:Package\fP
 Il contient le nom du paquet source de ce paquet binaire (depuis

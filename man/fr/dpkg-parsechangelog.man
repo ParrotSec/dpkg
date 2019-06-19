@@ -168,8 +168,8 @@ parenthèses doit être le nom du format). Exemple\ :
 
        @@@ changelog\-format: \fIautreformat\fP @@@
 
-Changelog format names are non\-empty strings of lowercase alphanumerics
-(“a\-z0\-9”).
+Les noms de formats de journaux de modifications sont des chaînes non vides
+de caractères alphanumériques en minuscules («\ a\-z0\-9\ »).
 
 Si une telle ligne existe, \fBdpkg\-parsechangelog\fP recherchera l'analyseur
 sous le nom du module Perl \fBDpkg::Changelog::\fP\fIautreformat\fP\ ; s'il n'est

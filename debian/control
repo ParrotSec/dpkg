@@ -1,11 +1,12 @@
 Source: dpkg
 Section: admin
 Priority: required
-Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
-Uploaders: Guillem Jover <guillem@debian.org>
+XSBC-Original-Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Maintainer: Parrot Dev Team <team@parrotsec.org>
+Uploaders: Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>
 Homepage: https://wiki.debian.org/Teams/Dpkg
-Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
-Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
+Vcs-Browser: https://nest.parrotsec.org/debian-packages/dpkg
+Vcs-Git: https://nest.parrotsec.org/debian-packages/dpkg
 Standards-Version: 4.3.0
 Rules-Requires-Root: no
 Build-Depends:

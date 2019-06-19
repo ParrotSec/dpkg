@@ -41,10 +41,10 @@ général les lignes pendant le traitement du contenu du champ.
 
 Le fichier sera nommé d'après le nom du distributeur. La convention
 habituelle est d'appeler le fichier distributeur avec le nom du distributeur
-tout en minuscule, mais des différences sont possibles. Notamment, les
+tout en minuscules, mais des différences sont possibles. Notamment, les
 espaces sont remplacées par des tirets («\ \fB\-\fP\ ») et le fichier peut avoir
 la même casse que la valeur du champ \fBVendor\fP ou il peut être mis en
-majuscule.
+capitales.
 .SH "LES CHAMPS"
 .TP 
 \fBVendor:\fP\fI distributeur\fP (requis)

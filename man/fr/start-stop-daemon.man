@@ -100,14 +100,14 @@ Note\ : l'utilisation de l'option de correspondance seule peut provoquer des
 actions sur des processus non prévus, si l'ancien processus s'est terminé
 sans savoir retiré le \fIfichier\-pid\fP.
 .IP
-\fBWarning:\fP using this match option with a world\-writable pidfile or using
-it alone with a daemon that writes the pidfile as an unprivileged (non\-root)
-user will be refused with an error (since version 1.19.3) as this is a
-security risk, because either any user can write to it, or if the daemon
-gets compromised, the contents of the pidfile cannot be trusted, and then a
-privileged runner (such as an init script executed as root) would end up
-acting on any system process.  Using \fI/dev/null\fP is exempt from these
-checks.
+\fBAttention\fP\ : L'utilisation de cette option de correspondance avec un
+fichier pid accessible à tous en écriture ou seule avec un démon qui écrit
+le fichier pid comme utilisateur non privilégié (pas root) sera refusée avec
+une erreur (depuis la version\ 1.19.3) car c'est un risque de sécurité, parce
+que, si le démon se trouve compromis, le contenu du fichier pid ne peut plus
+être sûr, et ainsi, un exécutant privilégié (comme un script init exécuté en
+tant que root) pourrait en fin de compte agir sur n'importe quel processus
+du système. L'utilisation de \fI/dev/null\fP est exclue de ces vérifications.
 .TP 
 \fB\-x\fP, \fB\-\-exec\fP \fIexécutable\fP
 Contrôle l'existence de processus qui soient des exemplaires de cet
@@ -214,30 +214,32 @@ dont la duplication n'a pas de sens ou bien des programmes dont le code
 n'est pas adaptable pour leur ajouter cette fonctionnalité.
 .TP 
 \fB\-\-notify\-await\fP
-Wait for the background process to send a readiness notification before
-considering the service started (since version 1.19.3).  This implements
-parts of the systemd readiness procotol, as specified in the \fBsd_notify\fP(3)
-man page.  The following variables are supported:
+Attend que le processus en arrière\-plan envoie une notification de
+disponibilité avant de considérer que le service est démarré (depuis la
+version\ 1.19.3). Cela met en œuvre des éléments du protocole de
+disponibilité de systemd, comme spécifié dans la page de manuel de
+\fBsd_notify\fP(3). Les variables suivantes sont prises en charge\ :
 .RS
 .TP 
 \fBREADY=1\fP
-The program is ready to give service, so we can exit safely.
+Le programme est prêt à offrir son service, il est possible de quitter sans
+risque.
 .TP 
-\fBEXTEND_TIMEOUT_USEC=\fP\fInumber\fP
-The program requests to extend the timeout by \fInumber\fP microseconds.  This
-will reset the current timeout to the specified value.
+\fBEXTEND_TIMEOUT_USEC=\fP\fInombre\fP
+Le programme demande l'extension de la durée de \fInombre\fP
+microsecondes. Cela fixera la durée en cours à la valeur spécifiée.
 .TP 
-\fBERRNO=\fP\fInumber\fP
-The program is exiting with an error.  Do the same and print the
-user\-friendly string for the \fBerrno\fP value.
+\fBERRNO=\fP \fInombre\fP
+Le programme s'est terminé avec une erreur. Fait la même chose et affiche
+une chaîne conviviale pour la valeur de \fBerrno\fP.
 .RE
 .
 .TP 
-\fB\-\-notify\-timeout\fP\fItimeout\fP
-Set a timeout for the \fB\-\-notify\-await\fP option (since version 1.19.3).  When
-the timeout is reached, \fBstart\-stop\-daemon\fP will exit with an error code,
-and no readiness notification will be awaited.  The default is \fB60\fP
-seconds.
+\fB\-\-notify\-timeout\fP\fIdurée\fP
+Définit une durée pour l'option \fB\-\-notify\-await\fP (depuis la
+version\ 1.19.3). Quand la durée est atteinte, \fBstart\-stop\-daemon\fP s'arrête
+avec un code d'erreur et aucune notification de disponibilité n'est
+attendue. La durée par défaut est de \fB60\fP\ secondes.
 .TP 
 \fB\-C\fP, \fB\-\-no\-close\fP
 Ne fermer aucun descripteur de fichiers en forçant le démon à s'exécuter en

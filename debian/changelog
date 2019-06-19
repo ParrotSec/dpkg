@@ -1,3 +1,46 @@
+dpkg (1.19.7+parrot1) testing; urgency=medium
+
+  * Import new Debian version.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Wed, 19 Jun 2019 16:44:23 +0200
+
+dpkg (1.19.7) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * dpkg: Fix off-by-one error in dpkg --abort-error. Closes: #924886
+    Thanks to Tom Goulet <tomg@sentex.ca>.
+  * dpkg: Set the force defaults before loading the config file, otherwise we
+    incorrectly override them. Regression introduced in dpkg 1.19.5.
+    Closes: #928671
+  * dpkg: Split the trigger dependtry into two, the second of which will be
+    the one checking trigger cycles when deferring trigger processing due to
+    unsatisfiable dependencies. Closes: #928429
+  * dpkg-deb: Validate ar member magic before normalizing any of its fields.
+  * dpkg-deb: Honor --nocheck when building packages with newlines in
+    filenames. Regression introduced in dpkg 1.18.1. Closes: #929727
+  * Documentation:
+    - rootless-builds.txt: Expand what the builder means. Mention the
+      dpkg-deb option to use to set the owner and group to root. And reword
+      the prototyping section to be less confusing with what is currently
+      implemented. Closes: #929019
+    - README: Clarify when autopoint is needed. Closes: #929601
+    - Fix typos in docs and output strings. Warned by codespell.
+
+  [ Updated programs translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated dselect translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated scripts translations ]
+  * Catalan (Guillem Jover).
+
+  [ Updated man pages translations ]
+  * Dutch (Frans Spiesschaert). Closes: #926665
+  * French (Jean-Pierre Giraud). Closes: #929664
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 03 Jun 2019 23:22:35 +0200
+
 dpkg (1.19.6+parrot1) testing; urgency=medium
 
   * Import new Debian release.

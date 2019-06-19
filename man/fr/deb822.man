@@ -88,7 +88,7 @@ définition du champ ne précise pas un type différent.
 La valeur d'un champ coupé («\ folded\ ») est une ligne logique qui peut
 s'étendre sur plusieurs lignes. Les lignes qui suivent la première sont
 appelées ligne de continuation et doivent commencer par un caractère U+0020
-\fBESPACE\fP ou U+0009 \fBTABULTAION\fP. Une espace, y compris les caractères saut
+\fBESPACE\fP ou U+0009 \fBTABULATION\fP. Une espace, y compris les caractères saut
 de ligne, n'est pas importante dans les valeurs de champ des champs coupés.
 
 La méthode de coupure est similaire à RFC5322, permettant des fichiers de

@@ -119,7 +119,7 @@ Dit is een verouderde alias voor \fBcmdline\fP.
 .TP 
 \fBmake\fP
 Make\-opdrachten om alle compilatievlaggen in de omgeving in te stellen en te
-exporteren. De uitvoer kan naar een makefile\-fragment geschreven worden en
+exporteren. De uitvoer kan naar een Makefile\-fragment geschreven worden en
 geëvalueerd met behulp van een \fBinclude\fP\-opdracht.
 .RE
 .TP 
@@ -597,7 +597,7 @@ Makefile\-fragment dat alle vlaggen die door \fBdpkg\-buildflags\fP ondersteund
 worden, laadt in variabelen (en eventueel exporteert) (sinds dpkg 1.16.1).
 .
 .SH VOORBEELDEN
-Om in een makefile bouwvlaggen door te geven aan een bouwcommando:
+Om in een Makefile bouwvlaggen door te geven aan een bouwcommando:
 .PP
 .RS 4
 .nf

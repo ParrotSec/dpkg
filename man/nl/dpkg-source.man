@@ -372,17 +372,20 @@ Debian\-specifieke pakketten die geen afzonderlijke toeleveraarsbroncode
 hebben en om die reden ook geen debianiserings\-diffs.
 .TP 
 \fB\-sa\fP of \fB\-sA\fP
-Specifies to look for the original source archive as a tarfile or as a
-directory \- the second argument, if any, may be either, or the empty string
-(this is equivalent to using \fB\-sn\fP).  If a tarfile is found it will unpack
-it to create the diff and remove it afterwards (this is equivalent to
-\fB\-sp\fP); if a directory is found it will pack it to create the original
-source and remove it afterwards (this is equivalent to \fB\-sr\fP); if neither
-is found it will assume that the package has no debianization diffs, only a
-straightforward source archive (this is equivalent to \fB\-sn\fP).  If both are
-found then \fBdpkg\-source\fP will ignore the directory, overwriting it, if
-\fB\-sA\fP was specified (this is equivalent to \fB\-sP\fP)  or raise an error if
-\fB\-sa\fP was specified.  \fB\-sa\fP is the default.
+Geeft aan dat naar de originele broncode gezocht moet worden in de vorm van
+een tar\-bestand of een map. Als er een tweede argument opgegeven wordt, mag
+dat een van die twee zijn of een lege tekenreeks (dit is het equivalent voor
+het gebruik van \fB\-sn\fP). Indien er een tar\-bestand gevonden wordt, zal het
+dat uitpakken om het diff\-bestand aan te maken en het daarna verwijderen
+(dit is het equivalent voor \fB\-sp\fP). Indien een map aangetroffen wordt, zal
+het die inpakken om de originele broncode te creëren en ze vervolgens
+verwijderen (dit is het equivalent voor \fB\-sr\fP). Indien geen van beide
+gevonden wordt, zal het aannemen dat het pakket geen debianiserings\-diffs
+heeft, maar enkel een eenvoudig broncodearchief (dit is het equivalent voor
+\fB\-sn\fP). Indien beide aangetroffen worden, dan zal \fBdpkg\-source\fP de map
+negeren, en ze overschrijven als \fB\-sA\fP opgegeven werd (dit is het
+equivalent voor \fB\-sP\fP) of een foutmelding geven als \fB\-sa\fP opgegeven
+werd. \fB\-sa\fP is de standaard.
 .TP 
 \fB\-\-abort\-on\-upstream\-changes\fP
 Het proces mislukt als het gegenereerde diff\-bestand wijzigingen aan
@@ -489,10 +492,12 @@ en steeds patches verwacht die kunnen toegepast worden met de optie \fB\-p1\fP
 van \fBpatch\fP. Het zal dus een waarschuwing geven als het dergelijke opties
 tegenkomt en het bouwen zal waarschijnlijk mislukken.
 .PP
-Note that \fBlintian\fP(1) will emit unconditional warnings when using vendor
-series due to a controversial Debian specific ruling, which should not
-affect any external usage; to silence these, the dpkg lintian profile can be
-used by passing «\fB\-\-profile dpkg\fP» to \fBlintian\fP(1).
+Opmerking: indien leveranciers\-series\-bestanden gebruikt worden, geeft
+\fBlintian\fP(1) onvoorwaardelijke waarschuwingen als gevolg van een
+controversieel Debian\-specifiek besluit. Extern gebruik zou hierdoor niet
+getroffen mogen worden. Om dergelijke waarschuwingen het zwijgen op te
+leggen kunt u het dpkg\-profiel van lintian gebruiken door aan \fBlintian\fP(1)
+de optie «\fB\-\-profile dpkg\fP» mee te geven.
 .PP
 Voor alle bestanden waarop een patch toegepast werd, wordt de
 tijdsaanduiding teruggezet op het tijdstip van extraheren van het

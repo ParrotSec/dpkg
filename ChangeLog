@@ -1,3 +1,316 @@
+commit edd4b837356860fe3c5f83c0eca88c452a1cc8c8
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jun 3 23:22:38 2019 +0200
+
+    Release 1.19.7
+
+ debian/changelog | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 702ca65cdf4cd0eb9369ff1a8b246dad267e643a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Jun 3 23:22:34 2019 +0200
+
+    po: Regenerate .pot files and merge .po files with them
+
+ dselect/po/bs.po        |  2 +-
+ dselect/po/ca.po        |  2 +-
+ dselect/po/cs.po        |  2 +-
+ dselect/po/da.po        |  2 +-
+ dselect/po/de.po        |  2 +-
+ dselect/po/dselect.pot  |  4 ++--
+ dselect/po/el.po        |  2 +-
+ dselect/po/es.po        |  2 +-
+ dselect/po/et.po        |  2 +-
+ dselect/po/eu.po        |  2 +-
+ dselect/po/fr.po        |  2 +-
+ dselect/po/gl.po        |  2 +-
+ dselect/po/hu.po        |  2 +-
+ dselect/po/id.po        |  2 +-
+ dselect/po/it.po        |  2 +-
+ dselect/po/ja.po        |  2 +-
+ dselect/po/ko.po        |  2 +-
+ dselect/po/nb.po        |  2 +-
+ dselect/po/nl.po        |  2 +-
+ dselect/po/nn.po        |  2 +-
+ dselect/po/pl.po        |  2 +-
+ dselect/po/pt.po        |  2 +-
+ dselect/po/pt_BR.po     |  2 +-
+ dselect/po/ro.po        |  2 +-
+ dselect/po/ru.po        |  2 +-
+ dselect/po/sk.po        |  2 +-
+ dselect/po/sv.po        |  2 +-
+ dselect/po/tl.po        |  2 +-
+ dselect/po/vi.po        |  2 +-
+ dselect/po/zh_CN.po     |  2 +-
+ dselect/po/zh_TW.po     |  2 +-
+ man/po/dpkg-man.pot     | 16 ++++++++--------
+ po/ast.po               |  2 +-
+ po/bs.po                |  2 +-
+ po/ca.po                |  2 +-
+ po/cs.po                |  2 +-
+ po/da.po                |  2 +-
+ po/de.po                |  2 +-
+ po/dpkg.pot             |  4 ++--
+ po/dz.po                |  2 +-
+ po/el.po                |  2 +-
+ po/eo.po                |  2 +-
+ po/es.po                |  2 +-
+ po/et.po                |  2 +-
+ po/eu.po                |  2 +-
+ po/fr.po                |  2 +-
+ po/gl.po                |  2 +-
+ po/hu.po                |  2 +-
+ po/id.po                |  2 +-
+ po/it.po                |  2 +-
+ po/ja.po                |  2 +-
+ po/km.po                |  2 +-
+ po/ko.po                |  2 +-
+ po/ku.po                |  2 +-
+ po/lt.po                |  2 +-
+ po/mr.po                |  2 +-
+ po/nb.po                |  2 +-
+ po/ne.po                |  2 +-
+ po/nl.po                |  2 +-
+ po/nn.po                |  2 +-
+ po/pa.po                |  2 +-
+ po/pl.po                |  2 +-
+ po/pt.po                |  2 +-
+ po/pt_BR.po             |  2 +-
+ po/ro.po                |  2 +-
+ po/ru.po                |  2 +-
+ po/sk.po                |  2 +-
+ po/sv.po                |  2 +-
+ po/th.po                |  2 +-
+ po/tl.po                |  2 +-
+ po/tr.po                |  2 +-
+ po/vi.po                |  2 +-
+ po/zh_CN.po             |  2 +-
+ po/zh_TW.po             |  2 +-
+ scripts/po/ca.po        |  2 +-
+ scripts/po/de.po        |  2 +-
+ scripts/po/dpkg-dev.pot |  6 +++---
+ scripts/po/es.po        |  2 +-
+ scripts/po/fr.po        |  2 +-
+ scripts/po/pl.po        |  2 +-
+ scripts/po/ru.po        |  2 +-
+ scripts/po/sv.po        |  2 +-
+ 82 files changed, 93 insertions(+), 93 deletions(-)
+
+commit 5b97f3546d0209dd5f0c3c0052e13d02a6a59255
+Author: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>
+Date:   Mon Apr 8 20:30:24 2019 +0200
+
+    po: Update Dutch man page translations
+    
+    Closes: #926665
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |  1 +
+ man/po/nl.po     | 36 +++++++++---------------------------
+ 2 files changed, 10 insertions(+), 27 deletions(-)
+
+commit 71763a440b2e00babe88d3f3085ea12bade90e65
+Author: Jean-Pierre Giraud <jenapierregiraud75@free.fr>
+Date:   Tue May 28 08:38:12 2019 +0200
+
+    po: Update French man page translations
+    
+    Closes: #929664
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog |   3 +
+ man/po/fr.po     | 504 +++++++++++++++++++++----------------------------------
+ 2 files changed, 195 insertions(+), 312 deletions(-)
+
+commit ddc4121f5b2f591cae3afb358b44c3e013ee9354
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jun 2 23:30:10 2019 +0200
+
+    po: Unfuzzy translations due to typo fixes
+
+ man/po/de.po     | 12 ++++++------
+ man/po/es.po     | 12 ++++++------
+ man/po/fr.po     | 14 +++++++-------
+ man/po/hu.po     | 12 ++++++------
+ man/po/it.po     | 14 +++++++-------
+ man/po/ja.po     | 12 ++++++------
+ man/po/nl.po     | 18 +++++++++---------
+ man/po/pl.po     | 12 ++++++------
+ man/po/pt_BR.po  | 12 ++++++------
+ man/po/ru.po     | 12 ++++++------
+ man/po/sv.po     | 12 ++++++------
+ man/po/zh_CN.po  | 12 ++++++------
+ scripts/po/ca.po |  2 +-
+ scripts/po/de.po |  2 +-
+ scripts/po/es.po |  2 +-
+ scripts/po/fr.po |  2 +-
+ scripts/po/pl.po |  2 +-
+ scripts/po/ru.po |  2 +-
+ scripts/po/sv.po |  2 +-
+ 19 files changed, 84 insertions(+), 84 deletions(-)
+
+commit 63b674de77ede42f1e9547ad760f3c83fd051a4e
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 23 22:04:56 2019 +0200
+
+    doc: Fix typos
+    
+    Warned-by: codespell
+
+ ChangeLog.old                          |  2 +-
+ debian/changelog                       |  3 ++-
+ dselect/pkglist.h                      |  2 +-
+ man/deb-buildinfo.man                  |  2 +-
+ man/deb-src-rules.man                  |  2 +-
+ man/dpkg-buildflags.man                |  4 ++--
+ man/dpkg-query.man                     |  2 +-
+ man/start-stop-daemon.man              |  2 +-
+ scripts/Dpkg/Changelog/Entry/Debian.pm |  2 +-
+ t/codespell/stopwords                  | 13 +++++++++++++
+ 10 files changed, 24 insertions(+), 10 deletions(-)
+
+commit 7ff658e1bf0703ecdea08702c74f6bfd8c1d6eb7
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun Jun 2 23:39:17 2019 +0200
+
+    doc: Clarify when autopoint is needed
+    
+    The README was not very clear on the listed software being source
+    projects. So instead of making the description more complex, just
+    list autopoint as an unconditional dependency, and list gettext as
+    only necessary with --enable-nls.
+    
+    Closes: #929601
+
+ README           | 3 ++-
+ debian/changelog | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 15d0f730cbc6f854d68a169ca5d3a33e704f525a
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 22 21:42:50 2019 +0200
+
+    doc: Clarify R³ specification
+    
+    Expand what the builder means. Mention the dpkg-deb option to use to set
+    the owner and group to root. And reword the prototyping section to be
+    less confusing with what is currently implemented.
+    
+    Closes: #929019
+
+ debian/changelog        |  5 +++++
+ doc/rootless-builds.txt | 19 ++++++++++---------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
+
+commit 36644e7d3041f403ae18af45ff6b13a51a8378ae
+Author: Guillem Jover <guillem@debian.org>
+Date:   Wed May 29 18:37:50 2019 +0200
+
+    dpkg-deb: Honor --nocheck when building packages with newlines in filenames
+    
+    Fixes: commit 438db7a31e074691e70e8ace7fff91631030624b
+    Closes: #929727
+    Stable-Candidate: 1.18.x
+
+ debian/changelog | 2 ++
+ dpkg-deb/build.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit b854bd6029ef632701af1d4411c6f81e265af884
+Author: Guillem Jover <guillem@debian.org>
+Date:   Sun May 19 02:24:51 2019 +0200
+
+    dpkg-deb: Validate ar member magic before normalizing any of its fields
+    
+    If the header is not valid, we should not try to normalize or even
+    consider it is in any sane state.
+
+ debian/changelog   | 1 +
+ dpkg-deb/extract.c | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit b5c50b3c6f0739f45aaa03afa3e5c857e7895c8c
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon May 13 03:36:03 2019 +0200
+
+    dpkg: Introduce a new dependency try level for trigger cycle checks
+    
+    This new dependtry level will also check trigger cycles on trigger
+    process deferral due to unsatisfiable dependencies.
+    
+    Closes: #928429
+
+ debian/changelog |  3 +++
+ src/main.h       | 13 +++++++++----
+ src/trigproc.c   |  8 +++++---
+ 3 files changed, 17 insertions(+), 7 deletions(-)
+
+commit 66223cb9ee839f4fe9c661fbb8818fae9833cf8d
+Author: Guillem Jover <guillem@debian.org>
+Date:   Fri May 10 03:58:25 2019 +0200
+
+    po: Update Catalan translations
+
+ po/ca.po         | 72 +++++++++++++++++++++++++++++++++-----------------------
+ scripts/po/ca.po |  7 ++----
+ 2 files changed, 44 insertions(+), 35 deletions(-)
+
+commit 53b39b3536d4e5a125e060685f68ff75da29ab2b
+Author: Guillem Jover <guillem@debian.org>
+Date:   Tue Apr 23 00:41:57 2019 +0200
+
+    po: Update Catalan translations
+
+ debian/changelog |  10 +
+ dselect/po/ca.po |   8 +-
+ po/ca.po         | 660 +++++++++++++++++++------------------------------------
+ scripts/po/ca.po | 319 +++++++--------------------
+ 4 files changed, 323 insertions(+), 674 deletions(-)
+
+commit 770aa74afb0fbf1c61605e4e2d0a1c27c3a847d6
+Author: Guillem Jover <guillem@debian.org>
+Date:   Thu May 9 05:45:26 2019 +0200
+
+    dpkg: Set the force defaults before loading the config file
+    
+    Otherwise we incorrectly override them.
+    
+    Fixes: commit 52427d9075b4b062fa0db16a70d2c2bda6407857
+    Closes: #928671
+
+ debian/changelog | 3 +++
+ src/main.c       | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 6e42d508db660f82f58802c10a179819aa8b6103
+Author: Tom Goulet <tomg@sentex.ca>
+Date:   Mon Mar 25 12:42:41 2019 +0100
+
+    dpkg: Fix off-by-one bug in --abort-after check
+    
+    The code checking whether the amount of errors had been reached, was
+    incrementing the counter after the check, which meant it was allowing
+    one more error than expected.
+    
+    [guillem@debian.org: Move return to the next line. ]
+    
+    Closes: #924886
+    Signed-off-by: Guillem Jover <guillem@debian.org>
+
+ debian/changelog | 3 ++-
+ src/errors.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 62cd86d390a11cfd677a2633dbe86d7d8237e7b5
+Author: Guillem Jover <guillem@debian.org>
+Date:   Mon Mar 25 15:41:15 2019 +0100
+
+    Bump version to 1.19.7
+
+ debian/changelog | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 commit 834e0f3329ce9be0c353c2c463da4deb91f6b0c7
 Author: Guillem Jover <guillem@debian.org>
 Date:   Mon Mar 25 15:09:01 2019 +0100

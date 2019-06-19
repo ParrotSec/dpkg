@@ -113,9 +113,9 @@ supprimer dans les répertoires du système, même les fichiers de
 configuration).
 .TP 
 \fBunknown\fP
-The package selection is unknown.  A package that is also in a
-\fBnot\-installed\fP state, and with an \fBok\fP flag will be forgotten in the next
-database store.
+La sélection de paquets est inconnue. Un paquet qui est aussi dans un état
+\fBnot\-installed\fP et avec un drapeau \fBok\fP sera oublié dans le prochain
+enregistrement de la base de données.
 .SS "Drapeaux du paquet\ :"
 .TP 
 \fBok\fP
@@ -192,14 +192,15 @@ paquets dans les états incorrects de \fBtriggers\-awaited\fP et de
 \-\-configure \-\-pending\fP.
 .TP 
 \fB\-r\fP, \fB\-\-remove\fP \fIpaquet\fP...|\fB\-a\fP|\fB\-\-pending\fP
-Remove an installed package.  This removes everything except conffiles and
-other data cleaned up by the \fIpostrm\fP script, which may avoid having to
-reconfigure the package if it is reinstalled later (conffiles are
-configuration files that are listed in the \fIDEBIAN/conffiles\fP control
-file).  If there is no \fIDEBIAN/conffiles\fP control file nor \fIDEBIAN/postrm\fP
-script, this command is equivalent to calling \fB\-\-purge\fP.  If \fB\-a\fP or
-\fB\-\-pending\fP is given instead of a package name, then all packages unpacked,
-but marked to be removed in file \fI%ADMINDIR%/status\fP, are removed.
+Supprimer un paquet installé. Cela supprime tout à l'exception des fichiers
+de configuration et les autres données nettoyées par le script \fIpostrm\fP, ce
+qui évite d'avoir à reconfigurer le paquet s'il était réinstallé par la
+suite (ces fichiers sont les fichiers de configuration listés dans le
+fichier de contrôle \fIDEBIAN/conffiles\fP). S'il n'y a pas de fichier de
+contrôle \fIDEBIAN/conffiles\fP ni script \fIDEBIAN/postrm\fP, cette commande est,
+équivalente à l'appel de \fB\-\-purge\fP. Si \fB\-a\fP ou \fB\-\-pending\fP est indiqué à
+la place d'un nom de paquet, alors tous les paquets dépaquetés mais marqués
+pour suppression dans le fichier \fI%ADMINDIR%/status\fP seront supprimés.
 
 La suppression d'un paquet comporte les étapes suivantes\ :
 .br
@@ -215,11 +216,11 @@ La suppression d'un paquet comporte les étapes suivantes\ :
 
 .TP 
 \fB\-P\fP, \fB\-\-purge\fP \fIpaquet\fP...|\fB\-a\fP|\fB\-\-pending\fP
-Purge an installed or already removed package. This removes everything,
-including conffiles, and anything else cleaned up from \fIpostrm\fP.  If \fB\-a\fP
-or \fB\-\-pending\fP is given instead of a package name, then all packages
-unpacked or removed, but marked to be purged in file \fI%ADMINDIR%/status\fP,
-are purged.
+Purger un paquet installé ou déjà supprimé. L'action supprime tout, y
+compris les fichiers de configuration et tout le reste nettoyé de
+\fIpostrm\fP. Si \fB\-a\fP ou \fB\-\-pending\fP est indiqué à la place d'un nom de
+paquet, tous les paquets dépaquetés ou supprimés mais marqués dans le
+fichier \fI%ADMINDIR%/status\fP comme devant être purgés seront purgés.
 
 Note\ : certains fichiers de configuration peuvent être inconnus de \fBdpkg\fP
 car ils sont créés et gérés séparément par le biais de scripts de
@@ -329,8 +330,8 @@ par \fB\-\-set\-selections\fP.
 Recherche les paquets qui ont été sélectionnés pour l'installation, mais
 qui, pour une raison quelconque, ne sont pas encore installés.
 .IP
-Note: This command makes use of both the available file and the package
-selections.
+Note\ : cette commande utilise à la fois le fichier disponible et les
+sélections de paquets.
 .TP 
 \fB\-\-predep\-package\fP
 Affiche un fichier unique qui est la cible d'une ou plusieurs
@@ -340,8 +341,8 @@ insatisfaites.
 Si un tel paquet est présent, l'affiche comme entrée du fichier Packages, et
 il peut être manipulé comme il se doit.
 .IP
-Note: This command makes use of both the available file and the package
-selections.
+Note\ : cette commande utilise à la fois le fichier disponible et les
+sélections de paquets.
 .IP
 Renvoie \fB0\fP si un paquet est affiché, \fB1\fP quand il n'y a pas de paquet
 adéquat disponible et \fB2\fP en cas d'erreur.
@@ -630,15 +631,16 @@ autre paquet.
 \fBoverwrite\-diverted\fP\ : remplacer un fichier détourné avec une version non
 détournée.
 
-\fBstatoverride\-add\fP: Overwrite an existing stat override when adding it
-(since dpkg 1.19.5).
+\fBstatoverride\-add\fP\ : remplacer une dérogation d'état existante lors de son
+ajout (depuis dpkg\ 1.19.5)
 
-\fBstatoverride\-remove\fP: Ignore a missing stat override when removing it
-(since dpkg 1.19.5).
+\fBstatoverride\-remove\fP\ : ignorer l'absence de dérogation d'état lors de sa
+suppression (depuis dpkg\ 1.19.5).
 
-\fBsecurity\-mac\fP(*): Use platform\-specific Mandatory Access Controls (MAC)
-based security when installing files into the filesystem (since dpkg
-1.19.5).  On Linux systems the implementation uses SELinux.
+\fBsecurity\-mac\fP(*)\ : utiliser une sécurité basée sur le contrôle d'accès
+obligatoire (Mandatory Access Controls –\ MAC) spécifique à la plateforme
+lors de l'installation de fichiers dans le systèmes de fichiers (depuis
+dpkg\ 1.19.5). Sur les systèmes Linux, la mise en œuvre utilise SELinux.
 
 \fBunsafe\-io\fP\ : ne pas effectuer d'action d'entrée/sortie non sûre lors de la
 décompression (depuis dpkg\ 1.15.8.6). Cela implique actuellement de ne pas
@@ -939,9 +941,10 @@ Définit le mode de couleur (depuis dpkg\ 1.18.5). Les valeurs actuellement
 acceptées sont \fBauto\fP (par défaut), \fBalways\fP et \fBnever\fP.
 .TP 
 \fBDPKG_FORCE\fP
-Sets the force flags (since dpkg 1.19.5).  When this variable is present, no
-built\-in force defaults will be applied.  If the variable is present but
-empty, all force flags will be disabled.
+Définit les drapeaux de forçage (depuis dpkg\ 1.19.5). Quand cette variable
+est présente, aucune des options internes de forçage par défaut ne sera
+appliquée. Si la variable est présente mais vide, tous les drapeaux de
+forçage seront désactivés.
 .TP 
 \fBDPKG_FRONTEND_LOCKED\fP
 Définie par une interface de gestion de paquets pour notifier à dpkg qu'il
@@ -974,8 +977,9 @@ dpkg\ 1.16.0). Cette variable est toujours fixée à la valeur actuelle de
 \fB\-\-admindir\fP.
 .TP 
 \fBDPKG_FORCE\fP
-Defined by \fBdpkg\fP on the subprocesses environment to all the currently
-enabled force option names separated by commas (since dpkg 1.19.5).
+Définie par \fBdpkg\fP dans l'environnement du sous\-processus pour tous les
+noms d'options de forçage actuellement activées séparés par des virgules
+(depuis\ dpkg\ 1.19.5).
 .TP 
 \fBDPKG_SHELL_REASON\fP
 Cette variable est définie pour le shell lancé par \fBdpkg\fP lorsqu'il lui est

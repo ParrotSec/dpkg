@@ -287,14 +287,14 @@ configurées en mode automatique. Cette option n'est pertinente qu'avec
 \fB\-\-config\fP ou \fB\-\-all\fP.
 .TP 
 \fB\-\-quiet\fP
-Do not generate any comments unless errors occur.
+Ne crée pas de commentaire à moins qu'une erreur ne survienne.
 .TP 
 \fB\-\-verbose\fP
 Produit plus de commentaires sur ce qui est fait.
 .TP 
 \fB\-\-debug\fP
-Generate even more comments, helpful for debugging, about what is being done
-(since version 1.19.3).
+Produit plus de commentaires, utiles pour le débogage, sur ce qui est fait
+(depuis la version\ 1.19.3).
 .
 .SH "CODE DE SORTIE"
 .TP 

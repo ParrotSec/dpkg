@@ -80,9 +80,9 @@ dpkg\ 1.19.0). Les valeurs permises sont\ : \fB0\fP et \fB1\fP (par défaut).
 .
 .SH LIMITATIONS
 .P
-Anything that is not parsed by Dpkg::Changelog is lost during the merge.
-This might include stuff like comments which were not supposed to be there,
-etc.
+Tout ce qui ne peut pas être analysé par Dpkg::Changelog est perdu lors de
+la fusion. Cela peut comprendre des commentaires qui ne sont pas censés se
+trouver là,\ etc.
 .
 .SH "INTÉGRATION AVEC GIT"
 .P

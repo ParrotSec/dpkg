@@ -68,9 +68,10 @@ binaire, alors le \fInom\-source\fP sera suivi par une \fIversion\-source\fP ent
 parenthèses. Cela peut arriver quand il s'agit d'un envoi seulement binaire
 NMU («\ non\-maintainer upload\ »).
 .TP 
-\fBBinary:\fP \fIbinary\-package\-list\fP (required in context)
-This folded field is a space\-separated list of binary packages to upload.
-If the upload is source\-only, then the field is omitted (since dpkg 1.19.3).
+\fBBinary:\fP \fIliste\-paquets\-binaires\fP (requis selon le contexte)
+Ce champ coupé est une liste, séparée par des espaces, de paquets binaires à
+envoyer. Si l'envoi ne concerne que les sources, le champ est omis (depuis
+dpkg\ 1.19.3).
 .TP 
 \fBArchitecture:\fP \fIliste\-architectures\fP
 Liste des architectures des fichiers actuellement envoyés. Voici quelques
@@ -108,9 +109,10 @@ version.
 \fBDescription:\fP (recommandé)
 .TQ
  \fInom\-du\-paquet\-binaire\fP \fB\-\fP \fIrésumé\-du\-paquet\-binaire\fP
-This multiline field contains a list of binary package names followed by a
-space, a dash (‘\fB\-\fP’) and their possibly truncated short descriptions.  If
-the upload is source\-only, then the field is omitted (since dpkg 1.19.3).
+Ce champ à lignes multiples contient une liste de noms de paquets binaires
+suivis d'une espace, d'un tiret («\ \fB\-\fP\ ») et de leur description courte
+éventuellement tronquée. Si l'envoi ne concerne que les sources, le champ
+est omis (depuis dpkg\ 1.19.3).
 .TP 
 \fBCloses:\fP\fI liste\-numéros\-bogue\fP
 Une liste, séparée par des espaces, de numéros de rapports de bogue qui ont

@@ -149,13 +149,13 @@ gauche. La ligne terminale avec les détails sur le responsable et la date
 doit être précédée d'une espace précisément. Les détails sur le responsable
 et la date doivent être séparés par exactement deux espaces.
 .PP
-Any line that consists entirely (i.e., no leading whitespace) of \fB#\fP or
-\fB/* */\fP style comments or RCS keywords.
+Toute ligne qui consiste uniquement (c'est\-à\-dire sans espace au début de la
+ligne) en commentaires de style \fB#\fP ou \fB/*\ */\fP, mots\-clés RCS.
 .PP
-Vim modelines or Emacs local variables, and ancient changelog entries with
-other formats at the end of the file should be accepted and preserved on
-output, but their contents might be otherwise ignored and parsing stopped at
-that point.
+Les lignes de mode («\ modeline\ ») de Vim ou variables locales d'Emacs et les
+anciennes entrées de changelog avec d'autres formats à la fin du fichier
+devraient être acceptées et conservées à la sortie, mais leur contenu
+pourrait être autrement ignoré et l'analyse arrêtée à ce moment\-là.
 .PP
 La totalité du journal des modifications doit être encodé en UTF\-8.
 .SH FICHIERS
