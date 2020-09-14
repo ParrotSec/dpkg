@@ -10,22 +10,22 @@
 # Deng Xiyue <manphiz-guest@users.alioth.debian.org>, 2007, 2008, 2009.
 # Aron Xu <happyaron.xu@gmail.com>, 2009, 2010.
 # Zhou Mo <cdluminate@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019.
-# Boyuan Yang <073plan@gmail.com>, 2017, 2018.
+# Boyuan Yang <073plan@gmail.com>, 2017, 2018, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.19.0\n"
+"Project-Id-Version: dpkg 1.20.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
-"PO-Revision-Date: 2019-01-12 00:00+0000\n"
-"Last-Translator: Mo Zhou <cdluminate@gmail.com>\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
+"PO-Revision-Date: 2020-06-14 21:45-0400\n"
+"Last-Translator: Boyuan yang <byang@debian.org>\n"
 "Language-Team: Chinese (simplified) <debian-l10n-chinese@lists.debian.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: lib/dpkg/ar.c
 msgid "failed to fstat archive"
@@ -111,6 +111,11 @@ msgstr "写入体系结构列表时出错"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
+msgid "cannot create base directory for %s"
+msgstr "无法为 %s 创建基本目录"
+
+#: lib/dpkg/atomic-file.c
+#, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "无法新建文件 '%.250s'"
 
@@ -127,12 +132,12 @@ msgstr "无法清空新文件 %.250s"
 #: lib/dpkg/atomic-file.c
 #, c-format
 msgid "unable to sync new file '%.250s'"
-msgstr "无法同步新文件 %.250s "
+msgstr "无法同步新文件 %.250s"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
 msgid "unable to close new file '%.250s'"
-msgstr "无法关闭新文件 '%.250s' "
+msgstr "无法关闭新文件 '%.250s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
@@ -196,6 +201,11 @@ msgstr "%s：内部 gzip 读取错误：%s"
 #, c-format
 msgid "%s: internal gzip write error"
 msgstr "%s：内部 gzip 写入错误"
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: internal gzip read error: %s"
+msgstr "%s：内部 gzip 读取错误：%s"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -322,6 +332,11 @@ msgstr "更新目录中的文件长度名称不一致（分别为 %d 和 %d）"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
+msgid "cannot create the dpkg updates directory %s"
+msgstr "无法创建 dpkg 更新目录 %s"
+
+#: lib/dpkg/dbmodify.c
+#, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr "无法扫描更新目录 %.255s "
 
@@ -346,56 +361,51 @@ msgid "unable to seek to start of %.250s after padding"
 msgstr "补齐后无法找到 %.250s 的起始位置"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "unable to get file descriptor for directory '%s'"
+#, c-format
 msgid "unable to check lock file for dpkg database directory %s"
-msgstr "无法获得目录 '%s' 的文件描述符"
+msgstr "无法检查 dpkg 数据库目录 '%s' 的锁文件"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "unable to open/create frontend lockfile"
+#, c-format
 msgid "unable to open/create dpkg frontend lock for directory %s"
-msgstr "无法打开或创建前端锁"
+msgstr "无法为目录 '%s' 打开或创建 dpkg 前端锁"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "unable to open/create status database lockfile"
+#, c-format
 msgid "unable to open/create dpkg database lock file for directory %s"
-msgstr "无法打开或创建状态数据库锁"
+msgstr "无法为目录 '%s' 打开或创建 dpkg 锁文件"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "you do not have permission to lock the dpkg status database"
+#, c-format
 msgid "you do not have permission to lock the dpkg database directory %s"
-msgstr "您没有锁定 dpkg 的状态数据库的权限"
+msgstr "您没有锁定 dpkg 数据库目录 '%s' 的权限"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy
-#| msgid "dpkg frontend"
 msgid "dpkg frontend lock"
-msgstr "dpkg 前端"
+msgstr "dpkg 前端锁"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy
-#| msgid "dpkg status database"
 msgid "dpkg database lock"
-msgstr "dpkg 状态数据库"
+msgstr "dpkg 数据库锁"
 
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr "所请求的操作需要超级用户权限"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "unable to access dpkg status area"
-msgid "unable to access the dpkg database directory %s"
-msgstr "无法访问 dpkg 状态区域"
+#, c-format
+msgid "cannot create the dpkg database directory %s"
+msgstr "无法创建 dpkg 数据库目录 %s"
 
 #: lib/dpkg/dbmodify.c
-#, fuzzy, c-format
-#| msgid "operation requires read/write access to dpkg status area"
+#, c-format
+msgid "unable to access the dpkg database directory %s"
+msgstr "无法访问 dpkg 数据库目录 %s"
+
+#: lib/dpkg/dbmodify.c
+#, c-format
 msgid "required read/write access to the dpkg database directory %s"
-msgstr "该操作需要读写 dpkg 状态区域的权限"
+msgstr "需要对于 dpkg 数据库目录 %s 的读/写权限"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
@@ -520,18 +530,18 @@ msgid ""
 "files list file for package '%.250s' missing; assuming package has no files "
 "currently installed"
 msgstr ""
-"无法找到软件包 %.250s 的文件名列表文件，现假定该软件包目前没有任何文件被安装"
-"在系统里。"
+"无法找到软件包 %.250s 的文件列表，现假定目前该软件包没有任何文件被安装在系统"
+"里。"
 
 #: lib/dpkg/db-fsys-files.c
 #, c-format
 msgid "files list file for package '%.250s' is missing final newline"
-msgstr "软件包 %.250s 的文件名列表文件缺少最后结尾的换行符"
+msgstr "软件包 %.250s 的文件列表缺少最后结尾的换行符"
 
 #: lib/dpkg/db-fsys-files.c
 #, c-format
 msgid "files list file for package '%.250s' contains empty filename"
-msgstr "软件包 %.250s 的文件名列表文件含有空的文件名"
+msgstr "软件包 %.250s 的文件列表含有空的文件名"
 
 #: lib/dpkg/db-fsys-files.c
 msgid "(Reading database ... "
@@ -590,6 +600,9 @@ msgid ""
 "before the override, which is most probably a packaging bug, to recover you\n"
 "can remove the override manually with %s"
 msgstr ""
+"在 stateoverride 文件中发现未知的系统用户 '%s'；该系统用户在重载之前被移"
+"除。\n"
+"这很有可能是一个打包Bug。您可以通过 %s 手动移除重载来进行恢复"
 
 #: lib/dpkg/db-fsys-override.c
 msgid "unexpected end of line in statoverride file"
@@ -603,6 +616,8 @@ msgid ""
 "before the override, which is most probably a packaging bug, to recover you\n"
 "can remove the override manually with %s"
 msgstr ""
+"在 stateoverride 文件中发现未知的系统组 '%s'；该系统组在重载之前被移除。\n"
+"这很有可能是一个打包Bug。您可以通过 %s 手动移除重载来进行恢复"
 
 #: lib/dpkg/db-fsys-override.c
 #, c-format
@@ -716,78 +731,70 @@ msgid "outside error context, aborting"
 msgstr "处于错误上下文之外，中止"
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr "发生了错误且不存在错误处理方法"
+
+#: lib/dpkg/ehandle.c
 msgid "internal error"
 msgstr "内部错误"
 
 #: lib/dpkg/fields.c
-#, fuzzy
-#| msgid "control file '%s' missing value"
 msgid "is missing a value"
-msgstr "control 文件 %s 中缺少值"
+msgstr "缺少一个值"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "Skip invalid line: %s"
+#, c-format
 msgid "has invalid value '%.50s'"
-msgstr "跳过无效行：%s"
+msgstr "有无效值 '%.50s'"
 
 #: lib/dpkg/fields.c
 msgid "has trailing junk"
-msgstr ""
+msgstr "有多余成分尾随"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "package name '%s' is invalid: %s"
+#, c-format
 msgid "invalid package name in '%s' field: %s"
-msgstr "软件包名 %s 无效: %s"
+msgstr "无效的软件包名存在于 '%s' 字段: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "empty archive details field '%s'"
+#, c-format
 msgid "empty archive details '%s' field"
-msgstr "档案详情字段 %s 为空"
+msgstr "档案详情 '%s' 字段为空"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "archive details field '%s' not allowed in status file"
+#, c-format
 msgid "archive details '%s' field not allowed in status file"
-msgstr "状态文件不允许档案详情字段 ‘%s’ "
+msgstr "状态文件不允许档案详情 ‘%s’ 字段"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "too many values in archive details field '%s' (compared to others)"
+#, c-format
 msgid "too many values in archive details '%s' field (compared to others)"
-msgstr "档案详情字段 %s 的值过多(和其他的相比)"
+msgstr "档案详情 '%s' 字段的值过多(和其他的相比)"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "too few values in archive details field '%s' (compared to others)"
+#, c-format
 msgid "too few values in archive details '%s' field (compared to others)"
-msgstr "档案详情字段 %s 的值过少(和其他的相比)"
+msgstr "档案详情 %s 字段的值过少(和其他的相比)"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "obsolete '%s' or '%s' field used"
+#, c-format
 msgid "boolean (yes/no) '%s' field: %s"
-msgstr "使用了废弃字段 %s 或者 %s "
+msgstr "布尔型(是/否) '%s' 字段: %s "
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "foreign/allowed/same/no in quadstate field"
+#, c-format
 msgid "quadstate (foreign/allowed/same/no) '%s' field: %s"
-msgstr "四值字段中的 foreign/allowed/same/no"
+msgstr "四值状态 (foreign/allowed/same/no) '%s' 字段: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "'%s' is not a valid architecture name: %s"
+#, c-format
 msgid "'%s' is not a valid architecture name in '%s' field: %s"
-msgstr "'%s' 不是有效的体系结构名称： %s"
+msgstr "'%s' 不是有效的 '%s' 字段体系结构名称: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "word in 'Priority' field"
+#, c-format
 msgid "word in '%s' field: %s"
-msgstr " Priority 字段中的文字"
+msgstr " '%s' 字段中的文字: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -795,34 +802,29 @@ msgid "value for '%s' field not allowed in this context"
 msgstr "此处不允许 '%s' 字段的值"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "first (want) word in 'Status' field"
+#, c-format
 msgid "first (want) word in '%s' field: %s"
-msgstr " Status 字段的第一个 (want) 词"
+msgstr "'%s' 字段的第一个 (want) 词: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "second (error) word in 'Status' field"
+#, c-format
 msgid "second (error) word in '%s' field: %s"
-msgstr " Status 字段的第二个 (error) 词"
+msgstr "'%s' 字段的第二个 (error) 词: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "third (status) word in 'Status' field"
+#, c-format
 msgid "third (status) word in '%s' field: %s"
-msgstr " Status 字段的第三个 (status) 词"
+msgstr "'%s' 字段的第三个 (status) 词: %s"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "error in '%s' field string '%.250s'"
+#, c-format
 msgid "'%s' field value '%.250s'"
-msgstr "'%s' 字段的字符串 %.250s 中有错误"
+msgstr "'%s' 字段值 '%.250s'"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "obsolete '%s' or '%s' field used"
+#, c-format
 msgid "obsolete '%s' field used"
-msgstr "使用了废弃字段 %s 或者 %s "
+msgstr "使用了废弃字段 '%s'"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -830,16 +832,14 @@ msgid "value for '%s' field has malformed line '%.*s'"
 msgstr "'%s' 字段的值有行格式有误: '%.*s'"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "value for '%s' has line starting with non-space '%c'"
+#, c-format
 msgid "value for '%s' field has line starting with non-space '%c'"
 msgstr "'%s' 字段的值有以非空格字符 '%c' 开头的行"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "root or null directory is listed as a conffile"
+#, c-format
 msgid "root or empty directory listed as a conffile in '%s' field"
-msgstr "根目录或空目录被列为 conffile"
+msgstr "根目录或空目录被列为一个 '%s' 字段中的配置文件"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -908,19 +908,19 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgstr "'%s' 字段，引用 '%.255s' ：版本号含有 '%c' "
-
-#: lib/dpkg/fields.c
-#, c-format
 msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "'%s' 字段，引用 '%.255s' ：版本号未终止"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
+#, c-format
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgstr "'%s' 字段，引用 '%.255s' ：版本号含有 '%c' 而非 '%c'"
+
+#: lib/dpkg/fields.c
+#, c-format
 msgid "'%s' field, reference to '%.255s': version '%s'"
-msgstr "'%s' 字段，引用 '%.255s' ：版本号含有 '%c' "
+msgstr "'%s' 字段，引用 '%.255s': 版本 '%s'"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -928,10 +928,9 @@ msgid "'%s' field, syntax error after reference to package '%.255s'"
 msgstr "'%s' 字段，在引用软件包 '%.255s' 后有语法错误"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-#| msgid "alternatives ('|') not allowed in %s field"
+#, c-format
 msgid "alternatives ('|') not allowed in '%s' field"
-msgstr "%s 字段不能含有可替换符 ('|')"
+msgstr "'%s' 字段不允许可替代项 ('|')"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -1000,13 +999,35 @@ msgstr "无法检查文件 %s 的锁状态 "
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "%s is locked by another process"
-msgstr "另外一个进程已经为 %s 加锁"
+msgid "unable to lock %s"
+msgstr "无法锁定 %s"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+"注意：删除锁文件的操作是错误的，这样操作会损坏上锁的部分甚至损坏\n"
+"个系统。详情请见 <https://wiki.debian.org/Teams/Dpkg/FAQ>。"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to lock %s"
-msgstr "无法锁定 %s"
+msgid ""
+"%s was locked by another process\n"
+"%s"
+msgstr ""
+"%s 已被另一个进程加锁\n"
+"%s"
+
+#: lib/dpkg/file.c
+#, c-format
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr ""
+"%s 已被另一个 pid 为 %d 的进程加锁\n"
+"%s"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1026,6 +1047,12 @@ msgstr "无法写入文件 %s 到分页器"
 #, c-format
 msgid "could not open log '%s': %s"
 msgstr "无法打开日志文件 %s ：%s"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+#| msgid "cannot stat file '%s'"
+msgid "cannot write to log file '%s': %s"
+msgstr "无法获取文件 %s 的状态"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1092,7 +1119,7 @@ msgstr "%s 中引号不闭合"
 #: lib/dpkg/options.c utils/update-alternatives.c
 #, c-format
 msgid "unknown option '%s'"
-msgstr "未知选项 %s "
+msgstr "未知选项 %s"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1185,45 +1212,39 @@ msgid "duplicate value for user-defined field '%.*s'"
 msgstr "有多个值对应于用户自定义字段 %.*s "
 
 #: lib/dpkg/parse.c lib/dpkg/parsehelp.c
-#, fuzzy, c-format
-#| msgid "missing %s"
+#, c-format
 msgid "missing '%s' field"
-msgstr "找不到 %s"
+msgstr "缺失 '%s' 字段"
 
 #: lib/dpkg/parse.c lib/dpkg/parsehelp.c
-#, fuzzy, c-format
-#| msgid "duplicate value for '%s' field"
+#, c-format
 msgid "empty value for '%s' field"
-msgstr "有多个值对应于字段 %s "
+msgstr "'%s' 字段值为空"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "package has field '%s' but is missing architecture"
+#, c-format
 msgid "package has '%s' field but is missing architecture"
 msgstr "软件包有 '%s' 字段，但缺失体系结构"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "package has field '%s' but is architecture all"
+#, c-format
 msgid "package has '%s' field but is architecture '%s'"
-msgstr "软件包有 %s 字段，但体系结构为“全部”"
+msgstr "软件包有 '%s' 字段，但体系结构为 “%s”"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "Config-Version for package with inappropriate Status"
+#, c-format
 msgid "'%s' field present for package with inappropriate '%s' field"
-msgstr "软件包有 Config-Version 的标志，但与安装状态不符"
+msgstr "软件包有 '%s' 字段，但存在不相符的 '%s' 字段"
 
 #: lib/dpkg/parse.c
 #, c-format
 msgid "package has status %s but triggers are awaited"
-msgstr "软件包有 %s 状态，但触发器在等待"
+msgstr "软件包处于 %s 状态，但触发器在等待"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "package has status %s but triggers are awaited"
+#, c-format
 msgid "package has status %s but no triggers awaited"
-msgstr "软件包有 %s 状态，但触发器在等待"
+msgstr "软件包处于 %s 状态，但没有触发器在等待"
 
 #: lib/dpkg/parse.c
 #, c-format
@@ -1231,16 +1252,14 @@ msgid "package has status %s but triggers are pending"
 msgstr "软件包处于 %s 状态，但是触发器处于未决状态"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "package has status %s but triggers are pending"
+#, c-format
 msgid "package has status %s but no triggers pending"
-msgstr "软件包处于 %s 状态，但是触发器处于未决状态"
+msgstr "软件包处于 %s 状态，但是没有触发器处于未决状态"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid "Package which in state not-installed has conffiles, forgetting them"
+#, c-format
 msgid "package has status %s and has conffiles, forgetting them"
-msgstr "该软件包的状态是尚未安装，但它有 conffiles ，忽略它们"
+msgstr "软件包处于 %s 状态，并且拥有配置文件，将会忽略它们"
 
 #: lib/dpkg/parse.c
 msgid ""
@@ -1257,14 +1276,13 @@ msgstr ""
 "进行过升级"
 
 #: lib/dpkg/parse.c
-#, fuzzy, c-format
-#| msgid ""
-#| "%s %s (Multi-Arch: %s) is not co-installable with %s which has multiple "
-#| "installed instances"
+#, c-format
 msgid ""
 "package %s (%s) with field '%s: %s' is not co-installable with %s which has "
 "multiple installed instances"
-msgstr "%s %s (多体系结构: %s) 不能与 %s 共存，它有多个安装实例"
+msgstr ""
+"含有字段 '%3$s: %4$s' 的软件包 %1$s (%2$s) 不能与存在多个已安装实例的 %5$s 共"
+"存"
 
 #: lib/dpkg/parse.c
 #, c-format
@@ -1357,20 +1375,16 @@ msgstr "在 %.255s 中没有软件包的相关信息"
 #: lib/dpkg/parsehelp.c
 #, c-format
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
-msgstr ""
-"正在解析文件 '%.255s' 第 %d 行附近，软件包 '%.255s' :\n"
-" %.255s"
+"parsing file '%s' near line %d package '%s':\n"
+" "
+msgstr "在解析文件 '%s' 第 %d 行附近，软件包 '%s' 时："
 
 #: lib/dpkg/parsehelp.c
 #, c-format
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
-msgstr ""
-"正在解析文件 '%.255s' 第 %d 行附近:\n"
-" %.255s"
+" "
+msgstr "在解析文件 '%.255s' 第 %d 行附近时："
 
 #: lib/dpkg/parsehelp.c
 msgid "must start with an alphanumeric character"
@@ -1610,16 +1624,13 @@ msgid "treewalk root %s is not a directory"
 msgstr "treewalk 的根节点 %s 不是一个目录"
 
 #: lib/dpkg/trigdeferred.c
-#, fuzzy, c-format
-#| msgid "unable to open/create triggers lockfile '%.250s'"
+#, c-format
 msgid "unable to open/create triggers lock file '%.250s'"
-msgstr "无法打开或创建触发器锁文件 %.250s"
+msgstr "无法打开或创建触发器锁文件 '%.250s'"
 
 #: lib/dpkg/trigdeferred.c
-#, fuzzy
-#| msgid "triggers area"
 msgid "triggers database lock"
-msgstr "触发器区域"
+msgstr "触发器数据库锁"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
@@ -1741,11 +1752,6 @@ msgstr "触发器 ci 文件包含位置指令 %.250s"
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "无法创建触发器状态目录 %.250s"
 
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr "无法设置触发器状态目录 %.250s 的所有者"
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr "触发器名不能为空"
@@ -1852,10 +1858,10 @@ msgstr "为 %.255s 设置时间戳时出错"
 msgid "error setting ownership of symlink '%.255s'"
 msgstr "为符号链接 %.255s 设置属主时出错"
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
-msgstr "无法读取符号链接 %.255s "
+msgstr "无法读取符号链接 %.255s"
 
 #: src/archives.c src/configure.c
 #, c-format
@@ -1900,8 +1906,8 @@ msgstr "正在尝试覆盖 %.250s，它是 %.250s 的转移版本"
 
 #: src/archives.c
 #, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
-msgstr "无法获取 %.255s 的状态(正准备安装该文件)"
+msgid "unable to stat '%.255s' (which was about to be installed)"
+msgstr "无法获取 '%.255s' 的状态（正准备安装该文件）"
 
 #: src/archives.c
 #, c-format
@@ -1971,12 +1977,12 @@ msgstr "无法安装 %.255s 的新版本"
 #: src/archives.c
 #, c-format
 msgid "unable to open '%.255s'"
-msgstr "无法打开 %.255s "
+msgstr "无法打开 %.255s"
 
 #: src/archives.c
 #, c-format
 msgid "unable to sync file '%.255s'"
-msgstr "无法同步文件 %.255s "
+msgstr "无法同步文件 %.255s"
 
 #: src/archives.c
 #, c-format
@@ -1998,6 +2004,28 @@ msgstr "正在考虑反配置基础软件包 %s，以便启用 %s。"
 #, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+"拒绝，%s 是基础软件包，不能反配置该软件包\n"
+" 以启用 %s"
+
+#: src/archives.c
+#, fuzzy, c-format
+#| msgid ""
+#| "considering deconfiguration of essential\n"
+#| " package %s, to enable %s"
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr "正在考虑反配置基础软件包 %s，以便启用 %s。"
+
+#: src/archives.c
+#, fuzzy, c-format
+#| msgid ""
+#| "no, %s is essential, will not deconfigure\n"
+#| " it in order to enable %s"
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 "拒绝，%s 是基础软件包，不能反配置该软件包\n"
@@ -2628,11 +2656,13 @@ msgstr ""
 "本软件是自由软件；要获知复制该软件的条件，请参阅 GNU 公共许可证\n"
 "第二版或其更新的版本。本软件【不】提供任何担保。\n"
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
-#, c-format
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "用法：%s [<选项> ...] <命令>\n"
@@ -2709,7 +2739,7 @@ msgstr ""
 msgid ""
 "please specify --no-rename explicitly, the default will change to --rename "
 "in 1.20.x"
-msgstr "请显式指定 --no-rename ，默认选项将会在 1.20.x 版本中变为 --rename 。"
+msgstr "请显式指定 --no-rename ，默认选项将会在 1.20.x 版本中变为 --rename"
 
 #: src/divertcmd.c utils/update-alternatives.c
 #, c-format
@@ -3048,6 +3078,12 @@ msgid "versioned Provides"
 msgstr "填实"
 
 #: src/enquiry.c
+#, fuzzy
+#| msgid "Pre-Depends field"
+msgid "Protected field"
+msgstr "预依赖字段"
+
+#: src/enquiry.c
 #, c-format
 msgid ""
 "cannot see how to satisfy pre-dependency:\n"
@@ -3105,7 +3141,7 @@ msgstr "版本号 '%s' 语法错误"
 msgid ""
 "--compare-versions takes three arguments: <version> <relation> <version>"
 msgstr ""
-"--compare-version 需要三个参数，它们分别是：<版本号> <比较关系> <版本号>"
+"--compare-versions 需要三个参数，它们分别是：<版本号> <比较关系> <版本号>"
 
 #: src/enquiry.c
 msgid "--compare-versions bad relation"
@@ -3114,7 +3150,7 @@ msgstr "--compare-versions 错误的比较关系"
 #: src/enquiry.c
 #, c-format
 msgid "--%s used with obsolete relation operator '%s'"
-msgstr "--%s 使用了废弃的关系操作符 '%s' "
+msgstr "--%s 使用了废弃的关系操作符 '%s'"
 
 #: src/errors.c
 #, c-format
@@ -3170,7 +3206,7 @@ msgstr "设置所有的强制选项"
 
 #: src/force.c
 msgid "Use MAC based security if available"
-msgstr ""
+msgstr "如果可行则使用基于 MAC 的安全性"
 
 #: src/force.c
 msgid "Replace a package with a lower version"
@@ -3181,8 +3217,8 @@ msgid "Configure any package which may help this one"
 msgstr "配置任何可能与这有关的软件包"
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
-msgstr "处理意外的软件包，即使它处于搁置状态"
+msgid "Install or remove incidental packages even when on hold"
+msgstr "安装或删除意外的软件包，即使它处于搁置状态"
 
 #: src/force.c
 msgid "Try to (de)install things even when not root"
@@ -3202,11 +3238,11 @@ msgstr "继续处理，即使软件包版本错误"
 
 #: src/force.c
 msgid "Overwrite an existing stat override when adding it"
-msgstr ""
+msgstr "在添加一个 stat 重载时盖写它"
 
 #: src/force.c
 msgid "Ignore a missing stat override when removing it"
-msgstr ""
+msgstr "忽略一个在移除时缺失的 stat 重载"
 
 #: src/force.c
 msgid "Overwrite a file from one package with another"
@@ -3280,6 +3316,12 @@ msgid "Remove packages which require installation"
 msgstr "移除要求安装的软件包"
 
 #: src/force.c
+#, fuzzy
+#| msgid "Remove an essential package"
+msgid "Remove a protected package"
+msgstr "移除一个至关重要的软件包"
+
+#: src/force.c
 msgid "Remove an essential package"
 msgstr "移除一个至关重要的软件包"
 
@@ -3314,6 +3356,9 @@ msgid ""
 "Currently enabled options:\n"
 " %s\n"
 msgstr ""
+"\n"
+"当前启用的选项:\n"
+" %s\n"
 
 #: src/force.c
 #, c-format
@@ -3363,7 +3408,7 @@ msgstr "已安装"
 
 #: src/help.c
 msgid "PATH is not set"
-msgstr "没有设置 PATH 环境变量。"
+msgstr "没有设置 PATH 环境变量"
 
 #: src/help.c
 #, c-format
@@ -3459,12 +3504,12 @@ msgstr ""
 "  --yet-to-unpack                  列出标记为待解压的软件包。\n"
 "  --predep-package                 列出待解压的预依赖。\n"
 "  --add-architecture    <体系结构> 添加 <体系结构> 到体系结构列表。\n"
-"  --remove-architecture <体系结构> 从架构列表中移除 <体系结构>。\n"
+"  --remove-architecture <体系结构> 从体系结构列表中移除 <体系结构>。\n"
 "  --print-architecture             显示 dpkg 体系结构。\n"
 "  --print-foreign-architectures    显示已启用的异质体系结构。\n"
 "  --assert-<特性>                  对指定特性启用断言支持。\n"
 "  --validate-<属性> <字符串>       验证一个 <属性>的 <字符串>。\n"
-"  --compare-vesions <a> <关系> <b> 比较版本号 - 见下。\n"
+"  --compare-versions <a> <关系> <b> 比较版本号 - 见下。\n"
 "  --force-help                     显示本强制选项的帮助信息。\n"
 "  -Dh|--debug=help                 显示有关出错调试的帮助信息。\n"
 "\n"
@@ -3481,10 +3526,14 @@ msgstr ""
 "\n"
 
 #: src/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Assertable features: support-predepends, working-epoch, long-filenames,\n"
+#| "  multi-conrep, multi-arch, versioned-provides.\n"
+#| "\n"
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 "Assert 特性： support-predepends, working-epoch, long-filenames,\n"
@@ -3516,13 +3565,54 @@ msgstr ""
 "\n"
 
 #: src/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --admindir=<directory>     Use <directory> instead of %s.\n"
+#| "  --root=<directory>         Install on a different root directory.\n"
+#| "  --instdir=<directory>      Change installation dir without changing "
+#| "admin dir.\n"
+#| "  --path-exclude=<pattern>   Do not install paths which match a shell "
+#| "pattern.\n"
+#| "  --path-include=<pattern>   Re-include a pattern after a previous "
+#| "exclusion.\n"
+#| "  -O|--selected-only         Skip packages not selected for install/"
+#| "upgrade.\n"
+#| "  -E|--skip-same-version     Skip packages whose same version is "
+#| "installed.\n"
+#| "  -G|--refuse-downgrade      Skip packages with earlier version than "
+#| "installed.\n"
+#| "  -B|--auto-deconfigure      Install even if it would break some other "
+#| "package.\n"
+#| "  --[no-]triggers            Skip or force consequential trigger "
+#| "processing.\n"
+#| "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+#| "  --no-debsig                Do not try to verify package signatures.\n"
+#| "  --no-act|--dry-run|--simulate\n"
+#| "                             Just say what we would do - don't do it.\n"
+#| "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --"
+#| "debug=help).\n"
+#| "  --status-fd <n>            Send status change updates to file "
+#| "descriptor <n>.\n"
+#| "  --status-logger=<command>  Send status change updates to <command>'s "
+#| "stdin.\n"
+#| "  --log=<filename>           Log status changes and actions to "
+#| "<filename>.\n"
+#| "  --ignore-depends=<package>,...\n"
+#| "                             Ignore dependencies involving <package>.\n"
+#| "  --force-...                Override problems (see --force-help).\n"
+#| "  --no-force-...|--refuse-...\n"
+#| "                             Stop when problems encountered.\n"
+#| "  --abort-after <n>          Abort after encountering <n> errors.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  --admindir=<directory>     Use <directory> instead of %s.\n"
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3537,6 +3627,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3546,12 +3637,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 "选项：\n"
@@ -3592,7 +3684,7 @@ msgid ""
 "syntax).\n"
 "\n"
 msgstr ""
-"可供--compare-version 使用的比较运算符有：\n"
+"可供--compare-versions 使用的比较运算符有：\n"
 " lt le eq ne ge gt        (如果版本号为空，那么就认为它先于任意版本号)；\n"
 " lt-nl le-nl ge-nl gt-nl  (如果版本号为空，那么就认为它后于任意版本号)；\n"
 " < << <= = >= >> >        (仅仅是为了与主控文件的语法兼容)。\n"
@@ -4069,11 +4161,19 @@ msgstr ""
 "\n"
 
 #: src/querycmd.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --admindir=<directory>           Use <directory> instead of %s.\n"
+#| "  --load-avail                     Use available file on --show and --"
+#| "list.\n"
+#| "  -f|--showformat=<format>         Use alternative format for --show.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -4124,6 +4224,12 @@ msgstr ""
 
 #: src/remove.c
 msgid "this is an essential package; it should not be removed"
+msgstr "这是一个至关重要的软件包；您不应当把它卸载。"
+
+#: src/remove.c
+#, fuzzy
+#| msgid "this is an essential package; it should not be removed"
+msgid "this is a protected package; it should not be removed"
 msgstr "这是一个至关重要的软件包；您不应当把它卸载。"
 
 #: src/remove.c
@@ -4358,6 +4464,15 @@ msgstr "无法为文件对象 '%s' 设置安全上下文"
 msgid "Use --help for help about overriding file stat information."
 msgstr "使用 --help 查看关于凌驾文件状态的帮助。"
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+"用法：%s [<选项> ...] <命令>\n"
+"\n"
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4384,7 +4499,10 @@ msgstr ""
 #| "dir.\n"
 #| "  --root <directory>       set the directory of the root filesystem.\n"
 #| "  --update                 immediately update <path> permissions.\n"
-#| "  --force                  force an action even if a sanity check fails.\n"
+#| "  --force                  deprecated alias for --force-all.\n"
+#| "  --force-...              override problems (see --force-help).\n"
+#| "  --no-force-...           stop when problems encountered.\n"
+#| "  --refuse-...             ditto.\n"
 #| "  --quiet                  quiet operation, minimal output.\n"
 #| "  --help                   show this help message.\n"
 #| "  --version                show the version.\n"
@@ -4396,21 +4514,24 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
 "\n"
 msgstr ""
 "选项：\n"
-"  --admindir <目录>        设置 statoverride 文件的目录。\n"
-"  --instdir <directory>    设置根目录，但不包括管理员目录。\n"
-"  --root <directory>       设置根文件系统的目录。\n"
+"  --admindir <目录>        经由 statoverride 文件设置目录。\n"
+"  --instdir <目录>         设置根目录，但不包括管理员目录。\n"
+"  --root <目录>            设置根文件系统的目录。\n"
 "  --update                 立即更新 <路径> 的权限。\n"
-"  --force                  就算没有通过自检，也强制执行操作。\n"
-"  --quiet                  安静模式，输出尽可能少的信息。不显示输出信息。\n"
+"  --force                  已弃用的 --force-all 别名。\n"
+"  --force-...              强制某问题 (参见 --force-help)。\n"
+"  --no-force-...           出现某问题则停止。\n"
+"  --refuse-...             同上。\n"
+"  --quiet                  安静模式，尽可能少的输出。\n"
 "  --help                   显示本帮助信息。\n"
 "  --version                显示版本信息。\n"
 
@@ -4455,17 +4576,16 @@ msgstr "--update 已指定但 %s 不存在"
 
 #: src/statcmd.c
 msgid "no override present"
-msgstr "override 不存在。"
+msgstr "override 不存在"
 
 #: src/statcmd.c
 msgid "--update is useless for --remove"
 msgstr "对于 --remove，--update 是无效的"
 
 #: src/statcmd.c
-#, fuzzy, c-format
-#| msgid "obsolete option '--%s'; please use '--%s' instead"
+#, c-format
 msgid "deprecated --%s option; use --%s instead"
-msgstr "废弃的选项 --%s，请使用 --%s 代替"
+msgstr "废弃的 --%s 选项；请使用 --%s 代替"
 
 #: src/trigcmd.c
 msgid "Type dpkg-trigger --help for help about this utility."
@@ -4477,10 +4597,14 @@ msgid "Debian %s package trigger utility version %s.\n"
 msgstr " Debian %s 软件包触发器工具 %s 版。\n"
 
 #: src/trigcmd.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<options> ...] <trigger-name>\n"
+#| "       %s [<options> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "用法：%s [<选项> ...] <触发器名称>\n"
@@ -4684,6 +4808,11 @@ msgstr "conffile 文件含有空行"
 msgid "conffile name '%s' is too long, or missing final newline"
 msgstr "conffile 的文件名 %s 超长，或是缺少最后结尾的换行符"
 
+#: src/unpack.c dpkg-deb/build.c
+#, c-format
+msgid "conffile name '%s' is not an absolute pathname"
+msgstr "conffile 文件名 \"%s\" 不是绝对路径名"
+
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
 msgid "read error in %.250s"
@@ -4823,18 +4952,16 @@ msgid "--%s takes at most one Packages-file argument"
 msgstr "--%s 只需要一个“软件包文件名”作为参数"
 
 #: src/update.c
-#, fuzzy, c-format
-#| msgid "unable to access dpkg status area for bulk available update"
+#, c-format
 msgid "unable to access dpkg database directory '%s' for bulk available update"
-msgstr "无法访问 dpkg 的状态区域，以进行批量的可用软件包更新"
+msgstr "无法访问 dpkg 数据库目录 '%s' 以进行批量的可用更新"
 
 #: src/update.c
-#, fuzzy, c-format
-#| msgid "unable to access dpkg status area for bulk available update"
+#, c-format
 msgid ""
 "required write access to dpkg database directory '%s' for bulk available "
 "update"
-msgstr "无法访问 dpkg 的状态区域，以进行批量的可用软件包更新"
+msgstr "需要对于 dpkg 数据库目录 '%s' 的写权限以进行批量的可用更新"
 
 #: src/update.c
 #, c-format
@@ -5277,14 +5404,29 @@ msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Debian %s 软件包后端打包程序 %s 版。\n"
 
 #: dpkg-deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Commands:\n"
+#| "  -b|--build <directory> [<deb>]   Build an archive.\n"
+#| "  -c|--contents <deb>              List contents.\n"
+#| "  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+#| "  -W|--show <deb>                  Show information on package(s)\n"
+#| "  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+#| "  -e|--control <deb> [<directory>] Extract control info.\n"
+#| "  -x|--extract <deb> <directory>   Extract files.\n"
+#| "  -X|--vextract <deb> <directory>  Extract & list files.\n"
+#| "  -R|--raw-extract <deb> <directory>\n"
+#| "                                   Extract control info and files.\n"
+#| "  --ctrl-tarfile <deb>             Output control tarfile.\n"
+#| "  --fsys-tarfile <deb>             Output filesystem tarfile.\n"
+#| "\n"
 msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -5394,12 +5536,12 @@ msgstr "无效的 deb 格式版本：%s"
 #: dpkg-deb/main.c
 #, c-format
 msgid "unknown deb format version: %s"
-msgstr "未知的 deb 格式版本：%s "
+msgstr "未知的 deb 格式版本：%s"
 
 #: dpkg-deb/main.c
 #, c-format
 msgid "invalid compression level for -%c: %ld"
-msgstr "无效的压缩等级 -%c：%ld "
+msgstr "无效的压缩等级 -%c：%ld"
 
 #: dpkg-deb/main.c
 #, c-format
@@ -5487,7 +5629,7 @@ msgstr "文件 %.250s 格式的版本是 %d.%d；您需要用更新版本的 dpk
 
 #: dpkg-split/info.c
 msgid "package name"
-msgstr "软件包名："
+msgstr "软件包名"
 
 #: dpkg-split/info.c
 msgid "package version number"
@@ -5539,7 +5681,7 @@ msgstr "文件 %.250s 已经损毁 - 归档分块编号有误"
 
 #: dpkg-split/info.c
 msgid "package architecture"
-msgstr "软件包体系结构："
+msgstr "软件包体系结构"
 
 #: dpkg-split/info.c
 #, c-format
@@ -5597,7 +5739,7 @@ msgstr ""
 "    分块的格式版本：                %d.%d\n"
 "    是这个软件包的分块：            %s\n"
 "        ... 版本：                  %s\n"
-"        ... 架构：                  %s\n"
+"        ... 体系结构：              %s\n"
 "        ... MD5 校验和：            %s\n"
 "        ... 大小：                  %jd 字节\n"
 "        ... 每个分块的大小：        %jd 字节\n"
@@ -5763,6 +5905,11 @@ msgstr "无法读取分块文件 %.250s"
 #, c-format
 msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr "文件 %.250s 并非多卷包文件的一个分块文件。\n"
+
+#: dpkg-split/queue.c
+#, c-format
+msgid "cannot create directory %s"
+msgstr "无法创建目录 %s"
 
 #: dpkg-split/queue.c
 #, c-format
@@ -5955,11 +6102,28 @@ msgstr ""
 "\n"
 
 #: utils/update-alternatives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --altdir <directory>     change the alternatives directory.\n"
+#| "  --admindir <directory>   change the administrative directory.\n"
+#| "  --log <file>             change the log file.\n"
+#| "  --force                  allow replacing files with alternative links.\n"
+#| "  --skip-auto              skip prompt for alternatives correctly "
+#| "configured\n"
+#| "                           in automatic mode (relevant for --config "
+#| "only)\n"
+#| "  --quiet                  quiet operation, minimal output.\n"
+#| "  --verbose                verbose operation, more output.\n"
+#| "  --debug                  debug output, way more output.\n"
+#| "  --help                   show this help message.\n"
+#| "  --version                show the version.\n"
 msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -5996,16 +6160,6 @@ msgstr "malloc 失败 (%zu 字节)"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "two commands specified: --%s and --%s"
-msgstr "指定了两个命令：--%s 和 --%s"
-
-#: utils/update-alternatives.c
-#, c-format
-msgid "cannot append to '%s'"
-msgstr "无法追加至 %s"
-
-#: utils/update-alternatives.c
-#, c-format
 msgid "wait for subprocess %s failed"
 msgstr "等待子进程 %s 失败"
 
@@ -6013,6 +6167,23 @@ msgstr "等待子进程 %s 失败"
 #, c-format
 msgid "unable to remove '%s'"
 msgstr "无法移除 %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot create directory %s"
+msgid "cannot create log directory '%s'"
+msgstr "无法创建目录 %s"
+
+#: utils/update-alternatives.c
+#, c-format
+msgid "cannot append to '%s'"
+msgstr "无法追加至 %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "unable to read link '%.255s'"
+msgid "unable to read link '%s%.255s'"
+msgstr "无法读取符号链接 %.255s"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -6084,7 +6255,7 @@ msgstr "重复路径 %s"
 msgid ""
 "alternative %s (part of link group %s) doesn't exist; removing from list of "
 "alternatives"
-msgstr "侯选项 %s(链接组 %s 的一部分)不存在；从候选项列表中移除。"
+msgstr "候选项 %s(链接组 %s 的一部分)不存在；从候选项列表中移除。"
 
 #: utils/update-alternatives.c
 msgid "priority"
@@ -6123,8 +6294,19 @@ msgstr "舍弃废弃的次要链接 %s (%s)"
 
 #: utils/update-alternatives.c
 #, c-format
+msgid "cannot create administrative directory '%s'"
+msgstr "无法创建管理目录 \"%s\""
+
+#: utils/update-alternatives.c
+#, c-format
 msgid "unable to flush file '%s'"
 msgstr "无法清空文件 %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot stat file '%s'"
+msgid "cannot stat file '%s%s'"
+msgstr "无法获取文件 %s 的状态"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6211,6 +6393,12 @@ msgid "not replacing %s with a link"
 msgstr "将不会把 %s 替换为链接"
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot create administrative directory '%s'"
+msgid "cannot create alternatives directory '%s'"
+msgstr "无法创建管理目录 \"%s\""
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr "无法安装未知的选择 %s"
@@ -6243,14 +6431,18 @@ msgid "alternative %s for %s not registered; not setting"
 msgstr "%2$s 的候选项 %1$s 没有注册，不予设置"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+#, fuzzy, c-format
+#| msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr "%s/%s 正处于未决状态；将以最佳选项更新它。"
 
 #: utils/update-alternatives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s/%s has been changed (manually or by a script); switching to manual "
+#| "updates only"
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr "%s/%s 已更改(由于手动更改或通过脚本)。切换成仅手动更新。"
 
@@ -6260,13 +6452,15 @@ msgid "setting up automatic selection of %s"
 msgstr "正在设置 %s 的自动选择"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "renaming %s slave link from %s to %s"
+#, fuzzy, c-format
+#| msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "正在将次要链接 %s 从 %s 重命名为 %s"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "renaming %s link from %s to %s"
+#, fuzzy, c-format
+#| msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "正在将链接 %s 从 %s 重命名为 %s"
 
 #: utils/update-alternatives.c
@@ -6341,8 +6535,9 @@ msgid "alternative link %s is already managed by %s"
 msgstr "替换链接 %s 已经由 %s 来管理了"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "alternative path %s doesn't exist"
+#, fuzzy, c-format
+#| msgid "alternative path %s doesn't exist"
+msgid "alternative path %s%s doesn't exist"
 msgstr "候选项路径 %s 不存在"
 
 #: utils/update-alternatives.c
@@ -6362,11 +6557,18 @@ msgstr "候选项链接 %s 已经由 %s (%s 的次要项)来管理了"
 
 #: utils/update-alternatives.c
 #, c-format
+msgid "two commands specified: --%s and --%s"
+msgstr "指定了两个命令：--%s 和 --%s"
+
+#: utils/update-alternatives.c
+#, c-format
 msgid "unknown argument '%s'"
 msgstr "无法识别的参数 %s "
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
+#, fuzzy, c-format
+#| msgid "--install needs <link> <name> <path> <priority>"
+msgid "--%s needs <link> <name> <path> <priority>"
 msgstr "--install 需要 <链接> <名称> <路径> <优先级>"
 
 #: utils/update-alternatives.c
@@ -6392,11 +6594,15 @@ msgid "--%s needs <name>"
 msgstr "--%s 需要 <名称>"
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, fuzzy, c-format
+#| msgid "--slave only allowed with --install"
+msgid "--%s only allowed with --%s"
 msgstr "--slave 只能搭配 --install 使用"
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
+#, fuzzy, c-format
+#| msgid "--slave needs <link> <name> <path>"
+msgid "--%s needs <link> <name> <path>"
 msgstr "--slave 需要 <链接> <名称> <路径>"
 
 #: utils/update-alternatives.c
@@ -6415,12 +6621,10 @@ msgid "--%s needs a <file> argument"
 msgstr "--%s 需要一个<文件>参数"
 
 #: utils/update-alternatives.c
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
-"需要 --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all 或 --auto"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6448,6 +6652,16 @@ msgstr "运行 update-alternatives 工具以修改系统可选项的选择情况
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr "需要认证后才能执行 update-alternatives"
+
+#~ msgid ""
+#~ "need --display, --query, --list, --get-selections, --config, --set, --set-"
+#~ "selections, --install, --remove, --all, --remove-all or --auto"
+#~ msgstr ""
+#~ "需要 --display, --query, --list, --get-selections, --config, --set, --set-"
+#~ "selections, --install, --remove, --all, --remove-all 或 --auto"
+
+#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgstr "无法设置触发器状态目录 %.250s 的所有者"
 
 #~ msgid "unable to open lock file %s for testing"
 #~ msgstr "无法打开锁文件 %s 以进行测试"
@@ -6504,13 +6718,13 @@ msgstr "需要认证后才能执行 update-alternatives"
 #~ msgstr "无法关闭软件包 '%2$s' 的 '%1$s' 控制文件"
 
 #~ msgid "unable to open files list file for package '%.250s'"
-#~ msgstr "无法打开软件包 %.250s 的文件名列表文件"
+#~ msgstr "无法打开软件包 %.250s 的文件列表"
 
 #~ msgid "unable to stat files list file for package '%.250s'"
-#~ msgstr "无法取得软件包 %.250s 的文件名列表文件"
+#~ msgstr "无法取得软件包 %.250s 的文件列表"
 
 #~ msgid "files list for package '%.250s' is not a regular file"
-#~ msgstr "软件包 %.250s 的文件名列表文件不是一个常规文件"
+#~ msgstr "软件包 %.250s 的文件列表不是一个常规文件"
 
 #~ msgid "reading files list for package '%.250s'"
 #~ msgstr "正在读取软件包 %.250s 的文件列表"
@@ -6762,22 +6976,22 @@ msgstr "需要认证后才能执行 update-alternatives"
 #~ msgstr "建立新的本地修改项备份出错"
 
 #~ msgid "unable to create updated files list file for package %s"
-#~ msgstr "无法为软件包 %s 新建更新后的文件名列表文件"
+#~ msgstr "无法为软件包 %s 新建更新后的文件列表"
 
 #~ msgid "failed to write to updated files list file for package %s"
-#~ msgstr "无法写入更新后的软件包 %s 的文件名列表文件"
+#~ msgstr "无法写入更新后的软件包 %s 的文件列表"
 
 #~ msgid "failed to flush updated files list file for package %s"
-#~ msgstr "无法刷新更新后的软件包 %s 的文件名列表文件"
+#~ msgstr "无法刷新更新后的软件包 %s 的文件列表"
 
 #~ msgid "failed to sync updated files list file for package %s"
-#~ msgstr "无法同步更新后的软件包 %s 的文件名列表文件"
+#~ msgstr "无法同步更新后的软件包 %s 的文件列表"
 
 #~ msgid "failed to close updated files list file for package %s"
-#~ msgstr "无法关闭更新后的软件包 %s 的文件名列表文件"
+#~ msgstr "无法关闭更新后的软件包 %s 的文件列表"
 
 #~ msgid "failed to install updated files list file for package %s"
-#~ msgstr "无法安装更新后的软件包 %s 的文件名列表文件"
+#~ msgstr "无法安装更新后的软件包 %s 的文件列表"
 
 #~ msgid "--command-fd takes one argument, not zero"
 #~ msgstr "--command-fd 需要一个参数，而非零个"
@@ -7009,8 +7223,8 @@ msgstr "需要认证后才能执行 update-alternatives"
 #~ "  confask [!]            没有新版本时询问替换配置文件\n"
 #~ "  breaks [!]             即使损坏其他软件包也继续安装\n"
 #~ "  conflicts [!]          让相互冲突的软件包也得以安装\n"
-#~ "  architecture [!]       即使软件包所属的体系架构与环境不符，它也将被处"
-#~ "理\n"
+#~ "  architecture [!]       即使软件包所属的体系体系结构与环境不符，它也将被"
+#~ "处理\n"
 #~ "  overwrite-dir [!]      用来自一个软件包的文件覆盖原本属于另一软件包的目"
 #~ "录\n"
 #~ "  remove-reinstreq [!]   删除那些需要安装的软件包\n"

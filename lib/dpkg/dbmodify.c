@@ -85,8 +85,16 @@ static void cleanupdates(void) {
   *updatefnrest = '\0';
   updateslength= -1;
   cdn= scandir(updatefnbuf, &cdlist, &ulist_select, alphasort);
-  if (cdn == -1)
+  if (cdn == -1) {
+    if (errno == ENOENT) {
+      if (cstatus >= msdbrw_write &&
+          dir_make_path(updatefnbuf, 0755) < 0)
+        ohshite(_("cannot create the dpkg updates directory %s"),
+                updatefnbuf);
+      return;
+    }
     ohshite(_("cannot scan updates directory '%.255s'"), updatefnbuf);
+  }
 
   if (cdn) {
     for (i=0; i<cdn; i++) {
@@ -273,6 +281,8 @@ modstatdb_unlock(void)
 enum modstatdb_rw
 modstatdb_open(enum modstatdb_rw readwritereq)
 {
+  bool db_can_access = false;
+
   modstatdb_init();
 
   cflags = readwritereq & msdbrw_available_mask;
@@ -285,11 +295,24 @@ modstatdb_open(enum modstatdb_rw readwritereq)
       ohshit(_("requested operation requires superuser privilege"));
     /* Fall through. */
   case msdbrw_write: case msdbrw_writeifposs:
-    if (access(dpkg_db_get_dir(), W_OK)) {
+    db_can_access = access(dpkg_db_get_dir(), W_OK) == 0;
+    if (!db_can_access && errno == ENOENT) {
+      if (dir_make_path(dpkg_db_get_dir(), 0755) == 0)
+        db_can_access = true;
+      else if (readwritereq >= msdbrw_write)
+        ohshite(_("cannot create the dpkg database directory %s"),
+                dpkg_db_get_dir());
+      else if (errno == EROFS)
+        /* If we cannot create the directory on read-only modes on read-only
+         * filesystems, make it look like an access error to be skipped. */
+        errno = EACCES;
+    }
+
+    if (!db_can_access) {
       if (errno != EACCES)
         ohshite(_("unable to access the dpkg database directory %s"),
                 dpkg_db_get_dir());
-      else if (readwritereq == msdbrw_write)
+      else if (readwritereq >= msdbrw_write)
         ohshit(_("required read/write access to the dpkg database directory %s"),
                dpkg_db_get_dir());
       cstatus= msdbrw_readonly;
@@ -452,7 +475,7 @@ void modstatdb_note(struct pkginfo *pkg) {
   if (pkg->status_dirty) {
     log_message("status %s %s %s", pkg_status_name(pkg),
                 pkg_name(pkg, pnaw_always),
-                versiondescribe(&pkg->installed.version, vdew_nonambig));
+                versiondescribe_c(&pkg->installed.version, vdew_nonambig));
     statusfd_send("status: %s: %s", pkg_name(pkg, pnaw_nonambig),
                   pkg_status_name(pkg));
 

@@ -212,6 +212,7 @@ my $sourceversion = $changelog->{'Binary-Only'} ?
 my $binaryversion = $changelog->{'Version'};
 
 $substvars->set_version_substvars($sourceversion, $binaryversion);
+$substvars->set_vendor_substvars();
 $substvars->set_arch_substvars();
 $substvars->load('debian/substvars') if -e 'debian/substvars' and not $substvars_loaded;
 
@@ -221,8 +222,8 @@ if (defined($prev_changelog) and
 {
     warning(g_('the current version (%s) is earlier than the previous one (%s)'),
 	$changelog->{'Version'}, $prev_changelog->{'Version'})
-        # ~bpo and ~vola are backports and have lower version number by definition
-        unless $changelog->{'Version'} =~ /~(?:bpo|vola)/;
+        # Backports have lower version number by definition.
+        unless $changelog->{'Version'} =~ /~(?:bpo|deb)/;
 }
 
 # Scan control info of source package
@@ -459,7 +460,7 @@ info($origsrcmsg);
 
 $fields->{'Format'} = $substvars->get('Format');
 
-if (!defined($fields->{'Date'})) {
+if (length $fields->{'Date'} == 0) {
     setlocale(LC_TIME, 'C');
     $fields->{'Date'} = POSIX::strftime('%a, %d %b %Y %T %z', localtime);
     setlocale(LC_TIME, '');

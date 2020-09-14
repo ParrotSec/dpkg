@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2015-04-07 09:51+0200\n"
 "Last-Translator: Håvard Korsvoll <korsvoll@skulelinux.no>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -111,6 +111,12 @@ msgstr "feil ved skriving av «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create base directory for %s"
+msgstr "klarte ikkje skanna katalogen «%.255s»"
+
+#: lib/dpkg/atomic-file.c
+#, fuzzy, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "klarte ikkje opna kjeldefila «%.250s»"
 
@@ -204,6 +210,11 @@ msgstr "%s: intern gzip-feil: «%s»"
 #: lib/dpkg/compress.c
 #, fuzzy, c-format
 msgid "%s: internal gzip write error"
+msgstr "%s: intern gzip-feil: «%s»"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: internal gzip read error: %s"
 msgstr "%s: intern gzip-feil: «%s»"
 
 #: lib/dpkg/compress.c
@@ -342,6 +353,12 @@ msgstr ""
 "oppdateringskatalogen inneheld filer med ulike namnelengder (både %d og %d)"
 
 #: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create the dpkg updates directory %s"
+msgstr "klarte ikkje skanna oppdateringskatalogen «%.255s»"
+
+#: lib/dpkg/dbmodify.c
 #, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr "klarte ikkje skanna oppdateringskatalogen «%.255s»"
@@ -403,6 +420,12 @@ msgstr "klarte ikkje låsa dpkg-statusdatabasen"
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr "den ønskte handlinga krev superbrukartilgang"
+
+#: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area"
+msgid "cannot create the dpkg database directory %s"
+msgstr "får ikkje tilgang til dpkg-statusområdet"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -762,6 +785,10 @@ msgid "outside error context, aborting"
 msgstr ""
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr ""
+
+#: lib/dpkg/ehandle.c
 #, fuzzy
 msgid "internal error"
 msgstr "%s: Intern gzip-feil: Las: «%s»"
@@ -958,14 +985,15 @@ msgstr ""
 "til eit mellomrom"
 
 #: lib/dpkg/fields.c
-#, fuzzy, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgstr "«%s»-felt, referanse til «%.255s»: versjon inneheld «(»"
-
-#: lib/dpkg/fields.c
 #, c-format
 msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "«%s»-felt, referanse til «%.255s»: versjon ikkje avslutta"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgstr "«%s»-felt, referanse til «%.255s»: versjon inneheld «(»"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
@@ -1052,14 +1080,31 @@ msgstr "klarte ikkje opna kjeldefila «%.250s»"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+msgid "unable to lock %s"
+msgstr "klarte ikkje køyra %s"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 #| msgid "status database area is locked by another process"
-msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process\n"
+"%s"
 msgstr "statusdatabaseområdet er låst av ein annan prosess"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
-msgid "unable to lock %s"
-msgstr "klarte ikkje køyra %s"
+#| msgid "status database area is locked by another process"
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr "statusdatabaseområdet er låst av ein annan prosess"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1081,6 +1126,11 @@ msgstr "klarte ikkje lesa infokatalogen"
 #| msgid "couldn't open log `%s': %s\n"
 msgid "could not open log '%s': %s"
 msgstr "klarte ikkje opna avlusingsfil «%s»: %s\n"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+msgid "cannot write to log file '%s': %s"
+msgstr "fann ikkje «%.255s» (i «%.255s»)"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1419,15 +1469,15 @@ msgstr "ingen pakkeinformasjon i «%.255s»"
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
+"parsing file '%s' near line %d package '%s':\n"
+" "
 msgstr "%s, i fila «%.255s» nær linje %d"
 
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
+" "
 msgstr "%s, i fila «%.255s» nær linje %d"
 
 #: lib/dpkg/parsehelp.c
@@ -1829,11 +1879,6 @@ msgstr ""
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "klarte ikkje lesa depotkatalogen «%.250s»"
 
-#: lib/dpkg/triglib.c
-#, fuzzy, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr "klarte ikkje lesa depotkatalogen «%.250s»"
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr ""
@@ -1944,7 +1989,7 @@ msgstr "feil ved setjing av tidsmerke for «%.255s»"
 msgid "error setting ownership of symlink '%.255s'"
 msgstr "feil ved setjing av eigarskap for den symbolske lenkja «%.255s»"
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
 msgstr "klarte ikkje lesa lenkja «%.255s»"
@@ -1996,8 +2041,9 @@ msgstr ""
 "«%.250s»%.10s%.100s%.10s"
 
 #: src/archives.c
-#, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
+#, fuzzy, c-format
+#| msgid "unable to stat '%.255s' (which I was about to install)"
+msgid "unable to stat '%.255s' (which was about to be installed)"
 msgstr "fann ikkje «%.255s» (som eg skulle til å installera)"
 
 #: src/archives.c
@@ -2105,6 +2151,24 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+"dpkg: Nei, %s er nødvendig. Vil ikkje fjerna oppsettet\n"
+" for å kunna fjerna %s.\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr ""
+"dpkg: Åtvaring - vurderer fjerning av oppsett for den nødvendige\n"
+" pakken %s for å kunna fjerna %s.\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 "dpkg: Nei, %s er nødvendig. Vil ikkje fjerna oppsettet\n"
@@ -2812,11 +2876,10 @@ msgstr ""
 "GNU General Public Licence versjon 2 eller nyare. Det finst INGEN garanti.\n"
 "Sjå «dpkg-deb --licence» for detaljar.\n"
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
 #, c-format
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 
@@ -3200,6 +3263,10 @@ msgid "versioned Provides"
 msgstr ""
 
 #: src/enquiry.c
+msgid "Protected field"
+msgstr ""
+
+#: src/enquiry.c
 #, fuzzy, c-format
 #| msgid ""
 #| "dpkg: cannot see how to satisfy pre-dependency:\n"
@@ -3355,7 +3422,7 @@ msgid "Configure any package which may help this one"
 msgstr ""
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
+msgid "Install or remove incidental packages even when on hold"
 msgstr ""
 
 #: src/force.c
@@ -3452,6 +3519,10 @@ msgstr "kravproblem - fjernar ikkje"
 
 #: src/force.c
 msgid "Remove packages which require installation"
+msgstr ""
+
+#: src/force.c
+msgid "Remove a protected package"
 msgstr ""
 
 #: src/force.c
@@ -3699,7 +3770,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 
@@ -3728,6 +3799,8 @@ msgid ""
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3742,6 +3815,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3751,12 +3825,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 
@@ -4292,6 +4367,7 @@ msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -4334,6 +4410,12 @@ msgstr ""
 #, fuzzy
 #| msgid "This is an essential package - it should not be removed."
 msgid "this is an essential package; it should not be removed"
+msgstr "Dette er ein nødvendig pakke - den bør ikkje fjernast."
+
+#: src/remove.c
+#, fuzzy
+#| msgid "This is an essential package - it should not be removed."
+msgid "this is a protected package; it should not be removed"
 msgstr "Dette er ein nødvendig pakke - den bør ikkje fjernast."
 
 #: src/remove.c
@@ -4596,6 +4678,13 @@ msgstr "klarte ikkje lesa oppsettsfilkatalogen «%.250s» (frå «%.250s»)"
 msgid "Use --help for help about overriding file stat information."
 msgstr ""
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4616,9 +4705,9 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4691,8 +4780,8 @@ msgstr "» pakkehandteringsprogram\n"
 #: src/trigcmd.c
 #, c-format
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 
@@ -4902,6 +4991,11 @@ msgid "conffile name '%s' is too long, or missing final newline"
 msgstr ""
 "åtvaring, namnet på oppsettsfila «%.50s...» er for langt eller manglar "
 "linjeskift til slutt\n"
+
+#: src/unpack.c dpkg-deb/build.c
+#, fuzzy, c-format
+msgid "conffile name '%s' is not an absolute pathname"
+msgstr "finn ikkje oppsettsfila «%.250s»"
 
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
@@ -5580,9 +5674,9 @@ msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -6083,6 +6177,12 @@ msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr "Fila «%.250s» er ikkje ein del av eit oppdelt arkiv.\n"
 
 #: dpkg-split/queue.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create directory %s"
+msgstr "klarte ikkje skanna katalogen «%.255s»"
+
+#: dpkg-split/queue.c
 #, c-format
 msgid "unable to reopen part file '%.250s'"
 msgstr "klarte ikkje opna delfila «%.250s» på nytt"
@@ -6255,6 +6355,8 @@ msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -6278,16 +6380,6 @@ msgid "malloc failed (%zu bytes)"
 msgstr "nytildeling mislukkast (%ld byte)"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "two commands specified: --%s and --%s"
-msgstr ""
-
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-msgid "cannot append to '%s'"
-msgstr "klarte ikkje opna avlusingsfil «%s»: %s\n"
-
-#: utils/update-alternatives.c
 #, fuzzy, c-format
 msgid "wait for subprocess %s failed"
 msgstr "venting på %s mislukkast"
@@ -6296,6 +6388,23 @@ msgstr "venting på %s mislukkast"
 #, fuzzy, c-format
 msgid "unable to remove '%s'"
 msgstr "klarte ikkje køyra %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create log directory '%s'"
+msgstr "klarte ikkje skanna katalogen «%.255s»"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot append to '%s'"
+msgstr "klarte ikkje opna avlusingsfil «%s»: %s\n"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "unable to read link '%.255s'"
+msgid "unable to read link '%s%.255s'"
+msgstr "klarte ikkje lesa lenkja «%.255s»"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -6408,8 +6517,19 @@ msgstr "verdien for feltet «%s» finst meir enn éin gong"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create administrative directory '%s'"
+msgstr "klarte ikkje skanna oppdateringskatalogen «%.255s»"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
 msgid "unable to flush file '%s'"
 msgstr "klarte ikkje tømma i vsnprintf"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot stat file '%s%s'"
+msgstr "fann ikkje «%.255s» (i «%.255s»)"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6500,6 +6620,12 @@ msgid "not replacing %s with a link"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create alternatives directory '%s'"
+msgstr "klarte ikkje skanna oppdateringskatalogen «%.255s»"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr ""
@@ -6533,13 +6659,13 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr ""
 
@@ -6550,12 +6676,12 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "Pakkar ut %s (frå %s) ...\n"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "Pakkar ut %s (frå %s) ...\n"
 
 #: utils/update-alternatives.c
@@ -6632,7 +6758,7 @@ msgstr ""
 #: utils/update-alternatives.c
 #, fuzzy, c-format
 #| msgid "error ensuring `%.250s' doesn't exist"
-msgid "alternative path %s doesn't exist"
+msgid "alternative path %s%s doesn't exist"
 msgstr "klarte ikkje sikra at «%.250s» ikkje finst"
 
 #: utils/update-alternatives.c
@@ -6651,13 +6777,19 @@ msgid "alternative link %s is already managed by %s (slave of %s)"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, c-format
+msgid "two commands specified: --%s and --%s"
+msgstr ""
+
+#: utils/update-alternatives.c
 #, fuzzy, c-format
 msgid "unknown argument '%s'"
 msgstr "ukjend komprimeringstype «%s»!"
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
-msgstr ""
+#, fuzzy, c-format
+msgid "--%s needs <link> <name> <path> <priority>"
+msgstr "--%s krev eit .deb-filnamn som parameter"
 
 #: utils/update-alternatives.c
 msgid "<link> and <path> can't be the same"
@@ -6682,12 +6814,14 @@ msgid "--%s needs <name>"
 msgstr "--%s tek ingen parametrar"
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, c-format
+msgid "--%s only allowed with --%s"
 msgstr ""
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
-msgstr ""
+#, fuzzy, c-format
+msgid "--%s needs <link> <name> <path>"
+msgstr "--%s krev eit .deb-filnamn som parameter"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6705,9 +6839,9 @@ msgid "--%s needs a <file> argument"
 msgstr "--build krev ein katalogparameter"
 
 #: utils/update-alternatives.c
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
 
 #: utils/update-alternatives.c
@@ -6738,6 +6872,10 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
+
+#, fuzzy
+#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgstr "klarte ikkje lesa depotkatalogen «%.250s»"
 
 #, fuzzy
 #~| msgid "unable to open tmpfile for vsnprintf"

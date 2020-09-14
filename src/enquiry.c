@@ -440,6 +440,14 @@ assertverprovides(const char *const *argv)
   return assert_version_support(argv, &version, _("versioned Provides"));
 }
 
+int
+assert_protected(const char *const *argv)
+{
+  struct dpkg_version version = { 0, "1.20.1", NULL };
+
+  return assert_version_support(argv, &version, _("Protected field"));
+}
+
 /**
  * Print a single package which:
  *  (a) is the target of one or more relevant predependencies.
@@ -742,8 +750,8 @@ cmpversions(const char *const *argv)
   }
   rc = dpkg_version_compare(&a, &b);
   debug(dbg_general, "cmpversions a='%s' b='%s' r=%d",
-        versiondescribe(&a,vdew_always),
-        versiondescribe(&b,vdew_always),
+        versiondescribe_c(&a,vdew_always),
+        versiondescribe_c(&b,vdew_always),
         rc);
   if (rc > 0)
     return rip->if_greater;

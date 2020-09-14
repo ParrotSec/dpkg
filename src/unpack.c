@@ -356,6 +356,10 @@ deb_parse_conffiles(struct pkginfo *pkg, const char *control_conffiles,
       continue;
     *p = '\0';
 
+    if (conffilenamebuf[0] != '/')
+      ohshit(_("conffile name '%s' is not an absolute pathname"),
+             conffilenamebuf);
+
     namenode = fsys_hash_find_node(conffilenamebuf, 0);
     namenode->oldhash = NEWCONFFILEFLAG;
     newconff = tar_fsys_namenode_queue_push(newconffiles, namenode);
@@ -768,6 +772,7 @@ pkg_update_fields(struct pkginfo *pkg, struct fsys_namenode_queue *newconffiles)
 
   /* We copy the text fields. */
   pkg->installed.essential = pkg->available.essential;
+  pkg->installed.is_protected = pkg->available.is_protected;
   pkg->installed.multiarch = pkg->available.multiarch;
   pkg->installed.description = pkg->available.description;
   pkg->installed.maintainer = pkg->available.maintainer;

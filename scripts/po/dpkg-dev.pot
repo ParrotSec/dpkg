@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.19.7\n"
+"Project-Id-Version: dpkg 1.20.5\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,6 +127,12 @@ msgid ""
 "correct CC environment variable"
 msgstr ""
 
+#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Cppfilt.pm
+#, perl-format
+msgid "unable to execute %s"
+msgstr ""
+
 #: scripts/dpkg-buildflags.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
@@ -190,6 +196,7 @@ msgid ""
 "      --pre-clean             pre clean source tree (default).\n"
 "      --no-post-clean         do not post clean source tree (default).\n"
 "  -tc, --post-clean           post clean source tree.\n"
+"      --sanitize-env          sanitize the build environment.\n"
 "  -D, --check-builddeps       check build dependencies and conflicts "
 "(default).\n"
 "  -d, --no-check-builddeps    do not check build dependencies and "
@@ -227,7 +234,7 @@ msgid ""
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
 "  -p, --sign-command=<command>\n"
 "                              command to sign .dsc and/or .changes files\n"
-"                                (default is gpg2 or gpg).\n"
+"                                (default is gpg).\n"
 "  -k, --sign-key=<keyid>      the key to use for signing.\n"
 "  -ap, --sign-pause           add pause before starting signature process.\n"
 "  -us, --unsigned-source      unsigned source package.\n"
@@ -457,6 +464,11 @@ msgid "cannot close %s"
 msgstr ""
 
 #: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "cannot move %s to %s"
+msgstr ""
+
+#: scripts/dpkg-buildpackage.pl
 msgid "source-only upload: Debian-native package"
 msgstr ""
 
@@ -522,7 +534,7 @@ msgstr ""
 #: scripts/dpkg-checkbuilddeps.pl scripts/dpkg-shlibdeps.pl
 #: scripts/dpkg-source.pl
 #, perl-format
-msgid "error occurred while parsing %s"
+msgid "cannot parse %s field"
 msgstr ""
 
 #: scripts/dpkg-checkbuilddeps.pl
@@ -775,7 +787,7 @@ msgstr ""
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
 msgid ""
-"current host architecture '%s' does not appear in package's architecture "
+"current host architecture '%s' does not appear in package '%s' architecture "
 "list (%s)"
 msgstr ""
 
@@ -786,19 +798,19 @@ msgstr ""
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
-msgid "error occurred while parsing %s field: %s"
+msgid "parsing package '%s' %s field: %s"
 msgstr ""
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
 msgid ""
-"the %s field contains an arch-specific dependency but the package is "
+"the %s field contains an arch-specific dependency but the package '%s' is "
 "architecture all"
 msgstr ""
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
-msgid "%s package with udeb specific field %s"
+msgid "%s package '%s' with udeb specific field %s"
 msgstr ""
 
 #: scripts/dpkg-gencontrol.pl scripts/Dpkg/Source/Package.pm
@@ -1412,11 +1424,6 @@ msgid ""
 "build tree"
 msgstr ""
 
-#: scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm scripts/Dpkg/Shlibs/Cppfilt.pm
-#, perl-format
-msgid "unable to execute %s"
-msgstr ""
-
 #: scripts/dpkg-shlibdeps.pl
 msgid "diversions involved - output may be incorrect"
 msgstr ""
@@ -1483,13 +1490,7 @@ msgstr ""
 
 #: scripts/dpkg-source.pl
 #, perl-format
-msgid ""
-"binary package stanza %s is using an obsolete Build-Profiles field syntax"
-msgstr ""
-
-#: scripts/dpkg-source.pl
-#, perl-format
-msgid "'%s' is not a legal architecture string"
+msgid "'%s' is not a legal architecture string in package '%s'"
 msgstr ""
 
 #: scripts/dpkg-source.pl
@@ -1569,6 +1570,11 @@ msgstr ""
 #: scripts/dpkg-source.pl
 #, perl-format
 msgid "%s field contains value %s, but no tests control file %s"
+msgstr ""
+
+#: scripts/dpkg-source.pl
+#, perl-format
+msgid "test control %s is missing %s or %s field"
 msgstr ""
 
 #: scripts/dpkg-source.pl
@@ -2104,12 +2110,17 @@ msgid "can't parse dependency %s"
 msgstr ""
 
 #: scripts/Dpkg/Deps.pm
+#, perl-format
+msgid "virtual dependency contains invalid relation: %s"
+msgstr ""
+
+#: scripts/Dpkg/Deps.pm
 msgid "an union dependency can only contain simple dependencies"
 msgstr ""
 
 #: scripts/Dpkg/Dist/Files.pm
 #, perl-format
-msgid "badly formed package name in files list file, line %d"
+msgid "badly formed file name in files list file, line %d"
 msgstr ""
 
 #: scripts/Dpkg/Dist/Files.pm
@@ -2237,6 +2248,26 @@ msgstr ""
 msgid "cannot write signature file %s"
 msgstr ""
 
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "cannot import key in %s since GnuPG is not installed"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "failed to import key in %s"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "cannot verify signature on %s since GnuPG is not installed"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "failed to verify signature on %s"
+msgstr ""
+
 #: scripts/Dpkg/Package.pm
 msgid "may not be empty string"
 msgstr ""
@@ -2248,6 +2279,16 @@ msgstr ""
 
 #: scripts/Dpkg/Package.pm
 msgid "must start with an alphanumeric character"
+msgstr ""
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' cannot be canonicalized"
+msgstr ""
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' points outside source root (to '%s')"
 msgstr ""
 
 #: scripts/Dpkg/Shlibs.pm
@@ -2405,18 +2446,17 @@ msgid "%s and %s fields are required to compute the source basename"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "failed to verify signature on %s"
-msgstr ""
-
-#: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "cannot verify signature on %s since GnuPG is not installed"
+msgid "upstream tarball signatures but no upstream signing key"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
 msgid "%s is not a valid option for %s"
+msgstr ""
+
+#: scripts/Dpkg/Source/Package.pm
+#, perl-format
+msgid "cannot copy %s to %s"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package.pm
@@ -2501,7 +2541,7 @@ msgstr ""
 msgid "source handling style -s%s not allowed with -x"
 msgstr ""
 
-#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+#: scripts/Dpkg/Source/Package/V1.pm
 msgid "multiple tarfiles in v1.0 source package"
 msgstr ""
 
@@ -2616,6 +2656,14 @@ msgstr ""
 msgid "unable to stat putative unpacked orig '%s'"
 msgstr ""
 
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Quilt.pm
+msgid "non-native package version does not contain a revision"
+msgstr ""
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+msgid "native package version may not have a revision"
+msgstr ""
+
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid "source directory '%s' is not <sourcepackage>-<upstreamversion> '%s'"
@@ -2659,6 +2707,10 @@ msgstr ""
 #: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V2.pm
 #, perl-format
 msgid "building %s using existing %s"
+msgstr ""
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V2.pm
+msgid "upstream signing key but no upstream tarball signature"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package/V1.pm
@@ -2991,12 +3043,12 @@ msgid "setting up shallow clone"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package/V3/Native.pm
-#, perl-format
-msgid "unrecognized file for a native source package: %s"
+msgid "multiple tarfiles in native source package"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package/V3/Native.pm
-msgid "native package version may not have a revision"
+#, perl-format
+msgid "unrecognized file for a native source package: %s"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
@@ -3005,10 +3057,6 @@ msgstr ""
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 msgid "accept quilt metadata <version> even if unknown"
-msgstr ""
-
-#: scripts/Dpkg/Source/Package/V3/Quilt.pm
-msgid "non-native package version does not contain a revision"
 msgstr ""
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm

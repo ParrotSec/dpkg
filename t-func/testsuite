@@ -909,7 +909,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-dpkg 1.19.7 test suite: dpkg tools functional test suite test groups:
+dpkg 1.20.5 test suite: dpkg tools functional test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -950,7 +950,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (dpkg 1.19.7)" &&
+  $as_echo "$as_me (dpkg 1.20.5)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1133,11 +1133,11 @@ exec 5>>"$at_suite_log"
 
 # Banners and logs.
 $as_echo "## --------------------------------------------------------- ##
-## dpkg 1.19.7 test suite: dpkg tools functional test suite. ##
+## dpkg 1.20.5 test suite: dpkg tools functional test suite. ##
 ## --------------------------------------------------------- ##"
 {
   $as_echo "## --------------------------------------------------------- ##
-## dpkg 1.19.7 test suite: dpkg tools functional test suite. ##
+## dpkg 1.20.5 test suite: dpkg tools functional test suite. ##
 ## --------------------------------------------------------- ##"
   echo
 
@@ -1981,7 +1981,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <debian-dpkg@lists.debian.org>
-   Subject: [dpkg 1.19.7] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [dpkg 1.20.5] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2781,10 +2781,10 @@ at_xfail=no
 
 
 
-  mkdir -p 'pkg-conff-dupe/DEBIAN'
+  mkdir -p 'pkg-conff-duped/DEBIAN'
 
-  cat >'pkg-conff-dupe/DEBIAN/control' <<CTRL_TEMPL
-Package: pkg-conff-dupe
+  cat >'pkg-conff-duped/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-duped
 Version: 0.0-1
 Section: test
 Priority: extra
@@ -2794,31 +2794,31 @@ Description: test package
 CTRL_TEMPL
 
 
-  mkdir -p 'pkg-conff-dupe/DEBIAN'
+  mkdir -p 'pkg-conff-duped/DEBIAN'
 
-  cat >'pkg-conff-dupe/DEBIAN/conffiles' <<CTRL_TEMPL
+  cat >'pkg-conff-duped/DEBIAN/conffiles' <<CTRL_TEMPL
 /test-conffile-1
 /test-conffile-2
 /test-conffile-1
 CTRL_TEMPL
 
-cat >pkg-conff-dupe/test-conffile-1 <<'_ATEOF'
+cat >pkg-conff-duped/test-conffile-1 <<'_ATEOF'
 test init
 _ATEOF
 
-cat >pkg-conff-dupe/test-conffile-2 <<'_ATEOF'
+cat >pkg-conff-duped/test-conffile-2 <<'_ATEOF'
 test init
 _ATEOF
 
 { set +x
 $as_echo "$at_srcdir/deb-content.at:14:
 # Duplicate conffile entries should produce a warning.
-dpkg-deb -b pkg-conff-dupe
+dpkg-deb -b pkg-conff-duped
 "
 at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:14"
 ( $at_check_trace;
 # Duplicate conffile entries should produce a warning.
-dpkg-deb -b pkg-conff-dupe
+dpkg-deb -b pkg-conff-duped
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2834,10 +2834,10 @@ $at_traceon; }
 
 
 
-  mkdir -p 'pkg-conff-noel/DEBIAN'
+  mkdir -p 'pkg-conff-noeol/DEBIAN'
 
-  cat >'pkg-conff-noel/DEBIAN/control' <<CTRL_TEMPL
-Package: pkg-conff-noel
+  cat >'pkg-conff-noeol/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-noeol
 Version: 0.0-1
 Section: test
 Priority: extra
@@ -2846,8 +2846,8 @@ Architecture: all
 Description: test package
 CTRL_TEMPL
 
-printf "/test-conffile-1" >"pkg-conff-noel/DEBIAN/conffiles"
-cat >pkg-conff-noel/test-conffile-1 <<'_ATEOF'
+printf "/test-conffile-1" >"pkg-conff-noeol/DEBIAN/conffiles"
+cat >pkg-conff-noeol/test-conffile-1 <<'_ATEOF'
 test init
 _ATEOF
 
@@ -2855,13 +2855,13 @@ _ATEOF
 $as_echo "$at_srcdir/deb-content.at:25:
 # Conffiles need a final newline to guarantee there's been no accidental
 # file truncation.
-dpkg-deb -b pkg-conff-noel pkg-conff-noel.deb
+dpkg-deb -b pkg-conff-noeol pkg-conff-noeol.deb
 "
 at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:25"
 ( $at_check_trace;
 # Conffiles need a final newline to guarantee there's been no accidental
 # file truncation.
-dpkg-deb -b pkg-conff-noel pkg-conff-noel.deb
+dpkg-deb -b pkg-conff-noeol pkg-conff-noeol.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2871,6 +2871,52 @@ echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile name '/test-conffile-1'
   $at_diff - "$at_stderr" || at_failed=:
 echo stdout:; cat "$at_stdout"
 at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:25"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-noabs/DEBIAN'
+
+  cat >'pkg-conff-noabs/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-noabs
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-noabs/DEBIAN'
+
+  cat >'pkg-conff-noabs/DEBIAN/conffiles' <<CTRL_TEMPL
+test-conffile-rel
+CTRL_TEMPL
+
+cat >pkg-conff-noabs/test-conffile-rel <<'_ATEOF'
+test init
+_ATEOF
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:36:
+# Conffiles must use absolute pathnames.
+dpkg-deb -b pkg-conff-noabs pkg-conff-noabs.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:36"
+( $at_check_trace;
+# Conffiles must use absolute pathnames.
+dpkg-deb -b pkg-conff-noabs pkg-conff-noabs.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile name 'test-conffile-rel' is not an absolute pathname
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:36"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -2891,11 +2937,11 @@ CTRL_TEMPL
 touch 'pkg-deb-newline/file
 newline'
 { set +x
-$as_echo "$at_srcdir/deb-content.at:35:
+$as_echo "$at_srcdir/deb-content.at:45:
 # Cannot create package with newlines in filenames.
 dpkg-deb -b pkg-deb-newline
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:35"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:45"
 ( $at_check_trace;
 # Cannot create package with newlines in filenames.
 dpkg-deb -b pkg-deb-newline
@@ -2908,7 +2954,7 @@ newline'
 " | \
   $at_diff - "$at_stderr" || at_failed=:
 echo stdout:; cat "$at_stdout"
-at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:35"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:45"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -3065,7 +3111,7 @@ $as_echo "$at_srcdir/deb-split.at:14:
 chmod -R u+w pkg-split
 # XXX: Some environments set SIGPIPE to ignore which we cannot reset, and 'yes'
 # does check print error conditions, so we ignore its error message here.
-yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=1024 status=none
+yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=2048 status=none
 find pkg-split | xargs touch -t 197001010100.00
 dpkg-deb --root-owner-group -Znone -b pkg-split >/dev/null
 "
@@ -3075,7 +3121,7 @@ at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:14"
 chmod -R u+w pkg-split
 # XXX: Some environments set SIGPIPE to ignore which we cannot reset, and 'yes'
 # does check print error conditions, so we ignore its error message here.
-yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=1024 status=none
+yes 2>/dev/null | dd of=pkg-split/data-file bs=1024 count=2048 status=none
 find pkg-split | xargs touch -t 197001010100.00
 dpkg-deb --root-owner-group -Znone -b pkg-split >/dev/null
 
@@ -3091,25 +3137,25 @@ $at_traceon; }
 
 { set +x
 $as_echo "$at_srcdir/deb-split.at:24:
-# Test splitting a package (in 3 parts: 400 KiB + 400 KiB + 224 KiB)
-dpkg-split -S 400 -s pkg-split.deb pkg-split-part
-test -f pkg-split-part.1of3.deb
-test -f pkg-split-part.2of3.deb
-test -f pkg-split-part.3of3.deb
+# Test splitting a package (in 10 parts: 9 * 210 KiB B + 158 KiB)
+dpkg-split -S 210 -s pkg-split.deb pkg-split-part
+for p in \$(seq 10); do
+  test -f pkg-split-part.\${p}of10.deb
+done
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:24"
+at_fn_check_prepare_notrace 'a $(...) command substitution' "deb-split.at:24"
 ( $at_check_trace;
-# Test splitting a package (in 3 parts: 400 KiB + 400 KiB + 224 KiB)
-dpkg-split -S 400 -s pkg-split.deb pkg-split-part
-test -f pkg-split-part.1of3.deb
-test -f pkg-split-part.2of3.deb
-test -f pkg-split-part.3of3.deb
+# Test splitting a package (in 10 parts: 9 * 210 KiB B + 158 KiB)
+dpkg-split -S 210 -s pkg-split.deb pkg-split-part
+for p in $(seq 10); do
+  test -f pkg-split-part.${p}of10.deb
+done
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "Splitting package pkg-split into 3 parts: 1 2 3 done
+echo >>"$at_stdout"; $as_echo "Splitting package pkg-split into 10 parts: 1 2 3 4 5 6 7 8 9 10 done
 " | \
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:24"
@@ -3117,80 +3163,153 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
-DEB_SPLIT_MD5SUM=c669258de88761bf90ad6621bdffd6f1
-DEB_SPLIT_LENGTH=1065152
+DEB_SPLIT_MD5SUM=0a4dfee0e57e273cd260ece947ce6bde
+DEB_SPLIT_LENGTH=2109632
+DEB_SPLIT_PART_LENGTH=214016
+DEB_SPLIT_PART_SIZE=214222
+DEB_SPLIT_LAST_LENGTH=183488
+DEB_SPLIT_LAST_SIZE=183694
 
 { set +x
-$as_echo "$at_srcdir/deb-split.at:36:
+$as_echo "$at_srcdir/deb-split.at:40:
 # Test getting information about the split parts (parsing verification)
-dpkg-split -I pkg-split-part.1of3.deb
-dpkg-split -I pkg-split-part.2of3.deb
-dpkg-split -I pkg-split-part.3of3.deb
+dpkg-split -I pkg-split-part.1of10.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:36"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:40"
 ( $at_check_trace;
 # Test getting information about the split parts (parsing verification)
-dpkg-split -I pkg-split-part.1of3.deb
-dpkg-split -I pkg-split-part.2of3.deb
-dpkg-split -I pkg-split-part.3of3.deb
+dpkg-split -I pkg-split-part.1of10.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "pkg-split-part.1of3.deb:
+echo >>"$at_stdout"; $as_echo "pkg-split-part.1of10.deb:
     Part format version:            2.1
     Part of package:                pkg-split
         ... version:                0.0-1
         ... architecture:           all
         ... MD5 checksum:           $DEB_SPLIT_MD5SUM
         ... length:                 $DEB_SPLIT_LENGTH bytes
-        ... split every:            408576 bytes
-    Part number:                    1/3
-    Part length:                    408576 bytes
+        ... split every:            $DEB_SPLIT_PART_LENGTH bytes
+    Part number:                    1/10
+    Part length:                    $DEB_SPLIT_PART_LENGTH bytes
     Part offset:                    0 bytes
-    Part file size (used portion):  408780 bytes
-
-pkg-split-part.2of3.deb:
-    Part format version:            2.1
-    Part of package:                pkg-split
-        ... version:                0.0-1
-        ... architecture:           all
-        ... MD5 checksum:           $DEB_SPLIT_MD5SUM
-        ... length:                 $DEB_SPLIT_LENGTH bytes
-        ... split every:            408576 bytes
-    Part number:                    2/3
-    Part length:                    408576 bytes
-    Part offset:                    408576 bytes
-    Part file size (used portion):  408780 bytes
-
-pkg-split-part.3of3.deb:
-    Part format version:            2.1
-    Part of package:                pkg-split
-        ... version:                0.0-1
-        ... architecture:           all
-        ... MD5 checksum:           $DEB_SPLIT_MD5SUM
-        ... length:                 $DEB_SPLIT_LENGTH bytes
-        ... split every:            408576 bytes
-    Part number:                    3/3
-    Part length:                    248000 bytes
-    Part offset:                    817152 bytes
-    Part file size (used portion):  248204 bytes
+    Part file size (used portion):  $DEB_SPLIT_PART_SIZE bytes
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:36"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:40"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+{ set +x
+$as_echo "$at_srcdir/deb-split.at:57:
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.2of10.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:57"
+( $at_check_trace;
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.2of10.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "pkg-split-part.2of10.deb:
+    Part format version:            2.1
+    Part of package:                pkg-split
+        ... version:                0.0-1
+        ... architecture:           all
+        ... MD5 checksum:           $DEB_SPLIT_MD5SUM
+        ... length:                 $DEB_SPLIT_LENGTH bytes
+        ... split every:            $DEB_SPLIT_PART_LENGTH bytes
+    Part number:                    2/10
+    Part length:                    $DEB_SPLIT_PART_LENGTH bytes
+    Part offset:                    214016 bytes
+    Part file size (used portion):  $DEB_SPLIT_PART_SIZE bytes
+
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:57"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+{ set +x
+$as_echo "$at_srcdir/deb-split.at:74:
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.9of10.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:74"
+( $at_check_trace;
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.9of10.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "pkg-split-part.9of10.deb:
+    Part format version:            2.1
+    Part of package:                pkg-split
+        ... version:                0.0-1
+        ... architecture:           all
+        ... MD5 checksum:           $DEB_SPLIT_MD5SUM
+        ... length:                 $DEB_SPLIT_LENGTH bytes
+        ... split every:            $DEB_SPLIT_PART_LENGTH bytes
+    Part number:                    9/10
+    Part length:                    $DEB_SPLIT_PART_LENGTH bytes
+    Part offset:                    1712128 bytes
+    Part file size (used portion):  $DEB_SPLIT_PART_SIZE bytes
+
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:74"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+{ set +x
+$as_echo "$at_srcdir/deb-split.at:91:
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.10of10.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:91"
+( $at_check_trace;
+# Test getting information about the split parts (parsing verification)
+dpkg-split -I pkg-split-part.10of10.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; $as_echo "pkg-split-part.10of10.deb:
+    Part format version:            2.1
+    Part of package:                pkg-split
+        ... version:                0.0-1
+        ... architecture:           all
+        ... MD5 checksum:           $DEB_SPLIT_MD5SUM
+        ... length:                 $DEB_SPLIT_LENGTH bytes
+        ... split every:            $DEB_SPLIT_PART_LENGTH bytes
+    Part number:                    10/10
+    Part length:                    $DEB_SPLIT_LAST_LENGTH bytes
+    Part offset:                    1926144 bytes
+    Part file size (used portion):  $DEB_SPLIT_LAST_SIZE bytes
+
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:91"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-$as_echo "$at_srcdir/deb-split.at:82:
+$as_echo "$at_srcdir/deb-split.at:109:
 # Test joining the split parts back together
 dpkg-split -o pkg-joined.deb -j pkg-split-part.*.deb
 cmp pkg-split.deb pkg-joined.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:82"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:109"
 ( $at_check_trace;
 # Test joining the split parts back together
 dpkg-split -o pkg-joined.deb -j pkg-split-part.*.deb
@@ -3200,10 +3319,10 @@ cmp pkg-split.deb pkg-joined.deb
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "Putting package pkg-split together from 3 parts: 1 2 3 done
+echo >>"$at_stdout"; $as_echo "Putting package pkg-split together from 10 parts: 1 2 3 4 5 6 7 8 9 10 done
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:82"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:109"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 

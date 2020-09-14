@@ -63,6 +63,10 @@ sub init_options {
     $self->{options}{ignore_bad_version} //= 0;
     $self->{options}{abort_on_upstream_changes} //= 0;
 
+    # Set default validation checks.
+    $self->{options}{require_valid_signature} //= 0;
+    $self->{options}{require_strong_checksums} //= 0;
+
     # V1.0 only supports gzip compression.
     $self->{options}{compression} //= 'gzip';
     $self->{options}{comp_level} //= compression_get_property('gzip', 'default_level');
@@ -347,6 +351,16 @@ sub do_build {
 	}
     }
 
+    my $v = Dpkg::Version->new($self->{fields}->{'Version'});
+    if ($sourcestyle =~ m/[kpursKPUR]/) {
+        error(g_('non-native package version does not contain a revision'))
+            if $v->is_native();
+    } else {
+        # FIXME: This will become fatal in the near future.
+        warning(g_('native package version may not have a revision'))
+            unless $v->is_native();
+    }
+
     my ($dirname, $dirbase) = fileparse($dir);
     if ($dirname ne $basedirname) {
 	warning(g_("source directory '%s' is not <sourcepackage>" .
@@ -409,13 +423,22 @@ sub do_build {
 	     $sourcepackage, $tarname);
     }
 
-    $self->add_file($tarname) if $tarname;
-    if ($tarname and -e "$tarname.sig" and not -e "$tarname.asc") {
-        openpgp_sig_to_asc("$tarname.sig", "$tarname.asc");
+    if ($tarname) {
+        $self->add_file($tarname);
+        if (-e "$tarname.sig" and not -e "$tarname.asc") {
+            openpgp_sig_to_asc("$tarname.sig", "$tarname.asc");
+        }
     }
     if ($tarsign and -e $tarsign) {
         info(g_('building %s using existing %s'), $sourcepackage, $tarsign);
         $self->add_file($tarsign);
+
+        $self->check_original_tarball_signature($dir, $tarsign);
+    } else {
+        my $key = $self->get_upstream_signing_key($dir);
+        if (-e $key) {
+            warning(g_('upstream signing key but no upstream tarball signature'));
+        }
     }
 
     if ($sourcestyle =~ m/[kpKP]/) {

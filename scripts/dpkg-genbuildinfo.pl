@@ -36,7 +36,7 @@ use Dpkg::Checksums;
 use Dpkg::ErrorHandling;
 use Dpkg::Arch qw(get_build_arch get_host_arch debarch_eq);
 use Dpkg::Build::Types;
-use Dpkg::Build::Info qw(get_build_env_whitelist);
+use Dpkg::Build::Info qw(get_build_env_allowed);
 use Dpkg::BuildOptions;
 use Dpkg::BuildFlags;
 use Dpkg::BuildProfiles qw(get_build_profiles);
@@ -69,6 +69,7 @@ my $buildinfo_format = '1.0';
 my $buildinfo;
 
 my $checksums = Dpkg::Checksums->new();
+my %distbinaries;
 my %archadded;
 my @archvalues;
 
@@ -247,13 +248,13 @@ sub collect_installed_builddeps {
 }
 
 sub cleansed_environment {
-    # Consider only whitelisted variables which are not supposed to leak
+    # Consider only allowed variables which are not supposed to leak
     # local user information.
     my %env = map {
         $_ => $ENV{$_}
     } grep {
         exists $ENV{$_}
-    } get_build_env_whitelist();
+    } get_build_env_allowed();
 
     # Record flags from dpkg-buildflags.
     my $bf = Dpkg::BuildFlags->new();
@@ -385,6 +386,15 @@ if (build_has_any(BUILD_BINARY)) {
         # Make us a bit idempotent.
         next if $file->{filename} =~ m/\.buildinfo$/;
 
+        if (defined $file->{arch}) {
+            my $arch_all = debarch_eq('all', $file->{arch});
+
+            next if build_has_none(BUILD_ARCH_INDEP) and $arch_all;
+            next if build_has_none(BUILD_ARCH_DEP) and not $arch_all;
+
+            $distbinaries{$file->{package}} = 1 if defined $file->{package};
+        }
+
         my $path = "$uploadfilesdir/$file->{filename}";
         $checksums->add_from_file($path, key => $file->{filename});
 
@@ -397,7 +407,7 @@ if (build_has_any(BUILD_BINARY)) {
 
 $fields->{'Format'} = $buildinfo_format;
 $fields->{'Source'} = $spackage;
-$fields->{'Binary'} = join(' ', map { $_->{'Package'} } $control->get_packages());
+$fields->{'Binary'} = join(' ', sort keys %distbinaries);
 # Avoid overly long line by splitting over multiple lines.
 if (length($fields->{'Binary'}) > 980) {
     $fields->{'Binary'} =~ s/(.{0,980}) /$1\n/g;

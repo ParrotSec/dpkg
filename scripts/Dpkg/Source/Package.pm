@@ -1,5 +1,5 @@
 # Copyright © 2008-2011 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2008-2015 Guillem Jover <guillem@debian.org>
+# Copyright © 2008-2019 Guillem Jover <guillem@debian.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Dpkg::Source::Package - manipulate Debian source packages
 
 =head1 DESCRIPTION
 
-This module provides an object that can manipulate Debian source
+This module provides a class that can manipulate Debian source
 packages. While it supports both the extraction and the creation
 of source packages, the only API that is officially supported
 is the one that supports the extraction of the source package.
@@ -34,7 +34,7 @@ is the one that supports the extraction of the source package.
 use strict;
 use warnings;
 
-our $VERSION = '1.03';
+our $VERSION = '2.01';
 our @EXPORT_OK = qw(
     get_default_diff_ignore_regex
     set_default_diff_ignore_regex
@@ -44,6 +44,8 @@ our @EXPORT_OK = qw(
 use Exporter qw(import);
 use POSIX qw(:errno_h :sys_wait_h);
 use Carp;
+use File::Temp;
+use File::Copy qw(cp);
 use File::Basename;
 
 use Dpkg::Gettext;
@@ -52,11 +54,10 @@ use Dpkg::Control;
 use Dpkg::Checksums;
 use Dpkg::Version;
 use Dpkg::Compression;
-use Dpkg::Exit qw(run_exit_handlers);
-use Dpkg::Path qw(check_files_are_the_same find_command);
-use Dpkg::IPC;
+use Dpkg::Path qw(check_files_are_the_same check_directory_traversal);
 use Dpkg::Vendor qw(run_vendor_hook);
 use Dpkg::Source::Format;
+use Dpkg::OpenPGP;
 
 my $diff_ignore_default_regex = '
 # Ignore general backup files
@@ -78,14 +79,8 @@ my $diff_ignore_default_regex = '
 $diff_ignore_default_regex =~ s/^#.*$//mg;
 $diff_ignore_default_regex =~ s/\n//sg;
 
-# Public variables
-# XXX: Backwards compatibility, stop exporting on VERSION 2.00.
-## no critic (Variables::ProhibitPackageVars)
-our $diff_ignore_default_regexp;
-*diff_ignore_default_regexp = \$diff_ignore_default_regex;
-
 no warnings 'qw'; ## no critic (TestingAndDebugging::ProhibitNoWarnings)
-our @tar_ignore_default_pattern = qw(
+my @tar_ignore_default_pattern = qw(
 *.a
 *.la
 *.o
@@ -208,7 +203,7 @@ source package after its extraction.
 
 =cut
 
-# Object methods
+# Class methods
 sub new {
     my ($this, %args) = @_;
     my $class = ref($this) || $this;
@@ -251,9 +246,16 @@ sub init_options {
          'debian/source/local-patch-header',
          'debian/files',
          'debian/files.new';
+    $self->{options}{copy_orig_tarballs} //= 0;
+
     # Skip debianization while specific to some formats has an impact
     # on code common to all formats
     $self->{options}{skip_debianization} //= 0;
+    $self->{options}{skip_patches} //= 0;
+
+    # Set default validation checks.
+    $self->{options}{require_valid_signature} //= 0;
+    $self->{options}{require_strong_checksums} //= 0;
 
     # Set default compressor for new formats.
     $self->{options}{compression} //= 'xz';
@@ -401,6 +403,54 @@ sub find_original_tarballs {
     return @tar;
 }
 
+=item $p->get_upstream_signing_key($dir)
+
+Get the filename for the upstream key.
+
+=cut
+
+sub get_upstream_signing_key {
+    my ($self, $dir) = @_;
+
+    return "$dir/debian/upstream/signing-key.asc";
+}
+
+=item $p->check_original_tarball_signature($dir, @asc)
+
+Verify the original upstream tarball signatures @asc using the upstream
+public keys. It requires the origin upstream tarballs, their signatures
+and the upstream signing key, as found in an unpacked source tree $dir.
+If any inconsistency is discovered, it immediately errors out.
+
+=cut
+
+sub check_original_tarball_signature {
+    my ($self, $dir, @asc) = @_;
+
+    my $upstream_key = $self->get_upstream_signing_key($dir);
+    if (not -e $upstream_key) {
+        warning(g_('upstream tarball signatures but no upstream signing key'));
+        return;
+    }
+
+    my $keyring = File::Temp->new(UNLINK => 1, SUFFIX => '.gpg');
+    my %opts = (
+        require_valid_signature => $self->{options}{require_valid_signature},
+    );
+    Dpkg::OpenPGP::import_key($upstream_key,
+        %opts,
+        keyring => $keyring,
+    );
+
+    foreach my $asc (@asc) {
+        Dpkg::OpenPGP::verify_signature($asc,
+            %opts,
+            keyrings => [ $keyring ],
+            datafile => $asc =~ s/\.asc$//r,
+        );
+    }
+}
+
 =item $bool = $p->is_signed()
 
 Returns 1 if the DSC files contains an embedded OpenPGP signature.
@@ -426,52 +476,22 @@ then any problem will result in a fatal error.
 sub check_signature {
     my $self = shift;
     my $dsc = $self->get_filename();
-    my @exec;
+    my @keyrings;
 
-    if (find_command('gpgv2')) {
-        push @exec, 'gpgv2';
-    } elsif (find_command('gpgv')) {
-        push @exec, 'gpgv';
-    } elsif (find_command('gpg2')) {
-        push @exec, 'gpg2', '--no-default-keyring', '-q', '--verify';
-    } elsif (find_command('gpg')) {
-        push @exec, 'gpg', '--no-default-keyring', '-q', '--verify';
+    if (length $ENV{HOME} and -r "$ENV{HOME}/.gnupg/trustedkeys.gpg") {
+        push @keyrings, "$ENV{HOME}/.gnupg/trustedkeys.gpg";
     }
-    if (scalar(@exec)) {
-        if (length $ENV{HOME} and -r "$ENV{HOME}/.gnupg/trustedkeys.gpg") {
-            push @exec, '--keyring', "$ENV{HOME}/.gnupg/trustedkeys.gpg";
-        }
-        foreach my $vendor_keyring (run_vendor_hook('package-keyrings')) {
-            if (-r $vendor_keyring) {
-                push @exec, '--keyring', $vendor_keyring;
-            }
-        }
-        push @exec, $dsc;
-
-        my ($stdout, $stderr);
-        spawn(exec => \@exec, wait_child => 1, nocheck => 1,
-              to_string => \$stdout, error_to_string => \$stderr,
-              timeout => 10);
-        if (WIFEXITED($?)) {
-            my $gpg_status = WEXITSTATUS($?);
-            print { *STDERR } "$stdout$stderr" if $gpg_status;
-            if ($gpg_status == 1 or ($gpg_status &&
-                $self->{options}{require_valid_signature}))
-            {
-                error(g_('failed to verify signature on %s'), $dsc);
-            } elsif ($gpg_status) {
-                warning(g_('failed to verify signature on %s'), $dsc);
-            }
-        } else {
-            subprocerr("@exec");
-        }
-    } else {
-        if ($self->{options}{require_valid_signature}) {
-            error(g_('cannot verify signature on %s since GnuPG is not installed'), $dsc);
-        } else {
-            warning(g_('cannot verify signature on %s since GnuPG is not installed'), $dsc);
+    foreach my $vendor_keyring (run_vendor_hook('package-keyrings')) {
+        if (-r $vendor_keyring) {
+            push @keyrings, $vendor_keyring;
         }
     }
+
+    my %opts = (
+        keyrings => \@keyrings,
+        require_valid_signature => $self->{options}{require_valid_signature},
+    );
+    Dpkg::OpenPGP::verify_signature($dsc, %opts);
 }
 
 sub describe_cmdline_options {
@@ -523,17 +543,20 @@ sub extract {
             my $src = File::Spec->catfile($self->{basedir}, $orig);
             my $dst = File::Spec->catfile($destdir, $orig);
             if (not check_files_are_the_same($src, $dst, 1)) {
-                system('cp', '--', $src, $dst);
-                subprocerr("cp $src to $dst") if $?;
+                cp($src, $dst)
+                    or syserror(g_('cannot copy %s to %s'), $src, $dst);
             }
         }
     }
 
     # Try extract
-    eval { $self->do_extract($newdirectory) };
-    if ($@) {
-        run_exit_handlers();
-        die $@;
+    $self->do_extract($newdirectory);
+
+    # Check for directory traversals.
+    if (not $self->{options}{skip_debianization}) {
+        # We need to add a trailing slash to handle the debian directory
+        # possibly being a symlink.
+        check_directory_traversal($newdirectory, "$newdirectory/debian/");
     }
 
     # Store format if non-standard so that next build keeps the same format
@@ -579,11 +602,8 @@ sub before_build {
 
 sub build {
     my $self = shift;
-    eval { $self->do_build(@_) };
-    if ($@) {
-        run_exit_handlers();
-        die $@;
-    }
+
+    $self->do_build(@_);
 }
 
 sub after_build {
@@ -613,11 +633,8 @@ sub add_file {
 
 sub commit {
     my $self = shift;
-    eval { $self->do_commit(@_) };
-    if ($@) {
-        run_exit_handlers();
-        die $@;
-    }
+
+    $self->do_commit(@_);
 }
 
 sub do_commit {
@@ -663,6 +680,18 @@ sub write_dsc {
 =back
 
 =head1 CHANGES
+
+=head2 Version 2.01 (dpkg 1.20.1)
+
+New method: get_upstream_signing_key().
+
+=head2 Version 2.00 (dpkg 1.20.0)
+
+New method: check_original_tarball_signature().
+
+Remove variable: $diff_ignore_default_regexp.
+
+Hide variable: @tar_ignore_default_pattern.
 
 =head2 Version 1.03 (dpkg 1.19.3)
 

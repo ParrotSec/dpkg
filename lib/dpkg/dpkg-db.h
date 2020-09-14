@@ -108,6 +108,8 @@ struct pkgbin {
   struct dependency *depends;
   /** The ‘essential’ flag, true = yes, false = no (absent). */
   bool essential;
+  /** The ‘protected’ flag, true = yes, false = no (absent). */
+  bool is_protected;
   enum pkgmultiarch multiarch;
   const struct dpkg_arch *arch;
   /** The following is the "pkgname:archqual" cached string, if this was a
@@ -261,10 +263,12 @@ char *dpkg_db_get_path(const char *pathpart);
 /*** from dbmodify.c ***/
 
 enum modstatdb_rw {
-  /* Those marked with \*s*\ are possible returns from modstatdb_init. */
-  msdbrw_readonly/*s*/, msdbrw_needsuperuserlockonly/*s*/,
+  /* Those marked with «return» are possible returns from modstatdb_open(). */
+  msdbrw_readonly,			/* «return» */
+  msdbrw_needsuperuserlockonly,		/* «return» */
   msdbrw_writeifposs,
-  msdbrw_write/*s*/, msdbrw_needsuperuser,
+  msdbrw_write,				/* «return» */
+  msdbrw_needsuperuser,
 
   /* Now some optional flags (starting at bit 8): */
   msdbrw_available_readonly	= DPKG_BIT(8),
@@ -348,13 +352,16 @@ enum parsedbflags {
   pdb_close_fd			= DPKG_BIT(7),
   /** Interpret filename ‘-’ as stdin. */
   pdb_dash_is_stdin		= DPKG_BIT(8),
+  /** Allow empty/missing files. */
+  pdb_allow_empty		= DPKG_BIT(9),
 
   /* Standard operations. */
 
-  pdb_parse_status		= pdb_lax_parser | pdb_weakclassification,
+  pdb_parse_status		= pdb_lax_parser | pdb_weakclassification |
+				  pdb_allow_empty,
   pdb_parse_update		= pdb_parse_status | pdb_single_stanza,
   pdb_parse_available		= pdb_recordavailable | pdb_rejectstatus |
-				  pdb_lax_parser,
+				  pdb_lax_parser | pdb_allow_empty,
   pdb_parse_binary		= pdb_recordavailable | pdb_rejectstatus |
 				  pdb_single_stanza,
 };
@@ -392,6 +399,8 @@ int parseversion(struct dpkg_version *version, const char *,
                  struct dpkg_error *err);
 const char *versiondescribe(const struct dpkg_version *,
                             enum versiondisplayepochwhen);
+const char *versiondescribe_c(const struct dpkg_version *version,
+                              enum versiondisplayepochwhen vdew);
 
 enum pkg_name_arch_when {
   /** Never display arch. */

@@ -124,7 +124,7 @@ dep_update_best_to_change_stop(perpackagestate *& best, pkginfo *trythis)
 
   debug(dbg_depcon, "update_best_to_change(best=%s{%d}, test=%s{%d});",
         best ? pkg_name(best->pkg, pnaw_always) : "",
-        best ? (int)best->spriority : -1,
+        best ? best->spriority : -1,
         trythis->set->name, trythis->clientdata->spriority);
 
   // If the problem is caused by us deselecting one of these packages
@@ -190,14 +190,19 @@ packagelist::deselect_one_of(pkginfo *per, pkginfo *ped, dependency *dep)
     best = ed;
   else if (ped->eflag & PKG_EFLAG_REINSTREQ)
     best = er;
-  else if (er->spriority < ed->spriority) best= er; // We'd rather change the
-  else if (er->spriority > ed->spriority) best= ed; // one with the lowest priority.
-  // ... failing that the one with the highest priority
-  else if (er->pkg->priority > ed->pkg->priority)
+  // We'd rather change the one with the lowest priority.
+  else if (er->spriority > ed->spriority)
+    best = ed;
+  else if (er->spriority < ed->spriority)
     best = er;
+  // ... failing that the one with the highest priority.
   else if (er->pkg->priority < ed->pkg->priority)
     best = ed;
-  else best= ed;                                      // ... failing that, the second
+  else if (er->pkg->priority > ed->pkg->priority)
+    best = er;
+  // ... failing that, the second.
+  else
+    best = ed;
 
   debug(dbg_depcon, "packagelist[%p]::deselect_one_of(): best %s{%d}",
         this, pkg_name(best->pkg, pnaw_always), best->spriority);

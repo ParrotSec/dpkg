@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2015-04-07 09:50+0200\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@gmail.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -105,6 +105,11 @@ msgstr "di xwendina %.250s de çewtî"
 
 #: lib/dpkg/atomic-file.c
 #, fuzzy, c-format
+msgid "cannot create base directory for %s"
+msgstr "%s nayê xebitandin"
+
+#: lib/dpkg/atomic-file.c
+#, fuzzy, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "%s nayê xebitandin"
 
@@ -192,6 +197,11 @@ msgstr "%s: çewtiya hundirî ya gzip: `%s'"
 #: lib/dpkg/compress.c
 #, fuzzy, c-format
 msgid "%s: internal gzip write error"
+msgstr "%s: çewtiya hundirî ya gzip: `%s'"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: internal gzip read error: %s"
 msgstr "%s: çewtiya hundirî ya gzip: `%s'"
 
 #: lib/dpkg/compress.c
@@ -319,6 +329,11 @@ msgid ""
 msgstr ""
 
 #: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+msgid "cannot create the dpkg updates directory %s"
+msgstr "afirandina peldankê biserneket"
+
+#: lib/dpkg/dbmodify.c
 #, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr ""
@@ -376,6 +391,11 @@ msgstr "nikarî danegeha rewşa dpkg biqifilîne"
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr ""
+
+#: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+msgid "cannot create the dpkg database directory %s"
+msgstr "afirandina peldankê biserneket"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -709,6 +729,10 @@ msgid "outside error context, aborting"
 msgstr ""
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr ""
+
+#: lib/dpkg/ehandle.c
 #, fuzzy
 msgid "internal error"
 msgstr "%s: çewtiya hundirî ya gzip: `%s'"
@@ -880,12 +904,13 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
+msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version unterminated"
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
 msgstr ""
 
 #: lib/dpkg/fields.c
@@ -970,14 +995,31 @@ msgstr "%s nayê xebitandin"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+msgid "unable to lock %s"
+msgstr "%s nayê xebitandin"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 #| msgid "status database area is locked by another process"
-msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process\n"
+"%s"
 msgstr "qada danegeha rewşê ji aliyê pêvajoyeke din tê qifilandin"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
-msgid "unable to lock %s"
-msgstr "%s nayê xebitandin"
+#| msgid "status database area is locked by another process"
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr "qada danegeha rewşê ji aliyê pêvajoyeke din tê qifilandin"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -998,6 +1040,11 @@ msgstr "pelê `%.250s' nayê rakirin"
 #, fuzzy, c-format
 msgid "could not open log '%s': %s"
 msgstr "%s nayê xebitandin"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+msgid "cannot write to log file '%s': %s"
+msgstr "di xwendina %s de çewtî"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1319,17 +1366,17 @@ msgid "no package information in '%.255s'"
 msgstr ""
 
 #: lib/dpkg/parsehelp.c
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
-msgstr ""
+"parsing file '%s' near line %d package '%s':\n"
+" "
+msgstr "di xwendina %s de çewtî"
 
 #: lib/dpkg/parsehelp.c
 #, c-format
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
+" "
 msgstr ""
 
 #: lib/dpkg/parsehelp.c
@@ -1716,11 +1763,6 @@ msgstr ""
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "afirandina peldankê biserneket"
 
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr ""
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr ""
@@ -1828,7 +1870,7 @@ msgstr ""
 msgid "error setting ownership of symlink '%.255s'"
 msgstr ""
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
 msgstr ""
@@ -1875,9 +1917,9 @@ msgid "trying to overwrite '%.250s', which is the diverted version of '%.250s'"
 msgstr ""
 
 #: src/archives.c
-#, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
-msgstr ""
+#, fuzzy, c-format
+msgid "unable to stat '%.255s' (which was about to be installed)"
+msgstr "nikarî `%.250s' wekî `%.250s' saz bike"
 
 #: src/archives.c
 #, c-format
@@ -1973,6 +2015,21 @@ msgstr ""
 #, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+
+#: src/archives.c
+#, fuzzy, c-format
+#| msgid "Purging configuration files for %s ...\n"
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr "Pelên veavakirina %s bi tevahî tên rakirin ...\n"
+
+#: src/archives.c
+#, c-format
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 
@@ -2625,11 +2682,10 @@ msgid ""
 "later for copying conditions. There is NO warranty.\n"
 msgstr ""
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
 #, c-format
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 
@@ -2994,6 +3050,10 @@ msgid "versioned Provides"
 msgstr ""
 
 #: src/enquiry.c
+msgid "Protected field"
+msgstr ""
+
+#: src/enquiry.c
 #, c-format
 msgid ""
 "cannot see how to satisfy pre-dependency:\n"
@@ -3124,7 +3184,7 @@ msgid "Configure any package which may help this one"
 msgstr ""
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
+msgid "Install or remove incidental packages even when on hold"
 msgstr ""
 
 #: src/force.c
@@ -3221,6 +3281,10 @@ msgstr "pirsgirêkên bindestiyê - nayê rakirin"
 
 #: src/force.c
 msgid "Remove packages which require installation"
+msgstr ""
+
+#: src/force.c
+msgid "Remove a protected package"
 msgstr ""
 
 #: src/force.c
@@ -3382,7 +3446,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 
@@ -3411,6 +3475,8 @@ msgid ""
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3425,6 +3491,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3434,12 +3501,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 
@@ -3907,6 +3975,7 @@ msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -3945,6 +4014,12 @@ msgstr ""
 #, fuzzy
 #| msgid "This is an essential package - it should not be removed."
 msgid "this is an essential package; it should not be removed"
+msgstr "Ev pakêteke bingehîne - bila neyê rakirin."
+
+#: src/remove.c
+#, fuzzy
+#| msgid "This is an essential package - it should not be removed."
+msgid "this is a protected package; it should not be removed"
 msgstr "Ev pakêteke bingehîne - bila neyê rakirin."
 
 #: src/remove.c
@@ -4187,6 +4262,13 @@ msgstr "di xwendina %s de çewtî"
 msgid "Use --help for help about overriding file stat information."
 msgstr ""
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4207,9 +4289,9 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4280,8 +4362,8 @@ msgstr "Debian %s guhartoya %s.\n"
 #: src/trigcmd.c
 #, c-format
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 
@@ -4481,6 +4563,11 @@ msgstr "nikarî `%.250s' wekî `%.250s' saz bike"
 #: src/unpack.c dpkg-deb/build.c
 #, fuzzy, c-format
 msgid "conffile name '%s' is too long, or missing final newline"
+msgstr "nikarî `%.250s' wekî `%.250s' saz bike"
+
+#: src/unpack.c dpkg-deb/build.c
+#, fuzzy, c-format
+msgid "conffile name '%s' is not an absolute pathname"
 msgstr "nikarî `%.250s' wekî `%.250s' saz bike"
 
 #: src/unpack.c utils/update-alternatives.c
@@ -5086,9 +5173,9 @@ msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -5507,6 +5594,11 @@ msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr ""
 
 #: dpkg-split/queue.c
+#, fuzzy, c-format
+msgid "cannot create directory %s"
+msgstr "%s nayê xebitandin"
+
+#: dpkg-split/queue.c
 #, c-format
 msgid "unable to reopen part file '%.250s'"
 msgstr ""
@@ -5679,6 +5771,8 @@ msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -5703,16 +5797,6 @@ msgstr "(tevî %lu bayt)\n"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "two commands specified: --%s and --%s"
-msgstr ""
-
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-msgid "cannot append to '%s'"
-msgstr "di xwendina %s de çewtî"
-
-#: utils/update-alternatives.c
-#, c-format
 msgid "wait for subprocess %s failed"
 msgstr ""
 
@@ -5720,6 +5804,21 @@ msgstr ""
 #, fuzzy, c-format
 msgid "unable to remove '%s'"
 msgstr "%s nayê xebitandin"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot create log directory '%s'"
+msgstr "%s nayê xebitandin"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot append to '%s'"
+msgstr "di xwendina %s de çewtî"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "unable to read link '%s%.255s'"
+msgstr "afirandina peldankê biserneket"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -5830,8 +5929,18 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
+msgid "cannot create administrative directory '%s'"
+msgstr "%s nayê xebitandin"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
 msgid "unable to flush file '%s'"
 msgstr "%s nayê xebitandin"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot stat file '%s%s'"
+msgstr "di xwendina %s de çewtî"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -5922,6 +6031,11 @@ msgid "not replacing %s with a link"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "cannot create alternatives directory '%s'"
+msgstr "%s nayê xebitandin"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr ""
@@ -5955,13 +6069,13 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr ""
 
@@ -5972,12 +6086,12 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "%s tê derxistin (ji %s) ...\n"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "%s tê derxistin (ji %s) ...\n"
 
 #: utils/update-alternatives.c
@@ -6052,9 +6166,9 @@ msgid "alternative link %s is already managed by %s"
 msgstr ""
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "alternative path %s doesn't exist"
-msgstr ""
+#, fuzzy, c-format
+msgid "alternative path %s%s doesn't exist"
+msgstr "di xwendina %s de çewtî"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6073,11 +6187,17 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
+msgid "two commands specified: --%s and --%s"
+msgstr ""
+
+#: utils/update-alternatives.c
+#, c-format
 msgid "unknown argument '%s'"
 msgstr ""
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
+#, c-format
+msgid "--%s needs <link> <name> <path> <priority>"
 msgstr ""
 
 #: utils/update-alternatives.c
@@ -6103,11 +6223,13 @@ msgid "--%s needs <name>"
 msgstr ""
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, c-format
+msgid "--%s only allowed with --%s"
 msgstr ""
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
+#, c-format
+msgid "--%s needs <link> <name> <path>"
 msgstr ""
 
 #: utils/update-alternatives.c
@@ -6126,9 +6248,9 @@ msgid "--%s needs a <file> argument"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
 
 #: utils/update-alternatives.c

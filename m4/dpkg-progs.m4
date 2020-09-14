@@ -1,3 +1,4 @@
+# serial 1
 # Copyright © 2005 Scott James Remnant <scott@netsplit.com>
 # Copyright © 2007 Frank Lichtenheld <djpig@debian.org>
 # Copyright © 2007, 2009, 2011 Guillem Jover <guillem@debian.org>
@@ -7,7 +8,7 @@
 # Locate perl interpreter in the path
 AC_DEFUN([DPKG_PROG_PERL], [
   AC_ARG_VAR([PERL], [Perl interpreter])dnl
-  m4_define([_PERL_MIN_VERSION], [5.20.2])
+  m4_define([_PERL_MIN_VERSION], [5.24.1])
   AC_SUBST([PERL_MIN_VERSION], [_PERL_MIN_VERSION])
   AC_CACHE_CHECK([for perl >= _PERL_MIN_VERSION], [ac_cv_path_PERL], [
     AC_PATH_PROGS_FEATURE_CHECK([PERL], [perl], [
@@ -37,9 +38,25 @@ AC_DEFUN([DPKG_PROG_PERL], [
 # --------------
 AC_DEFUN([DPKG_PROG_PO4A], [
   AC_REQUIRE([AM_NLS])
+  AC_REQUIRE([DPKG_PROG_PERL])
   AC_ARG_VAR([PO4A], [po4a program])
-  AC_CHECK_PROGS([PO4A], [po4a])
-  AS_IF([test "$USE_NLS" = "yes" && test -n "$PO4A"], [
+  m4_define([_PO4A_MIN_VERSION], [0.59])
+  AC_CACHE_CHECK([for po4a >= _PO4A_MIN_VERSION], [ac_cv_path_PO4A], [
+    AC_PATH_PROGS_FEATURE_CHECK([PO4A], [po4a], [
+      po4aversion=$(LC_ALL=C $ac_path_PO4A --version \
+                      | sed -ne 's/^po4a version \(.*\)\.$/\1/p')
+      AS_VERSION_COMPARE([$po4aversion], [_PO4A_MIN_VERSION],
+                         [po4acheck=no], [po4acheck=yes], [po4acheck=yes])
+      AS_IF([test "x$po4acheck" = "xyes"], [
+        ac_cv_path_PO4A=$ac_path_PO4A ac_path_PO4A_found=:
+      ])
+    ], [
+      ac_cv_path_PO4A=no
+    ])
+  ])
+  AC_SUBST([PO4A], [$ac_cv_path_PO4A])
+
+  AS_IF([test "$USE_NLS" = "yes" && test "$ac_cv_path_PO4A" != "no"], [
     USE_PO4A=yes
   ], [
     USE_PO4A=no

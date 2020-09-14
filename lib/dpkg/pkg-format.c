@@ -51,8 +51,7 @@ enum pkg_format_type {
 struct pkg_format_node {
 	struct pkg_format_node *next;
 	enum pkg_format_type type;
-	size_t width;
-	int pad;
+	int width;
 	char *data;
 };
 
@@ -67,7 +66,6 @@ pkg_format_node_new(void)
 	buf->next = NULL;
 	buf->data = NULL;
 	buf->width = 0;
-	buf->pad = 0;
 
 	return buf;
 }
@@ -99,11 +97,7 @@ parsefield(struct pkg_format_node *node, const char *fmt, const char *fmtend,
 			return false;
 		}
 
-		if (w < 0) {
-			node->pad = 1;
-			node->width = (size_t)-w;
-		} else
-			node->width = (size_t)w;
+		node->width = w;
 
 		len = ws - fmt;
 	}
@@ -308,21 +302,16 @@ virt_fsys_last_modified(struct varbuf *vb,
 	varbuf_printf(vb, "%ld", st.st_mtime);
 }
 
+/*
+ * This function requires the caller to have loaded the package fsys metadata,
+ * otherwise it will do nothing.
+ */
 static void
 virt_fsys_files(struct varbuf *vb,
                 const struct pkginfo *pkg, const struct pkgbin *pkgbin,
                 enum fwriteflags flags, const struct fieldinfo *fip)
 {
 	struct fsys_namenode_list *node;
-
-	/* XXX: This cast is so wrong on so many levels, but the alternatives
-	 * are apparently worse. We might need to end up removing the const
-	 * from the arguments.
-	 *
-	 * Ideally loading the entire fsys db would be cheaper, and stored
-	 * in a single file, so we could do it unconditionally, before any
-	 * formatting. */
-	ensure_packagefiles_available((struct pkginfo *)pkg);
 
 	if (!pkg->files_list_valid)
 		return;
@@ -388,6 +377,31 @@ static const struct fieldinfo virtinfos[] = {
 	{ NULL },
 };
 
+bool
+pkg_format_needs_db_fsys(const struct pkg_format_node *head)
+{
+	const struct pkg_format_node *node;
+
+	for (node = head; node; node = node->next) {
+		if (node->type != PKG_FORMAT_FIELD)
+			continue;
+		if (strcmp(node->data, "db-fsys:Files") == 0)
+			return true;
+	}
+
+	return false;
+}
+
+static void
+pkg_format_item(struct varbuf *vb,
+                const struct pkg_format_node *node, const char *str)
+{
+	if (node->width == 0)
+		varbuf_add_str(vb, str);
+	else
+		varbuf_printf(vb, "%*s", node->width, str);
+}
+
 void
 pkg_format_show(const struct pkg_format_node *head,
                 struct pkginfo *pkg, struct pkgbin *pkgbin)
@@ -396,19 +410,10 @@ pkg_format_show(const struct pkg_format_node *head,
 	struct varbuf vb = VARBUF_INIT, fb = VARBUF_INIT, wb = VARBUF_INIT;
 
 	for (node = head; node; node = node->next) {
-		bool ok;
-		char fmt[16];
-
-		ok = false;
-
-		if (node->width > 0)
-			snprintf(fmt, 16, "%%%s%zus",
-			         ((node->pad) ? "-" : ""), node->width);
-		else
-			strcpy(fmt, "%s");
+		bool ok = false;
 
 		if (node->type == PKG_FORMAT_STRING) {
-			varbuf_printf(&fb, fmt, node->data);
+			pkg_format_item(&fb, node, node->data);
 			ok = true;
 		} else if (node->type == PKG_FORMAT_FIELD) {
 			const struct fieldinfo *fip;
@@ -421,7 +426,7 @@ pkg_format_show(const struct pkg_format_node *head,
 				fip->wcall(&wb, pkg, pkgbin, 0, fip);
 
 				varbuf_end_str(&wb);
-				varbuf_printf(&fb, fmt, wb.buf);
+				pkg_format_item(&fb, node, wb.buf);
 				varbuf_reset(&wb);
 				ok = true;
 			} else {
@@ -429,7 +434,7 @@ pkg_format_show(const struct pkg_format_node *head,
 
 				afp = find_arbfield_info(pkgbin->arbs, node->data);
 				if (afp) {
-					varbuf_printf(&fb, fmt, afp->value);
+					pkg_format_item(&fb, node, afp->value);
 					ok = true;
 				}
 			}
@@ -437,8 +442,10 @@ pkg_format_show(const struct pkg_format_node *head,
 
 		if (ok) {
 			size_t len = fb.used;
-			if ((node->width > 0) && (len > node->width))
-				len = node->width;
+			size_t width = abs(node->width);
+
+			if ((width != 0) && (len > width))
+				len = width;
 			varbuf_add_buf(&vb, fb.buf, len);
 		}
 

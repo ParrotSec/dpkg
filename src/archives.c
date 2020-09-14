@@ -323,12 +323,12 @@ does_replace(struct pkginfo *new_pkg, struct pkgbin *new_pkgbin,
   debug(dbg_depcon,"does_replace new=%s old=%s (%s)",
         pkgbin_name(new_pkg, new_pkgbin, pnaw_always),
         pkgbin_name(old_pkg, old_pkgbin, pnaw_always),
-        versiondescribe(&old_pkgbin->version, vdew_always));
+        versiondescribe_c(&old_pkgbin->version, vdew_always));
   for (dep = new_pkgbin->depends; dep; dep = dep->next) {
     if (dep->type != dep_replaces || dep->list->ed != old_pkg->set)
       continue;
     debug(dbg_depcondetail,"does_replace ... found old, version %s",
-          versiondescribe(&dep->list->version,vdew_always));
+          versiondescribe_c(&dep->list->version,vdew_always));
     if (!versionsatisfied(old_pkgbin, dep->list))
       continue;
     /* The test below can only trigger if dep_replaces start having
@@ -751,7 +751,7 @@ tarobject(struct tar_archive *tar, struct tar_entry *ti)
   if (statr) {
     /* The lstat failed. */
     if (errno != ENOENT && errno != ENOTDIR)
-      ohshite(_("unable to stat '%.255s' (which I was about to install)"),
+      ohshite(_("unable to stat '%.255s' (which was about to be installed)"),
               ti->name);
     /* OK, so it doesn't exist.
      * However, it's possible that we were in the middle of some other
@@ -828,7 +828,7 @@ tarobject(struct tar_archive *tar, struct tar_entry *ti)
           refcounting = true;
         debug(dbg_eachfiledetail, "tarobject ... shared with %s %s (syncing=%d)",
               pkg_name(otherpkg, pnaw_always),
-              versiondescribe(&otherpkg->installed.version, vdew_nonambig),
+              versiondescribe_c(&otherpkg->installed.version, vdew_nonambig),
               tc->pkgset_getting_in_sync);
         continue;
       }
@@ -1262,6 +1262,19 @@ try_deconfigure_can(bool (*force_p)(struct deppossi *), struct pkginfo *pkg,
         return 0;
       }
     }
+    if (pkg->installed.is_protected) {
+      if (in_force(FORCE_REMOVE_PROTECTED)) {
+        warning(_("considering deconfiguration of protected\n"
+                  " package %s, to enable %s"),
+                pkg_name(pkg, pnaw_nonambig), action);
+      } else {
+        notice(_("no, %s is protected, will not deconfigure\n"
+                 " it in order to enable %s"),
+               pkg_name(pkg, pnaw_nonambig), action);
+        return 0;
+      }
+    }
+
     enqueue_deconfigure(pkg, removal);
     return 1;
   } else {
@@ -1343,7 +1356,7 @@ void check_breaks(struct dependency *dep, struct pkginfo *pkg,
 void check_conflict(struct dependency *dep, struct pkginfo *pkg,
                     const char *pfilename) {
   struct pkginfo *fixbyrm;
-  struct deppossi *pdep, flagdeppossi;
+  struct deppossi *pdep, flagdeppossi = { 0 };
   struct varbuf conflictwhy = VARBUF_INIT, removalwhy = VARBUF_INIT;
   struct dependency *providecheck;
 
@@ -1359,11 +1372,13 @@ void check_conflict(struct dependency *dep, struct pkginfo *pkg,
       fixbyrm= dep->up;
       ensure_package_clientdata(fixbyrm);
     }
-    if (((pkg->available.essential && fixbyrm->installed.essential) ||
-         (((fixbyrm->want != PKG_WANT_INSTALL &&
-            fixbyrm->want != PKG_WANT_HOLD) ||
-           does_replace(pkg, &pkg->available, fixbyrm, &fixbyrm->installed)) &&
-          (!fixbyrm->installed.essential || in_force(FORCE_REMOVE_ESSENTIAL))))) {
+    if (((pkg->available.essential || pkg->available.is_protected) &&
+         (fixbyrm->installed.essential || fixbyrm->installed.is_protected)) ||
+        (((fixbyrm->want != PKG_WANT_INSTALL &&
+           fixbyrm->want != PKG_WANT_HOLD) ||
+          does_replace(pkg, &pkg->available, fixbyrm, &fixbyrm->installed)) &&
+         ((!fixbyrm->installed.essential || in_force(FORCE_REMOVE_ESSENTIAL)) ||
+          (!fixbyrm->installed.is_protected || in_force(FORCE_REMOVE_PROTECTED))))) {
       if (fixbyrm->clientdata->istobe != PKG_ISTOBE_NORMAL &&
           fixbyrm->clientdata->istobe != PKG_ISTOBE_DECONFIGURE)
         internerr("package %s to be fixed by removal is not to be normal "

@@ -58,7 +58,7 @@ dpkg_arch_name_is_illegal(const char *name)
 	static char buf[150];
 	const char *p = name;
 
-	if (name == NULL)
+	if (p == NULL)
 		internerr("arch name argument is NULL");
 	if (!*p)
 		return _("may not be empty string");
@@ -317,7 +317,7 @@ dpkg_arch_save_list(void)
 		return;
 
 	archfile = dpkg_db_get_path(DPKG_DB_ARCH_FILE);
-	file = atomic_file_new(archfile, 0);
+	file = atomic_file_new(archfile, ATOMIC_FILE_MKPATH);
 	atomic_file_open(file);
 
 	for (arch = arch_head; arch; arch = arch->next) {

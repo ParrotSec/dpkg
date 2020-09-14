@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-dev 1.19.7\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2019-05-09 05:38+0200\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
@@ -173,6 +173,12 @@ msgstr ""
 "el tipus de sistema GNU %s especificat no correspon amb el tipus de sistema "
 "del CC %s, proveu a especificar una variable d'entorn CC correcta"
 
+#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Cppfilt.pm
+#, perl-format
+msgid "unable to execute %s"
+msgstr "no es pot executar %s"
+
 #: scripts/dpkg-buildflags.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
@@ -242,6 +248,75 @@ msgid "Usage: %s [<option>...]"
 msgstr "Forma d'ús: %s [<opció>…]"
 
 #: scripts/dpkg-buildpackage.pl
+#, fuzzy
+#| msgid ""
+#| "Options:\n"
+#| "      --build=<type>[,...]    specify the build <type>: full, source, "
+#| "binary,\n"
+#| "                                any, all (default is 'full').\n"
+#| "  -F, --build=full            normal full build (source and binary; "
+#| "default).\n"
+#| "  -g, --build=source,all      source and arch-indep build.\n"
+#| "  -G, --build=source,any      source and arch-specific build.\n"
+#| "  -b, --build=binary          binary-only, no source files.\n"
+#| "  -B, --build=any             binary-only, only arch-specific files.\n"
+#| "  -A, --build=all             binary-only, only arch-indep files.\n"
+#| "  -S, --build=source          source-only, no binary files.\n"
+#| "  -nc, --no-pre-clean         do not pre clean source tree (implies -b).\n"
+#| "      --pre-clean             pre clean source tree (default).\n"
+#| "      --no-post-clean         do not post clean source tree (default).\n"
+#| "  -tc, --post-clean           post clean source tree.\n"
+#| "  -D, --check-builddeps       check build dependencies and conflicts "
+#| "(default).\n"
+#| "  -d, --no-check-builddeps    do not check build dependencies and "
+#| "conflicts.\n"
+#| "      --ignore-builtin-builddeps\n"
+#| "                              do not check builtin build dependencies.\n"
+#| "  -P, --build-profiles=<profiles>\n"
+#| "                              assume comma-separated build <profiles> as "
+#| "active.\n"
+#| "      --rules-requires-root   assume legacy Rules-Requires-Root field "
+#| "value.\n"
+#| "  -R, --rules-file=<rules>    rules file to execute (default is debian/"
+#| "rules).\n"
+#| "  -T, --rules-target=<target> call debian/rules <target>.\n"
+#| "      --as-root               ensure -T calls the target with root "
+#| "rights.\n"
+#| "  -j, --jobs[=<number>|auto]  jobs to run simultaneously (passed to "
+#| "<rules>),\n"
+#| "                                forced mode.\n"
+#| "  -J, --jobs-try[=<number>|auto]\n"
+#| "                              jobs to run simultaneously (passed to "
+#| "<rules>),\n"
+#| "                                opt-in mode (default is auto).\n"
+#| "  -r, --root-command=<command>\n"
+#| "                              command to gain root rights (default is "
+#| "fakeroot).\n"
+#| "      --check-command=<command>\n"
+#| "                              command to check the .changes file (no "
+#| "default).\n"
+#| "      --check-option=<opt>    pass <opt> to check <command>.\n"
+#| "      --hook-<name>=<command> set <command> as the hook <name>, known "
+#| "hooks:\n"
+#| "                                init preclean source build binary "
+#| "buildinfo\n"
+#| "                                changes postclean check sign done\n"
+#| "      --buildinfo-option=<opt>\n"
+#| "                              pass option <opt> to dpkg-genbuildinfo.\n"
+#| "  -p, --sign-command=<command>\n"
+#| "                              command to sign .dsc and/or .changes files\n"
+#| "                                (default is gpg2 or gpg).\n"
+#| "  -k, --sign-key=<keyid>      the key to use for signing.\n"
+#| "  -ap, --sign-pause           add pause before starting signature "
+#| "process.\n"
+#| "  -us, --unsigned-source      unsigned source package.\n"
+#| "  -ui, --unsigned-buildinfo   unsigned .buildinfo file.\n"
+#| "  -uc, --unsigned-changes     unsigned .buildinfo and .changes file.\n"
+#| "      --no-sign               do not sign any file.\n"
+#| "      --force-sign            force signing the resulting files.\n"
+#| "      --admindir=<directory>  change the administrative directory.\n"
+#| "  -?, --help                  show this help message.\n"
+#| "      --version               show the version."
 msgid ""
 "Options:\n"
 "      --build=<type>[,...]    specify the build <type>: full, source, "
@@ -259,6 +334,7 @@ msgid ""
 "      --pre-clean             pre clean source tree (default).\n"
 "      --no-post-clean         do not post clean source tree (default).\n"
 "  -tc, --post-clean           post clean source tree.\n"
+"      --sanitize-env          sanitize the build environment.\n"
 "  -D, --check-builddeps       check build dependencies and conflicts "
 "(default).\n"
 "  -d, --no-check-builddeps    do not check build dependencies and "
@@ -296,7 +372,7 @@ msgid ""
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
 "  -p, --sign-command=<command>\n"
 "                              command to sign .dsc and/or .changes files\n"
-"                                (default is gpg2 or gpg).\n"
+"                                (default is gpg).\n"
 "  -k, --sign-key=<keyid>      the key to use for signing.\n"
 "  -ap, --sign-pause           add pause before starting signature process.\n"
 "  -us, --unsigned-source      unsigned source package.\n"
@@ -635,6 +711,12 @@ msgid "cannot close %s"
 msgstr "no es pot tancar %s"
 
 #: scripts/dpkg-buildpackage.pl
+#, fuzzy, perl-format
+#| msgid "cannot remove %s"
+msgid "cannot move %s to %s"
+msgstr "no es pot eliminar %s"
+
+#: scripts/dpkg-buildpackage.pl
 msgid "source-only upload: Debian-native package"
 msgstr "pujada de només font: paquet nadiu de Debian"
 
@@ -719,9 +801,10 @@ msgstr ""
 
 #: scripts/dpkg-checkbuilddeps.pl scripts/dpkg-shlibdeps.pl
 #: scripts/dpkg-source.pl
-#, perl-format
-msgid "error occurred while parsing %s"
-msgstr "s'ha produït un error en analitzar %s"
+#, fuzzy, perl-format
+#| msgid "cannot open %s"
+msgid "cannot parse %s field"
+msgstr "no es pot obrir %s"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
@@ -1069,9 +1152,12 @@ msgid "package %s: "
 msgstr "paquet %s: "
 
 #: scripts/dpkg-gencontrol.pl
-#, perl-format
+#, fuzzy, perl-format
+#| msgid ""
+#| "current host architecture '%s' does not appear in package's architecture "
+#| "list (%s)"
 msgid ""
-"current host architecture '%s' does not appear in package's architecture "
+"current host architecture '%s' does not appear in package '%s' architecture "
 "list (%s)"
 msgstr ""
 "l'arquitectura amfitrió «%s» no apareix a la llista d'arquitectures (%s) del "
@@ -1083,22 +1169,27 @@ msgid "%s field of package %s: "
 msgstr "camp %s del paquet %s: "
 
 #: scripts/dpkg-gencontrol.pl
-#, perl-format
-msgid "error occurred while parsing %s field: %s"
-msgstr "s'ha produït un error en analitzar el camp %s: %s"
+#, fuzzy, perl-format
+#| msgid "source package name '%s' is illegal: %s"
+msgid "parsing package '%s' %s field: %s"
+msgstr "el nom del paquet font «%s» no és legal: %s"
 
 #: scripts/dpkg-gencontrol.pl
-#, perl-format
+#, fuzzy, perl-format
+#| msgid ""
+#| "the %s field contains an arch-specific dependency but the package is "
+#| "architecture all"
 msgid ""
-"the %s field contains an arch-specific dependency but the package is "
+"the %s field contains an arch-specific dependency but the package '%s' is "
 "architecture all"
 msgstr ""
 "el camp %s conté una dependència especifica d'arquitectura però el paquet és "
 "d'arquitectura «all»"
 
 #: scripts/dpkg-gencontrol.pl
-#, perl-format
-msgid "%s package with udeb specific field %s"
+#, fuzzy, perl-format
+#| msgid "%s package with udeb specific field %s"
+msgid "%s package '%s' with udeb specific field %s"
 msgstr "paquet %s amb camp específic d'udeb %s"
 
 #: scripts/dpkg-gencontrol.pl scripts/Dpkg/Source/Package.pm
@@ -1897,11 +1988,6 @@ msgstr ""
 "identificar a causa de la manca de subdirectori DEBIAN en l'arrel de l'arbre "
 "de construcció del paquet"
 
-#: scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm scripts/Dpkg/Shlibs/Cppfilt.pm
-#, perl-format
-msgid "unable to execute %s"
-msgstr "no es pot executar %s"
-
 #: scripts/dpkg-shlibdeps.pl
 msgid "diversions involved - output may be incorrect"
 msgstr "hi ha desviacions involucrades, la sortida pot ser incorrecta"
@@ -1967,17 +2053,10 @@ msgid "%s doesn't contain any information about the source package"
 msgstr "%s no conté cap informació del paquet font"
 
 #: scripts/dpkg-source.pl
-#, perl-format
-msgid ""
-"binary package stanza %s is using an obsolete Build-Profiles field syntax"
-msgstr ""
-"el paràgraf del paquet binari %s empra una sintaxis obsoleta del camp Build-"
-"Profiles"
-
-#: scripts/dpkg-source.pl
-#, perl-format
-msgid "'%s' is not a legal architecture string"
-msgstr "«%s» no és una cadena d'arquitectura vàlida"
+#, fuzzy, perl-format
+#| msgid "'%s' is not a legal architecture in list '%s'"
+msgid "'%s' is not a legal architecture string in package '%s'"
+msgstr "«%s» no és una cadena d'arquitectura vàlida a la llista «%s»"
 
 #: scripts/dpkg-source.pl
 #, perl-format
@@ -2061,6 +2140,12 @@ msgid "%s field contains value %s, but no tests control file %s"
 msgstr ""
 "el camp %s conté el valor %s, però el fitxer de control de verificació %s no "
 "existeix"
+
+#: scripts/dpkg-source.pl
+#, fuzzy, perl-format
+#| msgid "test control %s is not a regular file"
+msgid "test control %s is missing %s or %s field"
+msgstr "fitxer de control test %s no és un fitxer regular"
 
 #: scripts/dpkg-source.pl
 msgctxt "source options"
@@ -2669,13 +2754,20 @@ msgid "can't parse dependency %s"
 msgstr "no s'ha pogut analitzar la dependència %s"
 
 #: scripts/Dpkg/Deps.pm
+#, fuzzy, perl-format
+#| msgid "invalid dependency got generated: %s"
+msgid "virtual dependency contains invalid relation: %s"
+msgstr "s'ha generat una dependència no vàlida: %s"
+
+#: scripts/Dpkg/Deps.pm
 msgid "an union dependency can only contain simple dependencies"
 msgstr "una dependència d'unió només pot contenir dependències senzilles"
 
 #: scripts/Dpkg/Dist/Files.pm
-#, perl-format
-msgid "badly formed package name in files list file, line %d"
-msgstr "nom de paquet mal format en la llista de fitxers, línia %d"
+#, fuzzy, perl-format
+#| msgid "badly formed line in files list file, line %d"
+msgid "badly formed file name in files list file, line %d"
+msgstr "línia mal formada en la llista de fitxers, línia %d"
 
 #: scripts/Dpkg/Dist/Files.pm
 #, perl-format
@@ -2804,6 +2896,28 @@ msgstr "no es pot executar el programa %s"
 msgid "cannot write signature file %s"
 msgstr "no es pot escriure el fitxer de signatura «%s»"
 
+#: scripts/Dpkg/OpenPGP.pm
+#, fuzzy, perl-format
+#| msgid "cannot verify signature on %s since GnuPG is not installed"
+msgid "cannot import key in %s since GnuPG is not installed"
+msgstr "no es pot verificar la signatura de %s perquè GnuPG no està instal·lat"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, fuzzy, perl-format
+#| msgid "failed to parse line in %s: %s"
+msgid "failed to import key in %s"
+msgstr "no s'ha pogut analitzar la línia en %s: %s"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "cannot verify signature on %s since GnuPG is not installed"
+msgstr "no es pot verificar la signatura de %s perquè GnuPG no està instal·lat"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "failed to verify signature on %s"
+msgstr "no s'ha pogut verificar la signatura de %s"
+
 #: scripts/Dpkg/Package.pm
 msgid "may not be empty string"
 msgstr "no pot ser una cadena buida"
@@ -2816,6 +2930,16 @@ msgstr "el caràcter «%s» no és permès"
 #: scripts/Dpkg/Package.pm
 msgid "must start with an alphanumeric character"
 msgstr "ha de començar amb un caràcter alfanumèric"
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' cannot be canonicalized"
+msgstr ""
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' points outside source root (to '%s')"
+msgstr ""
 
 #: scripts/Dpkg/Shlibs.pm
 msgid ""
@@ -2982,19 +3106,19 @@ msgid "%s and %s fields are required to compute the source basename"
 msgstr "els camps %s i %s són necessaris per calcular el nom base del font"
 
 #: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "failed to verify signature on %s"
-msgstr "no s'ha pogut verificar la signatura de %s"
-
-#: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "cannot verify signature on %s since GnuPG is not installed"
-msgstr "no es pot verificar la signatura de %s perquè GnuPG no està instal·lat"
+msgid "upstream tarball signatures but no upstream signing key"
+msgstr ""
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
 msgid "%s is not a valid option for %s"
 msgstr "%s no és una opció vàlida per a %s"
+
+#: scripts/Dpkg/Source/Package.pm
+#, fuzzy, perl-format
+#| msgid "failed to copy %s to %s"
+msgid "cannot copy %s to %s"
+msgstr "no es pot copiar %s a %s"
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
@@ -3078,7 +3202,7 @@ msgstr "l'opció -s%s sobreescriu l'opció -s%s anterior"
 msgid "source handling style -s%s not allowed with -x"
 msgstr "no es permet l'estil de maneig de font -s%s amb -x"
 
-#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+#: scripts/Dpkg/Source/Package/V1.pm
 msgid "multiple tarfiles in v1.0 source package"
 msgstr "múltiples arxius tar en el paquet font v1.0"
 
@@ -3201,6 +3325,14 @@ msgstr "el nom de l'orig desempaquetat «%s» existeix però no és un directori
 msgid "unable to stat putative unpacked orig '%s'"
 msgstr "no es pot fer «stat» al directori orig desempaquetat putatiu «%s»"
 
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Quilt.pm
+msgid "non-native package version does not contain a revision"
+msgstr "la versió del paquet no nadiu no conté una revisió"
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+msgid "native package version may not have a revision"
+msgstr "la versió del paquet nadiu no pot tenir una revisió"
+
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid "source directory '%s' is not <sourcepackage>-<upstreamversion> '%s'"
@@ -3251,6 +3383,10 @@ msgstr "no es poden establir els permisos d'execució en «%s»"
 #, perl-format
 msgid "building %s using existing %s"
 msgstr "s'està construint %s emprant %s existent"
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V2.pm
+msgid "upstream signing key but no upstream tarball signature"
+msgstr ""
 
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
@@ -3604,13 +3740,15 @@ msgid "setting up shallow clone"
 msgstr "s'esta preparant un clon sense profunditat"
 
 #: scripts/Dpkg/Source/Package/V3/Native.pm
+#, fuzzy
+#| msgid "multiple tarfiles in v1.0 source package"
+msgid "multiple tarfiles in native source package"
+msgstr "múltiples arxius tar en el paquet font v1.0"
+
+#: scripts/Dpkg/Source/Package/V3/Native.pm
 #, perl-format
 msgid "unrecognized file for a native source package: %s"
 msgstr "fitxer no reconegut per un paquet font nadiu: %s"
-
-#: scripts/Dpkg/Source/Package/V3/Native.pm
-msgid "native package version may not have a revision"
-msgstr "la versió del paquet nadiu no pot tenir una revisió"
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 msgid "use a single debianization patch"
@@ -3619,10 +3757,6 @@ msgstr "empra un sol pedaç de debianització"
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 msgid "accept quilt metadata <version> even if unknown"
 msgstr "accepta <versió> de metadades de quilt encara que no es conegui"
-
-#: scripts/Dpkg/Source/Package/V3/Quilt.pm
-msgid "non-native package version does not contain a revision"
-msgstr "la versió del paquet no nadiu no conté una revisió"
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 #, perl-format
@@ -3997,6 +4131,24 @@ msgstr "el número de versió conté un caràcter il·legal ‘%s‘"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "l'època en la versió no és un número: «%s»"
+
+#~ msgid "error occurred while parsing %s"
+#~ msgstr "s'ha produït un error en analitzar %s"
+
+#~ msgid "error occurred while parsing %s field: %s"
+#~ msgstr "s'ha produït un error en analitzar el camp %s: %s"
+
+#~ msgid "'%s' is not a legal architecture string"
+#~ msgstr "«%s» no és una cadena d'arquitectura vàlida"
+
+#~ msgid "badly formed package name in files list file, line %d"
+#~ msgstr "nom de paquet mal format en la llista de fitxers, línia %d"
+
+#~ msgid ""
+#~ "binary package stanza %s is using an obsolete Build-Profiles field syntax"
+#~ msgstr ""
+#~ "el paràgraf del paquet binari %s empra una sintaxis obsoleta del camp "
+#~ "Build-Profiles"
 
 #~ msgid "format variant must be in lowercase"
 #~ msgstr "la variant de format ha de ser en minúscules"

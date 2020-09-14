@@ -82,7 +82,7 @@ static void
 usage(const struct cmdinfo *cip, const char *value)
 {
 	printf(_(
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"), dpkg_get_progname());
 
 	printf(_(
@@ -855,6 +855,7 @@ main(int argc, const char * const *argv)
 	modstatdb_shutdown();
 
 	dpkg_program_done();
+	dpkg_locales_done();
 
 	return ret;
 }

@@ -142,7 +142,7 @@ list_format_init(struct list_format *fmt, struct pkg_array *array)
     vlen = str_width(versiondescribe(&array->pkgs[i]->installed.version,
                                      vdew_nonambig));
     alen = str_width(dpkg_arch_describe(array->pkgs[i]->installed.arch));
-    pkgbin_synopsis(array->pkgs[i], &array->pkgs[i]->installed, &dlen);
+    pkg_synopsis(array->pkgs[i], &dlen);
 
     if (plen > fmt->nw)
       fmt->nw = plen;
@@ -232,7 +232,7 @@ pkg_array_list_item(struct pkg_array *array, struct pkginfo *pkg, void *pkg_data
   list_format_init(fmt, array);
   list_format_print_header(fmt);
 
-  pdesc = pkgbin_synopsis(pkg, &pkg->installed, &l);
+  pdesc = pkg_synopsis(pkg, &l);
   l = min(l, fmt->dw);
 
   list_format_print(fmt,
@@ -541,6 +541,12 @@ list_files(const char *const *argv)
 }
 
 static void
+pkg_array_load_db_fsys(struct pkg_array *array, struct pkginfo *pkg, void *pkg_data)
+{
+  ensure_packagefiles_available(pkg);
+}
+
+static void
 pkg_array_show_item(struct pkg_array *array, struct pkginfo *pkg, void *pkg_data)
 {
   struct pkg_format_node *fmt = pkg_data;
@@ -555,6 +561,7 @@ showpackages(const char *const *argv)
   struct pkg_array array;
   struct pkginfo *pkg;
   struct pkg_format_node *fmt;
+  bool fmt_needs_db_fsys;
   int i;
   int rc = 0;
 
@@ -566,6 +573,8 @@ showpackages(const char *const *argv)
     return rc;
   }
 
+  fmt_needs_db_fsys = pkg_format_needs_db_fsys(fmt);
+
   if (!opt_loadavail)
     modstatdb_open(msdbrw_readonly);
   else
@@ -575,6 +584,8 @@ showpackages(const char *const *argv)
   pkg_array_sort(&array, pkg_sorter_by_nonambig_name_arch);
 
   if (!*argv) {
+    if (fmt_needs_db_fsys)
+      ensure_allinstfiles_available();
     for (i = 0; i < array.n_pkgs; i++) {
       pkg = array.pkgs[i];
       if (pkg->status == PKG_STAT_NOTINSTALLED)
@@ -582,6 +593,8 @@ showpackages(const char *const *argv)
       pkg_format_show(fmt, pkg, &pkg->installed);
     }
   } else {
+    if (fmt_needs_db_fsys)
+      pkg_array_foreach(&array, pkg_array_load_db_fsys, NULL);
     rc = pkg_array_match_patterns(&array, pkg_array_show_item, fmt, argv);
   }
 
@@ -773,7 +786,7 @@ static void DPKG_ATTR_NORET
 usage(const struct cmdinfo *ci, const char *value)
 {
   printf(_(
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"), DPKGQUERY);
 
   printf(_(
@@ -800,6 +813,7 @@ usage(const struct cmdinfo *ci, const char *value)
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"), ADMINDIR);
 
@@ -862,6 +876,7 @@ int main(int argc, const char *const *argv) {
   ret = cipaction->action(argv);
 
   dpkg_program_done();
+  dpkg_locales_done();
 
   return !!ret;
 }

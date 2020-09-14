@@ -70,8 +70,8 @@ sthfailed(const char * reasoning)
 static void cu_unlockmethod(int, void**) {
   struct flock fl;
 
-  if (methodlockfile == NULL)
-    internerr("method lock file is NULL");
+  if (methodlockfile == nullptr)
+    internerr("method lock file is nullptr");
   if (methlockfd < 0)
     internerr("method lock fd is %d < 0", methlockfd);
   fl.l_type=F_UNLCK; fl.l_whence= SEEK_SET; fl.l_start=fl.l_len=0;
@@ -208,7 +208,7 @@ static urqresult rundpkgauto(const char *name, const char *dpkgmode) {
                    dpkgmode, nullptr);
 
   cursesoff();
-  printf("running dpkg --pending %s ...\n",dpkgmode);
+  printf(_("running %s %s ...\n"), "dpkg --pending", dpkgmode);
   fflush(stdout);
   ur = falliblesubprocess(&cmd);
   command_destroy(&cmd);

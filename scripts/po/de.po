@@ -1,13 +1,13 @@
 # German translation of the scripts in the dpkg package
 # This file is distributed under the same license as the dpkg package.
-# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2019.
+# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg-dev 1.19.5\n"
+"Project-Id-Version: dpkg-dev 1.20.1\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
-"PO-Revision-Date: 2019-02-24 17:42+0100\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
+"PO-Revision-Date: 2020-07-07 13:17+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -166,6 +166,12 @@ msgstr ""
 "angegebener GNU-Systemtyp %s passt nicht zu CC-Systemtyp %s, versuchen Sie, "
 "eine korrekte CC-Umgebungsvariable zu setzen"
 
+#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Cppfilt.pm
+#, perl-format
+msgid "unable to execute %s"
+msgstr "%s konnte nicht ausgeführt werden"
+
 #: scripts/dpkg-buildflags.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
@@ -250,6 +256,7 @@ msgid ""
 "      --pre-clean             pre clean source tree (default).\n"
 "      --no-post-clean         do not post clean source tree (default).\n"
 "  -tc, --post-clean           post clean source tree.\n"
+"      --sanitize-env          sanitize the build environment.\n"
 "  -D, --check-builddeps       check build dependencies and conflicts "
 "(default).\n"
 "  -d, --no-check-builddeps    do not check build dependencies and "
@@ -287,7 +294,7 @@ msgid ""
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
 "  -p, --sign-command=<command>\n"
 "                              command to sign .dsc and/or .changes files\n"
-"                                (default is gpg2 or gpg).\n"
+"                                (default is gpg).\n"
 "  -k, --sign-key=<keyid>      the key to use for signing.\n"
 "  -ap, --sign-pause           add pause before starting signature process.\n"
 "  -us, --unsigned-source      unsigned source package.\n"
@@ -314,6 +321,7 @@ msgstr ""
 "       --pre-clean    Quellbaum vorab säubern (Standard)\n"
 "      --no-post-clean Quellbaum nicht abschließend säubern (Standard).\n"
 "  -tc, --post-clean   Quellbaum abschließend säubern.\n"
+"      --sanitize-env  die Bauumgebung bereinigen.\n"
 "  -D, --check-builddeps\n"
 "                      Bauabhängigkeiten und -konflikte prüfen (Standard)\n"
 "  -d, --no-check-builddeps Bauabhängigkeiten und -konflikte nicht prüfen\n"
@@ -355,7 +363,7 @@ msgstr ""
 "  -p, --sign-command=<Befehl>\n"
 "                      Befehl, um .dsc- und/oder .changes-Dateien zu "
 "signieren\n"
-"                        (standardmäßig gpg2 oder gpg)\n"
+"                        (standardmäßig gpg)\n"
 "  -k, --sign-key=<Schlüssel-ID>\n"
 "                      Für die Signierung zu verwendender Schlüssel\n"
 "  -ap, --sign-pause   Pause vor Beginn des Signaturprozesses einfügen\n"
@@ -380,6 +388,7 @@ msgid ""
 "      --target-type <type>    set the target GNU system type."
 msgstr ""
 "Optionen, die an dpkg-architecture weitergegeben werden:\n"
+"  -a, --host-arch <Arch>   setzt die Host-Debian-Architektur.\n"
 "  -t, --host-type <Typ>    setzt den Host-GNU-Systemtyp.\n"
 "      --target-arch <Arch> setzt die Ziel-Debian-Architektur.\n"
 "      --target-type <Typ>  setzt den Ziel-GNU-Systemtyp."
@@ -624,6 +633,11 @@ msgid "cannot close %s"
 msgstr "%s kann nicht geschlossen werden"
 
 #: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "cannot move %s to %s"
+msgstr "%s kann nicht in %s verschoben werden"
+
+#: scripts/dpkg-buildpackage.pl
 msgid "source-only upload: Debian-native package"
 msgstr "Nur Quelle hochzuladen: Debian-native-Paket"
 
@@ -708,8 +722,8 @@ msgstr ""
 #: scripts/dpkg-checkbuilddeps.pl scripts/dpkg-shlibdeps.pl
 #: scripts/dpkg-source.pl
 #, perl-format
-msgid "error occurred while parsing %s"
-msgstr "Fehler beim Auswerten von %s"
+msgid "cannot parse %s field"
+msgstr "das Feld %s kann nicht ausgewertet werden"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
@@ -1042,38 +1056,40 @@ msgstr "Paket muss angegeben werden, da Steuer-Info viele (%s) enthält"
 msgid "package %s: "
 msgstr "Paket %s: "
 
+# FIXME Positional arguments for %s?
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
 msgid ""
-"current host architecture '%s' does not appear in package's architecture "
+"current host architecture '%s' does not appear in package '%s' architecture "
 "list (%s)"
 msgstr ""
-"aktuelle Host-Architektur »%s« erscheint nicht in der Architekturliste (%s) "
-"des Pakets"
+"aktuelle Host-Architektur »%s« erscheint nicht in der Architekturliste des "
+"Pakets »%s« (%s)"
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
 msgid "%s field of package %s: "
 msgstr "Feld %s von Paket %s: "
 
+# FIXME Positional arguments for %s?
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
-msgid "error occurred while parsing %s field: %s"
-msgstr "Fehler beim Auswerten von %s Feld: %s"
+msgid "parsing package '%s' %s field: %s"
+msgstr "Pakets »%s« Feld %s wird ausgewertet: %s"
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
 msgid ""
-"the %s field contains an arch-specific dependency but the package is "
+"the %s field contains an arch-specific dependency but the package '%s' is "
 "architecture all"
 msgstr ""
 "das Feld %s enthält eine architekturspezifische Abhängigkeit, aber das Paket "
-"ist »architecture all«"
+"»%s« ist »architecture all«"
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
-msgid "%s package with udeb specific field %s"
-msgstr "%s Paket mit udeb-spezifischem Feld %s"
+msgid "%s package '%s' with udeb specific field %s"
+msgstr "%s Paket »%s« mit udeb-spezifischem Feld %s"
 
 #: scripts/dpkg-gencontrol.pl scripts/Dpkg/Source/Package.pm
 #: scripts/Dpkg/Source/Patch.pm
@@ -1867,11 +1883,6 @@ msgstr ""
 "nicht identifiziert werden, da das DEBIAN-Unterverzeichnis in der Wurzel des "
 "Paketbaubaums fehlt."
 
-#: scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm scripts/Dpkg/Shlibs/Cppfilt.pm
-#, perl-format
-msgid "unable to execute %s"
-msgstr "%s konnte nicht ausgeführt werden"
-
 #: scripts/dpkg-shlibdeps.pl
 msgid "diversions involved - output may be incorrect"
 msgstr "Umleitungen beteiligt - Ausgabe könnte nicht korrekt sein"
@@ -1938,15 +1949,8 @@ msgstr "%s enthält keine Informationen über das Quellpaket"
 
 #: scripts/dpkg-source.pl
 #, perl-format
-msgid ""
-"binary package stanza %s is using an obsolete Build-Profiles field syntax"
-msgstr ""
-"Binärpaketeintrag %s verwendet eine veraltete Build-Profiles-Feldsyntax"
-
-#: scripts/dpkg-source.pl
-#, perl-format
-msgid "'%s' is not a legal architecture string"
-msgstr "»%s« ist keine gültige Architektur-Zeichenkette"
+msgid "'%s' is not a legal architecture string in package '%s'"
+msgstr "»%s« ist keine gültige Architekturzeichenkette in Paket »%s«"
 
 #: scripts/dpkg-source.pl
 #, perl-format
@@ -2027,6 +2031,11 @@ msgstr "Teststeuerdatei %s ist keine gewöhnliche Datei."
 #, perl-format
 msgid "%s field contains value %s, but no tests control file %s"
 msgstr "%s-Feld enthält Wert %s, aber keine Teststeuerdatei %s"
+
+#: scripts/dpkg-source.pl
+#, perl-format
+msgid "test control %s is missing %s or %s field"
+msgstr "Teststeuerdatei %s fehlt das Feld %s oder %s."
 
 #: scripts/dpkg-source.pl
 msgctxt "source options"
@@ -2646,14 +2655,19 @@ msgid "can't parse dependency %s"
 msgstr "Abhängigkeit %s kann nicht ausgewertet werden"
 
 #: scripts/Dpkg/Deps.pm
+#, perl-format
+msgid "virtual dependency contains invalid relation: %s"
+msgstr "virtuelle Abhängigkeit enthält ungültige Beziehung: »%s«"
+
+#: scripts/Dpkg/Deps.pm
 msgid "an union dependency can only contain simple dependencies"
 msgstr ""
 "eine Vereinigungsabhängigkeit kann nur einfache Abhängigkeiten enthalten"
 
 #: scripts/Dpkg/Dist/Files.pm
 #, perl-format
-msgid "badly formed package name in files list file, line %d"
-msgstr "ungültiger Paketname in Dateilistendatei, Zeile %d"
+msgid "badly formed file name in files list file, line %d"
+msgstr "ungültiger Dateiname in Dateilistendatei, Zeile %d"
 
 #: scripts/Dpkg/Dist/Files.pm
 #, perl-format
@@ -2783,6 +2797,28 @@ msgstr "Programm %s kann nicht ausgeführt werden"
 msgid "cannot write signature file %s"
 msgstr "Signaturdatei %s kann nicht geschrieben werden"
 
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "cannot import key in %s since GnuPG is not installed"
+msgstr ""
+"Schlüssel kann nicht in %s importiert werden, da GnuPG nicht installiert ist"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "failed to import key in %s"
+msgstr "Fehlschlag beim Import des Schlüssels in %s"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "cannot verify signature on %s since GnuPG is not installed"
+msgstr ""
+"Signatur von %s kann nicht überprüft werden, da GnuPG nicht installiert ist"
+
+#: scripts/Dpkg/OpenPGP.pm
+#, perl-format
+msgid "failed to verify signature on %s"
+msgstr "Fehler beim Überprüfen der Signatur von %s"
+
 #: scripts/Dpkg/Package.pm
 msgid "may not be empty string"
 msgstr "darf keine leere Zeichenkette sein"
@@ -2795,6 +2831,16 @@ msgstr "Zeichen »%s« ist nicht erlaubt"
 #: scripts/Dpkg/Package.pm
 msgid "must start with an alphanumeric character"
 msgstr "muss mit einem alphanumerischen Zeichen beginnen"
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' cannot be canonicalized"
+msgstr "Pfadname „%s“ kann nicht in kanonische Form gebracht werden"
+
+#: scripts/Dpkg/Path.pm
+#, perl-format
+msgid "pathname '%s' points outside source root (to '%s')"
+msgstr "Pfadname »%s« zeigt außerhalb der Quellwurzel (nach „%s“)"
 
 #: scripts/Dpkg/Shlibs.pm
 msgid ""
@@ -2966,20 +3012,20 @@ msgstr ""
 "ermitteln"
 
 #: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "failed to verify signature on %s"
-msgstr "Fehler beim Überprüfen der Signatur von %s"
-
-#: scripts/Dpkg/Source/Package.pm
-#, perl-format
-msgid "cannot verify signature on %s since GnuPG is not installed"
+msgid "upstream tarball signatures but no upstream signing key"
 msgstr ""
-"Signatur von %s kann nicht überprüft werden, da GnuPG nicht installiert ist"
+"Tarball-Signatur der Originalautoren aber kein Signaturschlüssel der "
+"Originalautoren"
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
 msgid "%s is not a valid option for %s"
 msgstr "%s ist keine gültige Option für %s."
+
+#: scripts/Dpkg/Source/Package.pm
+#, perl-format
+msgid "cannot copy %s to %s"
+msgstr "%s kann nicht nach %s kopiert werden"
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
@@ -3063,7 +3109,7 @@ msgstr "Option -s%s überschreibt vorhergehende Option -s%s."
 msgid "source handling style -s%s not allowed with -x"
 msgstr "Quellbearbeitungsstil -s%s mit -x nicht erlaubt"
 
-#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+#: scripts/Dpkg/Source/Package/V1.pm
 msgid "multiple tarfiles in v1.0 source package"
 msgstr "mehrere Tar-Dateien in v1.0-Quellpaket"
 
@@ -3187,6 +3233,14 @@ msgid "unable to stat putative unpacked orig '%s'"
 msgstr ""
 "unmöglich, das vermeintlich ausgepackte Original »%s« mit stat abzufragen"
 
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Quilt.pm
+msgid "non-native package version does not contain a revision"
+msgstr "nichtnative Paketversion enthält keine Revision"
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V3/Native.pm
+msgid "native package version may not have a revision"
+msgstr "native Paketversion darf keine Revision haben"
+
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid "source directory '%s' is not <sourcepackage>-<upstreamversion> '%s'"
@@ -3237,6 +3291,12 @@ msgstr "Berechtigung von »%s« kann nicht geändert werden"
 #, perl-format
 msgid "building %s using existing %s"
 msgstr "%s wird unter Benutzung des existierenden %s gebaut"
+
+#: scripts/Dpkg/Source/Package/V1.pm scripts/Dpkg/Source/Package/V2.pm
+msgid "upstream signing key but no upstream tarball signature"
+msgstr ""
+"Signaturschlüssel der Originalautoren aber keine Tarball-Signatur der "
+"Originalautoren"
 
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
@@ -3589,13 +3649,13 @@ msgid "setting up shallow clone"
 msgstr "ein seichter (shallow) Klon wird eingerichtet"
 
 #: scripts/Dpkg/Source/Package/V3/Native.pm
+msgid "multiple tarfiles in native source package"
+msgstr "mehrere Tar-Dateien in nativem Quellpaket"
+
+#: scripts/Dpkg/Source/Package/V3/Native.pm
 #, perl-format
 msgid "unrecognized file for a native source package: %s"
 msgstr "unerkannte Datei für natives Quellpaket: %s"
-
-#: scripts/Dpkg/Source/Package/V3/Native.pm
-msgid "native package version may not have a revision"
-msgstr "native Paketversion darf keine Revision haben"
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 msgid "use a single debianization patch"
@@ -3604,10 +3664,6 @@ msgstr "einen einzigen Debianisierungs-Patch verwenden"
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 msgid "accept quilt metadata <version> even if unknown"
 msgstr "Quilt-Metadaten <Version> akzeptieren, selbst falls unbekannt"
-
-#: scripts/Dpkg/Source/Package/V3/Quilt.pm
-msgid "non-native package version does not contain a revision"
-msgstr "nichtnative Paketversion enthält keine Revision"
 
 #: scripts/Dpkg/Source/Package/V3/Quilt.pm
 #, perl-format
@@ -3983,6 +4039,23 @@ msgstr "Versionsnummer enthält ungültiges Zeichen »%s«"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
+
+#~ msgid "badly formed package name in files list file, line %d"
+#~ msgstr "ungültiger Paketname in Dateilistendatei, Zeile %d"
+
+#~ msgid "error occurred while parsing %s"
+#~ msgstr "Fehler beim Auswerten von %s"
+
+#~ msgid "error occurred while parsing %s field: %s"
+#~ msgstr "Fehler beim Auswerten von %s Feld: %s"
+
+#~ msgid "'%s' is not a legal architecture string"
+#~ msgstr "»%s« ist keine gültige Architektur-Zeichenkette"
+
+#~ msgid ""
+#~ "binary package stanza %s is using an obsolete Build-Profiles field syntax"
+#~ msgstr ""
+#~ "Binärpaketeintrag %s verwendet eine veraltete Build-Profiles-Feldsyntax"
 
 #~ msgid "format variant must be in lowercase"
 #~ msgstr "Formatvariante muss Kleinbuchstaben verwenden"
@@ -4542,9 +4615,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 #~ msgid "1 to 3 args expected\n"
 #~ msgstr "1 bis 3 Argumente erwartet\n"
 
-#~ msgid "cannot rename %s to %s"
-#~ msgstr "%s kann nicht in %s umbenannt werden"
-
 #~ msgid "no orig.tar file found"
 #~ msgstr "keine orig.tar-Datei gefunden"
 
@@ -4908,9 +4978,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "Unsupported format of .dsc file (%s)"
 #~ msgstr "Nicht unterstütztes Format der .dsc-Datei (%s)"
-
-#~ msgid "Files field contains invalid filename `%s'"
-#~ msgstr "Feld »Files« enthält ungültigen Dateinamen »%s«"
 
 #~ msgid "repeated file type - files `%s' and `%s'"
 #~ msgstr "wiederholter Dateityp - Dateien »%s« und »%s«"

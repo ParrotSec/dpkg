@@ -16,6 +16,7 @@ bin_SCRIPTS = \
 	dpkg-mergechangelogs \
 	dpkg-name \
 	dpkg-parsechangelog \
+	dpkg-realpath \
 	dpkg-scanpackages \
 	dpkg-scansources \
 	dpkg-shlibdeps \
@@ -36,6 +37,7 @@ EXTRA_DIST = \
 	dpkg-mergechangelogs.pl \
 	dpkg-name.pl \
 	dpkg-parsechangelog.pl \
+	dpkg-realpath.sh \
 	dpkg-scanpackages.pl \
 	dpkg-scansources.pl \
 	dpkg-shlibdeps.pl \
@@ -44,6 +46,9 @@ EXTRA_DIST = \
 	$(test_scripts) \
 	$(test_data)
 
+nobase_dist_pkgdata_DATA = \
+	sh/dpkg-error.sh \
+	# EOL
 
 CLEANFILES = \
 	$(test_data_objects) \
@@ -147,16 +152,17 @@ do_perl_subst = $(AM_V_GEN) sed \
 	-e "s:our \$$PROGVERSION = .*;:our \$$PROGVERSION = '$(PACKAGE_VERSION)';:"
 
 do_shell_subst = $(AM_V_GEN) sed \
-	-e "s:^version[[:space:]]*=[[:space:]]*['\"][^'\"]*[\"']:version=\"$(PACKAGE_VERSION)\":"
+	-e "s:^PKGDATADIR=.*$$:PKGDATADIR='$(pkgdatadir)':" \
+	-e "s:^version=['\"][^'\"]*[\"']:version=\"$(PACKAGE_VERSION)\":"
 
 SUFFIXES = .pl .sh
 
-.pl: Makefile
+.pl:
 	@test -d `dirname $@` || $(MKDIR_P) `dirname $@`
 	$(do_perl_subst) <$< >$@
 	$(AM_V_at) chmod +x $@
 
-.sh: Makefile
+.sh:
 	@test -d `dirname $@` || $(MKDIR_P) `dirname $@`
 	$(do_shell_subst) <$< >$@
 	$(AM_V_at) chmod +x $@
@@ -256,6 +262,7 @@ test_scripts = \
 	t/Dpkg_Source_Archive.t \
 	t/Dpkg_Source_Package.t \
 	t/Dpkg_Dist_Files.t \
+	t/dpkg_realpath.t \
 	t/dpkg_source.t \
 	t/dpkg_buildpackage.t \
 	t/merge_changelogs.t \
@@ -266,10 +273,10 @@ test_data = \
 	t/Dpkg_OpenPGP/package_1.0.orig.tar \
 	t/Dpkg_OpenPGP/package_1.0.orig.tar.asc \
 	t/Dpkg_OpenPGP/package_1.0.orig.tar.sig \
-	t/Dpkg_Shlibs/symbols.blacklisted \
-	t/Dpkg_Shlibs/symbols.blacklist-groups \
-	t/Dpkg_Shlibs/symbols.blacklist-filter \
-	t/Dpkg_Shlibs/symbols.blacklist-ignore \
+	t/Dpkg_Shlibs/symbols.internal \
+	t/Dpkg_Shlibs/symbols.internal-allow \
+	t/Dpkg_Shlibs/symbols.internal-allow-groups \
+	t/Dpkg_Shlibs/symbols.internal-filter \
 	t/Dpkg_Shlibs/symbols.fake-1 \
 	t/Dpkg_Shlibs/symbols.fake-2 \
 	t/Dpkg_Shlibs/symbols.fake-3 \
@@ -291,7 +298,7 @@ test_data = \
 	t/Dpkg_Shlibs/objdump.basictags-amd64 \
 	t/Dpkg_Shlibs/objdump.basictags-i386 \
 	t/Dpkg_Shlibs/objdump.basictags-mips \
-	t/Dpkg_Shlibs/objdump.blacklisted \
+	t/Dpkg_Shlibs/objdump.internal \
 	t/Dpkg_Shlibs/objdump.patterns \
 	t/Dpkg_Shlibs/objdump.glib-ia64 \
 	t/Dpkg_Shlibs/objdump.libc6-2.3 \
@@ -362,6 +369,7 @@ test_data = \
 	t/mk/debian/changelog \
 	t/mk/architecture.mk \
 	t/mk/buildflags.mk \
+	t/mk/buildopts.mk \
 	t/mk/buildtools.mk \
 	t/mk/pkg-info.mk \
 	t/mk/vendor-v0.mk \

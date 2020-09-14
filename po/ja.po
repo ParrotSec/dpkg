@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.18.3\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2016-04-01 16:07+0900\n"
 "Last-Translator: Takuma Yamada <tyamada@takumayamada.com>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -117,6 +117,12 @@ msgid "error writing to architecture list"
 msgstr "アーキテクチャリストへの書き込みエラーです"
 
 #: lib/dpkg/atomic-file.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create base directory for %s"
+msgstr "ディレクトリ `%.255s' を走査できません"
+
+#: lib/dpkg/atomic-file.c
 #, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "新しいファイル '%.250s' を作成できません"
@@ -203,6 +209,12 @@ msgstr "%s: 内部 gzip 読み取りエラー: '%s'"
 #, c-format
 msgid "%s: internal gzip write error"
 msgstr "%s: 内部 gzip 書き込みエラー"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: internal gzip read error: '%s'"
+msgid "%s: internal gzip read error: %s"
+msgstr "%s: 内部 gzip 読み取りエラー: '%s'"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -330,6 +342,12 @@ msgid ""
 msgstr "updates ディレクトリにあるファイル名の長さが異なります (%d と %d)"
 
 #: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create the dpkg updates directory %s"
+msgstr "updates ディレクトリ `%.255s' を走査できません"
+
+#: lib/dpkg/dbmodify.c
 #, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr "updates ディレクトリ `%.255s' を走査できません"
@@ -391,6 +409,12 @@ msgstr "dpkg ステータスデータベース"
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr "要求した操作はスーパーユーザの権限が必要です"
+
+#: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area"
+msgid "cannot create the dpkg database directory %s"
+msgstr "dpkg ステータスエリアにアクセスできません"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -761,6 +785,10 @@ msgstr ""
 " %s\n"
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr ""
+
+#: lib/dpkg/ehandle.c
 #, fuzzy
 #| msgid "internal error (bug)"
 msgid "internal error"
@@ -966,13 +994,15 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgstr "`%2$.255s' の `%1$s' フィールド: バージョンが `%3$c' を含んでいます"
-
-#: lib/dpkg/fields.c
-#, c-format
 msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "`%2$.255s' の `%1$s' フィールド: バージョンが完結していません"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgstr "`%2$.255s' の `%1$s' フィールド: バージョンが `%3$c' を含んでいます"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
@@ -1062,13 +1092,31 @@ msgstr "ファイル '%s' のロック状態を確認できません"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "%s is locked by another process"
+msgid "unable to lock %s"
+msgstr "%s をロックできません"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
+#| msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process\n"
+"%s"
 msgstr "%s が別のプロセスによってロックされています"
 
 #: lib/dpkg/file.c
-#, c-format
-msgid "unable to lock %s"
-msgstr "%s をロックできません"
+#, fuzzy, c-format
+#| msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr "%s が別のプロセスによってロックされています"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1092,6 +1140,12 @@ msgstr "ファイル '%s' をそれ自身に退避することはできません
 #, c-format
 msgid "could not open log '%s': %s"
 msgstr "ログ `%s' をオープンできませんでした: %s"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+#| msgid "cannot stat file '%s'"
+msgid "cannot write to log file '%s': %s"
+msgstr "ファイル '%s' の状態を取得できません"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1432,19 +1486,25 @@ msgid "no package information in '%.255s'"
 msgstr "`%.255s' にパッケージ情報がありません"
 
 #: lib/dpkg/parsehelp.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "parsing file '%.255s' near line %d package '%.255s':\n"
+#| " %.255s"
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
+"parsing file '%s' near line %d package '%s':\n"
+" "
 msgstr ""
 "ファイル '%.255s' を解析。%d 行目付近、パッケージ '%.255s':\n"
 " %.255s"
 
 #: lib/dpkg/parsehelp.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "parsing file '%.255s' near line %d:\n"
+#| " %.255s"
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
+" "
 msgstr ""
 "ファイル '%.255s' を解析。%d 行目付近:\n"
 " %.255s"
@@ -1856,11 +1916,6 @@ msgstr "ci ファイルのトリガは未知のディレクティブ `%.250s' �
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "状態ディレクトリ `%.250s' のトリガを作成できません"
 
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr "状態ディレクトリ `%.250s' のトリガの所有権を設定できません"
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr "空のトリガ名は許されていません"
@@ -1969,7 +2024,7 @@ msgstr "`%.255s' のタイムスタンプ設定エラーです"
 msgid "error setting ownership of symlink '%.255s'"
 msgstr "シンボリックリンク `%.255s' の所有者設定中にエラーが発生しました"
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
 msgstr "リンク `%.255s' を読み取れません"
@@ -2024,8 +2079,9 @@ msgstr ""
 "`%.250s' を上書きしようとしています。これは `%.250s' の退避バージョンです"
 
 #: src/archives.c
-#, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
+#, fuzzy, c-format
+#| msgid "unable to stat '%.255s' (which I was about to install)"
+msgid "unable to stat '%.255s' (which was about to be installed)"
 msgstr "(今インストールしようとしている) `%.255s' の状態を取得できません"
 
 #: src/archives.c
@@ -2132,6 +2188,30 @@ msgstr ""
 #, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+"失敗。%s は不可欠パッケージです。%s を有効に\n"
+" するために、その設定削除を行いません"
+
+#: src/archives.c
+#, fuzzy, c-format
+#| msgid ""
+#| "considering deconfiguration of essential\n"
+#| " package %s, to enable %s"
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr ""
+"%2$s を有効にするため、不可欠パッケージ\n"
+" %1$s の設定削除を考慮しています"
+
+#: src/archives.c
+#, fuzzy, c-format
+#| msgid ""
+#| "no, %s is essential, will not deconfigure\n"
+#| " it in order to enable %s"
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 "失敗。%s は不可欠パッケージです。%s を有効に\n"
@@ -2785,11 +2865,13 @@ msgstr ""
 "ン 2\n"
 "もしくはそれ以降を参照してください。このソフトウェアは無保証です。\n"
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
-#, c-format
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "使い方: %s [<オプション> ...] <コマンド>\n"
@@ -3227,6 +3309,12 @@ msgid "versioned Provides"
 msgstr "バージョン付き提供 (Provides)"
 
 #: src/enquiry.c
+#, fuzzy
+#| msgid "Pre-Depends field"
+msgid "Protected field"
+msgstr "先行依存フィールド"
+
+#: src/enquiry.c
 #, c-format
 msgid ""
 "cannot see how to satisfy pre-dependency:\n"
@@ -3371,7 +3459,9 @@ msgid "Configure any package which may help this one"
 msgstr "これが助けになるかもしれないパッケージを設定する"
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
+#, fuzzy
+#| msgid "Process incidental packages even when on hold"
+msgid "Install or remove incidental packages even when on hold"
 msgstr "保持していても付帯パッケージを処理する"
 
 #: src/force.c
@@ -3470,6 +3560,12 @@ msgstr "依存バージョンの問題を警告に切り替える"
 #: src/force.c
 msgid "Remove packages which require installation"
 msgstr "インストールに必要なパッケージを削除する"
+
+#: src/force.c
+#, fuzzy
+#| msgid "Remove an essential package"
+msgid "Remove a protected package"
+msgstr "不可欠パッケージを削除する"
 
 #: src/force.c
 msgid "Remove an essential package"
@@ -3725,10 +3821,14 @@ msgstr ""
 "\n"
 
 #: src/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Assertable features: support-predepends, working-epoch, long-filenames,\n"
+#| "  multi-conrep, multi-arch, versioned-provides.\n"
+#| "\n"
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 "アサート可能機能: support-predepends, working-epoch, long-filenames,\n"
@@ -3757,13 +3857,54 @@ msgstr ""
 "\n"
 
 #: src/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --admindir=<directory>     Use <directory> instead of %s.\n"
+#| "  --root=<directory>         Install on a different root directory.\n"
+#| "  --instdir=<directory>      Change installation dir without changing "
+#| "admin dir.\n"
+#| "  --path-exclude=<pattern>   Do not install paths which match a shell "
+#| "pattern.\n"
+#| "  --path-include=<pattern>   Re-include a pattern after a previous "
+#| "exclusion.\n"
+#| "  -O|--selected-only         Skip packages not selected for install/"
+#| "upgrade.\n"
+#| "  -E|--skip-same-version     Skip packages whose same version is "
+#| "installed.\n"
+#| "  -G|--refuse-downgrade      Skip packages with earlier version than "
+#| "installed.\n"
+#| "  -B|--auto-deconfigure      Install even if it would break some other "
+#| "package.\n"
+#| "  --[no-]triggers            Skip or force consequential trigger "
+#| "processing.\n"
+#| "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+#| "  --no-debsig                Do not try to verify package signatures.\n"
+#| "  --no-act|--dry-run|--simulate\n"
+#| "                             Just say what we would do - don't do it.\n"
+#| "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --"
+#| "debug=help).\n"
+#| "  --status-fd <n>            Send status change updates to file "
+#| "descriptor <n>.\n"
+#| "  --status-logger=<command>  Send status change updates to <command>'s "
+#| "stdin.\n"
+#| "  --log=<filename>           Log status changes and actions to "
+#| "<filename>.\n"
+#| "  --ignore-depends=<package>,...\n"
+#| "                             Ignore dependencies involving <package>.\n"
+#| "  --force-...                Override problems (see --force-help).\n"
+#| "  --no-force-...|--refuse-...\n"
+#| "                             Stop when problems encountered.\n"
+#| "  --abort-after <n>          Abort after encountering <n> errors.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  --admindir=<directory>     Use <directory> instead of %s.\n"
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3778,6 +3919,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3787,12 +3929,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 "オプション:\n"
@@ -4362,11 +4505,19 @@ msgstr ""
 "\n"
 
 #: src/querycmd.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --admindir=<directory>           Use <directory> instead of %s.\n"
+#| "  --load-avail                     Use available file on --show and --"
+#| "list.\n"
+#| "  -f|--showformat=<format>         Use alternative format for --show.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -4418,6 +4569,12 @@ msgstr ""
 
 #: src/remove.c
 msgid "this is an essential package; it should not be removed"
+msgstr "これは不可欠 (essential) パッケージです - 削除すべきではありません"
+
+#: src/remove.c
+#, fuzzy
+#| msgid "this is an essential package; it should not be removed"
+msgid "this is a protected package; it should not be removed"
 msgstr "これは不可欠 (essential) パッケージです - 削除すべきではありません"
 
 #: src/remove.c
@@ -4664,6 +4821,15 @@ msgstr ""
 "ファイルの状態情報を上書きすることについてのヘルプには、--help を使用してくだ"
 "さい。"
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+"使い方: %s [<オプション> ...] <コマンド>\n"
+"\n"
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4700,9 +4866,9 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4782,10 +4948,14 @@ msgid "Debian %s package trigger utility version %s.\n"
 msgstr "Debian %s パッケージトリガユーティリティバージョン %s。\n"
 
 #: src/trigcmd.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<options> ...] <trigger-name>\n"
+#| "       %s [<options> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "使い方: %s [<オプション> ...] <トリガ名>\n"
@@ -4997,6 +5167,12 @@ msgstr "statoverride ファイルが空行を含んでいます"
 #, c-format
 msgid "conffile name '%s' is too long, or missing final newline"
 msgstr "設定ファイル名 '%s' は長すぎるか、最後の改行がありません"
+
+#: src/unpack.c dpkg-deb/build.c
+#, fuzzy, c-format
+#| msgid "filename \"%s\" is not absolute"
+msgid "conffile name '%s' is not an absolute pathname"
+msgstr "ファイル名 \"%s\" は絶対パスではありません"
 
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
@@ -5636,14 +5812,29 @@ msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Debian `%s' パッケージアーカイブバックエンドバージョン %s。\n"
 
 #: dpkg-deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Commands:\n"
+#| "  -b|--build <directory> [<deb>]   Build an archive.\n"
+#| "  -c|--contents <deb>              List contents.\n"
+#| "  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+#| "  -W|--show <deb>                  Show information on package(s)\n"
+#| "  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+#| "  -e|--control <deb> [<directory>] Extract control info.\n"
+#| "  -x|--extract <deb> <directory>   Extract files.\n"
+#| "  -X|--vextract <deb> <directory>  Extract & list files.\n"
+#| "  -R|--raw-extract <deb> <directory>\n"
+#| "                                   Extract control info and files.\n"
+#| "  --ctrl-tarfile <deb>             Output control tarfile.\n"
+#| "  --fsys-tarfile <deb>             Output filesystem tarfile.\n"
+#| "\n"
 msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -6174,6 +6365,12 @@ msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr "ファイル `%.250s' はマルチパートアーカイブのパートではありません。\n"
 
 #: dpkg-split/queue.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create directory %s"
+msgstr "ディレクトリ `%.255s' を走査できません"
+
+#: dpkg-split/queue.c
 #, c-format
 msgid "unable to reopen part file '%.250s'"
 msgstr "パートファイル `%.250s' を再オープンできません"
@@ -6388,6 +6585,8 @@ msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -6427,16 +6626,6 @@ msgstr "malloc 失敗 (%zu バイト)"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "two commands specified: --%s and --%s"
-msgstr "2 つのコマンドが指定されました: --%s と --%s"
-
-#: utils/update-alternatives.c
-#, c-format
-msgid "cannot append to '%s'"
-msgstr "'%s' に追加できません"
-
-#: utils/update-alternatives.c
-#, c-format
 msgid "wait for subprocess %s failed"
 msgstr "サブプロセス %s の待機に失敗しました"
 
@@ -6444,6 +6633,23 @@ msgstr "サブプロセス %s の待機に失敗しました"
 #, c-format
 msgid "unable to remove '%s'"
 msgstr "'%s' を削除できません"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create log directory '%s'"
+msgstr "ディレクトリ `%.255s' を走査できません"
+
+#: utils/update-alternatives.c
+#, c-format
+msgid "cannot append to '%s'"
+msgstr "'%s' に追加できません"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "unable to read link '%.255s'"
+msgid "unable to read link '%s%.255s'"
+msgstr "リンク `%.255s' を読み取れません"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -6555,9 +6761,21 @@ msgid "discarding obsolete slave link %s (%s)"
 msgstr "時代遅れのスレーブリンク %s を破棄しています (%s)"
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create administrative directory '%s'"
+msgstr "updates ディレクトリ `%.255s' を走査できません"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "unable to flush file '%s'"
 msgstr "ファイル '%s' をフラッシュできません"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot stat file '%s'"
+msgid "cannot stat file '%s%s'"
+msgstr "ファイル '%s' の状態を取得できません"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6646,6 +6864,12 @@ msgid "not replacing %s with a link"
 msgstr "%s をリンクで置き換えません"
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create alternatives directory '%s'"
+msgstr "updates ディレクトリ `%.255s' を走査できません"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr "未知の選択肢 %s をインストールできません"
@@ -6682,14 +6906,18 @@ msgid "alternative %s for %s not registered; not setting"
 msgstr "%2$s の alternative %1$s は登録されていません。設定は行いません"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+#, fuzzy, c-format
+#| msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr "%s/%s が宙ぶらりんなため、最適な選択肢で更新されます"
 
 #: utils/update-alternatives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s/%s has been changed (manually or by a script); switching to manual "
+#| "updates only"
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr ""
 "%s/%s が (手動あるいはスクリプトにより) 変更されました。手動更新のみに切り替"
@@ -6701,13 +6929,15 @@ msgid "setting up automatic selection of %s"
 msgstr "%s の自動選択を設定しています"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "renaming %s slave link from %s to %s"
+#, fuzzy, c-format
+#| msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "%s のスレーブリンクを %s から %s に名前変更しています"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "renaming %s link from %s to %s"
+#, fuzzy, c-format
+#| msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "%s のリンクを %s から %s に名前変更しています"
 
 #: utils/update-alternatives.c
@@ -6791,8 +7021,9 @@ msgid "alternative link %s is already managed by %s"
 msgstr "alternative リンク %s はすでに %s によって管理されています"
 
 #: utils/update-alternatives.c
-#, c-format
-msgid "alternative path %s doesn't exist"
+#, fuzzy, c-format
+#| msgid "alternative path %s doesn't exist"
+msgid "alternative path %s%s doesn't exist"
 msgstr "alternative パス %s が存在しません"
 
 #: utils/update-alternatives.c
@@ -6815,11 +7046,18 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
+msgid "two commands specified: --%s and --%s"
+msgstr "2 つのコマンドが指定されました: --%s と --%s"
+
+#: utils/update-alternatives.c
+#, c-format
 msgid "unknown argument '%s'"
 msgstr "`%s' は不明な引数です"
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
+#, fuzzy, c-format
+#| msgid "--install needs <link> <name> <path> <priority>"
+msgid "--%s needs <link> <name> <path> <priority>"
 msgstr "--install は<リンク> <名前> <パス> <優先度> が必要です"
 
 #: utils/update-alternatives.c
@@ -6845,11 +7083,15 @@ msgid "--%s needs <name>"
 msgstr "--%s は <名前> が必要です"
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, fuzzy, c-format
+#| msgid "--slave only allowed with --install"
+msgid "--%s only allowed with --%s"
 msgstr "--slave は --install と一緒のみ許可されています"
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
+#, fuzzy, c-format
+#| msgid "--slave needs <link> <name> <path>"
+msgid "--%s needs <link> <name> <path>"
 msgstr "--slave は<リンク> <名前> <パス> が必要です"
 
 #: utils/update-alternatives.c
@@ -6868,13 +7110,10 @@ msgid "--%s needs a <file> argument"
 msgstr "--%s は <ファイル> の引数が必要です"
 
 #: utils/update-alternatives.c
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
-"--display、--query、--list、--get-selections、--config、--set、--set-"
-"selections、--install、--remove、--all、--remove-all、--auto のいずれかが必要"
-"です"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6902,6 +7141,17 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
+
+#~ msgid ""
+#~ "need --display, --query, --list, --get-selections, --config, --set, --set-"
+#~ "selections, --install, --remove, --all, --remove-all or --auto"
+#~ msgstr ""
+#~ "--display、--query、--list、--get-selections、--config、--set、--set-"
+#~ "selections、--install、--remove、--all、--remove-all、--auto のいずれかが"
+#~ "必要です"
+
+#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgstr "状態ディレクトリ `%.250s' のトリガの所有権を設定できません"
 
 #~ msgid "unable to open lock file %s for testing"
 #~ msgstr "テストのためのロックファイル %s をオープンできません"

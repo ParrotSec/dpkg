@@ -7,15 +7,15 @@ Uploaders: Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>
 Homepage: https://wiki.debian.org/Teams/Dpkg
 Vcs-Browser: https://nest.parrotsec.org/debian-packages/dpkg
 Vcs-Git: https://nest.parrotsec.org/debian-packages/dpkg
-Standards-Version: 4.3.0
+Standards-Version: 4.5.0
 Rules-Requires-Root: no
 Build-Depends:
- debhelper (>= 11),
+ debhelper-compat (= 13),
  pkg-config,
 # Needed for ITS support.
  gettext (>= 0.19.7),
-# Needed for --porefs.
- po4a (>= 0.43),
+# Needed for --porefs defaults, conditional addenda and mode=eof.
+ po4a (>= 0.59),
  zlib1g-dev,
  libbz2-dev,
  liblzma-dev,
@@ -41,21 +41,6 @@ Suggests:
 Breaks:
 # Due to --status-fd not duplicating output.
  libapt-pkg5.0 (<< 1.7~b),
-# Due to removal of dpkg-divert compat symlink.
- amule (<< 2.3.1+git1a369e47-3),
-# Due to removal of dpkg-statoverride compat symlink.
- acidbase (<= 1.4.5-4),
- beep (<< 1.3-4),
- im (<< 1:151-4),
- netselect (<< 0.3.ds1-27),
- pconsole (<< 1.0-12),
- phpgacl (<< 3.3.7-7.3),
- pure-ftpd (<< 1.0.43-1),
- systemtap (<< 2.8-1),
- terminatorx (<< 4.0.1-1),
- xvt (<= 2.1-20.1),
-# Due to renaming of triplettable to tupletable.
- libdpkg-perl (<< 1.18.11),
 # Due to s-s-d requiring secure usage of --pidfile.
  lsb-base (<< 10.2019031300),
 Description: Debian package management system
@@ -102,8 +87,8 @@ Recommends:
  build-essential,
  gcc | c-compiler,
  fakeroot,
- gnupg | gnupg2,
- gpgv | gpgv2,
+ gnupg,
+ gpgv,
 # Used by dpkg-mergechangelogs.
  libalgorithm-merge-perl,
 Suggests:
@@ -137,8 +122,8 @@ Recommends:
  xz-utils,
 Suggests:
  debian-keyring,
- gnupg | gnupg2,
- gpgv | gpgv2,
+ gnupg,
+ gpgv,
  gcc | c-compiler,
  binutils,
  patch,
@@ -149,8 +134,6 @@ Suggests:
 # Needed by Dpkg::Source::Package::V3::Bzr
  bzr,
 Breaks:
-# Needed for git-style diffs.
- patch (<< 2.7),
 # Uses the private Dpkg::Shlibs::SymbolFile module with no API stability
 # guarantees! Which obviously broke with 1.19.0.
  pkg-kde-tools (<< 0.15.28~),

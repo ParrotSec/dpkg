@@ -161,7 +161,7 @@ my $control = Dpkg::Control::Info->new();
 my $fields = $control->get_source();
 my $bd_value = deps_concat($fields->{'Build-Depends'}, $fields->{'Build-Depends-Arch'});
 my $build_deps = deps_parse($bd_value, build_dep => 1, reduce_restrictions => 1);
-error(g_('error occurred while parsing %s'), 'Build-Depends/Build-Depends-Arch')
+error(g_('cannot parse %s field'), 'Build-Depends/Build-Depends-Arch')
     unless defined $build_deps;
 
 my %dependencies;
@@ -435,8 +435,9 @@ foreach my $file (keys %exec) {
     foreach my $soname (@sonames) {
 	# Adjust minimal version of dependencies with information
 	# extracted from build-dependencies
-	my $dev_pkg = $symfile->get_field($soname, 'Build-Depends-Package');
-	if (defined $dev_pkg) {
+        my $dev_pkgs = $symfile->get_field($soname, 'Build-Depends-Packages') //
+                       $symfile->get_field($soname, 'Build-Depends-Package');
+        foreach my $dev_pkg (split /[,\s]+/, $dev_pkgs // '') {
             debug(1, "Updating dependencies of $soname with build-dependencies");
 	    my $minver = get_min_version_from_deps($build_deps, $dev_pkg);
 	    if (defined $minver) {
@@ -704,11 +705,15 @@ sub add_shlibs_dep {
 
 sub split_soname {
     my $soname = shift;
+
     if ($soname =~ /^(.*)\.so\.(.*)$/) {
+        # Shared library with stable <name>.so.<version> format.
 	return wantarray ? ($1, $2) : 1;
     } elsif ($soname =~ /^(.*)-(\d.*)\.so$/) {
+        # Shared library/module with unstable <name>-<version>.so format.
 	return wantarray ? ($1, $2) : 1;
     } else {
+        # Something else.
 	return wantarray ? () : 0;
     }
 }

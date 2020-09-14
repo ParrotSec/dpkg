@@ -28,6 +28,7 @@
 #include <sys/mman.h>
 #endif
 
+#include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
@@ -53,6 +54,7 @@ const struct fieldinfo fieldinfos[]= {
   /* Note: Capitalization of field name strings is important. */
   { FIELD("Package"),          f_name,            w_name                                     },
   { FIELD("Essential"),        f_boolean,         w_booleandefno,   PKGIFPOFF(essential)     },
+  { FIELD("Protected"),        f_boolean,         w_booleandefno,   PKGIFPOFF(is_protected)  },
   { FIELD("Status"),           f_status,          w_status                                   },
   { FIELD("Priority"),         f_priority,        w_priority                                 },
   { FIELD("Section"),          f_section,         w_section                                  },
@@ -526,11 +528,15 @@ parsedb_new(const char *filename, int fd, enum parsedbflags flags)
 
   ps = m_malloc(sizeof(*ps));
   ps->err = DPKG_ERROR_OBJECT;
+  ps->errmsg = VARBUF_OBJECT;
   ps->filename = filename;
   ps->type = parse_get_type(ps, flags);
   ps->flags = flags;
   ps->fd = fd;
   ps->lno = 0;
+  ps->data = NULL;
+  ps->dataptr = NULL;
+  ps->endptr = NULL;
   ps->pkg = NULL;
   ps->pkgbin = NULL;
 
@@ -551,7 +557,7 @@ parsedb_open(const char *filename, enum parsedbflags flags)
     return parsedb_new(filename, STDIN_FILENO, flags);
 
   fd = open(filename, O_RDONLY);
-  if (fd == -1)
+  if (fd == -1 && !(errno == ENOENT && (flags & pdb_allow_empty)))
     ohshite(_("failed to open package info file '%.255s' for reading"),
             filename);
 
@@ -569,6 +575,9 @@ void
 parsedb_load(struct parsedb_state *ps)
 {
   struct stat st;
+
+  if (ps->fd < 0 && (ps->flags & pdb_allow_empty))
+      return;
 
   if (fstat(ps->fd, &st) == -1)
     ohshite(_("can't stat package info file '%.255s'"), ps->filename);
@@ -735,7 +744,7 @@ parsedb_close(struct parsedb_state *ps)
   if (ps->flags & pdb_close_fd) {
     pop_cleanup(ehflag_normaltidy);
 
-    if (close(ps->fd))
+    if (ps->fd >= 0 && close(ps->fd) < 0)
       ohshite(_("failed to close after read: '%.255s'"), ps->filename);
   }
 
@@ -746,6 +755,8 @@ parsedb_close(struct parsedb_state *ps)
     free(ps->data);
 #endif
   }
+  dpkg_error_destroy(&ps->err);
+  varbuf_destroy(&ps->errmsg);
   free(ps);
 }
 
@@ -765,6 +776,9 @@ parsedb_parse(struct parsedb_state *ps, struct pkginfo **donep)
   int fieldencountered[array_count(fieldinfos)];
   int pdone;
   struct field_state fs;
+
+  if (ps->data == NULL && (ps->flags & pdb_allow_empty))
+    return 0;
 
   memset(&fs, 0, sizeof(fs));
   fs.fieldencountered = fieldencountered;
@@ -864,7 +878,7 @@ parsedb(const char *filename, enum parsedbflags flags, struct pkginfo **pkgp)
  * It is likely that the backward pointer for the package in question
  * (‘depended’) will be updated by this routine, but this will happen by
  * the routine traversing the dependency data structures. It doesn't need
- * to be told where to update that; I just mention it as something that
+ * to be told where to update that; just mentioned here as something that
  * one should be cautious about.
  */
 void copy_dependency_links(struct pkginfo *pkg,

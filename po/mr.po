@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2015-04-07 09:51+0200\n"
 "Last-Translator: Priti Patil <prithisd@gmail.com>\n"
 "Language-Team: Marathi <janabhaaratii@cdacmumbai.in>\n"
@@ -104,6 +104,12 @@ msgstr "`%s' लिहिताना त्रुटी"
 
 #: lib/dpkg/atomic-file.c
 #, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create base directory for %s"
+msgstr "`%.255s' निर्देशिका चाळता येत नाही"
+
+#: lib/dpkg/atomic-file.c
+#, fuzzy, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "उगम फाइल `%.250s' उघडता येत नाही"
 
@@ -199,6 +205,11 @@ msgstr "%s: आंतरिक जीझिप त्रुटी: `%s'"
 #: lib/dpkg/compress.c
 #, fuzzy, c-format
 msgid "%s: internal gzip write error"
+msgstr "%s: आंतरिक जीझिप त्रुटी: `%s'"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: internal gzip read error: %s"
 msgstr "%s: आंतरिक जीझिप त्रुटी: `%s'"
 
 #: lib/dpkg/compress.c
@@ -339,6 +350,12 @@ msgid ""
 msgstr "सुधारणा निर्देशिकेत असलेल्या फाईलींच्या नावांची लांबी वेगवेगळी आहे (दोन्ही %d व %d)"
 
 #: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create the dpkg updates directory %s"
+msgstr "`%.255s' सुधारणा निर्देशिका तपासता येत नाही"
+
+#: lib/dpkg/dbmodify.c
 #, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr "`%.255s' सुधारणा निर्देशिका तपासता येत नाही"
@@ -400,6 +417,12 @@ msgstr "डीपीकेजी सद्यस्थिती डेटाब�
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr "या संक्रियेसाठी सुपरयुझरचे हक्क आवश्यक आहेत"
+
+#: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area"
+msgid "cannot create the dpkg database directory %s"
+msgstr "डीपीकेजी दर्जा स्थानात प्रवेश मिळत नाही"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -763,6 +786,10 @@ msgid "outside error context, aborting"
 msgstr "\"%s\" साठी अनेक अोव्हरराइडस्, संपवत आहे"
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr ""
+
+#: lib/dpkg/ehandle.c
 #, fuzzy
 #| msgid "internal error - bad mode `%s'"
 msgid "internal error"
@@ -957,13 +984,15 @@ msgstr "आवृत्ती मूल्य अंक-अक्षरांश
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgstr "`%s' क्षेत्र, संदर्भ `%.255s': आवृत्तीत `%c' चा समावेश आहे"
-
-#: lib/dpkg/fields.c
-#, c-format
 msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "`%s' क्षेत्र, संदर्भ `%.255s': आवृत्ती अ-रहित"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgstr "`%s' क्षेत्र, संदर्भ `%.255s': आवृत्तीत `%c' चा समावेश आहे"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
@@ -1053,15 +1082,32 @@ msgstr "उगम फाइल `%.250s' उघडता येत नाही"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+#| msgid "unable to unlock %s: %s"
+msgid "unable to lock %s"
+msgstr "%s चे टाळे उघडता येत नाही: %s"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 #| msgid "status database area is locked by another process"
-msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process\n"
+"%s"
 msgstr "सद्यस्थिती डेटाबेस क्षेत्राला इतर प्रक्रियेने टाळे लावले आहे "
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
-#| msgid "unable to unlock %s: %s"
-msgid "unable to lock %s"
-msgstr "%s चे टाळे उघडता येत नाही: %s"
+#| msgid "status database area is locked by another process"
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr "सद्यस्थिती डेटाबेस क्षेत्राला इतर प्रक्रियेने टाळे लावले आहे "
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1084,6 +1130,12 @@ msgstr "निर्देशिका वळवता येत नाहीत
 #| msgid "couldn't open log `%s': %s\n"
 msgid "could not open log '%s': %s"
 msgstr "नोंद `%s': %s उघडता आली नाही \n"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot write to log file '%s': %s"
+msgstr "जुनी नावे `%s': %s स्टॅट करता येत नाहीत"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1416,15 +1468,15 @@ msgstr "`%.255s' मधे पॅकेजची माहिती नाही
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
+"parsing file '%s' near line %d package '%s':\n"
+" "
 msgstr "%s, `%.255s' फायलीत  %d ओळीजवळ"
 
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
+" "
 msgstr "%s, `%.255s' फायलीत  %d ओळीजवळ"
 
 #: lib/dpkg/parsehelp.c
@@ -1829,11 +1881,6 @@ msgstr ""
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "डिपोॅट निर्देशिका `%.250s' वाचता येत नाही"
 
-#: lib/dpkg/triglib.c
-#, fuzzy, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr "डिपोॅट निर्देशिका `%.250s' वाचता येत नाही"
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr ""
@@ -1944,7 +1991,7 @@ msgstr "`%.255s'चा समयशिक्का निर्धारीत �
 msgid "error setting ownership of symlink '%.255s'"
 msgstr "`%.255s' सिमलिंकची मालकी निश्चित करताना त्रुटी"
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
 msgstr "`%.255s' साखळी/लिंक वाचण्यास अशक्य"
@@ -1996,8 +2043,9 @@ msgstr ""
 "प्रयत्नात"
 
 #: src/archives.c
-#, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
+#, fuzzy, c-format
+#| msgid "unable to stat '%.255s' (which I was about to install)"
+msgid "unable to stat '%.255s' (which was about to be installed)"
 msgstr "`%.255s' स्टॅट करता येत नाही (जे मी आता अधिष्ठापित करणार होतो)"
 
 #: src/archives.c
@@ -2098,6 +2146,23 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+"डिपिकेजी: नाही, %s हे जरूरी आहे, %s काढुन टाकण्यासाठी त्याची अजुळवणी करणे शक्य नाही.\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr ""
+"डिपिकेजी: ताकिद - %s काढुन टकण्यासाठी जरुरी असलेल्या\n"
+" %s पॅकेजची अजुळवणी विचारात घेत आहे.\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 "डिपिकेजी: नाही, %s हे जरूरी आहे, %s काढुन टाकण्यासाठी त्याची अजुळवणी करणे शक्य नाही.\n"
@@ -2802,11 +2867,13 @@ msgstr ""
 "आवृत्ती २ वा\n"
 "पुढील पहा. याची कोणतीही हमी नाही.\n"
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
-#, c-format
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "उप्युक्तता: %s [<पर्याय> ...] <आज्ञा>\n"
@@ -3227,6 +3294,10 @@ msgid "versioned Provides"
 msgstr ""
 
 #: src/enquiry.c
+msgid "Protected field"
+msgstr ""
+
+#: src/enquiry.c
 #, fuzzy, c-format
 #| msgid ""
 #| "dpkg: cannot see how to satisfy pre-dependency:\n"
@@ -3382,7 +3453,7 @@ msgid "Configure any package which may help this one"
 msgstr ""
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
+msgid "Install or remove incidental packages even when on hold"
 msgstr ""
 
 #: src/force.c
@@ -3479,6 +3550,10 @@ msgstr "अवलंबुन असलेल्या समस्या - क�
 
 #: src/force.c
 msgid "Remove packages which require installation"
+msgstr ""
+
+#: src/force.c
+msgid "Remove a protected package"
 msgstr ""
 
 #: src/force.c
@@ -3680,7 +3755,7 @@ msgstr ""
 #| "\n"
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 "अंतर्गत वापरासाठी: डिपिकेजी --अॅसर्ट-सपोर्ट-प्रिडिपेन्डस् | --प्रिडेप-पॅकेज |\n"
@@ -3721,6 +3796,8 @@ msgid ""
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3735,6 +3812,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3744,12 +3822,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 "पर्याय:\n"
@@ -4305,6 +4384,7 @@ msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -4355,6 +4435,11 @@ msgstr ""
 #: src/remove.c
 #, fuzzy
 msgid "this is an essential package; it should not be removed"
+msgstr "हे महत्वाचे पॅकेज आहे - ते काढून टाकता कामा नये.\n"
+
+#: src/remove.c
+#, fuzzy
+msgid "this is a protected package; it should not be removed"
 msgstr "हे महत्वाचे पॅकेज आहे - ते काढून टाकता कामा नये.\n"
 
 #: src/remove.c
@@ -4615,6 +4700,15 @@ msgstr "कॉन्फिग फाइल डिआयआर `%.250s' हि  (
 msgid "Use --help for help about overriding file stat information."
 msgstr ""
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+"उप्युक्तता: %s [<पर्याय> ...] <आज्ञा>\n"
+"\n"
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4635,9 +4729,9 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4733,8 +4827,8 @@ msgstr "डेबिअन `%s' पॅकेज व्यवस्थापन �
 #: src/trigcmd.c
 #, fuzzy, c-format
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "उप्युक्तता: %s [<पर्याय> ...] <आज्ञा>\n"
@@ -4947,6 +5041,12 @@ msgstr "स्टॅटओवरराइड फाइलमध्ये रि�
 #, fuzzy, c-format
 msgid "conffile name '%s' is too long, or missing final newline"
 msgstr "धोक्याची सूचना, कोॅन्फफाईलचे नाव `%.50s...'खुपच मोठे, किंवा गायब अंतिम न्यूलाईन\n"
+
+#: src/unpack.c dpkg-deb/build.c
+#, fuzzy, c-format
+#| msgid "filename \"%s\" is not absolute"
+msgid "conffile name '%s' is not an absolute pathname"
+msgstr "फाइलनाव \"%s\" हे निरपेक्ष नाही"
 
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
@@ -5621,9 +5721,9 @@ msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -6113,6 +6213,12 @@ msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr "फाइल `%.250s' ही एका बहुभाग आर्काइवचा भाग नाही\n"
 
 #: dpkg-split/queue.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create directory %s"
+msgstr "`%.255s' निर्देशिका चाळता येत नाही"
+
+#: dpkg-split/queue.c
 #, c-format
 msgid "unable to reopen part file '%.250s'"
 msgstr "भाग फाइल `%.250s' पुन्हा उघडता येत नाही"
@@ -6320,6 +6426,8 @@ msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -6360,8 +6468,20 @@ msgstr "रिअललोॅक अयशस्वी (%ld बाइट्स)"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "two commands specified: --%s and --%s"
-msgstr "दोन पद्धती निर्धारीत केल्यात: %s आणी --%s"
+msgid "wait for subprocess %s failed"
+msgstr "%s साठी वाट पहाणे अयशस्वी झाले"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "unable to remove %s: %s"
+msgid "unable to remove '%s'"
+msgstr " %s काढून टाकता येत नाही: %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create log directory '%s'"
+msgstr "`%.255s' निर्देशिका चाळता येत नाही"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6371,14 +6491,9 @@ msgstr "वळवलेले: %s उघडता येत नाही"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "wait for subprocess %s failed"
-msgstr "%s साठी वाट पहाणे अयशस्वी झाले"
-
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-#| msgid "unable to remove %s: %s"
-msgid "unable to remove '%s'"
-msgstr " %s काढून टाकता येत नाही: %s"
+#| msgid "unable to read link '%.255s'"
+msgid "unable to read link '%s%.255s'"
+msgstr "`%.255s' साखळी/लिंक वाचण्यास अशक्य"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -6495,8 +6610,20 @@ msgstr "कालबाह्य गुलाम साखळी %s (%s) त्�
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create administrative directory '%s'"
+msgstr "`%.255s' सुधारणा निर्देशिका तपासता येत नाही"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
 msgid "unable to flush file '%s'"
 msgstr "व्हीएसएनप्रिंटएफ़मधे फ़्लश? करणे जमत नाही"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot stat file '%s%s'"
+msgstr "जुनी नावे `%s': %s स्टॅट करता येत नाहीत"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6593,6 +6720,12 @@ msgid "not replacing %s with a link"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create alternatives directory '%s'"
+msgstr "`%.255s' सुधारणा निर्देशिका तपासता येत नाही"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr ""
@@ -6626,13 +6759,13 @@ msgstr "%s साठीचा %s विकल्प नोंदणीकृत 
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr ""
 "%s मधे बदल झाला आहे (तुमच्याकडून किंवा  परिभाषेकडून).\n"
@@ -6645,12 +6778,12 @@ msgstr "%s करिता स्वयंचलित निवड संरच
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "गुलाम साखळी %s चे %s मधून %s मधे पुनर्नामांकन करत आहे."
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "%s साखळीचे %s मधून %s मधे पुनर्नामांकन करत आहे."
 
 #: utils/update-alternatives.c
@@ -6726,7 +6859,7 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "alternative path %s doesn't exist"
+msgid "alternative path %s%s doesn't exist"
 msgstr "धोक्याची सूचना: --सुधारा दिलेले आहे पण %s अस्तित्वात नाही"
 
 #: utils/update-alternatives.c
@@ -6747,12 +6880,19 @@ msgid "alternative link %s is already managed by %s (slave of %s)"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid "two commands specified: --%s and --%s"
+msgstr "दोन पद्धती निर्धारीत केल्यात: %s आणी --%s"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "unknown argument '%s'"
 msgstr "अपरिचीत पर्याय `%s'"
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
+#, fuzzy, c-format
+#| msgid "--install needs <link> <name> <path> <priority>"
+msgid "--%s needs <link> <name> <path> <priority>"
 msgstr "--अधिष्ठापा साठी <साखळी> <नाव> <मार्ग> <अग्रक्रम> आवश्यक"
 
 #: utils/update-alternatives.c
@@ -6779,11 +6919,15 @@ msgid "--%s needs <name>"
 msgstr "--%s साठी <नाव> आवश्यक"
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, fuzzy, c-format
+#| msgid "--slave only allowed with --install"
+msgid "--%s only allowed with --%s"
 msgstr "--गुलाम ला फक्त --अधिष्ठापा सोबत अनुमती"
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
+#, fuzzy, c-format
+#| msgid "--slave needs <link> <name> <path>"
+msgid "--%s needs <link> <name> <path>"
 msgstr "--गुलाम साठी <साखळी> <नाव> <मार्ग> आवश्यक"
 
 #: utils/update-alternatives.c
@@ -6802,13 +6946,10 @@ msgid "--%s needs a <file> argument"
 msgstr "--%s ला एकच पर्याय आवश्यक"
 
 #: utils/update-alternatives.c
-#, fuzzy
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
-"--दाखवा, --संरचना, --निश्चिती, --अधिष्ठापा, --काढा, --सर्व, --काढा-सर्व, किंवा --"
-"स्वयं गरजेचे"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6838,6 +6979,18 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "need --display, --query, --list, --get-selections, --config, --set, --set-"
+#~ "selections, --install, --remove, --all, --remove-all or --auto"
+#~ msgstr ""
+#~ "--दाखवा, --संरचना, --निश्चिती, --अधिष्ठापा, --काढा, --सर्व, --काढा-सर्व, किंवा "
+#~ "--स्वयं गरजेचे"
+
+#, fuzzy
+#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgstr "डिपोॅट निर्देशिका `%.250s' वाचता येत नाही"
 
 #, fuzzy
 #~| msgid "unable to open tmpfile for vsnprintf"

@@ -280,7 +280,7 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
 	    my $dep;
 	    my $type = field_get_dep_type($_);
 	    $dep = deps_parse($v, build_dep => 1, union => $type eq 'union');
-	    error(g_('error occurred while parsing %s'), $_) unless defined $dep;
+	    error(g_('cannot parse %s field'), $_) unless defined $dep;
 	    my $facts = Dpkg::Deps::KnownFacts->new();
 	    $dep->simplify_deps($facts);
 	    $dep->sort() if $type eq 'union';
@@ -306,13 +306,6 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
         $pkg_summary .= ' arch=' . join ',', split ' ', $arch;
 
         if (defined $profile) {
-            # If the string does not contain brackets then it is using the
-            # old syntax. Emit a fatal error.
-            if ($profile !~ m/^\s*<.*>\s*$/) {
-                error(g_('binary package stanza %s is using an obsolete ' .
-                         'Build-Profiles field syntax'), $p);
-            }
-
             # Instead of splitting twice and then joining twice, we just do
             # simple string replacements:
 
@@ -324,7 +317,9 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
             $profile =~ s/\s+/,/g;
             $pkg_summary .= " profile=$profile";
         }
-
+        if (defined $pkg->{'Protected'} and $pkg->{'Protected'} eq 'yes') {
+            $pkg_summary .= ' protected=yes';
+        }
         if (defined $pkg->{'Essential'} and $pkg->{'Essential'} eq 'yes') {
             $pkg_summary .= ' essential=yes';
         }
@@ -341,7 +336,8 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
                     push(@sourcearch, $v) unless $archadded{$v}++;
                 } else {
                     for my $a (split(/\s+/, $v)) {
-                        error(g_("'%s' is not a legal architecture string"), $a)
+                        error(g_("'%s' is not a legal architecture string " .
+                                 "in package '%s'"), $a, $p)
                             if debarch_is_illegal($a);
                         error(g_('architecture %s only allowed on its ' .
                                  "own (list for package %s is '%s')"),
@@ -531,6 +527,11 @@ sub set_testsuite_triggers_field
     return if $fields->{'Testsuite-Triggers'};
 
     foreach my $test ($tests->get()) {
+        if (not exists $test->{Tests} and not exists $test->{'Test-Command'}) {
+            error(g_('test control %s is missing %s or %s field'),
+                  'debian/tests/control', 'Tests', 'Test-Command');
+        }
+
         next unless $test->{Depends};
 
         my $deps = deps_parse($test->{Depends}, use_arch => 0, tests_dep => 1);

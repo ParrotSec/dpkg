@@ -551,8 +551,8 @@ wait_for_child(pid_t pid)
 static void
 cleanup_socket_dir(void)
 {
-	unlink(notify_socket);
-	rmdir(notify_sockdir);
+	(void)unlink(notify_socket);
+	(void)rmdir(notify_sockdir);
 }
 
 static char *
@@ -593,7 +593,7 @@ set_socket_passcred(int fd)
 #ifdef SO_PASSCRED
 	static const int enable = 1;
 
-	setsockopt(fd, SOL_SOCKET, SO_PASSCRED, &enable, sizeof(enable));
+	(void)setsockopt(fd, SOL_SOCKET, SO_PASSCRED, &enable, sizeof(enable));
 #endif
 }
 
@@ -806,6 +806,10 @@ daemonize(void)
 
 		_exit(0);
 	}
+
+	/* Close the notification socket, even though it is close-on-exec. */
+	if (notify_await)
+		close(notify_fd);
 
 	/* Create a new session. */
 	if (setsid() < 0)
@@ -1359,6 +1363,7 @@ parse_options(int argc, char * const *argv)
 			execname = optarg;
 			break;
 		case 'c':  /* --chuid <username>|<uid> */
+			free(changeuser);
 			/* We copy the string just in case we need the
 			 * argument later. */
 			changeuser_len = strcspn(optarg, ":");

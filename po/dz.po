@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2019-06-03 23:21+0200\n"
+"POT-Creation-Date: 2020-07-08 05:40+0200\n"
 "PO-Revision-Date: 2015-04-07 09:48+0200\n"
 "Last-Translator: Tshewang Norbu <bumthap2006@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -114,6 +114,12 @@ msgstr "stdout འབྲིཝ་ད་འཛོལ་བ: %s"
 
 #: lib/dpkg/atomic-file.c
 #, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create base directory for %s"
+msgstr "སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
+
+#: lib/dpkg/atomic-file.c
+#, fuzzy, c-format
 msgid "unable to create new file '%.250s'"
 msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
 
@@ -209,6 +215,11 @@ msgstr "%s: ནང་འཁོད་ gzip འཛོལ་བ: `%s'"
 #: lib/dpkg/compress.c
 #, fuzzy, c-format
 msgid "%s: internal gzip write error"
+msgstr "%s: ནང་འཁོད་ gzip འཛོལ་བ: `%s'"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: internal gzip read error: %s"
 msgstr "%s: ནང་འཁོད་ gzip འཛོལ་བ: `%s'"
 
 #: lib/dpkg/compress.c
@@ -350,6 +361,12 @@ msgstr ""
 "ཡོདཔ་ཨིན།"
 
 #: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create the dpkg updates directory %s"
+msgstr "དུས་མཐོན་ཀྱི་སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
+
+#: lib/dpkg/dbmodify.c
 #, c-format
 msgid "cannot scan updates directory '%.255s'"
 msgstr "དུས་མཐོན་ཀྱི་སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
@@ -411,6 +428,12 @@ msgstr "ཌི་པི་ཀེ་ཇི་གནས་ཚད་ཀྱི་ག
 #: lib/dpkg/dbmodify.c
 msgid "requested operation requires superuser privilege"
 msgstr "ཞུ་བ་འབད་ཡོད་པའི་བཀོལ་སྤྱོད་པ་ལུ་ ལག་ལེན་པ་གཙོ་བོའི་ཁེ་དབང་དགོཔ་ཨིན།"
+
+#: lib/dpkg/dbmodify.c
+#, fuzzy, c-format
+#| msgid "unable to access dpkg status area"
+msgid "cannot create the dpkg database directory %s"
+msgstr "ཌི་པི་ཀེ་ཇི་གནས་ཚད་མངའ་ཁོངས་འཛུལ་སྤྱོད་འབད་མ་ཚུགས།"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -774,6 +797,10 @@ msgid "outside error context, aborting"
 msgstr "\"%s\" གི་དོན་ལུ་སྣ་མང་ཟུར་བཞག་ཚུ་ བར་བཤོལ་འབད་དོ།"
 
 #: lib/dpkg/ehandle.c
+msgid "an error occurred with no error handling in place"
+msgstr ""
+
+#: lib/dpkg/ehandle.c
 #, fuzzy
 #| msgid "internal error - bad mode `%s'"
 msgid "internal error"
@@ -975,13 +1002,15 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgstr "`%s' ས་སྒོ་ `%.255s' ལུ་གཞི་བསྟུན:ཐོན་རིམ་ནང་ན་ `%c'ཡོད།"
-
-#: lib/dpkg/fields.c
-#, c-format
 msgid "'%s' field, reference to '%.255s': version unterminated"
 msgstr "`%s' ས་སྒོ་ གཞི་བསྟུན་ `%.255s' ལུ་: ཐོན་རིམ་རྩ་གྲོལ་མ་གཏངམ།"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
+msgid ""
+"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgstr "`%s' ས་སྒོ་ `%.255s' ལུ་གཞི་བསྟུན:ཐོན་རིམ་ནང་ན་ `%c'ཡོད།"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
@@ -1071,15 +1100,32 @@ msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' �
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+#| msgid "unable to unlock %s: %s"
+msgid "unable to lock %s"
+msgstr "ཁ་བསྡམ་མ་ཚུགས་ %s: %s"
+
+#: lib/dpkg/file.c
+msgid ""
+"Note: removing the lock file is always wrong, and can end up damaging the\n"
+"locked area and the entire system. See <https://wiki.debian.org/Teams/Dpkg/"
+"FAQ>."
+msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 #| msgid "status database area is locked by another process"
-msgid "%s is locked by another process"
+msgid ""
+"%s was locked by another process\n"
+"%s"
 msgstr "གནས་ཚད་གནད་སྡུད་གཞི་རྟེན་མངའ་ཁོངས་འདི་ ལས་སྦྱོར་གཞན་མི་ཅིག་གིས་ལྡེ་མིག་རྐྱབས་ཡོདཔ་ཨིན།"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
-#| msgid "unable to unlock %s: %s"
-msgid "unable to lock %s"
-msgstr "ཁ་བསྡམ་མ་ཚུགས་ %s: %s"
+#| msgid "status database area is locked by another process"
+msgid ""
+"%s was locked by another process with pid %d\n"
+"%s"
+msgstr "གནས་ཚད་གནད་སྡུད་གཞི་རྟེན་མངའ་ཁོངས་འདི་ ལས་སྦྱོར་གཞན་མི་ཅིག་གིས་ལྡེ་མིག་རྐྱབས་ཡོདཔ་ཨིན།"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1102,6 +1148,12 @@ msgstr "སྣོད་ཐོ་ཚུ་ཁ་ཕྱོགས་སྒྱུར
 #| msgid "couldn't open log `%s': %s\n"
 msgid "could not open log '%s': %s"
 msgstr "དྲན་དེབ་ `%s' ཁ་ཕྱེ་མ་ཚུགས: %s\n"
+
+#: lib/dpkg/log.c
+#, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot write to log file '%s': %s"
+msgstr "མིང་རྙིངམ་ `%s' སི་ཊེཊི་འབད་མ་ཚུགས: %s"
 
 #: lib/dpkg/log.c
 msgid "<package status and progress file descriptor>"
@@ -1435,15 +1487,15 @@ msgstr "`%.255s' ནང་ཐུམ་སྒྲིལ་གྱི་བརྡ་
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
-"parsing file '%.255s' near line %d package '%.255s':\n"
-" %.255s"
+"parsing file '%s' near line %d package '%s':\n"
+" "
 msgstr "%s  ཡིག་སྣོད་ `%.255s' ནང་ གྲལ་ཐིག་ %d གི་རྩ་བ།"
 
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 msgid ""
 "parsing file '%.255s' near line %d:\n"
-" %.255s"
+" "
 msgstr "%s  ཡིག་སྣོད་ `%.255s' ནང་ གྲལ་ཐིག་ %d གི་རྩ་བ།"
 
 #: lib/dpkg/parsehelp.c
@@ -1848,11 +1900,6 @@ msgstr ""
 msgid "unable to create triggers state directory '%.250s'"
 msgstr "དོས་ཁང་སྣོད་ཐོ་ `%.250s' ལྷག་མ་ཚུགས།"
 
-#: lib/dpkg/triglib.c
-#, fuzzy, c-format
-msgid "unable to set ownership of triggers state directory '%.250s'"
-msgstr "དོས་ཁང་སྣོད་ཐོ་ `%.250s' ལྷག་མ་ཚུགས།"
-
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
 msgstr ""
@@ -1964,7 +2011,7 @@ msgstr "`%.255s' གི་དུས་བཀོད་གཞི་སྒྲིག
 msgid "error setting ownership of symlink '%.255s'"
 msgstr "བརྡ་མཚོན་འབྲེལ་ལམ་ `%.255s' གི་བདག་པོ་གཞི་སྒྲིག་འབདཝ་ད་འཛོལ་བ།"
 
-#: src/archives.c utils/update-alternatives.c
+#: src/archives.c
 #, c-format
 msgid "unable to read link '%.255s'"
 msgstr "འབྲེལ་ལམ་ `%.255s' ལྷག་མ་ཚུགས།"
@@ -2016,8 +2063,9 @@ msgstr ""
 "ནི་ལུ་འབད་རྩོལ་བསྐྱེད་དོ།"
 
 #: src/archives.c
-#, c-format
-msgid "unable to stat '%.255s' (which I was about to install)"
+#, fuzzy, c-format
+#| msgid "unable to stat '%.255s' (which I was about to install)"
+msgid "unable to stat '%.255s' (which was about to be installed)"
 msgstr "`%.255s' སི་ཊེཊི་འབད་མ་ཚུགས།(ང་གིས་གཞི་བཙུགས་འབད་ནི་འབད་མི་དེ)"
 
 #: src/archives.c
@@ -2124,6 +2172,24 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "no, %s is essential, will not deconfigure\n"
+" it in order to enable %s"
+msgstr ""
+"dpkg: མེད། %s འདི་ཁག་ཆེཝ་ཨིན། འདི་རིམ་སྒྲིག་འབད་འོང་\n"
+"  %s རྩབསྐྲད་གཏང་ནི་ལྕོགས་ཅན་བཟོ་ནིའི་དོན་ལས།\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"considering deconfiguration of protected\n"
+" package %s, to enable %s"
+msgstr ""
+"dpkg: ཉེན་བརྡ་ - ཁག་ཆེ་བའི་ཐུམ་སྒྲིལ་ %s གི་རིམ་སྒྲིག་མི་འབད་ནི་ཆ་འཇོག་འབདཝ་དོ་\n"
+" %s རྩབསྐྲད་གཏང་ནི་ལྕོགས་ཅན་བཟོ་ནིའི་དོན་ལས།\n"
+
+#: src/archives.c
+#, fuzzy, c-format
+msgid ""
+"no, %s is protected, will not deconfigure\n"
 " it in order to enable %s"
 msgstr ""
 "dpkg: མེད། %s འདི་ཁག་ཆེཝ་ཨིན། འདི་རིམ་སྒྲིག་འབད་འོང་\n"
@@ -2832,11 +2898,13 @@ msgstr ""
 "འ་ནི་འདི་རང་དབང་མཉེན་ཆས་ཨིན། ཇི་ཨེན་ཡུ་ ཡོངས་ཁྱབ་མི་མང་ཆོག་ཐམ་ཐོན་རིམ་ ༢ ཡང་ན་\n"
 "ཤུལ་མམ་འདི་ གནས་སྟངས་ཚུ་འདྲ་བཤུས་རྐྱབས་ནིའི་དོན་ལུ་ བལྟ། ཉེན་ལེན་ག་ནི་ཡང་མེད།\n"
 
-#: src/divertcmd.c src/main.c src/querycmd.c src/statcmd.c dpkg-deb/main.c
-#: dpkg-split/main.c utils/update-alternatives.c
-#, c-format
+#: src/divertcmd.c src/main.c src/querycmd.c dpkg-deb/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
 msgid ""
-"Usage: %s [<option> ...] <command>\n"
+"Usage: %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "ལག་ལེན་: %s [<option> ...] <command>\n"
@@ -3265,6 +3333,10 @@ msgid "versioned Provides"
 msgstr ""
 
 #: src/enquiry.c
+msgid "Protected field"
+msgstr ""
+
+#: src/enquiry.c
 #, fuzzy, c-format
 #| msgid ""
 #| "dpkg: cannot see how to satisfy pre-dependency:\n"
@@ -3419,7 +3491,7 @@ msgid "Configure any package which may help this one"
 msgstr ""
 
 #: src/force.c
-msgid "Process incidental packages even when on hold"
+msgid "Install or remove incidental packages even when on hold"
 msgstr ""
 
 #: src/force.c
@@ -3516,6 +3588,10 @@ msgstr "རྟེན་འབམྲེལ་གྱྱི་དཀའ་ངལ་
 
 #: src/force.c
 msgid "Remove packages which require installation"
+msgstr ""
+
+#: src/force.c
+msgid "Remove a protected package"
 msgstr ""
 
 #: src/force.c
@@ -3722,7 +3798,7 @@ msgstr ""
 #| "\n"
 msgid ""
 "Assertable features: support-predepends, working-epoch, long-filenames,\n"
-"  multi-conrep, multi-arch, versioned-provides.\n"
+"  multi-conrep, multi-arch, versioned-provides, protected-field.\n"
 "\n"
 msgstr ""
 "ནང་འཁོད་ལག་ལེན་གྱི་དོན་ལུ་: dpkg --assert-support-predepends | --predep-package |\n"
@@ -3763,6 +3839,8 @@ msgid ""
 "  --root=<directory>         Install on a different root directory.\n"
 "  --instdir=<directory>      Change installation dir without changing admin "
 "dir.\n"
+"  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+"  --post-invoke=<command>    Set a post-invoke hook.\n"
 "  --path-exclude=<pattern>   Do not install paths which match a shell "
 "pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous "
@@ -3777,6 +3855,7 @@ msgid ""
 "  --[no-]triggers            Skip or force consequential trigger "
 "processing.\n"
 "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+"  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
 "                             Just say what we would do - don't do it.\n"
@@ -3786,12 +3865,13 @@ msgid ""
 "  --status-logger=<command>  Send status change updates to <command>'s "
 "stdin.\n"
 "  --log=<filename>           Log status changes and actions to <filename>.\n"
-"  --ignore-depends=<package>,...\n"
+"  --ignore-depends=<package>[,...]\n"
 "                             Ignore dependencies involving <package>.\n"
-"  --force-...                Override problems (see --force-help).\n"
-"  --no-force-...|--refuse-...\n"
-"                             Stop when problems encountered.\n"
+"  --force-<thing>[,...]      Override problems (see --force-help).\n"
+"  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+"  --refuse-<thing>[,...]     Ditto.\n"
 "  --abort-after <n>          Abort after encountering <n> errors.\n"
+"  --robot                    Use machine-readable output on some commands.\n"
 "\n"
 msgstr ""
 "གདམ་ཁ་ཚུ་:\n"
@@ -4359,6 +4439,7 @@ msgid ""
 "Options:\n"
 "  --admindir=<directory>           Use <directory> instead of %s.\n"
 "  --load-avail                     Use available file on --show and --list.\n"
+"  --no-pager                       Disables the use of any pager.\n"
 "  -f|--showformat=<format>         Use alternative format for --show.\n"
 "\n"
 msgstr ""
@@ -4414,6 +4495,12 @@ msgstr ""
 #, fuzzy
 #| msgid "This is an essential package - it should not be removed."
 msgid "this is an essential package; it should not be removed"
+msgstr "འ་ནི་འདི་མེད་ཐབས་མེད་པའི་ཐུམ་སྒྲིག་ཅིག་ཨིན་ - འདི་རྩ་བསྐྲད་མ་གཏང་པར་བཞག་དགོ"
+
+#: src/remove.c
+#, fuzzy
+#| msgid "This is an essential package - it should not be removed."
+msgid "this is a protected package; it should not be removed"
 msgstr "འ་ནི་འདི་མེད་ཐབས་མེད་པའི་ཐུམ་སྒྲིག་ཅིག་ཨིན་ - འདི་རྩ་བསྐྲད་མ་གཏང་པར་བཞག་དགོ"
 
 #: src/remove.c
@@ -4674,6 +4761,15 @@ msgstr "རིམ་སྒྲིག་ཡིག་སྣོད་ སྣོད�
 msgid "Use --help for help about overriding file stat information."
 msgstr ""
 
+#: src/statcmd.c dpkg-split/main.c utils/update-alternatives.c
+#, c-format
+msgid ""
+"Usage: %s [<option> ...] <command>\n"
+"\n"
+msgstr ""
+"ལག་ལེན་: %s [<option> ...] <command>\n"
+"\n"
+
 #: src/statcmd.c
 #, c-format
 msgid ""
@@ -4694,9 +4790,9 @@ msgid ""
 "  --root <directory>       set the directory of the root filesystem.\n"
 "  --update                 immediately update <path> permissions.\n"
 "  --force                  deprecated alias for --force-all.\n"
-"  --force-...              override problems (see --force-help).\n"
-"  --no-force-...           stop when problems encountered.\n"
-"  --refuse-...             ditto.\n"
+"  --force-<thing>[,...]    override problems (see --force-help).\n"
+"  --no-force-<thing>[,...] stop when problems encountered.\n"
+"  --refuse-<thing>[,...]   ditto.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -4792,8 +4888,8 @@ msgstr "ཌི་བི་ཡཱན་ `%s' ཐུམ་སྒྲིལ་འཛ
 #: src/trigcmd.c
 #, fuzzy, c-format
 msgid ""
-"Usage: %s [<options> ...] <trigger-name>\n"
-"       %s [<options> ...] <command>\n"
+"Usage: %s [<option>...] <trigger-name>\n"
+"       %s [<option>...] <command>\n"
 "\n"
 msgstr ""
 "ལག་ལེན་: %s [<option> ...] <command>\n"
@@ -5025,6 +5121,12 @@ msgid "conffile name '%s' is too long, or missing final newline"
 msgstr ""
 "ཉེན་བརྡ་  ཀཱོན་ཕ་ཡིལ་མིང་ `%.50s...' འདི་སྣ་མེད་ས་མེད་རིངམོ་ཨིན་པས་ ཡང་ན་མཐའ་མཇུག་གི་གྲལ་ཐིག་"
 "གསརཔ་བརླག་སྟོར་ཞུགས་ནུག\n"
+
+#: src/unpack.c dpkg-deb/build.c
+#, fuzzy, c-format
+#| msgid "filename \"%s\" is not absolute"
+msgid "conffile name '%s' is not an absolute pathname"
+msgstr "ཡིག་སྣོད་མིང་ \"%s\" འདི་ཡང་དག་མེན།"
 
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
@@ -5720,9 +5822,9 @@ msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
 "  -c|--contents <deb>              List contents.\n"
-"  -I|--info <deb> [<cfile> ...]    Show info to stdout.\n"
+"  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
-"  -f|--field <deb> [<cfield> ...]  Show field(s) to stdout.\n"
+"  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
 "  -e|--control <deb> [<directory>] Extract control info.\n"
 "  -x|--extract <deb> <directory>   Extract files.\n"
 "  -X|--vextract <deb> <directory>  Extract & list files.\n"
@@ -6257,6 +6359,12 @@ msgid "File '%.250s' is not part of a multipart archive.\n"
 msgstr "ཡིག་སྣོད་ `%.250s' འདི་སྣ་མང་ཡན་ལག་ཡིག་མཛོད་ཀྱི་ཡན་ལག་མེན།\n"
 
 #: dpkg-split/queue.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create directory %s"
+msgstr "སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
+
+#: dpkg-split/queue.c
 #, c-format
 msgid "unable to reopen part file '%.250s'"
 msgstr "ཡན་ལག་ཡིག་སྣོད་ `%.250s' ལོག་ཁ་ཕྱེ་མ་ཚུགས།"
@@ -6463,6 +6571,8 @@ msgid ""
 "Options:\n"
 "  --altdir <directory>     change the alternatives directory.\n"
 "  --admindir <directory>   change the administrative directory.\n"
+"  --instdir <directory>    change the installation directory.\n"
+"  --root <directory>       change the filesystem root directory.\n"
 "  --log <file>             change the log file.\n"
 "  --force                  allow replacing files with alternative links.\n"
 "  --skip-auto              skip prompt for alternatives correctly "
@@ -6503,9 +6613,20 @@ msgstr "རིའ་ལོཀ་ འཐུས་ཤོར་བྱུང་ཡ�
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-#| msgid "two commands specified: %s and --%s"
-msgid "two commands specified: --%s and --%s"
-msgstr "བརྡ་བཀོད་གཉིས་གསལ་བཀོད་འབད་ཡོདཔ: %s དང་ --%s"
+msgid "wait for subprocess %s failed"
+msgstr "%s གི་དོན་ལུ་བསྒུག་ནི་འཐུས་ཤོར་བྱུང་ཡོདཔ།"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "unable to remove %s: %s"
+msgid "unable to remove '%s'"
+msgstr "%s རྩ་བསྐྲད་གཏང་མ་ཚུགས: %s"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan directory '%.255s'"
+msgid "cannot create log directory '%s'"
+msgstr "སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6515,14 +6636,9 @@ msgstr "%s: %s ཁ་ཕྱེ་མི་ཚུགས་: %s"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "wait for subprocess %s failed"
-msgstr "%s གི་དོན་ལུ་བསྒུག་ནི་འཐུས་ཤོར་བྱུང་ཡོདཔ།"
-
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-#| msgid "unable to remove %s: %s"
-msgid "unable to remove '%s'"
-msgstr "%s རྩ་བསྐྲད་གཏང་མ་ཚུགས: %s"
+#| msgid "unable to read link '%.255s'"
+msgid "unable to read link '%s%.255s'"
+msgstr "འབྲེལ་ལམ་ `%.255s' ལྷག་མ་ཚུགས།"
 
 #: utils/update-alternatives.c
 msgid "auto mode"
@@ -6639,8 +6755,20 @@ msgstr "ཕན་མེད་བྲན་གཡོག་འབྲེལ་ལམ
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create administrative directory '%s'"
+msgstr "དུས་མཐོན་ཀྱི་སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
 msgid "unable to flush file '%s'"
 msgstr "vsnprintf ནང་ ངོས་སྙོམ་མ་ཚུགས།"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot stat file '%s%s'"
+msgstr "མིང་རྙིངམ་ `%s' སི་ཊེཊི་འབད་མ་ཚུགས: %s"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6737,6 +6865,12 @@ msgid "not replacing %s with a link"
 msgstr ""
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "cannot scan updates directory '%.255s'"
+msgid "cannot create alternatives directory '%s'"
+msgstr "དུས་མཐོན་ཀྱི་སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "can't install unknown choice %s"
 msgstr ""
@@ -6771,13 +6905,13 @@ msgstr "%s གི་དོན་ལུ་སྤེལ་མ་ %s འདི་�
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "%s/%s is dangling; it will be updated with best choice"
+msgid "%s%s/%s is dangling; it will be updated with best choice"
 msgstr ""
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
 msgid ""
-"%s/%s has been changed (manually or by a script); switching to manual "
+"%s%s/%s has been changed (manually or by a script); switching to manual "
 "updates only"
 msgstr ""
 "%s འདི་བསྐྱུར་བཅོས་འབད་ཡོདཔ་ཨིན།(ལག་ཐོག་ལས་ཡང་ན་ཡགི་ཚུགས་ཅིག་གིས་སྦེ་)\n"
@@ -6790,12 +6924,12 @@ msgstr "%s གི་རང་བཞིན་སེལ་འཐུ་གཞི་
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s slave link from %s to %s"
+msgid "renaming %s slave link from %s%s to %s%s"
 msgstr "%s བྲན་གཡོག་བྲན་ལམ་འདི་ %s ལས་ %s ལུ་བསྐྱར་མིང་བཏགས་དོ།"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "renaming %s link from %s to %s"
+msgid "renaming %s link from %s%s to %s%s"
 msgstr "%s འབྲེལ་ལམ་འདི་ %s ལས་ %s ལུ་བསྐྱར་མིང་བཏགས་དོ།"
 
 #: utils/update-alternatives.c
@@ -6871,7 +7005,7 @@ msgstr "%s:  %s གསར་བསྐྲུན་འབད་མི་ཚུག�
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-msgid "alternative path %s doesn't exist"
+msgid "alternative path %s%s doesn't exist"
 msgstr "ཉེན་བརྡ་: --དུས་མཐུན་བྱིན་ཡོད་ དེ་འབདཝ་ད་  %s འདི་མེད།"
 
 #: utils/update-alternatives.c
@@ -6890,12 +7024,20 @@ msgid "alternative link %s is already managed by %s (slave of %s)"
 msgstr "%s:  %s གསར་བསྐྲུན་འབད་མི་ཚུགས་: %s"
 
 #: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "two commands specified: %s and --%s"
+msgid "two commands specified: --%s and --%s"
+msgstr "བརྡ་བཀོད་གཉིས་གསལ་བཀོད་འབད་ཡོདཔ: %s དང་ --%s"
+
+#: utils/update-alternatives.c
 #, c-format
 msgid "unknown argument '%s'"
 msgstr "མ་ཤེས་པའི་སྒྲུབ་རྟགས་ `%s'"
 
 #: utils/update-alternatives.c
-msgid "--install needs <link> <name> <path> <priority>"
+#, fuzzy, c-format
+#| msgid "--install needs <link> <name> <path> <priority>"
+msgid "--%s needs <link> <name> <path> <priority>"
 msgstr "--གཞི་བཙུགས་ལུ་ <link> <name> <path> <priority> དགོཔ་ཨིན།"
 
 #: utils/update-alternatives.c
@@ -6922,11 +7064,15 @@ msgid "--%s needs <name>"
 msgstr "--%s ལུ་ <name> དགོཔ་ཨིན།"
 
 #: utils/update-alternatives.c
-msgid "--slave only allowed with --install"
+#, fuzzy, c-format
+#| msgid "--slave only allowed with --install"
+msgid "--%s only allowed with --%s"
 msgstr "--བྲན་གཡོག་འདི་ --གཞི་བཙུགས་དང་ཅིག་ཁར་རྐྱངམ་ཅིག་འབད་ཆོགཔ་ཨིན།"
 
 #: utils/update-alternatives.c
-msgid "--slave needs <link> <name> <path>"
+#, fuzzy, c-format
+#| msgid "--slave needs <link> <name> <path>"
+msgid "--%s needs <link> <name> <path>"
 msgstr "--བྲན་གཡོག་ལུ་ <link> <name> <path> དགོཔ་ཨིན།"
 
 #: utils/update-alternatives.c
@@ -6945,13 +7091,10 @@ msgid "--%s needs a <file> argument"
 msgstr "--%s་ལུ་སྒྲུབ་རྟགས་རྐྱང་པ་ཅིག་དགོཔ་འདུག"
 
 #: utils/update-alternatives.c
-#, fuzzy
+#, c-format
 msgid ""
-"need --display, --query, --list, --get-selections, --config, --set, --set-"
-"selections, --install, --remove, --all, --remove-all or --auto"
+"need --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s, --%s or --%s"
 msgstr ""
-"--བཀྲམ་སྟོན་ --རིམ་སྒྲིག་ --གཞི་སྒྲིག་ --གཞི་བཙུགས་ --རྩ་བསྐྲད་ --གེ་ར་ --གེ་ར་-རྩ་བསྐྲད་གཏང་ ཡང་"
-"ན་ --རང་བཞིན་ དགོཔ་ཨིན།"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6981,6 +7124,18 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "need --display, --query, --list, --get-selections, --config, --set, --set-"
+#~ "selections, --install, --remove, --all, --remove-all or --auto"
+#~ msgstr ""
+#~ "--བཀྲམ་སྟོན་ --རིམ་སྒྲིག་ --གཞི་སྒྲིག་ --གཞི་བཙུགས་ --རྩ་བསྐྲད་ --གེ་ར་ --གེ་ར་-རྩ་བསྐྲད་གཏང་ "
+#~ "ཡང་ན་ --རང་བཞིན་ དགོཔ་ཨིན།"
+
+#, fuzzy
+#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgstr "དོས་ཁང་སྣོད་ཐོ་ `%.250s' ལྷག་མ་ཚུགས།"
 
 #, fuzzy
 #~| msgid "unable to open tmpfile for vsnprintf"

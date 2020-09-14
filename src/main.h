@@ -98,6 +98,7 @@ enum action {
 	act_assertmulticonrep,
 	act_assertmultiarch,
 	act_assertverprovides,
+	act_assert_protected,
 
 	act_validate_pkgname,
 	act_validate_trigname,
@@ -122,6 +123,7 @@ enum action {
 
 extern const char *const statusstrings[];
 
+extern int f_robot;
 extern int f_pending, f_recursive, f_alsoselect, f_skipsame, f_noact;
 extern int f_autodeconf, f_nodebsig;
 extern int f_triggers;
@@ -165,6 +167,7 @@ int assertlongfilenames(const char *const *argv);
 int assertmulticonrep(const char *const *argv);
 int assertmultiarch(const char *const *argv);
 int assertverprovides(const char *const *argv);
+int assert_protected(const char *const *argv);
 int validate_pkgname(const char *const *argv);
 int validate_trigname(const char *const *argv);
 int validate_archname(const char *const *argv);

@@ -44,6 +44,7 @@ use Dpkg::Control::Info;
 use Dpkg::Changelog::Parse;
 use Dpkg::Path qw(find_command);
 use Dpkg::IPC;
+use Dpkg::Vendor qw(run_vendor_hook);
 
 textdomain('dpkg-dev');
 
@@ -74,6 +75,7 @@ sub usage {
       --pre-clean             pre clean source tree (default).
       --no-post-clean         do not post clean source tree (default).
   -tc, --post-clean           post clean source tree.
+      --sanitize-env          sanitize the build environment.
   -D, --check-builddeps       check build dependencies and conflicts (default).
   -d, --no-check-builddeps    do not check build dependencies and conflicts.
       --ignore-builtin-builddeps
@@ -101,7 +103,7 @@ sub usage {
                               pass option <opt> to dpkg-genbuildinfo.
   -p, --sign-command=<command>
                               command to sign .dsc and/or .changes files
-                                (default is gpg2 or gpg).
+                                (default is gpg).
   -k, --sign-key=<keyid>      the key to use for signing.
   -ap, --sign-pause           add pause before starting signature process.
   -us, --unsigned-source      unsigned source package.
@@ -149,6 +151,7 @@ my @rootcommand = ();
 my $signcommand;
 my $preclean = 1;
 my $postclean = 0;
+my $sanitize_env = 0;
 my $parallel;
 my $parallel_force = 0;
 my $checkbuilddep = 1;
@@ -238,7 +241,7 @@ while (@ARGV) {
 	$check_command = $1;
     } elsif (/^--check-option=(.*)$/) {
 	push @check_opts, $1;
-    } elsif (/^--hook-(.+)=(.*)$/) {
+    } elsif (/^--hook-([^=]+)=(.*)$/) {
 	my ($hook_name, $hook_cmd) = ($1, $2);
 	usageerr(g_('unknown hook name %s'), $hook_name)
 	    if not exists $hook{$hook_name};
@@ -296,6 +299,8 @@ while (@ARGV) {
         $postclean = 1;
     } elsif (/^--no-post-clean$/) {
         $postclean = 0;
+    } elsif (/^--sanitize-env$/) {
+        $sanitize_env = 1;
     } elsif (/^-t$/ or /^--host-type$/) {
 	$host_type = shift; # Order DOES matter!
     } elsif (/^-t(.*)$/ or /^--host-type=(.*)$/) {
@@ -394,9 +399,7 @@ if ($signcommand) {
     }
 } elsif (($ENV{GNUPGHOME} && -e $ENV{GNUPGHOME}) ||
          ($ENV{HOME} && -e "$ENV{HOME}/.gnupg")) {
-    if (find_command('gpg2')) {
-        $signcommand = 'gpg2';
-    } elsif (find_command('gpg')) {
+    if (find_command('gpg')) {
         $signcommand = 'gpg';
     }
 }
@@ -504,6 +507,11 @@ if (not $signcommand) {
 
 if ($signsource && build_has_none(BUILD_SOURCE)) {
     $signsource = 0;
+}
+
+# Sanitize build environment.
+if ($sanitize_env) {
+    run_vendor_hook('sanitize-environment');
 }
 
 #
@@ -740,13 +748,9 @@ sub parse_rules_requires_root {
     } elsif ($keywords_impl) {
         # Set only on <implementations-keywords>.
         $ENV{DEB_GAIN_ROOT_CMD} = join ' ', @rootcommand;
-        # XXX: For ephemeral backwards compatibility.
-        $ENV{DPKG_GAIN_ROOT_CMD} = $ENV{DEB_GAIN_ROOT_CMD};
     } else {
         # We should not provide the variable otherwise.
         delete $ENV{DEB_GAIN_ROOT_CMD};
-        # XXX: For ephemeral backwards compatibility.
-        delete $ENV{DPKG_GAIN_ROOT_CMD};
     }
 
     return %rrr;
@@ -857,8 +861,8 @@ sub signfile {
            '--output', "$signfile.asc", $signfile);
     my $status = $?;
     if ($status == 0) {
-	system('mv', '--', "$signfile.asc", "../$file")
-	    and subprocerr('mv');
+        move("$signfile.asc", "../$file")
+            or syserror(g_('cannot move %s to %s'), "$signfile.asc", "../$file");
     }
 
     print "\n";
