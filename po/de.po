@@ -1,18 +1,18 @@
 # Texte für Debian dpkg/po/de.po
-# Copyright © 2020 Dpkg Developers.
+# Copyright © 2021 Dpkg Developers.
 # Hartmut Koptein <koptein@debian.org>, Apr 2000.
 # Erich Schubert <debian@vitavonni.de>, March 2001.
 # Michael Piefel <piefel@debian.org>, 2001-2005.
 # Florian Ernst <florian@uni-hd.de>, 2004.
-# Sven Joachim <svenjoac@gmx.de>, 2006-2020.
+# Sven Joachim <svenjoac@gmx.de>, 2006-2021.
 # Holger Wansing <linux@wansing-online.de>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.20.3\n"
+"Project-Id-Version: dpkg 1.20.6\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2020-07-08 05:40+0200\n"
-"PO-Revision-Date: 2020-06-29 22:07+0200\n"
+"POT-Creation-Date: 2021-01-09 07:11+0100\n"
+"PO-Revision-Date: 2021-01-08 18:15+0100\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -60,6 +60,11 @@ msgstr "Länge des ar-Element-Namen »%s« ist zu lang"
 #, c-format
 msgid "ar member size %jd too large"
 msgstr "ar-Element-Größe %jd ist zu groß"
+
+#: lib/dpkg/ar.c
+#, c-format
+msgid "ar member time %jd too large"
+msgstr "ar-Element-Zeit %jd ist zu groß"
 
 #: lib/dpkg/ar.c
 #, c-format
@@ -1840,6 +1845,11 @@ msgstr "Unerwartetes Dateiende beim Lesen von »%.250s«"
 msgid "error formatting string into varbuf variable"
 msgstr "Fehler beim Formatieren von Zeichenkette in varbuf-Variable"
 
+#: lib/dpkg/varbuf.c
+#, c-format
+msgid "cannot grow varbuf to size %zu; it would overflow"
+msgstr "varbuf kann nicht auf %zu vergrößert werden; es würde überlaufen"
+
 #: src/archives.c
 msgid "error reading from dpkg-deb pipe"
 msgstr "Fehler beim Lesen aus der dpkg-deb-Pipe"
@@ -1957,6 +1967,11 @@ msgstr ""
 #, c-format
 msgid "newline not allowed in archive object name '%.255s'"
 msgstr "Zeilenvorschub nicht erlaubt in Archiv-Objektname »%.255s«"
+
+#: src/archives.c
+#, c-format
+msgid "conffile '%s' marked for removal on upgrade, shipped in package"
+msgstr "Conffile »%s« zum Entfernen beim Upgrade markiert, enthalten im Paket"
 
 #: src/archives.c
 #, c-format
@@ -2446,6 +2461,31 @@ msgstr "Conffile-Shell"
 
 #: src/configure.c
 #, c-format
+msgid "%s: failed to remove '%.250s': %s"
+msgstr "%s: Entfernen von »%.250s« fehlgeschlagen: %s"
+
+#: src/configure.c
+#, c-format
+msgid "Removing obsolete conffile %s ...\n"
+msgstr "Entfernen des veralteten Conffiles %s ...\n"
+
+#: src/configure.c
+#, c-format
+msgid "Obsolete conffile '%s' has been modified by you.\n"
+msgstr "Veraltetes Conffile »%s« wurde von Ihnen verändert.\n"
+
+#: src/configure.c
+#, c-format
+msgid "Saving as %s ...\n"
+msgstr "Speichern unter %s ...\n"
+
+#: src/configure.c
+#, c-format
+msgid "%s: cannot rename obsolete conffile '%s' to '%s': %s"
+msgstr "%s: Veraltetes Conffile »%s« kann nicht in »%s« umbenannt werden: %s"
+
+#: src/configure.c
+#, c-format
 msgid "unable to stat new distributed conffile '%.250s'"
 msgstr "Neu verteiltes Conffile »%.250s« kann nicht mit stat abgefragt werden"
 
@@ -2475,11 +2515,6 @@ msgstr "%s: Löschen von alter Sicherung »%.250s« fehlgeschlagen: %s"
 #, c-format
 msgid "%s: failed to rename '%.250s' to '%.250s': %s"
 msgstr "%s: Umbenennen von »%.250s« in »%.250s« fehlgeschlagen: %s"
-
-#: src/configure.c
-#, c-format
-msgid "%s: failed to remove '%.250s': %s"
-msgstr "%s: Entfernen von »%.250s« fehlgeschlagen: %s"
 
 #: src/configure.c
 #, c-format
@@ -4992,6 +5027,21 @@ msgstr "Conffile-Name »%s« ist zu lang oder Zeilenvorschub am Ende fehlt"
 msgid "conffile name '%s' is not an absolute pathname"
 msgstr "Conffile-Name »%s« ist kein absoluter Pfadname"
 
+#: src/unpack.c dpkg-deb/build.c
+#, c-format
+msgid "conffile name missing after flag '%s'"
+msgstr "Conffile-Name fehlt nach Flag »%s«"
+
+#: src/unpack.c dpkg-deb/build.c
+#, c-format
+msgid "line with conffile filename '%s' has leading white spaces"
+msgstr "Zeile mit Conffile-Dateiname »%s« enthält Leerzeichen am Ende"
+
+#: src/unpack.c dpkg-deb/build.c
+#, c-format
+msgid "unknown flag '%s' for conffile '%s'"
+msgstr "Unbekanntes Flag »%s« für Conffile »%s«"
+
 #: src/unpack.c utils/update-alternatives.c
 #, c-format
 msgid "read error in %.250s"
@@ -5248,6 +5298,12 @@ msgid "empty string from fgets reading conffiles"
 msgstr "leere Zeichenkette von fgets beim Lesen aus conffiles"
 
 #: dpkg-deb/build.c
+msgid "empty and whitespace-only lines are not allowed in conffiles"
+msgstr ""
+"Leere Zeilen und solche, die nur Leerzeichen enthalten, sind in Conffiles "
+"nicht erlaubt"
+
+#: dpkg-deb/build.c
 #, c-format
 msgid "conffile filename '%s' contains trailing white spaces"
 msgstr "Conffile-Dateiname »%s« enthält Leerzeichen am Ende"
@@ -5261,6 +5317,11 @@ msgstr "Conffile »%.250s« kommt nicht im Paket vor"
 #, c-format
 msgid "conffile '%.250s' is not stattable"
 msgstr "Auf Conffile »%.250s« kann kein stat durchgeführt werden"
+
+#: dpkg-deb/build.c
+#, c-format
+msgid "conffile '%s' is present but is requested to be removed"
+msgstr "Conffile »%s« ist vorhanden, aber zum Entfernen vorgesehen"
 
 #: dpkg-deb/build.c
 #, c-format
@@ -5497,8 +5558,9 @@ msgid "cannot close decompressor pipe"
 msgstr "Dekompressor-Pipe kann nicht geschlossen werden"
 
 #: dpkg-deb/extract.c
-msgid "decompressing archive member"
-msgstr "Archiv-Element wird dekomprimiert"
+#, c-format
+msgid "decompressing archive '%s' (size=%jd) member '%s'"
+msgstr "Dekomprimieren des Archivs »%s« (Größe=%jd), Element »%s«"
 
 #: dpkg-deb/extract.c
 msgid "failed to create directory"

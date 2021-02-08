@@ -113,7 +113,8 @@ B<Sun>.
 
 =item I<tt>
 
-Dies ist der Tag des Monats (B<01>-B<31>) aus einer oder zwei Ziffern.
+Dies ist der ein- oder zweistellige Tag des Monats (B<01>-B<31>), wobei die
+führende Null optional ist, aber normalerweise nicht weggelassen wird.
 
 =item I<Monat>
 
@@ -150,7 +151,10 @@ B<00>-B<59> liegen.
 Die erste „Titel“-Zeile muss am linken Rand anfangen. Die „Schluss“-Zeile
 mit den Betreuer- und Datumsdetails muss durch genau ein Leerzeichen (U+0020
 B<LEERZEICHEN>) eingeleitet werden. Die Details zum Betreuer und das Datum
-müssen durch genau zwei Leerzeichen (U+0020 B<LEERZEICHEN>) getrennt sein.
+müssen durch genau zwei Leerzeichen (U+0020 B<LEERZEICHEN>) getrennt
+sein. Jeder Teil vom I<Datum> kann durch eines oder mehrere Leerzeichen
+(U+0020 B<SPACE>) getrennt werden, außer nach dem Komma, wo es durch Null
+oder mehr Leerzeichen (U+0020 B<SPACE>) abgetrennt werden kann.
 
 Jede Zeile, die komplett (d.h. ohne vorangestellte Leerzeichen) aus
 Kommentaren im Stil B<#> oder B</* */> oder RCS-Schlüsselwörtern besteht,

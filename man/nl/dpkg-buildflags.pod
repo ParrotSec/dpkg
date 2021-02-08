@@ -57,27 +57,27 @@ De configuratiebestanden kunnen vier types opdrachten bevatten:
 
 =item B<SET> I<vlag waarde>
 
-Vervang de waarde van de vlag die I<vlag> als naam heeft in waarde
-I<waarde>.
+De vlag met I<vlag> als naam overschrijven om ze de waarde I<waarde> te
+geven.
 
 =item B<STRIP> I<vlag waarde>
 
-Verwijder van de vlag die I<vlag> als naam heeft alle bouwvlaggen die in
+Van de vlag met I<vlag> als naam alle bouwvlaggen verwijderen die in
 I<waarde> opgesomd worden.
 
 =item B<APPEND> I<vlag waarde>
 
-Breid de vlag die I<vlag> als naam heeft uit door er de opties aan toe te
-voegen die in I<waarde> opgegeven worden. Er wordt een spatie geplaatst voor
-de waarde die toegevoegd wordt, indien de huidige waarde van de vlag niet
-leeg is.
+De vlag met I<vlag> als naam uitbreiden door er de opties aan toe te voegen
+die in I<waarde> opgegeven worden. Er wordt een spatie geplaatst voor de
+waarde die toegevoegd wordt, indien de huidige waarde van de vlag niet leeg
+is.
 
 =item B<PREPEND> I<vlag waarde>
 
-Breid de vlag die I<vlag> als naam heeft uit door er vooraan de opties aan
-toe te voegen die in I<waarde> opgegeven worden. Er wordt een spatie
-geplaatst achter de waarde die toegevoegd wordt, indien de huidige waarde
-van de vlag niet leeg is.
+De vlag met I<vlag> als naam uitbreiden door er vooraan de opties aan toe te
+voegen die in I<waarde> opgegeven worden. Er wordt een spatie geplaatst
+achter de waarde die toegevoegd wordt, indien de huidige waarde van de vlag
+niet leeg is.
 
 =back
 
@@ -90,23 +90,23 @@ met een hekje (#). Ook lege regels worden genegeerd.
 
 =item B<--dump>
 
-Laat op standaarduitvoer alle compilatievlaggen en hun waarden zien. Dit
-geeft per regel één vlag en de waarde ervan weer met daartussenin een
+Op standaarduitvoer alle compilatievlaggen en hun waarden tonen. Dit geeft
+per regel één vlag en de waarde ervan weer met daartussenin een
 gelijkheidsteken (“I<vlag>=I<waarde>”). Dit is de standaardactie.
 
 =item B<--list>
 
-Geeft een lijst weer van vlaggen die door de huidige leverancier ondersteund
-wordt (één per regel). Zie het onderdeel B<SUPPORTED FLAGS> (ondersteunde
+Een lijst weergeven van vlaggen die door de huidige leverancier ondersteund
+worden (één per regel). Zie het onderdeel B<SUPPORTED FLAGS> (ondersteunde
 vlaggen) voor meer informatie daarover.
 
 =item B<--status>
 
-Laat eventuele informatie zien die nuttig kan zijn om het gedrag te
+Eventuele informatie laten zien welke nuttig kan zijn om het gedrag te
 verklaren van B<dpkg-buildflags> (sinds dpkg 1.16.5): relevante
 omgevingsvariabelen, huidige leverancier, toestand van alle
-functievlaggen. Geef ook de resulterende compileervlaggen met hun oorsprong
-weer.
+functievlaggen. Ook de resulterende compileervlaggen met hun oorsprong
+weergeven.
 
 Het is de bedoeling dat dit uitgevoerd wordt vanuit B<debian/rules>, zodat
 de bouwlog een duidelijk spoor van de gebruikte vlaggen kan bijhouden. Dit
@@ -114,7 +114,7 @@ kan nuttig zijn om ermee verband houdende problemen te diagnosticeren.
 
 =item B<--export=>I<indeling>
 
-Geef op standaarduitvoer commando's weer die gebruikt kunnen worden om alle
+Op standaarduitvoer commando's weergeven die gebruikt kunnen worden om alle
 compilatievlaggen te exporteren ten behoeve van een specifiek
 gereedschap. Indien de waarde I<indeling> niet opgegeven werd, wordt B<sh>
 verondersteld. Enkel compilatievlaggen die met een hoofdletter beginnen
@@ -149,12 +149,12 @@ geëvalueerd met behulp van een B<include>-opdracht.
 
 =item B<--get> I<vlag>
 
-Geef de waarde van de vlag weer op de standaarduitvoer. Sluit af met 0 bij
+De waarde van de vlag op de standaarduitvoer weergeven. Sluit af met 0 bij
 een gekende vlag en sluit anders af met 1.
 
 =item B<--origin> I<vlag>
 
-Geef de origine weer van de waarde die teruggegeven wordt door
+De origine weergeven van de waarde die teruggegeven wordt door
 B<--get>. Sluit af met 0 bij een gekende vlag en sluit anders af met 1. De
 origine kan één van de volgende waarden hebben:
 
@@ -181,8 +181,8 @@ de vlag werd ingesteld/gewijzigd door een omgevingsspecifieke configuratie.
 
 =item B<--query>
 
-Laat alle informatie zien die nuttig kan zijn om het gedrag van het
-programma te verklaren: huidige leverancier, relevante omgevingsvariabelen,
+Alle informatie tonen welke nuttig kan zijn om het gedrag van het programma
+te verklaren: huidige leverancier, relevante omgevingsvariabelen,
 functiegebieden, toestand van alle functievlaggen en de compileervlaggen met
 hun oorsprong (sinds dpkg 1.19.0).
 
@@ -211,7 +211,7 @@ Bijvoorbeeld:
 
 =item B<--query-features> I<gebied>
 
-Geef de functies weer die voor een opgegeven gebied geactiveerd zijn (sinds
+De functies weergeven die voor een opgegeven gebied geactiveerd zijn (sinds
 dpkg 1.16.2). Momenteel worden door Debian en zijn derivaten enkel de
 gebieden B<future>, B<qa>, B<reproducible>, B<sanitize> en B<hardening>
 herkend. Zie het onderdeel B<FUNCTIEGEBIEDEN> voor meer details. Sluit af
@@ -227,11 +227,11 @@ De uitvoer is in RFC822-indeling met één sectie per functie. Bijvoorbeeld:
 
 =item B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -265,6 +265,10 @@ Opties voor de Objective C++ compiler. Hetzelfde als B<CXXFLAGS>.
 =item B<GCJFLAGS>
 
 Opties voor de GNU Java compiler (gcj). Een subset van B<CFLAGS>.
+
+=item B<DFLAGS>
+
+Options for the D compiler (ldc or gdc). Since dpkg 1.20.6.
 
 =item B<FFLAGS>
 
@@ -582,12 +586,11 @@ B<__DATE__> en B<__TIMESTAMP__> gebruikt worden.
 
 =item B<fixfilepath>
 
-Deze instelling (standaard gedeactiveerd) voegt
-B<-ffile-prefix-map=>I<BUILDPATH>B<=.> toe aan B<CFLAGS>, B<CXXFLAGS>,
-B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> en B<FCFLAGS>, waarbij
-B<BUILDPATH> ingesteld wordt op de basismap van het pakket dat gebouwd
-wordt. Dit heeft als effect dat het bouwpad verwijderd wordt van eventueel
-gegenereerde bestanden.
+This setting (enabled by default) adds
+B<-ffile-prefix-map=>I<BUILDPATH>B<=.> to B<CFLAGS>, B<CXXFLAGS>,
+B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and B<FCFLAGS> where
+B<BUILDPATH> is set to the top-level directory of the package being built.
+This has the effect of removing the build path from any generated file.
 
 Indien zowel B<fixdebugpath> als B<fixfilepath> ingesteld zijn, heeft deze
 laatste optie voorrang, omdat het een superset is van de eerste.
@@ -691,7 +694,7 @@ waarden zijn: B<0> and B<1> (standaard).
 
 Configuratiebestand dat voor het hele systeem geldt.
 
-=item B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> or
+=item B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> of
 
 =item B<$HOME/.config/dpkg/buildflags.conf>
 
@@ -723,8 +726,8 @@ Om in een Makefile bouwvlaggen door te geven aan een bouwcommando:
 =back
 
 Om in een shell-script of shell-fragment bouwvlaggen in te stellen, kan
-B<eval> gebruikt worden om de uitvoer te interpreteren van en de vlaggen
-naar de omgeving te exporteren:
+B<eval> gebruikt worden om de uitvoer te interpreteren en de vlaggen in de
+omgeving te exporteren:
 
 =over 
 

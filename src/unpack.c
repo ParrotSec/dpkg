@@ -342,25 +342,50 @@ deb_parse_conffiles(struct pkginfo *pkg, const char *control_conffiles,
     struct fsys_namenode *namenode;
     struct fsys_namenode_list *newconff;
     struct conffile *searchconff;
+    char *conffilename = conffilenamebuf;
     char *p;
+    enum fsys_namenode_flags confflags = FNNF_NEW_CONFF;
 
-    p = conffilenamebuf + strlen(conffilenamebuf);
-    if (p == conffilenamebuf)
+    p = conffilename + strlen(conffilename);
+    if (p == conffilename)
       ohshit(_("conffile file contains an empty line"));
     if (p[-1] != '\n')
       ohshit(_("conffile name '%s' is too long, or missing final newline"),
-             conffilenamebuf);
-    while (p > conffilenamebuf && c_isspace(p[-1]))
-      --p;
-    if (p == conffilenamebuf)
+             conffilename);
+    p = str_rtrim_spaces(conffilename, p);
+    if (p == conffilename)
       continue;
-    *p = '\0';
 
-    if (conffilenamebuf[0] != '/')
-      ohshit(_("conffile name '%s' is not an absolute pathname"),
-             conffilenamebuf);
+    /* Check for conffile flags. */
+    if (conffilename[0] != '/') {
+      char *flag = conffilename;
+      char *flag_end = strchr(flag, ' ');
 
-    namenode = fsys_hash_find_node(conffilenamebuf, 0);
+      if (flag_end)
+        conffilename = flag_end + 1;
+
+      /* If no flag separator is found, assume a missing leading slash. */
+      if (flag_end == NULL || (conffilename[0] && conffilename[0] != '/'))
+        ohshit(_("conffile name '%s' is not an absolute pathname"), conffilename);
+
+      flag_end[0] = '\0';
+
+      /* Otherwise assume a missing filename after the flag separator. */
+      if (conffilename[0] == '\0')
+        ohshit(_("conffile name missing after flag '%s'"), flag);
+
+      if (strcmp(flag, "remove-on-upgrade") == 0) {
+        confflags |= FNNF_RM_CONFF_ON_UPGRADE;
+        confflags &= ~FNNF_NEW_CONFF;
+      } else {
+        if (c_isspace(flag[0]))
+          warning(_("line with conffile filename '%s' has leading white spaces"),
+                  conffilename);
+        ohshit(_("unknown flag '%s' for conffile '%s'"), flag, conffilename);
+      }
+    }
+
+    namenode = fsys_hash_find_node(conffilename, 0);
     namenode->oldhash = NEWCONFFILEFLAG;
     newconff = tar_fsys_namenode_queue_push(newconffiles, namenode);
 
@@ -412,7 +437,7 @@ deb_parse_conffiles(struct pkginfo *pkg, const char *control_conffiles,
       debug(dbg_conff, "process_archive conffile '%s' no package, no hash",
             newconff->namenode->name);
     }
-    newconff->namenode->flags |= FNNF_NEW_CONFF;
+    newconff->namenode->flags |= confflags;
   }
 
   if (ferror(conff))
@@ -573,6 +598,7 @@ pkg_remove_old_files(struct pkginfo *pkg,
     struct fsys_namenode *usenode;
 
     if ((namenode->flags & FNNF_NEW_CONFF) ||
+        (namenode->flags & FNNF_RM_CONFF_ON_UPGRADE) ||
         (namenode->flags & FNNF_NEW_INARCHIVE))
       continue;
 
@@ -582,9 +608,9 @@ pkg_remove_old_files(struct pkginfo *pkg,
     varbuf_add_str(&fnamevb, usenode->name);
     varbuf_end_str(&fnamevb);
 
-    if (!stat(namenode->name, &stab) && S_ISDIR(stab.st_mode)) {
+    if (!stat(fnamevb.buf, &stab) && S_ISDIR(stab.st_mode)) {
       debug(dbg_eachfiledetail, "process_archive: %s is a directory",
-            namenode->name);
+            fnamevb.buf);
       if (dir_is_used_by_others(namenode, pkg))
         continue;
     }
@@ -793,6 +819,8 @@ pkg_update_fields(struct pkginfo *pkg, struct fsys_namenode_queue *newconffiles)
     newiconff->name = nfstrsave(cfile->namenode->name);
     newiconff->hash = nfstrsave(cfile->namenode->oldhash);
     newiconff->obsolete = !!(cfile->namenode->flags & FNNF_OBS_CONFF);
+    newiconff->remove_on_upgrade = !!(
+        cfile->namenode->flags & FNNF_RM_CONFF_ON_UPGRADE);
     *iconffileslastp = newiconff;
     iconffileslastp = &newiconff->next;
   }

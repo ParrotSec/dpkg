@@ -269,7 +269,7 @@ benutzerfreundliche Zeichenkette für den Wert von B<errno> aus.
 
 =back
 
-=item B<--notify-timeout>I<Zeitüberschreitung>
+=item B<--notify-timeout> I<Zeitüberschreitung>
 
 Setzt eine Zeitüberschreitung für die Option B<--notify-await> (seit Version
 1.19.3). Wenn die Zeitüberschreitung erreicht wird, wird sich
@@ -282,6 +282,12 @@ Keinen Dateideskriptor schließen, wenn ein Daemon in den Hintergrund
 gezwungen wird (seit Version 1.16.5). Dies wird zu Fehlersuchzwecken
 angewandt oder um Dateideskriptoren zur Protokollierung der Prozessausgabe
 umzuleiten. Nur relevant bei der Verwendung von B<--background>.
+
+=item B<-O>, B<--output> I<Pfadname>
+
+Leitet B<stdout> und B<stderr> auf I<Pfadname> um, wenn der Daemon in den
+Hintergrund gezwungen wird (seit Version 1.20.6). Nur relevant bei Einsatz
+von B<--background>.
 
 =item B<-N>, B<--nicelevel> I<Ganzzahl>
 

@@ -23,15 +23,17 @@ B<DEBIAN/control>
 =head1 BESCHREIBUNG
 
 Jedes Debian-Binärpaket enthält eine Datei B<control> in seinem
-B<control>-Element. Ihr Format ist eine Teilmenge der Hauptdatei
-B<debian/control> in dem Debian-Quellpaket, siehe B<deb-src-control>(5).
+B<control>-Element. Ihr L<deb822(5)>-Format ist eine Teilmenge der
+Hauptdatei B<debian/control> in dem Debian-Quellpaket, siehe
+B<deb-src-control>(5).
 
 Diese Datei enthält eine Reihe von Feldern. Jedes Feld beginnt mit einer
 Markierung, wie B<Package> oder B<Version> (Groß-/Kleinschreibung egal),
-gefolgt von einem Doppelpunkt und dem Körper des Feldes. Felder werden nur
-durch die Feldmarkierungen abgegrenzt. Mit anderen Worten, Feldtexte können
-mehrere Zeilen überspannen, aber die Installationswerkzeuge werden im
-Allgemeinen die Zeilen bei der Verarbeitung des Feldkörpers zusammenfassen
+gefolgt von einem Doppelpunkt und dem Inhalt des Feldes
+(Groß-/Kleinschreibung ist relevant, außer anders angegeben). Felder werden
+nur durch die Feldmarkierungen abgegrenzt. Mit anderen Worten, Feldtexte
+können mehrere Zeilen überspannen, aber die Installationswerkzeuge werden im
+Allgemeinen die Zeilen bei der Verarbeitung des Feldinhaltes zusammenfassen
 (mit Ausnahme des B<Description>-Feldes, sehen Sie dazu unten).
 
 =head1 FELDER
@@ -396,8 +398,8 @@ speziellen Zweck und ausführbaren Format dient.
 
 =head1 SIEHE AUCH
 
-B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1),
-B<dpkg>(1), B<dpkg-deb>(1).
+L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7),
+B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1).
 
 
 =head1 ÜBERSETZUNG

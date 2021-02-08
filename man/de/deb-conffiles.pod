@@ -26,12 +26,20 @@ Ein Paket gibt seine Liste an Conffiles an, indem es eine Datei I<conffiles>
 in seinem Steuerarchiv (d.h. I<DEBIAN/conffiles> während der
 Paketerstellung) hinzunimmt.
 
-Diese Datei enthält eine Liste von Dateien, eine pro Zeile. Sie sollten als
-absolute Pfadnamen aufgeführt werden und sollten im Programmpaket
-existieren, andernfalls wird B<dpkg>(1) sie ignorieren (allerdings wird
-B<dpkg-deb>(1) standardmäßig den Bau solcher Programmpakete
-verweigern). Abschließende Leerraumzeichen werden entfernt und leere Zeilen
-werden ignoriert.
+Diese Datei enthält eine Liste von Dateien, eine pro Zeile, mit einem
+optionalen, durch Leerraum abgretrennten Schalter vorab. Diese Conffiles
+müssen als absolute Pfadnamen aufgeführt werden. Abschließender Leerraum
+wird abgetrennt, aber leere oder Zeilen mit nur Leerraum werden nicht
+akzeptiert.
+
+Dateien ohne einen Schalter sollten in Binärpaketen existieren, andernfalls
+wird L<dpkg(1)> sie ignorieren.
+
+Es wird derzeit nur ein Schalter unterstützt. B<remove-on-upgrade> markiert,
+dass ein Conffile beim nächsten Upgrade entfernt werden muss (seit Dpkg
+1.20.6). Diese Dateien dürfen nicht im Binärpaket enthalten sein, da sowohl
+L<dpkg(1)> als auch L<dpkg-deb(1)> das Bauen oder die Verarbeitung solcher
+Binärpakete nicht akzeptiert.
 
 =head1 BEISPIEL
 
@@ -39,6 +47,7 @@ werden ignoriert.
  %CONFDIR%/cron.daily/dpkg
  %PKGCONFDIR%/dpkg.cfg
  %CONFDIR%/logrotate.d/dpkg
+ remove-on-upgrade /etc/some-old-file.conf
 
 =head1 SIEHE AUCH
 

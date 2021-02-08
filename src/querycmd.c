@@ -585,7 +585,7 @@ showpackages(const char *const *argv)
 
   if (!*argv) {
     if (fmt_needs_db_fsys)
-      ensure_allinstfiles_available();
+      ensure_allinstfiles_available_quiet();
     for (i = 0; i < array.n_pkgs; i++) {
       pkg = array.pkgs[i];
       if (pkg->status == PKG_STAT_NOTINSTALLED)
@@ -870,8 +870,6 @@ int main(int argc, const char *const *argv) {
   admindir = dpkg_db_set_dir(admindir);
 
   if (!cipaction) badusage(_("need an action option"));
-
-  fsys_hash_init();
 
   ret = cipaction->action(argv);
 

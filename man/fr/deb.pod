@@ -80,7 +80,7 @@ contenir une entrée pour S<« . »,> le répertoire courant.
 Le troisième et dernier membre obligatoire est appelé B<data.tar>. Il
 contient le système de fichiers sous forme d'une archive tar, soit non
 compressée (gérée depuis S<dpkg 1.10.24)> ou compressée avec gzip (avec
-extension B<.gz>), xz (avec extensions B<.xz>, gérée depuis S<dpkg 1.15.6),>
+extension B<.gz>), xz (avec extension B<.xz>, gérée depuis S<dpkg 1.15.6),>
 bzip2 (avec extensions B<.bz2>, gérée depuis S<dpkg 1.10.24)> ou lzma (avec
 extension B<.lzma>, gérée depuis S<dpkg 1.13.25).>
 

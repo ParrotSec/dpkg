@@ -24,20 +24,21 @@ B<debian/control>
 =head1 DESCRIPTION
 
 Each Debian source package contains the master «B<debian/control>» file, and
-its format is a superset of the B<control> file shipped in Debian binary
-packages, see B<deb-control>(5).
+its L<deb822(5)> format is a superset of the B<control> file shipped in
+Debian binary packages, see B<deb-control>(5).
 
 This file contains at least 2 paragraphs, separated by a blank line.  The
 first paragraph lists all information about the source package in general,
 while each following paragraph describes exactly one binary package. Each
 paragraph consists of at least one field. A field starts with a fieldname,
 such as B<Package> or B<Section> (case insensitive), followed by a colon,
-the body of the field and a newline.  Multi-line fields are also allowed,
-but each supplementary line, without a fieldname, should start with at least
-one space. The content of the multi-line fields is generally joined to a
-single line by the tools (except in the case of the B<Description> field,
-see below). To insert empty lines into a multi-line field, insert a dot
-after the space.  Lines starting with a ‘B<#>’ are treated as comments.
+the body of the field (case sensitive unless stated otherwise) and a
+newline.  Multi-line fields are also allowed, but each supplementary line,
+without a fieldname, should start with at least one space. The content of
+the multi-line fields is generally joined to a single line by the tools
+(except in the case of the B<Description> field, see below). To insert empty
+lines into a multi-line field, insert a dot after the space.  Lines starting
+with a ‘B<#>’ are treated as comments.
 
 =head1 LES CHAMPS SOURCE
 
@@ -268,7 +269,7 @@ des champs B<Build-Conflicts> est B<any>. Un nom d'architecture réelle de
 Debian correspondra exactement à l'architecture pour ce nom de paquet,
 B<any> correspondra à toute architecture pour ce nom de paquet si le paquet
 a été marqué B<Multi-Arch: allowed>, et B<native> correspondra à
-l'architecturede construction actuelle si le paquet n'a été marqué
+l'architecture de construction actuelle si le paquet n'a pas été marqué
 B<Multi-Arch: foreign>.
 
 Une contrainte sur le numéro de version peut commencer par
@@ -432,7 +433,7 @@ n'apparaîtra pas dans les fichiers de contrôle des paquets binaires ou
 source.
 
 Il faut prendre en compte le fait que ces champs définis par l'utilisateur
-se serviront de l'espace de nommage global lequel pourrait, dans le futur,
+se serviront de l'espace de nommage global, lequel pourrait, dans le futur,
 entrer en conflit avec des champs officiellement reconnus. Pour éviter de
 telles situations, il est conseillé de les préfixer avec B<Private->
 S<(exemple :> B<XB-Private-New-Field>).
@@ -474,7 +475,7 @@ S<(exemple :> B<XB-Private-New-Field>).
 
 =head1 VOIR AUSSI
 
-B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
 
 
 =head1 TRADUCTION

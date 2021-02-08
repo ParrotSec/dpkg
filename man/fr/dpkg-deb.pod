@@ -32,7 +32,7 @@ de B<dpkg-deb>. B<dpkg> comprend que B<dpkg-deb> est appelé et le lance.
 
 Pour la plupart des commandes recevant un argument d'entrée d'archive,
 l'archive peut être lue à partir de l'entrée standard si le nom d'archive
-est donné sous la forme d'un caractère moins («B<->») S<unique ;> sinon,
+est donné sous la forme d'un caractère moins S<(« B<-> »)> S<unique ;> sinon,
 l'absence de prise en charge sera documentée dans leurs descriptions de
 commande respectives.
 

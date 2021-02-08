@@ -338,7 +338,7 @@ Do the same and print the user-friendly string for the B<errno> value.
 
 =back
 
-=item B<--notify-timeout>I<timeout>
+=item B<--notify-timeout> I<timeout>
 
 Set a timeout for the B<--notify-await> option (since version 1.19.3).
 When the timeout is reached, B<start-stop-daemon> will exit with an
@@ -351,6 +351,12 @@ Do not close any file descriptor when forcing the daemon into the background
 (since version 1.16.5).
 Used for debugging purposes to see the process output, or to redirect file
 descriptors to log the process output.
+Only relevant when using B<--background>.
+
+=item B<-O>, B<--output> I<pathname>
+
+Redirect B<stdout> and B<stderr> to I<pathname> when forcing the daemon into
+the background (since version 1.20.6).
 Only relevant when using B<--background>.
 
 =item B<-N>, B<--nicelevel> I<int>
@@ -501,4 +507,3 @@ Demonstration of a custom schedule for stopping B<food>:
  	--pidfile /run/food.pid --retry=TERM/30/KILL/5
 
 =back
-

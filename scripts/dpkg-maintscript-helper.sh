@@ -559,7 +559,7 @@ symlink_match()
   local SYMLINK_TARGET="$2"
 
   [ "$(readlink "$DPKG_ROOT$SYMLINK")" = "$SYMLINK_TARGET" ] || \
-  [ "$(dpkg-realpath "$DPKG_ROOT$SYMLINK")" = "$SYMLINK_TARGET" ]
+  [ "$(dpkg-realpath "$SYMLINK")" = "$SYMLINK_TARGET" ]
 }
 
 usage() {
@@ -600,7 +600,8 @@ if [ "$DPKG_ROOT" = "/" ]; then
 fi
 export DPKG_ROOT
 
-PKGDATADIR="${DPKG_DATADIR:-scripts}"
+PKGDATADIR_DEFAULT=scripts
+PKGDATADIR="${DPKG_DATADIR:-$PKGDATADIR_DEFAULT}"
 
 . "$PKGDATADIR/sh/dpkg-error.sh"
 

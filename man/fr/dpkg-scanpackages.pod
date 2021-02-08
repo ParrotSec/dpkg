@@ -72,7 +72,7 @@ B<deb-extra-override>(5) pour plus d'information sur le format utilisé.
 =item B<-a>, B<--arch> I<arch>
 
 Utilise un motif se composant de I<*_all.deb> et de I<*_arch.deb>, plutôt
-que de rechercher tous les fichiers debs.
+que de rechercher tous les fichiers deb.
 
 =item B<-h>, B<--hash> I<liste-de-hachage>
 

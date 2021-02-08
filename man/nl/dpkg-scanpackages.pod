@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-scanpackages - maak Packages indexbestanden
+dpkg-scanpackages - Packages-indexbestanden maken
 
 =head1 OVERZICHT
 
@@ -31,12 +31,13 @@ aantreft op de sites met Debian-archieven of op CD's. U kunt zelf gebruik
 maken van B<dpkg-scanpackages> als u een map met lokale pakketten maakt om
 ze op een cluster machines te installeren.
 
-B<Note:> If you want to access the generated Packages file with B<apt>(8)
-you will probably need to compress the file with B<xz>(1)  (generating a
-Packages.xz file), B<bzip2>(1)  (generating a Packages.bz2 file) or
-B<gzip>(1)  (generating a Packages.gz file).  B<apt>(8)  ignores
-uncompressed Packages files except on local access (i.e.  B<file://>
-sources).
+B<Opmerking:> indien u het gegenereerde bestand Packages wilt gebruiken met
+B<apt>, zult u het wellicht moeten comprimeren met B<xz>(1) (wat een bestand
+Packages.xz genereert), met B<bzip2>(1) (wat een bestand Packages.bz2
+genereert) of met B<gzip>(1) (wat een bestand Packages.gz
+genereert). B<apt>(8) negeert niet-gecomprimeerde Packages-bestanden tenzij
+in geval van lokale toegang (d.w.z. pakketbronnen in de vorm van
+B<file://>).
 
 I<pad-binair-pakket> is de naam van de boom met binaire pakketten die
 verwerkt moet worden (bijvoorbeeld B<contrib/binary-i386>). Het is best om
@@ -62,44 +63,44 @@ dat eerst aangetroffen wordt, gebruikt.
 
 =item B<-t>, B<--type> I<type>
 
-Zoek naar pakketten van het type *.I<type> in plaats van naar pakketten van
-het type *.deb.
+Zoeken naar pakketten van het type *.I<type> in plaats van naar pakketten
+van het type *.deb.
 
 =item B<-e>, B<--extra-override> I<bestand>
 
-Zoek in het I<bestand> naar bijkomende vervangingen (het bestand mag
+Zoeken in het I<bestand> naar bijkomende vervangingen (het bestand mag
 gecomprimeerd zijn sinds dpkg 1.15.5). Zie B<deb-extra-override>(5) voor
 meer informatie over hoe het ingedeeld wordt.
 
 =item B<-a>, B<--arch> I<arch>
 
-Gebruik een patroon dat bestaat uit I<*_all.deb> en I<*_arch.deb> in plaats
-van te zoeken naar alle deb-bestanden.
+Een patroon gebruiken dat bestaat uit I<*_all.deb> en I<*_arch.deb> in
+plaats van te zoeken naar alle deb-bestanden.
 
 =item B<-h>, B<--hash> I<hash-lijst>
 
-Genereer enkel bestandshashes voor de opgegeven lijst van algoritmen,
+Enkel bestandshashes genereren voor de opgegeven lijst van algoritmen,
 onderling gescheiden door komma's (sinds dpkg 1.17.14). Standaard worden ze
 voor alle momenteel ondersteunde algoritmen gemaakt. Ondersteunde waarden:
 B<md5>, B<sha1>, B<sha256>.
 
 =item B<-m>, B<--multiversion>
 
-Neem alle gevonden pakketten op in de uitvoer.
+Alle gevonden pakketten opnemen in de uitvoer.
 
 =item B<-M>, B<--medium> I<ID-tekenreeks>
 
-Voeg een veld B<X-Medium> toe dat de waarde I<ID-tekenreeks> heeft (sinds
+Een veld B<X-Medium> toevoegen dat de waarde I<ID-tekenreeks> heeft (sinds
 dpkg 1.15.5). Dit veld is nodig als u B<Packages.cd>-bestanden wilt
 genereren om te gebruiken met de multicd-toegangsmethode van dselect.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

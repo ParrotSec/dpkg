@@ -30,12 +30,15 @@ I<filename>B<.buildinfo>
 =head1 DESCRIPTION
 
 Each Debian source package build can record the build information in
-a B<.buildinfo> control file, which contains a number of fields.
+a B<.buildinfo> control file, which contains a number of fields in
+L<deb822(5)> format.
+
 Each field begins with a tag, such as
 B<Source>
 or
 B<Binary>
-(case insensitive), followed by a colon, and the body of the field.
+(case insensitive), followed by a colon, and the body of the field
+(case sensitive unless stated otherwise).
 Fields are delimited only by field tags.
 In other words, field text may be multiple lines in length, but the
 installation tools will generally join lines when processing the body
@@ -179,9 +182,10 @@ On Debian and derivatives the following reason tags can be emitted:
 
 =over
 
-=item B<merged-usr-via-symlinks>
+=item B<merged-usr-via-aliased-dirs>
 
-The system has a merged I</usr> via symlinks.
+The system has a merged I</usr> via aliased directories (previously known
+as B<merged-usr-via-symlinks>).
 This will confuse B<dpkg-query>, B<dpkg-statoverride>,
 B<dpkg-trigger>, B<update-alternatives> and any other tool using
 pathnames as keys into their databases, as it creates filesystem aliasing
@@ -242,6 +246,7 @@ backslashes escaped (‘\\’).
 
 =head1 SEE ALSO
 
+L<deb822(5)>,
 B<deb-changes>(5),
 B<deb-version>(7),
 B<dpkg-genbuildinfo>(1).

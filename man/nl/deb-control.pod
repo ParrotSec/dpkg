@@ -24,15 +24,16 @@ B<DEBIAN/control>
 =head1 BESCHRIJVING
 
 Each Debian binary package contains a B<control> file in its B<control>
-member, and its format is a subset of the master B<debian/control> file in
-Debian source packages, see B<deb-src-control>(5).
+member, and its L<deb822(5)> format is a subset of the master
+B<debian/control> file in Debian source packages, see B<deb-src-control>(5).
 
 This file contains a number of fields.  Each field begins with a tag, such
 as B<Package> or B<Version> (case insensitive), followed by a colon, and the
-body of the field.  Fields are delimited only by field tags. In other words,
-field text may be multiple lines in length, but the installation tools will
-generally join lines when processing the body of the field (except in the
-case of the B<Description> field, see below).
+body of the field (case sensitive unless stated otherwise).  Fields are
+delimited only by field tags. In other words, field text may be multiple
+lines in length, but the installation tools will generally join lines when
+processing the body of the field (except in the case of the B<Description>
+field, see below).
 
 =head1 VELDEN
 
@@ -95,24 +96,26 @@ mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
 
 =over 
 
-=item B<Installed-Size:> I<size>
+=item B<Installed-Size:> I<grootte>
 
 Bij benadering de totale grootte van de door het pakket geïnstalleerde
 bestanden, uitgedrukt in KiB.
 
 =item B<Protected:> B<yes>|B<no>
 
-This field is usually only needed when the answer is B<yes>.  It denotes a
-package that is required for proper booting of the system.  L<dpkg(1)> or
-any other installation tool will not allow a B<Protected> package to be
-removed (at least not without using one of the force options).
+Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het duidt een
+pakket aan dat vereist is voor het correct opstarten van het
+systeem. L<dpkg(1)> of om het even welk ander installatiegereedschap zal
+niet toestaan dat een pakket van het type B<Protected> verwijderd wordt
+(tenminste niet zonder dat één van de forceeropties gebruikt wordt).
 
 =item B<Essential:> B<yes>|B<no>
 
-This field is usually only needed when the answer is B<yes>.  It denotes a
-package that is required for proper operation of the system.  L<dpkg(1)> or
-any other installation tool will not allow an B<Essential> package to be
-removed (at least not without using one of the force options).
+Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het duidt een
+pakket aan dat vereist is opdat het systeem behoorlijk zou
+functioneren. L<dpkg(1)> of om het even welk ander installatiegereedschap
+zal niet toestaan dat een pakket van het type B<Essential> verwijderd wordt
+(tenminste niet zonder dat één van de forceeropties gebruikt wordt).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
@@ -351,7 +354,7 @@ zal zijn om een upload te aanvaarden van een pakket dat verklaart een
 B<Built-Using>-relatie te hebben waaraan in het archief niet voldaan kan
 worden.
 
-=item B<Built-For-Profiles:> I<profile-list> (obsolete)
+=item B<Built-For-Profiles:> I<profiel-lijst> (verouderd)
 
 Dit veld werd vroeger gebruikt om een lijst van door spaties van elkaar
 gescheiden bouwprofielen op te sommen waarmee deze binaire pakketten gebouwd
@@ -408,6 +411,6 @@ functie en uitvoerbaar formaat heeft.
 
 =head1 ZIE OOK
 
-B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1),
-B<dpkg>(1), B<dpkg-deb>(1).
+L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7),
+B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1).
 

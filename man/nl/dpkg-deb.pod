@@ -112,7 +112,7 @@ Geeft de inhoud weer van het archiefonderdeel van het pakketarchief dat de
 bestandssysteemboom bevat. Hij wordt momenteel weergegeven volgens de manier
 waarop B<tar> een breedsprakige lijst genereert.
 
-=item B<-x>, B<--extract> I<archief map>
+=item B<-x>, B<--extract> I<archiefmap>
 
 Extraheert de boom met het bestandssysteem uit een pakketarchief en plaatst
 die in de opgegeven map.
@@ -125,7 +125,7 @@ I<map> (maar niet de bovenliggende mappen) zal indien nodig aangemaakt
 worden en de toegangsrechten ervan zullen aangepast worden om overeen te
 komen met de inhoud van het pakket.
 
-=item B<-X>, B<--vextract> I<archief map>
+=item B<-X>, B<--vextract> I<archiefmap>
 
 Is zoals B<--extract> (B<-x>) met B<--verbose> (B<-v>), hetgeen een lijst
 van de geëxtraheerde bestanden toont terwijl de opdracht uitgevoerd wordt.
@@ -170,11 +170,11 @@ aangemaakt worden.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -199,7 +199,7 @@ De standaard voor dit veld is “${Package}\t${Version}\n”.
 
 =item B<-z>I<compressieniveau>
 
-Geef op welk compressieniveau gebruikt moet worden door het
+Specificeren welk compressieniveau gebruikt moet worden door het
 compressieprogramma bij het bouwen van het pakket (standaard is dat 9 voor
 gzip, 6 voor xz). Bruikbare waarden zijn 0-9, waarbij 0 vertaald wordt als
 geen compressie voor gzip. Voor dpkg 1.16.2 was niveau 0 het equivalent van
@@ -207,7 +207,7 @@ geen compressie voor alle compressieprogramma's.
 
 =item B<-S>I<compressiestrategie>
 
-Geef op welke compressiestrategie gebruikt moet worden door het
+Specificeren welke compressiestrategie gebruikt moet worden door het
 compressieprogramma bij het bouwen van een pakket (sinds dpkg
 1.16.2). Toegestane waarden zijn B<none> (sinds dpkg 1.16.4), B<filtered>,
 B<huffman>, B<rle> en B<fixed> voor gzip (sinds dpkg 1.17.0) en B<extreme>
@@ -215,14 +215,14 @@ voor xz.
 
 =item B<-Z>I<compressietype>
 
-Geef op welk compressietype bij het bouwen van een pakket gebruikt moet
+Specificeren welk compressietype bij het bouwen van een pakket gebruikt moet
 worden. Toegestane waarden zijn B<gzip>, B<xz> (sinds dpkg 1.15.6) en
 B<none> (standaard is B<xz>).
 
 =item B<--[no-]uniform-compression>
 
-Geef aan dat dezelfde compressieparameters gebruikt moeten worden voor alle
-archiefonderdelen (d.w.z. B<control.tar> en B<data.tar>; sinds dpkg
+Specificeren dat dezelfde compressieparameters gebruikt moeten worden voor
+alle archiefonderdelen (d.w.z. B<control.tar> en B<data.tar>; sinds dpkg
 1.17.6). Anders zullen die parameters enkel voor het onderdeel B<data.tar>
 gebruikt worden. De enige ondersteunde compressietypes waarvan het eenvormig
 gebruik toegelaten is, zijn B<none>, B<gzip> en B<xz>. De optie
@@ -231,8 +231,8 @@ B<--no-uniform-compression> schakelt uniforme compressie uit (sinds dpkg
 
 =item B<--root-owner-group>
 
-Stel voor elk gegevensitem van de bestandssysteemboom de eigenaar en de
-groep in op 'root' met het id 0 (sinds dpkg 1.19.0).
+Voor elk gegevensitem van de bestandssysteemboom de eigenaar en de groep
+instellen op 'root' met het id 0 (sinds dpkg 1.19.0).
 
 B<Noot>: Deze optie kan nuttig zijn voor een root-loze bouw (zie
 I<rootless-builds.txt>), maar zou B<niet> gebruikt mogen worden wanneer de
@@ -241,9 +241,9 @@ ondersteuning toegevoegd worden in de vorm van een meta-manifest.
 
 =item B<--deb-format=>I<indeling>
 
-Stel in welke versie van archiefindeling bij het bouwen gebruikt moet worden
-(sinds dpkg 1.17.0). Toegestane waarden zijn B<2.0> voor de nieuwe indeling
-en B<0.939000> voor de oude (standaard is B<2.0>).
+Instellen welke versie van archiefindeling bij het bouwen gebruikt moet
+worden (sinds dpkg 1.17.0). Toegestane waarden zijn B<2.0> voor de nieuwe
+indeling en B<0.939000> voor de oude (standaard is B<2.0>).
 
 De oude archiefindeling wordt door niet-Debian gereedschap minder
 gemakkelijk ontleed en wordt nu als verouderd beschouwd. Het enige nut ervan
@@ -310,7 +310,7 @@ op de items uit het B<tar>(5)-bestand.
 
 =head1 OPMERKINGEN
 
-Tracht met enkel maar B<dpkg-deb> geen software te installeren! U moet zoals
+Tracht geen software te installeren met enkel maar B<dpkg-deb>! U moet zoals
 het hoort B<dpkg> gebruiken om er zeker van te zijn dat alle bestanden op de
 juiste plaats terechtkomen, dat de scripts van het pakket uitgevoerd worden
 en dat zijn toestand en inhoud bijgehouden worden.

@@ -54,12 +54,17 @@ symbolique vers le fichier réellement visé. Les modifications faites par
 l'administrateur système sont ainsi confinées dans le répertoire
 S<I<%CONFDIR%> ;> le FHS (lisez-le) donne de Bonnes Raisons de faire ainsi.
 
-Chaque fois qu'un paquet, proposant un fichier pour une fonction déterminée,
-est installé, modifié ou désinstallé, B<update-alternatives> est appelé pour
-mettre à jour les informations concernant ce fichier dans le système des
-S<« alternatives ».> En général, B<update-alternatives> est appelé dans les
-scripts B<postinst> (configure) et B<prerm> (remove and deconfigure) des
-paquets Debian.
+When each package providing a file with a particular functionality is
+installed, changed or removed, B<update-alternatives> is called to update
+information about that file in the alternatives system.
+B<update-alternatives> is usually called from the following Debian package
+maintainer scripts, B<postinst> (configure) to install the alternative and
+from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
+most (if not all) cases no other maintainer script actions should call
+B<update-alternatives>, in particular neither of B<upgrade> nor
+B<disappear>, as any other such action can lose the manual state of an
+alternative, or make the alternative temporarily flip-flop, or completely
+switch when several of them have the same priority.
 
 Il est souvent utile de synchroniser certaines alternatives, de manière à
 pouvoir les manipuler S<globalement ;> par exemple, quand plusieurs versions de
@@ -519,7 +524,7 @@ commande en tant que S<superutilisateur :>
 
 =head1 VOIR AUSSI
 
-B<ln>(1), FHS, le standard pour l'organisation du système de fichiers.
+B<ln>(1), FHS (the Filesystem Hierarchy Standard).
 
 
 =head1 TRADUCTION

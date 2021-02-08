@@ -18,7 +18,7 @@ deb-triggers - pakket-triggers
 
 =head1 OVERZICHT
 
-B<debian/triggers>, B<debian/>I<binary-package>B<.triggers>,
+B<debian/triggers>, B<debian/>I<binair-pakket>B<.triggers>,
 B<DEBIAN/triggers>
 
 =head1 BESCHRIJVING

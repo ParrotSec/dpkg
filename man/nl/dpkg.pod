@@ -33,12 +33,12 @@ inadequaat.
 
 =head1 BESCHRIJVING
 
-B<dpkg> is a tool to install, build, remove and manage Debian packages. The
-primary and more user-friendly front-end for B<dpkg> is
-B<aptitude>(8). B<dpkg> itself is controlled entirely via command line
-parameters, which consist of exactly one action and zero or more
-options. The action-parameter tells B<dpkg> what to do and options control
-the behavior of the action in some way.
+B<dpkg> is gereedschap voor het installeren, bouwen, verwijderen en beheren
+van Debian pakketten. Het belangrijkste en meer gebruikersvriendelijke
+frontend voor B<dpkg> is B<aptitude>(8). B<dpkg> zelf wordt volledig
+gestuurd via commandoregelparameters, die bestaan uit exact één actie en nul
+of meer opties. De actieparameter zegt B<dpkg> wat het moet doen en de
+opties sturen in zekere zin het gedrag van de actie.
 
 B<dpkg> kan ook gebruikt worden als een frontend voor B<dpkg-deb>(1) en
 B<dpkg-query>(1). De lijst van ondersteunde acties kunt u verderop in het
@@ -66,7 +66,8 @@ Het pakket is niet op uw systeem geïnstalleerd.
 
 =item B<config-files> (configuratiebestanden)
 
-Enkel de configuratiebestanden van het pakket bevinden zich op het systeem.
+Only the configuration files or the B<postrm> script and the data it needs
+to remove of the package exist on the system.
 
 =item B<half-installed> (gedeeltelijk geïnstalleerd)
 
@@ -106,10 +107,11 @@ Het pakket werd geselecteerd om geïnstalleerd te worden.
 
 =item B<hold> (te handhaven)
 
-A package marked to be on B<hold> is kept on the same version, that is, no
-automatic new installs, upgrades or removals will be performed on them,
-unless these actions are requested explicitly, or are permitted to be done
-automatically with the B<--force-hold> option.
+Een pakket dat gemarkeerd is als "on B<hold>" (te handhaven), wordt behouden
+op dezelfde versie, wat betekent dat er geen automatische nieuwe
+installaties, opwaarderingen of verwijderingen op uitgevoerd zullen worden,
+tenzij er expliciet gevraagd wordt om deze acties of wanneer het met de
+optie B<--force-hold> toegelaten is om deze automatisch uit te voeren.
 
 =item B<deinstall> (de-installeren)
 
@@ -244,12 +246,14 @@ werd in plaats van een pakketnaam, dan zullen alle uitgepakte of verwijderde
 pakketten die echter in het bestand I<%ADMINDIR%/status> gemarkeerd zijn om
 gewist te worden, gewist worden.
 
-B<Note:> Some configuration files might be unknown to B<dpkg> because they
-are created and handled separately through the configuration scripts. In
-that case, B<dpkg> won't remove them by itself, but the package's I<postrm>
-script (which is called by B<dpkg>), has to take care of their removal
-during purge. Of course, this only applies to files in system directories,
-not configuration files written to individual users' home directories.
+Merk op: sommige configuratiebestanden kunnen onbekend zijn voor B<dpkg>
+omdat ze via de configuratiescripts gecreëerd en afzonderlijk afgehandeld
+worden. In dat geval zal B<dpkg> ze niet zelf verwijderen, maar het
+I<postrm>-script van het pakket (dat door B<dpkg> geactiveerd wordt) moet
+tijdens een wis-operatie voor hun verwijdering zorgen. Dit is uiteraard
+enkel van toepassing op bestanden in systeemmappen, niet op
+configuratiebestanden die neergeschreven werden in de persoonlijke map van
+gebruikers.
 
 Het wissen van een pakket bestaat uit de volgende stappen:
 
@@ -364,8 +368,8 @@ B<--set-selections>.
 Zoekt pakketten op die geselecteerd werden om geïnstalleerd te worden, maar
 die om één of andere reden nog niet geïnstalleerd werden.
 
-B<Note:> This command makes use of both the available file and the package
-selections.
+B<Merk op:> dit commando maakt zowel gebruik van het bestand available als
+van de pakketselectie.
 
 =item B<--predep-package>
 
@@ -375,8 +379,8 @@ vereisten en dat zelf geen niet-voldane voorafgaande vereisten heeft.
 Indien er een dergelijk pakket is, geef het dan weer in de vorm van een item
 voor het bestand Packages dat passend verder bewerkt kan worden.
 
-B<Note:> This command makes use of both the available file and the package
-selections.
+B<Merk op:> dit commando maakt zowel gebruik van het bestand available als
+van de pakketselectie.
 
 Geeft 0 terug als een pakket weergegeven werd, 1 als geen geschikt pakket te
 vinden is en 2 in geval van een fout.
@@ -450,7 +454,7 @@ dpkg 1.17.11).
 
 =item B<protected-field>
 
-Supports the B<Protected> field (since dpkg 1.20.1).
+Biedt ondersteuning voor het veld B<Protected> (sinds dpkg 1.20.1).
 
 =back
 
@@ -484,7 +488,7 @@ Valideert de opgegeven versie (sinds dpkg 1.18.16).
 
 =item B<--compare-versions> I<ver1> I<op> I<ver2>
 
-Vergelijk versienummers, waarbij I<op> een binaire operator is. B<dpkg>
+Versienummers vergelijken, waarbij I<op> een binaire operator is. B<dpkg>
 geeft de waarde waar (B<0>) terug indien voldaan werd aan de opgegeven
 conditie, en onwaar (B<1>) in het andere geval. Er zijn twee groepen
 operatoren, die van elkaar verschillen in de manier waarop zij omgaan met
@@ -498,110 +502,112 @@ verouderd en zouden omwille van de verwarrende semantiek B<niet> gebruikt
 mogen worden. Om dit te illustreren: B<0.1 E<lt> 0.1> wordt als waar
 beoordeeld.
 
-=begin disabled
+=begin uitgeschakeld
 
 =item B<--command-fd> I<n>
 
-Accept a series of commands on input file descriptor I<n>.
+Een reeks commando's accepteren op invoerbestandsindicator I<n>.
 
-B<Note:> Additional options set on the command line, and through this file
-descriptor, are not reset for subsequent commands executed during the same
-run.
+B<Merk op:> Extra opties die werden ingesteld op de opdrachtregel of via
+deze bestandsindicator, worden niet opnieuw ingesteld voor volgende
+opdrachten die tijdens dezelfde doorloop worden uitgevoerd.
 
-=end disabled
+=end uitgeschakeld
 
 =item B<-?>, B<--help>
 
-Geef een korte hulptekst weer.
+Een korte hulptekst weergeven.
 
 =item B<--force-help>
 
-Geef hulp over de opties B<--force->I<iets>.
+Hulp geven over de opties B<--force->I<iets>.
 
 =item B<-Dh>, B<--debug=help>
 
-Geef hulp over debug-opties.
+Hulp geven over debug-opties.
 
 =item B<--version>
 
-Geef versie-informatie over B<dpkg>.
+Versie-informatie geven over B<dpkg>.
 
-When used with B<--robot>, the output will be the program version number in
-a dotted numerical format, with no newline.
+Wanneer dit gebruikt wordt met B<--robot>, zal de uitvoer het versienummer
+bevatten in een gespikkeld numeriek formaat, zonder regeleinde.
 
-=item B<dpkg-deb acties>
+=item B<dpkg-deb actions>
 
-See B<dpkg-deb>(1) for more information about the following actions, and
-other actions and options not exposed by the B<dpkg> front-end.
+Zie B<dpkg-deb>(1) voor meer informatie over de volgende acties, en andere
+acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
-=item B<-b>, B<--build> I<directory> [I<archive>|I<directory>]
+=item B<-b>, B<--build> I<map> [I<archief>|I<map>]
 
-Build a deb package.
+Een deb-pakket bnouwen.
 
 =item B<-c>, B<--contents> I<archief>
 
-List contents of a deb package.
+De inhoud van een deb-pakket opsommen.
 
 =item B<-e>, B<--control> I<archief> [I<map>]
 
-Extract control-information from a package.
+Control-informatie extraheren uit een pakket.
 
-=item B<-x>, B<--extract> I<archief map>
+=item B<-x>, B<--extract> I<archiefmap>
 
-Extract the files contained by package.
+De bestanden uit een pakket extraheren.
 
-=item B<-X>, B<--vextract> I<archief map>
+=item B<-X>, B<--vextract> I<archiefmap>
 
-Extract and display the filenames contained by a package.
+De bestandsnamen welke een pakket bevat, extraheren en weergeven.
 
-=item B<-f>, B<--field> I<archive> [I<control-field>...]
+=item B<-f>, B<--field> I<archief> [I<control-veld>...]
 
-Display control field(s) of a package.
+Het/de control-veld(en) van een pakket weergeven.
 
 =item B<--ctrl-tarfile> I<archief>
 
-Output the control tar-file contained in a Debian package.
+Het control-tarbestand dat zich in een Debian pakket bevindt, voortbrengen.
 
 =item B<--fsys-tarfile> I<archief>
 
-Output the filesystem tar-file contained by a Debian package.
+Het bestandssysteem-tarbestand dat zich in een Debian pakket bevindt,
+voortbrengen.
 
-=item B<-I>, B<--info> I<archive> [I<control-file>...]
+=item B<-I>, B<--info> I<archief> [I<control-bestand>...]
 
-Show information about a package.
+Informatie over een pakket tonen.
 
 =back
 
 =item B<dpkg-query acties>
 
-See B<dpkg-query>(1) for more information about the following actions, and
-other actions and options not exposed by the B<dpkg> front-end.
+Zie B<dpkg-query>(1) voor meer informatie over de volgende acties, en andere
+acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
-=item B<-l>, B<--list> I<package-name-pattern>...
+=item B<-l>, B<--list> I<pakketnaampatroon>...
 
-List packages matching given pattern.
+De pakketten opsommen die beantwoorden aan het opgegeven patroon.
 
-=item B<-s>, B<--status> I<package-name>...
+=item B<-s>, B<--status> I<pakketnaam>...
 
-Report status of specified package.
+De status rapporteren van het opgegeven pakket.
 
 =item B<-L>, B<--listfiles> I<pakketnaam>...
 
-List files installed to your system from I<package-name>.
+De bestanden opsommen die vanuit I<pakketnaam> op uw systeem geïnstalleerd
+werden.
 
 =item B<-S>, B<--search> I<zoekpatroon-bestandsnaam>...
 
-Search for a filename from installed packages.
+Zoeken naar een bestandsnaam uit geïnstalleerde pakketten.
 
-=item B<-p>, B<--print-avail> I<package-name>...
+=item B<-p>, B<--print-avail> I<pakketnaam>...
 
-Display details about I<package-name>, as found in
-I<%ADMINDIR%/available>. Users of APT-based frontends should use B<apt show>
-I<package-name> instead.
+Details weergeven over I<pakketnaam>, zoals die te vinden zijn in
+I<%ADMINDIR%/available>. Gebruikers van op APT gebaseerde frontends moeten
+in plaats daarvan B<apt show> I<pakketnaam> gebruiken.
 
 =back
 
@@ -630,27 +636,26 @@ geïnstalleerd pakket het verwijderde pakket nodig heeft. Deze optie
 gebruiken heeft tot gevolg dat het pakket dat van het verwijderde pakket
 afhankelijk was, automatisch gedeconfigureerd wordt.
 
-=item B<-D>I<octal>, B<--debug=>I<octal>
+=item B<-D>I<octaal>, B<--debug=>I<octaal>
 
-Schakel debuggen in. I<octaal> wordt gevormd door de gewenste waarden uit de
-onderstaande lijst in een bitwise OR-bewerking samen te nemen (merk op dat
-deze waarden in toekomstige uitgaven kunnen veranderen). B<-Dh> of
-B<--debug=help> geeft deze debugwaarden weer.
+Switch debugging on. I<octal> is formed by bitwise-ORing desired values
+together from the list below (note that these values may change in future
+releases). B<-Dh> or B<--debug=help> display these debugging values.
 
-    Number   Description
-         1   Generally helpful progress information
-         2   Invocation and status of maintainer scripts
-        10   Output for each file processed
-       100   Lots of output for each file processed
-        20   Output for each configuration file
-       200   Lots of output for each configuration file
-        40   Dependencies and conflicts
-       400   Lots of dependencies/conflicts output
-     10000   Trigger activation and processing
-     20000   Lots of output regarding triggers
-     40000   Silly amounts of output regarding triggers
-      1000   Lots of drivel about e.g. the dpkg/info dir
-      2000   Insane amounts of drivel
+     Getal   Beschrijving
+         1   Algemene informatieve voortgangsinformatie
+         2   Activering en status van beheerdersscripts
+        10   Uitvoer voor elk verwerkt bestand
+       100   Veel uitvoer voor elk verwerkt bestand
+        20   Uitvoer voor elk configuratiebestand
+       200   Veel uitvoer voor elk configuratiebestand
+        40   Vereisten en tegenstrijdigheden
+       400   Veel uitvoer i.v.m. vereisten/tegenstrijdigheden
+     10000   Activatie en verwerking van triggers
+     20000   Veel uitvoer i.v.m. triggers
+     40000   Belachelijk veel uitvoer i.v.m. triggers
+      1000   Veel geleuter over bijv. de map dpkg/info
+      2000   Belachelijk veel geleuter
 
 =item B<--force->I<dingen>
 
@@ -680,19 +685,21 @@ hele systeem onbruikbaar maken. Te gebruiken met voorzichtigheid.>
 B<configure-any>: Ook elk uitgepakt maar niet-geconfigureerd pakket waarvan
 het huidige pakket afhankelijk is, configureren.
 
-B<hold>: Allow automatic installs, upgrades or removals of packages even
-when marked to be on “hold”.  B<Note:> This does not prevent these actions
-when requested explicitly.
+B<hold>: Automatische installaties, opwaarderingen en verwijderingen van
+pakketten toestaan, zelfs al zijn ze als te behouden (on "hold")
+gemarkeerd. B<Merk op:> Dit voorkomt deze acties niet wanneer er expliciet
+om gevraagd wordt.
 
 B<remove-reinstreq>: Een pakket verwijderen, zelfs als het defect is en er
 aangegeven staat dat een herinstallatie nodig is. Dit kan bijvoorbeeld tot
 gevolg hebben dat delen van het pakket op het systeem achterblijven, maar
 B<dpkg> zal er dan niet meer van op de hoogte zijn.
 
-B<remove-protected>: Remove, even if the package is considered protected
-(since dpkg 1.20.1).  Protected packages contain mostly important system
-boot infrastructure.  Removing them might cause the whole system to be
-unable to boot, so use with caution.
+B<remove-protected>: Het pakket verwijderen, zelfs al wordt het als
+beschermd beschouwd (sinds dpkg 1.20.1). Beschermde pakketten bevatten
+meestal belangrijke infrastructuur voor de systeemopstart. Ze verwijderen
+kan tot gevolg hebben dat het hele systeem niet langer kan
+opstarten. Gebruik dit dus met voorzichtigheid.
 
 B<remove-essential>: Het pakket verwijderen, zelfs al wordt het als
 essentieel beschouwd. Essentiële pakketten bevatten meestal hele basale Unix
@@ -818,10 +825,10 @@ Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen
 wegschrijven. Dit wordt gebruikt om te zien wat er bij de opgegeven actie
 zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
 
-Be sure to give B<--no-act> before the action-parameter, or you might end up
-with undesirable results. (e.g. B<dpkg --purge foo --no-act> will first
-purge package “foo” and then try to purge package ”--no-act”, even though
-you probably expected it to actually do nothing).
+Zorg ervoor om B<--no-act> voor de actie-parameter op te geven, anders zou u
+ongewenste resultaten kunnen bekomen. (bijvoorbeeld zal B<dpkg --purge foo
+--no-act> eerst pakket "foo" wissen en dan proberen pakket "--no-act" te
+wissen, ook al verwachtte u wellicht dat er niets gedaan zou worden)
 
 =item B<-R>, B<--recursive>
 
@@ -839,7 +846,7 @@ geïnstalleerd is. Dit is een alias voor B<--refuse-downgrade>.
 
 De administratieve map instellen op I<directory>. In deze map zitten veel
 bestanden met informatie over de status van geïnstalleerde of
-gede-installeerde pakketten, enz. Standaard is dat «I<%ADMINDIR%>»
+gede-installeerde pakketten, enz. Standaard is dat «I<%ADMINDIR%>».
 
 =item B<--instdir=>I<map>
 
@@ -847,7 +854,7 @@ Instellen van de installatiemap, welke de map aangeeft waarin pakketten
 geïnstalleerd zullen worden. B<instdir> is ook de map die aan B<chroot>(2)
 doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd
 worden, waardoor de scripts B<instdir> als de hoofdmap beschouwen. Standaard
-is dat «I</>»
+is dat «I</>».
 
 =item B<--root=>I<map>
 
@@ -870,17 +877,19 @@ geïnstalleerd is.
 
 =item B<--post-invoke=>I<commando>
 
-Set an invoke hook I<command> to be run via “sh -c” before or after the
-B<dpkg> run for the I<unpack>, I<configure>, I<install>, I<triggers-only>,
-I<remove>, I<purge>, I<add-architecture> and I<remove-architecture> B<dpkg>
-actions (since dpkg 1.15.4; I<add-architecture> and I<remove-architecture>
-actions since dpkg 1.17.19). This option can be specified multiple
-times. The order the options are specified is preserved, with the ones from
-the configuration files taking precedence.  The environment variable
-B<DPKG_HOOK_ACTION> is set for the hooks to the current B<dpkg> action.
+Instellen dat een uitbreiding (hook) I<commando> via "sh -c" moet uitgevoerd
+worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>,
+I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge>,
+I<add-architecture> en I<remove-architecture> van B<dpkg> (sinds dpkg 1.15.4
+en de acties I<add-architecture> en I<remove-architecture> sinds dpkg
+1.17.19). Deze optie kan meermaals opgegeven worden. De volgorde waarin de
+opties opgegeven worden, wordt behouden, waarbij deze uit de
+configuratiebestanden voorrang hebben. De omgevingsvariabele
+B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de
+huidige actie van B<dpkg>.
 
-B<Note:> Front-ends might call B<dpkg> several times per invocation, which
-might run the hooks more times than expected.
+B<Opmerking:> Frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen,
+waardoor de uitbreidingen meer keren dan verwacht uitgevoerd kunnen worden.
 
 =item B<--path-exclude=>I<glob-patroon>
 
@@ -891,18 +900,22 @@ ofwel door paden die aan het opgegeven patroon beantwoorden, uit te sluiten
 ofwel door eerder uitgesloten paden opnieuw toe te voegen (sinds dpkg
 1.15.8).
 
-I<Warning: Take into account that depending on the excluded paths you might
-completely break your system, use with caution.>
+I<Waarschuwing: Houd er rekening mee dat u, afhankelijk van de paden die
+uitgesloten worden, uw systeem volledig defect kunt maken. Gebruik dit
+behoedzaam.>
 
-The glob patterns use the same wildcards used in the shell, were ‘*’ matches
-any sequence of characters, including the empty string and also ‘/’.  For
-example, «I</usr/*/READ*>» matches «I</usr/share/doc/package/README>».  As
-usual, ‘?’ matches any single character (again, including ‘/’).  And ‘[’
-starts a character class, which can contain a list of characters, ranges and
-complementations. See B<glob>(7) for detailed information about globbing.
-B<Note:> The current implementation might re-include more directories and
-symlinks than needed, to be on the safe side and avoid possible unpack
-failures; future work might fix this.
+In de glob-patronen kunnen dezelfde jokertekens gebruikt worden als in de
+shell, waarbij ‘*’ overeenkomt met om het even welke reeks tekens, met
+inbegrip van de lege tekenreeks evenals van ‘/’. Bijvoorbeeld,
+«I</usr/*/READ*>» komt overeen met «I</usr/share/doc/package/README>». Zoals
+gebruikelijk komt ‘?’ overeen met één willekeurig teken (opnieuw met
+inbegrip van ‘/’). En ‘[’ geeft het begin aan van een klasse van tekens, die
+een lijst van tekens, bereiken of complementaties kan bevatten. Zie
+B<glob>(7) voor gedetailleerde informatie over het gebruik van
+glob-patronen. B<Opmerking:> Het is mogelijk dat de huidige implementatie
+meer mappen en symbolische koppelingen terug toevoegt dan nodig is. Dit is
+om op veilig te spelen en mogelijke mislukkingen bij het uitpakken te
+vermijden. In de toekomst kan eraan gewerkt worden om dit te verbeteren.
 
 Dit kan gebruikt worden om alle paden te verwijderen op enkele specifieke
 paden na. Een typische casus is:
@@ -982,10 +995,11 @@ B<configure>, B<trigproc>, B<disappear>, B<remove>, B<purge>.
 
 =item B<--status-logger>=I<commando>
 
-Send machine-readable package status and progress information to the shell
-I<command>'s standard input, to be run via “sh -c” (since dpkg 1.16.0).
-This option can be specified multiple times.  The output format used is the
-same as in B<--status-fd>.
+Door een machine te lezen informatie over pakketstatus en voortgang
+versturen naar de standaardinvoer van het shell-commando I<commando> dat via
+"sh -c" moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals
+opgegeven worden. De indeling van de uitvoer is dezelfde als bij
+B<--status-fd>.
 
 =item B<--log=>I<bestandsnaam>
 
@@ -1021,12 +1035,13 @@ I<beslissing> ofwel B<install> ofwel B<keep> is.
 
 =item B<--robot>
 
-Use a machine-readable output format. This provides an interface for
-programs that need to parse the output of some of the commands that do not
-otherwise emit a machine-readable output format. No localization will be
-used, and the output will be modified to make it easier to parse.
+Een indeling gebruiken die door machines gelezen kan worden. Dit biedt een
+interface aan programma's die de uitvoer moeten ontleden van sommige van de
+commando's welke anders geen uitvoer produceren in een door een machine te
+lezen indeling. Er wordt geen lokalisatie gebruikt en de uitvoer wordt
+aangepast om deze makkelijker ontleedbaar te maken.
 
-The only currently supported command is B<--version>.
+Het enige momenteel ondersteunde commando is B<--version>.
 
 =item B<--no-pager>
 
@@ -1108,11 +1123,12 @@ interactieve shell of bij het voortbrengen van een commando via een shell.
 
 =item B<DPKG_PAGER>
 
-The program B<dpkg> will execute when running a pager, which will be
-executed with «B<$SHELL -c>», for example when displaying the conffile
-differences.  If B<SHELL> is not set, «B<sh>» will be used instead.  The
-B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg
-1.19.2).
+Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een
+pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>»,
+bijvoorbeeld voor het tonen van de verschillen tussen de
+configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<sh>»
+gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER>
+(sinds dpkg 1.19.2).
 
 =item B<DPKG_COLORS>
 
@@ -1128,8 +1144,9 @@ forceer-vlaggen gedeactiveerd worden.
 
 =item B<DPKG_ADMINDIR>
 
-If set and the B<--admindir> or B<--root> options have not been specified,
-it will be used as the B<dpkg> administrative directory (since dpkg 1.20.0).
+Indien dit ingesteld is en de opties B<--admindir> of B<--root> niet
+opgegeven werden, zal dit gebruikt worden als de administratieve map voor
+B<dpkg> (sinds dpkg 1.20.0).
 
 =item B<DPKG_FRONTEND_LOCKED>
 
@@ -1168,9 +1185,9 @@ niet leeg.
 =item B<DPKG_ADMINDIR>
 
 Gedefinieerd door B<dpkg> binnen de omgeving van het script van de
-pakketonderhouder om aan te geven welke map gebruikt moet worden om B<dpkg>
-te beheren (sinds dpkg 1.16.0). Deze variabele wordt steeds ingesteld op de
-huidige waarde van B<--admindir>.
+pakketonderhouder om aan te geven welke map B<dpkg> moet gebruiken als
+administratieve map (sinds dpkg 1.16.0). Deze variabele wordt steeds
+ingesteld op de huidige waarde van B<--admindir>.
 
 =item B<DPKG_FORCE>
 
@@ -1346,14 +1363,14 @@ Om een lokale kopie te maken van de pakketselectietoestand:
 
 =over 
 
- dpkg --get-selections> myselections
+ dpkg --get-selections> mijnselecties
 
 =back
 
-U zou dit bestand kunnen overbrengen naar een andere computer en nadat u
-daar het bestand I<available> bijgewerkt hebt met het frontend voor
-pakketbeheer van uw voorkeur (zie https://wiki.debian.org/Teams/Dpkg/FAQ
-voor meer details), bijvoorbeeld:
+You might transfer this file to another computer, and after having updated
+the I<available> file there with your package manager frontend of choice
+(see L<https://wiki.debian.org/Teams/Dpkg/FAQ> for more details), for
+example:
 
 =over 
 
@@ -1377,7 +1394,7 @@ kunt u het installeren met:
 =over 
 
  dpkg --clear-selections
- dpkg --set-selections <myselections
+ dpkg --set-selections <mijnselecties
 
 =back
 
@@ -1397,7 +1414,7 @@ van de volgende pakketten: B<apt>, B<aptitude> en B<debsums>.
 =head1 ZIE OOK
 
 B<aptitude>(8), B<apt>(8), B<dselect>(1), B<dpkg-deb>(1), B<dpkg-query>(1),
-B<deb>(5), B<deb-control>(5), B<dpkg.cfg>(5), and B<dpkg-reconfigure>(8).
+B<deb>(5), B<deb-control>(5), B<dpkg.cfg>(5), en B<dpkg-reconfigure>(8).
 
 =head1 AUTEURS
 

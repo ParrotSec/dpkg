@@ -51,7 +51,7 @@
 #define PROGNAME "update-alternatives"
 
 static const char *altdir = SYSCONFDIR "/alternatives";
-static const char *admdir;
+static char *admdir = NULL;
 static const char *instdir = "";
 static size_t instdir_len;
 
@@ -101,7 +101,7 @@ enum output_mode {
 
 /* Action to perform */
 static enum action action = ACTION_NONE;
-static const char *log_file = LOGDIR "/alternatives.log";
+static char *log_file = NULL;
 static FILE *fh_log = NULL;
 /* Skip alternatives properly configured in auto mode (for --config) */
 static int opt_skip_auto = 0;
@@ -1229,6 +1229,14 @@ struct altdb_context {
 	jmp_buf on_error;
 };
 
+static void
+altdb_context_free(struct altdb_context *ctx)
+{
+	if (ctx->fh)
+		fclose(ctx->fh);
+	free(ctx->filename);
+}
+
 static int
 altdb_filter_namelist(const struct dirent *entry)
 {
@@ -1457,16 +1465,16 @@ alternative_load(struct alternative *a, enum altdb_flags flags)
 	/* Open the alternative file. */
 	ctx.fh = fopen(ctx.filename, "r");
 	if (ctx.fh == NULL) {
-		if (errno == ENOENT)
+		if (errno == ENOENT) {
+			altdb_context_free(&ctx);
 			return false;
+		}
 
 		syserr(_("unable to open file '%s'"), ctx.filename);
 	}
 
 	if (setjmp(ctx.on_error)) {
-		if (ctx.fh)
-			fclose(ctx.fh);
-		free(ctx.filename);
+		altdb_context_free(&ctx);
 		alternative_reset(a);
 		return false;
 	}
@@ -1474,8 +1482,11 @@ alternative_load(struct alternative *a, enum altdb_flags flags)
 	/* Verify the alternative is not empty. */
 	if (fstat(fileno(ctx.fh), &st) == -1)
 		syserr(_("cannot stat file '%s'"), ctx.filename);
-	if (st.st_size == 0)
+	if (st.st_size == 0) {
+		altdb_context_free(&ctx);
+		alternative_reset(a);
 		return false;
+	}
 
 	/* Start parsing mandatory attributes (link+status) of the alternative */
 	alternative_reset(a);
@@ -2052,11 +2063,11 @@ alternative_remove_files(struct alternative *a)
 	xunlink_args("%s/%s", admdir, a->master_name);
 }
 
-static const char *
+static char *
 alternative_remove(struct alternative *a, const char *current_choice,
                    const char *path)
 {
-	const char *new_choice = NULL;
+	char *new_choice = NULL;
 
 	if (alternative_has_choice(a, path))
 		alternative_remove_choice(a, path);
@@ -2077,7 +2088,7 @@ alternative_remove(struct alternative *a, const char *current_choice,
 		}
 		best = alternative_get_best(a);
 		if (best)
-			new_choice = best->master_file;
+			new_choice = xstrdup(best->master_file);
 	}
 
 	return new_choice;
@@ -2282,13 +2293,13 @@ alternative_map_free(struct alternative_map *am)
 	}
 }
 
-static const char *
+static char *
 alternative_set_manual(struct alternative *a, const char *path)
 {
-	const char *new_choice = NULL;
+	char *new_choice = NULL;
 
 	if (alternative_has_choice(a, path))
-		new_choice = path;
+		new_choice = xstrdup(path);
 	else
 		error(_("alternative %s for %s not registered; "
 		        "not setting"), path, a->master_name);
@@ -2297,17 +2308,17 @@ alternative_set_manual(struct alternative *a, const char *path)
 	return new_choice;
 }
 
-static const char *
+static char *
 alternative_set_auto(struct alternative *a)
 {
-	const char *new_choice = NULL;
+	char *new_choice = NULL;
 
 	alternative_set_status(a, ALT_ST_AUTO);
 	if (alternative_choices_count(a) == 0)
 		pr(_("There is no program which provides %s."),
 		   a->master_name);
 	else
-		new_choice = alternative_get_best(a)->master_file;
+		new_choice = xstrdup(alternative_get_best(a)->master_file);
 
 	return new_choice;
 }
@@ -2554,7 +2565,7 @@ alternative_set_selection(struct alternative_map *all, const char *name,
 	debug("set_selection(%s, %s, %s)", name, status, choice);
 	a = alternative_map_find(all, name);
 	if (a) {
-		const char *new_choice = NULL;
+		char *new_choice = NULL;
 
 		if (strcmp(status, "auto") == 0) {
 			new_choice = alternative_set_auto(a);
@@ -2572,6 +2583,8 @@ alternative_set_selection(struct alternative_map *all, const char *name,
 			alternative_select_mode(a, current_choice);
 
 			alternative_update(a, current_choice, new_choice);
+
+			free(new_choice);
 		}
 	} else {
 		pr(_("Skip unknown alternative %s."), name);
@@ -2793,14 +2806,16 @@ static const char *
 set_rootdir(const char *dir)
 {
 	instdir = fsys_set_dir(dir);
+	free(log_file);
 	log_file = fsys_get_path(LOGDIR "/alternatives.log");
 	altdir = SYSCONFDIR "/alternatives";
+	free(admdir);
 	admdir = fsys_gen_admindir(dir);
 
 	return instdir;
 }
 
-static const char *
+static char *
 admindir_init(void)
 {
 	const char *basedir, *basedir_env;
@@ -2828,9 +2843,9 @@ main(int argc, char **argv)
 	/* Set of files to install in the alternative. */
 	struct fileset *fileset = NULL;
 	/* Path of alternative we are offering. */
-	char *path = NULL;
+	const char *path = NULL;
 	const char *current_choice = NULL;
-	const char *new_choice = NULL;
+	char *new_choice = NULL;
 	bool modifies_alt = false;
 	bool modifies_sys = false;
 	int i = 0;
@@ -2843,6 +2858,7 @@ main(int argc, char **argv)
 
 	instdir = fsys_set_dir(NULL);
 	admdir = admindir_init();
+	log_file = fsys_get_path(LOGDIR "/alternatives.log");
 
 	if (setvbuf(stdout, NULL, _IONBF, 0))
 		syserr("setvbuf failed");
@@ -2898,7 +2914,7 @@ main(int argc, char **argv)
 				badusage(_("--%s needs <name> <path>"), argv[i] + 2);
 
 			a = alternative_new(argv[i + 1]);
-			path = xstrdup(argv[i + 2]);
+			path = argv[i + 2];
 
 			alternative_check_name(a->master_name);
 			alternative_check_path(path);
@@ -2965,6 +2981,7 @@ main(int argc, char **argv)
 			if (MISSING_ARGS(1))
 				badusage(_("--%s needs a <file> argument"),
 				         argv[i] + 2);
+			free(log_file);
 			log_file = fsys_get_path(argv[i + 1]);
 			i++;
 		} else if (strcmp("--altdir", argv[i]) == 0) {
@@ -2975,14 +2992,15 @@ main(int argc, char **argv)
 			i++;
 
 			/* If altdir is below instdir, convert it to a relative
-			 * path, as we will prepenr instdir as needed. */
+			 * path, as we will prepend instdir as needed. */
 			if (strncmp(altdir, instdir, instdir_len) == 0)
 				altdir += instdir_len;
 		} else if (strcmp("--admindir", argv[i]) == 0) {
 			if (MISSING_ARGS(1))
 				badusage(_("--%s needs a <directory> argument"),
 				         argv[i] + 2);
-			admdir = argv[i + 1];
+			free(admdir);
+			admdir = xstrdup(argv[i + 1]);
 			i++;
 		} else if (strcmp("--instdir", argv[i]) == 0) {
 			if (MISSING_ARGS(1))
@@ -2992,7 +3010,7 @@ main(int argc, char **argv)
 			i++;
 
 			/* If altdir is below instdir, convert it to a relative
-			 * path, as we will prepenr instdir as needed. */
+			 * path, as we will prepend instdir as needed. */
 			if (strncmp(altdir, instdir, instdir_len) == 0)
 				altdir += instdir_len;
 		} else if (strcmp("--root", argv[i]) == 0) {
@@ -3051,6 +3069,9 @@ main(int argc, char **argv)
 		 * link group file. */
 		if (!alternative_load(a, ALTDB_WARN_PARSER)) {
 			verbose(_("no alternatives for %s"), a->master_name);
+			alternative_free(a);
+			free(log_file);
+			free(admdir);
 			exit(0);
 		}
 	} else if (action == ACTION_INSTALL) {
@@ -3094,6 +3115,7 @@ main(int argc, char **argv)
 			/* Alternative already exists, check if anything got
 			 * updated. */
 			alternative_evolve(a, inst_alt, current_choice, fileset);
+			alternative_free(inst_alt);
 		} else {
 			/* Alternative doesn't exist, create from parameters. */
 			alternative_free(a);
@@ -3101,7 +3123,7 @@ main(int argc, char **argv)
 		}
 		alternative_add_choice(a, fileset);
 		if (a->status == ALT_ST_AUTO) {
-			new_choice = alternative_get_best(a)->master_file;
+			new_choice = xstrdup(alternative_get_best(a)->master_file);
 		} else {
 			verbose(_("automatic updates of %s/%s are disabled; "
 			          "leaving it alone"), altdir, a->master_name);
@@ -3112,6 +3134,12 @@ main(int argc, char **argv)
 
 	if (modifies_alt)
 		alternative_update(a, current_choice, new_choice);
+
+	if (a)
+		alternative_free(a);
+	free(new_choice);
+	free(log_file);
+	free(admdir);
 
 	return 0;
 }

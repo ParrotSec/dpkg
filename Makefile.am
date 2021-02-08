@@ -59,6 +59,7 @@ EXTRA_DIST = \
 	ChangeLog.old \
 	README.l10n \
 	autogen \
+	gen-changelog \
 	get-version \
 	run-script \
 	doc/coding-style.txt \
@@ -93,10 +94,13 @@ EXTRA_DIST = \
 	debian/shlibs.default \
 	debian/shlibs.override \
 	debian/tests/control \
+	debian/tests/test-func \
+	debian/tests/test-func-root \
 	debian/tests/test-not-root \
 	debian/tests/test-root \
 	po/its/polkit.its \
 	po/its/polkit.loc \
+	tests \
 	$(test_scripts) \
 	$(test_data) \
 	$(nil)

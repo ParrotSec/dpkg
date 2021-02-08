@@ -23,16 +23,18 @@ I<Dateiname>B<.buildinfo>
 =head1 BESCHREIBUNG
 
 Jeder Bau eines Debian-Quellpakets kann die Bauinformationen in einer
-B<.buildinfo>-Steuerdatei aufzeichnen. Diese enthält eine Reihe von
-Feldern. Jedes Feld beginnt mit einer Markierung, wie B<Source> oder
-B<Binary> (Groß-/Kleinschreibung ist egal), gefolgt von einem Doppelpunkt
-und dem Inhalt des Feldes. Felder werden nur durch Feldmarkierungen
-begrenzt. Mit anderen Worten, Felder können mehrere Zeilen umfassen, aber
-die Installationswerkzeuge werden im Allgemeinen die Zeilen bei der
-Verarbeitung des Feldinhaltes zusammenfassen (außer im Falle der
-mehrzeiligen Felder B<Binary-Only-Changes>, B<Installed-Build-Depends>,
-B<Environment>, B<Checksums-Md5>, B<Checksums-Sha1> und B<Checksums-Sha256>,
-siehe unten).
+B<.buildinfo>-Steuerdatei aufzeichnen. Diese enthält eine Reihe von Feldern
+im L<deb822(5)>-Format.
+
+Jedes Feld beginnt mit einer Markierung, wie B<Source> oder B<Binary>
+(Groß-/Kleinschreibung ist egal), gefolgt von einem Doppelpunkt und dem
+Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders
+angegeben). Felder werden nur durch Feldmarkierungen begrenzt. Mit anderen
+Worten, Felder können mehrere Zeilen umfassen, aber die
+Installationswerkzeuge werden im Allgemeinen die Zeilen bei der Verarbeitung
+des Feldinhaltes zusammenfassen (außer im Falle der mehrzeiligen Felder
+B<Binary-Only-Changes>, B<Installed-Build-Depends>, B<Environment>,
+B<Checksums-Md5>, B<Checksums-Sha1> und B<Checksums-Sha256>, siehe unten).
 
 Die Steuerdaten können in eine Signatur mit einer wie in RFC4880
 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
@@ -166,13 +168,14 @@ Begründungsmarkierungen ausgegeben werden:
 
 =over 
 
-=item B<merged-usr-via-symlinks>
+=item B<merged-usr-via-aliased-dirs>
 
-Das System hat ein mittels Symlinks zusammengeführtes I</usr>. Dies wird
-B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives>
-und weitere Werkzeuge, die Pfadnamen als Schlüssel in ihren Datenbanken
-verwenden, durcheinanderbringen, da es Dateisystem-Alias-Probleme erzeugt
-und bringt das Verständnis, das B<dpkg> in seiner Datenbank aufnotiert hat,
+Das System hat ein mittels Alias-Verzeichnisse zusammengeführtes I</usr>
+(früher B<merged-usr-via-symlinks> benannt). Dies wird B<dpkg-query>,
+B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> und weitere
+Werkzeuge, die Pfadnamen als Schlüssel in ihren Datenbanken verwenden,
+durcheinanderbringen, da es Dateisystem-Alias-Probleme erzeugt und bringt
+das Verständnis, das B<dpkg> in seiner Datenbank aufnotiert hat,
 durcheinander. Für Bausysteme, die Pfadnamen auf bestimmte Programme oder
 Bibliotheken auf den enstandenen Artefakten hartkodieren, kann dies auch zu
 Paketen führen, die mit nicht zusammengeführten /usr-Dateisystemen
@@ -231,7 +234,7 @@ doppelten Anführungszeichen (,=’) gefolgt wird.
 
 =head1 SIEHE AUCH
 
-B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
 
 
 =head1 ÜBERSETZUNG

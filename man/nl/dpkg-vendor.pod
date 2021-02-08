@@ -44,16 +44,16 @@ B<Parent> om door al de voorvaderen van de huidige leverancier te bladeren.
 
 =item B<--query> I<veld>
 
-Geef op de standaarduitvoer weer wat de waarde is van het
+Op de standaarduitvoer weergeven wat de waarde is van het
 leveranciersspecifieke I<veld> voor de huidige leverancier.
 
 =item B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

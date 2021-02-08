@@ -14,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with dpkg; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef LIBDPKG_PERF_H
@@ -27,6 +26,9 @@
 
 #include <time.h>
 #include <stdio.h>
+
+#define TEST_OMIT_VARIABLES
+#include <dpkg/test.h>
 
 struct perf_slot {
 	struct timespec t_ini, t_end;

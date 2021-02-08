@@ -201,11 +201,11 @@ de caractères alphanumériques en minuscules S<(« a-z0-9 »).>
 Si une telle ligne existe, B<dpkg-parsechangelog> recherchera l'analyseur
 sous le nom du module Perl S<B<Dpkg::Changelog::>I<autreformat> ;> s'il n'est
 pas présent, c'est une condition d'erreur. Le nom de l'analyseur dans le
-module Perl sera automatiquement mis en capitale. Le format de journaux des
+module Perl sera automatiquement mis en capitale. Le format de journaux de
 modifications par défaut est B<debian> et un analyseur pour ce format est
 fourni par défaut.
 
-L'analyseur doit être dérivée de la classe Dpkg::Changelog et implémenter
+L'analyseur doit être dérivé de la classe Dpkg::Changelog et implémenter
 l'interface documentée requise.
 
 Si le format du journal des modifications analysé laisse toujours ou presque

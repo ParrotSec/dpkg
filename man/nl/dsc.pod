@@ -22,15 +22,16 @@ I<bestandsnaam>B<.dsc>
 
 =head1 BESCHRIJVING
 
-Elk Debian broncodepakket bevat een .dsc-controlebestand dat uit een aantal
-velden bestaat. Ieder veld begint met een markering, zoals B<Source> of
-B<Binary> (niet hoofdlettergevoelig), gevolgd door een dubbele punt en de
-tekstinhoud van het veld. Velden worden enkel door veldmarkeringen
-begrensd. De tekstinhoud van het veld kan met andere woorden verschillende
-regels lang zijn, maar de installatiegereedschappen zullen bij het verwerken
-van de tekstinhoud de regels gewoonlijk samenvoegen (behalve in het geval
-van de multiregel-velden B<Package-List>, B<Files>, B<Checksums-Sha1> en
-B<Checksums-Sha256>; zie hierna)
+Each Debian source package is composed of a .dsc control file, which
+contains a number of fields, in L<deb822(5)> format.
+
+Each field begins with a tag, such as B<Source> or B<Binary> (case
+insensitive), followed by a colon, and the body of the field (case sensitive
+unless stated otherwise).  Fields are delimited only by field tags.  In
+other words, field text may be multiple lines in length, but the
+installation tools will generally join lines when processing the body of the
+field (except in case of the multiline fields B<Package-List>, B<Files>,
+B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
 
 De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met
 ASCII-harnas volgens de specificatie RFC4880.
@@ -201,7 +202,8 @@ B<deb-src-control>(5).
 
 =item B<Package-List:>
 
-=item S< >I<package> I<package-type> I<section> I<priority> I<key-value-list>
+=item S< >I<pakket> I<pakkettype> I<sectie> I<prioriteit>
+I<trefwoord-waarde-lijst>
 
 Dit multiregel-veld bevat een lijst van binaire pakketten die door dit
 broncodepakket gegenereerd worden.
@@ -233,8 +235,8 @@ B<Build-Profile> van het binaire pakket, waarbij OR's omgezet worden naar
 
 =item B<protected>
 
-If the binary package is protected, this key will contain the value of the
-B<Protected> field, that is a B<yes> value.
+Indien het binaire pakket beschermd (protected) is, zal dit trefwoord de
+waarde hebben van het veld B<Protected>, wat een waarde B<yes> is.
 
 =item B<essential>
 
@@ -249,7 +251,7 @@ waarde hebben van het veld B<Essential> en dat is de waarde B<yes>.
 
 =item B<Checksums-Sha256:> (verplicht)
 
-=item S< >I<checksum> I<size> I<filename>
+=item S< >I<controlesom> I<grootte> I<bestandsnaam>
 
 Deze multiregel-velden bevatten een lijst van bestanden met voor elk van hen
 een controlesom en een grootte. Deze velden hebben een identieke syntaxis en
@@ -276,5 +278,5 @@ indeling van het uitgepakte broncodepakket.
 
 =head1 ZIE OOK
 
-B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
 

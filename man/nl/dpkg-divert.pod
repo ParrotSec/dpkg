@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-divert - vervang de versie van een bestand in een pakket
+dpkg-divert - de versie van een bestand in een pakket overschrijven
 
 =head1 OVERZICHT
 
@@ -41,27 +41,27 @@ recentere versie van een pakket dat die bestanden bevat.
 
 =item [B<--add>] I<bestand>
 
-Voeg een omlegging toe voor I<bestand>. Het bestand wordt momenteel niet
+Een omlegging toevoegen voor I<bestand>. Het bestand wordt momenteel niet
 hernoemd, zie B<--rename>.
 
 =item B<--remove> I<bestand>
 
-Verwijder een omlegging voor I<bestand>. Het bestand wordt momenteel niet
+Een omlegging verwijderen voor I<bestand>. Het bestand wordt momenteel niet
 hernoemd, zie B<--rename>.
 
 =item B<--list> I<glob-patroon>
 
-Som de omleggingen op die aan I<glob-patroon> beantwoorden.
+De omleggingen opsommen die aan I<glob-patroon> beantwoorden.
 
 =item B<--listpackage> I<bestand>
 
-Geef de naam van het pakket weer dat I<bestand> omleidt (sinds dpkg
+De naam weergeven van het pakket dat I<bestand> omleidt (sinds dpkg
 1.15.0). Vermeldt LOCAL als I<bestand> lokaal omgeleid werd en niets als
 I<bestand> niet omgeleid werd.
 
 =item B<--truename> I<bestand>
 
-Vermeld de echte naam van een omgeleid bestand.
+De echte naam van een omgeleid bestand vermelden.
 
 =back
 
@@ -71,17 +71,18 @@ Vermeld de echte naam van een omgeleid bestand.
 
 =item B<--admindir> I<map>
 
-Stel de  administratieve map in op I<map>. Standaard is dit «I<%ADMINDIR%>».
+De administratieve map instellen op I<map>. Standaard is dit
+«I<%ADMINDIR%>».
 
 =item B<--instdir> I<map>
 
-Stel de installatiemap in, welke verwijst naar de map waar pakketten
+De installatiemap instellen, welke verwijst naar de map waar pakketten
 geïnstalleerd worden (sinds dpkg 1.19.2). Staat standaard ingesteld op
 «I</>».
 
 =item B<--root> I<map>
 
-Stel de hoofdmap in op B<map>, hetgeen de installatiemap instelt op
+De hoofdmap instellen op B<map>, hetgeen de installatiemap instelt op
 «I<map>» en de administratieve map op «I<map>B<%ADMINDIR%>» (sinds dpkg
 1.19.2).
 
@@ -109,7 +110,7 @@ Stille modus, m.a.w. geen breedsprakige uitvoer.
 
 =item B<--rename>
 
-Zet het bestand effectief uit de weg (of terug). B<dpkg-divert> zal de
+Het bestand effectief uit de weg (of terug) zetten. B<dpkg-divert> zal de
 bewerking afbreken indien het doelbestand reeds bestaat. Dit is het gangbare
 gedrag dat gebruikt wordt voor het omleggen van bestanden uit het geheel van
 niet-B<Essential> pakketten (zie B<--no-rename> voor meer details).
@@ -126,16 +127,16 @@ kan maken. Dit is het standaardgedrag, maar dat zal veranderen in de cyclus
 
 =item B<--test>
 
-Testmodus. Voer m.a.w. geen enkele wijziging effectief uit. Geef enkel een
-demonstratie.
+Testmodus. M.a.w. geen enkele wijziging effectief uitvoeren. Enkel een
+demonstratie geven.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -193,8 +194,9 @@ Bestand dat de huidige lijst van omleggingen op het systeem bevat. Zijn
 plaats is in de beheersmap van B<dpkg> samen met andere bestanden die
 belangrijk zijn voor B<dpkg>, zoals I<status> en I<available>.
 
-B<Note:> B<dpkg-divert> preserves the old copy of this file, with extension
-I<-old>, before replacing it with the new one.
+B<Opmerking:> B<dpkg-divert> bewaart de oorspronkelijke kopie van dit
+bestand met de extensie I<-old>, vooraleer het te vervangen door het nieuwe
+exemplaar.
 
 =back
 
@@ -221,21 +223,21 @@ I</usr/bin/voorbeeld.foo>, of met andere woorden alle pakketten die
 I</usr/bin/voorbeeld> aanleveren, op te dragen het te installeren als
 I</usr/bin/voorbeeld.foo> en zo nodig het hernoemen ervan uit te voeren:
 
- dpkg-divert --divert /usr/bin/example.foo --rename /usr/bin/example
+ dpkg-divert --divert /usr/bin/voorbeeld.foo --rename /usr/bin/voorbeeld
 
 Om die omlegging te verwijderen:
 
- dpkg-divert --rename --remove /usr/bin/example
+ dpkg-divert --rename --remove /usr/bin/voorbeeld
 
 Om elk pakket dat I</usr/bin/voorbeeld> tracht te installeren, om te leiden
-naar I</usr/bin/voorbeeld.foo>, behalve uw eigen pakket I<wiegel>
+naar I</usr/bin/voorbeeld.foo>, behalve uw eigen pakket I<wiegel>:
 
- dpkg-divert --package wibble --divert /usr/bin/example.foo \
-    --rename /usr/bin/example
+ dpkg-divert --package wiegele --divert /usr/bin/voorbeeld.foo \
+    --rename /usr/bin/voorbeeld
 
 Om die omlegging te verwijderen:
 
- dpkg-divert --package wibble --rename --remove /usr/bin/example
+ dpkg-divert --package wiegel --rename --remove /usr/bin/voorbeeld
 
 =head1 ZIE OOK
 

@@ -241,10 +241,10 @@ machine hôte.
 
 =item B<-t>, B<--host-type> I<type-de-système-gnu>
 
-Précise le type de système GNU pour lequel construire (option longue depuis
-S<dpkg 1.17.17).> Il peut être utilisé à la place de B<--host-arch> ou en tant
-que complément afin de remplacer le type de système GNU par défaut de
-l'architecture Debian hôte.
+Précise le type de système GNU pour lequel on construit (option longue
+depuis S<dpkg 1.17.17).> Il peut être utilisé à la place de B<--host-arch> ou
+en tant que complément afin de remplacer le type de système GNU par défaut
+de l'architecture Debian hôte.
 
 =item B<--target-arch> I<architecture>
 
@@ -320,7 +320,7 @@ Pas de vérification des dépendances de constructions internes et des
 conflits (depuis S<dpkg 1.18.2).> Il s'agit des dépendances de construction
 implicites spécifiques à la distribution habituellement requises dans un
 environnement de construction, c'est l'ensemble de paquets appelé
-Build-Essentiel.
+Build-Essential.
 
 =item B<--rules-requires-root>
 

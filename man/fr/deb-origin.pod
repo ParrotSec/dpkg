@@ -52,7 +52,7 @@ La valeur de ce champ donne le nom du distributeur.
 
 La valeur de ce champ donne l'adresse URL du distributeur
 
-=item B<Bugs:> I<url-du-bogue>
+=item B<Bugs:> I<URL-du-bogue>
 
 La valeur de ce champ donne le type et l'adresse du système de suivi des
 bogues du distributeur. Cela peut être une URL mailto ou debbugs (par

@@ -28,10 +28,10 @@ verschiedene Lieferanten von Debian-Paketen bereitstellen.
 Sie enthalten eine Reihe von Feldern oder Kommentaren (wenn die Zeile mit
 ‚B<#>’ beginnt). Jedes Feld beginnt mit einer Markierung, wie B<Vendor> oder
 B<Parent> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt und
-dem Körper des Feldes. Felder werden nur durch die Feldmarkierungen
+dem Inhalt des Feldes. Felder werden nur durch die Feldmarkierungen
 abgegrenzt. Mit anderen Worten, Feldtexte können mehrere Zeilen überspannen,
 aber die Werkzeuge werden im Allgemeinen die Zeilen bei der Verarbeitung des
-Feldkörpers zusammenfassen.
+Feldinhaltes zusammenfassen.
 
 Die Datei sollte nach dem Lieferantennamen benannt werden. Die normale
 Konvention lautet, dass die Lieferantendatei den Lieferantennamen komplett

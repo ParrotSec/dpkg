@@ -36,57 +36,57 @@ alternatief controlebestand mag aan de commandoregel opgegeven worden.
 
 =item B<--admindir=>I<map>
 
-Geef een andere locatie op voor de database van B<dpkg> (sinds dpkg
+Een andere locatie opgeven voor de database van B<dpkg> (sinds dpkg
 1.14.0). De standaardlocatie is I<%ADMINDIR%>.
 
 =item B<-A>
 
-Negeer de regels B<Build-Depends-Arch> en B<Build-Conflicts-Arch> (sinds
+De regels B<Build-Depends-Arch> en B<Build-Conflicts-Arch> negeren (sinds
 dpkg 1.16.4). Gebruik dit als enkel pakketten van het type arch-indep
 (architectuuronafhankelijke pakketten) gebouwd zullen worden, of gebruik het
 in combinatie met B<-B> als enkel een broncodepakket gebouwd moet worden.
 
 =item B<-B>
 
-Negeer de regels B<Build-Depends-Indep> en B<Build-Conflicts-Indep>. Gebruik
-dit als enkel pakketten van het type arch-dep (architectuurafhankelijke
-pakketten) gebouwd zullen worden, of gebruik het in combinatie met B<-A> als
-enkel een broncodepakket gebouwd moet worden.
+De regels B<Build-Depends-Indep> en B<Build-Conflicts-Indep>
+negeren. Gebruik dit als enkel pakketten van het type arch-dep
+(architectuurafhankelijke pakketten) gebouwd zullen worden, of gebruik het
+in combinatie met B<-A> als enkel een broncodepakket gebouwd moet worden.
 
 =item B<-I>
 
-Negeer ingebouwde bouwvereisten en bouwtegenstrijdigheden (sinds dpkg
-1.18.2). Dit zijn impliciete vereisten die gewoonlijk nodig zijn bij een
+Ingebouwde bouwvereisten en bouwtegenstrijdigheden (sinds dpkg 1.18.2)
+negeren. Dit zijn impliciete vereisten die gewoonlijk nodig zijn bij een
 specifieke distributie, de set van zogenaamde Build-Essential pakketten.
 
 =item B<-d> I<tekenreeks-voor-bouwvereisten>
 
 =item B<-c> I<tekenreeks-voor-bouwtegenstrijdigheden>
 
-Gebruik de opgegeven vereisten/tegenstrijdigheden in plaats van diegene die
-in het bestand I<debian/control> vermeld worden (sinds dpkg 1.14.17).
+De opgegeven vereisten/tegenstrijdigheden gebruiken in plaats van diegene
+die in het bestand I<debian/control> vermeld worden (sinds dpkg 1.14.17).
 
 =item B<-a> I<arch>
 
-Controleer op bouwvereisten/-tegenstrijdigheden, ervan uitgaand dat het
+Op bouwvereisten/-tegenstrijdigheden controleren, ervan uitgaand dat het
 pakket dat in het bestand control beschreven wordt, gebouwd moet worden voor
 de opgegeven hostarchitectuur in plaats van voor de architectuur van het
 huidige systeem (sinds dpkg 1.16.2).
 
 =item B<-P> I<profiel>[B<,>...]
 
-Controleer op bouwvereisten/-tegenstrijdigheden, ervan uitgaand dat het
+Op bouwvereisten/-tegenstrijdigheden controleren, ervan uitgaand dat het
 pakket dat in het bestand control beschreven wordt, gebouwd moet worden voor
 het/de opgegeven bouwprofiel(en) (sinds dpkg 1.17.2). Het argument is een
 lijst van profielnamen die onderling door komma's gescheiden worden.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

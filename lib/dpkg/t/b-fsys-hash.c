@@ -14,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with dpkg; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include <config.h>
@@ -68,8 +67,10 @@ main(int argc, const char *const *argv)
 
 	perf_ts_slot_print(&ps, "load .list");
 
-	pkg_hash_report(stdout);
-	fsys_hash_report(stdout);
+	if (test_is_verbose()) {
+		pkg_hash_report(stdout);
+		fsys_hash_report(stdout);
+	}
 
 	modstatdb_shutdown();
 	pop_error_context(ehflag_normaltidy);

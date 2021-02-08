@@ -714,23 +714,30 @@ sub parse_rules_requires_root {
     foreach my $keyword (split ' ', $rrr) {
         if ($keyword =~ m{/}) {
             if ($keyword =~ m{^dpkg/target/(.*)$}p and $target_official{$1}) {
-                error(g_('disallowed target in %s field keyword %s'),
+                error(g_('disallowed target in %s field keyword "%s"'),
                       'Rules-Requires-Root', $keyword);
             } elsif ($keyword ne 'dpkg/target-subcommand') {
-                error(g_('unknown %s field keyword %s in dpkg namespace'),
+                error(g_('%s field keyword "%s" is unknown in dpkg namespace'),
                       'Rules-Requires-Root', $keyword);
             }
             $keywords_impl++;
         } else {
-            if ($keyword ne 'no' and $keyword ne 'binary-targets') {
-                warning(g_('unknown %s field keyword %s'),
+            if ($keyword ne lc $keyword and
+                (lc $keyword eq 'no' or lc $keyword eq 'binary-targets')) {
+                error(g_('%s field keyword "%s" is uppercase; use "%s" instead'),
+                      'Rules-Requires-Root', $keyword, lc $keyword);
+            } elsif (lc $keyword eq 'yes') {
+                error(g_('%s field keyword "%s" is invalid; use "%s" instead'),
+                      'Rules-Requires-Root', $keyword, 'binary-targets');
+            } elsif ($keyword ne 'no' and $keyword ne 'binary-targets') {
+                warning(g_('%s field keyword "%s" is unknown'),
                         'Rules-Requires-Root', $keyword);
             }
             $keywords_base++;
         }
 
         if ($rrr{$keyword}++) {
-            error(g_('field %s contains duplicate keyword %s'),
+            error(g_('field %s contains duplicate keyword "%s"'),
                         'Rules-Requires-Root', $keyword);
         }
     }

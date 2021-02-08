@@ -35,7 +35,7 @@ argument op te geven.
 
 =item B<-x>, B<--extract> I<bestandsnaam>.dsc [I<uitvoermap>]
 
-Extraheer een broncodepakket (B<--extract> sinds dpkg 1.17.14). Er moet één
+Een broncodepakket extraheren (B<--extract> sinds dpkg 1.17.14). Er moet één
 argument dat geen optie is, opgegeven worden, namelijk de naam van het
 controlebestand (B<.dsc>) van de Debian broncode. Facultatief kan een tweede
 argument dat geen optie is, opgegeven worden om de map op te geven waarin
@@ -63,12 +63,12 @@ gebruikt wordt bij de volgende malen dat het broncodepakket gebouwd wordt.
 
 =item B<-b>, B<--build> I<map> [I<indelingsspecifieke-parameters>]
 
-Bouw een broncodepakket (B<--build> sinds dpkg 1.17.14). Het eerste argument
-dat geen optie is, wordt gebruikt als de naam van de map die de voor Debian
-gereedgemaakte broncodeboom bevat (d.w.z. met een onderliggende map debian
-en eventuele veranderingen aan de originele bestanden). Afhankelijk van de
-broncodepakketindeling die men gebruikt om het broncodepakket te bouwen,
-kunnen bijkomende parameters opgegeven worden.
+Een broncodepakket bouwen (B<--build> sinds dpkg 1.17.14). Het eerste
+argument dat geen optie is, wordt gebruikt als de naam van de map die de
+voor Debian gereedgemaakte broncodeboom bevat (d.w.z. met een onderliggende
+map debian en eventuele veranderingen aan de originele
+bestanden). Afhankelijk van de broncodepakketindeling die men gebruikt om
+het broncodepakket te bouwen, kunnen bijkomende parameters opgegeven worden.
 
 B<dpkg-source> zal het broncodepakket bouwen volgens de eerste indeling die
 gevonden wordt in de hierna volgende geordende lijst: de indeling opgegeven
@@ -82,34 +82,34 @@ indelingen voor broncodepakketten.
 
 =item B<--print-format> I<map>
 
-Geef weer welke indeling gebruikt zou worden om het broncodepakket te bouwen
+Weergeven welke indeling gebruikt zou worden om het broncodepakket te bouwen
 indien B<dpkg-source --build> I<map> aangeroepen werd (in dezelfde condities
 en met dezelfde parameters; sinds dpkg 1.15.5).
 
 =item B<--before-build> I<map>
 
-Voer de overeenkomstige uitbreiding (hook) uit van de broncodepakketindeling
-(sinds dpkg 1.15.8). Deze uitbreiding wordt telkens aangeroepen voor het
-pakket gebouwd wordt (B<dpkg-buildpackage> roept ze zeer vroeg aan, zelfs
-voor B<debian/rules clean>). Dit commando is idempotent en kan meermaals
-aangeroepen worden. Niet alle broncode-indelingen implementeren iets in deze
-uitbreiding, en die welke dat wel doen bereiden gewoonlijk de broncodeboom
-voor op het bouwproces, bijvoorbeeld door ervoor te zorgen dat de
-Debian-patches toegepast worden.
+De overeenkomstige uitbreiding (hook) van de broncodepakketindeling
+uitvoeren (sinds dpkg 1.15.8). Deze uitbreiding wordt telkens aangeroepen
+voor het pakket gebouwd wordt (B<dpkg-buildpackage> roept ze zeer vroeg aan,
+zelfs voor B<debian/rules clean>). Dit commando is idempotent en kan
+meermaals aangeroepen worden. Niet alle broncode-indelingen implementeren
+iets in deze uitbreiding, en die welke dat wel doen bereiden gewoonlijk de
+broncodeboom voor op het bouwproces, bijvoorbeeld door ervoor te zorgen dat
+de Debian-patches toegepast worden.
 
 =item B<--after-build> I<map>
 
-Voer de overeenkomstige uitbreiding (hook) uit van de broncodepakketindeling
-(sinds dpkg 1.15.8). Deze uitbreiding wordt telkens aangeroepen nadat het
-pakket gebouwd werd (B<dpkg-buildpackage> roept ze als laatste aan). Dit
-commando is idempotent en kan meermaals aangeroepen worden. Niet alle
-broncode-indelingen implementeren iets in deze uitbreiding, en die welke dat
-wel doen gebruiken ze gewoonlijk om ongedaan te maken wat B<--before-build>
-gedaan heeft.
+De overeenkomstige uitbreiding (hook) van de broncodepakketindeling
+uitvoeren (sinds dpkg 1.15.8). Deze uitbreiding wordt telkens aangeroepen
+nadat het pakket gebouwd werd (B<dpkg-buildpackage> roept ze als laatste
+aan). Dit commando is idempotent en kan meermaals aangeroepen worden. Niet
+alle broncode-indelingen implementeren iets in deze uitbreiding, en die
+welke dat wel doen gebruiken ze gewoonlijk om ongedaan te maken wat
+B<--before-build> gedaan heeft.
 
 =item B<--commit> [I<map>] ...
 
-Tekent veranderingen op in de broncodeboom die in I<map> uitgepakt werd
+Veranderingen optekenen in de broncodeboom die in I<map> uitgepakt werd
 (sinds dpkg 1.16.1). Aan dit commando kunnen afhankelijk van de
 broncode-indeling bijkomende parameters opgegeven worden. Het zal een
 foutmelding geven bij indelingen waarvoor deze operatie geen betekenis
@@ -117,12 +117,12 @@ heeft.
 
 =item B<-?>, B<--help>
 
-Toon de gebruiksaanwijzing en sluit af. Met de optie B<--format> kunnen de
+De gebruiksaanwijzing tonen en afsluiten. Met de optie B<--format> kunnen de
 indelingsspecifieke bouw- en extractie-opties getoond worden.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -132,7 +132,7 @@ Toon de versie en sluit af.
 
 =over 
 
-=item B<-c>I<controlebestand>
+=item B<-c>I<control-bestand>
 
 Duidt aan wat het belangrijkste controlebestand van de broncode is waaruit
 informatie gelezen moet worden. Standaard is dat B<debian/control>. Indien
@@ -153,32 +153,32 @@ B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
 
 =item B<--format=>I<waarde>
 
-Gebruik de opgegeven indeling om het broncodepakket te bouwen (sinds dpkg
+De opgegeven indeling gebruiken om het broncodepakket te bouwen (sinds dpkg
 1.14.17). Het vervangt een eventuele in B<debian/source/format> opgegeven
 indeling.
 
 =item B<-V>I<naam>B<=>I<waarde>
 
-Stel een uitvoersubstitutievariabele in. Zie B<deb-substvars>(5) voor een
+Een uitvoersubstitutievariabele instellen. Zie B<deb-substvars>(5) voor een
 bespreking van uitvoersubstitutie.
 
 =item B<-T>I<substvars-bestand>
 
-Lees substitutievariabelen uit I<substvars-bestand>. De standaard is om geen
-enkel bestand te lezen. Deze optie kan meermaals gebruikt worden om uit
+Substitutievariabelen lezen uit I<substvars-bestand>. De standaard is om
+geen enkel bestand te lezen. Deze optie kan meermaals gebruikt worden om uit
 verschillende bestanden substitutievariabelen te lezen (sinds dpkg 1.15.6).
 
 =item B<-D>I<veld>B<=>I<waarde>
 
-Vervang in de uitvoer een veld uit het controlebestand of voeg er een toe.
+Een uitvoerveld uit het control-bestand overschrijven of toevoegen.
 
 =item B<-U>I<veld>
 
-Verwijder in de uitvoer een veld uit het controlebestand.
+Een uitvoerveld uit het control-bestand verwijderen.
 
 =item B<-Z>I<compressie>, B<--compression>=I<compressie>
 
-Duidt het compressieniveau aan dat gebruikt wordt bij het maken van
+Het compressieniveau aanduiden dat gebruikt wordt bij het maken van
 tar-archieven en diff-bestanden (B<--compression> sinds dpkg 1.15.5). Merk
 op dat deze optie niet tot effect heeft dat bestaande tar-archieven opnieuw
 gecomprimeerd worden. Ze heeft enkel invloed op nieuwe
@@ -252,16 +252,15 @@ bouwuitvoermappen van Libtool.
 
 =back
 
-B<Opmerking:> hoewel zij vergelijkbare bedoelingen hebben, hebben B<-i> en
-B<-I> een heel verschillende syntaxis en semantiek. B<-i> kan slechts
-eenmaal opgegeven worden en verwacht een reguliere expressie die
-perl-compatibel is en die vergeleken wordt met het volledige relatieve pad
-van elk bestand. B<-I> kan meermaals opgegeven worden en verwacht een
-bestandsnaampatroon met shell-jokertekens. Het patroon wordt toegepast op
-het volledige relatieve pad maar ook op elk individueel onderdeel van het
-pad. De exacte semantiek van de optie B<--exclude> van tar is enigszins
-gecompliceerd. Zie voor een volledige documentatie
-https://www.gnu.org/software/tar/manual/tar.html#wildcards.
+B<Note:> While they have similar purposes, B<-i> and B<-I> have very
+different syntax and semantics. B<-i> can only be specified once and takes a
+perl compatible regular expression which is matched against the full
+relative path of each file. B<-I> can specified multiple times and takes a
+filename pattern with shell wildcards.  The pattern is applied to the full
+relative path but also to each part of the path individually. The exact
+semantic of tar's B<--exclude> option is somewhat complicated, see
+L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> for a full
+documentation.
 
 De standaard reguliere expressies en patronen voor beide opties zijn te zien
 in de uitvoer van het commando B<--help>.
@@ -272,30 +271,31 @@ in de uitvoer van het commando B<--help>.
 
 =item B<--no-copy>
 
-Kopieer de originele tar-archieven bij het geëxtraheerde broncodepakket niet
-(sinds dpkg 1.14.17).
+De originele tar-archieven bij het geëxtraheerde broncodepakket niet
+kopiëren (sinds dpkg 1.14.17).
 
 =item B<--no-check>
 
-Controleer voor het uitpakken geen ondertekeningen en controlesommen (sinds
+Voor het uitpakken geen ondertekeningen en controlesommen controleren (sinds
 dpkg 1.14.17).
 
 =item B<--no-overwrite-dir>
 
-Overschrijf de extractiemap niet als ze al bestaat (sinds dpkg 1.18.8).
+De extractiemap niet overschrijven als ze al bestaat (sinds dpkg 1.18.8).
 
 =item B<--require-valid-signature>
 
-Refuse to unpack the source package if it doesn't contain an OpenPGP
-signature that can be verified (since dpkg 1.15.0) either with the user's
-I<trustedkeys.gpg> keyring, one of the vendor-specific keyrings, or one of
-the official Debian keyrings (I</usr/share/keyrings/debian-keyring.gpg>,
-I</usr/share/keyrings/debian-nonupload.gpg> and
+Weigeren het broncodepakket uit te pakken als het geen OpenPGP-ondertekening
+bevat die kan gecontroleerd worden (sinds dpkg 1.15.0) met ofwel de
+I<trustedkeys.gpg>-sleutelbos van de gebruiker, één van de
+leveranciersspecifieke sleutelbossen of met één van de officiële
+sleutelbossen van Debian (I</usr/share/keyrings/debian-keyring.gpg>,
+I</usr/share/keyrings/debian-nonupload.gpg> en
 I</usr/share/keyrings/debian-maintainers.gpg>).
 
 =item B<--require-strong-checksums>
 
-Wijger het broncodepakket uit te pakken als het geen krachtige
+Weigeren het broncodepakket uit te pakken als het geen krachtige
 controlesommen bevat (sinds dpkg 1.18.7). Momenteel is B<SHA-256> de enige
 gekende controlesom die als krachtig aanzien wordt.
 
@@ -311,10 +311,10 @@ neerwaartse compatibiliteit te verzekeren.
 
 =head1 INDELINGEN VAN BRONCODEPAKKETTEN
 
-Indien u niet weet welke indeling te kiezen voor de broncode, zou u wellicht
-ofwel “3.0 (quilt)” of “3.0 (native)” moeten kiezen. Zie
-https://wiki.debian.org/Projects/DebSrc3.0 voor informatie over het in
-gebruik nemen van deze indelingen binnen Debian.
+If you don't know what source format to use, you should probably pick either
+“3.0 (quilt)” or “3.0 (native)”.  See
+L<https://wiki.debian.org/Projects/DebSrc3.0> for information on the
+deployment of those formats within Debian.
 
 =head2 Indeling: 1.0
 
@@ -325,16 +325,19 @@ oorsprong van Debian) is). Optioneel mag bij het originele tar-archief een
 afzonderlijke handtekening van de toeleveraar B<.orig.tar.gz.asc> gevoegd
 zijn. De extractie ervan wordt ondersteund sinds dpkg 1.18.5.
 
-B<Extraheren>
+B<Extracting>
 
-Extracting a native package is a simple extraction of the single tarball in
-the target directory. Extracting a non-native package is done by first
-unpacking the B<.orig.tar.gz> and then applying the patch contained in the
-B<.diff.gz> file. The timestamp of all patched files is reset to the
-extraction time of the source package (this avoids timestamp skews leading
-to problems when autogenerated files are patched). The diff can create new
-files (the whole debian directory is created that way) but cannot remove
-files (empty files will be left over) and cannot create or change symlinks.
+Een Debian-eigen (native) pakket extraheren is een eenvoudige extractie van
+het enige tar-archief in de doelmap. Een niet-eigen pakket extraheren
+bestaat erin eerst het B<.orig.tar.gz> uit te pakken en er dan de patch uit
+het bestand B<.diff.gz> op toe te passen. Voor alle bestanden waarop een
+patch toegepast werd, wordt de tijdsaanduiding teruggezet op het tijdstip
+van extraheren van het broncodepakket (dit vermijdt scheeftrekkingen van de
+tijdsaanduiding wat tot problemen kan leiden wanneer automatisch
+gegenereerde bestanden gepatcht worden). Het diff-bestand kan nieuwe
+bestanden aanmaken (de volledige debian-map wordt op die manier aangemaakt),
+maar kan geen bestanden verwijderen (lege bestanden blijven achter) en kan
+geen symbolische koppelingen creëren of wijzigen.
 
 B<Bouwen>
 
@@ -504,7 +507,7 @@ handtekening van de toeleveraar (B<.orig.tar.>I<ext>B<.asc> en
 B<.orig->I<component>B<.tar.>I<ext>B<.asc>), gevoegd worden. De extractie
 ervan wordt ondersteund sinds dpkg 1.17.20 en het bouwen sinds dpkg 1.18.5.
 
-B<Extraheren>
+B<Extracting>
 
 Eerst wordt het belangrijkste originele tar-archief uitgepakt en nadien
 worden alle bijkomende originele tar-archieven uitgepakt in onderliggende
@@ -516,27 +519,23 @@ debian tar-archief een onderliggende map B<debian> moet bevatten, maar dat
 het ook binaire bestanden kan bevatten buiten die map (zie de optie
 B<--include-binaries>).
 
-Vervolgens worden alle patches toegepast die vermeld zijn in
-B<debian/patches/>I<leverancier>B<.series> of B<debian/patches/series>,
-waarbij I<leverancier> de naam is in kleine letters van de huidige
-leverancier, of B<debian> als geen leverancier gedefinieerd is. Indien het
-eerste bestand gebruikt wordt en het laatste niet bestaat (of een
-symbolische koppeling is), dan zal het laatste vervangen worden door een
-symbolische koppeling naar het eerste. Dit is bedoeld om het gebruik van
-B<quilt> bij het beheer van het geheel van patches te
-vereenvoudigen. Leveranciersspecifieke series-bestanden hebben tot doel het
-serialiseren van meerdere leveranciersgebonden ontwikkelingstakken op een
-declaratieve manier mogelijk te maken, wat verkieslijker is boven een open
-codering van deze manipulatie in B<debian/rules>. Dit is in het bijzonder
-nuttig wanneer de broncode voorwaardelijk gepatched moet worden omdat de
-betrokken bestanden geen ingebouwde ondersteuning hebben voor conditionele
-occlusie. Merk nochtans op dat hoewel B<dpkg-source> op correcte wijze de
-ontleding uitvoert van series-bestanden met expliciete opties die gebruikt
-worden voor het toepassen van patches (op elke regel opgeslagen na de
-bestandsnaam van de patch en één of meer spaties), het deze opties negeert
-en steeds patches verwacht die kunnen toegepast worden met de optie B<-p1>
-van B<patch>. Het zal dus een waarschuwing geven als het dergelijke opties
-tegenkomt en het bouwen zal waarschijnlijk mislukken.
+All patches listed in B<debian/patches/>I<vendor>B<.series> or
+B<debian/patches/series> are then applied, where I<vendor> will be the
+lowercase name of the current vendor, or B<debian> if there is no vendor
+defined.  If the former file is used and the latter one doesn't exist (or is
+a symlink), then the latter is replaced with a symlink to the former.  This
+is meant to simplify usage of B<quilt> to manage the set of patches.
+Vendor-specific series files are intended to make it possible to serialize
+multiple development branches based on the vendor, in a declarative way, in
+preference to open-coding this handling in B<debian/rules>.  This is
+particularly useful when the source would need to be patched conditionally
+because the affected files do not have built-in conditional occlusion
+support.  Note however that while B<dpkg-source> parses correctly series
+files with explicit options used for patch application (stored on each line
+after the patch filename and one or more spaces), it does ignore those
+options and always expects patches that can be applied with the B<-p1>
+option of B<patch>. It will thus emit a warning when it encounters such
+options, and the build is likely to fail.
 
 Opmerking: indien leveranciers-series-bestanden gebruikt worden, geeft
 B<lintian>(1) onvoorwaardelijke waarschuwingen als gevolg van een
@@ -576,12 +575,13 @@ dat geval wordt de diff opgeslagen in de automatische patch. Indien de
 automatische patch aangemaakt/verwijderd wordt, wordt hij toegevoegd
 aan/verwijderd van het bestand series en van de metadata van B<quilt>.
 
-Any change on a binary file is not representable in a diff and will thus
-lead to a failure unless the maintainer deliberately decided to include that
-modified binary file in the debian tarball (by listing it in
-B<debian/source/include-binaries>). The build will also fail if it finds
-binary files in the debian sub-directory unless they have been allowed
-through B<debian/source/include-binaries>.
+Een eventuele wijziging aan een binair bestand kan niet weergegeven worden
+in een diff en zal dus tot een mislukking leiden, tenzij de onderhouder
+bewust besloot dat gewijzigd binair bestand toe te voegen aan het Debian
+tar-archief (door het op te sommen in
+B<debian/source/include-binaries>). Het bouwen zal ook mislukken als er
+binaire bestanden aangetroffen worden in de onderliggende map debian, tenzij
+dit toegestaan werd via B<debian/source/include-binaries>.
 
 De bijgewerkte map debian en de lijst van gewijzigde binaire bestanden wordt
 dan gebruikt om het Debian tar-archief te genereren.
@@ -593,13 +593,14 @@ standaardwaarde die met de optie B<-i>) verbonden is. In het bijzonder wordt
 de map B<.pc> die door B<quilt> gebruikt wordt, genegeerd tijdens het
 genereren van de automatische patch.
 
-B<Note:> B<dpkg-source> B<--before-build> (and B<--build>) will ensure that
-all patches listed in the series file are applied so that a package build
-always has all patches applied. It does this by finding unapplied patches
-(they are listed in the B<series> file but not in B<.pc/applied-patches>),
-and if the first patch in that set can be applied without errors, it will
-apply them all. The option B<--no-preparation> can be used to disable this
-behavior.
+B<Opmerking>: B<dpkg-source> B<--before-build> (en B<--build>) zal ervoor
+zorgen dat alle patches die in het bestand series opgesomd zijn, toegepast
+worden, zodat bij het bouwen van een pakket steeds alle patches toegepast
+zijn. Het doet dit door te zoeken naar niet-toegepaste patches (ze worden
+opgesomd in het bestand B<series> maar niet in B<.pc/applied-patches>) en
+indien de eerste patch uit die reeks foutloos toegepast kan worden, zal het
+ze allemaal toepassen. De optie B<--no-preparation> kan gebruikt worden om
+dit gedrag uit te schakelen.
 
 B<Wijzigingen optekenen>
 
@@ -636,7 +637,7 @@ B<Bouwopties>
 
 =item B<--allow-version-of-quilt-db=>I<versie>
 
-Laat B<dpkg-source> toe het broncodepakket te bouwen als de versie van de
+B<dpkg-source> toelaten het broncodepakket te bouwen als de versie van de
 metadata van B<quilt> de opgegeven versie is, zelfs al kent B<dpkg-source>
 die niet (sinds dpkg 1.15.5.4). Dit zegt effectief dat de opgegeven versie
 van de B<quilt>-metadata compatibel is met versie 2 die momenteel door
@@ -645,28 +646,28 @@ wordt opgeslagen in B<.pc/.version>.
 
 =item B<--include-removal>
 
-Negeer verwijderde bestanden niet en neem ze op in de automatisch
+Verwijderde bestanden niet negeren en ze opnemen in de automatisch
 gegenereerde patch.
 
 =item B<--include-timestamp>
 
-Voeg de tijdsaanduiding toe in de automatisch gegenereerde patch.
+De tijdsaanduiding toevoegen in de automatisch gegenereerde patch.
 
 =item B<--include-binaries>
 
-Voeg alle gewijzigde binaire bestanden toe aan het debian tar-archief. Voeg
-ze ook toe in B<debian/source/include-binaries>: in erop volgende
+Alle gewijzigde binaire bestanden toevoegen aan het debian tar-archief. Ze
+ook toevoegen in B<debian/source/include-binaries>: in erop volgende
 bouwactiviteiten zullen ze standaard toegevoegd worden en is deze optie dus
 niet meer nodig.
 
 =item B<--no-preparation>
 
-Tracht de bouwboom niet voor te bereiden door patches toe te passen die
+Niet proberen de bouwboom voor te bereiden door patches toe te passen die
 blijkbaar niet toegepast zijn (sinds dpkg 1.14.18).
 
 =item B<--single-debian-patch>
 
-Gebruik B<debian/patches/debian-changes> in plaats van
+B<debian/patches/debian-changes> gebruiken in plaats van
 B<debian/patches/debian-changes->I<versie> voor de naam van de tijdens het
 bouwen automatisch gegenereerde patch (sinds dpkg 1.15.5.4). Deze optie is
 in het bijzonder nuttig als het pakket wordt onderhouden in een VCS
@@ -680,7 +681,7 @@ worden, bijvoorbeeld in het versiebeheersysteem dat gebruikt wordt.
 
 =item B<--create-empty-orig>
 
-Creëer automatisch een leeg primair origineel tar-archief als dat ontbreekt
+Automatisch een leeg primair origineel tar-archief creëren als dat ontbreekt
 en er wel bijkomende originele tar-archieven zijn (sinds dpkg 1.15.6). Deze
 optie is bedoeld om gebruikt te worden als het broncodepakket slechts een
 bundel is van samengestelde toegeleverde software zonder een “centraal”
@@ -725,7 +726,7 @@ toeleveraar over (sinds dpkg 1.15.1).
 
 =item B<--skip-patches>
 
-Pas op het einde van de extractie geen patches toe (sinds dpkg 1.14.18).
+Op het einde van de extractie geen patches toepassen (sinds dpkg 1.14.18).
 
 =back
 
@@ -761,7 +762,7 @@ bundeling van een git-depot B<.git> die de broncode van het pakket bevat. Er
 kan ook een bestand B<.gitshallow> bestaan die de revisies vermeldt van een
 git shallow clone (een summiere kloon van een git-depot).
 
-B<Extraheren>
+B<Extracting>
 
 De bundel wordt gekloond in de doelmap als een git-depot. Als er een bestand
 gitshallow bestaat, wordt het als I<.git/shallow> geïnstalleerd binnenin het
@@ -795,7 +796,7 @@ de naam van een tak of een tag zijn die opgenomen moet worden. Het kan ook
 een parameter zijn die doorgegeven kan worden aan
 B<git-rev-list>(1). Gebruik bijvoorbeeld B<--git-ref=>master om enkel de
 master-tak op te nemen. Om alle takken en tags, behalve de tak persoonlijk
-op te nemen, gebruikt u B<--git-ref=>--all B<--git-ref=>^persoonlijk.
+op te nemen, gebruikt u B<--git-ref=>--all B<--git-ref=>^persoonlijk
 
 =item B<--git-depth=>I<aantal>
 
@@ -809,7 +810,7 @@ bij het opgegeven aantal revisies.
 Ondersteund sinds dpkg 1.14.17. Dit is een experimentele indeling. Ze
 genereert één enkel tar-archief met daarin het bzr-depot.
 
-B<Extraheren>
+B<Extracting>
 
 Het tar-archief wordt uitgepakt en daarna wordt bzr gebruikt om een
 werkkopie van de huidige tak te maken.
@@ -933,10 +934,11 @@ beschreven). Voorafgaande of nakomende witruimte is niet toegelaten.
 
 =head2 debian/source/include-binaries
 
-This file contains a list of pathnames of binary files (one per line)
-relative to the source root directory that should be included in the debian
-tarball.  Leading and trailing spaces are stripped.  Lines starting with
-‘B<#>’ are comments and are skipped.  Empty lines are ignored.
+Dit bestand bevat een lijst van padnamen van binaire bestanden (één per
+regel) relatief ten opzichte van de broncodebasismap, welke opgenomen moeten
+worden in het debian tar-archief. Voorafgaande of nakomende spaties worden
+gestript. Regels die beginnen met ‘B<#>’ zijn commentaar en worden
+overgeslagen. Lege regels worden genegeerd.
 
 =head2 debian/source/options
 
@@ -953,16 +955,16 @@ witruimte rond het symbool ‘B<=>’ en facultatieve aanhalingstekens rond de
 waarde zijn toegelaten. Hierna volgt een voorbeeld van een dergelijk
 bestand:
 
- # let dpkg-source create a debian.tar.bz2 with maximal compression
- compression = "bzip2"
- compression-level = 9
- # use debian/patches/debian-changes as automatic patch
- single-debian-patch
- # ignore changes on config.{sub,guess}
- extend-diff-ignore = "(^|/)(config.sub|config.guess)$"
+  # laat dpkg-source een bestand debian.tar.bz2 aanmaken met maximale compressie
+  compression = "bzip2"
+  compression-level = 9
+  # gebruik debian/patches/debian-changes als automatische patch
+  single-debian-patch
+  # negeer wijzigingen aan config.{sub,guess}
+  extend-diff-ignore = "(^|/)(config.sub|config.guess)$"
 
-B<Note:> B<format> options are not accepted in this file, you should use
-B<debian/source/format> instead.
+B<Opmerking:> B<--format>-opties worden niet aanvaard in dit bestand. U moet
+daarvoor eerder B<debian/source/format> gebruiken.
 
 =head2 debian/source/local-options
 

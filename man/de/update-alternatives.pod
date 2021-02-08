@@ -56,12 +56,18 @@ tatsächlich referenzierte Datei ist. Dies ist so realisiert, damit die
 beschränkt bleiben: der FHS (siehe dort) erklärt, warum dies eine gute Idee
 ist.
 
-Für jedes Paket, das eine Datei mit einer bestimmten Funktionalität
-bereitstellt, wird bei der Installation, der Änderung oder der Entfernung
+Wenn ein Paket, das eine Datei mit einer bestimmten Funktionalität
+bereitstellt, installiert, geändert oder entfernt wird, wird
 B<update-alternatives> aufgerufen, um die Informationen über diese Datei im
-Alternativ-System zu aktualisieren. B<update-alternatives> wird gewöhnlich
-vom Skript B<postinst> (configure) oder B<prerm> (remove und deconfigure)
-eines Debian-Paketes aufgerufen.
+Alternatives-System zu aktualisieren. B<update-alternatives> wird
+normalerweise in den folgenden Debian-Paketbetreuerskripten aufgerufen:
+B<postinst> (configure), um die Alternative zu installieren und von B<prerm>
+und B<postrm> (remove), um die Alternative zu entfernen. B<Hinweis:> In den
+meisten (wenn nicht allen) Fällen sollte keine weitere Betreuerskriptaktion
+B<update-alternatives> aufrufen, insbesondere weder B<upgrade> noch
+B<disappear>, da jede dieser anderen Aktionen zum Verlust des manuellen
+Zustands einer Alternative, oder zum Hin-und Herspringen oder zum kompletten
+Umspringen, wenn mehrere von ihnen die gleiche Priorität haben, führen kann.
 
 Es ist oft sinnvoll, dass eine Reihe von Alternativen synchronisiert werden,
 so dass sie als Gruppe geändert werden; wenn beispielsweise mehrere
@@ -524,7 +530,7 @@ Sie Folgendes als Root aus:
 
 =head1 SIEHE AUCH
 
-B<ln>(1), FHS, der Dateisystem-Hierarchie-Standard (Filesystem Hierarchy
+B<ln>(1), FHS (der Dateisystem-Hierarchie-Standard, Filesystem Hierarchy
 Standard).
 
 

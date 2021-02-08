@@ -57,7 +57,7 @@ premier trouvé est S<utilisé) :>
 
 =item debian/*/DEBIAN/symbols
 
-Les informations de bibliothèque partagée générée par l'actuel processus de
+Les informations de bibliothèque partagée générées par l'actuel processus de
 construction qui invoque aussi B<dpkg-shlibdeps>. Elles sont générées par
 B<dpkg-gensymbols>(1) et ne sont utilisées que si la bibliothèque se trouve
 dans l'arbre de construction d'un paquet. Le fichier des symboles qui
@@ -69,7 +69,7 @@ binaires.
 =item %PKGCONFDIR%/symbols/I<paquet>.symbols
 
 Les informations de dépendance de bibliothèque partagée principales par
-système. I<arch> est l'architecture du système actuel (obtenu par
+système. I<arch> est l'architecture du système actuel (obtenue par
 B<dpkg-architecture -qDEB_HOST_ARCH>).
 
 =item Affichage de “B<dpkg-query --control-path> I<paquet> symbols”
@@ -166,7 +166,7 @@ cross-compiling for example.
 =item B<-d>I<champ-dépendance>
 
 Cette option ajoute les dépendances destinées au champ S<« dépendance »> du
-fichier de contrôle I<champ-dépendance.> (Les dépendances pour ce champ sont
+fichier de contrôle I<champ-dépendance>. (Les dépendances pour ce champ sont
 dans la variable B<shlibs:>I<champ-dépendance>.)
 
 L'option B<-d>I<champ-dépendance> concerne tous les exécutables qui suivent
@@ -338,10 +338,11 @@ dynamique le trouve. Dans ce cas, la bibliothèque est incorrecte et doit
 =item B<paquet pourrait éviter une dépendance inutile si> I<le binaire> B<n'était
 pas lié avec> I<bibliothèque> B<(il ne fait usage d'aucun de ses symboles)>
 
-Aucun des I<binaires> liés à la I<bibliothèque> utilise les symboles qu'elle
-fournit. En corrigeant tous les binaires, vous éviteriez la dépendance
-associée à cette bibliothèque (à moins que la même dépendance soit également
-liée à une autre bibliothèque qui est elle réellement utilisée).
+Aucun des I<binaires> liés à la I<bibliothèque> n'utilise les symboles
+qu'elle fournit. En corrigeant tous les binaires, vous éviteriez la
+dépendance associée à cette bibliothèque (à moins que la même dépendance
+soit également liée à une autre bibliothèque qui est elle réellement
+utilisée).
 
 =item B<paquet pourrait éviter une dépendance inutile si> I<les binaires>
 B<n'étaient pas liés avec> I<bibliothèque> B<(ils ne font usage d'aucun de
@@ -353,7 +354,7 @@ Identique à l'avertissement précédent, pour des binaires multiples.
 fait usage d'aucun de ses symboles)>
 
 Le I<binaire> est lié à une bibliothèque dont il n'a pas besoin. Ce n'est
-pas un problème mais de petites améliorations de performance dans le temps
+pas un problème, mais de petites améliorations de performance dans le temps
 de chargement de celui-ci peuvent être obtenues en ne le liant pas à cette
 bibliothèque. Cet avertissement vérifie la même information que la
 précédente mais elle le fait pour tous les binaires au lieu de ne faire le

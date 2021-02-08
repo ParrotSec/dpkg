@@ -43,7 +43,7 @@ B<dpkg-trigger> een fout.
 
 =item B<--check-supported>
 
-Controleer of het exemplaar van B<dpkg> dat uitgevoerd wordt, triggers
+Controleren of het exemplaar van B<dpkg> dat uitgevoerd wordt, triggers
 ondersteunt (meestal worden die vanuit een postinst-script geactiveerd). Zal
 afsluiten met B<0> als een exemplaar van B<dpkg> uitgevoerd werd dat
 triggers aankan of afsluiten met B<1> en een foutmelding op de standaard
@@ -52,11 +52,11 @@ beter om gewoon de gewenste trigger te activeren met B<dpkg-trigger>.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -66,23 +66,24 @@ Toon de versie en sluit af.
 
 =item B<--admindir=>I<map>
 
-Wijzig de locatie van de database van B<dpkg>. De standaardlocatie is
+De locatie van de database van B<dpkg> wijzigen. De standaardlocatie is
 I<%ADMINDIR%>.
 
 =item B<--by-package=>I<pakket>
 
-Pas de triggerafwachter aan (normaal wordt dit ingesteld door B<dpkg> via de
-omgevingsvariabele B<DPKG_MAINTSCRIPT_PACKAGE> van de scripts van de
+De triggerafwachter overschrijven (normaal wordt dit ingesteld door B<dpkg>
+via de omgevingsvariabele B<DPKG_MAINTSCRIPT_PACKAGE> van de scripts van de
 pakketonderhouder. Die bevat de naam van het pakket waartoe het script
 behoort en standaard wordt die waarde gebruikt).
 
 =item B<--no-await>
 
-This option arranges that the calling package I<T> (if any) need not await
-the processing of this trigger; the interested package(s) I<I>, will not be
-added to I<T>'s trigger processing awaited list and I<T>'s status is
-unchanged.  I<T> may be considered installed even though I<I> may not yet
-have processed the trigger.
+Deze optie zorgt ervoor dat het (eventuele) aanroepende pakket I<T> niet
+moet wachten op de afhandeling van deze trigger. Het/de betrokken
+pakket(ten) I<I> zal/zullen niet toegevoegd worden aan I<T>'s lijst van
+triggers waarvan de afhandeling afgewacht wordt en de status van I<T> blijft
+ongewijzigd. I<T> mag als geïnstalleerd beschouwd worden, zelfs al heeft
+I<I> misschien de trigger nog niet verwerkt.
 
 =item B<--await>
 
@@ -93,7 +94,7 @@ standaardgedrag.
 
 =item B<--no-act>
 
-Test de zaak enkel uit, maar voer geen enkele effectieve wijziging door.
+De zaak enkel uittesten, maar geen enkele effectieve wijziging doorvoeren.
 
 =back
 

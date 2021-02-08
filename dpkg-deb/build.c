@@ -29,6 +29,7 @@
 
 #include <errno.h>
 #include <limits.h>
+#include <inttypes.h>
 #include <string.h>
 #include <time.h>
 #include <dirent.h>
@@ -251,7 +252,7 @@ check_conffiles(const char *ctrldir, const char *rootdir)
 {
   FILE *cf;
   struct varbuf controlfile = VARBUF_INIT;
-  char conffilename[MAXCONFFILENAME + 1];
+  char conffilenamebuf[MAXCONFFILENAME + 1];
   struct file_info *conffiles_head = NULL;
   struct file_info *conffiles_tail = NULL;
 
@@ -259,15 +260,19 @@ check_conffiles(const char *ctrldir, const char *rootdir)
 
   cf = fopen(controlfile.buf, "r");
   if (cf == NULL) {
-    if (errno == ENOENT)
+    if (errno == ENOENT) {
+      varbuf_destroy(&controlfile);
       return;
+    }
 
     ohshite(_("error opening conffiles file"));
   }
 
-  while (fgets(conffilename, MAXCONFFILENAME + 1, cf)) {
+  while (fgets(conffilenamebuf, MAXCONFFILENAME + 1, cf)) {
     struct stat controlstab;
+    char *conffilename = conffilenamebuf;
     int n;
+    bool remove_on_upgrade = false;
 
     n = strlen(conffilename);
     if (!n)
@@ -279,8 +284,41 @@ check_conffiles(const char *ctrldir, const char *rootdir)
 
     conffilename[n - 1] = '\0';
 
-    if (conffilename[0] != '/')
-      ohshit(_("conffile name '%s' is not an absolute pathname"), conffilename);
+    if (c_isspace(conffilename[0])) {
+      /* The conffiles lines cannot start with whitespace; by handling this
+       * case now, we simplify the remaining code. Move past the whitespace
+       * to give a better error. */
+      while (c_isspace(conffilename[0]))
+        conffilename++;
+      if (conffilename[0] == '\0')
+          ohshit(_("empty and whitespace-only lines are not allowed in "
+                   "conffiles"));
+      ohshit(_("line with conffile filename '%s' has leading white spaces"),
+             conffilename);
+    }
+
+    if (conffilename[0] != '/') {
+      char *flag = conffilename;
+      char *flag_end = strchr(flag, ' ');
+
+      if (flag_end)
+        conffilename = flag_end + 1;
+
+      /* If no flag separator is found, assume a missing leading slash. */
+      if (flag_end == NULL || (conffilename[0] && conffilename[0] != '/'))
+        ohshit(_("conffile name '%s' is not an absolute pathname"), conffilename);
+
+      flag_end[0] = '\0';
+
+      /* Otherwise assume a missing filename after the flag separator. */
+      if (conffilename[0] == '\0')
+        ohshit(_("conffile name missing after flag '%s'"), flag);
+
+      if (strcmp(flag, "remove-on-upgrade") == 0)
+        remove_on_upgrade = true;
+      else
+        ohshit(_("unknown flag '%s' for conffile '%s'"), flag, conffilename);
+    }
 
     varbuf_reset(&controlfile);
     varbuf_printf(&controlfile, "%s%s", rootdir, conffilename);
@@ -289,9 +327,13 @@ check_conffiles(const char *ctrldir, const char *rootdir)
         if ((n > 1) && c_isspace(conffilename[n - 2]))
           warning(_("conffile filename '%s' contains trailing white spaces"),
                   conffilename);
-        ohshit(_("conffile '%.250s' does not appear in package"), conffilename);
+        if (!remove_on_upgrade)
+          ohshit(_("conffile '%.250s' does not appear in package"), conffilename);
       } else
         ohshite(_("conffile '%.250s' is not stattable"), conffilename);
+    } else if (remove_on_upgrade) {
+        ohshit(_("conffile '%s' is present but is requested to be removed"),
+               conffilename);
     } else if (!S_ISREG(controlstab.st_mode)) {
       warning(_("conffile '%s' is not a plain file"), conffilename);
     }
@@ -423,7 +465,7 @@ gen_dest_pathname_from_pkg(const char *dir, struct pkginfo *pkg)
 typedef void filenames_feed_func(const char *dir, int fd_out);
 
 struct tar_pack_options {
-  time_t timestamp;
+  intmax_t timestamp;
   const char *mode;
   bool root_owner_group;
 };
@@ -457,7 +499,7 @@ tarball_pack(const char *dir, filenames_feed_func *tar_filenames_feeder,
     if (chdir(dir))
       ohshite(_("failed to chdir to '%.255s'"), dir);
 
-    snprintf(mtime, sizeof(mtime), "@%ld", options->timestamp);
+    snprintf(mtime, sizeof(mtime), "@%jd", options->timestamp);
 
     command_init(&cmd, TAR, "tar -cf");
     command_add_args(&cmd, "tar", "-cf", "-", "--format=gnu",
@@ -493,14 +535,14 @@ tarball_pack(const char *dir, filenames_feed_func *tar_filenames_feeder,
   subproc_reap(pid_tar, "tar -cf", 0);
 }
 
-static time_t
+static intmax_t
 parse_timestamp(const char *value)
 {
-  time_t timestamp;
+  intmax_t timestamp;
   char *end;
 
   errno = 0;
-  timestamp = strtol(value, &end, 10);
+  timestamp = strtoimax(value, &end, 10);
   if (value == end || *end || errno != 0)
     ohshite(_("unable to parse timestamp '%.255s'"), value);
 
@@ -517,7 +559,7 @@ do_build(const char *const *argv)
   struct tar_pack_options tar_options;
   struct dpkg_error err;
   struct dpkg_ar *ar;
-  time_t timestamp;
+  intmax_t timestamp;
   const char *timestamp_str;
   const char *dir, *dest;
   char *ctrldir;

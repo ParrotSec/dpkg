@@ -25,18 +25,21 @@ B<dpkg-architecture> [I<Option> …] [I<Befehl>]
 B<dpkg-architecture> stellt eine Möglichkeit bereit, die Rechner-Architektur
 für den Paketbau zu bestimmen und zu setzen.
 
-Die Bau-Architektur wird immer über einen externen Aufruf an B<dpkg>(1)
-bestimmt und kann nicht auf der Befehlszeile gesetzt werden.
+Die Bau-Architektur wird immer über due Variable B<DEB_BUILD_ARCH> (falls
+diese gesetzt und B<--force> nicht angegeben ist) oder durch einen externen
+Aufruf an B<dpkg>(1) bestimmt und kann nicht auf der Befehlszeile gesetzt
+werden.
 
 Sie können die Host-Architektur (Wirt-Architektur) spezifizieren, indem Sie
-eine oder beide der Optionen B<--host-arch> oder B<--host-type>
-verwenden. Der Standardwert wird über einen externen Aufruf an B<gcc>(1)
-ermittelt oder ist identisch mit der Bauarchitektur, falls sowohl B<CC> als
-auch GCC nicht verfügbar sind. Einer von B<--host-arch> oder B<--host-type>
-ist ausreichend, der Wert des anderen wird auf einen brauchbaren Wert
-gesetzt. Tatsächlich ist es oft besser, nur einen der beiden anzugeben, da
-B<dpkg-architecture> Sie warnen wird, falls Ihre Wahl nicht mit dem
-Standardwert übereinstimmt.
+eine oder beide der Optionen B<--host-arch> oder B<--host-type> verwenden
+(andernfalls wird die Variable B<DEB_HOST_ARCH> verwandt, falls sie gesetzt
+und B<--force> nicht angegeben ist). Der Standardwert wird über einen
+externen Aufruf an B<gcc>(1) ermittelt oder ist identisch mit der
+Bauarchitektur, falls sowohl B<CC> als auch GCC nicht verfügbar sind. Einer
+von B<--host-arch> oder B<--host-type> ist ausreichend, der Wert des anderen
+wird auf einen brauchbaren Wert gesetzt. Tatsächlich ist es oft besser, nur
+einen der beiden anzugeben, da B<dpkg-architecture> Sie warnen wird, falls
+Ihre Wahl nicht mit dem Standardwert übereinstimmt.
 
 =head1 BEFEHLE
 
@@ -70,12 +73,13 @@ Zeigt den Wert einer einzelnen Variablen an.
 =item B<-s>, B<--print-set>
 
 Zeigt einen Export-Befehl. Dies kann dazu verwendet werden, um
-Umgebungsvariablen mittels B<eval> der POSIX-Shell zu setzen.
+Umgebungsvariablen mittels der POSIX-Shell oder make B<eval> zu setzen,
+abhängig vom Ausgabeformat.
 
 =item B<-u>, B<--print-unset>
 
-Gibt ähnlich wie B<--print-unset> einen Export-Befehl aus, der alle
-Variablen löscht.
+Gibt ähnlich wie B<--print-set> einen Export-Befehl aus, der alle Variablen
+löscht.
 
 =item B<-c>, B<--command> I<Befehlszeichenkette>
 
@@ -133,6 +137,11 @@ den angegebenen CPU-Bits (seit Dpkg 1.17.14). Entweder B<32> oder B<64>.
 Begrenzt die mit B<--list-known> aufgeführten Architekturen auf solche mit
 der angegebenen Bytereihenfolge (seit Dpkg 1.17.14). Entweder B<little> oder
 B<big>.
+
+=item B<--print-format> I<Format>
+
+Setzt das Ausgabeformat für B<--print-set> und B<--print-unset> (seit Dpkg
+1.20.6), auf entweder B<shell> (Vorgabe) oder B<make>.
 
 =item B<-f>, B<--force>
 
@@ -218,8 +227,9 @@ x86_64-linux-gnu. Beispielpfade: /lib/powerpc64le-linux-gnu/,
 
 =head1 VARIABLEN
 
-Die folgenden Variablen werden von B<dpkg-architecture> gesetzt (siehe den
-Abschnitt B<AUSDRÜCKE> für eine Beschreibung des Benennungsschemas):
+Die folgenden Variablen werden von der Umgebung gelesen (außer B<--force>
+wurde angegeben) und durch B<dpkg-architecture> gesetzt (siehe den Abschnitt
+B<AUSDRÜCKE> für eine Beschreibung des Benennungsschemas):
 
 =over 
 
@@ -253,11 +263,11 @@ Die Bytereihenfolge der Baumaschine (little/big; seit Dpkg 1.15.4).
 
 =item B<DEB_BUILD_GNU_CPU>
 
-Der CPU-Teil von B<DEB_BUILD_GNU_TYPE>.
+Der GNU-CPU-Teil von B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_SYSTEM>
 
-Der System-Teil von B<DEB_BUILD_GNU_TYPE>.
+Der GNU-System-Teil von B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_TYPE>
 
@@ -298,11 +308,11 @@ Die Bytereihenfolge der Host-Maschine (little/big; seit Dpkg 1.15.4).
 
 =item B<DEB_HOST_GNU_CPU>
 
-Der CPU-Teil von B<DEB_HOST_GNU_TYPE>.
+Der GNU-CPU-Teil von B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_SYSTEM>
 
-Der System-Teil von B<DEB_HOST_GNU_TYPE>.
+Der GNU-System-Teil von B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_TYPE>
 
@@ -343,11 +353,11 @@ Die Bytereihenfolge der Ziel-Maschine (little/big; seit Dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_CPU>
 
-Der CPU-Teil von B<DEB_TARGET_GNU_TYPE>. (Seit Dpkg 1.17.14).
+Der GNU-CPU-Teil von B<DEB_TARGET_GNU_TYPE>. (Seit Dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_SYSTEM>
 
-Der System-Teil von B<DEB_TARGET_GNU_TYPE>. (Seit Dpkg 1.17.14).
+Der GNU-System-Teil von B<DEB_TARGET_GNU_TYPE>. (Seit Dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_TYPE>
 
@@ -460,9 +470,9 @@ Ermitteln des GNU-Systemtyps und dessen Weiterleitung an ./configure:
  […]
  ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
   confflags += --build=$(DEB_HOST_GNU_TYPE)
- else
-  confflags += --build=$(DEB_BUILD_GNU_TYPE) \
-               --host=$(DEB_HOST_GNU_TYPE)
+  else
+   confflags += --build=$(DEB_BUILD_GNU_TYPE) \
+                --host=$(DEB_HOST_GNU_TYPE)
  endif
  […]
  ./configure $(confflags)
@@ -476,7 +486,7 @@ Etwas nur für eine bestimmte Architektur erledigen:
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  […]
+   […]
  endif
 
 =back
@@ -492,7 +502,7 @@ setzen, können Sie auch extern ein Make-Steuerdateischnipsel verwenden:
  include %PKGDATADIR%/architecture.mk
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  […]
+   […]
  endif
 
 =back

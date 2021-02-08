@@ -126,6 +126,9 @@ elegante manier uit te voeren.
 
 =head2 Een configuratiebestand verwijderen
 
+Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in
+F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
+
 Indien een configuratiebestand volledig verwijderd wordt, moet het van
 schijf verwijderd worden, tenzij de gebruiker het aangepast heeft. Indien er
 lokale aanpassingen aangebracht werden, moeten die behouden blijven. Indien
@@ -139,7 +142,7 @@ scripts B<preinst>, B<postinst> en B<postrm> van de pakketonderhouder:
 
 Z<>
  dpkg-maintscript-helper rm_conffile \
-    I<conffile> I<prior-version> I<package> -- "$@"
+    I<configuratiebestand> I<vorige-versie> I<pakket> -- "$@"
 
 =back
 
@@ -177,7 +180,7 @@ B<postrm> van de pakketonderhouder:
 
 Z<>
  dpkg-maintscript-helper mv_conffile \
-    I<old-conffile> I<new-conffile> I<prior-version> I<package> -- "$@"
+    I<oud-configuratiebestand> I<nieuw-configuratiebestand> I<vorige-versie> I<pakket> -- "$@"
 
 =back
 
@@ -219,7 +222,7 @@ B<postrm> van de pakketonderhouder:
 
 Z<>
  dpkg-maintscript-helper symlink_to_dir \
-    I<pathname> I<old-target> I<prior-version> I<package> -- "$@"
+    I<padnaam> I<oud-doel> I<vorige-versie> I<pakket> -- "$@"
 
 =back
 
@@ -256,7 +259,7 @@ B<postrm> van de pakketonderhouder:
 
 Z<>
  dpkg-maintscript-helper dir_to_symlink \
-    I<pathname> I<new-target> I<prior-version> I<package> -- "$@"
+    I<padnaam> I<nieuw-doel> I<vorige-versie> I<pakket> -- "$@"
 
 =back
 
@@ -311,8 +314,8 @@ huidige geïnstalleerde versie van B<dpkg>:
 =over 
 
 Z<>
- if dpkg-maintscript-helper supports I<command>; then
-    dpkg-maintscript-helper I<command> ...
+ if dpkg-maintscript-helper supports I<commando>; then
+    dpkg-maintscript-helper I<commando> ...
  fi
 
 =back
@@ -328,11 +331,13 @@ omgeving niet voldoet, zal dit als een mislukking beschouwd worden.
 
 =item B<DPKG_ROOT>
 
-If set, it will be used as the filesystem root directory.
+Indien dit ingesteld werd, zal dit gebruikt worden als de basismap van het
+bestandssysteem.
 
 =item B<DPKG_ADMINDIR>
 
-If set, it will be used as the B<dpkg> data directory.
+Indien dit ingesteld werd, zal dit gebruikt worden als de datamap voor
+B<dpkg>.
 
 =item B<DPKG_COLORS>
 

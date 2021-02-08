@@ -45,7 +45,7 @@ Indien de hiervoor vermelde B<upgrade> mislukt.
 
 =item I<prerm> B<deconfigure in-favour> I<nieuw-pakket nieuwe-versie>
 
-=item S< >[ B<removing> I<old-package old-version> ]
+=item S< >[ B<removing> I<oud-pakket oude-versie> ]
 
 Vooraleer het pakket gedeconfigureerd wordt terwijl een vereiste wegens een
 conflict vervangen wordt.

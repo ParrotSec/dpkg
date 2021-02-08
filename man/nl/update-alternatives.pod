@@ -14,8 +14,8 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-update-alternatives - onderhoud symbolische koppelingen die
-standaardcommando's definiëren
+update-alternatives - symbolische koppelingen onderhouden welke
+standaardcommando's bepalen
 
 =head1 OVERZICHT
 
@@ -56,13 +56,17 @@ gedaan zodat de wijzigingen van de systeembeheerder beperkt kunnen blijven
 tot de map I<%CONFDIR%>: de FHS (zie aldaar) legt uit waarom dit een goede
 zaak is.
 
-Telkens een pakket dat voorziet in een bestand met een specifieke
-functionaliteit, wordt geïnstalleerd, gewijzigd of verwijderd, wordt
-B<update-alternatives> aangeroepen om de informatie over dat bestand bij te
-werken in het alternatievensysteem. B<update-alternatives> wordt gewoonlijk
-aangeroepen vanuit het script B<postinst> (configure/configureren) of
-B<prerm> (remove/verwijderen en deconfigure/de-configureren) uit Debian
-pakketten.
+When each package providing a file with a particular functionality is
+installed, changed or removed, B<update-alternatives> is called to update
+information about that file in the alternatives system.
+B<update-alternatives> is usually called from the following Debian package
+maintainer scripts, B<postinst> (configure) to install the alternative and
+from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
+most (if not all) cases no other maintainer script actions should call
+B<update-alternatives>, in particular neither of B<upgrade> nor
+B<disappear>, as any other such action can lose the manual state of an
+alternative, or make the alternative temporarily flip-flop, or completely
+switch when several of them have the same priority.
 
 Het is dikwijls nuttig om een aantal alternatieven te synchroniseren, zodat
 ze als groep aangepast worden. Als er bijvoorbeeld verschillende versies van
@@ -122,7 +126,7 @@ zijn werking.
 
 =over 
 
-=item algemene naam (of alternatief-koppeling)
+=item algemene naam (of alternatievenkoppeling)
 
 Een naam, zoals I</usr/bin/editor>, die via het systeem van alternatieven
 verwijst naar één of een aantal bestanden met een gelijkaardige functie.
@@ -142,7 +146,7 @@ worden.
 Een map, standaard I<%CONFDIR%/alternatives>, die de symbolische koppelingen
 bevat.
 
-=item beheersmap
+=item administratieve map
 
 Een map, standaard I<%ADMINDIR%/alternatives>, die de statusinformatie voor
 B<update-alternatives> bevat.
@@ -154,12 +158,12 @@ het de bedoeling is dat ze als groep bijgewerkt worden.
 
 =item hoofdkoppeling (master link)
 
-De alternatief-koppeling uit een koppelingengroep die bepaalt hoe de andere
+De alternatievenkoppeling uit een koppelingengroep die bepaalt hoe de andere
 koppelingen uit de groep geconfigureerd worden.
 
 =item secundaire koppeling (of slaafkoppeling) (slave link)
 
-Een alternatief-koppeling uit een koppelingengroep die gecontroleerd wordt
+Een alternatievenkoppeling uit een koppelingengroep die gecontroleerd wordt
 door de instelling van de hoofdkoppeling.
 
 =item automatische modus
@@ -183,7 +187,7 @@ van de systeembeheerder.
 =item B<--install> I<koppeling naam pad prioriteit> [B<--slave> I<koppeling naam
 pad>]...
 
-Voeg een groep alternatieven toe aan het systeem. I<koppeling> is de
+Een groep alternatieven toevoegen aan het systeem. I<koppeling> is de
 algemene naam voor de hoofdkoppeling. I<naam> is de naam van zijn
 symbolische koppeling in de alternatievenmap. I<pad> is het alternatief dat
 voor de hoofdkoppeling aangevoerd wordt. De argumenten na B<--slave> zijn de
@@ -192,10 +196,10 @@ en het alternatief-pad van een slaaf-koppeling. Nul of meer
 B<--slave>-opties kunnen opgegeven worden. Elk van hen moet door drie
 argumenten gevolgd worden. Merk op dat het hoofdalternatief moet bestaan. Zo
 niet, dan zal de aanroep mislukken. Indien evenwel een slaaf-alternatief
-niet bestaat, dan zal de overeenkomstige slaaf-alternatief-koppeling gewoon
+niet bestaat, dan zal de overeenkomstige slaaf-alternatievenkoppeling gewoon
 niet geïnstalleerd worden (er zal wel een waarschuwing gegeven
 worden). Indien een echt bestand geïnstalleerd is waar een
-alternatief-koppeling geïnstalleerd moet worden, wordt dat behouden tenzij
+alternatievenkoppeling geïnstalleerd moet worden, wordt dat behouden tenzij
 de optie B<--force> gebruikt wordt.
 
 Indien de opgegeven alternatief-naam reeds bestaat in de registers van het
@@ -209,13 +213,14 @@ bijgewerkt worden zodat ze verwijzen naar de pas toegevoegde alternatieven.
 
 =item B<--set> I<naam pad>
 
-Set the program I<path> as alternative for I<name>.  This is equivalent to
-B<--config> but is non-interactive and thus scriptable.
+Het programma I<pad> instellen als alternatief voor I<naam>. Dit is het
+equivalent voor B<--config>, maar het is non-interactief en dus bruikbaar in
+scripts.
 
 =item B<--remove> I<naam pad>
 
-Verwijder een alternatief en alle eraan gekoppelde secundaire (of slaaf-)
-koppelingen. I<naam> is een naam in de alternatievenmap en I<pad> is een
+Een alternatief en alle eraan gekoppelde secundaire (of slaaf-)koppelingen
+verwijderen. I<naam> is een naam in de alternatievenmap en I<pad> is een
 absolute bestandsnaam waaraan I<naam> gekoppeld zou kunnen zijn. Indien
 I<naam> inderdaad gekoppeld is aan I<pad>, dan wordt I<naam> bijgewerkt,
 zodat die verwijst naar een ander geschikt alternatief (en wordt de groep
@@ -227,12 +232,12 @@ over het alternatief wordt dan verwijderd.
 
 =item B<--remove-all> I<naam>
 
-Verwijder alle alternatieven en alle ermee verbonden secundaire (of slaaf-)
-koppelingen. I<naam> is een naam in de alternatievenmap.
+Alle alternatieven en alle ermee verbonden secundaire (of slaaf-)koppelingen
+verwijderen. I<naam> is een naam in de alternatievenmap.
 
 =item B<--all>
 
-Voer B<--config> uit op alle alternatieven. Het kan nuttig zijn om dit te
+B<--config> uitvoeren op alle alternatieven. Het kan nuttig zijn om dit te
 combineren met B<--skip-auto> om alle alternatieven te inspecteren en te
 configureren, die niet in automatische modus geconfigureerd zijn. Ook worden
 defecte alternatieven getoond. Een eenvoudige manier om alle defecte
@@ -241,14 +246,14 @@ update-alternatives --force --all>.
 
 =item B<--auto> I<naam>
 
-Schakel de koppelingengroep achter het alternatief voor I<naam> om naar
+De koppelingengroep achter het alternatief voor I<naam> omschakelen naar
 automatische modus. In dit proces worden de hoofdkoppeling en zijn
 slaafkoppelingen bijgewerkt zodat ze verwijzen naar de geïnstalleerde
 alternatieven met de hoogste prioriteit.
 
 =item B<--display> I<naam>
 
-Toon informatie over de koppelingengroep. De getoonde informatie bevat de
+Informatie over de koppelingengroep tonen. De getoonde informatie bevat de
 modus van de groep (auto of manueel), de hoofdkoppeling en de
 slaafkoppelingen, het alternatief waarnaar de hoofdkoppeling momenteel
 verwijst, de andere alternatieven die beschikbaar zijn (en hun
@@ -257,42 +262,43 @@ alternatief met de hoogste prioriteit.
 
 =item B<--get-selections>
 
-Som alle namen op van de hoofdalternatieven (die welke een koppelingengroep
-controleren) en hun status (sinds versie 1.15.0). Elke regel kan tot 3
-velden bevatten (door één of meer spaties van elkaar gescheiden). Het eerste
-veld is de naam van het alternatief. Het tweede is de status ervan (ofwel
-B<auto> ofwel B<manual>). Het laatste bevat het momenteel gekozen
-alternatief (let op: dit is een bestandsnaam en kan dus spaties bevatten).
+Alle namen opsommen van de hoofdalternatieven (die welke een
+koppelingengroep controleren) en hun status (sinds versie 1.15.0). Elke
+regel kan tot 3 velden bevatten (door één of meer spaties van elkaar
+gescheiden). Het eerste veld is de naam van het alternatief. Het tweede is
+de status ervan (ofwel B<auto> ofwel B<manual>). Het laatste bevat het
+momenteel gekozen alternatief (let op: dit is een bestandsnaam en kan dus
+spaties bevatten).
 
 =item B<--set-selections>
 
-Lees op standaardinvoer configuratie voor alternatieven in de door
-B<--get-selections> gegenereerde indeling en herconfigureer ze
-dienovereenkomstig (sinds versie 1.15.0).
+Op standaardinvoer configuratie voor alternatieven lezen in de door
+B<--get-selections> gegenereerde indeling en deze dienovereenkomstig
+herconfigureren(sinds versie 1.15.0).
 
 =item B<--query> I<naam>
 
-Geef informatie weer over de koppelingengroep zoals B<--display> dat doet,
+Informatie weergeven over de koppelingengroep zoals B<--display> dat doet,
 maar dan op een manier die door een machine ontleed kan worden (sinds versie
 1.15.0, zie hierna bij het onderdeel B<INDELING GEGEVENSOPVRAGING>).
 
 =item B<--list> I<naam>
 
-Geef alle doelen van de koppelingengroep weer.
+Alle doelen van de koppelingengroep weergeven.
 
 =item B<--config> I<naam>
 
-Toon de beschikbare alternatieven voor een koppelingengroep en laat de
-gebruiker toe om interactief te selecteren welke er gebruikt moet worden. De
+De beschikbare alternatieven voor een koppelingengroep tonen en de gebruiker
+toelaten om interactief te selecteren welke er gebruikt moet worden. De
 koppelingengroep wordt bijgewerkt.
 
 =item B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -302,24 +308,24 @@ Toon de versie en sluit af.
 
 =item B<--altdir> I<map>
 
-Specifies the alternatives directory, when this is to be different from the
-default.  Defaults to «I<%CONFDIR%/alternatives>».
+Duidt de alternatievenmap aan als die anders dan de standaard moet
+zijn. Standaard is dit «I<%CONFDIR%/alternatives>».
 
 =item B<--admindir> I<map>
 
-Specifies the administrative directory, when this is to be different from
-the default.  Defaults to «I<%ADMINDIR%/alternatives>»
+Specificeert de administratieve map als die anders dan de standaard moet
+zijn. Standaard is deze «I<%ADMINDIR%/alternatives>»
 
 =item B<--instdir> I<map>
 
-Specifies the installation directory where alternatives links will be
-created (since version 1.20.1).  Defaults to «».
+Specificeert de installatiemap waar alternatievenkoppelingen gecreëerd
+zullen worden (sinds versie 1.20.1). Standaard is dat «».
 
 =item B<--root> I<map>
 
-Specifies the root directory (since version 1.20.1).  This also sets the
-alternatives, installation and administrative directories to match.
-Defaults to «».
+Specificeert de basismap (sinds versie 1.20.1). Hiermee worden ook de
+alternatieven, installatie- en administratieve mappen aangepast. Standaard
+is deze «».
 
 =item B<--log> I<bestand>
 
@@ -328,8 +334,8 @@ standaard (%LOGDIR%/alternatives.log) moet zijn.
 
 =item B<--force>
 
-Laat toe om een echt bestand te vervangen of te verwijderen dat
-geïnstalleerd is waar een alternatief-koppeling geïnstalleerd of verwijderd
+Toestaan om een echt bestand te vervangen of te verwijderen dat
+geïnstalleerd is waar een alternatievenkoppeling geïnstalleerd of verwijderd
 moet worden.
 
 =item B<--skip-auto>
@@ -344,7 +350,7 @@ Geen commentaar genereren tenzij er zich fouten voordoen.
 
 =item B<--verbose>
 
-Genereer meer commentaar bij wat er gedaan wordt.
+Meer commentaar genereren bij wat er gedaan wordt.
 
 =item B<--debug>
 
@@ -375,7 +381,7 @@ het uitvoeren van de actie.
 =item B<DPKG_ADMINDIR>
 
 Indien dit ingesteld is en de optie B<--admindir> niet opgegeven werd, zal
-dit gebruikt worden als de hoofdmap voor beheersdoeleinden.
+dit gebruikt worden als de administratieve basismap.
 
 =back
 
@@ -422,7 +428,7 @@ naar de slaaf-koppeling.
 
 =item B<Status:> I<status>
 
-The status van het alternatief (B<auto> of B<manual>) (automatisch of
+De status van het alternatief (B<auto> of B<manual>) (automatisch of
 manueel).
 
 =item B<Best:> I<beste-keuze>
@@ -535,6 +541,5 @@ gekozen wordt, doet u als systeembeheerder dit:
 
 =head1 ZIE OOK
 
-B<ln>(1), FHS, the Filesystem Hierarchy Standard. (Standaardisatie van
-bestandsorganisatie en mappenstructuur op unix-achtige systemen)
+B<ln>(1), FHS (the Filesystem Hierarchy Standard).
 

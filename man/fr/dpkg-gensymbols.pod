@@ -122,7 +122,7 @@ Une bibliothèque bien maintenue offre les possibilités S<suivantes :>
 son interface de programmation (API) est stable (les symboles publics ne
 sont jamais supprimés et les changements ne concernent que des ajouts de
 nouveaux symboles publics) et les modifications provoquant une
-incompatibilité doivent être combinés avec un changement de S<SONAME ;>
+incompatibilité doivent être combinées avec un changement de S<SONAME ;>
 
 =item *
 
@@ -292,13 +292,10 @@ S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =head1 VOIR AUSSI
 
-B<https://people.redhat.com/drepper/symbol-versioning>
-
-B<https://people.redhat.com/drepper/goodpractice.pdf>
-
-B<https://people.redhat.com/drepper/dsohowto.pdf>
-
-B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>,
+L<https://people.redhat.com/drepper/goodpractice.pdf>,
+L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5),
+B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
 
 
 =head1 TRADUCTION

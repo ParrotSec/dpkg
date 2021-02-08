@@ -26,17 +26,19 @@ B<dpkg-architecture> [I<option>...] [I<commande>]
 B<dpkg-architecture> aide à déterminer et à fixer l'architecture de
 construction et l'architecture hôte pour la création d'un paquet.
 
-L'architecture de construction est toujours déterminée par un appel externe
-à B<dpkg>(1). Elle ne peut pas être spécifiée en ligne de commande.
+The build architecture is always determined by either the B<DEB_BUILD_ARCH>
+variable if set (and B<--force> not being specified) or by an external call
+to B<dpkg>(1), and cannot be set at the command line.
 
-Vous pouvez spécifier une architecture hôte en utilisant une des options
-B<--host-arch> et B<--host-type> (ou les deux). Par défaut, la valeur est
-déterminée par un appel à B<gcc>(1), ou en utilisant l'architecture de
-construction si B<CC> ou gcc ne sont pas disponibles. Utiliser une seule des
-options B<--host-arch> et B<--host-type> est suffisant, la valeur de l'une
-est utilisée comme valeur par défaut de l'autre. Bien sûr, il est préférable
-de n'en préciser qu'une seule, puisque B<dpkg-architecture> affichera un
-avertissement si le choix ne correspond pas à la valeur par défaut.
+You can specify the host architecture by providing one or both of the
+options B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH>
+variable is used if set (and B<--force> not being specified). The default is
+determined by an external call to B<gcc>(1), or the same as the build
+architecture if B<CC> or gcc are both not available. One out of
+B<--host-arch> and B<--host-type> is sufficient, the value of the other will
+be set to a usable default. Indeed, it is often better to only specify one,
+because B<dpkg-architecture> will warn you if your choice does not match the
+default.
 
 =head1 COMMANDES
 
@@ -70,12 +72,11 @@ Affiche la valeur d'une seule variable.
 =item B<-s>, B<--print-set>
 
 Print an export command. This can be used to set the environment variables
-using the POSIX shell B<eval>.
+using the POSIX shell or make B<eval>, depending on the output format.
 
 =item B<-u>, B<--print-unset>
 
-Affiche une commande similaire à celle produite par B<--print-unset>, mais
-pour supprimer toutes les variables.
+Print a similar command to B<--print-set> but to unset all variables.
 
 =item B<-c>, B<--command> I<chaîne-de-commande>
 
@@ -135,6 +136,11 @@ Restreindre les architectures listées par B<--list-known> à celles
 correspondant au boutisme spécifié (depuis S<dpkg 1.17.14).> Soit B<little>,
 soit B<big>.
 
+=item B<--print-format> I<format>
+
+Sets the output format for B<--print-set> and B<--print-unset> (since dpkg
+1.20.6), to either B<shell> (default) or B<make>.
+
 =item B<-f>, B<--force>
 
 Les valeurs positionnées par les variables d'environnement ayant le même nom
@@ -184,7 +190,7 @@ base-gnu-linux-amd64, eabihf-musl-linux-arm.
 Une architecture Debian joker est une architecture spéciale qui correspond à
 toutes les architectures réelles qui en font partie. Il est en général de la
 forme d'un n-uplet d'architecture Debian avec quatre éléments ou moins dont
-au moins l'un deux est B<any>. Les éléments manquants du n-uplet sont
+au moins l'un d'eux est B<any>. Les éléments manquants du n-uplet sont
 préfixés implicitement par B<any>, et donc les paires suivantes sont
 équivalentes.
 
@@ -220,8 +226,9 @@ i386-linux-gnu, x86_64-linux-gnu. Exemple de S<chemins :>
 
 =head1 VARIABLES D'ENVIRONNEMENT
 
-Les variables suivantes sont positionnées par B<dpkg-architecture> (voir la
-section B<TERMS> pour une description du schéma de S<nommage) :>
+The following variables are read from the environment (unless B<--force> has
+been specified) and set by B<dpkg-architecture> (see the B<TERMS> section
+for a description of the naming scheme):
 
 =over 
 
@@ -231,7 +238,7 @@ Architecture Debian de la machine de construction.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
-Nom de l'ABI Debian de la machine de construction (depuis S<dpkg 1.18.11).>
+The Debian ABI name of the build machine (since dpkg 1.18.11).
 
 =item B<DEB_BUILD_ARCH_LIBC>
 
@@ -243,7 +250,7 @@ Nom du système Debian de la machine de construction (depuis S<dpkg 1.13.2).>
 
 =item B<DEB_BUILD_ARCH_CPU>
 
-Nom de processeur Debian de la machine de construction (depuis S<dpkg 1.13.2).>
+The Debian CPU name of the build machine (since dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_BITS>
 
@@ -256,11 +263,11 @@ Boutisme de la machine de construction (petit ou gros, depuis S<dpkg 1.15.4).>
 
 =item B<DEB_BUILD_GNU_CPU>
 
-Partie CPU de B<DEB_BUILD_GNU_TYPE>.
+The GNU CPU part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_SYSTEM>
 
-Partie S<« système »> de B<DEB_BUILD_GNU_TYPE>.
+The GNU system part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_TYPE>
 
@@ -277,7 +284,7 @@ Architecture Debian de la machine hôte.
 
 =item B<DEB_HOST_ARCH_ABI>
 
-Nom de l'ABI Debian de la machine hôte (depuis S<dpkg 1.18.11).>
+The Debian ABI name of the host machine (since dpkg 1.18.11).
 
 =item B<DEB_HOST_ARCH_LIBC>
 
@@ -289,7 +296,7 @@ Nom du système Debian de la machine hôte (depuis S<dpkg 1.13.2).>
 
 =item B<DEB_HOST_ARCH_CPU>
 
-Nom du processeur Debian de la machine hôte (depuis S<dpkg 1.13.2).>
+The Debian CPU name of the host machine (since dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_BITS>
 
@@ -301,11 +308,11 @@ Boutisme de la machine hôte (petit ou gros, depuis S<dpkg 1.15.4).>
 
 =item B<DEB_HOST_GNU_CPU>
 
-Partie S<« processeur »> de B<DEB_HOST_GNU_TYPE>.
+The GNU CPU part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_SYSTEM>
 
-Partie S<« système »> de B<DEB_HOST_GNU_TYPE>.
+The GNU system part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_TYPE>
 
@@ -322,7 +329,7 @@ L'architecture Debian de la machine cible (depuis S<dpkg 1.17.14).>
 
 =item B<DEB_TARGET_ARCH_ABI>
 
-Nom de l'ABI Debian de la machine cible (depuis S<dpkg 1.18.11).>
+The Debian ABI name of the target machine (since dpkg 1.18.11).
 
 =item B<DEB_TARGET_ARCH_LIBC>
 
@@ -334,7 +341,7 @@ Nom du système Debian de la machine cible (depuis S<dpkg 1.17.14).>
 
 =item B<DEB_TARGET_ARCH_CPU>
 
-Nom du processeur Debian de la machine cible (depuis S<dpkg 1.17.14).>
+The Debian CPU name of the target machine (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_BITS>
 
@@ -346,11 +353,11 @@ Boutisme de la machine cible (petit ou gros, depuis S<dpkg 1.17.14).>
 
 =item B<DEB_TARGET_GNU_CPU>
 
-Partie S<« processeur »> de B<DEB_TARGET_GNU_TYPE> (depuis S<dpkg 1.17.14).>
+The GNU CPU part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_SYSTEM>
 
-Partie S<« système »> de B<DEB_TARGET_GNU_TYPE> (depuis S<dpkg 1.17.14).>
+The GNU system part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_TYPE>
 
@@ -463,9 +470,9 @@ Récupération du type de système GNU et passage à S<./configure :>
  [...]
  ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
   confflags += --build=$(DEB_HOST_GNU_TYPE)
- else
-  confflags += --build=$(DEB_BUILD_GNU_TYPE) \
-               --host=$(DEB_HOST_GNU_TYPE)
+  else
+   confflags += --build=$(DEB_BUILD_GNU_TYPE) \
+                --host=$(DEB_HOST_GNU_TYPE)
  endif
  [...]
  ./configure $(confflags)
@@ -479,7 +486,7 @@ Effectuer une action pour une architecture S<spécifique :>
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back
@@ -496,7 +503,7 @@ B<dpkg-architecture> peut S<fournir :>
  include %PKGDATADIR%/architecture.mk
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back

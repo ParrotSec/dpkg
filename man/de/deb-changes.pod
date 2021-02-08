@@ -23,14 +23,17 @@ I<Dateiname>B<.changes>
 =head1 BESCHREIBUNG
 
 Jeder Debian-Upload besteht aus einer .changes-Steuerdatei, die eine Reihe
-von Feldern enthält. Jedes Feld beginnt mit einer Markierung wie B<Source>
-oder B<Binary> (Groß-/Kleinschreibung ist egal), gefolgt von einem
-Doppelpunkt und dem Inhalt des Feldes. Felder werden nur durch
-Feldmarkierungen abgegrenzt. Mit anderen Worten: Der Feldtext kann sich über
-mehrere Zeilen erstrecken, wobei die Installationswerkzeuge die Zeilen bei
-der Verarbeitung des Feldinhaltes zusammenfügen werden (Ausnahmen sind die
-mehrzeiligen Felder B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1>
-und B<Checksums-Sha256>, siehe unten).
+von Feldern im L<deb822(5)>-Format enthält.
+
+Jedes Feld beginnt mit einer Markierung wie B<Source> oder B<Binary>
+(Groß-/Kleinschreibung ist egal), gefolgt von einem Doppelpunkt und dem
+Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders
+angegeben). Felder werden nur durch Feldmarkierungen abgegrenzt. Mit anderen
+Worten: Der Feldtext kann sich über mehrere Zeilen erstrecken, wobei die
+Installationswerkzeuge die Zeilen bei der Verarbeitung des Feldinhaltes
+zusammenfügen werden (Ausnahmen sind die mehrzeiligen Felder B<Description>,
+B<Changes>, B<Files>, B<Checksums-Sha1> und B<Checksums-Sha256>, siehe
+unten).
 
 Die Steuerdaten können in eine Signatur mit einer wie in RFC4880
 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
@@ -197,7 +200,7 @@ was normalerweise als Suite bezeichnet wird.
 
 =head1 SIEHE AUCH
 
-B<deb-src-control>(5), B<deb-version>(7).
+L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7).
 
 
 =head1 ÜBERSETZUNG

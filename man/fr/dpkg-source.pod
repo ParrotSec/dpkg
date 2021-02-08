@@ -246,16 +246,15 @@ répertoires utilisés par Libtool.
 
 =back
 
-S<B<Note> :> même si elles ont des rôles similaires, B<-i> et B<-I> ont une
-syntaxe et une sémantique très différentes. B<-i> ne peut être spécifié
-qu'une fois et reçoit une expression rationnelle compatible avec le langage
-Perl qui est appliquée sur chaque chemin relatif complet de chaque
-fichier. B<-I> peut être spécifié plusieurs fois et prend un motif de nom de
-fichier avec les méta-caractères du shell. Le motif est appliqué au chemin
-relatif complet mais aussi à chaque partie du chemin individuellement. La
-sémantique exacte de l'option B<--exclude> de tar est un peu compliquée,
-voir https://www.gnu.org/software/tar/manuel/tar.html#wildcards pour une
-documentation plus complète.
+B<Note:> While they have similar purposes, B<-i> and B<-I> have very
+different syntax and semantics. B<-i> can only be specified once and takes a
+perl compatible regular expression which is matched against the full
+relative path of each file. B<-I> can specified multiple times and takes a
+filename pattern with shell wildcards.  The pattern is applied to the full
+relative path but also to each part of the path individually. The exact
+semantic of tar's B<--exclude> option is somewhat complicated, see
+L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> for a full
+documentation.
 
 L'expression rationnelle et le motif par défaut pour les deux options
 peuvent être trouvés dans la sortie de la commande B<--help>.
@@ -305,10 +304,10 @@ cassées, pour préserver la compatibilité avec les versions précédentes.
 
 =head1 FORMATS DE PAQUET SOURCE
 
-Si vous ne savez pas quel format source utiliser, il est conseillé de
-choisir soit S<« 3.0> S<(quilt) »> soit S<« 3.0> S<(native) ».> Voir
-https://wiki.debian.org/Projects/DebSrc3.0 pour plus d'informations sur la
-mise en œuvre de ces formats dans Debian.
+If you don't know what source format to use, you should probably pick either
+“3.0 (quilt)” or “3.0 (native)”.  See
+L<https://wiki.debian.org/Projects/DebSrc3.0> for information on the
+deployment of those formats within Debian.
 
 =head2 S<Format :> 1.0
 
@@ -503,27 +502,23 @@ Debian doit contenir un sous-répertoire B<debian>, mais elle peut également
 contenir des fichiers binaires en dehors de ce répertoire (voir l'option
 B<--include-binaries>).
 
-Toutes les modifications figurant dans
-B<debian/patches/>I<distributeur>B<.series> ou B<debian/patches/series> sont
-alors appliquées, où I<distributeur> sera le nom en minuscules du
-distributeur actuel, ou Debian s'il n'y a pas de distributeur défini. Si
-l'ancien fichier est utilisé et qu'il n'y en a pas de plus récent (ou si
-c'est un lien symbolique), alors celui-ci est remplacé par un lien
-symbolique vers l'ancien. Cette disposition vise à simplifier l'utilisation
-de B<quilt> pour gérer l'ensemble des correctifs. Les fichiers de séries
-propres au distributeur sont destinés à permettre de sérialiser plusieurs
-branches de développement en se basant sur le distributeur, d'une manière
-déclarative, de préférence au codage ouvert de cette gestion dans
-B<debian/rules>. Cela est particulièrement utile quand le source à besoin de
-correctifs de manière conditionnelle car les fichiers affectés n’ont pas de
-gestion interne d’inclusion conditionnelle. Notez toutefois que si
-B<dpkg-source> analyse correctement les fichiers de séries avec les options
-utilisées pour l'application du correctif (stockées sur chaque ligne après
-le nom du correctif et une ou plusieurs espaces), il n'ignore pas ces
-options et s'attendra toujours à ce que les correctifs puissent être
-appliqués avec l'option B<-p1> de B<patch>. Il va donc émettre un
-avertissement lorsqu'il rencontrera ces options, et la construction est
-susceptible d'échouer.
+All patches listed in B<debian/patches/>I<vendor>B<.series> or
+B<debian/patches/series> are then applied, where I<vendor> will be the
+lowercase name of the current vendor, or B<debian> if there is no vendor
+defined.  If the former file is used and the latter one doesn't exist (or is
+a symlink), then the latter is replaced with a symlink to the former.  This
+is meant to simplify usage of B<quilt> to manage the set of patches.
+Vendor-specific series files are intended to make it possible to serialize
+multiple development branches based on the vendor, in a declarative way, in
+preference to open-coding this handling in B<debian/rules>.  This is
+particularly useful when the source would need to be patched conditionally
+because the affected files do not have built-in conditional occlusion
+support.  Note however that while B<dpkg-source> parses correctly series
+files with explicit options used for patch application (stored on each line
+after the patch filename and one or more spaces), it does ignore those
+options and always expects patches that can be applied with the B<-p1>
+option of B<patch>. It will thus emit a warning when it encounters such
+options, and the build is likely to fail.
 
 Notez que B<lintian>(1) émettra des avertissements sans condition lors de
 l'utilisation de séries de distributeur du fait d'une règle controversée

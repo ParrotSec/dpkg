@@ -23,14 +23,17 @@ I<Dateiname>B<.dsc>
 =head1 BESCHREIBUNG
 
 Jedes Debian-Quellpaket besteht aus einer .dsc-Steuerdatei, die eine Reihe
-von Feldern enthält. Jedes Feld beginnt mit einer Markierung, wie B<Source>
-oder B<Binary> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt
-und dem Körper des Feldes. Felder werden nur durch die Feldmarkierungen
-abgegrenzt. Mit anderen Worten, Feldtexte können mehrere Zeilen überspannen,
-aber die Installationswerkzeuge werden im Allgemeinen die Zeilen bei der
-Verarbeitung des Feldkörpers zusammenfassen (mit Ausnahme der mehrzeiligen
-Felder B<Package-List>, B<Files>, B<Checksums-Sha1> und B<Checksums-Sha256>,
-sehen Sie dazu unten).
+von Feldern im L<deb822(5)>-Format enthält.
+
+Jedes Feld beginnt mit einer Markierung, wie B<Source> oder B<Binary>
+(Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt und dem Inhalt
+des Feldes (Groß-/Kleinschreibung ist relevant, außer anders
+angegeben). Felder werden nur durch die Feldmarkierungen abgegrenzt. Mit
+anderen Worten, Feldtexte können mehrere Zeilen überspannen, aber die
+Installationswerkzeuge werden im Allgemeinen die Zeilen bei der Verarbeitung
+des Feldinhaltes zusammenfassen (mit Ausnahme der mehrzeiligen Felder
+B<Package-List>, B<Files>, B<Checksums-Sha1> und B<Checksums-Sha256>, sehen
+Sie dazu unten).
 
 Die Steuerdaten können in eine Signatur mit einer wie in RFC4880
 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
@@ -266,7 +269,7 @@ entpackten Quellpakets zusammen.
 
 =head1 SIEHE AUCH
 
-B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
 
 
 =head1 ÜBERSETZUNG

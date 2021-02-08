@@ -39,13 +39,12 @@ numérotation des versions amont.
 
 =item I<version_amont>
 
-Cela est la partie principale du numéro de version. Cela correspond
-normalement au numéro de version du paquet d'origine S<(« upstream »)> qui a
-servi à créer le fichier I<.deb>, si cela peut s'appliquer. Le format
-d'origine spécifié par l'auteur est généralement S<conservé ;> cependant, il
-arrive qu'il soit nécessaire d'adapter ce numéro pour qu'il se conforme au
-format du système de gestion de paquet et du procédé de comparaison des
-numéros de version.
+La partie principale du numéro de version. Cela correspond normalement au
+numéro de version du paquet d'origine S<(« upstream »)> qui a servi à créer le
+fichier I<.deb>, si cela peut s'appliquer. Le format d'origine spécifié par
+l'auteur est généralement S<conservé ;> cependant, il arrive qu'il soit
+nécessaire d'adapter ce numéro pour qu'il se conforme au format du système
+de gestion de paquet et du procédé de comparaison des numéros de version.
 
 Le principe de comparaison du système de gestion de paquets en ce qui
 concerne la I<version_amont> est décrit ci-dessous. La partie

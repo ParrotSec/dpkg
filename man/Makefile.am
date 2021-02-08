@@ -33,6 +33,7 @@ man_MANS = \
 	dpkg-deb.1 \
 	dpkg-distaddfile.1 \
 	dpkg-divert.1 \
+	dpkg-fsys-usrunmess.8 \
 	dpkg-genbuildinfo.1 \
 	dpkg-genchanges.1 \
 	dpkg-gencontrol.1 \
@@ -107,6 +108,7 @@ EXTRA_DIST = \
 	dpkg-deb.pod \
 	dpkg-distaddfile.pod \
 	dpkg-divert.pod \
+	dpkg-fsys-usrunmess.pod \
 	dpkg-genbuildinfo.pod \
 	dpkg-genchanges.pod \
 	dpkg-gencontrol.pod \
@@ -160,22 +162,23 @@ all-local: all-local-@USE_PO4A@
 all-local-no:
 all-local-yes: gen-man
 
-# We use the man-once target to guarantee there is never an empty call in
-# gen-man, that starts recursing infinitely.
-.PHONY: gen-man man-once
+.PHONY: gen-man
 
 gen-man: man.stamp
 	for lang in $(LINGUAS); do \
 	  files=""; \
 	  for man in $(man_MANS); do \
-	    trans="$${man%%.[0-9]}.pod"; \
-	    if [ -f $(builddir)/$$lang/$$trans ]; then \
+	    tmpl="$${man%%.[0-9]}.pod"; \
+	    if [ -f "$(builddir)/$$lang/$$tmpl" ]; then \
 	      files="$$files $(builddir)/$$lang/$$man"; \
-	    elif [ -f $(srcdir)/$$lang/$$trans ]; then \
-	      files="$$files $(srcdir)/$$lang/$$man"; \
+	    elif [ -f "$(srcdir)/$$lang/$$tmpl" ]; then \
+	      files="$$files $(builddir)/$$lang/$$man"; \
 	    fi; \
 	  done; \
-	  $(MAKE) mandir="$(mandir)/$$lang" man_MANS="" man-once $$files; \
+	  if [ -n "$$files" ]; then \
+	    $(MKDIR_P) $$lang; \
+	    $(MAKE) mandir="$(mandir)/$$lang" man_MANS="" $$files; \
+	  fi; \
 	done
 
 # FIXME: Use a stamp file until po4a supports them internally.
@@ -204,8 +207,7 @@ POD2MAN_V_0 = @echo "  POD2MAN $@";
 POD2MAN_OPTS = --utf8 --center='dpkg suite' --release=$(PACKAGE_VERSION) \
                --date='$(PACKAGE_RELEASE_DATE)'
 
-MANFIXUP = sed \
-	-f $(srcdir)/utf8toman.sed \
+PODSUBST = sed \
 	-e 's/%PACKAGE%/$(PACKAGE)/g' \
 	-e 's/%VERSION%/$(PACKAGE_VERSION)/g' \
 	-e 's/%RELEASE_DATE%/$(PACKAGE_RELEASE_DATE)/g' \
@@ -218,10 +220,16 @@ MANFIXUP = sed \
 	-e 's:%PKGDATADIR%:$(pkgdatadir):g' \
 	$(nil)
 
+MANFIXUP = sed \
+	-f $(srcdir)/utf8toman.sed \
+	$(nil)
+
 if BUILD_POD_DOC
-MANGEN = $(POD2MAN_V) filename='$@'; $(POD2MAN) $(POD2MAN_OPTS) \
+MANGEN = $(POD2MAN_V) filename='$@'; \
+	  $(PODSUBST) $< | \
+	  $(POD2MAN) $(POD2MAN_OPTS) \
 	  --name="$$(basename $${filename%.*})" \
-	  --section="$${filename\#\#*.}" $< | \
+	  --section="$${filename\#\#*.}" | \
 	  $(MANFIXUP) >$@
 endif
 
@@ -241,11 +249,11 @@ install-data-local-yes:
 	for lang in $(LINGUAS); do \
 	  files=""; \
 	  for man in $(man_MANS); do \
-	    trans="$${man%%.[0-9]}.pod"; \
-	    if [ -f $(builddir)/$$lang/$$trans ]; then \
+	    tmpl="$${man%%.[0-9]}.pod"; \
+	    if [ -f "$(builddir)/$$lang/$$tmpl" ]; then \
 	      files="$$files $(builddir)/$$lang/$$man"; \
-	    elif [ -f $(srcdir)/$$lang/$$trans ]; then \
-	      files="$$files $(srcdir)/$$lang/$$man"; \
+	    elif [ -f "$(srcdir)/$$lang/$$tmpl" ]; then \
+	      files="$$files $(builddir)/$$lang/$$man"; \
 	    fi; \
 	  done; \
 	  $(MAKE) install-man mandir="$(mandir)/$$lang" man_MANS="$$files"; \
@@ -258,11 +266,11 @@ uninstall-local-yes:
 	for lang in $(LINGUAS); do \
 	  files=""; \
 	  for man in $(man_MANS); do \
-	    trans="$${man%%.[0-9]}.pod"; \
-	    if [ -f $(builddir)/$$lang/$$trans ]; then \
+	    tmpl="$${man%%.[0-9]}.pod"; \
+	    if [ -f "$(builddir)/$$lang/$$tmpl" ]; then \
 	      files="$$files $(builddir)/$$lang/$$man"; \
-	    elif [ -f $(srcdir)/$$lang/$$trans ]; then \
-	      files="$$files $(srcdir)/$$lang/$$man"; \
+	    elif [ -f "$(srcdir)/$$lang/$$tmpl" ]; then \
+	      files="$$files $(builddir)/$$lang/$$man"; \
 	    fi; \
 	  done; \
 	  $(MAKE) uninstall-man mandir="$(mandir)/$$lang" man_MANS="$$files"; \
@@ -272,7 +280,11 @@ dist-hook: man.stamp
 	cp -p $< $(distdir)/
 	for lang in $(LINGUAS_DIST); do \
 	  cp -p $(srcdir)/po/$$lang.po $(distdir)/po; \
-	  cp -p $(srcdir)/po/$$lang.add $(distdir)/po; \
-	  $(MKDIR_P) $(distdir)/$$lang; \
-	  cp -pR $(srcdir)/$$lang $(distdir)/; \
+	  if [ -e "$(srcdir)/po/$$lang.add" ]; then \
+	    cp -p $(srcdir)/po/$$lang.add $(distdir)/po; \
+	  fi; \
+	  if [ -n "`ls $(builddir)/$$lang/*.pod 2>/dev/null`" ]; then \
+	    $(MKDIR_P) $(distdir)/$$lang; \
+	    cp -p $(builddir)/$$lang/*.pod $(distdir)/$$lang/; \
+	  fi; \
 	done

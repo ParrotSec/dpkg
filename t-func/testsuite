@@ -909,7 +909,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-dpkg 1.20.5 test suite: dpkg tools functional test suite test groups:
+dpkg 1.20.7.1 test suite: dpkg tools functional test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -950,7 +950,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (dpkg 1.20.5)" &&
+  $as_echo "$as_me (dpkg 1.20.7.1)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1132,13 +1132,13 @@ fi
 exec 5>>"$at_suite_log"
 
 # Banners and logs.
-$as_echo "## --------------------------------------------------------- ##
-## dpkg 1.20.5 test suite: dpkg tools functional test suite. ##
-## --------------------------------------------------------- ##"
+$as_echo "## ----------------------------------------------------------- ##
+## dpkg 1.20.7.1 test suite: dpkg tools functional test suite. ##
+## ----------------------------------------------------------- ##"
 {
-  $as_echo "## --------------------------------------------------------- ##
-## dpkg 1.20.5 test suite: dpkg tools functional test suite. ##
-## --------------------------------------------------------- ##"
+  $as_echo "## ----------------------------------------------------------- ##
+## dpkg 1.20.7.1 test suite: dpkg tools functional test suite. ##
+## ----------------------------------------------------------- ##"
   echo
 
   $as_echo "$as_me: command line was:"
@@ -1981,7 +1981,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <debian-dpkg@lists.debian.org>
-   Subject: [dpkg 1.20.5] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [dpkg 1.20.7.1] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2922,6 +2922,377 @@ $at_traceon; }
 
 
 
+  mkdir -p 'pkg-conff-empty/DEBIAN'
+
+  cat >'pkg-conff-empty/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-empty
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+printf "   \n" >"pkg-conff-empty/DEBIAN/conffiles"
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:44:
+# Conffiles must not contain empty lines.
+dpkg-deb -b pkg-conff-empty pkg-conff-empty.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:44"
+( $at_check_trace;
+# Conffiles must not contain empty lines.
+dpkg-deb -b pkg-conff-empty pkg-conff-empty.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: empty and whitespace-only lines are not allowed in conffiles
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:44"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-space-prefix/DEBIAN'
+
+  cat >'pkg-conff-space-prefix/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-space-prefix
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-space-prefix/DEBIAN'
+
+  cat >'pkg-conff-space-prefix/DEBIAN/conffiles' <<CTRL_TEMPL
+ /test-conffile
+CTRL_TEMPL
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:52:
+# Conffiles must not contain prefixed spaces.
+dpkg-deb -b pkg-conff-space-prefix pkg-conff-space-prefix.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:52"
+( $at_check_trace;
+# Conffiles must not contain prefixed spaces.
+dpkg-deb -b pkg-conff-space-prefix pkg-conff-space-prefix.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: line with conffile filename '/test-conffile' has leading white spaces
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:52"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-unknown-flag/DEBIAN'
+
+  cat >'pkg-conff-unknown-flag/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-unknown-flag
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-unknown-flag/DEBIAN'
+
+  cat >'pkg-conff-unknown-flag/DEBIAN/conffiles' <<CTRL_TEMPL
+unknown-flag /test-conffile
+CTRL_TEMPL
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:60:
+# Conffiles marked with an unknown flag.
+dpkg-deb -b pkg-conff-unknown-flag pkg-conff-unknown-flag.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:60"
+( $at_check_trace;
+# Conffiles marked with an unknown flag.
+dpkg-deb -b pkg-conff-unknown-flag pkg-conff-unknown-flag.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: unknown flag 'unknown-flag' for conffile '/test-conffile'
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:60"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-missing-pathname/DEBIAN'
+
+  cat >'pkg-conff-missing-pathname/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-missing-pathname
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+printf "unknown-flag \n" >"pkg-conff-missing-pathname/DEBIAN/conffiles"
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:68:
+# Conffiles need a pathname, in addition to a flag.
+dpkg-deb -b pkg-conff-missing-pathname pkg-conff-missing-pathname.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:68"
+( $at_check_trace;
+# Conffiles need a pathname, in addition to a flag.
+dpkg-deb -b pkg-conff-missing-pathname pkg-conff-missing-pathname.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile name missing after flag 'unknown-flag'
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:68"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-removed-missing/DEBIAN'
+
+  cat >'pkg-conff-removed-missing/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-removed-missing
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-removed-missing/DEBIAN'
+
+  cat >'pkg-conff-removed-missing/DEBIAN/conffiles' <<CTRL_TEMPL
+remove-on-upgrade /test-conffile-missing
+CTRL_TEMPL
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:76:
+# Conffiles marked for removal must not be present.
+dpkg-deb -b pkg-conff-removed-missing pkg-conff-removed-missing.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:76"
+( $at_check_trace;
+# Conffiles marked for removal must not be present.
+dpkg-deb -b pkg-conff-removed-missing pkg-conff-removed-missing.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-content.at:76"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-removed-duped/DEBIAN'
+
+  cat >'pkg-conff-removed-duped/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-removed-duped
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-removed-duped/DEBIAN'
+
+  cat >'pkg-conff-removed-duped/DEBIAN/conffiles' <<CTRL_TEMPL
+remove-on-upgrade /test-conffile-1
+remove-on-upgrade /test-conffile-2
+remove-on-upgrade /test-conffile-1
+CTRL_TEMPL
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:85:
+# Duplicate conffile entries should produce a warning.
+dpkg-deb -b pkg-conff-removed-duped
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:85"
+( $at_check_trace;
+# Duplicate conffile entries should produce a warning.
+dpkg-deb -b pkg-conff-removed-duped
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: warning: conffile name '/test-conffile-1' is duplicated
+dpkg-deb: warning: ignoring 1 warning about the control file(s)
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-content.at:85"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-removed-noeol/DEBIAN'
+
+  cat >'pkg-conff-removed-noeol/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-removed-noeol
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+printf "remove-on-upgrade /test-conffile-1" >"pkg-conff-removed-noeol/DEBIAN/conffiles"
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:94:
+# Conffiles need a final newline to guarantee there has been no accidental
+# file truncation.
+dpkg-deb -b pkg-conff-removed-noeol pkg-conff-removed-noeol.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:94"
+( $at_check_trace;
+# Conffiles need a final newline to guarantee there has been no accidental
+# file truncation.
+dpkg-deb -b pkg-conff-removed-noeol pkg-conff-removed-noeol.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile name 'remove-on-upgrade /test-conffile-1' is too long, or missing final newline
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:94"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-removed-noabs/DEBIAN'
+
+  cat >'pkg-conff-removed-noabs/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-removed-noabs
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-removed-noabs/DEBIAN'
+
+  cat >'pkg-conff-removed-noabs/DEBIAN/conffiles' <<CTRL_TEMPL
+remove-on-upgrade test-conffile-rel
+CTRL_TEMPL
+
+cat >pkg-conff-removed-noabs/test-conffile-rel <<'_ATEOF'
+test init
+_ATEOF
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:105:
+# Conffiles must use absolute pathnames.
+dpkg-deb -b pkg-conff-removed-noabs pkg-conff-removed-noabs.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:105"
+( $at_check_trace;
+# Conffiles must use absolute pathnames.
+dpkg-deb -b pkg-conff-removed-noabs pkg-conff-removed-noabs.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile name 'test-conffile-rel' is not an absolute pathname
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:105"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
+  mkdir -p 'pkg-conff-removed-present/DEBIAN'
+
+  cat >'pkg-conff-removed-present/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-conff-removed-present
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+  mkdir -p 'pkg-conff-removed-present/DEBIAN'
+
+  cat >'pkg-conff-removed-present/DEBIAN/conffiles' <<CTRL_TEMPL
+remove-on-upgrade /test-conffile-present
+CTRL_TEMPL
+
+cat >pkg-conff-removed-present/test-conffile-present <<'_ATEOF'
+test init
+_ATEOF
+
+{ set +x
+$as_echo "$at_srcdir/deb-content.at:115:
+# Conffiles marked for removal must not be present.
+dpkg-deb -b pkg-conff-removed-present pkg-conff-removed-present.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:115"
+( $at_check_trace;
+# Conffiles marked for removal must not be present.
+dpkg-deb -b pkg-conff-removed-present pkg-conff-removed-present.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+echo >>"$at_stderr"; $as_echo "dpkg-deb: error: conffile '/test-conffile-present' is present but is requested to be removed
+" | \
+  $at_diff - "$at_stderr" || at_failed=:
+echo stdout:; cat "$at_stdout"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:115"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+
   mkdir -p 'pkg-deb-newline/DEBIAN'
 
   cat >'pkg-deb-newline/DEBIAN/control' <<CTRL_TEMPL
@@ -2937,11 +3308,11 @@ CTRL_TEMPL
 touch 'pkg-deb-newline/file
 newline'
 { set +x
-$as_echo "$at_srcdir/deb-content.at:45:
+$as_echo "$at_srcdir/deb-content.at:124:
 # Cannot create package with newlines in filenames.
 dpkg-deb -b pkg-deb-newline
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:45"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-content.at:124"
 ( $at_check_trace;
 # Cannot create package with newlines in filenames.
 dpkg-deb -b pkg-deb-newline
@@ -2954,7 +3325,7 @@ newline'
 " | \
   $at_diff - "$at_stderr" || at_failed=:
 echo stdout:; cat "$at_stdout"
-at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:45"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-content.at:124"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 

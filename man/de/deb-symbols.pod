@@ -50,7 +50,8 @@ I<Minimalversion> seiner Abhängigkeitsvorlage zugeordnet (die
 Hauptabhängigkeitsvorlage wird immer verwandt und wird am Ende mit der
 abhängigen, in I<Kennung_der_Abhängigkeitsvorlage> referenzierten Vorlage
 (falls vorhanden) kombiniert). Die erste alternative Abhängigkeitsvorlage
-wird mit 1 nummeriert, die zweite mit 2 usw.
+wird mit 1 nummeriert, die zweite mit 2 usw. Jede Spalte ist genau durch ein
+Leerraum abgetrennt.
 
 Jeder Eintrag für eine Bibliothek kann auch einige Felder mit
 Metainformationen enthalten. Diese Felder werden in Zeilen gespeichert, die
@@ -110,8 +111,7 @@ unterstützt seit Dpkg 1.17.6).
 
 =head1 SIEHE AUCH
 
-B<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>
-
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>,
 B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 
 

@@ -267,6 +267,10 @@ Optionen für den Objective-C++-Compiler. Identisch zu B<CXXFLAGS>.
 
 Optionen für den GNU-Java-Compiler (gcj). Eine Untermenge von B<CFLAGS>.
 
+=item B<DFLAGS>
+
+Optionen für den D-Compiler (ldc oder gdc). Seit Dpkg 1.20.6.
+
 =item B<FFLAGS>
 
 Optionen für den Fortran-77-Compiler. Eine Untermenge von B<CFLAGS>.
@@ -579,7 +583,7 @@ B<__DATE__> und B<__TIMESTAMP__> verwandt werden.
 
 =item B<fixfilepath>
 
-Diese Einstellung (standardmäßig deaktiviert) fügt
+Diese Einstellung (standardmäßig aktiviert) fügt
 B<-ffile-prefix-map=>I<BUILDPATH>B<=.> zu B<CFLAGS>, B<CXXFLAGS>,
 B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> und B<FCFLAGS> hinzu,
 wobei B<BUILDPATH> auf das oberste Verzeichnis des bauenden Pakets gesetzt

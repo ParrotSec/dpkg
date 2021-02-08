@@ -252,7 +252,7 @@ wird das Problem verschwinden oder gelöst werden. Falls Probleme bleiben
 oder die durchgeführte Installation nicht korrekt war, untersuchen Sie bitte
 den Grund und die Umstände und reichen Sie einen Fehler in der
 Fehlerdatenbank von Debian ein. Anleitungen, wie dies erfolgen kann, sind
-auf https://bugs.debian.org/ verfügbar oder können durch Lesen der
+auf L<https://bugs.debian.org/> verfügbar oder können durch Lesen der
 Dokumentation für B<bug>(1) oder B<reportbug>(1) (falls diese installiert
 sind) erhalten werden.
 

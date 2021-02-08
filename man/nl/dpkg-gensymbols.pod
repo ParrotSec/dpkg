@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-gensymbols - genereer symbolenbestanden (informatie over
+dpkg-gensymbols - symbolenbestanden genereren (informatie over
 afhankelijkheidsrelaties met gedeelde bibliotheken)
 
 =head1 OVERZICHT
@@ -70,37 +70,40 @@ verschil u kunt tolereren; zie de optie B<-c>).
 
 =head1 HET ONDERHOUD VAN SYMBOLENBESTANDEN
 
-The base interchange format of the symbols file is described in
-B<deb-symbols>(5), which is used by the symbols files included in binary
-packages. These are generated from template symbols files with a format
-based on the former, described in B<deb-src-symbols>(5)  and included in
-source packages.
+De basisuitwisselingsindeling van het symbolenbestand wordt beschreven in
+B<deb-symbols>(5), hetgeen gebruikt wordt door de symbolenbestanden uit de
+binaire pakketten. Deze worden gegenereerd uit symbolensjabloonbestanden met
+een indeling gebaseerd op het eerste, beschreven in B<deb-src-symbols>(5) en
+opgenomen in broncodepakketten.
 
-The symbols files are really useful only if they reflect the evolution of
-the package through several releases. Thus the maintainer has to update them
-every time that a new symbol is added so that its associated minimal version
-matches reality.
+De symbolenbestanden zijn pas echt nuttig als ze de evolutie van het pakket
+reflecteren doorheen verschillende releases. De onderhouder moet ze dus
+iedere keer bijwerken wanneer een nieuw symbool toegevoegd wordt, zodat de
+minimale versie die eraan gekoppeld wordt, overeenkomt met de realiteit.
 
-The diffs contained in the build logs can be used as a starting point, but
-the maintainer, additionally, has to make sure that the behaviour of those
-symbols has not changed in a way that would make anything using those
-symbols and linking against the new version, stop working with the old
-version.
+De diffs (weergave van de verschillen) die in de bouwlogs te vinden zijn,
+kunnen als startpunt genomen worden, maar daarbovenop moet de onderhouder
+erop letten dat het gedrag van deze symbolen niet zodanig veranderd werd,
+dat iets dat van deze symbolen gebruik maakt en linkt met de nieuwe versie,
+niet stopt met werken met de oude versie.
 
-In most cases, the diff applies directly to the debian/I<package>.symbols
-file. That said, further tweaks are usually needed: it's recommended for
-example to drop the Debian revision from the minimal version so that
-backports with a lower version number but the same upstream version still
-satisfy the generated dependencies.  If the Debian revision can't be dropped
-because the symbol really got added by the Debian specific change, then one
-should suffix the version with ‘B<~>’.
+In de meeste gevallen kan de diff rechtstreeks toegepast worden op het
+bestand debian/I<pakket>.symbols. Dit gezegd zijnde, zijn verdere
+aanpassingen meestal wel nodig: het wordt bijvoorbeeld aanbevolen om het
+Debian revisienummer weg te laten uit de minimale versie, zodat backports
+(nieuwere programmaversies die geschikt gemaakt worden voor een vroegere
+release) met een lager versienummer maar eenzelfde bovenstroomse versie nog
+steeds voldoen aan de gegenereerde afhankelijkheidsrelaties. Indien het
+Debian revisienummer niet weggelaten kan worden omdat het symbool echt via
+een Debian-specifieke aanpassing toegevoegd werd, moet men aan het
+versienummer het achtervoegsel ‘B<~>’ toevoegen.
 
 Vooraleer een patch toe te passen op een symbolenbestand, moet de
 onderhouder grondig controleren of dat wel correct is. Publieke symbolen
 worden verondersteld niet te verdwijnen. Een patch zou dus idealiter enkel
 nieuwe regels mogen toevoegen.
 
-Note that you can put comments in symbols files.
+Merk op dat u in symbolenbestanden commentaar kunt invoegen.
 
 Vergeet niet na te gaan of oudere symboolversies niet verhoogd moeten
 worden. Er bestaat geen manier voor B<dpkg-gensymbols> om in dit verband
@@ -178,10 +181,11 @@ Voeg I<map> vooraan toe aan de lijst van mappen waarin naar private gedeelde
 bibliotheken gezocht moet worden (sinds dpkg 1.19.1). Deze optie kan
 meermaals gebruikt worden.
 
-B<Note:> Use this option instead of setting B<LD_LIBRARY_PATH>, as that
-environment variable is used to control the run-time linker and abusing it
-to set the shared library paths at build-time can be problematic when
-cross-compiling for example.
+B<Opmerking:> gebruik deze optie in de plaats van het instellen van
+B<LD_LIBRARY_PATH>, aangezien die omgevingsvariabele gebruikt wordt om de
+runtime linker aan te sturen. Daarvan misbruik maken om de paden van
+gedeelde bibliotheken in te stellen tijdens het bouwen van het programma,
+kan problematisch zijn, bijvoorbeeld bij het cross-compileren.
 
 =item B<-I>I<bestandsnaam>
 
@@ -190,19 +194,19 @@ genereren dat in het pakket zelf geïntegreerd wordt.
 
 =item B<-O>[I<bestandsnaam>]
 
-Geef het gegenereerde symbolenbestand uit weer op de standaarduitvoer of
-schrijf het naar I<bestandsnaam> als dat opgegeven werd, eerder dan naar
+Het gegenereerde symbolenbestand weergeven op de standaarduitvoer of
+schrijven naar I<bestandsnaam> als dat opgegeven werd, eerder dan naar
 B<debian/tmp/DEBIAN/symbols> (of I<pakketbouwmap>B</DEBIAN/symbols> indien
 B<-P> gebruikt werd). Indien I<bestandsnaam> reeds bestond, wordt de inhoud
 ervan gebruikt als basis voor het gegenereerde symbolenbestand. U kunt van
 deze functionaliteit gebruik maken om een symbolenbestand bij te werken
-zodat het in overeenstemming is met een nieuwere toeleveraarsversie van uw
+zodat het in overeenstemming is met een nieuwere bovenstroomse versie van uw
 bibliotheek.
 
 =item B<-t>
 
-Schrijf het symbolenbestand in sjabloonmodus eerder dan in de indeling die
-compatibel is met B<deb-symbols>(5). Het grootste verschil is dat in de
+Het symbolenbestand in sjabloonmodus opschrijven, eerder dan in de indeling
+die compatibel is met B<deb-symbols>(5). Het grootste verschil is dat in de
 sjabloonmodus symboolnamen en tags geschreven worden in hun originele vorm
 in tegenstelling tot in de compatibele modus waarin de verwerkte
 symboolnamen ontdaan van hun tags gebruikt worden. Daarenboven kunnen bij
@@ -213,7 +217,7 @@ worden.
 
 =item B<-c>I<[0-4]>
 
-Definieer de controles die moeten gebeuren bij het vergelijken van het
+Definiëren welke controles moeten gebeuren bij het vergelijken van het
 gegenereerde symbolenbestand met het sjabloonbestand dat als vertrekpunt
 gebruikt werd. Standaard is dat volgens niveau 1. Het verhogen van het
 niveau leidt tot meer controles, terwijl alle controles van lagere niveaus
@@ -228,16 +232,16 @@ B<DPKG_GENSYMBOLS_CHECK_LEVEL>.
 
 =item B<-q>
 
-Gedraag u rustig en genereer nooit een diff (een overzicht van de
-verschillen) tussen het gegenereerde symbolenbestand en het sjabloonbestand
-dat als vertrekpunt gebruikt werd en toon geen enkele waarschuwing in
-verband met nieuwe/verloren bibliotheken of nieuwe/verloren symbolen. Deze
-optie schakelt enkel de informatieve uitvoer uit, maar niet de controles
-zelf (zie de optie B<-c>).
+Stil blijven en nooit een diff (een overzicht van de verschillen) maken
+tussen het gegenereerde symbolenbestand en het sjabloonbestand dat als
+vertrekpunt gebruikt werd en geen enkele waarschuwing tonen in verband met
+nieuwe/verloren bibliotheken of nieuwe/verloren symbolen. Deze optie
+schakelt enkel de informatieve uitvoer uit, maar niet de controles zelf (zie
+de optie B<-c>).
 
 =item B<-a>I<arch>
 
-Ga uit van I<arch> als hostarchitectuur bij het verwerken van
+Uitgaan van I<arch> als hostarchitectuur bij het verwerken van
 symbolenbestanden. Gebruik deze optie om een symbolenbestand of een diff
 (overzicht van de verschillen) voor een willekeurige architectuur te
 genereren op voorwaarde dat de binaire bestanden ervan reeds voorhanden
@@ -245,23 +249,23 @@ zijn.
 
 =item B<-d>
 
-Zet debug-modus aan. Talrijke berichten worden dan getoond om toe te lichten
-wat B<dpkg-gensymbols> doet.
+Debug-modus aanzetten. Talrijke berichten worden dan getoond om toe te
+lichten wat B<dpkg-gensymbols> doet.
 
 =item B<-V>
 
-Schakel de breedsprakige modus in. Het gegenereerde symbolenbestand bevat
+De breedsprakige modus inschakelen. Het gegenereerde symbolenbestand bevat
 dan verouderde symbolen in de vorm van commentaar. In sjabloonmodus worden
 daarenboven patroonsymbolen gevolgd door commentaar met daarin een opsomming
 van de echte symbolen die met het patroon overeenkwamen.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -292,11 +296,8 @@ waarden zijn: B<0> and B<1> (standaard).
 
 =head1 ZIE OOK
 
-B<https://people.redhat.com/drepper/symbol-versioning>
-
-B<https://people.redhat.com/drepper/goodpractice.pdf>
-
-B<https://people.redhat.com/drepper/dsohowto.pdf>
-
-B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>,
+L<https://people.redhat.com/drepper/goodpractice.pdf>,
+L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5),
+B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
 

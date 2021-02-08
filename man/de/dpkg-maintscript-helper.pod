@@ -125,6 +125,10 @@ innerhalb von Betreuerskripten durchzuführen.
 
 =head2 Eine Conffile entfernen
 
+Hinweis: In den meisten Fällen kann dies durch den Schalter
+C<remove-on-upgrade> in F<DEBIAN/conffiles> (seit Dpkg 1.20.6) ersetzt
+werden, siehe L<deb-conffiles(5)>.
+
 Falls eine Conffile komplett entfernt wird, sollte sie von der Platte
 entfernt werden, falls der Benutzer sie nicht verändert hat. Falls es lokale
 Anpassungen gibt, sollten diese erhalten werden. Falls das Upgrade des

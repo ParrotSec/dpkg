@@ -289,13 +289,10 @@ B<0> und B<1> (Vorgabe).
 
 =head1 SIEHE AUCH
 
-B<https://people.redhat.com/drepper/symbol-versioning>
-
-B<https://people.redhat.com/drepper/goodpractice.pdf>
-
-B<https://people.redhat.com/drepper/dsohowto.pdf>
-
-B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>,
+L<https://people.redhat.com/drepper/goodpractice.pdf>,
+L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5),
+B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
 
 
 =head1 ÜBERSETZUNG

@@ -38,7 +38,7 @@ teruggevallen op B<deb>.
 
 =item B<-a>, B<--no-architecture>
 
-De bestandsnaam van de bestemming zal geen architectuuriniformatie bevatten
+De bestandsnaam van de bestemming zal geen architectuuriniformatie bevatten.
 
 =item B<-k>, B<--symlink>
 
@@ -51,32 +51,32 @@ als de bestandsnaam van de bestemming.
 
 =item B<-s>, B<--subdir> [I<map>]
 
-Files will be moved into a subdirectory. If the directory given as argument
-exists the files will be moved into that directory otherwise the name of the
-target directory is extracted from the section field in the control part of
-the package. The target directory will be
-«unstable/binary-I<architecture>/I<section>».  If the section is not found
-in the control, then B<no-section> is assumed, and in this case, as well as
-for sections B<non-free> and B<contrib> the target directory is
-«I<section>/binary-I<architecture>».  The section field is not required so a
-lot of packages will find their way to the B<no-section> area.
+Bestanden zullen naar een onderliggende map verplaatst worden. Indien de als
+argument opgegeven map bestaat, zullen de bestanden naar die map verplaatst
+worden, anders wordt de naam van de doelmap geëxtraheerd uit het sectieveld
+uit het controlegedeelte van het pakket. De doelmap zal
+«unstable/binary-I<architectuur>/I<sectie>» zijn. Indien de sectie niet
+gevonden wordt in het controlebestand, dan wordt uitgegaan van
+B<no-section>. In dat geval en ook voor de secties B<non-free> en B<contrib>
+is de doelmap «I<sectie>/binary-I<architectuur>». Het veld sectie is niet
+verplicht, zodat veel pakketten terechtkomen in het gebied B<no-section>.
 
-B<Warning:> I<Use this option with care, it is messy.>
+B<Warschuwing:> I<Gebruik deze optie met zorg, ze werkt rommelig.>
 
 =item B<-c>, B<--create-dir>
 
-This option can used together with the B<-s> option. If a target directory
-isn't found it will be created automatically.
+Deze optie kan samen met de optie B<-s> gebruikt worden. Als een doelmap
+niet aangetroffen wordt, zal ze automatisch aangemaakt worden.
 
-B<Warning:> I<Use this option with care.>
+B<Warning:> I<Gebruik deze optie met zorg.>
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<-v>, B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

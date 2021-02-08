@@ -65,7 +65,8 @@ Das Paket ist nicht auf Ihrem System installiert.
 
 =item B<config-files> (Config-Dateien)
 
-Nur die Konfigurationsdateien des Pakets existieren auf dem System.
+Nur die Konfigurationsdateien oder das Skript B<postrm> und die von ihm für
+das Entfernen des Pakets benötigten Daten existieren auf dem System.
 
 =item B<half-installed> (halb-installiert)
 
@@ -1335,8 +1336,8 @@ Um eine lokale Kopie der Paketauswahl-Zustände zu erstellen:
 
 Sie könnten diese Datei auf einen anderen Rechner übertragen und dann die
 Datei I<available> dort mit dem Paketverwalter Ihrer Wahl (siehe
-https://wiki.debian.org/Teams/Dpkg/FAQ für weitere Details) aktualisieren,
-zum Beispiel:
+L<https://wiki.debian.org/Teams/Dpkg/FAQ> für weitere Details)
+aktualisieren, zum Beispiel:
 
 =over 
 

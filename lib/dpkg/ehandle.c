@@ -173,6 +173,7 @@ error_context_errmsg_free(struct error_context *ec)
 {
   if (ec->errmsg != emergency.errmsg)
     free(ec->errmsg);
+  ec->errmsg = NULL;
 }
 
 static void
@@ -279,6 +280,7 @@ run_cleanups(struct error_context *econ, int flagsetin)
       if (cep->calls[i].call && cep->calls[i].mask & flagset) {
         if (setjmp(recurse_jump)) {
           run_cleanups(&recurserr, ehflag_bombout | ehflag_recursiveerror);
+          error_context_errmsg_free(&recurserr);
         } else {
           memset(&recurserr, 0, sizeof(recurserr));
           set_error_printer(&recurserr, print_cleanup_error, NULL);
@@ -428,6 +430,7 @@ run_error_handler(void)
      * abort. Hopefully the user can fix the situation (out of disk, out
      * of memory, etc). */
     print_abort_error(_("unrecoverable fatal error, aborting"), econtext->errmsg);
+    error_context_errmsg_free(econtext);
     exit(2);
   }
 
@@ -501,6 +504,8 @@ do_internerr(const char *file, int line, const char *func, const char *fmt, ...)
           dpkg_get_progname(), file, line, func, color_reset(),
           color_get(COLOR_ERROR), _("internal error"), color_reset(),
           econtext->errmsg);
+
+  error_context_errmsg_free(econtext);
 
   abort();
 }

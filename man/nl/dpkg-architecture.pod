@@ -26,18 +26,19 @@ B<dpkg-architecture> [I<optie>...] [I<commando>]
 B<dpkg-architecture> biedt een mogelijkheid om de bouw- en host-architectuur
 voor het bouwen van pakketten vast te stellen en in te stellen.
 
-De bouwarchitectuur wordt steeds bepaald door een externe aanroep van
-B<dpkg>(1) en kan niet ingesteld worden aan de commandoregel.
+The build architecture is always determined by either the B<DEB_BUILD_ARCH>
+variable if set (and B<--force> not being specified) or by an external call
+to B<dpkg>(1), and cannot be set at the command line.
 
-U kunt de host-architectuur specificeren door een van of allebei de opties
-B<--host-arch> en B<--host-type> op te geven. Wat de standaard is, wordt
-vastgesteld door een externe aanroep van B<gcc>(1) of, als zowel B<CC> als
-gcc onbeschikbaar zijn, gelijkgesteld aan de bouwarchitectuur. Een van
-beide, B<--host-arch> of B<--host-type>, volstaat. De andere waarde zal op
-een gebruikelijke standaardwaarde ingesteld worden. Het is inderdaad
-dikwijls beter om slechts één waarde op te geven, vermits
-B<dpkg-architecture> een waarschuwing zal geven als de keuze die u maakt
-niet met de standaardwaarde overeenkomt.
+You can specify the host architecture by providing one or both of the
+options B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH>
+variable is used if set (and B<--force> not being specified). The default is
+determined by an external call to B<gcc>(1), or the same as the build
+architecture if B<CC> or gcc are both not available. One out of
+B<--host-arch> and B<--host-type> is sufficient, the value of the other will
+be set to a usable default. Indeed, it is often better to only specify one,
+because B<dpkg-architecture> will warn you if your choice does not match the
+default.
 
 =head1 COMMANDO'S
 
@@ -45,12 +46,12 @@ niet met de standaardwaarde overeenkomt.
 
 =item B<-l>, B<--list>
 
-Geef de omgevingsvariabelen, per regel één, weer volgens de indeling
+De omgevingsvariabelen weergeven, één per regel, volgens de indeling
 I<VARIABELE=waarde>. Dit is de standaardactie.
 
 =item B<-e>, B<--equal> I<architectuur>
 
-Ga na of de architecturen gelijk zijn (sinds dpkg 1.13.13). Het vergelijkt
+Nagaan of de architecturen gelijk zijn (sinds dpkg 1.13.13). Het vergelijkt
 de huidige of opgegeven Debian host-architectuur met I<architectuur> om na
 te gaan of ze gelijk zijn. Deze actie zal geen architectuurjokertekens
 verwerken. Het commando sluit af met een afsluitstatus 0 bij gelijkheid en 1
@@ -58,7 +59,7 @@ bij ongelijkheid.
 
 =item B<-i>, B<--is> I<architectuurjokerteken>
 
-Ga na of de architecturen gelijk zijn (sinds dpkg 1.13.13). Het vergelijkt
+Nagaan of de architecturen gelijk zijn (sinds dpkg 1.13.13). Het vergelijkt
 de huidige of opgegeven Debian host-architectuur met
 I<architectuurjokerteken>, nadat dit als een architectuurjokerteken verwerkt
 werd, om na te gaan of beide gelijk zijn. Het commando sluit af met een
@@ -66,36 +67,35 @@ afsluitstatus 0 bij gelijkheid en 1 bij ongelijkheid.
 
 =item B<-q>, B<--query> I<variabelenaam>
 
-Toon de waarde van één enkele variabele.
+De waarde van één enkele variabele tonen.
 
 =item B<-s>, B<--print-set>
 
 Print an export command. This can be used to set the environment variables
-using the POSIX shell B<eval>.
+using the POSIX shell or make B<eval>, depending on the output format.
 
 =item B<-u>, B<--print-unset>
 
-Toon een commando dat vergelijkbaar is met B<--print-unset>, maar om alle
-variabelen leeg te maken.
+Print a similar command to B<--print-set> but to unset all variables.
 
 =item B<-c>, B<--command> I<commando-tekenreeks>
 
-Voer een I<commando-tekenreeks> uit in een omgeving waarin alle variabelen
+Een I<commando-tekenreeks> uitvoeren in een omgeving waarin alle variabelen
 ingesteld zijn op de vastgelegde waarde.
 
 =item B<-L>, B<--list-known>
 
-Toon een lijst van geldige architectuurbenamingen. Kan eventueel ingeperkt
+Een lijst van geldige architectuurbenamingen tonen. Kan eventueel ingeperkt
 worden met een of meer van de vergelijkingsopties B<--match-wildcard>,
 B<--match-bits> of B<--match-endian> (sinds dpkg 1.17.14).
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -105,36 +105,41 @@ Toon de versie en sluit af.
 
 =item B<-a>, B<--host-arch> I<architectuur>
 
-Stel de Debian-architectuur in voor de host.
+De Debian-architectuur voor de host instellen.
 
 =item B<-t>, B<--host-type> I<gnu-systeemtype>
 
-Stel het GNU-systeemtype in voor de host.
+Het GNU-systeemtype instellen voor de host.
 
 =item B<-A>, B<--target-arch> I<architectuur>
 
-Stel de Debian-architectuur in voor het doel (sinds dpkg 1.17.14).
+De Debian-architectuur instellen voor het doel (sinds dpkg 1.17.14).
 
 =item B<-T>, B<--target-type> I<gnu-systeemtype>
 
-Stel het GNU-systeemtype in voor het doel (sinds dpkg 1.17.14).
+Het GNU-systeemtype instellen voor het doel (sinds dpkg 1.17.14).
 
 =item B<-W>, B<--match-wildcard> I<architectuurjokerteken>
 
-Beperk de architecturen die door B<--list-known> weergegeven worden tot die
-welke beantwoorden aan het opgegeven architectuurjokerteken (sinds dpkg
+De architecturen die door B<--list-known> weergegeven worden, beperken tot
+die welke beantwoorden aan het opgegeven architectuurjokerteken (sinds dpkg
 1.17.14).
 
 =item B<-B>, B<--match-bits> I<architectuur-bits>
 
-Beperk de architecturen die door B<--list-known> weergegeven worden tot die
-met de opgegeven CPU-bits (sinds dpkg 1.17.14). Ofwel B<32> ofwel B<64>.
+De architecturen die door B<--list-known> weergegeven worden, beperken tot
+die met de opgegeven CPU-bits (sinds dpkg 1.17.14). Ofwel B<32> ofwel B<64>.
 
 =item B<-E>, B<--match-endian> I<architectuur-bytevolgorde>
 
-Beperk de architecturen die door B<--list-known> weergegeven worden tot die
-met de opgegeven bytevolgorde (endianness) (sinds dpkg 1.17.14). Ofwel
+De architecturen die door B<--list-known> weergegeven worden, beperken tot
+die met de opgegeven bytevolgorde (endianness) (sinds dpkg 1.17.14). Ofwel
 B<little> ofwel B<big>.
+
+=item B<--print-format> I<format>
+
+Sets the output format for B<--print-set> and B<--print-unset> (since dpkg
+1.20.6), to either B<shell> (default) or B<make>.
 
 =item B<-f>, B<--force>
 
@@ -222,8 +227,9 @@ i386-linux-gnu, x86_64-linux-gnu. Voorbeelden van paden:
 
 =head1 VARIABELEN
 
-De volgende variabelen worden door B<dpkg-architecture> ingesteld (zie de
-sectie B<TERMS> voor een beschrijving van het naamgevingsschema):
+The following variables are read from the environment (unless B<--force> has
+been specified) and set by B<dpkg-architecture> (see the B<TERMS> section
+for a description of the naming scheme):
 
 =over 
 
@@ -233,7 +239,7 @@ De Debian architectuur van de bouwmachine.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
-De Debian abi-naam van de bouwmachine (sinds dpkg 1.18.11).
+The Debian ABI name of the build machine (since dpkg 1.18.11).
 
 =item B<DEB_BUILD_ARCH_LIBC>
 
@@ -245,7 +251,7 @@ De Debian systeemnaam van de bouwmachine (sinds dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_CPU>
 
-De Debian CPU-naam van de bouwmachine (sinds dpkg 1.13.2).
+The Debian CPU name of the build machine (since dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_BITS>
 
@@ -258,11 +264,11 @@ De bytevolgorde (endianness) van de bouwmachine (little / big; sinds dpkg
 
 =item B<DEB_BUILD_GNU_CPU>
 
-Het CPU-gedeelte van B<DEB_BUILD_GNU_TYPE>.
+The GNU CPU part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_SYSTEM>
 
-Het systeemgedeelte van B<DEB_BUILD_GNU_TYPE>.
+The GNU system part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_TYPE>
 
@@ -279,7 +285,7 @@ De Debian architectuur van de hostmachine.
 
 =item B<DEB_HOST_ARCH_ABI>
 
-De Debian abi-naam van de hostmachine (sinds dpkg 1.18.11).
+The Debian ABI name of the host machine (since dpkg 1.18.11).
 
 =item B<DEB_HOST_ARCH_LIBC>
 
@@ -291,7 +297,7 @@ De Debian systeemnaam van de hostmachine (sinds dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_CPU>
 
-De Debian CPU-naam van de hostmachine (sinds dpkg 1.13.2).
+The Debian CPU name of the host machine (since dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_BITS>
 
@@ -304,11 +310,11 @@ De bytevolgorde (endianness) van de hostmachine (little / big; sinds dpkg
 
 =item B<DEB_HOST_GNU_CPU>
 
-Het CPU-gedeelte van B<DEB_HOST_GNU_TYPE>.
+The GNU CPU part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_SYSTEM>
 
-The systeemgedeelte van B<DEB_HOST_GNU_TYPE>.
+The GNU system part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_TYPE>
 
@@ -325,7 +331,7 @@ De Debian architectuur van de doelmachine (sinds dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_ABI>
 
-De Debian abi-naam van de doelmachine (sinds dpkg 1.18.11).
+The Debian ABI name of the target machine (since dpkg 1.18.11).
 
 =item B<DEB_TARGET_ARCH_LIBC>
 
@@ -337,7 +343,7 @@ De Debian systeemnaam van de doelmachine (sinds dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_CPU>
 
-De Debian CPU-naam van de doelmachine (sinds dpkg 1.17.14).
+The Debian CPU name of the target machine (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_BITS>
 
@@ -350,11 +356,11 @@ De bytevolgorde (endianness) van de doelmachine (little / big; sinds dpkg
 
 =item B<DEB_TARGET_GNU_CPU>
 
-Het CPU-gedeelte van B<DEB_TARGET_GNU_TYPE> (sinds dpkg 1.17.14).
+The GNU CPU part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_SYSTEM>
 
-Het systeemgedeelte van B<DEB_TARGET_GNU_TYPE> (sinds dpkg 1.17.14).
+The GNU system part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_TYPE>
 
@@ -425,7 +431,7 @@ door aan B<dpkg-architecture>. Andere voorbeelden:
 
 =back
 
-Verifieer of de huidige of opgegeven hostarchitectuur gelijk is aan een
+Verifiëren of de huidige of opgegeven hostarchitectuur gelijk is aan een
 architectuur:
 
 =over 
@@ -436,7 +442,7 @@ architectuur:
 
 =back
 
-Verifieer of de huidige of opgegeven hostarchitectuur een Linux-systeem is:
+Verifiëren of de huidige of opgegeven hostarchitectuur een Linux-systeem is:
 
 =over 
 
@@ -465,9 +471,9 @@ Het opvragen van het GNU-systeemtype en dit doorgeven aan ./configure:
  [...]
  ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
   confflags += --build=$(DEB_HOST_GNU_TYPE)
- else
-  confflags += --build=$(DEB_BUILD_GNU_TYPE) \
-               --host=$(DEB_HOST_GNU_TYPE)
+  else
+   confflags += --build=$(DEB_BUILD_GNU_TYPE) \
+                --host=$(DEB_HOST_GNU_TYPE)
  endif
  [...]
  ./configure $(confflags)
@@ -481,7 +487,7 @@ Iets enkel voor een specifieke architectuur doen:
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back
@@ -498,7 +504,7 @@ aangeleverd worden:
  include %PKGDATADIR%/architecture.mk
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back

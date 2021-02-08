@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-distaddfile - voeg items toe aan debian/files
+dpkg-distaddfile - items toevoegen aan debian/files
 
 =head1 OVERZICHT
 
@@ -39,16 +39,16 @@ dat B<dpkg-distaddfile> uitgevoerd wordt.
 
 =item B<-f>I<bestand-met-bestandenlijst>
 
-Lees of schrijf de lijst van bestanden die geüpload moeten worden hier,
+De lijst van bestanden die geüpload moeten worden hier lezen of schrijven,
 eerder dan B<debian/files> te gebruiken.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

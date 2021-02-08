@@ -28,7 +28,7 @@ fichier I<triggers> dans son archive de contrôle (c'est-à-dire
 I<DEBIAN/triggers> au moment de la création du paquet).
 
 Ce fichier contient des directives, une par ligne. Les espaces de début et
-fin de ligne et tout ce qui suit le premier caractère S<B<« # »>> sont
+fin de ligne et tout ce qui suit le premier caractère S<« B<#> »> sont
 supprimés, et les lignes vides seront ignorées.
 
 Les directives actuellement gérées S<sont :>

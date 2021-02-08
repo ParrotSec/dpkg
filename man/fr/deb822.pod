@@ -36,7 +36,7 @@ de contrôle utiliseront des lignes vides. Certains fichiers de contrôle
 acceptent seulement un paragraphe unique, d'autres plusieurs, dans ce cas,
 chaque paragraphe fait référence habituellement à un paquet différent. (Par
 exemple, dans les paquets source, le premier paragraphe fait référence au
-paquet source, et les paragraphes suivants font références aux paquets
+paquet source, et les paragraphes suivants font référence aux paquets
 binaires créés à partir du source.) L'ordre des paragraphes dans les
 fichiers de contrôles est important.
 
@@ -89,7 +89,7 @@ appelées ligne de continuation et doivent commencer par un caractère U+0020
 B<ESPACE> ou U+0009 B<TABULATION>. Une espace, y compris les caractères saut
 de ligne, n'est pas importante dans les valeurs de champ des champs coupés.
 
-La méthode de coupure est similaire à RFC5322, permettant des fichiers de
+La méthode de coupure est similaire à RFC5322, permettant à des fichiers de
 contrôle, qui contiennent seulement un paragraphe et pas des champs à
 plusieurs lignes, d'être lus par les analyseurs écrits pour RFC5322.
 
@@ -123,11 +123,11 @@ dans les valeurs de champ ou entre les champs. Les lignes vides dans les
 valeurs de champ sont habituellement protégées par une U+0020 B<ESPACE>
 suivie par un point (U+002E S<« B<.> »).>
 
-Les lignes débutant par un U+0023 S<« B<#> »,> sans être précédée d'une espace
+Les lignes débutant par un U+0023 S<« B<#> »,> sans être précédées d'une espace
 sont des lignes de commentaires qui ne sont permises que dans les fichiers
 de contrôle de paquet source et dans les fichiers B<deb-origin>(5). Ces
 lignes de commentaires sont ignorées, même entre deux lignes de
-continuation. Elles ne peuvent terminer les lignes logiques.
+continuation. Elles ne peuvent pas terminer les lignes logiques.
 
 Tous les fichiers de contrôle doivent être encodés en UTF-8.
 

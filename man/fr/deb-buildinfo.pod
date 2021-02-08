@@ -22,17 +22,18 @@ I<nom-du-fichier>B<.buildinfo>
 
 =head1 DESCRIPTION
 
-Chaque construction de paquet source Debian peut enregistrer les
-informations de construction dans un fichier de contrôle B<.buildinfo> qui
-contient un certain nombre de champs. Chaque champ commence par une
-étiquette, telle que B<Source> ou B<Binary> (la casse n'importe pas), suivie
-d'un S<« : »> et du contenu du champ. Les champs sont séparés seulement par des
-étiquettes de champ. En d'autres termes, le contenu d'un champ peut
-s'étendre sur plusieurs lignes, mais les outils d'installation joindront en
-général les lignes pendant le traitement du contenu du champ (sauf dans le
-cas des champs à lignes multiples  B<Binary-Only-Changes>,
+Each Debian source package build can record the build information in a
+B<.buildinfo> control file, which contains a number of fields in
+L<deb822(5)> format.
+
+Each field begins with a tag, such as B<Source> or B<Binary> (case
+insensitive), followed by a colon, and the body of the field (case sensitive
+unless stated otherwise).  Fields are delimited only by field tags.  In
+other words, field text may be multiple lines in length, but the
+installation tools will generally join lines when processing the body of the
+field (except in case of the multiline fields B<Binary-Only-Changes>,
 B<Installed-Build-Depends>, B<Environment>, B<Checksums-Md5>,
-B<Checksums-Sha1> et B<Checksums-Sha256>, voir ci-dessous).
+B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
 
 Les données de contrôle pourraient être incluses dans une signature OpenPGP
 S<« ASCII> S<Armored »,> comme spécifié dans RFC4880.
@@ -94,7 +95,7 @@ l'algorithme de tri sont décrits dans B<deb-version>(7).
 Ce champ à lignes multiples contient le texte concaténé des entrées de
 changelog pour un envoi seulement binaire (binNMU), si c'est le cas. Pour
 faire de ce champ un champ à lignes multiples valable, les lignes vides sont
-remplacées par un point S<B<« . »>> et toutes les lignes sont indentées par une
+remplacées par un point S<« B<.> »> et toutes les lignes sont indentées par une
 seule espace. Le contenu exact dépend du format du changelog.
 
 =item B<Checksums-Md5:> (requis)
@@ -163,18 +164,17 @@ Dans Debian et ses dérivées, les étiquettes de raisons suivantes peuvent
 
 =over 
 
-=item B<merged-usr-via-symlinks>
+=item B<merged-usr-via-aliased-dirs>
 
-Le système possède un I</usr> fusionné au moyen de liens symboliques. Cela
-peut tromper B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>,
-B<update-alternatives> et tous les autres outils qui utilisent les noms de
-chemin comme clés de leurs bases de données, parce que cela crée des
-problèmes d'alias du système de fichiers, et perturbe la compréhension du
-système de fichiers que B<dpkg> a enregistré dans sa base de données. Pour
-des systèmes construits qui codent en dur les noms de chemin vers des
-binaires ou des bibliothèques particuliers sur les objets produits, cela
-peut aussi produire des paquets qui seront incompatibles avec des systèmes
-de fichiers sans I</usr> fusionné.
+The system has a merged I</usr> via aliased directories (previously known as
+B<merged-usr-via-symlinks>).  This will confuse B<dpkg-query>,
+B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> and any other
+tool using pathnames as keys into their databases, as it creates filesystem
+aliasing problems, and messes with the understanding of the filesystem that
+B<dpkg> has recorded in its database.  For build systems that hardcode
+pathnames to specific binaries or libraries on the resulting artifacts, it
+can also produce packages that will be incompatible with non-/usr-merged
+filesystems.
 
 =item B<usr-local-has-configs>
 
@@ -222,14 +222,14 @@ dépendants seront inclus.
 
 La liste des variables d'environnement qui sont connues pour affecter le
 processus de construction du paquet. Chaque variable d'environnement est
-suivie d'un signe égal S<(« = »)> et de la valeur de la variable protégé avec
+suivie d'un signe égal S<(« = »)> et de la valeur de la variable protégée avec
 des guillemets doubles S<(« " »)> et des barres obliques inverses S<(« \\ »).>
 
 =back
 
 =head1 VOIR AUSSI
 
-B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
 
 
 =head1 TRADUCTION

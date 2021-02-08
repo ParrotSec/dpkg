@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-genchanges - genereer Debian .changes-bestanden
+dpkg-genchanges - Debian .changes-bestanden genereren
 
 =head1 OVERZICHT
 
@@ -41,26 +41,25 @@ De waarden die gebruikt mogen worden zijn:
 
 =item B<source>
 
-Doe een upload van het broncodepakket.
+Het broncodepakket uploaden.
 
 =item B<any>
 
-Doe een upload van de architectuurspecifieke binaire pakketten.
+De architectuurspecifieke binaire pakketten uploaden.
 
 =item B<all>
 
-Doe een upload van de architectuuronafhankelijke binaire pakketten.
+De architectuuronafhankelijke binaire pakketten uploaden.
 
 =item B<binary>
 
-Doe een upload van de architectuurspecifieke en de
-architectuuronafhankelijke binaire pakketten. Dit is een alias voor
-B<any,all>.
+De architectuurspecifieke en de architectuuronafhankelijke binaire pakketten
+uploaden. Dit is een alias voor B<any,all>.
 
 =item B<full>
 
-Doe een upload van alles. Dit is een alias voor B<source,any,all> en
-hetzelfde als de standaardsituatie wanneer geen bouwopties opgegeven werden.
+Alles uploaden. Dit is een alias voor B<source,any,all> en hetzelfde als de
+standaardsituatie wanneer geen bouwopties opgegeven werden.
 
 =back
 
@@ -137,12 +136,12 @@ bestand changelog van de broncodeboom.
 
 =item B<-V>I<naam>B<=>I<waarde>
 
-Stel een uitvoersubstitutievariabele in. Zie B<deb-substvars>(5) voor een
+Een uitvoersubstitutievariabele instellen. Zie B<deb-substvars>(5) voor een
 bespreking van uitvoersubstitutie.
 
 =item B<-T>I<substvars-bestand>
 
-Lees de substitutievariabelen uit I<substvars-bestand>. Standaard is dat
+De substitutievariabelen lezen uit I<substvars-bestand>. Standaard is dat
 B<debian/substvars>. Er wordt geen variabelesubstitutie toegepast op de
 velden uit de uitvoer, behalve voor de inhoud die geëxtraheerd werd uit het
 veld B<Description> van elk binair pakket (sinds dpkg 1.19.0). Nochtans zal
@@ -152,11 +151,11 @@ verschillende bestanden te lezen (sinds dpkg 1.15.6).
 
 =item B<-D>I<veld>B<=>I<waarde>
 
-Vervang in de uitvoer een veld uit het controlebestand of voeg er een toe.
+Een uitvoerveld uit het control-bestand overschrijven of toevoegen.
 
 =item B<-U>I<veld>
 
-Verwijder in de uitvoer een veld uit het controlebestand.
+Een uitvoerveld uit het control-bestand verwijderen.
 
 =item B<-c>I<controlebestand>
 
@@ -170,7 +169,7 @@ worden. Standaard is dat B<debian/changelog>.
 
 =item B<-f>I<bestand-met-bestandenlijst>
 
-Lees hier de lijst van bestanden die geüpload moeten worden, eerder dan
+Hier de lijst van bestanden lezen welke geüpload moeten worden, eerder dan
 gebruik te maken van B<debian/files>.
 
 =item B<-F>I<changelog-indeling>
@@ -180,7 +179,7 @@ B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
 
 =item B<-u>I<map-upload-bestanden>
 
-Zoek de bestanden die geüpload moeten worden in I<map-upload-bestanden>
+De bestanden welke geüpload moeten worden, zoeken in I<map-upload-bestanden>
 eerder dan in B<..> (B<dpkg-genchanges> moet deze bestanden kunnen vinden,
 zodat het hun grootte en hun controlesom kan opnemen in het bestand
 B<.changes>)
@@ -193,17 +192,17 @@ van het pakket geüpload worden. B<-q> onderdrukt deze berichten.
 
 =item B<-O>[I<bestandsnaam>]
 
-Toon het changes-bestand op standaarduitvoer (het standaardgedrag) of
-schrijf het naar I<bestandsnaam> indien dat op gegeven werd (sinds dpkg
+Het changes-bestand op standaarduitvoer tonen (het standaardgedrag) of het
+naar I<bestandsnaam> schrijven indien dat opgegeven werd (sinds dpkg
 1.18.5).
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

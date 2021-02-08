@@ -55,8 +55,14 @@ zrobić.
 When each package providing a file with a particular functionality is
 installed, changed or removed, B<update-alternatives> is called to update
 information about that file in the alternatives system.
-B<update-alternatives> is usually called from the B<postinst> (configure) or
-B<prerm> (remove and deconfigure) scripts in Debian packages.
+B<update-alternatives> is usually called from the following Debian package
+maintainer scripts, B<postinst> (configure) to install the alternative and
+from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
+most (if not all) cases no other maintainer script actions should call
+B<update-alternatives>, in particular neither of B<upgrade> nor
+B<disappear>, as any other such action can lose the manual state of an
+alternative, or make the alternative temporarily flip-flop, or completely
+switch when several of them have the same priority.
 
 Często użyteczne jest, aby pewna liczba alternatyw była zsynchronizowana,
 tak żeby była zmieniana jako grupa. Na przykład jeżeli jest zainstalowane
@@ -502,7 +508,7 @@ jako użytkownik root wykonać:
 
 =head1 ZOBACZ TAKŻE
 
-B<ln>(1), FHS - standard hierarchii systemu plików.
+B<ln>(1), FHS (the Filesystem Hierarchy Standard).
 
 
 =head1 TŁUMACZE

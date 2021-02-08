@@ -251,7 +251,7 @@ werden und nimmt ein Dateinamen-Muster mit Shell-Jokerzeichen an. Das Muster
 wird gegen den vollen relativen Pfad, aber auch individuell auf jeden Teil
 des Pfades angewendet. Die exakte Semantik der Option B<--exclude> ist etwas
 kompliziert, lesen Sie
-https://www.gnu.org/software/tar/manual/tar.html#wildcards für eine
+L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> für eine
 komplette Dokumentation.
 
 Der voreingestellte reguläre Ausdruck und Muster für beide Optionen können
@@ -304,7 +304,7 @@ Rückwärtskompatibilität.
 
 Falls Sie nicht wissen, welches Quellformat Sie verwenden sollen, verwenden
 Sie wahrscheinlich am besten entweder „3.0 (quilt)“ oder „3.0
-(native)“. Lesen Sie https://wiki.debian.org/Projects/DebSrc3.0 für
+(native)“. Lesen Sie L<https://wiki.debian.org/Projects/DebSrc3.0> für
 Informationen über den Einsatz dieser Formate innerhalb von Debian.
 
 =head2 Format: 1.0

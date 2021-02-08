@@ -78,7 +78,8 @@ The package is not installed on your system.
 
 =item B<config-files>
 
-Only the configuration files of the package exist on the system.
+Only the configuration files or the B<postrm> script and the data it needs
+to remove of the package exist on the system.
 
 =item B<half-installed>
 
@@ -621,7 +622,7 @@ depended on the removed package.
 
 =item B<-D>I<octal>, B<--debug=>I<octal>
 
-Switch debugging on. I<octal> is formed by bitwise-oring desired
+Switch debugging on. I<octal> is formed by bitwise-ORing desired
 values together from the list below (note that these values may change
 in future releases). B<-Dh> or B<--debug=help> display these
 debugging values.
@@ -1332,7 +1333,7 @@ To make a local copy of the package selection states:
 
 You might transfer this file to another computer, and after having updated
 the I<available> file there with your package manager frontend of choice
-(see https://wiki.debian.org/Teams/Dpkg/FAQ for more details), for example:
+(see L<https://wiki.debian.org/Teams/Dpkg/FAQ> for more details), for example:
 
 =over
 

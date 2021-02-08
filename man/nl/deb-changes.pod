@@ -22,15 +22,16 @@ I<bestandsnaam>B<.changes>
 
 =head1 BESCHRIJVING
 
-Elke upload in Debian bevat een .changes-controlebestand I<control> met een
-aantal velden. Ieder veld begint met een markering, zoals B<Source> of
-B<Binary> (niet hoofdlettergevoelig), gevolgd door een dubbele punt en de
-tekstinhoud van het veld. Velden worden enkel door veldmarkeringen
-begrensd. De tekstinhoud van het veld kan met andere woorden verschillende
-regels lang zijn, maar de installatiegereedschappen zullen bij het verwerken
-van de tekstinhoud de regels gewoonlijk samenvoegen (behalve voor de
-multiregel-velden B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> en
-B<Checksums-Sha256>; zie hierna)
+Each Debian upload is composed of a .changes control file, which contains a
+number of fields in L<deb822(5)> format.
+
+Each field begins with a tag, such as B<Source> or B<Binary> (case
+insensitive), followed by a colon, and the body of the field (case sensitive
+unless stated otherwise).  Fields are delimited only by field tags.  In
+other words, field text may be multiple lines in length, but the
+installation tools will generally join lines when processing the body of the
+field (except in case of the multiline fields B<Description>, B<Changes>,
+B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
 
 De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met
 ASCII-harnas volgens de specificatie RFC4880.
@@ -116,7 +117,7 @@ release verantwoordelijk is voor de veranderingen aan het pakket.
 
 =item B<Description:> (aanbevolen)
 
-=item S< >I<binary-package-name> B<-> I<binary-package-summary>
+=item S< >I<naam-binaire-pakket> B<-> I<samenvatting-binaire-pakket>
 
 Dit multiregel-veld bevat een lijst met de naam van de binaire pakketten,
 gevolgd door een spatie, een koppelteken (‘B<->’) en hun eventueel afgekapte
@@ -125,10 +126,10 @@ het veld weggelaten (sinds dpkg 1.19.3).
 
 =item B<Closes:> I<bug-nummer-lijst>
 
-A space-separated list of bug report numbers for bug reports that have been
-resolved with this upload.  The distribution archive software might use this
-field to automatically close the referred bug numbers in the distribution
-bug tracking system.
+Een lijst van met komma's van elkaar gescheiden nummers van bugrapporten die
+door deze upload opgelost worden. De archiefsoftware van de distributie kan
+dit veld gebruiken om automatisch de vermelde bugnummers te sluiten in het
+opvolgingssysteem voor bugs van de distributie.
 
 =item B<Binary-Only: yes>
 
@@ -144,7 +145,7 @@ bouwprofielen op waarmee deze upload gebouwd werd.
 
 =item B<Changes:> (verplicht)
 
-=item S< >I<changelog-entries>
+=item S< >I<changelog-items>
 
 Dit multiregel-veld bevat de samengevoegde tekst van alle changelog-items
 die deel uitmaken van de upload. Om van dit veld een geldig multiregel-veld
@@ -154,7 +155,7 @@ changelog-indeling.
 
 =item B<Files:> (verplicht)
 
-=item S< >I<md5sum> I<size> I<section> I<priority> I<filename>
+=item S< >I<md5som> I<grootte> I<sectie> I<prioriteit> I<bestandsnaam>
 
 Dit multiregel-veld bevat een bestandslijst met voor elk bestand de
 vermelding van de md5som, grootte, sectie en prioriteit.
@@ -174,7 +175,7 @@ andere gerelateerde B<Checksums>-velden.
 
 =item B<Checksums-Sha256:> (verplicht)
 
-=item S< >I<checksum> I<size> I<filename>
+=item S< >I<controlesom> I<grootte> I<bestandsnaam>
 
 Deze multiregel-velden bevatten een lijst van bestanden met een controlesom
 en een bestandsgrootte voor elk van hen. Deze velden gebruiken dezelfde
@@ -204,5 +205,5 @@ naar verwezen wordt.
 
 =head1 ZIE OOK
 
-B<deb-src-control>(5), B<deb-version>(7).
+L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7).
 

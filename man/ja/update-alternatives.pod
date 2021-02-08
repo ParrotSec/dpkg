@@ -42,8 +42,14 @@ I<%CONFDIR%> ディレクトリ以下で完結させるためである。なぜ�
 When each package providing a file with a particular functionality is
 installed, changed or removed, B<update-alternatives> is called to update
 information about that file in the alternatives system.
-B<update-alternatives> is usually called from the B<postinst> (configure) or
-B<prerm> (remove and deconfigure) scripts in Debian packages.
+B<update-alternatives> is usually called from the following Debian package
+maintainer scripts, B<postinst> (configure) to install the alternative and
+from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
+most (if not all) cases no other maintainer script actions should call
+B<update-alternatives>, in particular neither of B<upgrade> nor
+B<disappear>, as any other such action can lose the manual state of an
+alternative, or make the alternative temporarily flip-flop, or completely
+switch when several of them have the same priority.
 
 複数の選択肢を同期させ、グループとして変更すると便利なことが多い。例えば B<vi>(1)
 エディタのいろいろな派生システムが同時にインストールされていたとすると、 I</usr/share/man/man1/vi.1> が参照する man
@@ -441,7 +447,7 @@ B<vi> 実装の選択を自動的に行なうように戻すには、root とし
 
 =head1 関連項目
 
-B<ln>(1), FHS, the Filesystem Hierarchy Standard.
+B<ln>(1), FHS (the Filesystem Hierarchy Standard).
 
 
 =head1 翻訳者

@@ -43,7 +43,7 @@ Nadat het pakket gewist was (d.w.z. inclusief zijn configuratie).
 
 Nadat het pakket opgewaardeerd was.
 
-=item I<new-postrm> B<failed-upgrade> I<old-version> I<new-version>
+=item I<new-postrm> B<failed-upgrade> I<oude-versie> I<nieuwe-versie>
 
 Indien de bovenvermelde B<upgrade>-opdracht mislukt.
 

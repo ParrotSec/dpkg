@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-gencontrol - genereer Debian controlebestanden
+dpkg-gencontrol - Debian control-bestanden genereren
 
 =head1 OVERZICHT
 
@@ -62,19 +62,19 @@ bespreking van uitvoersubstitutie.
 
 =item B<-T>I<substvars-bestand>
 
-Lees de substitutievariabelen uit het I<substvars-bestand>. De standaard is
+De substitutievariabelen lezen uit het I<substvars-bestand>. De standaard is
 B<debian/substvars>. Deze optie kan meermaals gebruikt worden om uit
 verschillende bestanden substitutievariabelen te lezen (sinds dpkg 1.15.6).
 
 =item B<-D>I<veld>B<=>I<waarde>
 
-Vervang in de uitvoer een veld uit het controlebestand of voeg er een toe.
+Een uitvoerveld uit het control-bestand overschrijven of toevoegen.
 
 =item B<-U>I<veld>
 
-Verwijder in de uitvoer een veld uit het controlebestand.
+Een uitvoerveld uit het control-bestand verwijderen.
 
-=item B<-c>I<controlebestand>
+=item B<-c>I<control-bestand>
 
 Geeft aan wat het hoofdcontrolebestand van de broncode is waaruit informatie
 gehaald moet worden. Standaard is dat B<debian/control>.
@@ -86,7 +86,7 @@ worden. Standaard is dat B<debian/changelog>.
 
 =item B<-f>I<bestand-met-bestandenlijst>
 
-Lees of schrijf de lijst van bestanden die geüpload moeten worden hier,
+De lijst van bestanden die geüpload moeten worden hier lezen of schrijven,
 eerder dan B<debian/files> te gebruiken.
 
 =item B<-F>I<changelog-indeling>
@@ -96,14 +96,14 @@ B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
 
 =item B<-p>I<pakket>
 
-Genereer informatie over het binaire pakket I<pakket>. Indien het
-controlebestand van de broncode enkel één binair pakket vermeldt, dan kan
+Informatie genereren over het binaire pakket I<pakket>. Indien het
+control-bestand van de broncode enkel één binair pakket vermeldt, dan kan
 deze optie weggelaten worden. Anders is ze van essentieel belang om te
 selecteren over welk binair pakket er informatie gegenereerd moet worden.
 
 =item B<-n>I<bestandsnaam>
 
-Ga ervan uit dat de bestandsnaam van het pakket I<bestandsnaam> zal zijn in
+Ervan uitgaan dat de bestandsnaam van het pakket I<bestandsnaam> zal zijn in
 plaats van de normale bestandsnaam pakket_versie_arch.deb.
 
 =item B<-is>, B<-ip>, B<-isp>
@@ -118,24 +118,25 @@ verwijderen.
 
 =item B<-P>I<pakketbouwmap>
 
-Scan I<package-build-dir> instead of B<debian/tmp>.  This value is used to
-find the default value of the B<Installed-Size> substitution variable and
-control file field, and for the default location of the output file.
+De I<pakketbouwmap> doorzoeken in plaats van B<debian/tmp>. Deze waarde
+wordt gebruikt om de standaardwaarde te vinden van de substitutievariabele
+B<Installed-Size> en van dat veld in het bestand control en voor de
+standaardlocatie van het uitvoerbestand.
 
 =item B<-O>[I<bestandsnaam>]
 
-Geef het bestand control weer op de standaarduitvoer (of in I<bestandsnaam>
+Het bestand control weergeven op de standaarduitvoer (of in I<bestandsnaam>
 als dit opgegeven werd; sinds dpkg 1.17.2), eerder dan in
 B<debian/tmp/DEBIAN/control> (of I<pakketbouwmap>B</DEBIAN/control> indien
 B<-P> gebruikt werd).
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

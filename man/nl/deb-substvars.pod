@@ -18,7 +18,7 @@ deb-substvars - Substitutievariabelen in Debian broncode
 
 =head1 OVERZICHT
 
-B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>
+B<debian/substvars>, B<debian/>I<binair-pakket>B<.substvars>
 
 =head1 BESCHRIJVING
 
@@ -53,18 +53,18 @@ impliciet bij de uitvoer van het veld. Indien bijvoorbeeld de variabele
 B<${Description}> ingesteld werd op "foo is bar.${Newline}foo is geweldig."
 en u het volgende veld heeft:
 
- Description: foo application
+ Description: toepassing foo
   ${Description}
   .
-  More text.
+  Bijkomende tekst.
 
 zal dit resulteren in:
 
- Description: foo application
+ Description: toepassing foo
   foo is bar.
-  foo is great.
+  foo is geweldig.
   .
-  More text.
+  Bijkomende tekst.
 
 Variabelen kunnen ingesteld worden met behulp van de algemene optie
 B<-V>. Ze kunnen ook opgegeven worden in het bestand B<debian/substvars> (of
@@ -84,14 +84,14 @@ gebouwd wordt; het equivalent van B<DEB_HOST_ARCH>).
 
 =item B<vendor:Name>
 
-The current vendor name (since dpkg 1.20.0).  This value comes from the
-B<Vendor> field for the current vendor's origin file, as B<dpkg-vendor>(1)
-would retrieve it.
+De naam van de huidige leverancier (sinds dpkg 1.20.0). Deze waarde is
+afkomstig van het B<Vendor>-veld voor het origin-bestand van de huidige
+leverancier, zoals B<dpkg-vendor>(1) het zou ophalen.
 
 =item B<vendor:Id>
 
-The current vendor ID (since dpkg 1.20.0).  This is just the lowercase
-variant of B<vendor:Name>.
+Het ID van de huidige leverancier (sinds dpkg 1.20.0). Dit is gewoon de
+variant van B<vendor:Name> in kleine letters.
 
 =item B<source:Version>
 
@@ -128,13 +128,15 @@ B<Description> van het broncode-element, als het bestaat (sinds dpkg
 
 =item B<Installed-Size>
 
-The approximate total size of the package's installed files. This value is
-copied into the corresponding control file field; setting it will modify the
-value of that field. If this variable is not set B<dpkg-gencontrol> will
-compute the default value by accumulating the size of each regular file and
-symlink rounded to 1 KiB used units, and a baseline of 1 KiB for any other
-filesystem object type.  With hardlinks only being counted once as a regular
-file.
+De geschatte totale grootte van de uit het pakket geïnstalleerde
+bestanden. Deze waarde wordt gekopieerd naar het overeenkomstige veld in het
+bestand control. Dit instellen wijzigt de waarde van dat veld. Indien deze
+variabele niet ingesteld werd, zal B<dpkg-gencontrol> de standaardwaarde
+berekenen door de grootte van alle gewone bestanden en alle symbolische
+koppelingen samen te nemen, afgerond tot op een eenheid van 1 KiB, en met
+een richtlijn van 1 KiB voor elk ander type object van het
+bestandssysteem. Daarbij worden harde koppelingen slechts éénmaal geteld als
+een gewoon bestand
 
 B<Opmerking:> Houd er rekening mee dat dit steeds slechts een schatting kan
 zijn, aangezien de werkelijke grootte die op het geïnstalleerde systeem

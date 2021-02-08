@@ -55,12 +55,17 @@ dall'amministratore di sistema possono rimanere confinate nella directory
 I</etc>: il FHS (q.v.) spiega le ragioni per cui questa è una Cosa Buona e
 Giusta.
 
-Al momento dell'installazione, cambiamento o rimozione di ogni pacchetto che
-fornisce un file con una particolare funzionalità, viene invocato
-B<update-alternatives> per aggiornare le informazioni su quel file nel
-sistema delle alternative. B<update-alternatives> viene solitamente chiamato
-dagli script B<postinst> (configurazione) o B<prerm> (rimozione e
-deconfigurazione) dei pacchetti Debian.
+When each package providing a file with a particular functionality is
+installed, changed or removed, B<update-alternatives> is called to update
+information about that file in the alternatives system.
+B<update-alternatives> is usually called from the following Debian package
+maintainer scripts, B<postinst> (configure) to install the alternative and
+from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
+most (if not all) cases no other maintainer script actions should call
+B<update-alternatives>, in particular neither of B<upgrade> nor
+B<disappear>, as any other such action can lose the manual state of an
+alternative, or make the alternative temporarily flip-flop, or completely
+switch when several of them have the same priority.
 
 Spesso è utile che un certo numero di alternative siano sincronizzate, in
 modo da venir modificate in gruppo; per esempio, quando sono installate
@@ -522,5 +527,5 @@ questo da root:
 
 =head1 VEDERE ANCHE
 
-B<ln>(1), FHS: lo standard per la gerarchia del file system.
+B<ln>(1), FHS (the Filesystem Hierarchy Standard).
 

@@ -14,12 +14,12 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-shlibdeps - genereert substitutievariabelen over
+dpkg-shlibdeps - substitutievariabelen genereren over
 afhankelijkheidsrelaties tot gedeelde bibliotheken
 
 =head1 OVERZICHT
 
-B<dpkg-shlibdeps> [I<option>...] [B<-e>] I<executable> [I<option>...]
+B<dpkg-shlibdeps> [I<optie>...] [B<-e>] I<programma> [I<optie>...]
 
 =head1 BESCHRIJVING
 
@@ -151,23 +151,24 @@ B<-e>I<programma>.
 
 =item B<-e>I<programma>
 
-Voeg de gepaste afhankelijkheidsrelaties tot gedeelde bibliotheken toe die
-nodig zijn voor I<programma>. Deze optie kan meermaals gebruikt worden.
+De gepaste afhankelijkheidsrelaties tot gedeelde bibliotheken die nodig zijn
+voor I<programma>, toevoegen. Deze optie kan meermaals gebruikt worden.
 
 =item B<-l>I<map>
 
-Voeg I<map> vooraan toe aan de lijst van mappen waarin naar particuliere
+I<map> vooraan toevoegen aan de lijst van mappen waarin naar particuliere
 gedeelde bibliotheken gezocht moet worden (sinds dpkg 1.17.0). Deze optie
 kan meermaals gebruikt worden.
 
-B<Note:> Use this option instead of setting B<LD_LIBRARY_PATH>, as that
-environment variable is used to control the run-time linker and abusing it
-to set the shared library paths at build-time can be problematic when
-cross-compiling for example.
+B<Opmerking:> gebruik deze optie in de plaats van het instellen van
+B<LD_LIBRARY_PATH>, aangezien die omgevingsvariabele gebruikt wordt om de
+runtime linker aan te sturen. Daarvan misbruik maken om de paden van
+gedeelde bibliotheken in te stellen tijdens het bouwen van het programma,
+kan problematisch zijn, bijvoorbeeld bij het cross-compileren.
 
 =item B<-d>I<afhankelijkheidsveld>
 
-Geef afhankelijkheidsinformatie op die toegevoegd moet worden aan het
+Afhankelijkheidsinformatie opgeven die toegevoegd moet worden aan het
 afhankelijkheidsveld I<afhankelijkheidsveld> van het bestand control. (De
 afhankelijkheidsinformatie voor dit veld wordt in de variabele
 B<shlibs:>I<dependency-field> geplaatst.)
@@ -185,21 +186,21 @@ vertegenwoordigt.
 
 =item B<-p>I<variabelenaamprefix>
 
-Begin substitutievariabelen met I<variabelenaamprefix>B<:> in plaats van met
-B<shlibs:>. Op dezelfde wijze worden eventuele substitutievariabelen die
+Substitutievariabelen beginnen met I<variabelenaamprefix>B<:> in plaats van
+met B<shlibs:>. Op dezelfde wijze worden eventuele substitutievariabelen die
 beginnen met I<variabelenaamprefix>B<:> (in plaats van met B<shlibs:>),
 verwijderd uit het bestand met substitutievariabelen.
 
 =item B<-O>[I<bestandsnaam>]
 
-Geef de instellingen in verband met substitutievariabelen weer op de
+De instellingen in verband met substitutievariabelen weergeven op de
 standaarduitvoer (of in I<bestandsnaam> als die opgegeven werd; sinds dpkg
 1.17.2), eerder dan ze toe te voegen aan het bestand met
 substitutievariabelen (standaard is dat B<debian/substvars>).
 
 =item B<-t>I<type>
 
-Geef de voorrang aan informatie over afhankelijkheidsrelaties tot gedeelde
+De voorrang geven aan informatie over afhankelijkheidsrelaties tot gedeelde
 bibliotheken die gemarkeerd werd als geldend voor het opgegeven
 pakkettype. Indien er geen gemarkeerde informatie te vinden is, wordt
 teruggevallen op niet-gemarkeerde informatie. Het standaardpakkettype is
@@ -209,23 +210,23 @@ voorafgaan door de naam van dat type, een dubbele punt en witruimte.
 
 =item B<-L>I<lokaal-shlibs-bestand>
 
-Lees vervangende informatie over afhankelijkheidsrelaties tot gedeelde
-bibliotheken uit I<lokaal-shlibs-bestand> in plaats van uit
+Vervangende informatie over afhankelijkheidsrelaties tot gedeelde
+bibliotheken lezen uit I<lokaal-shlibs-bestand> in plaats van uit
 B<debian/shlibs.local>.
 
 =item B<-T>I<substvars-bestand>
 
-Schrijf substitutievariabelen neer in I<substvars-bestand>. Standaard is dat
+Substitutievariabelen opschrijven in I<substvars-bestand>. Standaard is dat
 B<debian/substvars>.
 
 =item B<-v>
 
-Schakel de breedsprakige modus in (sinds dpkg 1.14.8). Talrijke berichten
+De breedsprakige modus inschakelen (sinds dpkg 1.14.8). Talrijke berichten
 worden weergegeven om uit te leggen wat B<dpkg-shlibdeps> doet.
 
 =item B<-x>I<pakket>
 
-Sluit het pakket uit van de gegenereerde afhankelijkheden (sinds dpkg
+Het pakket uitsluiten van de gegenereerde afhankelijkheden (sinds dpkg
 1.14.8). Dit is nuttig om een afhankelijkheid van zichzelf te vermijden voor
 pakketten die binaire bestanden van het type ELF aanleveren (programma's of
 bibliotheekuitbreidingen), waarbij die binaire bestanden gebruik maken van
@@ -234,7 +235,7 @@ meermaals gebruikt worden om meerdere pakketten uit te sluiten.
 
 =item B<-S>I<pakket-bouwmap>
 
-Zoek eerst in I<pakket-bouwmap> bij het zoeken naar een bibliotheek (sinds
+Eerst zoeken in I<pakket-bouwmap> bij het zoeken naar een bibliotheek (sinds
 dpkg 1.14.15). Dit is nuttig als het broncodepakket meerdere varianten van
 dezelfde bibliotheek bouwt en u zeker wilt zijn dat u de afhankelijkheden
 krijgt van een specifiek binair pakket. U kunt deze optie meermaals
@@ -243,14 +244,14 @@ gezocht wordt in de mappen van andere binaire pakketten.
 
 =item B<-I>I<pakketbouwmap>
 
-Sla I<pakketbouwmap> over bij het zoeken naar shlibs-, symbolen- en gedeelde
-bibliotheek-bestanden (sinds dpkg 1.18.5). U kunt deze optie meermaals
-gebruiken.
+I<pakketbouwmap> overslaan bij het zoeken naar shlibs-, symbolen- en
+gedeelde bibliotheek-bestanden (sinds dpkg 1.18.5). U kunt deze optie
+meermaals gebruiken.
 
 =item B<--ignore-missing-info>
 
-Beschouw het niet als een mislukking als voor een gedeelde bibliotheek geen
-afhankelijkheidsinformatie gevonden kan worden (sinds dpkg 1.14.8). Het
+Het niet als een mislukking beschouwen als voor een gedeelde bibliotheek
+geen afhankelijkheidsinformatie gevonden kan worden (sinds dpkg 1.14.8). Het
 wordt afgeraden om deze optie te gebruiken. Alle bibliotheken zouden
 afhankelijkheidsinformatie moeten verschaffen (ofwel via shlibs-bestanden of
 via symbolenbestanden), zelfs als die nog niet door andere pakketten
@@ -271,16 +272,16 @@ geactiveerd worden.
 
 =item B<--admindir=>I<map>
 
-Geef een andere locatie op voor de database van B<dpkg> (sinds dpkg
+Een andere locatie opgeven voor de database van B<dpkg> (sinds dpkg
 1.14.0). De standaardlocatie is I<%ADMINDIR%>.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

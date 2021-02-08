@@ -24,7 +24,8 @@ B<debian/>I<Paket>B<.symbols>, B<debian/symbols>
 =head1 BESCHREIBUNG
 
 Die Symboldateivorlagen werden in Debian-Quellpaketen ausgeliefert. Deren
-Format ist eine Obermenge der in Binärpaketen ausgelieferten Symboldateien.
+Format ist eine Obermenge der in Binärpaketen ausgelieferten Symboldateien,
+siehe L<deb-symbols(5)>.
 
 =head2 Kommentare
 

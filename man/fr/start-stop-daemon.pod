@@ -23,7 +23,7 @@ B<start-stop-daemon> [I<option>...] I<commande>
 =head1 DESCRIPTION
 
 On se sert de B<start-stop-daemon> pour contrôler la création ou l'arrêt de
-processus système. En utilisant les options correspondantes,
+processus système. En utilisant une des options de correspondance,
 B<start-stop-daemon> peut être configuré pour trouver les exemplaires
 présents d'un processus en fonctionnement.
 
@@ -260,7 +260,7 @@ une chaîne conviviale pour la valeur de B<errno>.
 
 =back
 
-=item B<--notify-timeout>I<durée>
+=item B<--notify-timeout> I<timeout>
 
 Définit une durée pour l'option B<--notify-await> (depuis la
 S<version 1.19.3).> Quand la durée est atteinte, B<start-stop-daemon> s'arrête
@@ -274,6 +274,12 @@ arrière-plan (depuis la S<version 1.16.5).> Utilisé à des fins de débogage a
 de voir ce qu'affiche le processus ou pour rediriger les descripteurs de
 fichiers pour journaliser l'affichage du processus. N'est pertinent que lors
 de l'utilisation de B<--background>.
+
+=item B<-O>, B<--output> I<pathname>
+
+Redirect B<stdout> and B<stderr> to I<pathname> when forcing the daemon into
+the background (since version 1.20.6).  Only relevant when using
+B<--background>.
 
 =item B<-N>, B<--nicelevel> I<int>
 

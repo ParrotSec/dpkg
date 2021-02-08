@@ -23,15 +23,16 @@ B<debian/control>
 =head1 BESCHREIBUNG
 
 Jedes Debian-Quellpaket enthält eine Hauptdatei „B<debian/control>“. Deren
-Format ist eine Obermenge der in Debian-Binärpaketen ausgelieferten
-B<control>-Datei, siehe B<deb-control>(5).
+L<deb822(5)>-Format ist eine Obermenge der in Debian-Binärpaketen
+ausgelieferten B<control>-Datei, siehe B<deb-control>(5).
 
 Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile
 getrennt werden. Der erste Absatz führt alle allgemeinen Informationen über
 das Quellpaket auf, während jeder folgende Absatz genau ein Binärpaket
 beschreibt. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt
 mit einem Feldnamen, wie B<Package> oder B<Section> (Groß-/Kleinschreibung
-egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes und einem
+egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes
+(Groß-/Kleinschreibung ist relevant, außer anders angegeben) und einem
 Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede ergänzende
 Zeile ohne Feldnamen sollte mit mindestens einem Leerzeichen beginnen. Der
 Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu
@@ -465,7 +466,7 @@ Sie den Feldern B<Private->, wie in B<XB-Private-Neues-Feld>, voranstellen.
 
 =head1 SIEHE AUCH
 
-B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
 
 
 =head1 ÜBERSETZUNG

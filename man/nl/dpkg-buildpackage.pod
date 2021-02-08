@@ -108,12 +108,13 @@ werd).
 
 =item B<11.>
 
-It runs the B<sign> hook and calls B<gpg> (as long as it is not an
-UNRELEASED build, or B<--no-sign> is specified) to sign the B<.dsc> file (if
-any, unless B<-us> or B<--unsigned-source> is specified), the B<.buildinfo>
-file (unless B<-ui>, B<--unsigned-buildinfo>, B<-uc> or
-B<--unsigned-changes> is specified) and the B<.changes> file (unless B<-uc>
-or B<--unsigned-changes> is specified).
+Het voert de uitbreiding (hook) B<sign> uit en roept B<gpg> aan (voor zover
+het geen bouw van het type UNRELEASED is of tenzij B<--no-sign> werd
+opgegeven) voor het ondertekenen van het bestand B<.dsc> (als dat bestaat,
+tenzij B<-us> of B<--unsigned-source> opgegeven werden), van het bestand
+B<.buildinfo> (tenzij B<-ui>, B<--unsigned-buildinfo>, B<-uc> of
+B<--unsigned-changes> opgegeven werden) en van het bestand B<.changes>
+(tenzij B<-uc> of B<--unsigned-changes> opgegeven werden).
 
 =item B<12.>
 
@@ -142,13 +143,14 @@ De waarden die gebruikt mogen worden zijn:
 
 =item B<source>
 
-Builds the source package.
+Bouwt het broncodepakket.
 
-B<Note:> When using this value standalone and if what you want is simply to
-(re-)build the source package from a clean source tree, using B<dpkg-source>
-directly is always a better option as it does not require any build
-dependencies to be installed which are otherwise needed to be able to call
-the B<clean> target.
+B<Opmerking:> Indien u deze waarde op zichzelf staand gebruikt en indien uw
+enige bedoeling is om het bronpakket gewoon (opnieuw) te bouwen vanuit een
+zuivere broncodeboom, dan is het altijd beter om rechtstreeks B<dpkg-source>
+te gebruiken, aangezien dat niet vereist dat eventuele bouwvereisten
+geïnstalleerd worden, welke anders nodig zijn om in staat te zijn het
+doelwit B<clean> te aanroepen.
 
 =item B<any>
 
@@ -239,38 +241,39 @@ ervan.
 
 =item B<-a>, B<--host-arch> I<architectuur>
 
-Geef de Debian-architectuur op waarvoor we bouwen (lange optie sinds dpkg
-1.17.17). De architectuur van de machine waarop we bouwen, wordt automatisch
-vastgesteld en ze wordt ook als standaard genomen voor de hostmachine.
+De Debian-architectuur waarvoor we bouwen specificeren (lange optie sinds
+dpkg 1.17.17). De architectuur van de machine waarop we bouwen, wordt
+automatisch vastgesteld en ze wordt ook als standaard genomen voor de
+hostmachine.
 
 =item B<-t>, B<--host-type> I<gnu-systeemtype>
 
-Geef het GNU-systeemtype op waarvoor we bouwen (lange optie sinds dpkg
+Het GNU-systeemtype waarvoor we bouwen specificeren (lange optie sinds dpkg
 1.17.17). Het kan gebruikt worden in de plaats van B<--host-arch> of als een
 aanvulling om het standaard GNU-systeemtype voor de Debian-architectuur van
 de host aan te passen.
 
 =item B<--target-arch> I<architectuur>
 
-Geef de Debian-architectuur op waarvoor de gebouwde programma's zullen
-bouwen (sinds dpkg 1.17.17). De standaardwaarde is de hostmachine.
+De Debian-architectuur specificeren waarvoor de gebouwde programma's gebouwd
+zullen worden (sinds dpkg 1.17.17). De standaardwaarde is de hostmachine.
 
 =item B<--target-type> I<gnu-systeemtype>
 
-Geef het GNU-systeemtype op waarvoor de gebouwde programma's zullen bouwen
-(sinds dpkg 1.17.17). Het kan gebruikt worden in de plaats van
+Het GNU-systeemtype specificeren waarvoor de gebouwde programma's gebouwd
+zullen worden (sinds dpkg 1.17.17). Het kan gebruikt worden in de plaats van
 B<--target-arch> of als een aanvulling om het standaard GNU-systeemtype voor
 de Debian doelarchitectuur aan te passen.
 
 =item B<-P>, B<--build-profiles=>I<profiel>[B<,>...]
 
-Geef het/de profiel(en) die we bouwen op in een lijst met een komma als
-scheidingsteken (sinds dpkg 1.17.2, de lange optie sinds dpkg 1.18.8). Het
-standaardgedrag is om niet voor een specifiek profiel te bouwen. Stelt ze
-ook in (als een lijst met een spatie als scheidingsteken) als de
-omgevingsvariabele B<DEB_BUILD_PROFILES>, hetgeen bijvoorbeeld toelaat aan
-B<debian/rules>-bestanden om gebruik te maken van deze informatie bij
-voorwaardelijke bouwoperaties.
+Het/de profiel(en) welke we bouwen specificeren in een lijst met een komma
+als scheidingsteken (sinds dpkg 1.17.2, de lange optie sinds dpkg
+1.18.8). Het standaardgedrag is om niet voor een specifiek profiel te
+bouwen. Stelt ze ook in (als een lijst met een spatie als scheidingsteken)
+als de omgevingsvariabele B<DEB_BUILD_PROFILES>, hetgeen bijvoorbeeld
+toelaat aan B<debian/rules>-bestanden om gebruik te maken van deze
+informatie bij voorwaardelijke bouwoperaties.
 
 =item B<-j>, B<--jobs>[=I<taken>|B<auto>]
 
@@ -310,56 +313,57 @@ instellen op 1 zal het seriële gedrag opnieuw instellen.
 
 =item B<-D>, B<--check-builddeps>
 
-Controleer bouwvereisten en tegenstrijdigheden en breek af als er niet aan
+Bouwvereisten en tegenstrijdigheden controleren en afbreken als er niet aan
 voldaan is (de lange optie sinds dpkg 1.18.8). Dit is het standaardgedrag.
 
 =item B<-d>, B<--no-check-builddeps>
 
-Controleer bouwvereisten en tegenstrijdigheden niet (de lange optie sinds
+Bouwvereisten en tegenstrijdigheden niet controleren (de lange optie sinds
 dpkg 1.18.8).
 
 =item B<--ignore-builtin-builddeps>
 
-Controleer ingebouwde bouwvereisten en tegenstrijdigheden niet (sinds dpkg
+Ingebouwde bouwvereisten en tegenstrijdigheden niet controleren (sinds dpkg
 1.18.2). Dit zijn de distributiespecifieke impliciete bouwvereisten die
 gewoonlijk noodzakelijk zijn in een bouwomgeving, de zogenaamde set van
 pakketten van het type Build-Essential.
 
 =item B<--rules-requires-root>
 
-Honoreer het veld B<Rules-Requires-Root> niet; er wordt teruggevallen op
+Het veld B<Rules-Requires-Root> niet honoreren; er wordt teruggevallen op
 zijn verouderde standaardwaarde (since dpkg 1.19.1).
 
 =item B<-nc>, B<--no-pre-clean>
 
-Schoon voor het bouwen de broncodeboom niet op (de lange optie sinds dpkg
+Voor het bouwen de broncodeboom niet opschonen (de lange optie sinds dpkg
 1.18.8). Impliceert B<-b> indien geen van de opties B<-F>, B<-g>, B<-G>,
 B<-B>, B<-A> of B<-S> gekozen werd. Gecombineerd met B<-S> impliceert dit
 B<-d> (sinds dpkg 1.18.0).
 
 =item B<--pre-clean>
 
-Schoon voor het bouwen de broncodeboom op (sinds dpkg 1.18.8). Dit is het
+Voor het bouwen de broncodeboom opschonen (sinds dpkg 1.18.8). Dit is het
 standaardgedrag.
 
 =item B<-tc>, B<--post-clean>
 
-Schoon de broncodeboom op (met I<commando-om-root-te-worden> B<debian/rules
+De broncodeboom opschonen (met I<commando-om-root-te-worden> B<debian/rules
 clean>) nadat het pakket gebouwd werd (de lange optie sinds dpkg 1.18.8).
 
 =item B<--no-post-clean>
 
-Schoon de broncodeboom niet op na het bouwen van het pakket (sinds dpkg
+De broncodeboom niet opschonen na het bouwen van het pakket (sinds dpkg
 1.19.1). Dit is het standaardgedrag.
 
 =item B<--sanitize-env>
 
-Sanitize the build environment (since dpkg 1.20.0).  This will reset or
-remove environment variables, umask, and any other process attributes that
-might otherwise adversely affect the build of packages.  Because the
-official entry point to build packages is B<debian/rules>, packages cannot
-rely on these settings being in place, and thus should work even when they
-are not.  What to sanitize is vendor specific.
+De bouwomgeving saneren (sinds dpkg 1.20.0). Dit houdt het verwijderen of
+opnieuw instellen in van omgevingsvariabelen, van umask en van eventuele
+andere procesattributen welke anders de bouw van pakketten negatief zouden
+kunnen beïnvloeden. Omdat het officiële startpunt voor het bouwen van
+pakketten B<debian/rules> is, kunnen pakketten er niet op vertrouwen dat
+deze instellingen aanwezig zijn en moeten ze dus werken indien dat niet het
+geval is. Wat gesaneerd moet worden is leverancierspecifiek.
 
 =item B<-r>, B<--root-command=>I<commando-om-root-te-worden>
 
@@ -398,7 +402,7 @@ B<.changes> krijgen. Gewoonlijk is dit commando B<lintian>.
 
 =item B<--check-option=>I<optie>
 
-Geef optie I<optie> door aan het I<controlecommando> dat gespecificeerd werd
+Optie I<optie> doorgeven aan het I<controlecommando> dat gespecificeerd werd
 met B<DEB_CHECK_COMMAND> of met B<--check-command> (sinds dpkg 1.17.6). Kan
 meermaals gebruikt worden.
 
@@ -412,10 +416,11 @@ uitgevoerd wordt (met uitzondering voor de uitbreiding (hook)
 B<binary>). Alle uitbreidingen (hooks) zullen uitgevoerd worden in de map
 van de uitgepakte broncode.
 
-B<Note:> Hooks can affect the build process, and cause build failures if
-their commands fail, so watch out for unintended consequences.
+B<Opmerking:> uitbreidingen (hooks) kunnen het bouwproces beïnvloeden en
+leiden tot het mislukken van de bouw als hun commando's falen. Wees dus
+alert voor onbedoelde consequenties.
 
-Momenteel worden de volgende I<hook-namen> ondersteund
+Momenteel worden de volgende I<hook-namen> ondersteund:
 
 B<init preclean source build binary buildinfo changes postclean check sign
 done>
@@ -449,50 +454,51 @@ De versie van het broncodepakket (zonder de epoch).
 
 =item B<%u>
 
-Het upstream versienummer (toeleveraarsversie).
+Het bovenstroomse versienummer (toeleveraarsversie).
 
 =back
 
 =item B<--buildinfo-option=>I<optie>
 
-Geef optie I<optie> door aan B<dpkg-genbuildinfo> (sinds dpkg 1.18.11). Kan
+Optie I<optie> doorgeven aan B<dpkg-genbuildinfo> (sinds dpkg 1.18.11). Kan
 meermaals gebruikt worden.
 
 =item B<-p>, B<--sign-command=>I<ondertekeningscommando>
 
-When B<dpkg-buildpackage> needs to execute GPG to sign a source control
-(B<.dsc>) file or a B<.changes> file it will run I<sign-command> (searching
-the B<PATH> if necessary) instead of B<gpg> (long option since dpkg
-1.18.8).  I<sign-command> will get all the arguments that B<gpg> would have
-gotten. I<sign-command> should not contain spaces or any other shell
-metacharacters.
+Als B<dpkg-buildpackage> GPG moet uitvoeren om een controlebestand (B<.dsc>)
+van de broncode of een bestand B<.changes> te ondertekenen, zal het
+I<ondertekeningscommando> uitvoeren (en indien nodig daarbij het B<PATH>
+doorzoeken) in plaats van B<gpg> (de lange optie sinds dpkg 1.18.8). Aan
+I<ondertekeningscommando> zullen alle argumenten meegegeven worden die
+anders aan B<gpg> gegeven zouden zijn. I<ondertekeningscommando> mag geen
+spaties bevatten en geen andere shell-metatekens.
 
 =item B<-k>, B<--sign-key=>I<sleutel-id>
 
-Geef de sleutel-ID op die gebruikt moet worden om pakketten te ondertekenen
-(de lange optie sinds dpkg 1.18.8).
+De sleutel-ID specificeren welke gebruikt moet worden om pakketten te
+ondertekenen (de lange optie sinds dpkg 1.18.8).
 
 =item B<-us>, B<--unsigned-source>
 
-Onderteken het broncodepakket niet (de lange optie sinds dpkg 1.18.8).
+Het broncodepakket niet ondertekenen (de lange optie sinds dpkg 1.18.8).
 
 =item B<-ui>, B<--unsigned-buildinfo>
 
-Onderteken het bestand B<.buildinfo> niet (sinds dpkg 1.18.19).
+Het bestand B<.buildinfo> niet ondertekenen (sinds dpkg 1.18.19).
 
 =item B<-uc>, B<--unsigned-changes>
 
-Onderteken de bestanden B<.buildinfo> en B<.changes> niet (de lange optie
+De bestanden B<.buildinfo> en B<.changes> niet ondertekenen (de lange optie
 sinds dpkg 1.18.8).
 
 =item B<--no-sign>
 
-Onderteken geen enkel bestand; dit omvat het broncodepakket, het bestand
+Geen enkel bestand ondertekenen; dit omvat het broncodepakket, het bestand
 B<.buildinfo> en het bestand B<.changes> (sinds dpkg 1.18.20).
 
 =item B<--force-sign>
 
-Verplicht het ondertekenen van de resulterende bestanden (sinds dpkg
+Het ondertekenen van de resulterende bestanden afdwingen (sinds dpkg
 1.17.0), ongeacht B<-us>, B<--unsigned-source>, B<-ui>,
 B<--unsigned-buildinfo>, B<-uc>, B<--unsigned-changes> of overige interne
 heuristiek.
@@ -527,28 +533,28 @@ Wordt ongewijzigd doorgegeven aan B<dpkg-source>. Zie de man-pagina ervan.
 
 =item B<--source-option=>I<optie>
 
-Geef optie I<optie> door aan B<dpkg-source> (sinds dpkg 1.15.6). Kan
+Optie I<optie> doorgeven aan B<dpkg-source> (sinds dpkg 1.15.6). Kan
 meermaals gebruikt worden.
 
 =item B<--changes-option=>I<optie>
 
-Geef optie I<optie> door aan B<dpkg-genchanges> (sinds dpkg 1.15.6). Kan
+Optie I<optie> doorgeven aan B<dpkg-genchanges> (sinds dpkg 1.15.6). Kan
 meermaals gebruikt worden.
 
 =item B<--admindir=>I<map>
 
 =item B<--admindir> I<map>
 
-Geef een andere locatie op voor de database van B<dpkg> (sinds dpkg
+Een andere locatie opgeven voor de database van B<dpkg> (sinds dpkg
 1.14.0). De standaardlocatie is I<%ADMINDIR%>.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -667,7 +673,7 @@ Configuratiebestand dat gebruikersafhankelijk is.
 Tussen dpkg 1.14.17 en 1.16.1 exporteerde B<dpkg-buildpackage>
 compileervlaggen (B<CFLAGS>, B<CXXFLAGS>, B<FFLAGS>, B<CPPFLAGS> en
 B<LDFLAGS>) met de waarden die door B<dpkg-buildflags> teruggegeven
-werden. Dit is niet langer het geval
+werden. Dit is niet langer het geval.
 
 =head2 Standaard bouwtargets
 

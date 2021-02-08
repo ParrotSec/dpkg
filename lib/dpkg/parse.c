@@ -184,7 +184,7 @@ pkg_parse_verify(struct parsedb_state *ps,
   if ((ps->flags & pdb_recordavailable) ||
       pkg->status > PKG_STAT_HALFINSTALLED) {
     /* We always want usable architecture information (as long as the package
-     * is in such a state that it make sense), so that it can be used safely
+     * is in such a state that it makes sense), so that it can be used safely
      * on string comparisons and the like. */
     if (pkgbin->arch->type == DPKG_ARCH_NONE)
       parse_warn(ps, _("missing '%s' field"), "Architecture");
@@ -279,8 +279,7 @@ pkg_parse_verify(struct parsedb_state *ps,
       pkg->status == PKG_STAT_NOTINSTALLED &&
       pkg->eflag == PKG_EFLAG_OK &&
       (pkg->want == PKG_WANT_PURGE ||
-       pkg->want == PKG_WANT_DEINSTALL ||
-       pkg->want == PKG_WANT_HOLD)) {
+       pkg->want == PKG_WANT_DEINSTALL)) {
     pkg_set_want(pkg, PKG_WANT_UNKNOWN);
   }
 

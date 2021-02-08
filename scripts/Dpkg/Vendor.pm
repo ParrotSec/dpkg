@@ -174,10 +174,12 @@ sub get_vendor_object {
 
     my $info = get_vendor_info($vendor);
     if (defined $info and defined $info->{'Parent'}) {
-        return get_vendor_object($info->{'Parent'});
+        $obj = get_vendor_object($info->{'Parent'});
     } else {
-        return get_vendor_object('Default');
+        $obj = get_vendor_object('Default');
     }
+    $OBJECT_CACHE{$vendor} = $obj;
+    return $obj;
 }
 
 =item run_vendor_hook($hookid, @params)

@@ -743,8 +743,6 @@ commandfd(const char *const *argv)
     dpkg_options_parse((const char *const **)&endargs, cmdinfos, printforhelp);
     if (!cipaction) badusage(_("need an action option"));
 
-    fsys_hash_init();
-
     ret |= cipaction->action(endargs);
 
     fsys_hash_reset();
@@ -758,6 +756,7 @@ commandfd(const char *const *argv)
 }
 
 int main(int argc, const char *const *argv) {
+  char *force_string;
   int ret;
 
   dpkg_locales_init(PACKAGE);
@@ -781,8 +780,10 @@ int main(int argc, const char *const *argv) {
     ohshite(_("unable to setenv for subprocesses"));
   if (setenv("DPKG_ROOT", instdir, 1) < 0)
     ohshite(_("unable to setenv for subprocesses"));
-  if (setenv("DPKG_FORCE", get_force_string(), 1) < 0)
+  force_string = get_force_string();
+  if (setenv("DPKG_FORCE", force_string, 1) < 0)
     ohshite(_("unable to setenv for subprocesses"));
+  free(force_string);
 
   if (!f_triggers)
     f_triggers = (cipaction->arg_int == act_triggers && *argv) ? -1 : 1;
@@ -791,8 +792,6 @@ int main(int argc, const char *const *argv) {
     run_invoke_hooks(cipaction->olong, &pre_invoke_hooks);
     run_status_loggers(&status_loggers);
   }
-
-  fsys_hash_init();
 
   ret = cipaction->action(argv);
 

@@ -92,7 +92,7 @@ Le nom du paquet propriétaire du (des) nom(s) de chemin. Si le paquet est
 S<« Multi-Arch:> S<same »> ce paramètre doit inclure le type d'architecture,
 sinon, il ne devrait B<pas> habituellement inclure le type d'architecture
 (parce qu'il pourrait interdire les catégories croisées, ou le passage d'une
-architecture spécifique à architecture B<all> ou vice-versa). Si le
+architecture spécifique à l'architecture B<all> ou vice-versa). Si le
 paramètre est vide ou omis, les variables d'environnement
 B<DPKG_MAINTSCRIPT_PACKAGE> et B<DPKG_MAINTSCRIPT_ARCH> (telles que définies
 par B<dpkg> lors de l'exécution des scripts du responsable) seront utilisées
@@ -125,6 +125,9 @@ ou renommage de fichiers de configuration à l'aide de scripts du
 responsable.
 
 =head2 Supprimer un fichier de configuration
+
+Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in
+F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
 
 Si un fichier de configuration est complètement supprimé, il doit être
 effacé du disque sauf si l'administrateur local l'a modifié. Les éventuelles

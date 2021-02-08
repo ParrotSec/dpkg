@@ -56,11 +56,11 @@ veld wordt niet weergegeven, enkel de inhoud ervan.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -140,44 +140,44 @@ alle metadata van elk item behouden blijven.
 
 =item B<--reverse>
 
-Include all changes in reverse order (since dpkg 1.19.1).
+Alle wijzigingen in omgekeerde volgorde opnemen (sinds dpkg 1.19.1).
 
-B<Note:> For the B<dpkg> format the first entry will be the most ancient
-entry.
+B<Opmerking:> voor de indeling B<dpkg> zal het eerste item het oudste item
+zijn.
 
 =item B<--all>
 
-Include all changes.  B<Note:> Other options have no effect when this is in
-use.
+Alle wijzigingen opnemen. B<Opmerking:> andere opties hebben geen effect als
+deze optie gebruikt wordt.
 
 =item B<-s>, B<--since> I<versie>
 
 =item B<-v> I<versie>
 
-Neem alle wijzigingen op die recenter zijn dan I<versie>.
+Alle wijzigingen opnemen die recenter zijn dan I<versie>.
 
 =item B<-u>, B<--until> I<versie>
 
-Neem alle wijzigingen op die gemaakt zijn voor I<versie>.
+Alle wijzigingen opnemen die aangebracht zijn voor I<versie>.
 
 =item B<-f>, B<--from> I<versie>
 
-Neem alle wijzigingen uit I<versie> of later op.
+Alle wijzigingen uit I<versie> of later opnemen.
 
 =item B<-t>, B<--to> I<versie>
 
-Neem alle wijzigingen uit I<versie> of vroeger op.
+Alle wijzigingen uit I<versie> of vroeger opnemen.
 
 =item B<-c>, B<--count> I<aantal>
 
 =item B<-n> I<aantal>
 
-Neem I<aantal> items op te beginnen bij het begin (of bij het einde als
+I<aantal> items opnemen, te beginnen bij het begin (of bij het einde als
 I<aantal> kleiner is dan 0).
 
 =item B<-o>, B<--offset> I<getal>
 
-Pas het beginpunt voor B<--count> aan, te rekenen vanaf het begin (of het
+Het beginpunt voor B<--count> aanpassen, te rekenen vanaf het begin (of het
 einde als I<getal> lager is dan 0).
 
 =back
@@ -195,7 +195,7 @@ naam van de indeling zijn. Bijvoorbeeld:
 
 =over 
 
-@@@ changelog-format: I<otherformat> @@@
+@@@ changelog-format: I<andere-indeling> @@@
 
 =back
 

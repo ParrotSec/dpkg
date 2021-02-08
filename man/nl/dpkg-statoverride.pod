@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-statoverride - wijzig eigenaarschap en modus van bestanden
+dpkg-statoverride - eigenaarschap en modus van bestanden wijzigen
 
 =head1 OVERZICHT
 
@@ -64,7 +64,7 @@ werd.
 
 =item B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--force-help>
 
@@ -72,7 +72,7 @@ Hulp bieden over de opties B<--force->I<iets> (sinds dpkg 1.19.5).
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 
@@ -93,7 +93,7 @@ geïnstalleerd worden (sinds dpkg 1.19.2). Standaard is dat «I</>».
 
 =item B<--root> I<map>
 
-Stel de hoofdmap in op B<map>, hetgeen de installatiemap instelt op
+De hoofdmap instellen op B<map>, hetgeen de installatiemap instelt op
 «I<map>» en de administratieve map op «I<map>B<%ADMINDIR%>» (sinds dpkg
 1.19.2).
 
@@ -201,8 +201,8 @@ bevat. Het bevindt zich in de administratieve map van B<dpkg> samen met
 andere bestanden die van belang zijn voor B<dpkg>, zoals I<status> en
 I<available>.
 
-B<Note:> B<dpkg-statoverride> preserves the old copy of this file, with
-extension “-old”, before replacing it with the new one.
+B<Opmerking:> B<dpkg-statoverride> bewaart de oude kopie van dit bestand met
+de extensie “-old” vooraleer het dit door het nieuwe bestand vervangt.
 
 =back
 

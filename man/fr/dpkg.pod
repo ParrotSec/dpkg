@@ -63,7 +63,8 @@ Le paquet n'est pas installé sur le système.
 
 =item B<config-files>
 
-Seuls les fichiers de configuration du paquet existent sur le système.
+Only the configuration files or the B<postrm> script and the data it needs
+to remove of the package exist on the system.
 
 =item B<half-installed>
 
@@ -613,10 +614,9 @@ déconfiguration automatique du paquet qui dépendait du paquet supprimé.
 
 =item B<-D>I<octal>, B<--debug=>I<octal>
 
-Demande de débogage. I<octal> est formé en faisant un S<« ou »> logique entre
-des valeurs souhaitées appartenant à la liste ci-dessous (notez que ces
-valeurs pourront changer dans les prochaines versions). B<-Dh> ou
-B<--debug=help> affiche ces valeurs de débogage.
+Switch debugging on. I<octal> is formed by bitwise-ORing desired values
+together from the list below (note that these values may change in future
+releases). B<-Dh> or B<--debug=help> display these debugging values.
 
     Number   Description
          1   Generally helpful progress information
@@ -780,9 +780,9 @@ authenticité a échoué.
 =item B<--ignore-depends>=I<paquet>,...
 
 Ne tient pas compte de la vérification des dépendances pour les paquets
-spécifiés (en fait, la vérification est faite mais on ne donne rien d'autre
-que des avertissements). Cela affecte les champs B<Pre-Depends>, B<Depends>
-et B<Breaks>.
+spécifiés (en fait, la vérification est faite mais ne donne rien d'autre que
+des avertissements). Cela affecte les champs B<Pre-Depends>, B<Depends> et
+B<Breaks>.
 
 =item B<--no-act>, B<--dry-run>, B<--simulate>
 
@@ -929,13 +929,12 @@ enregistrement par ligne, dans l'une des formes S<suivantes :>
 =item B<status:> I<paquet>B<:> I<état>
 
 L'état du paquet a S<changé ;> l'I<état> est tel que dans le fichier d'état
-S<( «status> S<file »).>
+S<(« status> S<file »).>
 
 =item B<status:> I<paquet> B<: error :> I<message-d'erreur-complet>
 
-Une erreur s'est produite. Toutes les lignes supplémentaires éventuelles
-dans I<message-d'erreur-complet> seront converties en espaces avant
-affichage.
+Une erreur s'est produite. Les sauts de ligne éventuels dans
+I<message-d'erreur-complet> seront convertis en espaces avant affichage.
 
 =item B<status:> I<fichier> B<: conffile-prompt : '>I<real-old>B<'
 '>I<real-new>B<'> I<useredited>B<> I<distedited>
@@ -1118,7 +1117,7 @@ du lancement d'un afficheur (depuis S<dpkg 1.19.2).> Pour modifier le
 comportement par défaut, cette variable peut être configurée à une autre
 valeur y compris une chaîne S<vide ;> alternativement, les variables B<PAGER>
 ou B<DPKG_PAGER> peuvent être réglées pour désactiver des options
-particulières avec «B<-+>», par exemple B<DPKG_PAGER="less -+F">.
+particulières avec S<« B<-+> »,> par exemple B<DPKG_PAGER="less -+F">.
 
 =item B<DPKG_ROOT>
 
@@ -1156,15 +1155,15 @@ B<conffile-prompt>.
 
 Cette variable est définie pour le shell lancé par B<dpkg> lorsqu'il lui est
 demandé d'analyser la situation lors du traitement des fichiers de
-configuration (depuis S<dpkg 1.15.6).> Elle contient le nom de l'ancien fichier
-de configuration.
+configuration (depuis S<dpkg 1.15.6).> Elle contient le chemin de l'ancien
+fichier de configuration.
 
 =item B<DPKG_CONFFILE_NEW>
 
 Cette variable est définie pour le shell lancé par B<dpkg> lorsqu'il lui est
 demandé d'analyser la situation lors du traitement des fichiers de
-configuration (depuis S<dpkg 1.15.6).> Elle contient le nom du nouveau fichier
-de configuration.
+configuration (depuis S<dpkg 1.15.6).> Elle contient le chemin du nouveau
+fichier de configuration.
 
 =item B<DPKG_HOOK_ACTION>
 
@@ -1206,7 +1205,7 @@ B<postinst>, B<prerm> ou B<postrm> (depuis S<dpkg 1.15.7).>
 =item B<DPKG_MAINTSCRIPT_DEBUG>
 
 Cette variable est définie par B<dpkg> dans l'environnement du script du
-responsable à une valeur S<(« B<0> »> ou S<« B<1> »> notant si le débogage a été
+responsable à une valeur S<(« B<0> »> ou S<« B<1> »)> notant si le débogage a été
 demandé (avec l'option B<--debug>) pour les scripts du responsable (depuis
 S<dpkg 1.18.4).>
 
@@ -1315,10 +1314,10 @@ Pour faire une copie locale des états de sélection des S<paquets :>
 
 =back
 
-Vous pourriez transférer ce fichier sur un autre ordinateur, et après avoir
-mis à jour le fichier I<available> avec l'interface de gestion de paquets de
-votre choix (voir https://wiki.debian.org/Teams/Dpkg/FAQ pour plus de
-détails), par S<exemple :>
+You might transfer this file to another computer, and after having updated
+the I<available> file there with your package manager frontend of choice
+(see L<https://wiki.debian.org/Teams/Dpkg/FAQ> for more details), for
+example:
 
 =over 
 

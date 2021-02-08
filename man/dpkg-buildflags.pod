@@ -267,6 +267,10 @@ Options for the Objective C++ compiler. Same as B<CXXFLAGS>.
 
 Options for the GNU Java compiler (gcj). A subset of B<CFLAGS>.
 
+=item B<DFLAGS>
+
+Options for the D compiler (ldc or gdc). Since dpkg 1.20.6.
+
 =item B<FFLAGS>
 
 Options for the Fortran 77 compiler. A subset of B<CFLAGS>.
@@ -573,7 +577,7 @@ B<__TIMESTAMP__> macros are used.
 
 =item B<fixfilepath>
 
-This setting (disabled by default) adds
+This setting (enabled by default) adds
 B<-ffile-prefix-map=>I<BUILDPATH>B<=.>
 to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>,
 B<GCJFLAGS>, B<FFLAGS> and B<FCFLAGS> where B<BUILDPATH> is
@@ -776,4 +780,3 @@ And you can of course pass the flags to commands manually:
  	$(CC) -o hello hello.c $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
 
 =back
-

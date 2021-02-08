@@ -44,29 +44,29 @@ De waarden die gebruikt mogen worden zijn:
 
 =item B<any>
 
-Genereer bouwinformatie die niet-gekwalificeerde bouwvereisten
+Bouwinformatie genereren welke niet-gekwalificeerde bouwvereisten
 (B<Build-Depends>) en architectuurspecifieke bouwvereisten
 (B<Build-Depends-Arch>) bevat.
 
 =item B<all>
 
-Genereer bouwinformatie die niet-gekwalificeerde bouwvereisten
+Bouwinformatie genereren welke niet-gekwalificeerde bouwvereisten
 (B<Build-Depends>) en architectuuronafhankelijke bouwvereisten
 (B<Build-Depends-Indep>) bevat.
 
 =item B<source>
 
-Effectief genegeerd; genereer bouwinformatie met uitsluitend de
+Effectief genegeerd; bouwinformatie genereren met uitsluitend de
 niet-gekwalificeerde bouwvereisten (B<Build-Depends>).
 
 =item B<binary>
 
-Genereer bouwinformatie met alle drie de types bouwvereisten. Dit is een
+Bouwinformatie genereren met alle drie de types bouwvereisten. Dit is een
 alias voor B<any,all>.
 
 =item B<full>
 
-Genereer bouwinformatie met alle drie de types bouwvereisten. Dit is een
+Bouwinformatie genereren met alle drie de types bouwvereisten. Dit is een
 alias voor B<any,all,source> en identiek aan de standaardsituatie wanneer
 geen bouwoptie opgegeven werd.
 
@@ -94,7 +94,7 @@ B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
 
 =item B<-O>[I<bestandsnaam>]
 
-Geef het bestand buildinfo weer op de standaarduitvoer (of in
+Het bestand buildinfo op de standaarduitvoer weergeven (of in
 I<bestandsnaam> als dit opgegeven werd), in plaats van in
 I<map>B</>I<broncode-naam>B<_>I<binaire-versie>B<_>I<arch>B<.buildinfo>
 (waarbij I<map> standaard B<..> is of I<map-upload-bestanden> indien B<-u>
@@ -102,7 +102,7 @@ gebruikt werd).
 
 =item B<-u>I<map-upload-bestanden>
 
-Zoek de bestanden die geüpload moeten worden in I<map-upload-bestanden>
+De bestanden die geüpload moeten worden opzoeken in I<map-upload-bestanden>
 eerder dan in B<..> (B<dpkg-genbuildinfo> moet deze bestanden kunnen vinden,
 zodat het hun grootte en hun controlesom kan opnemen in het bestand
 B<.buildinfo>)
@@ -116,10 +116,10 @@ B<Build-Kernel-Version> aan te maken als B<.buildinfo> gegenereerd wordt.
 
 =item B<--always-include-path>
 
-By default, the B<Build-Path> field will only be written if the current
-directory starts with an allowed pattern.
+Standaard zal het veld B<Build-Path> enkel opgeschreven worden als de
+huidige map begint met een toegestaan patroon.
 
-O Debian en zijn derivaten moet het patroon beantwoorden aan B</build/> als
+Op Debian en zijn derivaten moet het patroon beantwoorden aan B</build/> als
 begin van de padnaam.
 
 Geef deze optie op om steeds een veld B<Build-Path> aan te maken als
@@ -127,7 +127,7 @@ B<.buildinfo> gegenereerd wordt.
 
 =item B<--admindir=>I<map>
 
-Wijzig de locatie van de database van B<dpkg>. De standaardlocatie is
+De locatie van de database van B<dpkg> wijzigen. De standaardlocatie is
 I</var/lib/dpkg>.
 
 =item B<-q>
@@ -137,11 +137,11 @@ produceren. B<-q> onderdrukt deze berichten.
 
 =item B<-?>, B<--help>
 
-Toon info over het gebruik en sluit af.
+Info tonen over het gebruik en afsluiten.
 
 =item B<--version>
 
-Toon de versie en sluit af.
+De versie tonen en afsluiten.
 
 =back
 

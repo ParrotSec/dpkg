@@ -35,13 +35,14 @@ B<dpkg-architecture>
 provides a facility to determine and set the build and
 host architecture for package building.
 
-The build architecture is always determined by an external call to
+The build architecture is always determined by either the B<DEB_BUILD_ARCH>
+variable if set (and B<--force> not being specified) or by an external call to
 B<dpkg>(1), and cannot be set at the command line.
 
 You can specify the host architecture by providing one or both of the options
-B<--host-arch> and B<--host-type>. The default is determined by
-an external call to
-B<gcc>(1),
+B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH> variable
+is used if set (and B<--force> not being specified). The default is
+determined by an external call to B<gcc>(1),
 or the same as the build architecture if B<CC> or gcc are both not
 available. One out of B<--host-arch> and B<--host-type> is
 sufficient, the value of the
@@ -81,11 +82,11 @@ Print the value of a single variable.
 =item B<-s>, B<--print-set>
 
 Print an export command. This can be used to set the environment variables
-using the POSIX shell B<eval>.
+using the POSIX shell or make B<eval>, depending on the output format.
 
 =item B<-u>, B<--print-unset>
 
-Print a similar command to B<--print-unset> but to unset all variables.
+Print a similar command to B<--print-set> but to unset all variables.
 
 =item B<-c>, B<--command> I<command-string>
 
@@ -143,6 +144,11 @@ specified CPU bits (since dpkg 1.17.14). Either B<32> or B<64>.
 
 Restrict the architectures listed by B<--list-known> to ones with the
 specified endianness (since dpkg 1.17.14). Either B<little> or B<big>.
+
+=item B<--print-format> I<format>
+
+Sets the output format for B<--print-set> and B<--print-unset>
+(since dpkg 1.20.6), to either B<shell> (default) or B<make>.
 
 =item B<-f>, B<--force>
 
@@ -229,8 +235,9 @@ Example paths: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-kfreebsd-gnu/.
 
 =head1 VARIABLES
 
-The following variables are set by B<dpkg-architecture> (see the
-B<TERMS> section for a description of the naming scheme):
+The following variables are read from the environment (unless B<--force>
+has been specified) and set by B<dpkg-architecture> (see the B<TERMS>
+section for a description of the naming scheme):
 
 =over
 
@@ -240,7 +247,7 @@ The Debian architecture of the build machine.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
-The Debian abi name of the build machine (since dpkg 1.18.11).
+The Debian ABI name of the build machine (since dpkg 1.18.11).
 
 =item B<DEB_BUILD_ARCH_LIBC>
 
@@ -252,7 +259,7 @@ The Debian system name of the build machine (since dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_CPU>
 
-The Debian cpu name of the build machine (since dpkg 1.13.2).
+The Debian CPU name of the build machine (since dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_BITS>
 
@@ -264,11 +271,11 @@ The endianness of the build machine (little / big; since dpkg 1.15.4).
 
 =item B<DEB_BUILD_GNU_CPU>
 
-The CPU part of B<DEB_BUILD_GNU_TYPE>.
+The GNU CPU part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_SYSTEM>
 
-The System part of B<DEB_BUILD_GNU_TYPE>.
+The GNU system part of B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_TYPE>
 
@@ -285,7 +292,7 @@ The Debian architecture of the host machine.
 
 =item B<DEB_HOST_ARCH_ABI>
 
-The Debian abi name of the host machine (since dpkg 1.18.11).
+The Debian ABI name of the host machine (since dpkg 1.18.11).
 
 =item B<DEB_HOST_ARCH_LIBC>
 
@@ -297,7 +304,7 @@ The Debian system name of the host machine (since dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_CPU>
 
-The Debian cpu name of the host machine (since dpkg 1.13.2).
+The Debian CPU name of the host machine (since dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_BITS>
 
@@ -309,11 +316,11 @@ The endianness of the host machine (little / big; since dpkg 1.15.4).
 
 =item B<DEB_HOST_GNU_CPU>
 
-The CPU part of B<DEB_HOST_GNU_TYPE>.
+The GNU CPU part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_SYSTEM>
 
-The System part of B<DEB_HOST_GNU_TYPE>.
+The GNU system part of B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_TYPE>
 
@@ -330,7 +337,7 @@ The Debian architecture of the target machine (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_ABI>
 
-The Debian abi name of the target machine (since dpkg 1.18.11).
+The Debian ABI name of the target machine (since dpkg 1.18.11).
 
 =item B<DEB_TARGET_ARCH_LIBC>
 
@@ -342,7 +349,7 @@ The Debian system name of the target machine (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_CPU>
 
-The Debian cpu name of the target machine (since dpkg 1.17.14).
+The Debian CPU name of the target machine (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_BITS>
 
@@ -354,11 +361,11 @@ The endianness of the target machine (little / big; since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_CPU>
 
-The CPU part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
+The GNU CPU part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_SYSTEM>
 
-The System part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
+The GNU system part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_TYPE>
 
@@ -471,9 +478,9 @@ Retrieving the GNU system type and forwarding it to ./configure:
  [...]
  ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
   confflags += --build=$(DEB_HOST_GNU_TYPE)
- else
-  confflags += --build=$(DEB_BUILD_GNU_TYPE) \
-               --host=$(DEB_HOST_GNU_TYPE)
+  else
+   confflags += --build=$(DEB_BUILD_GNU_TYPE) \
+                --host=$(DEB_HOST_GNU_TYPE)
  endif
  [...]
  ./configure $(confflags)
@@ -487,7 +494,7 @@ Doing something only for a specific architecture:
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back
@@ -503,7 +510,7 @@ set all the variables that B<dpkg-architecture> can provide:
  include %PKGDATADIR%/architecture.mk
 
  ifeq ($(DEB_HOST_ARCH),alpha)
-  [...]
+   [...]
  endif
 
 =back

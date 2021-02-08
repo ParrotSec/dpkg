@@ -123,6 +123,9 @@ spostamento di file di configurazione all'interno di script dei manutentori.
 
 =head2 Rimozione di un file di configurazione
 
+Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in
+F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
+
 Se un file di configurazione viene completamente rimosso, dovrebbe essere
 rimosso dal disco a meno che l'utente non l'abbia modificato. Se ci sono
 modifiche locali, queste dovrebbero essere preservate. Se l'aggiornamento

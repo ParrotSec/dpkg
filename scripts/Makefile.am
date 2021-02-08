@@ -2,6 +2,9 @@
 
 SUBDIRS = mk po
 
+sbin_SCRIPTS = \
+	dpkg-fsys-usrunmess
+
 bin_SCRIPTS = \
 	dpkg-architecture \
 	dpkg-buildflags \
@@ -29,6 +32,7 @@ EXTRA_DIST = \
 	dpkg-buildpackage.pl \
 	dpkg-checkbuilddeps.pl \
 	dpkg-distaddfile.pl \
+	dpkg-fsys-usrunmess.pl \
 	dpkg-genbuildinfo.pl \
 	dpkg-genchanges.pl \
 	dpkg-gencontrol.pl \
@@ -52,6 +56,7 @@ nobase_dist_pkgdata_DATA = \
 
 CLEANFILES = \
 	$(test_data_objects) \
+	$(sbin_SCRIPTS) \
 	$(bin_SCRIPTS)
 
 perllibdir = $(PERL_LIBDIR)
@@ -152,7 +157,7 @@ do_perl_subst = $(AM_V_GEN) sed \
 	-e "s:our \$$PROGVERSION = .*;:our \$$PROGVERSION = '$(PACKAGE_VERSION)';:"
 
 do_shell_subst = $(AM_V_GEN) sed \
-	-e "s:^PKGDATADIR=.*$$:PKGDATADIR='$(pkgdatadir)':" \
+	-e "s:^PKGDATADIR_DEFAULT=.*$$:PKGDATADIR_DEFAULT='$(pkgdatadir)':" \
 	-e "s:^version=['\"][^'\"]*[\"']:version=\"$(PACKAGE_VERSION)\":"
 
 SUFFIXES = .pl .sh

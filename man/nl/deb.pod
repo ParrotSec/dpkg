@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-deb - binair pakketformaat van Debian
+deb - Binair pakketformaat van Debian
 
 =head1 OVERZICHT
 
