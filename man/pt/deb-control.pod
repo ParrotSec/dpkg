@@ -23,17 +23,19 @@ B<DEBIAN/control>
 
 =head1 DESCRIÇÃO
 
-Each Debian binary package contains a B<control> file in its B<control>
-member, and its L<deb822(5)> format is a subset of the master
-B<debian/control> file in Debian source packages, see B<deb-src-control>(5).
+Cada pacote binário Debian contem um ficheiro B<control> no seu membro
+B<control>, e o seu formato L<deb822(5)> é um subconjunto do ficheiro
+B<debian/control> mestre em pacotes fonte Debian, veja
+B<deb-src-control>(5).
 
-This file contains a number of fields.  Each field begins with a tag, such
-as B<Package> or B<Version> (case insensitive), followed by a colon, and the
-body of the field (case sensitive unless stated otherwise).  Fields are
-delimited only by field tags. In other words, field text may be multiple
-lines in length, but the installation tools will generally join lines when
-processing the body of the field (except in the case of the B<Description>
-field, see below).
+Este ficheiro contém um número de campos. Cada campo começa com uma
+etiqueta, tal como B<Package> ou B<Version> (insensitivo a
+maiúsculas/minúsculas) seguido por dois pontos (:), e o corpo do campo
+(sensível a maiúsculas/minúsculas a menos que declarado o contrário). Os
+campos são delimitados apenas pelas etiquetas de campo, por outras palavras,
+o texto do campo pode ter múltiplas linhas de comprimento, mas as
+ferramentas de instalação irão geralmente juntar as linhas quando processam
+o corpo do campo (excepto no caso do campo B<Description>, veja em baixo).
 
 =head1 CAMPOS
 

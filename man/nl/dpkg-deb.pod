@@ -73,7 +73,7 @@ gebruikt moet worden).
 
 =item B<-I>, B<--info> I<archief> [I<naam-controlebestand>...]
 
-Geeft informatie over een binair pakketarchief
+Geeft informatie over een binair pakketarchief.
 
 Indien geen I<naam-controlebestand>(en) opgegeven werd(en) zal het een
 samenvatting weergeven van de inhoud van het pakket en van zijn bestand

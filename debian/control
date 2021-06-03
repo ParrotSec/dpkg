@@ -3,9 +3,10 @@ Section: admin
 Priority: required
 XSBC-Original-Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
 Maintainer: Parrot Dev Team <team@parrotsec.org>
+Uploaders: Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>
 Homepage: https://wiki.debian.org/Teams/Dpkg
-Vcs-Browser: https://nest.parrotsec.org/packages/debian/dpkg
-Vcs-Git: https://nest.parrotsec.org/packages/debian/dpkg
+Vcs-Browser: https://nest.parrotsec.org/debian-packages/dpkg
+Vcs-Git: https://nest.parrotsec.org/debian-packages/dpkg
 Standards-Version: 4.5.1
 Rules-Requires-Root: no
 Build-Depends:

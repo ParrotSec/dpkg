@@ -63,8 +63,8 @@ Este pacote não está instalado no seu sistema.
 
 =item B<config-files>
 
-Only the configuration files or the B<postrm> script and the data it needs
-to remove of the package exist on the system.
+Apenas os ficheiros de configuração ou o script B<postrm> e os dados que
+precisa para remoção do pacote existem no sistema.
 
 =item B<half-installed>
 
@@ -599,9 +599,9 @@ desconfiguração automática do pacote que dependia do pacote removido.
 
 =item B<-D>I<octal>, B<--debug=>I<octal>
 
-Switch debugging on. I<octal> is formed by bitwise-ORing desired values
-together from the list below (note that these values may change in future
-releases). B<-Dh> or B<--debug=help> display these debugging values.
+Liga a depuração. I<octal> é formado por valores bitwise-ORing desejados
+juntos da lista em baixo (note que estes valores podem mudar em lançamentos
+futuros). B<-Dh> ou B<--debug=help> mostram estes valores de depuração.
 
     Número   Descrição
          1   Informação de progresso geralmente útil
@@ -1278,10 +1278,10 @@ Para fazer uma cópia local do estado de selecção de pacotes:
 
 =back
 
-You might transfer this file to another computer, and after having updated
-the I<available> file there with your package manager frontend of choice
-(see L<https://wiki.debian.org/Teams/Dpkg/FAQ> for more details), for
-example:
+Você poderá transferir este ficheiro para outro computador, e depois de ter
+actualizado lá o ficheiro I<available> com o seu frontend elegido de gestão
+de pacotes (veja L<https://wiki.debian.org/Teams/Dpkg/FAQ> para mais
+detalhes), por exemplo:
 
 =over 
 

@@ -53,17 +53,18 @@ referenciado. Isto é feito deste modo para que as alterações do
 administrador do sistema fiquem confinadas dentro do directório
 I<%CONFDIR%>: a FHS (q.v.) explica o porquê isto ser uma Coisa Boa.
 
-When each package providing a file with a particular functionality is
-installed, changed or removed, B<update-alternatives> is called to update
-information about that file in the alternatives system.
-B<update-alternatives> is usually called from the following Debian package
-maintainer scripts, B<postinst> (configure) to install the alternative and
-from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
-most (if not all) cases no other maintainer script actions should call
-B<update-alternatives>, in particular neither of B<upgrade> nor
-B<disappear>, as any other such action can lose the manual state of an
-alternative, or make the alternative temporarily flip-flop, or completely
-switch when several of them have the same priority.
+Quando cada pacote que fornece um ficheiro com uma determinada
+funcionalidade é instalado, modificado ou removido, o B<update-alternatives>
+é chamado para actualizar a informação sobre esse ficheiro no sistema de
+alternativas. O B<update-alternatives> é geralmente chamado a partir dos
+seguintes scripts de maintainer de pacote Debian, B<postinst> (configurar)
+para instalar a alternativa e a partir de B<prerm> e B<postrm> (remover)
+para remover a alternativa.  B<Nota:> na maioria dos casos (se não todos)
+nenhuma outra acção de script de maintainer deverá chamar
+B<update-alternatives>, em particular nenhum de B<upgrade> nem B<disappear>,
+pois outra acção do tipo pode perder o estado manual da alternativa, ou
+fazer a alternativa inverter temporariamente, ou comutar completamente
+quando várias têm a mesma prioridade.
 
 Isto é muitas vezes útil para se sincronizar várias alternativas, para que
 sejam mudadas como um grupo; por exemplo, quando estão instaladas várias
@@ -513,7 +514,7 @@ faça isto como root:
 
 =head1 VEJA TAMBÉM
 
-B<ln>(1), FHS (the Filesystem Hierarchy Standard).
+B<ln>(1), FHS (o Standard de Hierarquia de Sistema de Ficheiros).
 
 
 =head1 TRADUÇÃO

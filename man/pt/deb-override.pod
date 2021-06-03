@@ -44,9 +44,9 @@ I<priority> e I<section> correspondem a campos de controle respectivos
 disponíveis no .deb. Os valores permitidos são específicos para cada arquivo
 de distribuição.
 
-I<maintainer-info>, if present, can be either the name of a maintainer for
-an unconditional override, or else I<old-maintainer> B<=E<gt>>
-I<new-maintainer> to perform a substitution.
+I<maintainer-info>, se presente, pode ser o nome de um responsável por uma
+sobreposição incondicional, ou então I<old-maintainer> B<=E<gt>>
+I<new-maintainer> para executar a substituição.
 
 Os ficheiros de sobreposição usados para criar as listas de Pacotes oficiais
 podem ser encontradas no directório I<indices> em qualquer mirror Debian.

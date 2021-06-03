@@ -31,9 +31,9 @@ locatie. Omleggingen kunnen door de scripts van een Debian pakket gebruikt
 worden om een bestand uit de weg te zetten als het een tegenstrijdigheid
 veroorzaakt. Systeembeheerders kunnen het ook gebruiken om het
 configuratiebestand van een bepaald pakket te vervangen of wanneer bepaalde
-bestanden (die niet als “conffiles” (configuratiebestanden) gemarkeerd
-staan) behouden moeten worden door B<dpkg> bij het installeren van een
-recentere versie van een pakket dat die bestanden bevat.
+bestanden (die niet als configuratiebestanden van het type “conffiles”
+gemarkeerd staan) behouden moeten worden door B<dpkg> bij het installeren
+van een recentere versie van een pakket dat die bestanden bevat.
 
 =head1 COMMANDO'S
 

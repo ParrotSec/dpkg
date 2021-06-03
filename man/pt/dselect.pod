@@ -239,13 +239,14 @@ podem ser pré-obtidos antes da instalação, ou obtidos quando
 necessários. Alguns métodos de acesso podem também remover pacotes que foram
 marcados para remoção.
 
-If an error occurred during install, it is usually advisable to run install
-again. In most cases, the problems will disappear or be solved.  If problems
-persist or the installation performed was incorrect, please investigate into
-the causes and circumstances, and file a bug in the Debian bug tracking
-system. Instructions on how to do this can be found at
-L<https://bugs.debian.org/> or by reading the documentation for B<bug>(1) or
-B<reportbug>(1), if these are installed.
+Se ocorrer um erro durante a instalação, é normalmente aconselhável repetir
+a instalação. Na maioria dos casos, os problemas irão desaparecer ou ser
+resolvidos. Se os problemas persistirem ou a execução da instalação foi
+incorrecta, por favor investigue as causas e circunstâncias, e preencha um
+relatório de bug no sistema de acompanhamento de bugs de Debian. As
+instruções em como fazer isto podem ser encontradas em
+L<https://bugs.debian.org/> ou ao ler a documentação para B<bug>(1) ou
+B<reportbug>(1), se esta estiver instalada.
 
 Detalhes do comando de instalação dependem da implementação do método de
 acesso. Pode ser requerida a atenção do utilizador e entradas deste durante
@@ -267,7 +268,7 @@ Remove ou purga pacotes instalados, que estão marcados para remoção.
 
 Termina o B<dselect>.
 
-Exits the program with zero (successful) error code.
+Termina o programa com código de erro zero (com sucesso).
 
 =head1 GESTÃO DE SELECÇÕES DE PACOTES
 

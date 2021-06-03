@@ -268,7 +268,7 @@ Opties voor de GNU Java compiler (gcj). Een subset van B<CFLAGS>.
 
 =item B<DFLAGS>
 
-Options for the D compiler (ldc or gdc). Since dpkg 1.20.6.
+Opties voor de D-compiler (ldc of gdc). Sinds dpkg 1.20.6.
 
 =item B<FFLAGS>
 
@@ -586,11 +586,12 @@ B<__DATE__> en B<__TIMESTAMP__> gebruikt worden.
 
 =item B<fixfilepath>
 
-This setting (enabled by default) adds
-B<-ffile-prefix-map=>I<BUILDPATH>B<=.> to B<CFLAGS>, B<CXXFLAGS>,
-B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and B<FCFLAGS> where
-B<BUILDPATH> is set to the top-level directory of the package being built.
-This has the effect of removing the build path from any generated file.
+Deze instelling (standaard geactiveerd) voegt
+B<-ffile-prefix-map=>I<BUILDPATH>B<=.> toe aan B<CFLAGS>, B<CXXFLAGS>,
+B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> en B<FCFLAGS>, waarbij
+B<BUILDPATH> ingesteld wordt op de basismap van het pakket dat gebouwd
+wordt. Dit heeft als effect dat het bouwpad verwijderd wordt van elk
+gegenereerd bestand.
 
 Indien zowel B<fixdebugpath> als B<fixfilepath> ingesteld zijn, heeft deze
 laatste optie voorrang, omdat het een superset is van de eerste.

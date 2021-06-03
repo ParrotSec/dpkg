@@ -56,17 +56,19 @@ gedaan zodat de wijzigingen van de systeembeheerder beperkt kunnen blijven
 tot de map I<%CONFDIR%>: de FHS (zie aldaar) legt uit waarom dit een goede
 zaak is.
 
-When each package providing a file with a particular functionality is
-installed, changed or removed, B<update-alternatives> is called to update
-information about that file in the alternatives system.
-B<update-alternatives> is usually called from the following Debian package
-maintainer scripts, B<postinst> (configure) to install the alternative and
-from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note:> in
-most (if not all) cases no other maintainer script actions should call
-B<update-alternatives>, in particular neither of B<upgrade> nor
-B<disappear>, as any other such action can lose the manual state of an
-alternative, or make the alternative temporarily flip-flop, or completely
-switch when several of them have the same priority.
+Bij het installeren, wijzigen of verwijderen van elk pakket dat een bestand
+met een bepaalde functionaliteit levert, wordt B<update-alternatives>
+aangeroepen om informatie over dat bestand in het systeem voor alternatieven
+bij te werken. B<update-alternatives> wordt gewoonlijk aangeroepen vanuit de
+volgende scripts van de Debian pakketbeheerder, B<postinst> (configure) om
+het alternatief te installeren en vanuit B<prerm> en B<postrm> (remove)  om
+het alternatief te verwijderen. B<Opmerking:> In de meeste (zo niet alle)
+gevallen mogen geen andere acties van beheerderscripts
+B<update-alternatives> aanroepen, in het bijzonder B<upgrade> en
+B<disappear> niet, aangezien elke andere dergelijke actie de handmatige
+status van een alternatief kan verloren laten gaan, of het alternatief
+tijdelijk kan laten heen en weer schakelen, of volledig laten overschakelen
+wanneer meerdere van hen dezelfde prioriteit hebben.
 
 Het is dikwijls nuttig om een aantal alternatieven te synchroniseren, zodat
 ze als groep aangepast worden. Als er bijvoorbeeld verschillende versies van
@@ -541,5 +543,6 @@ gekozen wordt, doet u als systeembeheerder dit:
 
 =head1 ZIE OOK
 
-B<ln>(1), FHS (the Filesystem Hierarchy Standard).
+B<ln>(1), FHS (the Filesystem Hierarchy Standard - de standaardisatie van
+bestandsorganisatie en mappenstructuur op unix-achtige systemen).
 

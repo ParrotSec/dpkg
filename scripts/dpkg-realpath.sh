@@ -69,10 +69,6 @@ canonicalize() {
      src=${src#/}
   done
   while [ -n "$src" ]; do
-    loop=$((loop + 1))
-    if [ "$loop" -gt 25 ]; then
-      error "too many levels of symbolic links"
-    fi
     # Get the first directory component.
     prefix=${src%%/*}
     # Remove the first directory component from src.
@@ -88,10 +84,14 @@ canonicalize() {
     elif [ "$prefix" = .. ]; then
       # Go up one directory.
       result=${result%/*}
-      if [ "${result#"$root"}" = "$result" ]; then
+      if [ -n "$root" ] && [ "${result#"$root"}" = "$result" ]; then
         result="$root"
       fi
     elif [ -h "$result/$prefix" ]; then
+      loop=$((loop + 1))
+      if [ "$loop" -gt 25 ]; then
+        error "too many levels of symbolic links"
+      fi
       # Resolve the symlink within $result.
       dst=$(readlink "$result/$prefix")
       case "$dst" in

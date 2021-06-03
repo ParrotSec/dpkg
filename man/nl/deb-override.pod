@@ -34,7 +34,7 @@ met een B<#>).
 
 =over 
 
-I<package> I<priority> I<section> [I<maintainer-info>]
+I<pakket> I<prioriteit> I<sectie> [I<onderhouder-info>]
 
 =back
 
@@ -46,9 +46,10 @@ I<prioriteit> en I<sectie> komen overeen met de respectieve controlevelden
 uit het .deb-bestand. Welke waarden mogelijk zijn, is specifiek voor het
 archief van elke distributie.
 
-I<maintainer-info>, if present, can be either the name of a maintainer for
-an unconditional override, or else I<old-maintainer> B<=E<gt>>
-I<new-maintainer> to perform a substitution.
+[I<onderhouder-info>], als het vermeld wordt, kan ofwel de naam van een
+onderhouder zijn voor een onvoorwaardelijke vervanging, of anders
+I<oude-onderhouder> B<=E<gt>> I<nieuwe-onderhouder> om een aflossing door te
+voeren.
 
 De override-bestanden die gebruikt worden om de officiële Packages-lijsten
 te maken kunnen op elke Debian spiegelserver gevonden worden in de map

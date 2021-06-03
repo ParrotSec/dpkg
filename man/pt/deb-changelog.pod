@@ -84,12 +84,13 @@ nos detalhes de alterações (a expressão regular Perl exacta é
 B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>).Esta informação
 é transmitida via campo B<Closes> no ficheiro I<.changes>.
 
-The maintainer name and email address used in the changelog should be the
-details of the person who prepared this release of the package.  They are
-B<not> necessarily those of the uploader or usual package maintainer.  The
-information here will be copied to the B<Changed-By> field in the
-I<.changes> file, and then later might be used to send an acknowledgment
-when the upload has been installed in the distribution archive.
+O nome de maintainer e endereço email usado no changelog deverão ser os
+detalhes da pessoa que preparou este lançamento do pacote. B<Não> são
+necessários os da pessoa que faz o envio ou do maintainer habitual do
+pacote. A informação daqui será copiada para o campo B<Changed-By> no
+ficheiro I<.changes>, e depois mais tarde pode ser usada para enviar uma
+confirmação quando o pacote enviado for instalado no arquivo da
+distribuição.
 
 O I<date> tem o seguinte formato (compatível com as mesmas semânticas de
 RFC2822 e RFC5322, ou o que «date -R» gerar):
@@ -111,8 +112,8 @@ onde:
 
 =item I<dd>
 
-Is a one- or two-digit day of the month (B<01>-B<31>), where the leading
-zero is optional, but conventionally does not get omitted.
+E um dia do mês de um ou dois dígitos (B<01>-B<31>), onde o zero inicial é
+opcional, mas convencionalmente não é omitido.
 
 =item I<month>
 
@@ -146,13 +147,13 @@ têm de estar dentro do alcance  B<00>-B<59>.
 
 =back
 
-The first “title” line with the package name must start at the left hand
-margin.  The “trailer” line with the maintainer and date details must be
-preceded by exactly one space (U+0020 B<SPACE>).  The maintainer details and
-the date must be separated by exactly two spaces (U+0020 B<SPACE>).  Each
-part of the I<date> can be separated by one or more spaces (U+0020
-B<SPACE>), except after the comma where it can be separated by zero or more
-spaces (U+0020 B<SPACE>).
+A primeira linha "título" com no nome do pacote tem de começar na margem
+esquerda. margin.  A linha final “trailer” com os detalhes do maintainer e
+data deve ser precedida de exactamente um espaço (U+0020 B<SPACE>). Os
+detalhes do maintainer e a data devem estar separados por exactamente dois
+espaços (U+0020 B<SPACE>).  Cada parte de I<date> pode ser separada  por um
+ou mais espaços (U+0020 B<SPACE>), excepto após a vírgula onde pode ser
+separada por zero ou mais espaços (U+0020 B<SPACE>).
 
 Quaisquer linhas que consistam inteiramente (isto é, sem espaço em branco à
 esquerda) de B<#> ou B</* */> são comentários de estilo ou palavras chave

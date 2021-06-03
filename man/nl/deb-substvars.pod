@@ -58,7 +58,7 @@ en u het volgende veld heeft:
   .
   Bijkomende tekst.
 
-zal dit resulteren in:
+Dit zal dit resulteren in:
 
  Description: toepassing foo
   foo is bar.
@@ -136,7 +136,7 @@ berekenen door de grootte van alle gewone bestanden en alle symbolische
 koppelingen samen te nemen, afgerond tot op een eenheid van 1 KiB, en met
 een richtlijn van 1 KiB voor elk ander type object van het
 bestandssysteem. Daarbij worden harde koppelingen slechts éénmaal geteld als
-een gewoon bestand
+een gewoon bestand.
 
 B<Opmerking:> Houd er rekening mee dat dit steeds slechts een schatting kan
 zijn, aangezien de werkelijke grootte die op het geïnstalleerde systeem

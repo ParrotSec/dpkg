@@ -272,7 +272,7 @@ B<errno>-waarde de gebruikersvriendelijke tekenreeks tonen.
 
 =back
 
-=item B<--notify-timeout> I<timeout>
+=item B<--notify-timeout> I<wachttijd>
 
 Een wachttijd instellen voor de optie B<--notify-await> (sinds versie
 1.19.3). Wanneer de wachttijd verlopen is, zal B<start-stop-daemon>
@@ -287,11 +287,11 @@ oog op debuggen om de uitvoer van het proces te zien of om
 bestandsindicatoren om te leiden om de procesuitvoer te loggen. Enkel
 relevant als B<--background> gebruikt wordt.
 
-=item B<-O>, B<--output> I<pathname>
+=item B<-O>, B<--output> I<padnaam>
 
-Redirect B<stdout> and B<stderr> to I<pathname> when forcing the daemon into
-the background (since version 1.20.6).  Only relevant when using
-B<--background>.
+B<stdout> en B<stderr> omleiden naar I<padnaam> wanneer de achtergronddienst
+naar de achtergrond gedwongen wordt (sinds versie 1.20.6). Enkel relevant
+bij het gebruik van B<--background>.
 
 =item B<-N>, B<--nicelevel> I<geheel-getal>
 

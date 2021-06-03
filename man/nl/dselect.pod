@@ -247,13 +247,15 @@ opgehaald worden, of opgehaald worden als dat nodig is. Sommige
 benaderingsmethodes kunnen ook pakketten verwijderen die gemarkeerd waren om
 verwijderd te worden.
 
-If an error occurred during install, it is usually advisable to run install
-again. In most cases, the problems will disappear or be solved.  If problems
-persist or the installation performed was incorrect, please investigate into
-the causes and circumstances, and file a bug in the Debian bug tracking
-system. Instructions on how to do this can be found at
-L<https://bugs.debian.org/> or by reading the documentation for B<bug>(1) or
-B<reportbug>(1), if these are installed.
+Indien zich tijdens het installeren een fout voordeed, wordt over het
+algemeen aangeraden om het commando install nogmaals uit te voeren. In de
+meeste gevallen zullen de problemen verdwijnen of opgelost geraken. Indien
+er problemen blijven bestaan of de uitgevoerde installatie niet correct was,
+gelieve dan op zoek te gaan naar de oorzaken ervan en de omstandigheden te
+onderzoeken en een bugrapport te sturen naar het bugvolgsysteem van
+Debian. Instructies over hoe u dit kunt doen, zijn te vinden op
+L<https://bugs.debian.org/> of u kunt de documentatie lezen bij B<bug>(1) of
+B<reportbug>(1) mochten die geïnstalleerd zijn.
 
 De bijzonderheden van het install-commando hangen af van de implementatie
 van de benaderingsmethode. Er kan behoefte zijn aan aandacht en invoer
@@ -277,7 +279,7 @@ verwijderd te worden.
 
 Beëindigt B<dselect>.
 
-Exits the program with zero (successful) error code.
+Sluit het programma af met de foutcode nul (succesvol).
 
 =head1 PAKKETSELECTIES BEHEREN
 

@@ -66,8 +66,8 @@ Het pakket is niet op uw systeem geïnstalleerd.
 
 =item B<config-files> (configuratiebestanden)
 
-Only the configuration files or the B<postrm> script and the data it needs
-to remove of the package exist on the system.
+Enkel de configuratiebestanden van het pakket en het B<postrm>-script en de
+data welke het moet verwijderen, bevinden zich op het systeem.
 
 =item B<half-installed> (gedeeltelijk geïnstalleerd)
 
@@ -199,9 +199,9 @@ echter het commando B<dpkg-reconfigure>(8) gebruiken.
 
 Het configureren bestaat uit de volgende stappen:
 
-B<1.> Het uitpakken van de conffiles (configuratiebestanden) en tegelijk een
-reservekopie maken van de oude conffiles, zodat ze hersteld kunnen worden
-mocht er iets fout lopen.
+B<1.> Het uitpakken van de configuratiebestanden en tegelijk een
+reservekopie maken van de oude configuratiebestanden, zodat ze hersteld
+kunnen worden mocht er iets fout lopen.
 
 B<2.> Indien het pakket een I<postinst>-script meelevert, dat uitvoeren.
 
@@ -218,16 +218,16 @@ worden door het uitvoeren van B<dpkg --configure --pending>.
 =item B<-r>, B<--remove> I<pakket>...|B<-a>|B<--pending>
 
 Een geïnstalleerd pakket verwijderen. Dit verwijdert alles behalve de
-conffiles (configuratiebestanden) en andere gegevens die opgeruimd worden
-door het script I<postrm>, waardoor vermeden kan worden dat het pakket
-opnieuw geconfigureerd moet worden als het opnieuw geïnstalleerd wordt
-(conffiles zijn configuratiebestanden die vermeld worden in het
-controlebestand I<DEBIAN/conffiles>). Indien er geen controlebestand
-I<DEBIAN/conffiles> en geen script I<DEBIAN/postrm> bestaat, is dit commando
-equivalent met het aanroepen van B<--purge>. Indien B<-a> of B<--pending>
-opgegeven werd in plaats van een pakketnaam, zullen alle pakketten die
-uitgepakt zijn maar in het bestand I<%ADMINDIR%/status> gemarkeerd staan om
-verwijderd te worden, verwijderd worden.
+configuratiebestanden van het type conffiles (conffiles zijn
+configuratiebestanden die vermeld worden in het controlebestand
+I<DEBIAN/conffiles>) en andere gegevens die opgeruimd worden door het script
+I<postrm>, waardoor vermeden kan worden dat het pakket opnieuw
+geconfigureerd moet worden als het opnieuw geïnstalleerd wordt. Indien er
+geen controlebestand I<DEBIAN/conffiles> en geen script I<DEBIAN/postrm>
+bestaat, is dit commando equivalent met het aanroepen van B<--purge>. Indien
+B<-a> of B<--pending> opgegeven werd in plaats van een pakketnaam, zullen
+alle pakketten die uitgepakt zijn maar in het bestand I<%ADMINDIR%/status>
+gemarkeerd staan om verwijderd te worden, verwijderd worden.
 
 Het verwijderen van een pakket bestaat uit de volgende stappen:
 
@@ -240,11 +240,11 @@ B<3.> Het uitvoeren van het I<postrm>-script
 =item B<-P>, B<--purge> I<pakket>...|B<-a>|B<--pending>
 
 Een geïnstalleerd of een reeds verwijderd pakket wissen. Dit verwijdert
-alles, inclusief conffiles (configuratiebestanden) en alles wat anders
-opgeruimd wordt vanuit I<postrm>. Indien B<-a> of B<--pending> opgegeven
-werd in plaats van een pakketnaam, dan zullen alle uitgepakte of verwijderde
-pakketten die echter in het bestand I<%ADMINDIR%/status> gemarkeerd zijn om
-gewist te worden, gewist worden.
+alles, inclusief configuratiebestanden en alles wat anders opgeruimd wordt
+vanuit I<postrm>. Indien B<-a> of B<--pending> opgegeven werd in plaats van
+een pakketnaam, dan zullen alle uitgepakte of verwijderde pakketten die
+echter in het bestand I<%ADMINDIR%/status> gemarkeerd zijn om gewist te
+worden, gewist worden.
 
 Merk op: sommige configuratiebestanden kunnen onbekend zijn voor B<dpkg>
 omdat ze via de configuratiescripts gecreëerd en afzonderlijk afgehandeld
@@ -627,7 +627,7 @@ commentaar (als hij begint met een ‘B<#>’).
 
 =item B<--abort-after=>I<aantal>
 
-Pas aan na hoeveel fouten B<dpkg> moet afbreken. Standaard is dat 50.
+Aanpassen na hoeveel fouten B<dpkg> moet afbreken. Standaard is dat 50.
 
 =item B<-B>, B<--auto-deconfigure>
 
@@ -638,9 +638,10 @@ afhankelijk was, automatisch gedeconfigureerd wordt.
 
 =item B<-D>I<octaal>, B<--debug=>I<octaal>
 
-Switch debugging on. I<octal> is formed by bitwise-ORing desired values
-together from the list below (note that these values may change in future
-releases). B<-Dh> or B<--debug=help> display these debugging values.
+Debuggen inschakelen. I<octaal> wordt gevormd door de gewenste waarden uit
+de onderstaande lijst in een bitwise OR-bewerking samen te nemen (merk op
+dat deze waarden in toekomstige uitgaven kunnen veranderen). B<-Dh> of
+B<--debug=help> geeft deze debugwaarden weer.
 
      Getal   Beschrijving
          1   Algemene informatieve voortgangsinformatie
@@ -720,34 +721,33 @@ pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van
 bepaalde bestanden tot gevolg hebben. Dit heeft invloed op het veld
 B<Conflicts>.
 
-B<confmiss>: Zonder vragen steeds het ontbrekende conffile
-(configuratiebestand) installeren. Dit is gevaarlijk, aangezien het betekent
-dat een verandering die aan een bestand aangebracht werd (het verwijderen
-ervan), niet behouden wordt.
+B<confmiss>: Zonder vragen steeds het ontbrekende configuratiebestand
+installeren. Dit is gevaarlijk, aangezien het betekent dat een verandering
+die aan een bestand aangebracht werd (het verwijderen ervan), niet behouden
+wordt.
 
-B<confnew>: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, dan steeds zonder vragen de nieuwe
-versie installeren, tenzij ook B<--force-confdef> opgegeven werd. In dat
-geval wordt de voorkeur gegeven aan de standaardactie.
-
-B<confold>: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, dan steeds zonder vragen de oude
-versie behouden, tenzij ook B<--force-confdef> opgegeven werd. In dat geval
+B<confnew>: Als een configuratiebestand aangepast werd en de versie uit het
+pakket gewijzigd werd, dan steeds zonder vragen de nieuwe versie
+installeren, tenzij ook B<--force-confdef> opgegeven werd. In dat geval
 wordt de voorkeur gegeven aan de standaardactie.
 
-B<confdef>: Als een conffile (configuratiebestand) aangepast werd en de
-versie uit het pakket gewijzigd werd, dan steeds zonder vragen voor de
-standaardactie kiezen. Indien er geen standaardactie is, zal het programma
-stoppen en de gebruiker een vraag stellen, tenzij ook B<--force-confnew> of
+B<confold>: Als een configuratiebestand aangepast werd en de versie uit het
+pakket gewijzigd werd, dan steeds zonder vragen de oude versie behouden,
+tenzij ook B<--force-confdef> opgegeven werd. In dat geval wordt de voorkeur
+gegeven aan de standaardactie.
+
+B<confdef>: Als een configuratiebestand aangepast werd en de versie uit het
+pakket gewijzigd werd, dan steeds zonder vragen voor de standaardactie
+kiezen. Indien er geen standaardactie is, zal het programma stoppen en de
+gebruiker een vraag stellen, tenzij ook B<--force-confnew> of
 B<--force-confold> opgegeven werd. In dat geval zal het dit gebruiken om
 over de uiteindelijke actie te beslissen.
 
-B<confask>: Als een conffile (configuratiebestand) aangepast werd, altijd
-aanbieden om het te vervangen door de versie uit het pakket, ook al werd de
-versie uit het pakket niet gewijzigd (sinds dpkg 1.15.8). Indien ook een van
-de opties B<--force-confnew>, B<--force-confold> of B<--force-confdef>
-opgegeven werd, zal het die gebruiken om over de uiteindelijke actie te
-beslissen.
+B<confask>: Als een configuratiebestand aangepast werd, altijd aanbieden om
+het te vervangen door de versie uit het pakket, ook al werd de versie uit
+het pakket niet gewijzigd (sinds dpkg 1.15.8). Indien ook een van de opties
+B<--force-confnew>, B<--force-confold> of B<--force-confdef> opgegeven werd,
+zal het die gebruiken om over de uiteindelijke actie te beslissen.
 
 B<overwrite>: Een bestand van een pakket overschrijven met het bestand van
 een ander pakket.
@@ -955,11 +955,11 @@ beginnen met 9 tekens om van iedere specifieke toets het resultaat te
 rapporteren, waarbij een ‘B<?>’ betekent dat de toets niet uitgevoerd kon
 worden (ontbrekende ondersteuning, bestandspermissies, enz.), een ‘B<.>’
 betekent dat de toets slaagde en een alfanumeriek teken betekent dat een
-specifieke toets mislukte. Een mislukte toets van de md5-controlesom (de
+specifieke toets mislukte. Een mislukte toets van het md5-controlegetal (de
 inhoud van het bestand werd gewijzigd) wordt aangegeven met een ‘B<5>’ op de
 plaats van het derde teken. De regel wordt gevolgd door een spatie en een
-attribuutteken (momenteel ‘B<c>’ voor conffiles (configuratiebestanden)),
-nog een spatie en de padnaam.
+attribuutteken (momenteel ‘B<c>’ voor configuratiebestanden), nog een spatie
+en de padnaam.
 
 =item B<--status-fd> I<n>
 
@@ -982,8 +982,8 @@ zullen voor de uitvoer omgezet worden naar spaties.
 =item B<status:> I<bestand> B<: conffile-prompt : '>I<echt-oud>B<'
 '>I<echt-nieuw>B<'> I<door-gebruiker-bewerkt>B<> I<door-distributie-bewerkt>
 
-Er wordt een vraag in verband met een conffile (configuratiebestand) gesteld
-aan de gebruiker.
+Er wordt een vraag in verband met een configuratiebestand gesteld aan de
+gebruiker.
 
 =item B<processing:> I<fase>B<:> I<pakket>
 
@@ -1028,8 +1028,8 @@ B<configure>, B<trigproc>, B<disappear>, B<remove> of B<purge>.
 
 =item YYYY-MM-DD HH:MM:SS B<conffile> I<bestandsnaam> I<beslissing>
 
-Voor conffile-wijzigingen (wijzigingen aan een configuratiebestand) waarbij
-I<beslissing> ofwel B<install> ofwel B<keep> is.
+Voor wijzigingen aan een configuratiebestand waarbij I<beslissing> ofwel
+B<install> ofwel B<keep> is.
 
 =back
 
@@ -1197,23 +1197,23 @@ dpkg 1.19.5).
 
 =item B<DPKG_SHELL_REASON>
 
-Gedefinieerd door B<dpkg> in de shell die door de conffile-prompt (een vraag
-in verband met de configuratie) geactiveerd wordt met het oog op het
-onderzoeken van de situatie (sinds dpkg 1.15.6). Momenteel is de geldige
-waarde: B<conffile-prompt>.
+Gedefinieerd door B<dpkg> in de shell die geactiveerd wordt naar aanleiding
+van een vraag in verband met de configuratie met het oog op het onderzoeken
+van de situatie (sinds dpkg 1.15.6). Momenteel is de geldige waarde:
+B<conffile-prompt>.
 
 =item B<DPKG_CONFFILE_OLD>
 
-Gedefinieerd door B<dpkg> in de shell die door de conffile-prompt (een vraag
-in verband met de configuratie) geactiveerd wordt om de situatie te
-onderzoeken (sinds dpkg 1.15.6). Bevat het pad naar de oude conffile
+Gedefinieerd door B<dpkg> in de shell die geactiveerd wordt naar aanleiding
+van een vraag in verband met de configuratie om de situatie te onderzoeken
+(sinds dpkg 1.15.6). Bevat het pad naar de oude conffile
 (configuratiebestand).
 
 =item B<DPKG_CONFFILE_NEW>
 
-Gedefinieerd door B<dpkg> in de shell die door de conffile-prompt (een vraag
-in verband met de configuratie) geactiveerd wordt om de situatie te
-onderzoeken (sinds dpkg 1.15.6). Bevat het pad naar de nieuwe conffile
+Gedefinieerd door B<dpkg> in de shell die geactiveerd wordt naar aanleiding
+van een vraag in verband met de configuratie om de situatie te onderzoeken
+(sinds dpkg 1.15.6). Bevat het pad naar de nieuwe conffile
 (configuratiebestand).
 
 =item B<DPKG_HOOK_ACTION>
@@ -1367,10 +1367,10 @@ Om een lokale kopie te maken van de pakketselectietoestand:
 
 =back
 
-You might transfer this file to another computer, and after having updated
-the I<available> file there with your package manager frontend of choice
-(see L<https://wiki.debian.org/Teams/Dpkg/FAQ> for more details), for
-example:
+U zou dit bestand kunnen overbrengen naar een andere computer en nadat u
+daar het bestand I<available> bijgewerkt hebt met het frontend voor
+pakketbeheer van uw voorkeur (zie L<https://wiki.debian.org/Teams/Dpkg/FAQ>
+voor meer details), bijvoorbeeld:
 
 =over 
 

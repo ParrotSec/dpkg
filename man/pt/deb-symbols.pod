@@ -44,13 +44,13 @@ B<objdump>(1). Um I<dependency-template> é uma dependência onde I<#MINVER#>
 I<minimal-version>)” ou por nada (se uma dependência isenta-de-versão for
 considerada suficiente).
 
-Each exported I<symbol> (listed as I<name>@I<version>, with I<version> being
-“Base” if the library is not versioned) is associated to a
-I<minimal-version> of its dependency template (the main dependency template
-is always used and will end up being combined with the dependency template
-referenced by I<id-of-dependency-template> if present). The first
-alternative dependency template is numbered 1, the second one 2, etc.  Each
-column is separated by exactly a single whitespace.
+Cada I<symbol> exportado (listado como I<name>@I<version>, com I<version>
+sendo “Base” se a biblioteca for isenta-de-versão) estiver associado a um
+I<minimal-version> do seu modelo de dependência (o modelo de dependência
+principal é sempre usado e irá acabar sendo combinado com o modelo de
+dependência referenciado por I<id-of-dependency-template> se presente). O
+primeiro modelo de dependência alternativa é numerado 1, o segundo 2,
+etc. Cada coluna é separada por exactamente um único espaço em branco.
 
 Cada entrada para uma biblioteca pode também ter alguns campos de
 meta-informação. Esses campos são armazenados em linhas que começam com um

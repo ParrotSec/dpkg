@@ -235,15 +235,16 @@ directórios de saída de compilação de Libtool.
 
 =back
 
-B<Note:> While they have similar purposes, B<-i> and B<-I> have very
-different syntax and semantics. B<-i> can only be specified once and takes a
-perl compatible regular expression which is matched against the full
-relative path of each file. B<-I> can specified multiple times and takes a
-filename pattern with shell wildcards.  The pattern is applied to the full
-relative path but also to each part of the path individually. The exact
-semantic of tar's B<--exclude> option is somewhat complicated, see
-L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> for a full
-documentation.
+B<Nota:> Apesar de terem objectivos semelhantes, B<-i> e B<-I> têm muitas
+diferenças na sintaxe e semântica. B<-i> só pode ser especificado uma vez e
+e recebe uma expressão regular compatível com perl que é correspondida ao
+caminho relativo completo de cada ficheiro. B<-I> pode se especificado
+várias vezes e recebe um padrão de nome de ficheiro com wildcards de
+shell. O padrão é aplicado ao caminho relativo completo mas também a cada
+parte do caminho individualmente. A semântica exacta da opção B<--exclude>
+do tar é um tanto complicada, veja
+L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> para a
+documentação completa.
 
 A regex e padrões predefinidos para ambas opções podem ser vistos no
 resultado do comando B<--help>.
@@ -294,10 +295,10 @@ antigas.
 
 =head1 FORMATOS DE PACOTE FONTE
 
-If you don't know what source format to use, you should probably pick either
-“3.0 (quilt)” or “3.0 (native)”.  See
-L<https://wiki.debian.org/Projects/DebSrc3.0> for information on the
-deployment of those formats within Debian.
+Se você não sabe que formato de fonte usar, deve provavelmente escolher
+entre “3.0 (quilt)” ou “3.0 (native)”.  Veja
+L<https://wiki.debian.org/Projects/DebSrc3.0> para informação sobre o
+desenvolvimento desses formatos em Debian.
 
 =head2 Formato: 1.0
 
@@ -486,23 +487,25 @@ pré remoção de qualquer directório B<debian> pré-existente mas pode também
 conter ficheiros binários fora desse directório (veja a opção
 B<--include-binaries>).
 
-All patches listed in B<debian/patches/>I<vendor>B<.series> or
-B<debian/patches/series> are then applied, where I<vendor> will be the
-lowercase name of the current vendor, or B<debian> if there is no vendor
-defined.  If the former file is used and the latter one doesn't exist (or is
-a symlink), then the latter is replaced with a symlink to the former.  This
-is meant to simplify usage of B<quilt> to manage the set of patches.
-Vendor-specific series files are intended to make it possible to serialize
-multiple development branches based on the vendor, in a declarative way, in
-preference to open-coding this handling in B<debian/rules>.  This is
-particularly useful when the source would need to be patched conditionally
-because the affected files do not have built-in conditional occlusion
-support.  Note however that while B<dpkg-source> parses correctly series
-files with explicit options used for patch application (stored on each line
-after the patch filename and one or more spaces), it does ignore those
-options and always expects patches that can be applied with the B<-p1>
-option of B<patch>. It will thus emit a warning when it encounters such
-options, and the build is likely to fail.
+Todas as patches listadas em B<debian/patches/>I<vendor>B<.series> ou
+B<debian/patches/series> são então aplicadas, onde I<vendor> será o nome em
+minúsculas do fornecedor actual, ou B<debian> se não existir um fornecedor
+definido. Se o ficheiro anterior for usado e o posterior não existir (ou for
+um link simbólico), então o posterior é substituído por um link simbólico
+para o antigo. Isto destina-se a simplificar a utilização de B<quilt> para
+gerir o conjunto de patches. Ficheiros de séries especificas-de-fornecedor
+destinam-se a tornar possível a criação de séries de múltiplos ramos de
+desenvolvimento baseados no fornecedor, num modo declarativo, dando
+preferência a codificação-aberta deste manuseamento em B<debian/rules>. Isto
+é particularmente útil quando a fonte precisa de receber uma patch
+condicionalmente porque os ficheiros afectados não possuem suporte a oclusão
+condicional embutido. Note no entanto que enquanto B<dpkg-source> analisa
+correctamente ficheiros de séries com opções explícitas usadas para aplicar
+patch a aplicação (armazenada em cada linha antes do nome de ficheiro de
+patch e um ou mais espaços), ele ignora essas opções e espera sempre que as
+patches possam ser aplicadas com a opção B<-p1> ou B<patch>. Irá portanto
+emitir um aviso quando encontra tais opções, e é provável que a compilação
+falhe.
 
 Note que B<lintian>(1) irá emitir avisos incondicionais quando usa séries de
 fornecedor devido a regulamento controverso específico de Debian, o qual não

@@ -26,19 +26,20 @@ B<dpkg-architecture> [I<option>...] [I<command>]
 B<dpkg-architecture> disponibiliza uma habilidade para determinar e definir
 a arquitectura de compilação e da máquina para compilação de pacotes.
 
-The build architecture is always determined by either the B<DEB_BUILD_ARCH>
-variable if set (and B<--force> not being specified) or by an external call
-to B<dpkg>(1), and cannot be set at the command line.
+A arquitectura de compilação é sempre determinada seja ou pela variável
+B<DEB_BUILD_ARCH> se definida (e se B<--force> não for especificada) ou por
+uma chamada externa ao B<dpkg>(1), e não pode ser definida na linha de
+comandos.
 
-You can specify the host architecture by providing one or both of the
-options B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH>
-variable is used if set (and B<--force> not being specified). The default is
-determined by an external call to B<gcc>(1), or the same as the build
-architecture if B<CC> or gcc are both not available. One out of
-B<--host-arch> and B<--host-type> is sufficient, the value of the other will
-be set to a usable default. Indeed, it is often better to only specify one,
-because B<dpkg-architecture> will warn you if your choice does not match the
-default.
+Você pode especificar a arquitectura da máquina ao fornecer uma ou ambas as
+opções B<--host-arch> e B<--host-type>, caso contrário é usada a variável
+B<DEB_HOST_ARCH> se definida (e não sendo especificado B<--force>). A
+predefinição é determinada por uma chamada externa ao B<gcc>(1), ou o mesmo
+como a arquitectura de compilação se B<CC> ou gcc estiverem ambos não
+disponíveis. Um de B<--host-arch> e B<--host-type> é suficiente, o valor do
+outro será definido para uma predefinição utilizável. De facto, é muitas
+vezes melhor apenas especificar um, porque B<dpkg-architecture> vai avisa-lo
+se a sua escolha não corresponder ao predefinido.
 
 =head1 COMANDOS
 
@@ -71,12 +72,14 @@ Escreve o valor de uma variável única.
 
 =item B<-s>, B<--print-set>
 
-Print an export command. This can be used to set the environment variables
-using the POSIX shell or make B<eval>, depending on the output format.
+Escreve um comando de exportação. Isto pode ser usado para definir as
+variáveis de ambiente usando a shell POSIX ou make B<eval>, dependendo do
+formato dos resultados.
 
 =item B<-u>, B<--print-unset>
 
-Print a similar command to B<--print-set> but to unset all variables.
+Escreve um comando semelhante ao B<--print-set> mas para limpar o valor de
+todas as variáveis.
 
 =item B<-c>, B<--command> I<command-string>
 
@@ -138,8 +141,8 @@ B<big>.
 
 =item B<--print-format> I<format>
 
-Sets the output format for B<--print-set> and B<--print-unset> (since dpkg
-1.20.6), to either B<shell> (default) or B<make>.
+Define o formato de resultados para B<--print-set> e B<--print-unset> (desde
+dpkg 1.20.6), para ou B<shell> (predefinição) ou B<make>.
 
 =item B<-f>, B<--force>
 
@@ -224,9 +227,9 @@ x86_64-linux-gnu.  Exemplos de caminhos: /lib/powerpc64le-linux-gnu/,
 
 =head1 VARIÁVEIS
 
-The following variables are read from the environment (unless B<--force> has
-been specified) and set by B<dpkg-architecture> (see the B<TERMS> section
-for a description of the naming scheme):
+As seguintes variáveis são lidas a partir do ambiente (a menos que
+B<--force> seja especificado) e definidas por B<dpkg-architecture> (veja a
+secção B<TERMS> para uma descrição do esquema de nomeação):
 
 =over 
 
@@ -236,7 +239,7 @@ A arquitectura Debian da máquina de compilação.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
-The Debian ABI name of the build machine (since dpkg 1.18.11).
+O nome ABI Debian da máquina de compilação (desde dpkg 1.18.11).
 
 =item B<DEB_BUILD_ARCH_LIBC>
 
@@ -248,7 +251,7 @@ O nome de sistema Debian da máquina de compilação (desde dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_CPU>
 
-The Debian CPU name of the build machine (since dpkg 1.13.2).
+O nome de CPU de Debian da máquina de compilação (desde dpkg 1.13.2).
 
 =item B<DEB_BUILD_ARCH_BITS>
 
@@ -260,11 +263,11 @@ A classe endian da máquina de compilação (ittle / big; desde dpkg 1.15.4).
 
 =item B<DEB_BUILD_GNU_CPU>
 
-The GNU CPU part of B<DEB_BUILD_GNU_TYPE>.
+A parte CPU GNU de B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_SYSTEM>
 
-The GNU system part of B<DEB_BUILD_GNU_TYPE>.
+A parte de system GNU de B<DEB_BUILD_GNU_TYPE>.
 
 =item B<DEB_BUILD_GNU_TYPE>
 
@@ -281,7 +284,7 @@ A arquitectura Debian da máquina anfitriã.
 
 =item B<DEB_HOST_ARCH_ABI>
 
-The Debian ABI name of the host machine (since dpkg 1.18.11).
+O nome ABI Debian da máquina anfitriã (desde dpkg 1.18.11).
 
 =item B<DEB_HOST_ARCH_LIBC>
 
@@ -293,7 +296,7 @@ O nome de sistema Debian da máquina anfitriã (desde dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_CPU>
 
-The Debian CPU name of the host machine (since dpkg 1.13.2).
+O nome de CPU de Debian da máquina anfitriã (desde dpkg 1.13.2).
 
 =item B<DEB_HOST_ARCH_BITS>
 
@@ -305,11 +308,11 @@ A classe endian da máquina anfitriã (ittle / big; desde dpkg 1.15.4).
 
 =item B<DEB_HOST_GNU_CPU>
 
-The GNU CPU part of B<DEB_HOST_GNU_TYPE>.
+A parte CPU GNU de B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_SYSTEM>
 
-The GNU system part of B<DEB_HOST_GNU_TYPE>.
+A parte de system GNU de B<DEB_HOST_GNU_TYPE>.
 
 =item B<DEB_HOST_GNU_TYPE>
 
@@ -326,7 +329,7 @@ A arquitectura Debian da máquina de destino (desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_ABI>
 
-The Debian ABI name of the target machine (since dpkg 1.18.11).
+O nome ABI Debian da máquina alvo (desde dpkg 1.18.11).
 
 =item B<DEB_TARGET_ARCH_LIBC>
 
@@ -338,7 +341,7 @@ O nome de sistema Debian da máquina de destino (desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_CPU>
 
-The Debian CPU name of the target machine (since dpkg 1.17.14).
+O nome de CPU de Debian da máquina de destino (desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_ARCH_BITS>
 
@@ -350,11 +353,11 @@ A classe endian da máquina de destino (ittle / big; desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_CPU>
 
-The GNU CPU part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
+A parte CPU GNU de B<DEB_TARGET_GNU_TYPE> (desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_SYSTEM>
 
-The GNU system part of B<DEB_TARGET_GNU_TYPE> (since dpkg 1.17.14).
+A parte de system GNU de B<DEB_TARGET_GNU_TYPE> (desde dpkg 1.17.14).
 
 =item B<DEB_TARGET_GNU_TYPE>
 

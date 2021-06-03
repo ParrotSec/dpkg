@@ -106,28 +106,29 @@ worden aan het programma na B<-->.
 
 =head1 TAKEN IN VERBAND MET CONFIGURATIEBESTANDEN
 
-Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een conffile
-(configuratiebestand) (conffile = een configuratiebestand waarin B<dpkg>
-door de gebruiker gemaakte aanpassingen moet behouden) verwijderen indien
-dat niet in de nieuwe versie voorkomt. Daarvoor zijn twee belangrijke
-redenen. De eerste is dat het configuratiebestand per ongeluk weggevallen
-kan zijn en dat de volgende versie dit zou kunnen herstellen en dat
-gebruikers hun aanpassingen niet graag verloren zouden zien gaan. De tweede
-is om pakketten de mogelijkheid te bieden om over te gaan van een door dpkg
-onderhouden configuratiebestand naar een bestand dat onderhouden wordt door
-de scripts van de pakketonderhouder, meestal met behulp van gereedschap
-zoals debconf of ucf.
+Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een
+configuratiebestand van het type conffile (conffile = een
+configuratiebestand waarin B<dpkg> door de gebruiker gemaakte aanpassingen
+moet behouden) verwijderen indien dat niet in de nieuwe versie
+voorkomt. Daarvoor zijn twee belangrijke redenen. De eerste is dat het
+configuratiebestand per ongeluk weggevallen kan zijn en dat de volgende
+versie dit zou kunnen herstellen en dat gebruikers hun aanpassingen niet
+graag verloren zouden zien gaan. De tweede is om pakketten de mogelijkheid
+te bieden om over te gaan van een door dpkg onderhouden configuratiebestand
+naar een bestand dat onderhouden wordt door de scripts van de
+pakketonderhouder, meestal met behulp van gereedschap zoals debconf of ucf.
 
-Dit houdt in dat indien een pakket de bedoeling heeft om een conffile
-(configuratiebestand) te hernoemen of te verwijderen, het dit expliciet moet
+Dit houdt in dat indien een pakket de bedoeling heeft om een
+configuratiebestand te hernoemen of te verwijderen, het dit expliciet moet
 doen en dat B<dpkg-maintscript-helper> kan gebruikt worden in scripts van de
-pakketonderhouder om het verwijderen en verplaatsen van conffiles op een
-elegante manier uit te voeren.
+pakketonderhouder om het verwijderen en verplaatsen van
+configuratiebestanden op een elegante manier uit te voeren.
 
 =head2 Een configuratiebestand verwijderen
 
-Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in
-F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
+Opmerking: In de meeste gevallen kan dit vervangen worden door de vlag
+C<remove-on-upgrade> in F<DEBIAN/conffiles> (sinds dpkg 1.20.6), zie
+L<deb-conffiles(5)>.
 
 Indien een configuratiebestand volledig verwijderd wordt, moet het van
 schijf verwijderd worden, tenzij de gebruiker het aangepast heeft. Indien er
@@ -169,8 +170,8 @@ andere, moet u er voor zorgen dat eventuele wijzigingen die de gebruiker
 maakte mee gaan. Op het eerste gezicht kan dit lijken op een eenvoudige
 aanpassing aan het script B<preinst>. Dat zal evenwel als resultaat hebben
 dat de gebruiker door B<dpkg> gevraagd wordt om de aanpassingen aan het
-configuratiebestand goed te keuren, al heeft hij er in dit geval niets mee
-te maken.
+configuratiebestand goed te keuren, al is hij er in dit geval niet voor
+verantwoordelijk.
 
 Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende
 shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en
@@ -247,9 +248,9 @@ Indien een echte map omgezet wordt naar een symbolische koppeling, moet u
 ervoor zorgen dat de map verwijderd wordt voor het uitpakken. Dit kan op het
 eerste gezicht een eenvoudige aanpassing aan het script B<preinst>
 lijken. Nochtans kan dit enige problemen opleveren in het geval de map
-conffiles (configuratiebestanden) bevat, padnamen die eigendom zijn van
-andere pakketten of lokaal aangemaakte padnamen, of in het geval het pakket
-gedegradeerd wordt.
+configuratiebestanden bevat, padnamen die eigendom zijn van andere pakketten
+of lokaal aangemaakte padnamen, of in het geval het pakket gedegradeerd
+wordt.
 
 Een elegante omschakeling kan gerealiseerd worden door het volgende
 shell-fragment op te nemen in de scripts B<preinst>, B<postinst> en
@@ -269,21 +270,20 @@ van de nieuwe symbolische koppeling in I<padnaam>. Dit kan ofwel absoluut of
 relatief zijn ten opzichte van de map die I<padnaam> bevat.
 
 Huidige toepassing: het script B<preinst> controleert of de map bestaat en
-geen conffiles (configuratiebestanden), padnamen die eigendom zijn van
-andere pakketten of lokaal aangemaakte padnamen bevat. Is dat niet het
-geval, dan wordt ze gerust gelaten. Anders wordt ze hernoemd naar
-I<padnaam>B<.dpkg-backup> en wordt een lege voorlopige map I<padnaam>
-aangemaakt die met een bestand gemarkeerd wordt, zodat dpkg ze kan
-opvolgen. Tijdens het configureren beëindigt het script B<postinst> de
-overgang indien I<padnaam>B<.dpkg-backup> nog steeds een map is en
-I<padnaam> de voorlopige map. Het verwijdert het bestand dat de voorlopige
-map markeert en verplaatst de zopas in de map aangemaakte bestanden naar het
-doel van de symbolische koppeling I<nieuw-doel>/, vervangt de nu lege
-voorlopige map I<padnaam> door een symbolische koppeling naar I<nieuw-doel>
-en verwijdert I<padnaam>B<.dpkg-backup>. In geval van
-abort-upgrade/abort-install (afbreken van de opwaardering/installatie)
-hernoemt het script B<postrm> zo nodig I<padnaam>B<.dpkg-backup> terug naar
-I<padnaam>.
+geen configuratiebestanden, padnamen die eigendom zijn van andere pakketten
+of lokaal aangemaakte padnamen bevat. Is dat niet het geval, dan wordt ze
+gerust gelaten. Anders wordt ze hernoemd naar I<padnaam>B<.dpkg-backup> en
+wordt een lege voorlopige map I<padnaam> aangemaakt die met een bestand
+gemarkeerd wordt, zodat dpkg ze kan opvolgen. Tijdens het configureren
+beëindigt het script B<postinst> de overgang indien
+I<padnaam>B<.dpkg-backup> nog steeds een map is en I<padnaam> de voorlopige
+map. Het verwijdert het bestand dat de voorlopige map markeert en verplaatst
+de zopas in de map aangemaakte bestanden naar het doel van de symbolische
+koppeling I<nieuw-doel>/, vervangt de nu lege voorlopige map I<padnaam> door
+een symbolische koppeling naar I<nieuw-doel> en verwijdert
+I<padnaam>B<.dpkg-backup>. In geval van abort-upgrade/abort-install
+(afbreken van de opwaardering/installatie) hernoemt het script B<postrm> zo
+nodig I<padnaam>B<.dpkg-backup> terug naar I<padnaam>.
 
 =head1 DE INTEGRATIE IN PAKKETTEN
 

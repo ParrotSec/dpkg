@@ -14,8 +14,8 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-deb-src-symbols - Sjabloonbestand met Debian's uitgebreide gedeelde
-bibliotheek
+deb-src-symbols - Uitgebreid sjabloonbestand van Debian voor gedeelde
+bibliotheken
 
 =head1 OVERZICHT
 
@@ -24,26 +24,26 @@ B<debian/>I<pakket>B<.symbols>, B<debian/symbols>
 
 =head1 BESCHRIJVING
 
-The symbol file templates are shipped in Debian source packages, and its
-format is a superset of the symbols files shipped in binary packages, see
-L<deb-symbols(5)>.
+De symboolbestand-sjablonen worden geleverd met Debian bronpakketten en de
+indeling ervan is een superverzameling van de symboolbestanden, geleverd in
+binaire pakketten, zie L<deb-symbols(5)>.
 
 =head2 Commentaar
 
-Commentaar wordt ondersteund in sjabloonsymbolenbestanden. Elke regel met
-‘#’ als eerste teken is een commentaarregel, behalve als die regel begint
-met ‘#include’ (zie het onderdeel over B<Het gebruik van includes>). Regels
-die beginnen met ‘#MISSING:’ zijn een bijzondere vorm van commentaar waarin
+Commentaar wordt ondersteund in sjabloonsymboolbestanden. Elke regel met ‘#’
+als eerste teken is een commentaarregel, behalve als die regel begint met
+‘#include’ (zie het onderdeel over B<Het gebruik van includes>). Regels die
+beginnen met ‘#MISSING:’ zijn een bijzondere vorm van commentaar waarin
 symbolen die verdwenen zijn, gedocumenteerd worden.
 
 =head2 Substitutie van #PACKAGE# gebruiken
 
 In enkele zeldzame gevallen verschilt de naam van de bibliotheek naargelang
 de architectuur. Om de naam van het pakket niet rechtstreeks in het
-symbolenbestand te moeten inschrijven, kunt u gebruik maken van de marker
-I<#PACKAGE#>. Die zal tijdens de installatie van de symbolenbestanden
+symboolbestand te moeten inschrijven, kunt u gebruik maken van de marker
+I<#PACKAGE#>. Die zal tijdens de installatie van de symboolbestanden
 vervangen worden door de echte pakketnaam. In tegenstelling tot de marker
-I<#MINVER#>, zal I<#PACKAGE#> nooit te vinden zijn in een symbolenbestand
+I<#MINVER#>, zal I<#PACKAGE#> nooit te vinden zijn in een symboolbestand
 binnenin een binair pakket.
 
 =head2 Symbooltags gebruiken
@@ -81,11 +81,11 @@ normaal niet-getagd symbool.
 
 Aangezien symbooltags een uitbreiding zijn van het
 B<deb-symbols>(5)-systeem, kunnen zij enkel deel uitmaken van de
-symbolenbestanden die in broncodepakketten gebruikt worden (die bestanden
+symboolbestanden die in broncodepakketten gebruikt worden (die bestanden
 moeten dan gezien worden als sjablonen die gebruikt worden om de
-symbolenbestanden te bouwen die in de binaire pakketten zitten). Indien
+symboolbestanden te bouwen die in de binaire pakketten zitten). Indien
 B<dpkg-gensymbols> aangeroepen wordt zonder de optie B<-t> zal het
-symbolenbestanden produceren die compatibel zijn met het
+symboolbestanden produceren die compatibel zijn met het
 B<deb-symbols>(5)-systeem: er gebeurt een volledige verwerking van de
 symbolen in overeenstemming met de vereisten van hun standaardtags en de
 uitvoer wordt ontdaan van alle tags. In sjabloonmodus (B<-t>) daarentegen
@@ -105,7 +105,7 @@ van B<dpkg-gensymbols> tot gevolg hebben. Nochtans zullen verdwenen
 facultatieve symbolen permanent als MISSING (ontbrekend) aangegeven worden
 in de diff (weergave van de veranderingen) bij elke nieuwe
 pakketrevisie. Dit gedrag dient als een geheugensteuntje voor de onderhouder
-dat een dergelijk symbool verwijderd moet worden uit het symbolenbestand of
+dat een dergelijk symbool verwijderd moet worden uit het symboolbestand of
 terug toegevoegd aan de bibliotheek. Indien een facultatief symbool dat
 eerder als MISSING opgetekend stond in een volgende revisie plots opnieuw
 terug opduikt, zal het terug opgewaardeerd worden naar de status “existing”
@@ -142,11 +142,11 @@ de diff (weergave van de veranderingen) opgenomen zal worden), maar het
 wordt niet als nieuw beschouwd.
 
 Als in de standaardmodus (niet-sjabloonmodus) gewerkt wordt, worden van de
-architectuurspecifieke symbolen enkel die in het symbolenbestand
-opgeschreven die overeenkomen met de huidige hostarchitectuur. Als
-daarentegen in de sjabloonmodus gewerkt wordt, worden steeds alle
-architectuurspecifieke symbolen (ook die voor vreemde architecturen)
-opgeschreven in het symbolenbestand.
+architectuurspecifieke symbolen enkel die in het symboolbestand opgeschreven
+die overeenkomen met de huidige hostarchitectuur. Als daarentegen in de
+sjabloonmodus gewerkt wordt, worden steeds alle architectuurspecifieke
+symbolen (ook die voor vreemde architecturen) opgeschreven in het
+symboolbestand.
 
 De indeling voor de I<architectuurlijst> is dezelfde als die welke gebruikt
 wordt voor het veld B<Build-Depends> van I<debian/control> (behalve de
@@ -172,12 +172,12 @@ Meerdere beperkingen kunnen aaneengeregen worden.
 =item B<allow-internal>
 
 dpkg-gensymbols hanteert een lijst van interne symbolen die niet zouden
-mogen voorkomen in symbolenbestanden omdat ze gewoonlijk slechts een
+mogen voorkomen in symboolbestanden omdat ze gewoonlijk slechts een
 neveneffect zijn van details in de wijze waarop de gereedschapskist
 (toolchain) geïmplementeerd wordt. Indien u om een of andere reden echt wilt
-dat een van deze symbolen opgenomen wordt in het symbolenbestand, moet u het
+dat een van deze symbolen opgenomen wordt in het symboolbestand, moet u het
 symbool markeren met de tag B<allow-internal>. Dit kan nodig zijn voor
-sommige gereedschapskistbibliotheken van lagere orde zoals libgcc
+sommige gereedschapskistbibliotheken van lagere orde zoals “libgcc”.
 
 =item B<ignore-blacklist>
 
@@ -206,11 +206,11 @@ gebruik van symboolpatronen>.
 Anders dan een standaardbeschrijving van een symbool, kan een patroon
 meerdere echte symbolen uit de bibliotheek dekken. B<dpkg-gensymbols> zal
 proberen om elk patroon te vergelijken met elk reëel symbool waarvoor in het
-symbolenbestand I<geen> specifiek symboolpendant gedefinieerd werd. Telkens
-wanneer een eerste overeenkomst met een patroon gevonden wordt, worden alle
-tags en eigenschappen ervan gebruikt als basisspecificatie voor het
-symbool. Indien er met geen enkel patroon een overeenkomst gevonden wordt,
-zal het symbool als nieuw beschouwd worden.
+symboolbestand I<geen> specifiek symbooltegenhanger gedefinieerd
+werd. Telkens wanneer een eerste overeenkomst met een patroon gevonden
+wordt, worden alle tags en eigenschappen ervan gebruikt als
+basisspecificatie voor het symbool. Indien er met geen enkel patroon een
+overeenkomst gevonden wordt, zal het symbool als nieuw beschouwd worden.
 
 Een patroon wordt als verloren beschouwd als het met geen enkel symbool uit
 de bibliotheek overeenkomt. Standaard zal dit onder B<-c1> of een hoger
@@ -224,12 +224,12 @@ de tag I<arch>. Raadpleeg het onderdeel B<Standaard symbooltags> hierboven
 voor meer informatie.
 
 Patronen vormen een uitbreiding van het B<deb-symbols>(5)-systeem en zijn
-daarom enkel geldig in symbolenbestandsjablonen. De syntaxis voor het
+daarom enkel geldig in symboolbestand-sjablonen. De syntaxis voor het
 opgeven van patronen verschilt niet van die voor een specifiek symbool. Het
 onderdeel symboolnaam van de specificatie fungeert echter als een expressie
 die vergeleken wordt met I<naam@versie> van het echte symbool. Om het
 onderscheid te maken tussen verschillende types patronen, wordt een patroon
-doorgaans gemarkeerd met een speciale tag
+doorgaans gemarkeerd met een speciale tag.
 
 Op dit ogenblik ondersteunt B<dpkg-gensymbols> drie fundamentele
 patroontypes:
@@ -269,7 +269,7 @@ bijvoorbeeld het geval met niet-virtuele thunk-symbolen in complexe
 overervingsconfiguraties of met de meeste constructors en destructors
 (vermits g++ voor hen doorgaans twee echte symbolen genereert). Vermits deze
 collisies zich op het ABI-niveau voordoen, verminderen zij evenwel niet de
-kwaliteit van het symbolenbestand.
+kwaliteit van het symboolbestand.
 
 =item B<symver>
 
@@ -324,7 +324,7 @@ van het patroon.
 
 De hierboven vermelde basispatronen kunnen met elkaar gecombineerd worden
 als dat zinvol is. In dat geval worden zij verwerkt in de volgorde waarin de
-tags opgegeven werden. Bijvoorbeeld, beide onderstaande patronen
+tags opgegeven werden. Bijvoorbeeld, beide onderstaande patronen:
 
   (c++|regex)"^NSA::ClassA::Private::privmethod\d\(int\)@Base" 1.0
   (regex|c++)N3NSA6ClassA7Private11privmethod\dEi@Base 1.0
@@ -352,7 +352,7 @@ gebruik te maken van generieke patronen.
 Indien meerdere patronen een overeenkomst opleveren met hetzelfde echte
 symbool, krijgen aliassen (eerst I<c++>, dan I<symver>) de voorkeur boven
 generieke patronen. Generieke patronen worden vergeleken in de volgorde
-waarin zij aangetroffen worden in het symbolenbestandsjabloon tot er een
+waarin zij aangetroffen worden in het symboolbestand-sjabloon tot er een
 eerste succes volgt. Merk nochtans op dat het manueel herordenen van items
 uit het sjabloonbestand niet aangeraden wordt, aangezien B<dpkg-gensymbols>
 diffs (weergave van de veranderingen) genereert op basis van de
@@ -362,8 +362,8 @@ alfanumerieke volgorde van hun namen.
 
 Als de set van geëxporteerde symbolen onderling verschilt tussen
 verschillende architecturen, kan het inefficiënt worden om één enkel
-symbolenbestand te gebruiken. In die gevallen kan een include-opdracht op
-een aantal wijzen nuttig blijken:
+symboolbestand te gebruiken. In die gevallen kan een include-opdracht op een
+aantal wijzen nuttig blijken:
 
 =over 
 
@@ -386,7 +386,7 @@ Als gevolg daarvan zal er standaard van uitgegaan worden dat alle symbolen
 die uit I<in-te-voegen-bestand> opgenomen worden, gemarkeerd zijn met I<tag>
 ... I<tagN>. U kunt van deze functionaliteit gebruik maken om een
 gemeenschappelijk bestand I<pakket>.symbols te maken waarin
-architectuurspecifieke symbolenbestanden opgenomen worden:
+architectuurspecifieke symboolbestanden opgenomen worden:
 
   gemeenschappelijk_symbool1@Base 1.0
  (arch=amd64 ia64 alpha)#include "pakket.symbols.64bit"
@@ -394,7 +394,7 @@ architectuurspecifieke symbolenbestanden opgenomen worden:
   gemeenschappelijk_symbool2@Base 1.0
 =back
 
-De symbolenbestanden worden regel per regel gelezen en include-opdrachten
+De symboolbestanden worden regel per regel gelezen en include-opdrachten
 worden verwerkt van zodra ze tegengekomen worden. Dit betekent dat de inhoud
 van het ingevoegde bestand eventueel zaken kan vervangen die voor de
 include-opdracht stonden en dat zaken die na de opdracht komen, eventueel

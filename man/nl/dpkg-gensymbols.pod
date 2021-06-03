@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-gensymbols - symbolenbestanden genereren (informatie over
+dpkg-gensymbols - symboolbestanden genereren (informatie over
 afhankelijkheidsrelaties met gedeelde bibliotheken)
 
 =head1 OVERZICHT
@@ -30,7 +30,7 @@ in een onderliggende map van de bouwboom met de naam DEBIAN, zodat het
 uiteindelijk opgenomen geraakt in de controle-informatie van het pakket.
 
 Bij het genereren van deze bestanden gebruikt het als invoer bepaalde
-symbolenbestanden die door de onderhouder aangeleverd worden. Het zoekt naar
+symboolbestanden die door de onderhouder aangeleverd worden. Het zoekt naar
 de volgende bestanden (en gebruikt het eerste dat gevonden wordt):
 
 =over 
@@ -62,21 +62,21 @@ neerwaartse compatibiliteit verbroken wordt. Het is de verantwoordelijkheid
 van de onderhouder om deze bestanden up-to-date en accuraat te houden, maar
 B<dpkg-gensymbols> helpt hierbij.
 
-Indien het gegenereerde symbolenbestand verschilt van datgene wat de
+Indien het gegenereerde symboolbestand verschilt van datgene wat de
 onderhouder aanlevert, zal B<dpkg-gensymbols> de verschillen tussen de twee
 versies tonen in diff-formaat. Bovendien kan dit zelfs tot een mislukking
 leiden als de verschillen te significant zijn (u kunt aanpassen hoeveel
 verschil u kunt tolereren; zie de optie B<-c>).
 
-=head1 HET ONDERHOUD VAN SYMBOLENBESTANDEN
+=head1 HET ONDERHOUD VAN SYMBOOLBESTANDEN
 
-De basisuitwisselingsindeling van het symbolenbestand wordt beschreven in
-B<deb-symbols>(5), hetgeen gebruikt wordt door de symbolenbestanden uit de
-binaire pakketten. Deze worden gegenereerd uit symbolensjabloonbestanden met
+De basisuitwisselingsindeling van het symboolbestand wordt beschreven in
+B<deb-symbols>(5), hetgeen gebruikt wordt door de symboolbestanden uit de
+binaire pakketten. Deze worden gegenereerd uit sjabloonsymboolbestanden met
 een indeling gebaseerd op het eerste, beschreven in B<deb-src-symbols>(5) en
 opgenomen in broncodepakketten.
 
-De symbolenbestanden zijn pas echt nuttig als ze de evolutie van het pakket
+De symboolbestanden zijn pas echt nuttig als ze de evolutie van het pakket
 reflecteren doorheen verschillende releases. De onderhouder moet ze dus
 iedere keer bijwerken wanneer een nieuw symbool toegevoegd wordt, zodat de
 minimale versie die eraan gekoppeld wordt, overeenkomt met de realiteit.
@@ -98,12 +98,12 @@ Debian revisienummer niet weggelaten kan worden omdat het symbool echt via
 een Debian-specifieke aanpassing toegevoegd werd, moet men aan het
 versienummer het achtervoegsel ‘B<~>’ toevoegen.
 
-Vooraleer een patch toe te passen op een symbolenbestand, moet de
-onderhouder grondig controleren of dat wel correct is. Publieke symbolen
-worden verondersteld niet te verdwijnen. Een patch zou dus idealiter enkel
-nieuwe regels mogen toevoegen.
+Vooraleer een patch toe te passen op een symboolbestand, moet de onderhouder
+grondig controleren of dat wel correct is. Publieke symbolen worden
+verondersteld niet te verdwijnen. Een patch zou dus idealiter enkel nieuwe
+regels mogen toevoegen.
 
-Merk op dat u in symbolenbestanden commentaar kunt invoegen.
+Merk op dat u in symboolbestanden commentaar kunt invoegen.
 
 Vergeet niet na te gaan of oudere symboolversies niet verhoogd moeten
 worden. Er bestaat geen manier voor B<dpkg-gensymbols> om in dit verband
@@ -138,7 +138,7 @@ optional krijgen om dat te omzeilen).
 
 =back
 
-Bij het onderhoud van een symbolenbestand is het gemakkelijk om het
+Bij het onderhoud van een symboolbestand is het gemakkelijk om het
 verschijnen en verdwijnen van symbolen op te merken. Maar het is moeilijker
 om incompatibele API- en ABI-wijzigingen op te merken. Daarom moet de
 onderhouder het changelog-bestand van de toeleveraar grondig nakijken op
@@ -189,36 +189,36 @@ kan problematisch zijn, bijvoorbeeld bij het cross-compileren.
 
 =item B<-I>I<bestandsnaam>
 
-Gebruik I<bestandsnaam> als referentiebestand om het symbolenbestand te
+Gebruik I<bestandsnaam> als referentiebestand om het symboolbestand te
 genereren dat in het pakket zelf geïntegreerd wordt.
 
 =item B<-O>[I<bestandsnaam>]
 
-Het gegenereerde symbolenbestand weergeven op de standaarduitvoer of
+Het gegenereerde symboolbestand weergeven op de standaarduitvoer of
 schrijven naar I<bestandsnaam> als dat opgegeven werd, eerder dan naar
 B<debian/tmp/DEBIAN/symbols> (of I<pakketbouwmap>B</DEBIAN/symbols> indien
 B<-P> gebruikt werd). Indien I<bestandsnaam> reeds bestond, wordt de inhoud
-ervan gebruikt als basis voor het gegenereerde symbolenbestand. U kunt van
-deze functionaliteit gebruik maken om een symbolenbestand bij te werken
-zodat het in overeenstemming is met een nieuwere bovenstroomse versie van uw
+ervan gebruikt als basis voor het gegenereerde symboolbestand. U kunt van
+deze functionaliteit gebruik maken om een symboolbestand bij te werken zodat
+het in overeenstemming is met een nieuwere bovenstroomse versie van uw
 bibliotheek.
 
 =item B<-t>
 
-Het symbolenbestand in sjabloonmodus opschrijven, eerder dan in de indeling
+Het symboolbestand in sjabloonmodus opschrijven, eerder dan in de indeling
 die compatibel is met B<deb-symbols>(5). Het grootste verschil is dat in de
 sjabloonmodus symboolnamen en tags geschreven worden in hun originele vorm
 in tegenstelling tot in de compatibele modus waarin de verwerkte
 symboolnamen ontdaan van hun tags gebruikt worden. Daarenboven kunnen bij
 het schrijven van een standaard B<deb-symbols>(5)-bestand sommige symbolen
 weggelaten worden (overeenkomstig de regels voor het verwerken van tags),
-terwijl in een symbolenbestandsjabloon steeds alle symbolen neergeschreven
+terwijl in een symboolbestand-sjabloon steeds alle symbolen neergeschreven
 worden.
 
 =item B<-c>I<[0-4]>
 
 Definiëren welke controles moeten gebeuren bij het vergelijken van het
-gegenereerde symbolenbestand met het sjabloonbestand dat als vertrekpunt
+gegenereerde symboolbestand met het sjabloonbestand dat als vertrekpunt
 gebruikt werd. Standaard is dat volgens niveau 1. Het verhogen van het
 niveau leidt tot meer controles, terwijl alle controles van lagere niveaus
 behouden blijven. Niveau 0 leidt nooit tot een mislukking. Niveau 1 mislukt
@@ -233,7 +233,7 @@ B<DPKG_GENSYMBOLS_CHECK_LEVEL>.
 =item B<-q>
 
 Stil blijven en nooit een diff (een overzicht van de verschillen) maken
-tussen het gegenereerde symbolenbestand en het sjabloonbestand dat als
+tussen het gegenereerde symboolbestand en het sjabloonbestand dat als
 vertrekpunt gebruikt werd en geen enkele waarschuwing tonen in verband met
 nieuwe/verloren bibliotheken of nieuwe/verloren symbolen. Deze optie
 schakelt enkel de informatieve uitvoer uit, maar niet de controles zelf (zie
@@ -241,8 +241,8 @@ de optie B<-c>).
 
 =item B<-a>I<arch>
 
-Uitgaan van I<arch> als hostarchitectuur bij het verwerken van
-symbolenbestanden. Gebruik deze optie om een symbolenbestand of een diff
+Uitgaan van I<arch> als host-architectuur bij het verwerken van
+symboolbestanden. Gebruik deze optie om een symboolbestand of een diff
 (overzicht van de verschillen) voor een willekeurige architectuur te
 genereren op voorwaarde dat de binaire bestanden ervan reeds voorhanden
 zijn.
@@ -254,7 +254,7 @@ lichten wat B<dpkg-gensymbols> doet.
 
 =item B<-V>
 
-De breedsprakige modus inschakelen. Het gegenereerde symbolenbestand bevat
+De breedsprakige modus inschakelen. Het gegenereerde symboolbestand bevat
 dan verouderde symbolen in de vorm van commentaar. In sjabloonmodus worden
 daarenboven patroonsymbolen gevolgd door commentaar met daarin een opsomming
 van de echte symbolen die met het patroon overeenkwamen.

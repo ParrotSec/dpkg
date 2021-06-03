@@ -65,7 +65,7 @@ waarbij I<naam> gewoonlijk voorafgegaan wordt door B<lib>.
 
 Het B<shlibs>-bestand voor een typisch bibliotheekpakket met als naam
 I<libcrunch1> dat één bibliotheek levert met als SONAME I<libcrunch.so.1>,
-kan er als volgt uitzien:
+kan er als volgt uitzien
 
 =over 
 

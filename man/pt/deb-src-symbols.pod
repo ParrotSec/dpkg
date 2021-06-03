@@ -24,9 +24,9 @@ B<debian/>I<package>B<.symbols>, B<debian/symbols>
 
 =head1 DESCRIÇÃO
 
-The symbol file templates are shipped in Debian source packages, and its
-format is a superset of the symbols files shipped in binary packages, see
-L<deb-symbols(5)>.
+Os modelos de ficheiros symbol são enviados em pacotes fonte Debian, e o seu
+formato é um superconjunto dos ficheiros symbols enviados em pacotes
+binários, veja L<deb-symbols(5)>.
 
 =head2 Comentários
 

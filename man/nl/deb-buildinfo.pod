@@ -22,18 +22,19 @@ I<bestandsnaam>B<.buildinfo>
 
 =head1 BESCHRIJVING
 
-Each Debian source package build can record the build information in a
-B<.buildinfo> control file, which contains a number of fields in
-L<deb822(5)> format.
+Van elke bouw van een Debian broncodepakket kan de bouwinformatie opgeslagen
+worden in een controlebestand B<.buildinfo>, dat een aantal velden bevat
+volgens de indeling L<deb822(5)>.
 
-Each field begins with a tag, such as B<Source> or B<Binary> (case
-insensitive), followed by a colon, and the body of the field (case sensitive
-unless stated otherwise).  Fields are delimited only by field tags.  In
-other words, field text may be multiple lines in length, but the
-installation tools will generally join lines when processing the body of the
-field (except in case of the multiline fields B<Binary-Only-Changes>,
+Ieder veld begint met een markering, zoals B<Source> of B<Binary> (niet
+hoofdlettergevoelig), gevolgd door een dubbele punt en de tekstinhoud van
+het veld (hoofdlettergevoelig tenzij anders vermeld). Velden worden enkel
+door veldmarkeringen begrensd. De tekstinhoud van het veld kan met andere
+woorden verschillende regels lang zijn, maar de installatiegereedschappen
+zullen bij het verwerken van de tekstinhoud de regels gewoonlijk samenvoegen
+(behalve in het geval van de multiregel-velden B<Binary-Only-Changes>,
 B<Installed-Build-Depends>, B<Environment>, B<Checksums-Md5>,
-B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
+B<Checksums-Sha1> en B<Checksums-Sha256>; zie hierna)
 
 De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met
 ASCII-harnas volgens de specificatie RFC4880.
@@ -171,15 +172,16 @@ Op Debian en zijn derivaten kunnen de volgende reden-labels gegeven worden:
 
 =item B<merged-usr-via-aliased-dirs>
 
-The system has a merged I</usr> via aliased directories (previously known as
-B<merged-usr-via-symlinks>).  This will confuse B<dpkg-query>,
-B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> and any other
-tool using pathnames as keys into their databases, as it creates filesystem
-aliasing problems, and messes with the understanding of the filesystem that
-B<dpkg> has recorded in its database.  For build systems that hardcode
-pathnames to specific binaries or libraries on the resulting artifacts, it
-can also produce packages that will be incompatible with non-/usr-merged
-filesystems.
+Het systeem heeft een via aliassen samengevoegde map I</usr> (vroeger gekend
+als B<merged-usr-via-symlinks>). Dit sticht verwarring bij B<dpkg-query>,
+B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> en elk ander
+hulpmiddel dat in zijn databank gebruik maakt van padnamen als sleutel,
+omdat het zorgt voor problemen met aliassen in het bestandssysteem en knoeit
+met het overzicht van het bestandssysteem dat B<dpkg> in zijn databank
+opgeslagen heeft. Met bouwsystemen die in de door hen gemaakte objecten
+gebruik maken van vaste padnamen naar specifieke uitvoerbare bestanden of
+bibliotheken, kan dit ook leiden tot pakketten die niet compatibel zijn met
+bestandssystemen zonder samengevoegde /usr-map.
 
 =item B<usr-local-has-configs>
 

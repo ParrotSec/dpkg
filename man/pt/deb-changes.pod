@@ -22,16 +22,18 @@ I<filename>B<.changes>
 
 =head1 DESCRIÇÃO
 
-Each Debian upload is composed of a .changes control file, which contains a
-number of fields in L<deb822(5)> format.
+Cada envio Debian é composto de um ficheiro de controle .changes, o qual
+contém um número de campos em formato L<deb822(5)>.
 
-Each field begins with a tag, such as B<Source> or B<Binary> (case
-insensitive), followed by a colon, and the body of the field (case sensitive
-unless stated otherwise).  Fields are delimited only by field tags.  In
-other words, field text may be multiple lines in length, but the
-installation tools will generally join lines when processing the body of the
-field (except in case of the multiline fields B<Description>, B<Changes>,
-B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
+Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary>
+(insensível a maiúsculas/minúsculas), seguida do símbolo dois pontos, e o
+corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o
+contrário). Os campos são delimitados apenas por etiquetas de campos. Por
+outras palavras, o texto do campo pode ter várias linhas de comprimento, mas
+as ferramentas de instalação irão geralmente juntar as linhas quando
+processam o corpo do campo (excepto no caso de B<Description>, B<Changes>,
+B<Files>, B<Checksums-Sha1> e B<Checksums-Sha256> de múltiplos campos, ver
+abaixo).
 
 Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII
 Armored, como especificado em RFC4880.

@@ -23,9 +23,9 @@ B<DEBIAN/symbols>
 
 =head1 BESCHRIJVING
 
-De symbolenbestanden worden meegeleverd met Debian binaire pakketten en de
+De symboolbestanden worden meegeleverd met Debian binaire pakketten en de
 indeling ervan maakt gebruik van deelaspecten van de
-sjabloonsymbolenbestanden die door B<dpkg-gensymbols>(1) in Debian
+sjabloonsymboolbestanden die door B<dpkg-gensymbols>(1) in Debian
 broncodepakketten gebruikt worden.
 
 In deze bestanden is de indeling van een item met informatie over een
@@ -45,13 +45,14 @@ een afhankelijkheid waarbij I<#MINVER#> dynamisch vervangen wordt door ofwel
 een versietoets zoals “(E<gt>= I<minimale-versie>)” ofwel door niets (indien
 een versieloze afhankelijkheid voldoende geacht wordt).
 
-Each exported I<symbol> (listed as I<name>@I<version>, with I<version> being
-“Base” if the library is not versioned) is associated to a
-I<minimal-version> of its dependency template (the main dependency template
-is always used and will end up being combined with the dependency template
-referenced by I<id-of-dependency-template> if present). The first
-alternative dependency template is numbered 1, the second one 2, etc.  Each
-column is separated by exactly a single whitespace.
+Elk geëxporteerd I<symbool> (vermeld als I<naam>@I<versie>, waarbij
+I<versie> “Base” is als het een versieloze bibliotheek betreft) is
+geassocieerd met een I<minimale-versie> van zijn afhankelijkheidssjabloon
+(het hoofdafhankelijkheidssjabloon wordt altijd gebruikt en wordt
+uiteindelijk gecombineerd met het afhankelijkheidssjabloon waarnaar verwezen
+wordt door I<id-van-afhankelijkheidssjabloon> als dat voorhanden is). Het
+eerste alternatieve afhankelijkheidssjabloon krijgt het nummer 1, het tweede
+2 enzovoort. Elke kolom wordt door exact één witruimte gescheiden.
 
 Elk item over een bibliotheek kan ook velden met meta-informatie
 bevatten. Die velden worden opgeslagen in regels die beginnen met een
@@ -93,14 +94,14 @@ ondersteund sinds dpkg 1.17.6).
 
 =head1 VOORBEELDEN
 
-=head2 Eenvoudig symbolenbestand
+=head2 Eenvoudig symboolbestand
 
  libftp.so.3 libftp3 #MINVER#
   DefaultNetbuf@Base 3.1-1-6
   FtpAccess@Base 3.1-1-6
   [...]
 
-=head2 Geavanceerd symbolenbestand
+=head2 Geavanceerd symboolbestand
 
  libGL.so.1 libgl1
  | libgl1-mesa-glx #MINVER#

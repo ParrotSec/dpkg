@@ -252,15 +252,16 @@ bouwuitvoermappen van Libtool.
 
 =back
 
-B<Note:> While they have similar purposes, B<-i> and B<-I> have very
-different syntax and semantics. B<-i> can only be specified once and takes a
-perl compatible regular expression which is matched against the full
-relative path of each file. B<-I> can specified multiple times and takes a
-filename pattern with shell wildcards.  The pattern is applied to the full
-relative path but also to each part of the path individually. The exact
-semantic of tar's B<--exclude> option is somewhat complicated, see
-L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> for a full
-documentation.
+B<Opmerking:> hoewel zij vergelijkbare bedoelingen hebben, hebben B<-i> en
+B<-I> een heel verschillende syntaxis en semantiek. B<-i> kan slechts
+eenmaal opgegeven worden en verwacht een reguliere expressie die
+perl-compatibel is en die vergeleken wordt met het volledige relatieve pad
+van elk bestand. B<-I> kan meermaals opgegeven worden en verwacht een
+bestandsnaampatroon met shell-jokertekens. Het patroon wordt toegepast op
+het volledige relatieve pad maar ook op elk individueel onderdeel van het
+pad. De exacte semantiek van de optie B<--exclude> van tar is enigszins
+gecompliceerd. Zie voor een volledige documentatie
+L<https://www.gnu.org/software/tar/manual/tar.html#wildcards>.
 
 De standaard reguliere expressies en patronen voor beide opties zijn te zien
 in de uitvoer van het commando B<--help>.
@@ -311,10 +312,10 @@ neerwaartse compatibiliteit te verzekeren.
 
 =head1 INDELINGEN VAN BRONCODEPAKKETTEN
 
-If you don't know what source format to use, you should probably pick either
-“3.0 (quilt)” or “3.0 (native)”.  See
-L<https://wiki.debian.org/Projects/DebSrc3.0> for information on the
-deployment of those formats within Debian.
+Indien u niet weet welke indeling te kiezen voor de broncode, zou u wellicht
+ofwel “3.0 (quilt)” of “3.0 (native)” moeten kiezen. Zie
+L<https://wiki.debian.org/Projects/DebSrc3.0> voor informatie over het in
+gebruik nemen van deze indelingen binnen Debian.
 
 =head2 Indeling: 1.0
 
@@ -519,23 +520,27 @@ debian tar-archief een onderliggende map B<debian> moet bevatten, maar dat
 het ook binaire bestanden kan bevatten buiten die map (zie de optie
 B<--include-binaries>).
 
-All patches listed in B<debian/patches/>I<vendor>B<.series> or
-B<debian/patches/series> are then applied, where I<vendor> will be the
-lowercase name of the current vendor, or B<debian> if there is no vendor
-defined.  If the former file is used and the latter one doesn't exist (or is
-a symlink), then the latter is replaced with a symlink to the former.  This
-is meant to simplify usage of B<quilt> to manage the set of patches.
-Vendor-specific series files are intended to make it possible to serialize
-multiple development branches based on the vendor, in a declarative way, in
-preference to open-coding this handling in B<debian/rules>.  This is
-particularly useful when the source would need to be patched conditionally
-because the affected files do not have built-in conditional occlusion
-support.  Note however that while B<dpkg-source> parses correctly series
-files with explicit options used for patch application (stored on each line
-after the patch filename and one or more spaces), it does ignore those
-options and always expects patches that can be applied with the B<-p1>
-option of B<patch>. It will thus emit a warning when it encounters such
-options, and the build is likely to fail.
+Vervolgens worden alle patches toegepast die vermeld zijn in
+B<debian/patches/>I<leverancier>B<.series> of B<debian/patches/series>,
+waarbij I<leverancier> de naam is in kleine letters van de huidige
+leverancier, of B<debian> als geen leverancier gedefinieerd is. Indien het
+eerste bestand gebruikt wordt en het laatste niet bestaat (of een
+symbolische koppeling is), dan zal het laatste vervangen worden door een
+symbolische koppeling naar het eerste. Dit is bedoeld om het gebruik van
+B<quilt> bij het beheer van het geheel van patches te
+vereenvoudigen. Leveranciersspecifieke series-bestanden hebben tot doel het
+serialiseren van meerdere leveranciersgebonden ontwikkelingstakken op een
+declaratieve manier mogelijk te maken, wat verkieslijker is boven een open
+codering van deze aanpak in B<debian/rules>. Dit is in het bijzonder nuttig
+wanneer de broncode voorwaardelijk gepatched moet worden omdat de betrokken
+bestanden geen ingebouwde ondersteuning hebben voor conditionele
+occlusie. Merk nochtans op dat hoewel B<dpkg-source> op correcte wijze de
+ontleding uitvoert van series-bestanden met expliciete opties die gebruikt
+worden voor het toepassen van patches (op elke regel opgeslagen na de
+bestandsnaam van de patch en één of meer spaties), het deze opties negeert
+en steeds patches verwacht die kunnen toegepast worden met de optie B<-p1>
+van B<patch>. Het zal dus een waarschuwing geven als het dergelijke opties
+tegenkomt en het bouwen zal waarschijnlijk mislukken.
 
 Opmerking: indien leveranciers-series-bestanden gebruikt worden, geeft
 B<lintian>(1) onvoorwaardelijke waarschuwingen als gevolg van een

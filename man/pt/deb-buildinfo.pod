@@ -22,18 +22,20 @@ I<filename>B<.buildinfo>
 
 =head1 DESCRIÇÃO
 
-Each Debian source package build can record the build information in a
-B<.buildinfo> control file, which contains a number of fields in
-L<deb822(5)> format.
+Cada compilação de pacote fonte Debian pode gravar a informação de
+compilação num ficheiro de controle B<.buildinfo>, o qual contem um número
+de campos em formato L<deb822(5)>.
 
-Each field begins with a tag, such as B<Source> or B<Binary> (case
-insensitive), followed by a colon, and the body of the field (case sensitive
-unless stated otherwise).  Fields are delimited only by field tags.  In
-other words, field text may be multiple lines in length, but the
-installation tools will generally join lines when processing the body of the
-field (except in case of the multiline fields B<Binary-Only-Changes>,
-B<Installed-Build-Depends>, B<Environment>, B<Checksums-Md5>,
-B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
+Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary>
+(insensível a maiúsculas/minúsculas), seguida de dois pontos, e do corpo do
+campo (sensível a maiúsculas/minúsculas a menos que declarado o
+contrário). Os campos são delimitados apenas pelas etiquetas (tags) dos
+campos. Por outras palavras, o campo de texto pode ter várias linhas de
+comprimento, mas as ferramentas de instalação irão geralmente juntar as
+linhas quando processam o corpo do campo (excepto no caso de campos
+multi-linha B<Binary-Only-Changes>, B<Installed-Build-Depends>,
+B<Environment>, B<Checksums-Md5>, B<Checksums-Sha1> e B<Checksums-Sha256>,
+ver abaixo).
 
 Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII
 Armored, como especificado em RFC4880.
@@ -167,15 +169,17 @@ Em Debian e derivados as seguintes etiquetas de razão podem ser emitidas:
 
 =item B<merged-usr-via-aliased-dirs>
 
-The system has a merged I</usr> via aliased directories (previously known as
-B<merged-usr-via-symlinks>).  This will confuse B<dpkg-query>,
-B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> and any other
-tool using pathnames as keys into their databases, as it creates filesystem
-aliasing problems, and messes with the understanding of the filesystem that
-B<dpkg> has recorded in its database.  For build systems that hardcode
-pathnames to specific binaries or libraries on the resulting artifacts, it
-can also produce packages that will be incompatible with non-/usr-merged
-filesystems.
+Este sistema tem um I</usr> fundido via directórios com nomes alternativos
+(anteriormente conhecido como B<merged-usr-via-symlinks>). Isto irá
+confundir B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>,
+B<update-alternatives> e qualquer outra ferramenta que use nomes-de-caminho
+como chaves para as suas base de dados, pois isto cria problemas de nomes
+alternativos no sistema de ficheiros, e complica o conhecimento do sistema
+de ficheiros que o B<dpkg> gravou na sua base de dados. Para sistema de
+compilação, isso .  For build systems that dificulta a codificação dos nomes
+de caminhos para binários ou bibliotecas específicas nos artefactos
+resultantes, também pode produzir pacotes que sejam incompatíveis com
+sistemas de ficheiros não-usr fundidos.
 
 =item B<usr-local-has-configs>
 

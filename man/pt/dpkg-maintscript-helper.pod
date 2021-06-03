@@ -117,8 +117,9 @@ scripts do maintainer.
 
 =head2 Remover um ficheiro de configuração
 
-Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in
-F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
+Nota: Isto pode ser substituído na maioria dos casos pela bandeira
+C<remove-on-upgrade> em F<DEBIAN/conffiles> (desde dpkg 1.20.6), veja
+L<deb-conffiles(5)>.
 
 Se um conffile for completamente removido, deve ser removido do disco, a
 menos que o utilizador o tenha modificado. Se existirem modificações locais,

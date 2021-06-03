@@ -47,11 +47,11 @@ in dezelfde mappen gezocht als die welke B<ld.so> zou gebruiken) en dan
 B<dpkg -S> I<bibliotheekbestand> gebruiken om het pakket op te zoeken dat de
 bibliotheek levert.
 
-=head2 Symbolenbestanden
+=head2 Symboolbestanden
 
-Symbolenbestanden bevatten fijnmazige afhankelijkheidsinformatie door voor
+Symboolbestanden bevatten fijnmazige afhankelijkheidsinformatie door voor
 ieder symbool dat de bibliotheek exporteert, de minimumvereiste op te
-geven. Het script tracht een symbolenbestand dat bij een bibliotheekpakket
+geven. Het script tracht een symboolbestand dat bij een bibliotheekpakket
 hoort op de volgende plaatsen te vinden (het eerste dat gevonden wordt,
 wordt gebruikt):
 
@@ -63,7 +63,7 @@ Informatie over gedeelde bibliotheken die gegenereerd werd door het huidige
 bouwproces dat ook B<dpkg-shlibdeps> aanriep. Zij worden gegenereerd door
 B<dpkg-gensymbols>(1). Ze worden enkel gebruikt als de bibliotheek
 aangetroffen wordt in de bouwboom van een pakket. Het bestand symbols in die
-bouwboom heeft voorrang op symbolenbestanden van andere binaire pakketten.
+bouwboom heeft voorrang op symboolbestanden van andere binaire pakketten.
 
 =item %PKGCONFDIR%/symbols/I<pakket>.symbols.I<arch>
 
@@ -254,8 +254,8 @@ Het niet als een mislukking beschouwen als voor een gedeelde bibliotheek
 geen afhankelijkheidsinformatie gevonden kan worden (sinds dpkg 1.14.8). Het
 wordt afgeraden om deze optie te gebruiken. Alle bibliotheken zouden
 afhankelijkheidsinformatie moeten verschaffen (ofwel via shlibs-bestanden of
-via symbolenbestanden), zelfs als die nog niet door andere pakketten
-gebruikt wordt.
+via symboolbestanden), zelfs als die nog niet door andere pakketten gebruikt
+wordt.
 
 =item B<--warnings=>I<waarde>
 
@@ -377,7 +377,7 @@ bestanden.
 
 B<dpkg-shlibdeps> zal mislukken als het een publieke bibliotheek die door
 een binair bestand gebruikt wordt, niet kan vinden of indien er geen
-afhankelijkheidsinformatie (ofwel een shlibs-bestand of een symbolenbestand)
+afhankelijkheidsinformatie (ofwel een shlibs-bestand of een symboolbestand)
 aan die bibliotheek gekoppeld is. Een publieke bibliotheek heeft een SONAME
 en heeft een versienummer (lib-iets.so.I<X>). Een private bibliotheek (zoals
 een uitbreiding - plug-in) zou geen SONAME mogen hebben en heeft geen
@@ -428,11 +428,11 @@ voordoen als de bibliotheek gebouwd wordt binnen hetzelfde broncodepakket en
 de shlibs-bestanden nog niet aangemaakt zijn (in dat geval moet u
 debian/rules repareren zodat de shlibs gemaakt worden voordat
 B<dpkg-shlibdeps> ingeroepen wordt). Een slecht RPATH kan er ook toe leiden
-dat de bibliotheek te vinden is onder een ongebruikelijke naam (bijvoorbeeld
+dat de bibliotheek te vinden is onder een niet-conforme naam (bijvoorbeeld
 /usr/lib/openoffice.org/../lib/libssl.so.0.9.8 in plaats van
 /usr/lib/libssl.so.0.9.8), die aan geen enkel pakket gekoppeld
 is. B<dpkg-shlibdeps> tracht dit te omzeilen door terug te vallen op een
-gebruikelijke naam (met behulp van B<realpath>(3)), maar dit lukt niet
+conforme naam (met behulp van B<realpath>(3)), maar dit lukt niet
 altijd. Het is altijd het beste om het RPATH van het binair bestand uit te
 zuiveren om problemen te voorkomen.
 
